@@ -3556,18 +3556,6 @@ Move o rectangulo sobre a parte do Encadre no que queres facer subsampling. A c√
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Desconectada a fonte de datos do tempo</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Temperaturas Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Amosar temperaturas en Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Unidades Imperiais</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Amosa datos meteorol√≥xicos sen temperatura en unidades imperiais</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Sen Fonte Datos do Tempo</value>
   </data>
@@ -5817,5 +5805,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

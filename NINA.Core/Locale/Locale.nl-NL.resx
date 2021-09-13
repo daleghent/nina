@@ -3543,18 +3543,6 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Niet verbonden met weergegevensbron</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Fahrenheit temperaturen</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Toon temperaturen in Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Imperiale eenheden</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Weergegevens van niet-temperatuur weergeven in imperiale eenheden</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Geen bron voor weerdata</value>
   </data>
@@ -5804,5 +5792,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

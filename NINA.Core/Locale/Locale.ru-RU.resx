@@ -1234,7 +1234,7 @@ Dec: {1}</value>
     <value>Купол не может установить затвор</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>Купол не может задать азимут</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>Купол не может синхронизировать азимут</value>
@@ -3548,18 +3548,6 @@ Dec: {1}</value>
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Источник данных о погоде отключен</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Температура в Фаренгейтах</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Отображение температуры в Фаренгейтах</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Британские единицы</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Отображение нетемпературных погодных данных в британских единицах</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Нет источника данных о погоде</value>
   </data>
@@ -3867,10 +3855,10 @@ Dec: {1}</value>
     <value>Затвор</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close Shutter</value>
+    <value>Закрыть затвор</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open Shutter</value>
+    <value>Открыть затвор</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Повернуть по часовой стрелке</value>
@@ -5762,40 +5750,40 @@ Dec: {1}</value>
     <value>Время успокоения межкадровой подвижки</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
-    <value>Failed to start tracking CCD ASCOM server. {0}</value>
+    <value>Не удалось запустить отслеживание CCD ASCOM сервера. {0}</value>
   </data>
   <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
-    <value>Tracking CCD ASCOM server started</value>
+    <value>Отслеживание CCD ASCOM сервера запущено</value>
   </data>
   <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
-    <value>Tracking CCD ASCOM server stopped</value>
+    <value>Отслеживание CCD ASCOM сервера остановлено</value>
   </data>
   <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Enabled</value>
+    <value>Отслеживание CCD ASCOM сервера включено</value>
   </data>
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
-    <value>Runs a server in the background to control the built-in tracking camera from other applications</value>
+    <value>Запуск сервера в фоновом режиме для управления встроенной отслеживающей камерой из других приложений</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
-    <value>Server Pipe Name</value>
+    <value>Имя канала сервера</value>
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
-    <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
+    <value>Драйвер ASCOM, который читает с этого сервера, должен иметь одно и то же имя канала</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
-    <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
+    <value>{0} больше не поддерживается Microsoft и проектом N.I.N.A. Вы будете сталкиваться с неисправностями приложения или сбоями в результате использования N.I.N.A. на неподдерживаемой версии Windows. Текущие системные требования N.I.N.A. указаны в онлайн документации.</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Синхронизировать купол</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
     <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>Азимут</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>Высота</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
     <value>Turn dome following off to use the Synchronize Dome Trigger</value>
@@ -5805,9 +5793,12 @@ Dec: {1}</value>
 Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
-    <value>Loop while unsafe</value>
+    <value>Цикл пока небезопасно</value>
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
-    <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+    <value>Не удалось возобновить гидирование после изменения фильтра, которое привело к перемещению фокуса</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

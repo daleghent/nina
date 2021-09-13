@@ -3545,18 +3545,6 @@ Cuando está habilitado, se estirarán los canales de color de forma independien
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Fuente de Datos del tiempo desconectada</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Grados Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Muestra la Temperatura en grados Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Unidades Imperiales</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Despliega datos de la temperatura en unidades imperiales</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Sin fuente de datos del tiempo</value>
   </data>
@@ -5806,5 +5794,8 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Error al reanudar el autoguiado después de que un cambio de filtro causara un desplazamiento en el enfocador</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

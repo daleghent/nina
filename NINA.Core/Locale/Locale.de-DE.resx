@@ -1241,7 +1241,7 @@ wenn die Linien nicht ausgerichtet sind, gibt es einen Polarausrichtungsfehler</
     <value>Kuppel kann Verschluss nicht setzen</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>Kuppel kann Azimut nicht festlegen</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>Kuppel kann Azimut nicht synchronisieren</value>
@@ -2942,7 +2942,7 @@ Diese Vorlage wird beim Starten der Applikation geladen, statt der Standard Sequ
     <value>Schwenken</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>Schwenken und Zentrieren</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Schwenkdauer</value>
@@ -3554,18 +3554,6 @@ Lichtverschmutzten Gebieten. Berechnungszeit ist jedoch erhöht.</value>
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Verbindung zur Wetterdatenquelle getrennt</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Fahrenheit Temperatur</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Zeige Temperatur in Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Imperiale Einheiten</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Zeige nicht-Temperatur Abhängige Wetterdaten in Imperialen Einheiten</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Keine Quelle für Wetterdaten</value>
   </data>
@@ -3873,10 +3861,10 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Verschluss</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close Shutter</value>
+    <value>Kuppelspalt schließen</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open Shutter</value>
+    <value>Kuppelspalt öffnen</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Im Uhrzeigersinn drehen</value>
@@ -4296,7 +4284,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>A condition that loops until the specified time has been reached and then stops the current instruction set</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
-    <value>Loop Until Time</value>
+    <value>Bis Zeitpunkt wiederholen</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
     <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
@@ -4395,13 +4383,13 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Schwenken, Zentrieren und Rotieren</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
     <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Schwenken und Zentrieren</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Parks the telescope to the park position</value>
@@ -4458,19 +4446,19 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Waits until the altitude has been reached for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
-    <value>Wait for Altitude</value>
+    <value>Höhe abwarten</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
     <value>Waits for a given duration in seconds</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
-    <value>Wait for Time Span</value>
+    <value>Zeitspanne abwarten</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
     <value>Waits for the specified time in the hh:mm:ss format. Additionally a utility box is available to auto populate it for sunset, dusk, dawn and sunrise</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
-    <value>Wait for Time</value>
+    <value>Zeit abwarten</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
     <value>Nach Drift zentrieren</value>
@@ -4551,10 +4539,10 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Resumes guiding if it was previously interrupted</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>Guiding wiederherstellen</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Nach Belichtungen bewerten</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Nach Belichtungen</value>
@@ -5004,7 +4992,7 @@ Example:
     <value>Der Fokussierer liefert keine gültigen Temperaturwerte</value>
   </data>
   <data name="LblServerEnabled" xml:space="preserve">
-    <value>Server Enabled</value>
+    <value>Server aktiviert</value>
   </data>
   <data name="LblServerEnabledTooltip" xml:space="preserve">
     <value>Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
@@ -5082,10 +5070,10 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Wartet auf Anfahren Teleskop-Parkposition</value>
   </data>
   <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
-    <value>Weather Underground API Key</value>
+    <value>Weather Underground API-Schlüssel</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Weather Underground Station Id</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Markierte Reihe nach unten</value>
@@ -5282,7 +5270,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Sterne</value>
   </data>
   <data name="LblShowSnapshots" xml:space="preserve">
-    <value>Snapshots</value>
+    <value>Schnappschüsse</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
     <value>Slew, Center and Rotate</value>
@@ -5448,7 +5436,7 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
     <value>Wait until safe</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Waiting for safe conditions</value>
+    <value>Warten auf sichere Bedingungen</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
     <value>Camera Temperature Set Point</value>
@@ -5487,27 +5475,27 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Font</value>
   </data>
   <data name="LblPrimaryRate" xml:space="preserve">
-    <value>Primary rate</value>
+    <value>Primärrate</value>
     <comment>Primary telescope axis rate</comment>
   </data>
   <data name="LblSecondaryRate" xml:space="preserve">
-    <value>Secondary rate</value>
+    <value>Sekundärrate</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
-    <value>Telescope cannot move primary axis</value>
+    <value>Teleskop kann die Primärachse nicht bewegen</value>
   </data>
   <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
-    <value>Telescope cannot move secondary axis</value>
+    <value>Teleskop kann die Sekundärachse nicht bewegen</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>Primäre umgekehrt</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
     <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>Sekundäre umgekehrt</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
@@ -5595,22 +5583,22 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Skip currently running instruction(s)</value>
   </data>
   <data name="LblFanSpeed" xml:space="preserve">
-    <value>Fan speed</value>
+    <value>Lüftergeschwindigkeit</value>
   </data>
   <data name="LblUnableToConnect" xml:space="preserve">
     <value>Unable to connect to {0}. Reason: {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>Abbrechen</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
     <value>Fortfahren</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>Bei Fehler</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
-    <value>Retries</value>
+    <value>Wiederholungen</value>
   </data>
   <data name="LblSkipInstructionSetOnError" xml:space="preserve">
     <value>Skip current instruction set</value>
@@ -5619,7 +5607,7 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Skip to end of sequence instructions</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
-    <value>Number of attempts</value>
+    <value>Anzahl der Versuche</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
     <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
@@ -5629,7 +5617,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>The number of attempts that should be made when the instruction fails to execute.</value>
   </data>
   <data name="LblStopSequence" xml:space="preserve">
-    <value>Stop Sequence</value>
+    <value>Sequenz stoppen</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
     <value>Sequence template "{0}" has been created.</value>
@@ -5638,28 +5626,28 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Sequence template "{0}" has been updated.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>Ziel "{0}" wurde erstellt.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>Ziel "{0}" wurde aktualisiert.</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>Do you want to reset the complete sequence run?</value>
+    <value>Möchten Sie die komplette Sequenz zurücksetzen?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
-    <value>Reset sequence?</value>
+    <value>Sequenz zurücksetzen?</value>
   </data>
   <data name="LblMountType" xml:space="preserve">
-    <value>Mount Type</value>
+    <value>Montierungstyp</value>
   </data>
   <data name="LblEquatorial" xml:space="preserve">
-    <value>Equatorial</value>
+    <value>Äquatorial</value>
   </data>
   <data name="LblForkOnWedge" xml:space="preserve">
-    <value>Fork on Wedge</value>
+    <value>Gabelmontierung auf Polhöhenwiege</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
     <value>DEC Horizontal Offset</value>
@@ -5681,10 +5669,10 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Switches to the simple target set planning mode</value>
   </data>
   <data name="LblByName" xml:space="preserve">
-    <value>By Name</value>
+    <value>Nach Name</value>
   </data>
   <data name="LblByRelevance" xml:space="preserve">
-    <value>By Relevance</value>
+    <value>Nach Relevanz</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
     <value>Sequencer Targets Folder</value>
@@ -5693,7 +5681,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>The folder where sequence targets for the advanced sequencer are stored in</value>
   </data>
   <data name="LblNotInstalled" xml:space="preserve">
-    <value>Not installed</value>
+    <value>Nicht installiert</value>
   </data>
   <data name="LblVendor" xml:space="preserve">
     <value>Vendor</value>
@@ -5711,13 +5699,13 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Global Triggers</value>
   </data>
   <data name="LblTargetOptions" xml:space="preserve">
-    <value>Target Options</value>
+    <value>Zieloptionen</value>
   </data>
   <data name="LblCoolCamera" xml:space="preserve">
-    <value>Cool Camera</value>
+    <value>Kamera kühlen</value>
   </data>
   <data name="LblParkMount" xml:space="preserve">
-    <value>Park Mount</value>
+    <value>Montierung parken</value>
   </data>
   <data name="LblTargetSetEndOptions" xml:space="preserve">
     <value>Target Set End Options</value>
@@ -5726,10 +5714,10 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Target Set Start Options</value>
   </data>
   <data name="LblUnparkMount" xml:space="preserve">
-    <value>Unpark Mount</value>
+    <value>Montierung ausparken</value>
   </data>
   <data name="LblWarmCamera" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Kamera aufwärmen</value>
   </data>
   <data name="LblRotatorRangeType" xml:space="preserve">
     <value>Mechanical Range</value>
@@ -5738,19 +5726,19 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Mechanical Range Start</value>
   </data>
   <data name="LblRotatorRangeFull" xml:space="preserve">
-    <value>Full</value>
+    <value>Voll</value>
   </data>
   <data name="LblRotatorRangeFullTooltip" xml:space="preserve">
-    <value>No restrictions for mechanical position</value>
+    <value>Keine Einschränkungen für die mechanische Position</value>
   </data>
   <data name="LblRotatorRangeHalf" xml:space="preserve">
-    <value>180 Degrees</value>
+    <value>180 Grad</value>
   </data>
   <data name="LblRotatorRangeHalfTooltip" xml:space="preserve">
     <value>Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range.</value>
   </data>
   <data name="LblRotatorRangeQuarter" xml:space="preserve">
-    <value>90 Degrees</value>
+    <value>90 Grad</value>
   </data>
   <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
     <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
@@ -5765,7 +5753,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Unable to set mount latitude to {0} and longitude to {1}!</value>
   </data>
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>Dithering Einschwingzeit</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
     <value>Failed to start tracking CCD ASCOM server. {0}</value>
@@ -5792,16 +5780,16 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Kuppel synchronisieren</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
     <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>Azimut</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>Höhe</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
     <value>Turn dome following off to use the Synchronize Dome Trigger</value>
@@ -5815,5 +5803,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unbekannte Anweisung erkannt! Bitte Sequenz auf ungültige Anweisungen überprüfen. Weiter sollte überprüft werden, dass alles auf dem neusten Stand ist.</value>
   </data>
 </root>

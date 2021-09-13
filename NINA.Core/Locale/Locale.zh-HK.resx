@@ -3555,18 +3555,6 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>氣象數據源已斷開連接</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>華氏溫度</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>以華氏溫度顯示溫度</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>英制單位</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>以英制單位顯示非溫度氣象數據</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>無氣象數據源</value>
   </data>
@@ -5816,5 +5804,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

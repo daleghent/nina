@@ -3550,18 +3550,6 @@ Arraste o rectângulo sobre a parte da imagem que deseja efectuar sub-sample e s
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Fonte de dados meteorológicos desconectada</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Temperatura em Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Mostrar temperaturas em Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Unidades Imperiais</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Exibir dados meteorológicos sem temperatura em unidades imperiais</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Nenhuma fonte de dados meteorológicos seleccionada</value>
   </data>
@@ -5809,5 +5797,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

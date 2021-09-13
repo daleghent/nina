@@ -3542,18 +3542,6 @@ Dikdörtgeni kadrajın örneklemek istediğiniz kısmına sürükleyin ve örnek
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Meteoroloji veri kaynak bağlantısı kesildi</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Fahrenheit sıcaklık</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Sıcaklığı Fahrenheit olarak göster</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>İngiliz ölçü birimi</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Sıcaklık hariç, meteoroloji verilerini İngiliz ölçü biriminde göster</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Meteoroloji veri kaynağı yok</value>
   </data>
@@ -5803,5 +5791,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
 </root>

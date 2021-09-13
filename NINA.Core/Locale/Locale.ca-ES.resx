@@ -3548,18 +3548,6 @@ Quan estigui activat, els canals de color s’estiraran per separat, ajudant a a
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>La font de dades meteorològiques s'ha desconnectat</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Temperatures Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Mostra les temperatures en Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Unitats Imperials</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Mostra les dades meteorològiques sense temperatura en unitats Imperials</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Sense font de dades meteorològiques</value>
   </data>
@@ -3865,10 +3853,10 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Obturador</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close Shutter</value>
+    <value>Tanca l'obturador</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open Shutter</value>
+    <value>Obre l'obturador</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotar en sentit horari</value>
@@ -5807,5 +5795,8 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>No s'ha pogut reprendre la guia després d'un canvi de filtre que ha provocat el moviment del centrat</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>S'ha detectat una instrucció desconeguda. Comproveu de nou la seqüència i inspeccioneu quines instruccions no són vàlides. A més, valideu que tot estigui actualitzat.</value>
   </data>
 </root>

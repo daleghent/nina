@@ -3550,18 +3550,6 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Odpojit počasí</value>
   </data>
-  <data name="LblWeatherDisplayFahrenheit" xml:space="preserve">
-    <value>Teploty Fahrenheita</value>
-  </data>
-  <data name="LblWeatherDisplayFahrenheitTooltip" xml:space="preserve">
-    <value>Zobrazit teploty v Fahrenheit</value>
-  </data>
-  <data name="LblWeatherDisplayImperial" xml:space="preserve">
-    <value>Imperiální Jednotky</value>
-  </data>
-  <data name="LblWeatherDisplayImperialTooltip" xml:space="preserve">
-    <value>Zobrazení neteplotních údajů o počasí v imperiálních jednotkách</value>
-  </data>
   <data name="LblWeatherNoSource" xml:space="preserve">
     <value>Žádný Zdroj Dat o Počasí</value>
   </data>
@@ -5811,5 +5799,8 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Obnovení pointace se nezdařilo po změně filtru, která způsobila pohyb ostření</value>
+  </data>
+  <data name="LblUnknownInstructionValidation" xml:space="preserve">
+    <value>Byla zjištěna neznámá instrukce! Zkontrolujte svou posloupnost a zkontrolujte, které instrukce se staly neplatnými. Dále ověřte, že vše je aktuální.</value>
   </data>
 </root>
