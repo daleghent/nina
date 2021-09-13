@@ -58,6 +58,15 @@ namespace NINA.Sequencer.Container {
         }
 
         [JsonProperty]
+        public new string Name {
+            get => base.Name;
+            set {
+                base.Name = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [JsonProperty]
         public IList<ISequenceCondition> Conditions { get; protected set; } = new ObservableCollection<ISequenceCondition>();
 
         public virtual ICommand DropIntoCommand => new RelayCommand((o) => {
