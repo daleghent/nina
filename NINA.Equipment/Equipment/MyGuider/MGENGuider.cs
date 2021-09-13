@@ -315,12 +315,19 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             try {
                 if (!await MGen.IsActivelyGuiding(ct)) {
-                    await AutoSelectGuideStar();
+                    try {
+                        Logger.Debug("MGEN - Not actively guiding, attempting to start guiding");
+                        await MGen.StartGuiding(ct);
+                        Logger.Debug("MGEN - Guiding successfully resumed");
+                    } catch (NoStarSeenException ex) {
+                        Logger.Debug("MGEN - Guiding didn't start, selecting new guide star");
+                        await AutoSelectGuideStar();
+                    }
                 }
                 var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
-                Logger.Debug("MGEN - Starting Guiding");
-                await MGen.StartGuiding(ct);
                 if (calibrated) {
+                    Logger.Debug("MGEN - Starting Guiding");
+                    await MGen.StartGuiding(ct);
                     await WaitForSettling(DitherSettlingTime, progress, ct);
                 }
             } catch (Exception ex) {
