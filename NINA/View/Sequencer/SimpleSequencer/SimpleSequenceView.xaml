@@ -51,9 +51,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid
@@ -74,7 +74,7 @@
                         Text="{Binding Sequencer.MainContainer.SequenceTitle, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
-                <Grid Grid.Row="1" Margin="5,0,0,0">
+                <Grid Grid.Row="3" Margin="5,2.5,0,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -258,145 +258,149 @@
                     </StackPanel>
                 </Grid>
 
-                <local:SimpleDSOContainerView Grid.Row="3" DataContext="{Binding SelectedTarget}" />
+                <local:SimpleDSOContainerView Grid.Row="4" DataContext="{Binding SelectedTarget}" />
 
                 <Border
-                    Grid.Row="4"
+                    Grid.Row="1"
                     BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="0">
-                    <Expander DataContext="{Binding StartOptions}">
-                        <Expander.Header>
-                            <WrapPanel Orientation="Horizontal">
-                                <TextBlock Text="{ns:Loc LblTargetSetStartOptions}" />
-                                <WrapPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                        <TextBlock Text="|" />
-                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblCoolCamera}" />
-                                        <StackPanel.Style>
-                                            <Style TargetType="StackPanel">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding CoolCameraAtSequenceStart}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </StackPanel.Style>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                        <TextBlock Text="|" />
-                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblUnparkMount}" />
-                                        <StackPanel.Style>
-                                            <Style TargetType="StackPanel">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding UnparkMountAtSequenceStart}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </StackPanel.Style>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                        <TextBlock Text="|" />
-                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
-                                        <StackPanel.Style>
-                                            <Style TargetType="StackPanel">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </StackPanel.Style>
-                                    </StackPanel>
-                                </WrapPanel>
-                            </WrapPanel>
-                        </Expander.Header>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                            <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
-                                <TextBlock
-                                    MinHeight="20"
-                                    Margin="5,0,5,0"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblCoolCamera}" />
-                                <CheckBox
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding CoolCameraAtSequenceStart, Mode=TwoWay}" />
-
-                                <TextBlock
-                                    MinHeight="20"
-                                    Margin="5,0,5,0"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblUnparkMount}" />
-                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding UnparkMountAtSequenceStart, Mode=TwoWay}" />
-
-                                <TextBlock
-                                    MinHeight="20"
-                                    Margin="5,0,5,0"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
-                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" />
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Expander>
-                </Border>
-
-                <Border
-                    Grid.Row="5"
-                    BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="0,1,0,1">
-                    <Expander DataContext="{Binding EndOptions}">
-                        <Expander.Header>
-                            <WrapPanel Orientation="Horizontal">
-                                <TextBlock Text="{ns:Loc LblTargetSetEndOptions}" />
+                    BorderThickness="0,0,0,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Expander DataContext="{Binding StartOptions}" IsExpanded="True">
+                            <Expander.Header>
                                 <WrapPanel Orientation="Horizontal">
-                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                        <TextBlock Text="|" />
-                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblWarmCamera}" />
-                                        <StackPanel.Style>
-                                            <Style TargetType="StackPanel">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WarmCamAtSequenceEnd}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </StackPanel.Style>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                        <TextBlock Text="|" />
-                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblParkMount}" />
-                                        <StackPanel.Style>
-                                            <Style TargetType="StackPanel">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ParkMountAtSequenceEnd}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </StackPanel.Style>
-                                    </StackPanel>
+                                    <TextBlock Text="{ns:Loc LblTargetSetStartOptions}" />
+                                    <WrapPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblCoolCamera}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CoolCameraAtSequenceStart}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblUnparkMount}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding UnparkMountAtSequenceStart}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                    </WrapPanel>
                                 </WrapPanel>
-                            </WrapPanel>
-                        </Expander.Header>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                            <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
-                                <TextBlock
-                                    MinHeight="20"
-                                    Margin="5,0,5,0"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblWarmCamera}" />
-                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding WarmCamAtSequenceEnd, Mode=TwoWay}" />
+                            </Expander.Header>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
+                                    <TextBlock
+                                        MinHeight="20"
+                                        Margin="5,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblCoolCamera}" />
+                                    <CheckBox
+                                        Grid.Column="2"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding CoolCameraAtSequenceStart, Mode=TwoWay}" />
 
-                                <TextBlock
-                                    MinHeight="20"
-                                    Margin="5,0,5,0"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblParkMount}" />
-                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountAtSequenceEnd, Mode=TwoWay}" />
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Expander>
+                                    <TextBlock
+                                        MinHeight="20"
+                                        Margin="5,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblUnparkMount}" />
+                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding UnparkMountAtSequenceStart, Mode=TwoWay}" />
+
+                                    <TextBlock
+                                        MinHeight="20"
+                                        Margin="5,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
+                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" />
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Expander>
+
+                        <Expander
+                            Grid.Column="1"
+                            DataContext="{Binding EndOptions}"
+                            IsExpanded="True">
+                            <Expander.Header>
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ns:Loc LblTargetSetEndOptions}" />
+                                    <WrapPanel Orientation="Horizontal">
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblWarmCamera}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding WarmCamAtSequenceEnd}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblParkMount}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ParkMountAtSequenceEnd}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                    </WrapPanel>
+                                </WrapPanel>
+                            </Expander.Header>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
+                                    <TextBlock
+                                        MinHeight="20"
+                                        Margin="5,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblWarmCamera}" />
+                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding WarmCamAtSequenceEnd, Mode=TwoWay}" />
+
+                                    <TextBlock
+                                        MinHeight="20"
+                                        Margin="5,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblParkMount}" />
+                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountAtSequenceEnd, Mode=TwoWay}" />
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Expander>
+                    </Grid>
                 </Border>
             </Grid>
         </ScrollViewer>
