@@ -559,7 +559,8 @@ namespace NINA.ViewModel {
                 if (data.Properties.IsBayered && profileService.ActiveProfile.ImageSettings.DebayerImage) {
                     _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDebayeringImage"] });
                     var unlinkedStretch = profileService.ActiveProfile.ImageSettings.UnlinkedStretch;
-                    var starDetection = profileService.ActiveProfile.ImageSettings.DebayeredHFR && DetectStars;
+                    var detectStars = parameters.DetectStars.HasValue ? parameters.DetectStars.Value : DetectStars;
+                    var starDetection = profileService.ActiveProfile.ImageSettings.DebayeredHFR && detectStars;
 
                     var bayerPattern = cameraInfo.SensorType;
                     if (profileService.ActiveProfile.CameraSettings.BayerPattern != BayerPatternEnum.Auto) {
