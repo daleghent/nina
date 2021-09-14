@@ -31,6 +31,7 @@ namespace NINA.ViewModel {
             set {
                 savePath = value;
                 Sequencer.MainContainer.SequenceTitle = Path.GetFileNameWithoutExtension(savePath);
+                RaisePropertyChanged();
             }
         }
 
