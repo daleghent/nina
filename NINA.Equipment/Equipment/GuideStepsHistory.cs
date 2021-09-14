@@ -141,6 +141,7 @@ namespace NINA.Equipment.Equipment {
                     }
 
                     GuideSteps = new AsyncObservableLimitedSizedStack<HistoryStep>(historySize, collection);
+
                     CalculateMaximumDurationY();
                 }
             }
@@ -192,7 +193,7 @@ namespace NINA.Equipment.Equipment {
                 overallGuideSteps.AddLast(historyStep);
 
                 if (GuideSteps.Count == HistorySize) {
-                    var elementIdx = overallGuideSteps.Count - HistorySize;
+                    var elementIdx = overallGuideSteps.Count - HistorySize - 1;
                     if (elementIdx >= 0) {
                         var stepToRemove = overallGuideSteps.ElementAt(elementIdx);
                         RMS.RemoveDataPoint(stepToRemove.RADistanceRaw, stepToRemove.DECDistanceRaw);

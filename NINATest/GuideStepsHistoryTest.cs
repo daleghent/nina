@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using NINA.Core.Interfaces;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
+using FluentAssertions;
 
 namespace NINATest {
 
@@ -413,6 +414,27 @@ namespace NINATest {
 
             Assert.AreEqual(100, gsh.MaxDurationY);
             Assert.AreEqual(-100, gsh.MinDurationY);
+        }
+
+        [Test]
+        //[TestCase(5, new int[] { 100, 1000, 100, 1000, 100, 2, 2, 2, 2, 2, 2 }, 1, 0)]
+        [TestCase(5, new int[] { 100, 1000, 100, 1000, 100, 5, 1, 6, 1, 2, 1 }, 2, 1.9390)]
+        public void ScaleChange(int historySize, int[] input, double arcsecPerPix, double expected) {
+            GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
+            gsh.PixelScale = arcsecPerPix;
+            foreach (var val in input) {
+                var step = new PhdEventGuideStep() {
+                    RADistanceRaw = val
+                };
+                gsh.AddGuideStep(step);
+            }
+
+            gsh.RMS.Total.Should().BeApproximately(expected, 0.0001);
+            gsh.Scale = GuiderScaleEnum.ARCSECONDS;
+            gsh.RMS.Total.Should().BeApproximately(expected, 0.0001);
+            gsh.RMS.TotalText.Should().Be($"Tot: {Math.Round(expected, 2):0.00} ({Math.Round(expected * arcsecPerPix, 2):0.00}\")");
+            gsh.Scale = GuiderScaleEnum.PIXELS;
+            gsh.RMS.Total.Should().BeApproximately(expected, 0.0001);
         }
     }
 }
