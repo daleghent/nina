@@ -13,6 +13,8 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using NINA.Core.Utility.Extensions;
+using System;
 using System.Windows;
 
 namespace NINA.Core.MyMessageBox {
@@ -146,7 +148,10 @@ namespace NINA.Core.MyMessageBox {
 
                 var mainwindow = System.Windows.Application.Current.MainWindow;
                 mainwindow.Opacity = 0.8;
-
+                win.Owner = mainwindow;
+                win.Closed += (object sender, EventArgs e) => {
+                    Application.Current.MainWindow.Focus();
+                };
                 win.ShowDialog();
 
                 mainwindow.Opacity = 1;
@@ -176,8 +181,9 @@ namespace NINA.Core.MyMessageBox {
             var mainwindow = System.Windows.Application.Current.MainWindow;
 
             var win = (System.Windows.Window)sender;
-            win.Left = mainwindow.Left + (mainwindow.Width - win.ActualWidth) / 2; ;
-            win.Top = mainwindow.Top + (mainwindow.Height - win.ActualHeight) / 2;
+            var rect = mainwindow.GetAbsolutePosition();
+            win.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
+            win.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
         }
     }
 }

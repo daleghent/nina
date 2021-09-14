@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility.Extensions;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -43,9 +44,16 @@ namespace NINA.Core.Utility.WindowService {
                     MinWidth = 350,
                     Style = Application.Current.TryFindResource("NoResizeWindow") as Style,
                 };
-                window.CloseCommand = new RelayCommand((object o) => window.Close());
-                window.Closed += (object sender, EventArgs e) => this.OnClosed?.Invoke(this, null);
+                window.CloseCommand = new RelayCommand((object o) => {
+                    window.Close();
+                });
+
+                window.Closed += (object sender, EventArgs e) => {
+                    this.OnClosed?.Invoke(this, null);
+                    Application.Current.MainWindow.Focus();
+                };
                 window.ContentRendered += (object sender, EventArgs e) => window.InvalidateVisual();
+                window.SizeChanged += Win_SizeChanged;
                 window.Content = content;
                 window.Owner = Application.Current.MainWindow;
                 window.Show();
@@ -80,7 +88,15 @@ namespace NINA.Core.Utility.WindowService {
                 } else {
                     window.CloseCommand = closeCommand;
                 }
-                window.Closed += (object sender, EventArgs e) => this.OnClosed?.Invoke(this, null);
+                window.Closing += (object sender, CancelEventArgs e) => {
+                    if ((sender is Window w) && w.IsFocused) {
+                        Application.Current.MainWindow.Focus();
+                    }
+                };
+                window.Closed += (object sender, EventArgs e) => {
+                    this.OnClosed?.Invoke(this, null);
+                    Application.Current.MainWindow.Focus();
+                };
                 window.ContentRendered += (object sender, EventArgs e) => window.InvalidateVisual();
 
                 window.SizeChanged += Win_SizeChanged;
@@ -101,8 +117,10 @@ namespace NINA.Core.Utility.WindowService {
         private static void Win_SizeChanged(object sender, SizeChangedEventArgs e) {
             var mainwindow = System.Windows.Application.Current.MainWindow;
             var win = (System.Windows.Window)sender;
-            win.Left = mainwindow.Left + (mainwindow.Width - win.ActualWidth) / 2; ;
-            win.Top = mainwindow.Top + (mainwindow.Height - win.ActualHeight) / 2;
+
+            var rect = mainwindow.GetAbsolutePosition();
+            win.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
+            win.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
         }
     }
 

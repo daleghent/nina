@@ -344,6 +344,7 @@
     <Compile Include="Enum\XISFFeaturesEnum.cs" />
     <Compile Include="Utility\Extensions\IOrderedQueryableExtension.cs" />
     <Compile Include="Utility\Extensions\ProcessExtension.cs" />
+    <Compile Include="Utility\Extensions\WPFExtensions.cs" />
     <Compile Include="Utility\ExternalCommand\ExternalCommandExecutor.cs" />
     <Compile Include="Utility\Http\HttpDownloadFileRequest.cs" />
     <Compile Include="Utility\Http\HttpDownloadImageRequest.cs" />
