@@ -62,7 +62,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         protected Coordinates lastFlipCoordiantes;
 
         [ImportingConstructor]
-        public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator, 
+        public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator,
             IFocuserMediator focuserMediator, IImagingMediator imagingMediator, IDomeMediator domeMediator, IDomeFollower domeFollower,
             IApplicationStatusMediator applicationStatusMediator, IFilterWheelMediator filterWheelMediator, IImageHistoryVM historyVM) : base() {
             this.profileService = profileService;
@@ -258,7 +258,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));
                         if (telescopeInfo.SideOfPier == targetSideOfPier) {
-                            Logger.Info($"Meridian Flip - There is still time remainging, but the telescope already reports {telescopeInfo.SideOfPier}. Automated Flip will not be performed.");
+                            Logger.Info($"Meridian Flip - There is still time remaining, but the telescope already reports {telescopeInfo.SideOfPier}. Automated Flip will not be performed.");
                             return false;
                         } else {
                             // When pier side doesn't match the target, but remaining time indicating that a flip happened, the flip seems to have not happened yet and must be done immediately
@@ -283,7 +283,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}. Flip should happen now");
                         return true;
                     } else {
-                        Logger.Info($"Meridian Flip - There is still time remainging. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}.");
+                        Logger.Info($"Meridian Flip - There is still time remaining. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}.");
                         return false;
                     }
                 }
