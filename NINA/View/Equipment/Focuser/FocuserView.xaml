@@ -104,10 +104,15 @@
                                 VerticalAlignment="Center"
                                 Columns="2">
                                 <TextBlock Text="{ns:Loc LblIsMoving}" />
-                                <TextBlock
+                                <CheckBox
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
-                                    Text="{Binding FocuserInfo.IsMoving}"
-                                    TextWrapping="WrapWithOverflow" />
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Transparent"
+                                    IsChecked="{Binding FocuserInfo.IsMoving, FallbackValue=False, Mode=OneWay}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
@@ -118,10 +123,15 @@
                                 VerticalAlignment="Center"
                                 Columns="2">
                                 <TextBlock Text="{ns:Loc LblIsSettling}" />
-                                <TextBlock
+                                <CheckBox
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
-                                    Text="{Binding FocuserInfo.IsSettling}"
-                                    TextWrapping="WrapWithOverflow" />
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Transparent"
+                                    IsChecked="{Binding FocuserInfo.IsSettling, FallbackValue=False, Mode=OneWay}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>

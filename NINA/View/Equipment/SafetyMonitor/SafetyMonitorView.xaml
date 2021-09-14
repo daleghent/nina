@@ -103,10 +103,15 @@
                                 VerticalAlignment="Center"
                                 Columns="2">
                                 <TextBlock Text="{ns:Loc LblIsSafe}" />
-                                <TextBlock
+                                <CheckBox
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
-                                    Text="{Binding SafetyMonitorInfo.IsSafe}"
-                                    TextWrapping="WrapWithOverflow" />
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Transparent"
+                                    IsChecked="{Binding SafetyMonitorInfo.IsSafe, FallbackValue=False, Mode=OneWay}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource CheckmarkCheckbox}" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>

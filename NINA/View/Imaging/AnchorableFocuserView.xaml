@@ -58,7 +58,7 @@
                                     BorderBrush="Transparent"
                                     IsChecked="{Binding FocuserInfo.IsMoving, FallbackValue=False, Mode=OneWay}"
                                     IsEnabled="False"
-                                    Style="{StaticResource CheckmarkCheckbox}" />
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </Border>
                         <Border
@@ -75,7 +75,7 @@
                                     BorderBrush="Transparent"
                                     IsChecked="{Binding FocuserInfo.IsSettling, FallbackValue=False, Mode=OneWay}"
                                     IsEnabled="False"
-                                    Style="{StaticResource CheckmarkCheckbox}" />
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </Border>
                         <Border

@@ -188,7 +188,7 @@
                                     BorderBrush="Transparent"
                                     IsChecked="{Binding DomeInfo.AtPark, FallbackValue=False, Mode=OneWay}"
                                     IsEnabled="False"
-                                    Style="{StaticResource CheckmarkCheckbox}" />
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </Border>
                         <Border
@@ -205,7 +205,7 @@
                                     BorderBrush="Transparent"
                                     IsChecked="{Binding DomeInfo.AtHome, FallbackValue=False, Mode=OneWay}"
                                     IsEnabled="False"
-                                    Style="{StaticResource CheckmarkCheckbox}" />
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </Border>
                         <Border
@@ -239,7 +239,7 @@
                                     BorderBrush="Transparent"
                                     IsChecked="{Binding DomeInfo.Slewing, FallbackValue=False, Mode=OneWay}"
                                     IsEnabled="False"
-                                    Style="{StaticResource CheckmarkCheckbox}" />
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
                             </UniformGrid>
                         </Border>
                         <Border
