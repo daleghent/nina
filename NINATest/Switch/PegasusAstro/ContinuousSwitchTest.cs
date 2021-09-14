@@ -56,6 +56,16 @@ namespace NINATest.Switch.PegasusAstro {
         }
 
         [Test]
+        public async Task TestPoll2() {
+            var response = new PowerStatusResponse { DeviceResponse = "PS:11:8" };
+            _mockSdk.Setup(m => m.SendCommand<PowerStatusResponse>(It.IsAny<PowerStatusCommand>()))
+                .Returns(Task.FromResult(response));
+            var result = await _sut.Poll();
+            Assert.That(result, Is.True);
+            Assert.That(_sut.Value, Is.EqualTo(8));
+        }
+
+        [Test]
         public async Task TestPollInvalidResponse() {
             _mockSdk.Setup(m => m.SendCommand<PowerStatusResponse>(It.IsAny<PowerStatusCommand>()))
                 .Throws(new InvalidDeviceResponseException());

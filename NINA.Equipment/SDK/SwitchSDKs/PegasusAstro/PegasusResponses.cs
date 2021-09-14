@@ -244,18 +244,27 @@ namespace NINA.Equipment.SDK.SwitchSDKs.PegasusAstro {
 
         protected override void ParseResponse(string response) {
             base.ParseResponse(response);
-            if (!response.StartsWith("PS:") || response.Length < 9) {
+            if (!response.StartsWith("PS:") || response.Length < 7) {
                 Logger.Error($"Could not parse PowerStatus Response {response}");
                 throw new InvalidDeviceResponseException(response);
             }
-            var temp = new bool[4];
-            for (var i = 0; i < 4; i++) {
-                if (!TryParseBoolFromZeroOne(response[i + 3], "power status", out temp[i])) throw new InvalidDeviceResponseException(response);
+            if (response.Length < 9) {
+                var temp = new bool[2];
+                for (var i = 0; i < 2; i++) {
+                    if (!TryParseBoolFromZeroOne(response[i + 3], "power status", out temp[i])) throw new InvalidDeviceResponseException(response);
+                }
+                PowerStatusOnBoot = new ReadOnlyCollection<bool>(temp);
+                if (!TryParseDouble(response.Substring(6), "variable voltage value", out var voltage)) throw new InvalidDeviceResponseException(response);
+                VariableVoltage = voltage <= 12d ? voltage : 0;
+            } else {
+                var temp = new bool[4];
+                for (var i = 0; i < 4; i++) {
+                    if (!TryParseBoolFromZeroOne(response[i + 3], "power status", out temp[i])) throw new InvalidDeviceResponseException(response);
+                }
+                PowerStatusOnBoot = new ReadOnlyCollection<bool>(temp);
+                if (!TryParseDouble(response.Substring(8), "variable voltage value", out var voltage)) throw new InvalidDeviceResponseException(response);
+                VariableVoltage = voltage <= 12d ? voltage : 0;
             }
-            PowerStatusOnBoot = new ReadOnlyCollection<bool>(temp);
-
-            if (!TryParseDouble(response.Substring(8), "variable voltage value", out var voltage)) throw new InvalidDeviceResponseException(response);
-            VariableVoltage = voltage <= 12d ? voltage : 0;
         }
     }
 
