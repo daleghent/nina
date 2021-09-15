@@ -87,8 +87,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        private static double NormalizeUShort(double val) {
-            return val / (double)ushort.MaxValue;
+        private static double NormalizeUShort(double val, int bitDepth) {
+            return val / (double)(1 << bitDepth);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace NINA.Image.ImageAnalysis {
         private static ushort[] GetStretchMap(IImageStatistics statistics, double targetHistogramMedianPercent, double shadowsClipping) {
             ushort[] map = new ushort[ushort.MaxValue + 1];
 
-            var normalizedMedian = NormalizeUShort(statistics.Median);
-            var normalizedMAD = NormalizeUShort(statistics.MedianAbsoluteDeviation);
+            var normalizedMedian = NormalizeUShort(statistics.Median, statistics.BitDepth);
+            var normalizedMAD = NormalizeUShort(statistics.MedianAbsoluteDeviation, statistics.BitDepth);
 
             var scaleFactor = 1.4826; // see https://en.wikipedia.org/wiki/Median_absolute_deviation
 
@@ -114,9 +114,9 @@ namespace NINA.Image.ImageAnalysis {
 
             //Assume the image is inverted or overexposed when median is higher than half of the possible value
             if (normalizedMedian > 0.5) {
-                shadows = 0d;
+                shadows = 0.0d;
                 highlights = normalizedMedian - shadowsClipping * normalizedMAD * scaleFactor;
-                midtones = MidtonesTransferFunction(highlights - normalizedMedian, targetHistogramMedianPercent);
+                midtones = MidtonesTransferFunction(targetHistogramMedianPercent, 1.0 - (highlights - normalizedMedian));
             } else {
                 shadows = normalizedMedian + shadowsClipping * normalizedMAD * scaleFactor;
                 midtones = MidtonesTransferFunction(targetHistogramMedianPercent, normalizedMedian - shadows);
@@ -124,7 +124,7 @@ namespace NINA.Image.ImageAnalysis {
             }
 
             for (int i = 0; i < map.Length; i++) {
-                double value = NormalizeUShort(i);
+                double value = NormalizeUShort(i, statistics.BitDepth);
 
                 map[i] = DenormalizeUShort(MidtonesTransferFunction(midtones, 1 - highlights + value - shadows));
             }

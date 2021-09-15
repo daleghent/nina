@@ -17,6 +17,7 @@ using System.Collections.Immutable;
 namespace NINA.Image.Interfaces {
 
     public interface IImageStatistics {
+        int BitDepth { get; }
         double StDev { get; }
         double Mean { get; }
         double Median { get; }

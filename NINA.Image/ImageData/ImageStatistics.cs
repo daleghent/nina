@@ -28,6 +28,7 @@ namespace NINA.Image.ImageData {
         private ImageStatistics() {
         }
 
+        public int BitDepth { get; private set; }
         public double StDev { get; private set; }
         public double Mean { get; private set; }
         public double Median { get; private set; }
@@ -154,6 +155,7 @@ namespace NINA.Image.ImageData {
                     .OrderBy(item => item.X).ToImmutableList();
 
                 var statistics = new ImageStatistics();
+                statistics.BitDepth = imageProperties.BitDepth;
                 statistics.StDev = stdev;
                 statistics.Mean = mean;
                 statistics.Median = median;
