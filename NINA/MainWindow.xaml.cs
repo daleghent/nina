@@ -45,6 +45,14 @@ namespace NINA {
         protected override void OnSourceInitialized(EventArgs e) {
             base.OnSourceInitialized(e);
             ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
+
+            this.WindowState = Properties.Settings.Default.WindowState;
+            this.Top = Properties.Settings.Default.WindowTop;
+            this.Left = Properties.Settings.Default.WindowLeft;
+            this.Width = Properties.Settings.Default.WindowWidth;
+            this.Height = Properties.Settings.Default.WindowHeight;
+
+            sizeInitialized = true;
         }
 
         private IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) {
@@ -57,6 +65,24 @@ namespace NINA {
                 }
             }
             return IntPtr.Zero;
+        }
+
+        private bool sizeInitialized = false;
+
+        private void ThisWindow_LocationChanged(object sender, EventArgs e) {
+            if (sizeInitialized && this.WindowState != WindowState.Maximized) {
+                Properties.Settings.Default.WindowTop = this.Top;
+                Properties.Settings.Default.WindowLeft = this.Left;
+                Properties.Settings.Default.WindowWidth = this.Width;
+                Properties.Settings.Default.WindowHeight = this.Height;
+            }
+        }
+
+        private void ThisWindow_StateChanged(object sender, EventArgs e) {
+            if (sizeInitialized) {
+                Properties.Settings.Default.WindowState = this.WindowState;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }

@@ -24,18 +24,15 @@
     xmlns:vm="clr-namespace:NINA.ViewModel"
     Name="ThisWindow"
     Title="{Binding AppVM.Title}"
-    Width="{Binding Source={x:Static settings:Settings.Default}, Path=WindowWidth, Mode=TwoWay}"
-    Height="{Binding Source={x:Static settings:Settings.Default}, Path=WindowHeight, Mode=TwoWay}"
     Background="{StaticResource BackgroundBrush}"
     FontFamily="{Binding ApplicationFontFamily, Source={x:Static settings:Settings.Default}}"
     FontStretch="{Binding FontStretch, Source={x:Static settings:Settings.Default}}"
     FontStyle="{Binding FontStyle, Source={x:Static settings:Settings.Default}}"
     FontWeight="{Binding FontWeight, Source={x:Static settings:Settings.Default}}"
     Icon="/NINA;component/Resources/Logo_Nina.ico"
-    Left="{Binding Source={x:Static settings:Settings.Default}, Path=WindowLeft, Mode=TwoWay}"
-    Style="{StaticResource MainWindow}"
-    Top="{Binding Source={x:Static settings:Settings.Default}, Path=WindowTop, Mode=TwoWay}"
-    WindowState="{Binding Source={x:Static settings:Settings.Default}, Path=WindowState, Mode=TwoWay}">
+    LocationChanged="ThisWindow_LocationChanged"
+    StateChanged="ThisWindow_StateChanged"
+    Style="{StaticResource MainWindow}">
     <Window.InputBindings>
         <KeyBinding Key="F5" Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}" />
         <KeyBinding Key="F9" Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}" />
