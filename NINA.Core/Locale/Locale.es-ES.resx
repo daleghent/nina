@@ -3855,7 +3855,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Cerrar ventana de la cúpula</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open Shutter</value>
+    <value>Abrir la ventana de la cúpula</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Girar en sentido horario</value>
@@ -5796,6 +5796,6 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
     <value>Error al reanudar el autoguiado después de que un cambio de filtro causara un desplazamiento en el enfocador</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
-    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
+    <value>¡Detectada instrucción desconocida! Por favor, vuelva a comprobar su secuencia e inspeccione qué instrucciones pueden no ser válidas. Valide, además, que todo está actualizado.</value>
   </data>
 </root>
