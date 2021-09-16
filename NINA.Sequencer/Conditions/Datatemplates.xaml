@@ -652,7 +652,7 @@
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
                             TextAlignment="Right"
-                            Unit="°">
+                            Unit="%">
                             <ninactrl:UnitTextBox.Text>
                                 <Binding Path="UserMoonIllumination" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
