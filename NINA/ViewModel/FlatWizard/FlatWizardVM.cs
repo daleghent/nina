@@ -1141,6 +1141,30 @@ namespace NINA.ViewModel.FlatWizard {
 
         public void UpdateDeviceInfo(FlatDeviceInfo deviceInfo) {
             FlatDeviceInfo = deviceInfo;
+            if(FlatDeviceInfo.Connected) {
+
+                AdjustSettingForBrightness(SingleFlatWizardFilterSettings);
+
+                foreach(var setting in Filters) {
+                    AdjustSettingForBrightness(setting);
+                }
+            }
+        }
+
+        private void AdjustSettingForBrightness(FlatWizardFilterSettingsWrapper setting) {
+            if (setting.Settings.MinAbsoluteFlatDeviceBrightness < FlatDeviceInfo.MinBrightness) {
+                setting.Settings.MinAbsoluteFlatDeviceBrightness = FlatDeviceInfo.MinBrightness;
+            }
+            if (setting.Settings.MaxAbsoluteFlatDeviceBrightness < FlatDeviceInfo.MinBrightness) {
+                setting.Settings.MaxAbsoluteFlatDeviceBrightness = FlatDeviceInfo.MinBrightness;
+            }
+
+            if (setting.Settings.MinAbsoluteFlatDeviceBrightness > FlatDeviceInfo.MaxBrightness) {
+                setting.Settings.MinAbsoluteFlatDeviceBrightness = FlatDeviceInfo.MaxBrightness;
+            }
+            if (setting.Settings.MaxAbsoluteFlatDeviceBrightness > FlatDeviceInfo.MaxBrightness) {
+                setting.Settings.MaxAbsoluteFlatDeviceBrightness = FlatDeviceInfo.MaxBrightness;
+            }
         }
 
         public RelayCommand CancelFlatExposureSequenceCommand { get; }
