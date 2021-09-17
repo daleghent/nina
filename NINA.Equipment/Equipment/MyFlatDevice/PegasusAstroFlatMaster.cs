@@ -81,7 +81,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public string DriverInfo => "Last modified 2020/01/31.";
+        public string DriverInfo => "Last modified 2021-09-17.";
         public string DriverVersion => "1.0";
 
         public async Task<bool> Connect(CancellationToken token) {
@@ -113,6 +113,9 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                 } catch (SerialPortClosedException ex) {
                     HandlePortClosed(statusCommand, ex);
                 }
+
+                Brightness = MinBrightness;
+                LightOn = false;
 
                 RaiseAllPropertiesChanged();
                 return Connected;
