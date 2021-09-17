@@ -792,7 +792,7 @@ namespace NINA.ViewModel.FlatWizard {
                         switch (FlatWizardMode) {
                             case FlatWizardMode.DYNAMICEXPOSURE:
                                 time = await FindFlatExposureTime(pt, filter);
-                                brightness = FlatDeviceInfo.MaxBrightness;
+                                brightness = filter.Settings.MaxAbsoluteFlatDeviceBrightness;
                                 await TakeRegularFlats(regularTimes, time, brightness, filter, pt);
                                 break;
 
