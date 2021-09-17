@@ -33,11 +33,11 @@ namespace NINATest.SerialCommunication {
     public class SerialSdkTest {
         private TestSdk _sut;
         private Mock<ISerialPort> _mockSerialPort;
-        private Mock<ICommand> _mockCommand;
+        private Mock<ISerialCommand> _mockCommand;
 
         [OneTimeSetUp]
         public void OneTimeSetup() {
-            _mockCommand = new Mock<ICommand>();
+            _mockCommand = new Mock<ISerialCommand>();
             _mockSerialPort = new Mock<ISerialPort>();
         }
 

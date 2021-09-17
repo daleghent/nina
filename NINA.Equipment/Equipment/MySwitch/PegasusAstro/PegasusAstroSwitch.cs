@@ -66,7 +66,7 @@ namespace NINA.Equipment.Equipment.MySwitch.PegasusAstro {
             }
         }
 
-        public virtual async Task<StatusResponse> GetStatus(ICommand command) {
+        public virtual async Task<StatusResponse> GetStatus(ISerialCommand command) {
             switch (FirmwareVersion) {
                 case double version when version >= 1.4:
                     return await Sdk.SendCommand<StatusResponseV14>(command);

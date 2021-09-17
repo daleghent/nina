@@ -89,7 +89,7 @@ namespace NINATest.Switch.PegasusAstro {
             var command = string.Empty;
             _mockSdk
                 .Setup(m => m.SendCommand<SetVariableVoltageResponse>(It.IsAny<SetVariableVoltageCommand>()))
-                .Callback<ICommand>(arg => { command = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { command = arg.CommandString; });
             _sut.TargetValue = value;
             await _sut.SetValue();
             Assert.That(command, Is.EqualTo(expectedCommand));
@@ -183,12 +183,12 @@ namespace NINATest.Switch.PegasusAstro {
             var dewCommand = string.Empty;
             var autoDewCommand = string.Empty;
             _mockSdk.Setup(m => m.SendCommand<SetDewHeaterPowerResponse>(It.IsAny<SetDewHeaterPowerCommand>()))
-                .Callback<ICommand>(arg => { dewCommand = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { dewCommand = arg.CommandString; });
             var response = new StatusResponse { DeviceResponse = "UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0" };
             _mockSdk.Setup(m => m.SendCommand<StatusResponse>(It.IsAny<StatusCommand>()))
                 .Returns(Task.FromResult(response));
             _mockSdk.Setup(m => m.SendCommand<SetAutoDewResponse>(It.IsAny<SetAutoDewCommand>()))
-                .Callback<ICommand>(arg => { autoDewCommand = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { autoDewCommand = arg.CommandString; });
             _sut.TargetValue = value;
             _sut.AutoDewOnTarget = autoDew;
             await _sut.SetValue();
@@ -206,12 +206,12 @@ namespace NINATest.Switch.PegasusAstro {
             var dewCommand = string.Empty;
             var autoDewCommand = string.Empty;
             _mockSdk.Setup(m => m.SendCommand<SetDewHeaterPowerResponse>(It.IsAny<SetDewHeaterPowerCommand>()))
-                .Callback<ICommand>(arg => { dewCommand = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { dewCommand = arg.CommandString; });
             var response = new StatusResponseV14 { DeviceResponse = "UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0" };
             _mockSdk.Setup(m => m.SendCommand<StatusResponseV14>(It.IsAny<StatusCommand>()))
                 .Returns(Task.FromResult(response));
             _mockSdk.Setup(m => m.SendCommand<SetAutoDewResponse>(It.IsAny<SetAutoDewCommand>()))
-                .Callback<ICommand>(arg => { autoDewCommand = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { autoDewCommand = arg.CommandString; });
             _sut.TargetValue = value;
             _sut.AutoDewOnTarget = autoDew;
             _sut.FirmwareVersion = 1.4;

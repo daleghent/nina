@@ -46,13 +46,13 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             SetBacklashStepsCommand = new RelayCommand(SetBacklashSteps);
         }
 
-        private void LogAndNotify(Core.Utility.SerialCommunication.ICommand command, InvalidDeviceResponseException ex) {
+        private void LogAndNotify(Core.Utility.SerialCommunication.ISerialCommand command, InvalidDeviceResponseException ex) {
             Logger.Error($"Invalid response from Ultimate Powerbox V2 on port {PortName}. " +
                          $"Command was: {command} Response was: {ex.Message}.");
             Notification.ShowError(Loc.Instance["LblUPBV2InvalidResponse"]);
         }
 
-        private void HandlePortClosed(Core.Utility.SerialCommunication.ICommand command, SerialPortClosedException ex) {
+        private void HandlePortClosed(Core.Utility.SerialCommunication.ISerialCommand command, SerialPortClosedException ex) {
             Logger.Error($"Serial port was closed. Command was: {command} Exception: {ex.InnerException}.");
             Notification.ShowError(Loc.Instance["LblUPBV2InvalidResponse"]);
             Disconnect();

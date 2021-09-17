@@ -16,33 +16,33 @@ using NINA.Core.Utility.SerialCommunication;
 
 namespace NINA.Equipment.SDK.FlatDeviceSDKs.Artesky {
 
-    public class LightOnCommand : ICommand {
+    public class LightOnCommand : ISerialCommand {
         public string CommandString => ">LOOO\r";
         public bool HasResponse => true;
     }
 
-    public class LightOffCommand : ICommand {
+    public class LightOffCommand : ISerialCommand {
         public string CommandString => ">DOOO\r";
         public bool HasResponse => true;
     }
 
-    public class SetBrightnessCommand : ICommand {
+    public class SetBrightnessCommand : ISerialCommand {
         public double Brightness { get; set; }
         public string CommandString => $">B{Brightness:000}\r";
         public bool HasResponse => true;
     }
 
-    public class GetBrightnessCommand : ICommand {
+    public class GetBrightnessCommand : ISerialCommand {
         public string CommandString => ">JOOO\r";
         public bool HasResponse => true;
     }
 
-    public class StateCommand : ICommand {
+    public class StateCommand : ISerialCommand {
         public string CommandString => ">SOOO\r";
         public bool HasResponse => true;
     }
 
-    public class FirmwareVersionCommand : ICommand {
+    public class FirmwareVersionCommand : ISerialCommand {
         public string CommandString => ">VOOO\r";
         public bool HasResponse => true;
     }

@@ -46,13 +46,13 @@ namespace NINA.Equipment.Equipment.MySwitch.PegasusAstro {
 
         public ReadOnlyCollection<string> PortNames => Sdk?.PortNames;
 
-        private void LogAndNotify(ICommand command, InvalidDeviceResponseException ex) {
+        private void LogAndNotify(ISerialCommand command, InvalidDeviceResponseException ex) {
             Logger.Error($"Invalid response from Ultimate Powerbox V2 on port {PortName}. " +
                          $"Command was: {command} Response was: {ex.Message}.");
             Notification.ShowError(Loc.Instance["LblUPBV2InvalidResponse"]);
         }
 
-        private void HandlePortClosed(ICommand command, SerialPortClosedException ex) {
+        private void HandlePortClosed(ISerialCommand command, SerialPortClosedException ex) {
             Logger.Error($"Serial port was closed. Command was: {command} Exception: {ex.InnerException}.");
             Notification.ShowError(Loc.Instance["LblUPBV2InvalidResponse"]);
             Disconnect();

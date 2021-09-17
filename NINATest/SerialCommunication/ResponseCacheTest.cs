@@ -32,7 +32,7 @@ namespace NINATest.SerialCommunication {
             public override int Ttl => 0;
         }
 
-        private Mock<ICommand> _mockCommand;
+        private Mock<ISerialCommand> _mockCommand;
         private CachableResponse _cachableResponse;
         private CachableResponse _cachableResponse2;
         private NonCachableResponse _nonCachableResponse;
@@ -41,7 +41,7 @@ namespace NINATest.SerialCommunication {
 
         [OneTimeSetUp]
         public void OneTimeSetup() {
-            _mockCommand = new Mock<ICommand>();
+            _mockCommand = new Mock<ISerialCommand>();
         }
 
         [SetUp]

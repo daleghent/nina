@@ -29,7 +29,7 @@ namespace NINA.Core.Utility.SerialCommunication {
             return _cache.ContainsKey((commandType, responseType)) && _cache[(commandType, responseType)].expires >= DateTime.UtcNow;
         }
 
-        public void Add(ICommand command, Response response) {
+        public void Add(ISerialCommand command, Response response) {
             if (command == null || response == null || response.Ttl == 0) return;
             if (_cache.ContainsKey((command.GetType(), response.GetType()))) {
                 _cache[(command.GetType(), response.GetType())] = (response, DateTime.UtcNow.AddMilliseconds(response.Ttl));

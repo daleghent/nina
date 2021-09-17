@@ -61,7 +61,7 @@ namespace NINA.Core.Utility.SerialCommunication {
             return SerialPort != null;
         }
 
-        public Task<TResult> SendCommand<TResult>(ICommand command) where TResult : Response, new() {
+        public Task<TResult> SendCommand<TResult>(ISerialCommand command) where TResult : Response, new() {
             return Task.Run(() => {
                 if (command == null) throw new ArgumentNullException(nameof(command));
                 ssSerial.Wait();
@@ -112,7 +112,7 @@ namespace NINA.Core.Utility.SerialCommunication {
             }
         }
 
-        private void WriteAndLog(ICommand command) {
+        private void WriteAndLog(ISerialCommand command) {
             try {
                 Logger.Trace($"{LogName}: command : {command}");
                 SerialPort?.Write(command.CommandString);
@@ -129,7 +129,7 @@ namespace NINA.Core.Utility.SerialCommunication {
             }
         }
 
-        private string ReadAndLog(ICommand command, ref int retries) {
+        private string ReadAndLog(ISerialCommand command, ref int retries) {
             string result = null;
             try {
                 result = SerialPort?.ReadLine();

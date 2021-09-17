@@ -90,7 +90,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<OnOffResponse>(It.IsAny<OnOffCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new OnOffResponse { DeviceResponse = response }));
             await _sut.Connect(new CancellationToken());
 
@@ -121,7 +121,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<OnOffResponse>(It.IsAny<OnOffCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             await _sut.Connect(new CancellationToken());
 
@@ -146,7 +146,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new SetBrightnessResponse { DeviceResponse = response }));
             await _sut.Connect(new CancellationToken());
 
@@ -167,7 +167,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             await _sut.Connect(new CancellationToken());
 

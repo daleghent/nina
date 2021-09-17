@@ -153,7 +153,7 @@ namespace NINA.Equipment.Equipment.MySwitch.PegasusAstro {
 
         public override Task SetValue() {
             return Task.Run(async () => {
-                ICommand command = new SetDewHeaterPowerCommand { DutyCycle = TargetValue, SwitchNumber = Id };
+                ISerialCommand command = new SetDewHeaterPowerCommand { DutyCycle = TargetValue, SwitchNumber = Id };
                 try {
                     Logger.Trace($"Trying to set value {TargetValue}, {AutoDewOn} for dew heater {Id}");
                     _ = await Sdk.SendCommand<SetDewHeaterPowerResponse>(command);

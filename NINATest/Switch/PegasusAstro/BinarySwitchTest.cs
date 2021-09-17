@@ -103,7 +103,7 @@ namespace NINATest.Switch.PegasusAstro {
             _sut = new PegasusAstroPowerSwitch(1) { Sdk = _mockSdk.Object };
             var command = string.Empty;
             _mockSdk.Setup(m => m.SendCommand<SetPowerResponse>(It.IsAny<SetPowerCommand>()))
-                .Callback<ICommand>(arg => { command = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { command = arg.CommandString; });
             _sut.TargetValue = value;
             await _sut.SetValue();
             Assert.That(command, Is.EqualTo(expectedCommand));
@@ -183,7 +183,7 @@ namespace NINATest.Switch.PegasusAstro {
             _sut = new PegasusAstroUsbSwitch(1) { Sdk = _mockSdk.Object };
             var command = string.Empty;
             _mockSdk.Setup(m => m.SendCommand<SetUsbPowerResponse>(It.IsAny<SetUsbPowerCommand>()))
-                .Callback<ICommand>(arg => { command = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { command = arg.CommandString; });
             _sut.TargetValue = value;
             await _sut.SetValue();
             Assert.That(command, Is.EqualTo(expectedCommand));

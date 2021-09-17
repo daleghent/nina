@@ -16,24 +16,24 @@ using NINA.Core.Utility.SerialCommunication;
 
 namespace NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK {
 
-    public class StatusCommand : ICommand {
+    public class StatusCommand : ISerialCommand {
         public string CommandString => "#\n";
         public bool HasResponse => true;
     }
 
-    public class FirmwareVersionCommand : ICommand {
+    public class FirmwareVersionCommand : ISerialCommand {
         public string CommandString => "V\n";
         public bool HasResponse => true;
     }
 
-    public class OnOffCommand : ICommand {
+    public class OnOffCommand : ISerialCommand {
         public bool On { get; set; }
 
         public string CommandString => $"E:{(On ? 1 : 0)}\n";
         public bool HasResponse => true;
     }
 
-    public class SetBrightnessCommand : ICommand {
+    public class SetBrightnessCommand : ISerialCommand {
         public double Brightness { get; set; }
         public string CommandString => $"L:{Brightness:000}\n";
         public bool HasResponse => true;

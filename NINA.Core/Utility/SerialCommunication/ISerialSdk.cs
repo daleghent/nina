@@ -19,7 +19,7 @@ namespace NINA.Core.Utility.SerialCommunication {
 
     public interface ISerialSdk {
 
-        Task<TResult> SendCommand<TResult>(ICommand command) where TResult : Response, new();
+        Task<TResult> SendCommand<TResult>(ISerialCommand command) where TResult : Response, new();
 
         ISerialPort SerialPort { get; set; }
         ISerialPortProvider SerialPortProvider { set; }

@@ -42,13 +42,13 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             PortName = profileService.ActiveProfile?.FlatDeviceSettings?.PortName ?? "AUTO";
         }
 
-        private static void LogAndNotify(ICommand command, InvalidDeviceResponseException ex) {
+        private static void LogAndNotify(ISerialCommand command, InvalidDeviceResponseException ex) {
             Logger.Error("Invalid response from flat device. " +
                          $"Command was: {command} Response was: {ex.Message}.");
             Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
         }
 
-        private void HandlePortClosed(ICommand command, SerialPortClosedException ex) {
+        private void HandlePortClosed(ISerialCommand command, SerialPortClosedException ex) {
             Logger.Error($"Serial port was closed. Command was: {command} Exception: {ex.InnerException}.");
             Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
             Disconnect();

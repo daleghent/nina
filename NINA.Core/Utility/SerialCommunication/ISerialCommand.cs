@@ -14,7 +14,7 @@
 
 namespace NINA.Core.Utility.SerialCommunication {
 
-    public interface ICommand {
+    public interface ISerialCommand {
         string CommandString { get; }
         bool HasResponse { get; }
     }

@@ -369,7 +369,7 @@
     <Compile Include="Utility\ObserveAllCollection.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="Utility\SerialCommunication\Exceptions.cs" />
-    <Compile Include="Utility\SerialCommunication\ICommand.cs" />
+    <Compile Include="Utility\SerialCommunication\ISerialCommand.cs" />
     <Compile Include="Utility\SerialCommunication\ISerialPort.cs" />
     <Compile Include="Utility\SerialCommunication\ISerialPortProvider.cs" />
     <Compile Include="Utility\SerialCommunication\ISerialSdk.cs" />
