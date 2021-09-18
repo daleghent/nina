@@ -221,13 +221,23 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 GetOpenCoverItem().ResetProgress();
             }
 
+            /* Panel most likely cannot open/close so it should just be skipped */
+            var closeItem = GetCloseCoverItem();
+            if (!closeItem.Validate()) {
+                closeItem.Skip();
+            }
+            var openItem = GetOpenCoverItem();
+            if (!openItem.Validate()) {
+                openItem.Skip();
+            }
+
             return base.Execute(progress, token);
         }
 
         public override bool Validate() {
-            var switchFilter = (Items[2] as SwitchFilter);
-            var takeExposure = ((Items[4] as SequentialContainer).Items[0] as TakeExposure);
-            var setBrightness = (Items[3] as SetBrightness);
+            var switchFilter = GetSwitchFilterItem();
+            var takeExposure = GetExposureItem();
+            var setBrightness = GetSetBrightnessItem();
 
             var valid = takeExposure.Validate() && switchFilter.Validate() && setBrightness.Validate();
 

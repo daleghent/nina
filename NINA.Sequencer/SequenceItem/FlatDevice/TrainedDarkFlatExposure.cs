@@ -212,6 +212,16 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 GetOpenCoverItem().ResetProgress();
             }
 
+            /* Panel most likely cannot open/close so it should just be skipped */
+            var closeItem = GetCloseCoverItem();
+            if (!closeItem.Validate()) {
+                closeItem.Skip();
+            }
+            var openItem = GetOpenCoverItem();
+            if (!openItem.Validate()) {
+                openItem.Skip();
+            }
+
             return base.Execute(progress, token);
         }
 
