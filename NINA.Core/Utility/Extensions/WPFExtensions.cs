@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace NINA.Core.Utility.Extensions {
 
@@ -49,22 +50,28 @@ namespace NINA.Core.Utility.Extensions {
 
     internal static class WPFExtensionMethods {
 
+        private static double GetScalingFactor(Window w) {
+            Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
+            return m.M11;
+        }
+
         public static Rect GetAbsolutePosition(this Window w) {
             if (w.WindowState != WindowState.Maximized)
                 return new Rect(w.Left, w.Top, w.Width, w.Height);
 
             Rect r;
             bool multimonSupported = OSInterop.GetSystemMetrics(OSInterop.SM_CMONITORS) != 0;
+            var scalingFactor = GetScalingFactor(w);
             if (!multimonSupported) {
                 OSInterop.RECT rc = new OSInterop.RECT();
                 OSInterop.SystemParametersInfo(48, 0, ref rc, 0);
-                r = new Rect(rc.left, rc.top, rc.width, rc.height);
+                r = new Rect(rc.left / scalingFactor, rc.top / scalingFactor, rc.width / scalingFactor, rc.height / scalingFactor);
             } else {
                 WindowInteropHelper helper = new WindowInteropHelper(w);
                 IntPtr hmonitor = OSInterop.MonitorFromWindow(new HandleRef((object)null, helper.EnsureHandle()), 2);
                 OSInterop.MONITORINFOEX info = new OSInterop.MONITORINFOEX();
                 OSInterop.GetMonitorInfo(new HandleRef((object)null, hmonitor), info);
-                r = new Rect(info.rcWork.left, info.rcWork.top, info.rcWork.width, info.rcWork.height);
+                r = new Rect(info.rcWork.left / scalingFactor, info.rcWork.top / scalingFactor, info.rcWork.width / scalingFactor, info.rcWork.height / scalingFactor);
             }
             return r;
         }
