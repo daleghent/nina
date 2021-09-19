@@ -570,6 +570,9 @@
       <Version>2.5.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo_Nina.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == SignedRelease (

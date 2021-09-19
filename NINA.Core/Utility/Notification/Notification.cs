@@ -52,24 +52,28 @@ namespace NINA.Core.Utility.Notification {
                     corner: Corner.BottomRight,
                     offsetX: 10,
                     offsetY: 0);*/
+                cfg.DisplayOptions.Width = 360;
                 cfg.PositionProvider = new PrimaryScreenPositionProvider(
                     corner: Corner.BottomRight,
-                    offsetX: 1,
-                    offsetY: 1);
+                    offsetX: 15,
+                    offsetY: 10);
 
                 cfg.LifetimeSupervisor = new CustomLifetimeSupervisor();
             });
         }
 
         public static void ShowInformation(string message) {
-            ShowInformation(message, TimeSpan.FromSeconds(5));
+            ShowInformation(message, TimeSpan.FromSeconds(10));
         }
 
         public static void ShowInformation(string message, TimeSpan lifetime) {
             lock (_lock) {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(message, lifetime));
+                        var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["AboutSVG"];
+                        var brush = new SolidColorBrush(Color.FromArgb(255, 00, 00, 255));
+                        var foregroundBrush = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblInfo"], message, symbol, brush, lifetime));
                     }));
                 }
             }
@@ -80,7 +84,9 @@ namespace NINA.Core.Utility.Notification {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CheckedCircledSVG"];
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(message, symbol, TimeSpan.FromSeconds(5)));
+                        var brush = new SolidColorBrush(Color.FromArgb(255, 00, 255, 00));
+                        var foregroundBrush = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblSuccess"], message, symbol, brush, TimeSpan.FromSeconds(10)));
                     }));
                 }
             }
@@ -95,9 +101,8 @@ namespace NINA.Core.Utility.Notification {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ExclamationCircledSVG"];
-                        var brush = (Brush)System.Windows.Application.Current.Resources["NotificationWarningBrush"];
-                        var foregroundBrush = (Brush)System.Windows.Application.Current.Resources["NotificationWarningTextBrush"];
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(message, symbol, brush, foregroundBrush, lifetime));
+                        var brush = new SolidColorBrush(Color.FromArgb(255, 255, 255, 00));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblWarning"], message, symbol, brush, lifetime));
                     }));
                 }
             }
@@ -108,9 +113,8 @@ namespace NINA.Core.Utility.Notification {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CancelCircledSVG"];
-                        var brush = (Brush)System.Windows.Application.Current.Resources["NotificationErrorBrush"];
-                        var foregroundBrush = (Brush)System.Windows.Application.Current.Resources["NotificationErrorTextBrush"];
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(message, symbol, brush, foregroundBrush, TimeSpan.FromHours(24)));
+                        var brush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 00));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblError"], message, symbol, brush, TimeSpan.FromHours(24)));
                     }));
                 }
             }
@@ -138,23 +142,10 @@ namespace NINA.Core.Utility.Notification {
 
         public override NotificationDisplayPart DisplayPart => _displayPart ?? (_displayPart = new CustomDisplayPart(this));
 
-        public CustomNotification(string message, TimeSpan lifetime) : base(message, new MessageOptions()) {
-            Color = (Brush)System.Windows.Application.Current.Resources["ButtonBackgroundBrush"];
-            ForegroundColor = (Brush)System.Windows.Application.Current.Resources["ButtonForegroundBrush"];
-            Lifetime = lifetime;
-        }
-
-        public CustomNotification(string message, Geometry symbol, TimeSpan lifetime) : base(message, new MessageOptions()) {
-            Symbol = symbol;
-            Color = (Brush)System.Windows.Application.Current.Resources["ButtonBackgroundBrush"];
-            ForegroundColor = (Brush)System.Windows.Application.Current.Resources["ButtonForegroundBrush"];
-            Lifetime = lifetime;
-        }
-
-        public CustomNotification(string message, Geometry symbol, Brush color, Brush foregroundColor, TimeSpan lifetime) : base(message, new MessageOptions()) {
+        public CustomNotification(string header, string message, Geometry symbol, Brush color, TimeSpan lifetime) : base(message, new MessageOptions()) {
+            Header = header;
             Symbol = symbol;
             Color = color;
-            ForegroundColor = foregroundColor;
             Lifetime = lifetime;
         }
 
@@ -163,6 +154,16 @@ namespace NINA.Core.Utility.Notification {
         public DateTime DateTime { get; private set; } = DateTime.Now;
 
         public TimeSpan Lifetime { get; }
+
+        private string header;
+
+        public string Header {
+            get => header;
+            set {
+                header = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private Geometry _symbol;
 
@@ -184,18 +185,6 @@ namespace NINA.Core.Utility.Notification {
             }
             set {
                 _color = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Brush _foregroundColor;
-
-        public Brush ForegroundColor {
-            get {
-                return _foregroundColor;
-            }
-            set {
-                _foregroundColor = value;
                 RaisePropertyChanged();
             }
         }
