@@ -37,6 +37,32 @@ namespace NINA.Core.Utility {
             }
         }
 
+        public static bool IsReleaseBuild {
+            get {
+                return new Version(Version).Revision >= 9000;
+            }
+        }
+
+        public static string DocumentationPage {
+            get {
+                if (IsReleaseBuild) {
+                    return "https://nighttime-imaging.eu/docs/master/site/";
+                } else {
+                    return "https://nighttime-imaging.eu/docs/develop/site/";
+                }
+            }
+        }
+
+        public static string ChangelogPage {
+            get {
+                if (IsReleaseBuild) {
+                    return "https://bitbucket.org/Isbeorn/nina/commits/branch/master";
+                } else {
+                    return "https://bitbucket.org/Isbeorn/nina/commits/branch/develop";
+                }
+            }
+        }
+
         public static string Title {
             get {
                 return "N.I.N.A. - Nighttime Imaging 'N' Astronomy";
