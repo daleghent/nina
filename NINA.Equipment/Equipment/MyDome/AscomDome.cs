@@ -43,7 +43,8 @@ namespace NINA.Equipment.Equipment.MyDome {
                 case ASCOM.DeviceInterface.ShutterState.shutterError:
                     return ShutterState.ShutterError;
             }
-            throw new ArgumentOutOfRangeException($"{shutterState} is not an expected value");
+            Logger.Error($"Invalid ASCOM shutter state {shutterState}. The driver is non-conformant and should be fixed. Treating it as shutterError.");
+            return ShutterState.ShutterError;
         }
 
         public static ASCOM.DeviceInterface.ShutterState ToASCOM(this ShutterState shutterState) {
