@@ -138,6 +138,11 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             return CoverState == CoverState.Closed;
         }
 
+        protected override Task PreConnect() {
+            lastBrightness = 0;
+            return base.PreConnect();
+        }
+
         protected override Task PostConnect() {
             Initialize();
             return Task.CompletedTask;

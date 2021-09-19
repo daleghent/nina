@@ -112,15 +112,28 @@
                             Columns="2"
                             IsEnabled="{Binding FlatDeviceInfo.Connected}">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceLight}" />
-                            <CheckBox
-                                Height="25"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Command="{Binding ToggleLightCommand}"
-                                CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
-                                IsChecked="{Binding FlatDeviceInfo.LightOn}"
-                                IsEnabled="{Binding FlatDeviceInfo.Connected}" />
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox
+                                    x:Name="LightStatus"
+                                    Height="25"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding FlatDeviceInfo.LightOn}"
+                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
+                                    Style="{StaticResource CheckmarkCheckbox}" />
+                                <Button
+                                    Grid.Column="1"
+                                    MinWidth="80"
+                                    Command="{Binding ToggleLightCommand}"
+                                    CommandParameter="{Binding Path=IsChecked, ElementName=LightStatus, Converter={StaticResource InverseBooleanConverter}}">
+                                    <Run Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblToggle}" />
+                                </Button>
+                            </Grid>
                         </UniformGrid>
                     </Border>
                     <Border
@@ -161,7 +174,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="40" />
-                                    <ColumnDefinition Width="1.2*" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <ninactrl:IntStepperControl
                                     Grid.Row="0"

@@ -15261,6 +15261,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle.
+        /// </summary>
+        internal static string LblToggle {
+            get {
+                return ResourceManager.GetString("LblToggle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
         internal static string LblTools {
