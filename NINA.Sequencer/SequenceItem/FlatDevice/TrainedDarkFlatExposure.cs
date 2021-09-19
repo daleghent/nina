@@ -37,6 +37,7 @@ using NINA.Core.Locale;
 using NINA.Profile;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Sequencer.Utility;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
@@ -196,6 +197,12 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            var loop = GetIterations();
+            if (loop.CompletedIterations >= loop.Iterations) {
+                Logger.Warning($"The Trained Dark Flat Exposure progress is already complete ({loop.CompletedIterations}/{loop.Iterations}). The instruction will be skipped");
+                throw new SequenceItemSkippedException();
+            }
+
             /* Lookup trained values and set brightness and exposure time accordingly */
             var filter = GetSwitchFilterItem()?.Filter;
             var takeExposure = GetExposureItem();
