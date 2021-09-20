@@ -1048,6 +1048,13 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             Initialize();
             EquatorialSystem = DetermineEquatorialSystem();
             trackingModes = GetTrackingModes();
+
+            try {
+                Logger.Info($"Mount UTC Time: {device.UTCDate:u} / System UTC Time: {DateTime.UtcNow:u}");
+            } catch (Exception e) {
+                Logger.Error(e, "Failed to retrieve the UTC Date from the mount");
+            }
+
             return Task.CompletedTask;
         }
 
