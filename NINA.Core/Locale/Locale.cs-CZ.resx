@@ -5803,4 +5803,7 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>Byla zjištěna neznámá instrukce! Zkontrolujte svou posloupnost a zkontrolujte, které instrukce se staly neplatnými. Dále ověřte, že vše je aktuální.</value>
   </data>
+  <data name="LblToggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
 </root>

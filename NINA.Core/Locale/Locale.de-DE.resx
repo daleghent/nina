@@ -5807,4 +5807,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>Unbekannte Anweisung erkannt! Bitte Sequenz auf ungültige Anweisungen überprüfen. Weiter sollte überprüft werden, dass alles auf dem neusten Stand ist.</value>
   </data>
+  <data name="LblToggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
 </root>

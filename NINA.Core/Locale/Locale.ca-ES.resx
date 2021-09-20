@@ -5799,4 +5799,7 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>S'ha detectat una instrucció desconeguda. Comproveu de nou la seqüència i inspeccioneu quines instruccions no són vàlides. A més, valideu que tot estigui actualitzat.</value>
   </data>
+  <data name="LblToggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
 </root>

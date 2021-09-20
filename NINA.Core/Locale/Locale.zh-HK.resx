@@ -5808,4 +5808,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
   </data>
+  <data name="LblToggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
 </root>
