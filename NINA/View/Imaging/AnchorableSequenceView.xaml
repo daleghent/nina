@@ -147,9 +147,15 @@
                             <TextBlock Text="{Binding ElementName=pbActiveSequence2, Path=Maximum}" />
                         </StackPanel>
                     </Grid>
+                    <Border Margin="0,5,0,0" BorderThickness="0">
+                        <UniformGrid VerticalAlignment="Center" Columns="2">
+                            <TextBlock Text="{ns:Loc LblTarget}" />
+                            <TextBlock Margin="5,0,0,0" Text="{Binding ActiveTarget.Name}" />
+                        </UniformGrid>
+                    </Border>
                     <Border
                         Margin="0,5,0,0"
-                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderBrush="Transparent"
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock Text="{ns:Loc LblMode}" />
@@ -157,46 +163,31 @@
                         </UniformGrid>
                     </Border>
                     <StackPanel DataContext="{Binding ActiveTarget.ActiveExposure}" Orientation="Vertical">
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0">
+                        <Border Margin="0,5,0,0" BorderThickness="0">
                             <UniformGrid VerticalAlignment="Center" Columns="2">
                                 <TextBlock Text="{ns:Loc LblExposureTime}" />
                                 <TextBlock Margin="5,0,0,0" Text="{Binding Items[1].ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}" />
                             </UniformGrid>
                         </Border>
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0">
+                        <Border Margin="0,5,0,0" BorderThickness="0">
                             <UniformGrid VerticalAlignment="Center" Columns="2">
                                 <TextBlock Text="{ns:Loc LblType}" />
                                 <TextBlock Margin="5,0,0,0" Text="{Binding Items[1].ImageType}" />
                             </UniformGrid>
                         </Border>
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0">
+                        <Border Margin="0,5,0,0" BorderThickness="0">
                             <UniformGrid VerticalAlignment="Center" Columns="2">
                                 <TextBlock Text="{ns:Loc LblFilter}" />
                                 <TextBlock Margin="5,0,0,0" Text="{Binding Items[0].Filter}" />
                             </UniformGrid>
                         </Border>
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0">
+                        <Border Margin="0,5,0,0" BorderThickness="0">
                             <UniformGrid VerticalAlignment="Center" Columns="2">
                                 <TextBlock Text="{ns:Loc LblBinning}" />
                                 <TextBlock Margin="5,0,0,0" Text="{Binding Items[1].Binning.Name}" />
                             </UniformGrid>
                         </Border>
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0">
+                        <Border Margin="0,5,0,0" BorderThickness="0">
                             <UniformGrid VerticalAlignment="Center" Columns="2">
                                 <TextBlock Text="{ns:Loc LblGain}" />
                                 <TextBlock Margin="5,0,0,0">
@@ -212,10 +203,7 @@
                                 </TextBlock>
                             </UniformGrid>
                         </Border>
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0">
+                        <Border Margin="0,5,0,0" BorderThickness="0">
                             <Border.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleanOrToVisibilityCollapsedMultiConverter}" FallbackValue="Visible">
                                     <Binding
@@ -243,7 +231,6 @@
                     </StackPanel>
                     <Border
                         Margin="0,5,0,0"
-                        BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
                         DataContext="{Binding}"
                         Visibility="{Binding DoMeridianFlip, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
