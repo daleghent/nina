@@ -35,6 +35,6 @@ using System.Reflection;
 //Release Candidate: 1.8.0.3001 (Displayed as "1.8 RC1")
 //Beta: 1.8.0.2004 (Displayed as "1.8 BETA004")
 //Develop: 1.8.0.1022 (Displayed as "1.8 NIGHTLY #022")
-[assembly: AssemblyVersion("1.11.0.1150")]
-[assembly: AssemblyFileVersion("1.11.0.1150")]
-[assembly: AssemblyInformationalVersion("1.11.0.1150-nightly")]
+[assembly: AssemblyVersion("1.11.0.1151")]
+[assembly: AssemblyFileVersion("1.11.0.1151")]
+[assembly: AssemblyInformationalVersion("1.11.0.1151-nightly")]
