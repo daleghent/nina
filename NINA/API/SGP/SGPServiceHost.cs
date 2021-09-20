@@ -59,11 +59,11 @@ namespace NINA.API.SGP {
                     stp.IncludeExceptionDetailInFaults = true;
                     hostWeb.Open();
 
-                    Notification.ShowInformation(Loc.Instance["LblServerStarted"]);
+                    Logger.Info("SGP Service started");
                     await stopServiceEvent.WaitAsync();
                 } catch (Exception ex) {
                     Logger.Error("Failed to start SGP Server", ex);
-                    Notification.ShowError(String.Format(Loc.Instance["LblServerFailed"], ex.Message));
+                    Notification.ShowError(string.Format(Loc.Instance["LblServerFailed"], ex.Message));
                     throw;
                 } finally {
                     hostWeb?.Close();
@@ -77,7 +77,7 @@ namespace NINA.API.SGP {
                 stopServiceEvent.Set();
                 try {
                     serviceTask.Wait(new CancellationTokenSource(2000).Token);
-                    Notification.ShowInformation(Loc.Instance["LblServerStopped"]);
+                    Logger.Info("SGP Service stopped");
                 } catch (Exception ex) {
                     Logger.Error("Failed to stop SGP Server", ex.Message);
                 } finally {

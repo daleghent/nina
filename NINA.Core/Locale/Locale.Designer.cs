@@ -13582,24 +13582,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Server Started.
-        /// </summary>
-        internal static string LblServerStarted {
-            get {
-                return ResourceManager.GetString("LblServerStarted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Server Stopped.
-        /// </summary>
-        internal static string LblServerStopped {
-            get {
-                return ResourceManager.GetString("LblServerStopped", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Set as sequence target.
         /// </summary>
         internal static string LblSetAsSequenceTarget {
