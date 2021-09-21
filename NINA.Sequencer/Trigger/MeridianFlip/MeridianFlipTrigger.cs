@@ -246,7 +246,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: projectedSiderealTime);
                         if (telescopeInfo.SideOfPier == targetSideOfPier) {
-                            Logger.Info($"Meridian Flip - Telescope already reports {telescopeInfo.SideOfPier}. Automated Flip will not be performed.");
+                            Logger.Info($"Meridian Flip - Telescope already reports expected pier side {telescopeInfo.SideOfPier}. Automated Flip is not necessary.");
                             return false;
                         } else {
                             Logger.Info("Meridian Flip - No more remaining time available before flip. Flip should happen now");
@@ -258,7 +258,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));
                         if (telescopeInfo.SideOfPier == targetSideOfPier) {
-                            Logger.Info($"Meridian Flip - There is still time remaining, but the telescope already reports {telescopeInfo.SideOfPier}. Automated Flip will not be performed.");
+                            Logger.Info($"Meridian Flip - There is still time remaining, and the telescope reports expected pier side {telescopeInfo.SideOfPier}. Automated Flip is not necessary.");
                             return false;
                         } else {
                             // When pier side doesn't match the target, but remaining time indicating that a flip happened, the flip seems to have not happened yet and must be done immediately
