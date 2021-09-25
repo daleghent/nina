@@ -851,8 +851,23 @@ namespace NINA.ViewModel.FlatWizard {
             filter.IsChecked = false;
         }
 
-        private async Task TakeSkyFlats(IDictionary<FlatWizardFilterSettingsWrapper, List<double>> skyFlatTimes,
-            double firstExposureTime, FlatWizardFilterSettingsWrapper filter, PauseToken pt) {
+        /// <summary>
+        /// This method will take twilight sky flat exposures by adjusting the exposure time based on the changing sky conditions during the runtime.
+        /// A paper which explains the math behind the algorithm can be found here
+        /// http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.56.3178&rep=rep1&type=pdf
+        /// </summary>
+        /// <param name="skyFlatTimes"></param>
+        /// <param name="firstExposureTime"></param>
+        /// <param name="filter"></param>
+        /// <param name="pt"></param>
+        /// <remarks></remarks>
+        /// <returns></returns>
+        private async Task TakeSkyFlats(
+                IDictionary<FlatWizardFilterSettingsWrapper,
+                List<double>> skyFlatTimes,
+                double firstExposureTime,
+                FlatWizardFilterSettingsWrapper filter,
+                PauseToken pt) {
             var stopWatch = Stopwatch.StartNew();
 
             var springTwilight = twilightCalculator.GetTwilightDuration(new DateTime(DateTime.Now.Year, 03, 20), 30.0, 0d).TotalMilliseconds;
@@ -895,6 +910,42 @@ namespace NINA.ViewModel.FlatWizard {
                     Image = imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token).Result.Image;
                 }, flatSequenceCts.Token);
 
+                var imageStatistics = await imageData.Statistics.Task;
+                switch (
+                        HistogramMath.GetExposureAduState(
+                            imageStatistics.Mean,
+                            filter.Settings.HistogramMeanTarget,
+                            filter.BitDepth,
+                            filter.Settings.HistogramTolerance)
+                        ) {
+                    case HistogramMath.ExposureAduState.ExposureBelowLowerBound:
+                    case HistogramMath.ExposureAduState.ExposureAboveUpperBound:
+                        Logger.Warning($"Skyflat correction did not work and is outside of tolerance: " +
+                                     $"first exposure time {firstExposureTime}, " +
+                                     $"current exposure time {time}, " +
+                                     $"elapsed time: {stopWatch.ElapsedMilliseconds / 1000d}, " +
+                                     $"current mean adu: {imageStatistics.Mean}. " +
+                                     $"The sky flat exposure time will be determined again and the exposure will be repeated.");
+                        Notification.ShowWarning($"Skyflat correction did not work and is outside of tolerance:" + Environment.NewLine +
+                                     $"first exposure time {firstExposureTime:#.####}" + Environment.NewLine +
+                                     $"current exposure time {time:#.####}, " + Environment.NewLine +
+                                     $"elapsed time: {stopWatch.ElapsedMilliseconds / 1000d:#.##}" + Environment.NewLine +
+                                     $"mean adu: {imageStatistics.Mean:#.##}." + Environment.NewLine +
+                                     $"The sky flat exposure time will be determined again and the exposure will be repeated.");
+
+                        firstExposureTime = await FindFlatExposureTime(pt, filter);
+                        k = DateTime.Now.Hour < 12 ? 0.094 / 60 : -0.094 / 60;
+                        a = Math.Pow(10, k / tau);
+                        s = firstExposureTime;
+                        CalculatedExposureTime = firstExposureTime;
+                        time = firstExposureTime;
+                        Logger.Info($"New exposure time for sky flat determined - {time}");
+                        stopWatch = Stopwatch.StartNew();
+                        i--;
+                        continue;
+                }
+
+                exposureTimes.Add(time);
                 if (saveTask != null && !saveTask.IsCompleted) {
                     progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
                     await saveTask;
@@ -902,34 +953,6 @@ namespace NINA.ViewModel.FlatWizard {
 
                 saveTask = imageData.SaveToDisk(new FileSaveInfo(profileService), flatSequenceCts.Token);
 
-                var imageStatistics = await imageData.Statistics.Task;
-                switch (HistogramMath.GetExposureAduState(imageStatistics.Mean, filter.Settings.HistogramMeanTarget,
-                    filter.BitDepth, filter.Settings.HistogramTolerance)) {
-                    case HistogramMath.ExposureAduState.ExposureBelowLowerBound:
-                        Logger.Warning($"Skyflat correction did not work and is outside of tolerance: first exposure time {firstExposureTime}, current exposure time{time}, " +
-                                     $"elapsed time: {stopWatch.ElapsedMilliseconds / 1000d} current mean adu: {imageStatistics.Mean}");
-                        Notification.ShowWarning($"Skyflat correction did not work and is outside of tolerance: first exposure time {firstExposureTime}, current exposure time{time}, " +
-                                     $"elapsed time: {stopWatch.ElapsedMilliseconds / 1000d} current mean adu: {imageStatistics.Mean}");
-                        firstExposureTime = await FindFlatExposureTime(pt, filter);
-                        stopWatch.Reset();
-                        continue;
-
-                    case HistogramMath.ExposureAduState.ExposureWithinBounds:
-                        exposureTimes.Add(time);
-                        break;
-
-                    case HistogramMath.ExposureAduState.ExposureAboveUpperBound:
-                        Logger.Warning($"Skyflat correction did not work and is outside of tolerance: first exposure time {firstExposureTime}, current exposure time{time}, " +
-                                     $"elapsed time: {stopWatch.ElapsedMilliseconds / 1000d} current mean adu: {imageStatistics.Mean}");
-                        Notification.ShowWarning($"Skyflat correction did not work and is outside of tolerance: first exposure time {firstExposureTime}, current exposure time{time}, " +
-                                     $"elapsed time: {stopWatch.ElapsedMilliseconds / 1000d} current mean adu: {imageStatistics.Mean}");
-                        firstExposureTime = await FindFlatExposureTime(pt, filter);
-                        stopWatch.Reset();
-                        continue;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
                 progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
                 var trot = stopWatch.Elapsed - ti - TimeSpan.FromMilliseconds(time * 1000d);
                 if (trot.TotalMilliseconds < 0) trot = TimeSpan.FromMilliseconds(0);
@@ -1141,11 +1164,10 @@ namespace NINA.ViewModel.FlatWizard {
 
         public void UpdateDeviceInfo(FlatDeviceInfo deviceInfo) {
             FlatDeviceInfo = deviceInfo;
-            if(FlatDeviceInfo.Connected) {
-
+            if (FlatDeviceInfo.Connected) {
                 AdjustSettingForBrightness(SingleFlatWizardFilterSettings);
 
-                foreach(var setting in Filters) {
+                foreach (var setting in Filters) {
                     AdjustSettingForBrightness(setting);
                 }
             }
