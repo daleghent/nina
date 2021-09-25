@@ -4988,12 +4988,6 @@ Uyarı: Bu talimat, teleskopu bir hedefe MERKEZLEMEZ, sadece mevcut yönlendiril
   <data name="LblServerFailed" xml:space="preserve">
     <value>Sunucu başlatılamadı. NINA dökümantasyonuna bakın. {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>Sunucu başlatıldı</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>Sunucu durduruldu</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Tümünü kapat</value>
   </data>

@@ -5001,12 +5001,6 @@ Example:
   <data name="LblServerFailed" xml:space="preserve">
     <value>Server failed to start. Check the N.I.N.A. documentation. {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>Server started</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>Server stopped</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Close all</value>
   </data>

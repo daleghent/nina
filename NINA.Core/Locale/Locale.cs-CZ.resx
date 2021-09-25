@@ -4996,12 +4996,6 @@ Příklad:
   <data name="LblServerFailed" xml:space="preserve">
     <value>Server se nespustil. Zkontrolujte dokumentaci NINA. {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>Server Spuštěn</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>Server Zastaven</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Zavřít Vše</value>
   </data>
@@ -5804,6 +5798,6 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
     <value>Byla zjištěna neznámá instrukce! Zkontrolujte svou posloupnost a zkontrolujte, které instrukce se staly neplatnými. Dále ověřte, že vše je aktuální.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
-    <value>Toggle</value>
+    <value>Přepínač</value>
   </data>
 </root>

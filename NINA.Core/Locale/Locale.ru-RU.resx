@@ -4994,12 +4994,6 @@ Dec: {1}</value>
   <data name="LblServerFailed" xml:space="preserve">
     <value>Не удалось запустить сервер. Проверьте документацию NINA. {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>Сервер запущен</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>Сервер остановлен</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Закрыть все</value>
   </data>

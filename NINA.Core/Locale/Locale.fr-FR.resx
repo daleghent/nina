@@ -4998,12 +4998,6 @@ Exemple :
   <data name="LblServerFailed" xml:space="preserve">
     <value>Le serveur n'a pas pu démarrer. Vérifiez la documentation NINA. {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>Serveur démarré</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>Serveur arrêté</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Fermer tout</value>
   </data>

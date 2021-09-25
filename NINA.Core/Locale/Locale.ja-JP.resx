@@ -4978,12 +4978,6 @@
   <data name="LblServerFailed" xml:space="preserve">
     <value>サーバーの起動に失敗しました。NINAドキュメントを確認してください。 {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>サーバー開始</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>サーバーが停止</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>すべて閉じる</value>
   </data>

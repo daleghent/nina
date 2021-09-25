@@ -4991,12 +4991,6 @@ Ejemplo:
   <data name="LblServerFailed" xml:space="preserve">
     <value>El servidor no pudo iniciarse. Compruebe la documentación NINA. {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>Servidor iniciado</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>Servidor detenido</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Cerrarlo todo</value>
   </data>
@@ -5799,6 +5793,6 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
     <value>¡Detectada instrucción desconocida! Por favor, vuelva a comprobar su secuencia e inspeccione qué instrucciones pueden no ser válidas. Valide, además, que todo está actualizado.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
-    <value>Toggle</value>
+    <value>Cambiar</value>
   </data>
 </root>

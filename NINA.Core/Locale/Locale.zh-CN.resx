@@ -5001,12 +5001,6 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
   <data name="LblServerFailed" xml:space="preserve">
     <value>服务器启动失败。请检查NINA文档。 {0}</value>
   </data>
-  <data name="LblServerStarted" xml:space="preserve">
-    <value>服务器已启动</value>
-  </data>
-  <data name="LblServerStopped" xml:space="preserve">
-    <value>服务器已停止</value>
-  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>全部关闭</value>
   </data>
