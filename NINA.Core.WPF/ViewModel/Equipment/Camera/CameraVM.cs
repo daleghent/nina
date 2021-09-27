@@ -185,14 +185,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 var totalDeltaTemp = Math.Abs(currentTemp - temperature);
                 var cooling = temperature < currentTemp;
 
-                if (duration > TimeSpan.Zero) {
+                // Only wait if we're outside of the 1C tolerance at the start
+                if (duration > TimeSpan.Zero && totalDeltaTemp > 1.0d) {
                     // Stepped temp change
                     double[] input = { 0, duration.TotalSeconds };
                     double[] output = { currentTemp, temperature };
                     OrdinaryLeastSquares leastSquares = new OrdinaryLeastSquares();
                     var regression = leastSquares.Learn(input, output);
 
-                    Logger.Debug($"Starting stepped temperature change with parameters: Start Temp: {currentTemp}, Target Temp: {temperature}, Duration: {duration.TotalMinutes}m, Slope: {regression.Slope}, Intersept: {regression.Intercept}");
+                    Logger.Debug($"Starting stepped temperature change with parameters: Start Temp: {currentTemp}, Target Temp: {temperature}, Duration: {duration.TotalMinutes}m, Slope: {regression.Slope}, Intercept: {regression.Intercept}");
 
                     var interval = TimeSpan.FromSeconds(15);
                     int checkpoints = (int)(duration.TotalSeconds / interval.TotalSeconds);
