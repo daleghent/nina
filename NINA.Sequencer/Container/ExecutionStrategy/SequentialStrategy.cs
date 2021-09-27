@@ -37,23 +37,24 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         public async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             ISequenceItem previous = null;
             ISequenceItem next = null;
+            bool canContinue = true;
             var root = ItemUtility.GetRootContainer(context);
 
             context.Iterations = 0;
             InitializeBlock(context);
 
             try {
-                while ((next = GetNextItem(context, previous)) != null) {
+                while (((next, canContinue) = GetNextItem(context, previous)).next != null && canContinue) {
                     StartBlock(context);
 
-                    next = GetNextItem(context, previous);
-                    while (next != null) {
+                    (next, canContinue) = GetNextItem(context, previous);
+                    while (next != null && canContinue) {
                         token.ThrowIfCancellationRequested();
                         await RunTriggers(context, previous, next, progress, token);
                         await next.Run(progress, token);
                         previous = next;
 
-                        next = GetNextItem(context, previous);
+                        (next, canContinue) = GetNextItem(context, previous);
                         await RunTriggersAfter(context, previous, next, progress, token);
                     }
 
@@ -117,15 +118,16 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             }
         }
 
-        private ISequenceItem GetNextItem(ISequenceContainer context, ISequenceItem previous) {
+        private (ISequenceItem, bool) GetNextItem(ISequenceContainer context, ISequenceItem previous) {
             var items = context.GetItemsSnapshot();
             var next = items.FirstOrDefault(x => x.Status == SequenceEntityStatus.CREATED);
 
-            if (next != null && !CanContinue(context, previous, next)) {
-                next = null;
+            var canContinue = false;
+            if (next != null) {
+                canContinue = CanContinue(context, previous, next);
             }
 
-            return next;
+            return (next, canContinue);
         }
 
         private async Task RunTriggers(ISequenceContainer container, ISequenceItem previousItem, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
