@@ -721,7 +721,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 case "Settling": {
                         var settleInfo = message.ToObject<PhdEventSettling>();
                         Settling = true;
-                        Logger.Info($"PHD2 settling started. Time: {settleInfo.Time}, Distance: {settleInfo.Distance}");
+                        Logger.Debug($"PHD2 settling started. Time: {settleInfo.Time}, Distance: {settleInfo.Distance}");
                         break;
                     }
                 case "SettleDone": {
@@ -732,7 +732,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                             Logger.Error("PHD2 error:" + settleDone.Error);
                             Notification.ShowWarning("PHD2 error: " + settleDone.Error);
                         } else {
-                            Logger.Info("PHD2 settle completed");
+                            Logger.Debug("PHD2 settle completed");
                         }
                         break;
                     }
@@ -761,17 +761,17 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     }
                 case "StarLost": {
                         var starlost = message.ToObject<PhdEventStarLost>();
-                        Logger.Warning($"PHD2 - Star lost! Status: {starlost.Status}");
+                        Logger.Debug($"PHD2 - Star lost! Status: {starlost.Status}");
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
                 case "LockPositionSet": {
                         var lockPosition = message.ToObject<PhdEventLockPositionSet>();
-                        Logger.Info($"PHD2 - Lock position set at x:{lockPosition.X} y:{lockPosition.Y}");
+                        Logger.Debug($"PHD2 - Lock position set at x:{lockPosition.X} y:{lockPosition.Y}");
                         break;
                     }
                 case "LockPositionLost": {
-                        Logger.Warning($"PHD2 - Lock position lost!");
+                        Logger.Debug($"PHD2 - Lock position lost!");
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
