@@ -156,8 +156,16 @@ namespace NINA.WPF.Base.ViewModel {
                 _targetCoordinates = targetCoordinates;
                 RemainingTime = timeToFlip;
 
-                Logger.Info("Meridian Flip - Initializing Meridian Flip");
-                Logger.Info($"Meridian Flip - Current target coordinates RA: {_targetCoordinates.RAString} Dec: {_targetCoordinates.DecString} Epoch: {_targetCoordinates.Epoch}");
+                Logger.Info($"Meridian Flip - Initializing Meridian Flip. " + Environment.NewLine +
+                    $"Current target coordinates RA: {_targetCoordinates.RAString} Dec: {_targetCoordinates.DecString} Epoch: {_targetCoordinates.Epoch}" + Environment.NewLine +
+                    $"Remaining wait time: {timeToFlip}" + Environment.NewLine +
+                    $"Pause Time Before Meridian: {profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian}" + Environment.NewLine +
+                    $"Minutes After Meridian: {profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian}" + Environment.NewLine +
+                    $"Max Minutes After Meridian: {profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian}" + Environment.NewLine +
+                    $"AutoFocus After Flip: {profileService.ActiveProfile.MeridianFlipSettings.AutoFocusAfterFlip}" + Environment.NewLine +
+                    $"Recenter: {profileService.ActiveProfile.MeridianFlipSettings.Recenter}" + Environment.NewLine +
+                    $"Use SideOfPier: {profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier}" + Environment.NewLine +
+                    $"Settle Time: {profileService.ActiveProfile.MeridianFlipSettings.SettleTime}");
 
                 Steps = new AutomatedWorkflow();
 

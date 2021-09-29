@@ -249,6 +249,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             Logger.Info($"Meridian Flip - Telescope already reports expected pier side {telescopeInfo.SideOfPier}. Automated Flip is not necessary.");
                             return false;
                         } else {
+                            if (nextItem != null) {
+                                Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}, next instruction {nextItem}. Flip should happen now");
+                            } else {
+                                Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}. Flip should happen now");
+                            }
                             Logger.Info("Meridian Flip - No more remaining time available before flip. Flip should happen now");
                             return true;
                         }
@@ -263,11 +268,13 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         } else {
                             // When pier side doesn't match the target, but remaining time indicating that a flip happened, the flip seems to have not happened yet and must be done immediately
                             // Only allow delayed flip behavior for the first hour after a flip should've happened
-                            var delayedFlip = maximumTimeRemaining
-                                >= (TimeSpan.FromHours(11)
-                                    - TimeSpan.FromMinutes(MaxMinutesAfterMeridian)
-                                    - TimeSpan.FromMinutes(PauseTimeBeforeMeridian)
-                                  );
+                            var delayedFlip =
+                                maximumTimeRemaining <= TimeSpan.FromHours(12)
+                                && maximumTimeRemaining
+                                    >= (TimeSpan.FromHours(11)
+                                        - TimeSpan.FromMinutes(MaxMinutesAfterMeridian)
+                                        - TimeSpan.FromMinutes(PauseTimeBeforeMeridian)
+                                       );
 
                             if (delayedFlip) {
                                 Logger.Info($"Meridian Flip - Flip seems to not happened in time as Side Of Pier is {telescopeInfo.SideOfPier} but expected to be {targetSideOfPier}. Flip should happen now");
@@ -280,10 +287,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                     var noRemainingTime = maximumTimeRemaining <= (TimeSpan.FromSeconds(nextInstructionTime) + TimeSpan.FromMinutes(2));
 
                     if (noRemainingTime) {
-                        Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}. Flip should happen now");
+                        if (nextItem != null) {
+                            Logger.Info($"Meridian Flip - (Side of Pier usage is disabled) No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}, next instruction {nextItem}. Flip should happen now");
+                        } else {
+                            Logger.Info($"Meridian Flip - (Side of Pier usage is disabled) No more remaining time available before flip. Max remaining time {maximumTimeRemaining}. Flip should happen now");
+                        }
                         return true;
                     } else {
-                        Logger.Info($"Meridian Flip - There is still time remaining. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}.");
+                        Logger.Info($"Meridian Flip - (Side of Pier usage is disabled) There is still time remaining. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}.");
                         return false;
                     }
                 }
