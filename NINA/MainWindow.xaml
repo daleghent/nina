@@ -24,6 +24,8 @@
     xmlns:vm="clr-namespace:NINA.ViewModel"
     Name="ThisWindow"
     Title="{Binding AppVM.Title}"
+    MinWidth="800"
+    MinHeight="600"
     Background="{StaticResource BackgroundBrush}"
     FontFamily="{Binding ApplicationFontFamily, Source={x:Static settings:Settings.Default}}"
     FontStretch="{Binding FontStretch, Source={x:Static settings:Settings.Default}}"
