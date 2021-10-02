@@ -895,6 +895,7 @@ namespace NINA.ViewModel.FlatWizard {
                 });
 
                 var sequence = new CaptureSequence(time, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, FlatCount) { Gain = Gain };
+                sequence.ProgressExposureCount = i;
                 var ti = stopWatch.Elapsed;
                 var captureImageTask = imagingVM.CaptureImage(sequence, flatSequenceCts.Token, progress);
                 //stretch the last image while the next exposure is taken
@@ -1042,10 +1043,10 @@ namespace NINA.ViewModel.FlatWizard {
                     await captureImageTask;
                 }
 
-                var imageData = await captureImageTask.Result.ToImageData(progress, flatSequenceCts.Token);
+                var imageData = await (await captureImageTask).ToImageData(progress, flatSequenceCts.Token);
                 imageData.MetaData.Target.Name = TargetName;
-                showImageTask = Task.Run(() => {
-                    Image = imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token).Result.Image;
+                showImageTask = Task.Run(async () => {
+                    Image = (await imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token)).Image;
                 }, flatSequenceCts.Token);
 
                 if (saveTask != null && !saveTask.IsCompleted) {
