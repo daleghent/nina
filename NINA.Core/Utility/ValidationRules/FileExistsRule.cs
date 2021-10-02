@@ -29,4 +29,16 @@ namespace NINA.Core.Utility.ValidationRules {
             }
         }
     }
+
+    public class FileExistsOrEmptyRule : ValidationRule {
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo) {
+            var file = value.ToString();
+            if (!string.IsNullOrWhiteSpace(file) && !File.Exists(file)) {
+                return new ValidationResult(false, "Invalid File");
+            } else {
+                return new ValidationResult(true, null);
+            }
+        }
+    }
 }

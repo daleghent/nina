@@ -126,9 +126,18 @@ namespace NINA.ViewModel {
         }
 
         private void OpenHorizonFilePathDiag(object obj) {
-            var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz");
+            var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz;*.txt");
             if (dialog.ShowDialog() == true) {
-                profileService.ChangeHorizon(dialog.FileName);
+                HorizonFilePath = dialog.FileName;
+            }
+        }
+
+        public string HorizonFilePath {
+            get => profileService.ActiveProfile.AstrometrySettings.HorizonFilePath;
+
+            set {
+                profileService.ChangeHorizon(value);
+                RaisePropertyChanged();
             }
         }
 

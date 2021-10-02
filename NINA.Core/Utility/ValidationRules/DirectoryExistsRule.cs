@@ -29,4 +29,16 @@ namespace NINA.Core.Utility.ValidationRules {
             }
         }
     }
+
+    public class DirectoryExistsOrEmptyRule : ValidationRule {
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo) {
+            var dir = value.ToString();
+            if (!string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir)) {
+                return new ValidationResult(false, "Invalid Directory");
+            } else {
+                return new ValidationResult(true, null);
+            }
+        }
+    }
 }

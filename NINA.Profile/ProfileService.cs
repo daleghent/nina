@@ -238,9 +238,15 @@ namespace NINA.Profile {
             ActiveProfile.AstrometrySettings.HorizonFilePath = horizonFilePath;
 
             try {
-                ActiveProfile.AstrometrySettings.Horizon = CustomHorizon.FromFile(horizonFilePath);
+                if (!string.IsNullOrWhiteSpace(horizonFilePath)) {
+                    ActiveProfile.AstrometrySettings.Horizon = CustomHorizon.FromFile(horizonFilePath);
+                } else {
+                    ActiveProfile.AstrometrySettings.HorizonFilePath = string.Empty;
+                    ActiveProfile.AstrometrySettings.Horizon = null;
+                }
             } catch (Exception ex) {
                 ActiveProfile.AstrometrySettings.HorizonFilePath = string.Empty;
+                ActiveProfile.AstrometrySettings.Horizon = null;
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["LblFailedToLoadCustomHorizon"] + ex.Message);
             }

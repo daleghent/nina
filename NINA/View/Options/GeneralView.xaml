@@ -868,9 +868,9 @@
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center">
                             <TextBox.Text>
-                                <Binding Path="ActiveProfile.AstrometrySettings.HorizonFilePath" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="HorizonFilePath" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
-                                        <rules:FileExistsRule />
+                                        <rules:FileExistsOrEmptyRule />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
