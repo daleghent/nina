@@ -1002,6 +1002,7 @@ namespace NINA.ViewModel.FlatWizard {
                     foreach (var keyValuePair in skyFlatTimes) {
                         filterCount++;
                         var filterName = keyValuePair.Key.Filter?.Name ?? string.Empty;
+                        var exposure = 0;
                         progress.Report(new ApplicationStatus {
                             Status2 = $"{Loc.Instance["LblFilter"]} {filterName}",
                             Progress2 = filterCount,
@@ -1015,6 +1016,8 @@ namespace NINA.ViewModel.FlatWizard {
                         });
                         foreach (var singleDarkFlatSequence in keyValuePair.Value.Select(time => new CaptureSequence(time, CaptureSequence.ImageTypes.DARKFLAT,
                             keyValuePair.Key.Filter, BinningMode, 1) { Gain = Gain })) {
+                            singleDarkFlatSequence.ProgressExposureCount = exposure;
+                            singleDarkFlatSequence.TotalExposureCount = ++exposure;
                             await CaptureImages(singleDarkFlatSequence, pt);
                         }
                     }
