@@ -165,7 +165,8 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             var fwInfo = this.filterWheelMediator.GetInfo();
 
             var lastAF = history.AutoFocusPoints?.LastOrDefault();
-            var imageHistory = history.ImageHistory.Where(x => x.Type == "LIGHT").ToList(); ;
+            // Filter the history for all light frames and frames that have a non zero HFR value
+            var imageHistory = history.ImageHistory.Where(x => x.Type == "LIGHT" && !double.IsNaN(x.HFR) && x.HFR > 0).ToList(); ;
 
             if (lastAF != null) {
                 //Take all items that are after the last autofocus into consideration
@@ -182,8 +183,9 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
 
             if (imageHistory.Count > 0) {
-                var first = imageHistory.First();
-                OriginalHFR = first.HFR;
+                // Determine the lowest HFR
+                var lowest = imageHistory.Aggregate((curMin, x) => curMin == null || x.HFR < curMin.HFR ? x : curMin);
+                OriginalHFR = lowest.HFR;
 
                 //Take either the last point after AF Position as index or the sample size index, whichever is greater
                 var minimumSampleIndex = Math.Max(0, imageHistory.Count - sampleSize);
