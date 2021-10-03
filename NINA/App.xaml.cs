@@ -112,6 +112,18 @@ namespace NINA {
             } else {
                 Logger.Error(e.Exception);
             }
+
+            if (e.Exception is InvalidOperationException) {
+                /* When accessing N.I.N.A. via RDP from a mobile device or a tablet device it seems like WPF has a stylus bug during refresh.
+                 * This piece of code tries to auto recover from that issue
+                 */
+                if (e.Exception.StackTrace.Contains("System.Windows.Input.StylusWisp.WispLogic.RefreshTablets")) {
+                    Logger.Error("The exception is related to the WPF Stylus bug and therefore tries to recover automatically");
+                    e.Handled = true;
+                    return;
+                }
+            }
+
             if (e.Exception is System.Windows.Markup.XamlParseException xamlEx) {
                 Logger.Error($"Faulting xaml module: {xamlEx.BaseUri}");
                 if (Application.Current?.Resources != null) {
