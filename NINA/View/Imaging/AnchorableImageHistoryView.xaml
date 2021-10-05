@@ -131,7 +131,7 @@
                 LegendMaxHeight="35"
                 LegendOrientation="Horizontal"
                 LegendPadding="2"
-                LegendPlacement="Inside"
+                LegendPlacement="Outside"
                 LegendPosition="TopLeft"
                 LegendSymbolLength="10"
                 LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
