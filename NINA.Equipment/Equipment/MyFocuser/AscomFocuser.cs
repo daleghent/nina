@@ -113,9 +113,9 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                     TempComp = false;
                 }
 
-                while (position != device.Position) {
+                while (position != device.Position && !ct.IsCancellationRequested) {
                     device.Move(position);
-                    while (IsMoving) {
+                    while (IsMoving && !ct.IsCancellationRequested) {
                         await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
                 }
@@ -134,13 +134,13 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                 }
 
                 var relativeOffsetRemaining = position - this.Position;
-                while (relativeOffsetRemaining != 0) {
+                while (relativeOffsetRemaining != 0 && !ct.IsCancellationRequested) {
                     var moveAmount = Math.Min(MaxStep, Math.Abs(relativeOffsetRemaining));
                     if (relativeOffsetRemaining < 0) {
                         moveAmount *= -1;
                     }
                     device.Move(moveAmount);
-                    while (IsMoving) {
+                    while (IsMoving && !ct.IsCancellationRequested) {
                         await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
                     relativeOffsetRemaining -= moveAmount;
