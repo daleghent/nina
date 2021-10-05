@@ -161,6 +161,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset Target.
+        /// </summary>
+        internal static string Lbl_OldSequencer_ResetTarget {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_ResetTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset all rows in the current target?.
+        /// </summary>
+        internal static string Lbl_OldSequencer_ResetTargetRows {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_ResetTargetRows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parallel Start of Sequence Instructions.
         /// </summary>
         internal static string Lbl_OldSequencer_StartOfSequence {

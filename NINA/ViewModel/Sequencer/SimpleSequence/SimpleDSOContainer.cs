@@ -53,6 +53,7 @@ using NINA.Core.Utility.Notification;
 using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Core.MyMessageBox;
 
 namespace NINA.Sequencer.Container {
 
@@ -129,6 +130,14 @@ namespace NINA.Sequencer.Container {
             this.rotateLoopCondition = factory.GetCondition<LoopCondition>();
             this.rotateLoopCondition.Iterations = 1;
         }
+
+        public override ICommand ResetProgressCommand => new RelayCommand(
+           (o) => {
+               if (MyMessageBox.Show(Loc.Instance["Lbl_OldSequencer_ResetTargetRows"], Loc.Instance["Lbl_OldSequencer_ResetTarget"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.Yes) == System.Windows.MessageBoxResult.Yes) {
+                   base.ResetProgressCommand.Execute(o);
+               }
+           }
+       );
 
         public ISimpleExposure ActiveExposure {
             get => activeExposure;
