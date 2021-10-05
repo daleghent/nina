@@ -400,58 +400,6 @@
                                 MinWidth="200"
                                 MinHeight="20"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblAutoStretchFactor}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblAutoStretchFactorTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <TextBox
-                                MinWidth="75"
-                                MinHeight="20"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center">
-                                <TextBox.Text>
-                                    <Binding Path="AutoStretchFactor" UpdateSourceTrigger="LostFocus">
-                                        <Binding.ValidationRules>
-                                            <rules:GreaterZeroRule />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                MinWidth="200"
-                                MinHeight="20"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblBlackClipping}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblLblBlackClippingTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <TextBox
-                                MinWidth="75"
-                                MinHeight="20"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center">
-                                <TextBox.Text>
-                                    <Binding Path="BlackClipping" UpdateSourceTrigger="LostFocus">
-                                        <Binding.ValidationRules>
-                                            <rules:DoubleRangeRule>
-                                                <rules:DoubleRangeRule.ValidRange>
-                                                    <rules:DoubleRangeChecker Maximum="0" Minimum="-10" />
-                                                </rules:DoubleRangeRule.ValidRange>
-                                            </rules:DoubleRangeRule>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                MinWidth="200"
-                                MinHeight="20"
-                                VerticalAlignment="Center"
                                 Text="{ns:Loc LblAnnotateImage}">
                                 <TextBlock.ToolTip>
                                     <TextBlock Text="{ns:Loc LblAnnotateImageTooltip}" />
@@ -507,38 +455,6 @@
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding UnlinkedStretch}" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                MinWidth="200"
-                                MinHeight="20"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblStarSensitivity}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblStarSensitivityTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <ComboBox
-                                MinWidth="150"
-                                Margin="0,0,0,0"
-                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:StarSensitivityEnum}}}"
-                                SelectedItem="{Binding StarSensitivity}" />
-                        </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                MinWidth="200"
-                                MinHeight="20"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNoiseReduction}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblNoiseReductionTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <ComboBox
-                                MinWidth="150"
-                                Margin="0,0,0,0"
-                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:NoiseReductionEnum}}}"
-                                SelectedItem="{Binding NoiseReduction}" />
-                        </StackPanel>
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />
@@ -575,6 +491,102 @@
                                 </Button.ToolTip>
                             </Button>
                         </Grid>
+                        <Border
+                            Margin="0,10,0,0"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0,1,0,1">
+                            <Expander Header="{ns:Loc LblAdvancedSettings}">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                        <TextBlock
+                                            MinWidth="200"
+                                            MinHeight="20"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAutoStretchFactor}">
+                                            <TextBlock.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblAutoStretchFactorTooltip}" />
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                                        <TextBox
+                                            MinWidth="75"
+                                            MinHeight="20"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center">
+                                            <TextBox.Text>
+                                                <Binding Path="AutoStretchFactor" UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <rules:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </StackPanel>
+                                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                        <TextBlock
+                                            MinWidth="200"
+                                            MinHeight="20"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblBlackClipping}">
+                                            <TextBlock.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblLblBlackClippingTooltip}" />
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                                        <TextBox
+                                            MinWidth="75"
+                                            MinHeight="20"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center">
+                                            <TextBox.Text>
+                                                <Binding Path="BlackClipping" UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <rules:DoubleRangeRule>
+                                                            <rules:DoubleRangeRule.ValidRange>
+                                                                <rules:DoubleRangeChecker Maximum="0" Minimum="-10" />
+                                                            </rules:DoubleRangeRule.ValidRange>
+                                                        </rules:DoubleRangeRule>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+
+                                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                            <TextBlock
+                                                MinWidth="200"
+                                                MinHeight="20"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblStarSensitivity}">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblStarSensitivityTooltip}" />
+                                                </TextBlock.ToolTip>
+                                            </TextBlock>
+                                            <ComboBox
+                                                MinWidth="150"
+                                                Margin="0,0,0,0"
+                                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:StarSensitivityEnum}}}"
+                                                SelectedItem="{Binding StarSensitivity}" />
+                                        </StackPanel>
+                                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                            <TextBlock
+                                                MinWidth="200"
+                                                MinHeight="20"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblNoiseReduction}">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblNoiseReductionTooltip}" />
+                                                </TextBlock.ToolTip>
+                                            </TextBlock>
+                                            <ComboBox
+                                                MinWidth="150"
+                                                Margin="0,0,0,0"
+                                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:NoiseReductionEnum}}}"
+                                                SelectedItem="{Binding NoiseReduction}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Expander>
+                        </Border>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox DataContext="{Binding SequenceSettings}" Header="{ns:Loc LblSequence}">
