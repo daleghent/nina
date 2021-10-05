@@ -76,7 +76,7 @@ namespace NINA.Core.Utility.ExternalCommand {
                     await Task.Delay(5000);
                     StatusUpdate(src, "");
                 });
-                return true;
+                return process.ExitCode == 0;
             } catch (Exception e) {
                 Logger.Error($"Error running command {sequenceCompleteCommand}: {e.Message}", e);
             }
