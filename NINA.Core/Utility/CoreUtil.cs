@@ -109,7 +109,7 @@ namespace NINA.Core.Utility {
         /// <param name="date">DateTime object</param>
         /// <returns>long</returns>
         public static long DateTimeToUnixTimeStamp(DateTime date) {
-            return (int)(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds; ;
+            return (int)date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds; ;
         }
 
         public static async Task<TimeSpan> Delay(int milliseconds, CancellationToken token) {
@@ -124,11 +124,41 @@ namespace NINA.Core.Utility {
         }
 
         public static async Task<TimeSpan> Wait(TimeSpan t, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = default, string status = "") {
+            status = string.IsNullOrWhiteSpace(status) ? NINA.Core.Locale.Loc.Instance["LblWaiting"] : status;
+
             var elapsed = new TimeSpan(0);
             while (elapsed < t && !token.IsCancellationRequested) {
                 var delta = await Delay(100, token);
                 elapsed += delta;
-                progress?.Report(new ApplicationStatus { MaxProgress = (int)t.TotalSeconds, Progress = (int)elapsed.TotalSeconds, Status = string.IsNullOrWhiteSpace(status) ? NINA.Core.Locale.Loc.Instance["LblWaiting"] : status, ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
+
+                if (t.Hours > 0) {
+                    progress?.Report(
+                        new ApplicationStatus {
+                            MaxProgress = 1,
+                            Progress = elapsed.TotalSeconds / t.TotalSeconds,
+                            Status = $"{status} {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2} / {t.Hours:D2}:{t.Minutes:D2}:{t.Seconds:D2}",
+                            ProgressType = ApplicationStatus.StatusProgressType.Percent
+                        }
+                    );
+                } else if (t.Minutes > 0) {
+                    progress?.Report(
+                        new ApplicationStatus {
+                            MaxProgress = 1,
+                            Progress = elapsed.TotalSeconds / t.TotalSeconds,
+                            Status = $"{status} {elapsed.Minutes:D2}:{elapsed.Seconds:D2} / {t.Minutes:D2}:{t.Seconds:D2}",
+                            ProgressType = ApplicationStatus.StatusProgressType.Percent
+                        }
+                    );
+                } else {
+                    progress?.Report(
+                        new ApplicationStatus {
+                            MaxProgress = (int)t.TotalSeconds,
+                            Progress = (int)elapsed.TotalSeconds,
+                            Status = status,
+                            ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue
+                        }
+                    );
+                }
             }
             return elapsed;
         }
@@ -165,7 +195,7 @@ namespace NINA.Core.Utility {
             long max = (long)Math.Pow(scale, orders.Length - 1);
             foreach (string order in orders) {
                 if (bytes > max) {
-                    return string.Format("{0:##.##} {1}", decimal.Divide(bytes, max), order);
+                    return string.Format("{0:D2.##} {1}", decimal.Divide(bytes, max), order);
                 }
 
                 max /= scale;
