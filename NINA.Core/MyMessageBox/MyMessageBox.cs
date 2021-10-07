@@ -141,12 +141,19 @@ namespace NINA.Core.MyMessageBox {
                     MyMessageBox.NoVisibility = System.Windows.Visibility.Hidden;
                 }
 
+                var mainwindow = System.Windows.Application.Current.MainWindow;
                 System.Windows.Window win = new MyMessageBoxView {
                     DataContext = MyMessageBox
                 };
-                win.SizeChanged += Win_SizeChanged;
+                win.ContentRendered += (object sender, EventArgs e) => {
+                    var window = (System.Windows.Window)sender;
+                    window.InvalidateVisual();
 
-                var mainwindow = System.Windows.Application.Current.MainWindow;
+                    var rect = mainwindow.GetAbsolutePosition();
+                    window.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
+                    window.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
+                };
+
                 mainwindow.Opacity = 0.8;
                 win.Owner = mainwindow;
                 win.Closed += (object sender, EventArgs e) => {
@@ -175,15 +182,6 @@ namespace NINA.Core.MyMessageBox {
                 }
             });
             return dialogresult;
-        }
-
-        private static void Win_SizeChanged(object sender, SizeChangedEventArgs e) {
-            var mainwindow = System.Windows.Application.Current.MainWindow;
-
-            var win = (System.Windows.Window)sender;
-            var rect = mainwindow.GetAbsolutePosition();
-            win.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
-            win.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
         }
     }
 }

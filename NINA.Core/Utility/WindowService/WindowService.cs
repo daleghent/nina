@@ -34,26 +34,8 @@ namespace NINA.Core.Utility.WindowService {
 
         public void Show(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None) {
             dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => {
-                window = new CustomWindow() {
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    Title = title,
-                    Background = Application.Current.TryFindResource("BackgroundBrush") as Brush,
-                    ResizeMode = resizeMode,
-                    WindowStyle = windowStyle,
-                    MinHeight = 300,
-                    MinWidth = 350,
-                    Style = Application.Current.TryFindResource("NoResizeWindow") as Style,
-                };
-                window.CloseCommand = new RelayCommand((object o) => {
-                    window.Close();
-                });
+                window = GenerateWindow(title, resizeMode, windowStyle, null);
 
-                window.Closed += (object sender, EventArgs e) => {
-                    this.OnClosed?.Invoke(this, null);
-                    Application.Current.MainWindow.Focus();
-                };
-                window.ContentRendered += (object sender, EventArgs e) => window.InvalidateVisual();
-                window.SizeChanged += Win_SizeChanged;
                 window.Content = content;
                 window.Owner = Application.Current.MainWindow;
                 window.Show();
@@ -73,55 +55,63 @@ namespace NINA.Core.Utility.WindowService {
             }));
         }
 
+        private CustomWindow GenerateWindow(string title, ResizeMode resizeMode, WindowStyle windowStyle, ICommand closeCommand) {
+            var window = new CustomWindow() {
+                SizeToContent = SizeToContent.WidthAndHeight,
+                Title = title,
+                Background = Application.Current.TryFindResource("BackgroundBrush") as Brush,
+                ResizeMode = resizeMode,
+                WindowStyle = windowStyle,
+                MinHeight = 300,
+                MinWidth = 350,
+                Style = Application.Current.TryFindResource("NoResizeWindow") as Style,
+            };
+
+            if (closeCommand == null) {
+                window.CloseCommand = new RelayCommand((object o) => window.Close());
+            } else {
+                window.CloseCommand = closeCommand;
+            }
+
+            var mainwindow = Application.Current.MainWindow;
+
+            window.Closing += (object sender, CancelEventArgs e) => {
+                if ((sender is Window w) && w.IsFocused) {
+                    mainwindow.Focus();
+                }
+            };
+            window.Closed += (object sender, EventArgs e) => {
+                this.OnClosed?.Invoke(this, null);
+                mainwindow.Focus();
+            };
+            window.ContentRendered += (object sender, EventArgs e) => {
+                var win = (System.Windows.Window)sender;
+                win.InvalidateVisual();
+
+                var rect = mainwindow.GetAbsolutePosition();
+                win.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
+                win.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
+            };
+            window.Owner = mainwindow;
+
+            return window;
+        }
+
         public IDispatcherOperationWrapper ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null) {
             return new DispatcherOperationWrapper(dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                window = new CustomWindow() {
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    Title = title,
-                    Background = Application.Current.TryFindResource("BackgroundBrush") as Brush,
-                    ResizeMode = resizeMode,
-                    WindowStyle = windowStyle,
-                    Style = Application.Current.TryFindResource("NoResizeWindow") as Style,
-                };
-                if (closeCommand == null) {
-                    window.CloseCommand = new RelayCommand((object o) => window.Close());
-                } else {
-                    window.CloseCommand = closeCommand;
-                }
-                window.Closing += (object sender, CancelEventArgs e) => {
-                    if ((sender is Window w) && w.IsFocused) {
-                        Application.Current.MainWindow.Focus();
-                    }
-                };
-                window.Closed += (object sender, EventArgs e) => {
-                    this.OnClosed?.Invoke(this, null);
-                    Application.Current.MainWindow.Focus();
-                };
-                window.ContentRendered += (object sender, EventArgs e) => window.InvalidateVisual();
+                window = GenerateWindow(title, resizeMode, windowStyle, closeCommand);
 
-                window.SizeChanged += Win_SizeChanged;
                 window.Content = content;
-                var mainwindow = System.Windows.Application.Current.MainWindow;
-                mainwindow.Opacity = 0.8;
-                window.Owner = Application.Current.MainWindow;
+                Application.Current.MainWindow.Opacity = 0.8;
                 var result = window.ShowDialog();
                 this.OnDialogResultChanged?.Invoke(this, new DialogResultEventArgs(result));
-                mainwindow.Opacity = 1;
+                Application.Current.MainWindow.Opacity = 1;
             })));
         }
 
         public event EventHandler OnDialogResultChanged;
 
         public event EventHandler OnClosed;
-
-        private static void Win_SizeChanged(object sender, SizeChangedEventArgs e) {
-            var mainwindow = System.Windows.Application.Current.MainWindow;
-            var win = (System.Windows.Window)sender;
-
-            var rect = mainwindow.GetAbsolutePosition();
-            win.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
-            win.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
-        }
     }
 
     public interface IWindowService {
