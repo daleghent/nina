@@ -53,6 +53,7 @@ namespace NINA.Core.Utility {
                     shared: false,
                     buffered: false,
                     hooks: new HeaderWriter(GenerateHeader),
+                    flushToDiskInterval: TimeSpan.FromSeconds(1),
                     retainedFileCountLimit: null)
                 .CreateLogger();
         }
