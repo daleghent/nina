@@ -60,6 +60,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
              );
 
             SetSwitchValueCommand = new AsyncCommand<bool>(SetSwitchValue);
+            ToggleBooleanSwitchValueCommand = new AsyncCommand<bool>(async o => {
+                if (o is IWritableSwitch ws) {
+                    ws.TargetValue = ws.TargetValue == 0 ? 1 : 0;
+                    await SetSwitchValueCommand.ExecuteAsync(o);
+                }
+                return true;
+            });
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 AsyncContext.Run(Rescan);
@@ -108,6 +115,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
         }
 
         public IAsyncCommand SetSwitchValueCommand { get; private set; }
+        public IAsyncCommand ToggleBooleanSwitchValueCommand { get; private set; }
 
         private ISwitchHub switchHub;
 
