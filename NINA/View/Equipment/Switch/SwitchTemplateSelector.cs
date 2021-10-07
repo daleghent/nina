@@ -31,7 +31,7 @@ namespace NINA.View.Equipment.Switch {
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             if (item is IWritableSwitch) {
                 var s = (IWritableSwitch)item;
-                if (s.Minimum == 0 && s.Maximum == 1) {
+                if (s.Minimum == 0 && s.Maximum == 1 && s.StepSize == 1) {
                     return WritableBoolean;
                 } else {
                     return Writable;

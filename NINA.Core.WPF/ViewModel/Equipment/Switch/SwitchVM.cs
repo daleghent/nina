@@ -77,6 +77,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             await Task.Run(() => SwitchChooserVM.GetEquipment());
         }
 
+        private static double SWITCHTOLERANCE = 0.00001;
+
         private async Task<bool> SetSwitchValue(object arg) {
             var aSwitch = (IWritableSwitch)arg;
 
@@ -86,7 +88,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
             var timeOut = TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval * 4);
             bool success = true;
-            while (aSwitch.Value != aSwitch.TargetValue) {
+            while (Math.Abs(aSwitch.Value - aSwitch.TargetValue) > SWITCHTOLERANCE) {
                 var elapsed = await CoreUtil.Wait(TimeSpan.FromMilliseconds(500));
                 timeOut = timeOut - elapsed;
                 if (timeOut.TotalMilliseconds <= 0) {
