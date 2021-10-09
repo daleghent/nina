@@ -5794,6 +5794,12 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
     <value>S'ha detectat una instrucció desconeguda. Comproveu de nou la seqüència i inspeccioneu quines instruccions no són vàlides. A més, valideu que tot estigui actualitzat.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
-    <value>Toggle</value>
+    <value>Commuta</value>
+  </data>
+  <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
+    <value>Restableix l'objectiu</value>
+  </data>
+  <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
+    <value>Voleu restablir totes les files de l'objectiu actual?</value>
   </data>
 </root>

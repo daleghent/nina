@@ -5795,4 +5795,10 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   <data name="LblToggle" xml:space="preserve">
     <value>Cambiar</value>
   </data>
+  <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
+    <value>Restablecer objetivo</value>
+  </data>
+  <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
+    <value>¿Reinicializar todas las filas del objetivo actual?</value>
+  </data>
 </root>

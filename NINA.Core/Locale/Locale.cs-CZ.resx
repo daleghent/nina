@@ -3530,7 +3530,7 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
     <value>Zahřívání</value>
   </data>
   <data name="LblWarning" xml:space="preserve">
-    <value>Warning</value>
+    <value>Varování</value>
   </data>
   <data name="LblWarnTelescopeParked" xml:space="preserve">
     <value>Dalekohled v parkovací poloze se automaticky odparkuje, když uživatel zahájí sekvenci</value>
@@ -5799,5 +5799,11 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   </data>
   <data name="LblToggle" xml:space="preserve">
     <value>Přepínač</value>
+  </data>
+  <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
+    <value>Resetovat Cíl</value>
+  </data>
+  <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
+    <value>Resetovat všechny řádky v aktuálním cíli?</value>
   </data>
 </root>
