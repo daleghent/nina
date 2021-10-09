@@ -133,13 +133,15 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task SlewToAzimuth(double azimuth, CancellationToken ct) {
             if (Connected) {
                 if (CanSetAzimuth) {
-                    ct.Register(async () => await StopSlewing());
-                    await Task.Run(async () => {
-                        device?.SlewToAzimuth(azimuth);
-                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
-                            await Task.Delay(1000, ct);
-                        }
-                    }, ct);
+                    using (ct.Register(async () => await StopSlewing())) {
+                        await Task.Run(async () => {
+                            device?.SlewToAzimuth(azimuth);
+                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                            while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                                await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                            }
+                        }, ct);
+                    }
                 } else {
                     Logger.Warning("Dome cannot slew");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotSlew"]);
@@ -189,18 +191,26 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task OpenShutter(CancellationToken ct) {
             if (Connected) {
                 if (CanSetShutter) {
-                    ct.Register(() => device?.AbortSlew());
-                    if (ShutterStatus == ShutterState.ShutterError) {
-                        // If shutter is in the error state, you must close it before re-opening
-                        await CloseShutter(ct);
+                    if (ShutterStatus == ShutterState.ShutterOpen) {
+                        return;
                     }
-                    await Task.Run(() => device?.OpenShutter(), ct);
-                    while (device != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
-                        await Task.Delay(1000, ct);
-                    };
-                    if (device != null && ShutterStatus == ShutterState.ShutterClosed) {
-                        Logger.Error("ShutterStatus is still reported as closed after calling CloseShutter.");
-                        Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillClosed"]);
+
+                    using (ct.Register(() => device?.AbortSlew())) {
+                        if (ShutterStatus == ShutterState.ShutterError) {
+                            // If shutter is in the error state, you must close it before re-opening
+                            await CloseShutter(ct);
+                        }
+
+                        await Task.Run(() => device?.OpenShutter(), ct);
+                        // Give the dome controller 2 seconds to react to the shutter open request, since OpenShutter can be an asynchronous operation
+                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        while (device != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
+                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                        };
+                        if (device != null && ShutterStatus == ShutterState.ShutterClosed) {
+                            Logger.Error("ShutterStatus is still reported as closed after calling OpenShutter.");
+                            Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillClosed"]);
+                        }
                     }
                 } else {
                     Logger.Warning("Dome cannot open");
@@ -215,14 +225,22 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task CloseShutter(CancellationToken ct) {
             if (Connected) {
                 if (CanSetShutter) {
-                    ct.Register(() => device?.AbortSlew());
-                    await Task.Run(() => device?.CloseShutter(), ct);
-                    while (device != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
-                        await Task.Delay(1000, ct);
-                    };
-                    if (device != null && ShutterStatus == ShutterState.ShutterOpen) {
-                        Logger.Error("ShutterStatus is still reported as open after calling CloseShutter.");
-                        Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillOpen"]);
+                    if (ShutterStatus == ShutterState.ShutterClosed) {
+                        return;
+                    }
+
+                    using (ct.Register(() => device?.AbortSlew())) {
+                        await Task.Run(() => device?.CloseShutter(), ct);
+
+                        // Give the dome controller 2 seconds to react to the shutter close request, since CloseShutter can be an asynchronous operation
+                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        while (device != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
+                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                        };
+                        if (device != null && ShutterStatus == ShutterState.ShutterOpen) {
+                            Logger.Error("ShutterStatus is still reported as open after calling CloseShutter.");
+                            Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillOpen"]);
+                        }
                     }
                 } else {
                     Logger.Warning("Dome cannot close shutter");
@@ -241,16 +259,17 @@ namespace NINA.Equipment.Equipment.MyDome {
                     device?.AbortSlew();
                     await Task.Delay(1000, ct);
 
-                    ct.Register(() => device.AbortSlew());
-                    await Task.Run(() => device.FindHome(), ct);
+                    using (ct.Register(() => device.AbortSlew())) {
+                        await Task.Run(() => device.FindHome(), ct);
 
-                    // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
-                    await Task.Delay(1000, ct);
-                    while (device != null && device.Slewing && !ct.IsCancellationRequested) {
-                        await Task.Delay(1000, ct);
+                        // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
+                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                        }
+                        // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
+                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
                     }
-                    // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
-                    await Task.Delay(2000, ct);
                 } else {
                     Logger.Warning("Dome cannot find home");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotFindHome"]);
@@ -266,15 +285,17 @@ namespace NINA.Equipment.Equipment.MyDome {
                 if (CanPark) {
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure Park works
                     device?.AbortSlew();
-                    await Task.Delay(1000, ct);
+                    await Task.Delay(TimeSpan.FromSeconds(1), ct);
 
-                    ct.Register(() => device?.AbortSlew());
-                    await Task.Run(() => device?.Park(), ct);
-                    if (CanSetShutter) {
-                        await Task.Run(() => device?.CloseShutter(), ct);
-                    }
-                    while (device != null && device.Slewing && !ct.IsCancellationRequested) {
-                        await Task.Delay(1000, ct);
+                    using (ct.Register(() => device?.AbortSlew())) {
+                        await Task.Run(() => device?.Park(), ct);
+                        if (CanSetShutter) {
+                            await Task.Run(() => device?.CloseShutter(), ct);
+                        }
+                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                        }
                     }
                 } else {
                     Logger.Warning("Dome cannot find park");
