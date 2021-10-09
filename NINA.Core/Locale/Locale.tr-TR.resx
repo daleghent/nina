@@ -5792,4 +5792,10 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblToggle" xml:space="preserve">
     <value>Toggle</value>
   </data>
+  <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
+    <value>Reset Target</value>
+  </data>
+  <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
+    <value>Reset all rows in the current target?</value>
+  </data>
 </root>
