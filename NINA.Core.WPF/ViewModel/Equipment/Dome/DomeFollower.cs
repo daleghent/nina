@@ -208,6 +208,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             var currentAzimuth = Angle.ByDegree(domeInfo.Azimuth);
             if (!IsDomeWithinTolerance(currentAzimuth, calculatedTargetDomeCoordinates)) {
                 Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={calculatedTargetDomeCoordinates.Azimuth}, Target altitude={calculatedTargetDomeCoordinates.Altitude}");
+                IsSynchronized = false;
                 domeRotationCTS = new CancellationTokenSource();
                 domeRotationTask = this.domeMediator.SlewToAzimuth(calculatedTargetDomeCoordinates.Azimuth.Degree, domeRotationCTS.Token);
             }
