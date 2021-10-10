@@ -62,7 +62,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             SetSwitchValueCommand = new AsyncCommand<bool>(SetSwitchValue);
             ToggleBooleanSwitchValueCommand = new AsyncCommand<bool>(async o => {
                 if (o is IWritableSwitch ws) {
-                    ws.TargetValue = ws.TargetValue == 0 ? 1 : 0;
+                    ws.TargetValue = ws.Value == 0 ? 1 : 0;
                     await SetSwitchValueCommand.ExecuteAsync(o);
                 }
                 return true;
