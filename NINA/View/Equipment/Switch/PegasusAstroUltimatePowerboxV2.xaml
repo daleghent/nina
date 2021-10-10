@@ -160,26 +160,18 @@
                                     Grid.Column="1"
                                     HorizontalAlignment="Right"
                                     Orientation="Horizontal">
-                                    <CheckBox
-                                        Height="25"
-                                        MinWidth="100"
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        IsChecked="{Binding TargetValue, Mode=TwoWay, Converter={StaticResource DoubleToBooleanConverter}}" />
                                     <Button
                                         Height="25"
                                         Margin="4,0,0,0"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=DataContext.SetSwitchValueCommand, RelativeSource={RelativeSource AncestorType=equip:SwitchHubView}}"
+                                        Command="{Binding Path=DataContext.ToggleBooleanSwitchValueCommand, RelativeSource={RelativeSource AncestorType=equip:SwitchHubView}}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource CheckedCircledSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                        <TextBlock
+                                            Padding="5,0,5,0"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{ns:Loc LblToggle}" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
@@ -249,26 +241,18 @@
                                     Grid.Column="1"
                                     HorizontalAlignment="Right"
                                     Orientation="Horizontal">
-                                    <CheckBox
-                                        Height="25"
-                                        MinWidth="100"
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        IsChecked="{Binding TargetValue, Mode=TwoWay, Converter={StaticResource DoubleToBooleanConverter}}" />
                                     <Button
                                         Height="25"
                                         Margin="4,0,0,0"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=DataContext.SetSwitchValueCommand, RelativeSource={RelativeSource AncestorType=equip:SwitchHubView}}"
+                                        Command="{Binding Path=DataContext.ToggleBooleanSwitchValueCommand, RelativeSource={RelativeSource AncestorType=equip:SwitchHubView}}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource CheckedCircledSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                        <TextBlock
+                                            Padding="5,0,5,0"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{ns:Loc LblToggle}" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
