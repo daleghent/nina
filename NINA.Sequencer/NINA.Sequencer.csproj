@@ -251,6 +251,7 @@
     <Compile Include="SequenceItem\Platesolving\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SequenceItem\Platesolving\SolveAndRotate.cs" />
     <Compile Include="SequenceItem\Platesolving\SolveAndSync.cs" />
     <Compile Include="SequenceItem\Rotator\DataTemplates.xaml.cs">
       <DependentUpon>DataTemplates.xaml</DependentUpon>

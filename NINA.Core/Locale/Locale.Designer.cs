@@ -1420,6 +1420,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!).
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_SolveAndRotate_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_SolveAndRotate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solve and rotate.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_SolveAndRotate_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_SolveAndRotate_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Takes an image and solves the image using the current telescope position as reference.
         ///After solving the frame successfully the telescope will be synced to the solved position.
         ///Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!.

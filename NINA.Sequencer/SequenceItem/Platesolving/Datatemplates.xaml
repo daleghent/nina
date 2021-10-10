@@ -238,4 +238,31 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:SolveAndRotate}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblRotation}" />
+                    <ninactrl:UnitTextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                        TextAlignment="Right"
+                        Unit="°">
+                        <ninactrl:UnitTextBox.Text>
+                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <rules:FullCircleDegreesRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ninactrl:UnitTextBox.Text>
+                    </ninactrl:UnitTextBox>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
 </ResourceDictionary>

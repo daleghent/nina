@@ -356,6 +356,7 @@
     <Compile Include="Sequencer\SequenceItem\Imaging\TakeManyExposuresTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Platesolving\CenterAndRotateTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Platesolving\CenterTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Platesolving\SolveAndRotateTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Platesolving\SolveAndSyncTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Rotator\MoveRotatorMechanicalTest.cs" />
     <Compile Include="Sequencer\SequenceItem\SafetyMonitor\WaitUntilSafeTest.cs" />
