@@ -26,7 +26,7 @@ namespace NINA.Equipment.Equipment.MySwitch.PegasusAstro {
 
         public override double Maximum { get; protected set; } = 1d;
         public override double Minimum { get; protected set; } = 0d;
-        public override double StepSize { get; protected set; } = 0d;
+        public override double StepSize { get; protected set; } = 1d;
         public override double TargetValue { get; set; }
 
         public abstract override Task SetValue();
