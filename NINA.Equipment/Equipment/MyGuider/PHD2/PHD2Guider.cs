@@ -481,7 +481,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 var starSelected = await WaitForStarSelected(progress, ct);
                 if (starSelected) {
                     if (!isCalibrated) {
-                        await Task.Delay(1000, ct);
+                        await Task.Delay(5000, ct);
                         await WaitForCalibrationFinished(progress, ct);
                     }
 
