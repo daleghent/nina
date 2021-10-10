@@ -690,7 +690,7 @@
                                                     <Binding.ValidationRules>
                                                         <util:ShortRangeRule>
                                                             <util:ShortRangeRule.ValidRange>
-                                                                <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                                                <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
                                                             </util:ShortRangeRule.ValidRange>
                                                         </util:ShortRangeRule>
                                                     </Binding.ValidationRules>
@@ -729,12 +729,13 @@
                                 CanUserSort="False"
                                 Header="{ns:Loc LblOffset}">
                                 <DataGridTemplateColumn.Visibility>
-                                    <PriorityBinding FallbackValue="Visible">
+                                    <MultiBinding Converter="{StaticResource BooleanOrToVisibilityCollapsedMultiConverter}" FallbackValue="Visible">
                                         <Binding
-                                            Converter="{StaticResource BooleanToVisibilityHiddenConverter}"
-                                            Path="Data.CanSetOffset"
+                                            Converter="{StaticResource InverseBooleanConverter}"
+                                            Path="Data.Connected"
                                             Source="{StaticResource CameraInfo}" />
-                                    </PriorityBinding>
+                                        <Binding Path="Data.CanSetOffset" Source="{StaticResource CameraInfo}" />
+                                    </MultiBinding>
                                 </DataGridTemplateColumn.Visibility>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
@@ -763,7 +764,7 @@
                                                     <Binding.ValidationRules>
                                                         <util:ShortRangeRule>
                                                             <util:ShortRangeRule.ValidRange>
-                                                                <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMin}" />
+                                                                <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
                                                             </util:ShortRangeRule.ValidRange>
                                                         </util:ShortRangeRule>
                                                     </Binding.ValidationRules>
