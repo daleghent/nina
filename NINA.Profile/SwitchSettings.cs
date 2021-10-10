@@ -31,6 +31,18 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             id = "No_Device";
             eagleUrl = "http://localhost:1380/";
+
+            Upbv2PowerName1 = "Power 1";
+            Upbv2PowerName2 = "Power 2";
+            Upbv2PowerName3 = "Power 3";
+            Upbv2PowerName4 = "Power 4";
+            Upbv2PowerName5 = "Power 5";
+            Upbv2UsbName1 = "USB 1";
+            Upbv2UsbName2 = "USB 2";
+            Upbv2UsbName3 = "USB 3";
+            Upbv2UsbName4 = "USB 4";
+            Upbv2UsbName5 = "USB 5";
+            Upbv2UsbName6 = "USB 6";
         }
 
         private string id;
