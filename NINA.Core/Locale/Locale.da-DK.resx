@@ -5803,4 +5803,10 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
     <value>Reset all rows in the current target?</value>
   </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
+    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
+    <value>Solve and rotate</value>
+  </data>
 </root>
