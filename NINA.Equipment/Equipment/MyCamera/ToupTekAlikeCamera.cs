@@ -33,11 +33,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
     public class ToupTekAlikeCamera : BaseINPC, ICamera {
         private ToupTekAlikeFlag flags;
         private IToupTekAlikeCameraSDK sdk;
+        private string internalId;
 
         public ToupTekAlikeCamera(ToupTekAlikeDeviceInfo deviceInfo, IToupTekAlikeCameraSDK sdk, IProfileService profileService) {
+            Category = sdk.Category;
+
             this.profileService = profileService;
             this.sdk = sdk;
-            this.Id = deviceInfo.id;
+            this.internalId = deviceInfo.id;
+            if (sdk is ToupTekAlike.AltairSDKWrapper || sdk is ToupTekAlike.ToupTekSDKWrapper) {
+                // Altair cams hava a distinct id in contrast to other touptek brands and the original touptek brand doesn't need the category filter
+                this.Id = deviceInfo.id;
+            } else {
+                this.Id = Category + "_" + deviceInfo.id;
+            }
+
             this.Name = deviceInfo.displayname;
             this.Description = deviceInfo.model.name;
             this.MaxFanSpeed = (int)deviceInfo.model.maxfanspeed;
@@ -45,8 +55,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.PixelSizeY = Math.Round(deviceInfo.model.ypixsz, 2);
 
             this.flags = (ToupTekAlikeFlag)deviceInfo.model.flag;
-
-            Category = sdk.Category;
         }
 
         private IProfileService profileService;
@@ -592,7 +600,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     imageReadyTCS?.TrySetCanceled();
                     imageReadyTCS = null;
 
-                    sdk = sdk.Open(this.Id);
+                    sdk = sdk.Open(this.internalId);
                     success = true;
 
                     /* Use maximum bit depth */

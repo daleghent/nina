@@ -195,7 +195,9 @@
     <Compile Include="Equipment\MyCamera\QHYCamera.cs" />
     <Compile Include="Equipment\MyCamera\SBIGCamera.cs" />
     <Compile Include="Equipment\MyCamera\SBIGCameraASCOMService.cs" />
+    <Compile Include="Equipment\MyCamera\ToupTekAlike\MallinCamSDKWrapper.cs" />
     <Compile Include="Equipment\MyFilterWheel\SBIGFilterWheel.cs" />
+    <Compile Include="SDK\CameraSDKs\MallinCamSDK\mallincam.cs" />
     <Compile Include="SDK\CameraSDKs\SBIGSDK\SBIGFilterWheelProvider.cs" />
     <Compile Include="Equipment\MyCamera\SVBonyCamera.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlikeCamera.cs" />

@@ -51,6 +51,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock FontWeight="Bold" Text="{ns:Loc LblVendor}" />
             <TextBlock
@@ -80,59 +81,65 @@
                 Grid.Column="1"
                 Text="{Binding CanonSDKVersion}" />
 
-            <TextBlock Grid.Row="4" Text="Nikon" />
+            <TextBlock Grid.Row="4" Text="FLI" />
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="1"
-                Text="{Binding NikonSDKVersion}" />
+                Text="{Binding FLISDKVersion}" />
 
-            <TextBlock Grid.Row="5" Text="FLI" />
+            <TextBlock Grid.Row="5" Text="MallinCam" />
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="1"
-                Text="{Binding FLISDKVersion}" />
+                Text="{Binding MallinCamSDKVersion}" />
 
-            <TextBlock Grid.Row="6" Text="Omegon" />
+            <TextBlock Grid.Row="6" Text="Nikon" />
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="1"
-                Text="{Binding OmegonSDKVersion}" />
+                Text="{Binding NikonSDKVersion}" />
 
-            <TextBlock Grid.Row="7" Text="QHYCCD" />
+            <TextBlock Grid.Row="7" Text="Omegon" />
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="1"
-                Text="{Binding QHYSDKVersion}" />
+                Text="{Binding OmegonSDKVersion}" />
 
-            <TextBlock Grid.Row="8" Text="RisingCam" />
+            <TextBlock Grid.Row="8" Text="QHYCCD" />
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="1"
-                Text="{Binding RisingCamSDKVersion}" />
+                Text="{Binding QHYSDKVersion}" />
 
-            <TextBlock Grid.Row="9" Text="ToupTek" />
+            <TextBlock Grid.Row="9" Text="RisingCam" />
             <TextBlock
                 Grid.Row="9"
                 Grid.Column="1"
-                Text="{Binding ToupTekSDKVersion}" />
+                Text="{Binding RisingCamSDKVersion}" />
 
-            <TextBlock Grid.Row="10" Text="ZWOptical" />
+            <TextBlock Grid.Row="10" Text="ToupTek" />
             <TextBlock
                 Grid.Row="10"
                 Grid.Column="1"
-                Text="{Binding ZWOSDKVersion}" />
+                Text="{Binding ToupTekSDKVersion}" />
 
-            <TextBlock Grid.Row="11" Text="SVBony" />
+            <TextBlock Grid.Row="11" Text="SBIG" />
             <TextBlock
                 Grid.Row="11"
                 Grid.Column="1"
-                Text="{Binding SVBonySDKVersion}" />
+                Text="{Binding SBIGSDKVersion}" />
 
-            <TextBlock Grid.Row="12" Text="SBIG" />
+            <TextBlock Grid.Row="12" Text="SVBony" />
             <TextBlock
                 Grid.Row="12"
                 Grid.Column="1"
-                Text="{Binding SBIGSDKVersion}" />
+                Text="{Binding SVBonySDKVersion}" />
+
+            <TextBlock Grid.Row="13" Text="ZWOptical" />
+            <TextBlock
+                Grid.Row="13"
+                Grid.Column="1"
+                Text="{Binding ZWOSDKVersion}" />
         </Grid>
     </Grid>
 </UserControl>

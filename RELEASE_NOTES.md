@@ -90,6 +90,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ### SBIG
 - Added a native driver for SBIG cameras.
 
+### MallinCam
+- Added native driver for MallinCam cameras.
+
 ### ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)

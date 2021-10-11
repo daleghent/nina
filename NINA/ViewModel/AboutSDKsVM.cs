@@ -100,6 +100,12 @@ namespace NINA.ViewModel {
             } catch (Exception) {
                 SBIGSDKVersion = Loc.Instance["LblNotInstalled"];
             }
+
+            try {
+                MallinCamSDKVersion = MallinCam.MallinCam.Version();
+            } catch (Exception) {
+                MallinCamSDKVersion = Loc.Instance["LblNotInstalled"];
+            }
         }
 
         public string AltairSDKVersion { get; }
@@ -114,5 +120,6 @@ namespace NINA.ViewModel {
         public string ToupTekSDKVersion { get; }
         public string SVBonySDKVersion { get; }
         public string SBIGSDKVersion { get; }
+        public string MallinCamSDKVersion { get; }
     }
 }

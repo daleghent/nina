@@ -193,6 +193,8 @@
 			<ComponentGroupRef Id="zh_Hans_files" />
 			<ComponentGroupRef Id="zh_Hant_files" />
 			<ComponentGroupRef Id="de_files" />
+			<ComponentGroupRef Id="External_x64_MallinCam_files" />
+			<ComponentGroupRef Id="External_x86_MallinCam_files" />
 		</Feature>
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
@@ -271,6 +273,7 @@
 							<Directory Id="External_x64_VCRedis" Name="VCRedis" />
 							<Directory Id="External_x64_SVBony" Name="SVBony" />
 							<Directory Id="External_x64_SBIG" Name="SBIG" />
+							<Directory Id="External_x64_MallinCam" Name="MallinCam" />
 						</Directory>
 						<Directory Id="External_x86" Name="x86">
 							<Directory Id="External_x86_Nikon" Name="Nikon">
@@ -323,6 +326,7 @@
 							<Directory Id="External_x86_VCRedis" Name="VCRedis" />
 							<Directory Id="External_x86_SVBony" Name="SVBony" />
 							<Directory Id="External_x86_SBIG" Name="SBIG" />
+							<Directory Id="External_x86_MallinCam" Name="MallinCam" />
 						</Directory>
 					</Directory>
 					<Directory Id="Utility" Name="Utility">
@@ -1965,6 +1969,21 @@
 		<ComponentGroup Id="External_x86_SBIG_files" Directory="External_x86_SBIG">
 			<Component Win64="$(var.Win64)" Id="External_x86_SBIG_SBIGUDrv.dll" Guid="ae8c1bd5-519e-4e44-a7ed-b7e88d62d255">
 				<File Id="External_x86_SBIG_SBIGUDrv.dll" Name="SBIGUDrv.dll" Source="$(var.NINA_TargetDir)External\x86\SBIG\SBIGUDrv.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="External_x64_MallinCam_files" Directory="External_x64_MallinCam">
+			<Component Win64="$(var.Win64)" Id="External_x64_MallinCam_mallincam.dll" Guid="a02a555a-10f1-4d60-83d1-82f0ba731e2f">
+				<File Id="External_x64_MallinCam_mallincam.dll" Name="mallincam.dll" Source="$(var.NINA_TargetDir)External\x64\MallinCam\mallincam.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="External_x86_MallinCam_files" Directory="External_x86_MallinCam">
+			<Component Win64="$(var.Win64)" Id="External_x86_MallinCam_mallincam.dll" Guid="5a676019-685b-486c-b3b2-5fabf1bf02fc">
+				<File Id="External_x86_MallinCam_mallincam.dll" Name="mallincam.dll" Source="$(var.NINA_TargetDir)External\x86\MallinCam\mallincam.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>

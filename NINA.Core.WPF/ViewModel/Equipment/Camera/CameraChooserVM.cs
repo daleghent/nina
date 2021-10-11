@@ -162,6 +162,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     Logger.Error(ex);
                 }
 
+                /* MallinCam */
+                try {
+                    Logger.Trace("Adding MallinCam Cameras");
+                    foreach (var instance in MallinCam.MallinCam.EnumV2()) {
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new MallinCamSDKWrapper(), profileService);
+                        devices.Add(cam);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
                 /* SVBony */
                 try {
                     var provider = new SVBonyProvider(profileService);

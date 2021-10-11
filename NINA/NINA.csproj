@@ -1169,6 +1169,9 @@
     <Content Include="Database\Migration\5.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x64\MallinCam\mallincam.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\Risingcam\nncam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1199,6 +1202,9 @@
       <TargetPath>vcruntime140_1.dll</TargetPath>
     </ContentWithTargetPath>
     <Content Include="External\x64\SVBony\SVBCameraSDK.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x86\MallinCam\mallincam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x86\Risingcam\nncam.dll">
