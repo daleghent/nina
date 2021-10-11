@@ -5771,7 +5771,7 @@ Dec: {1}</value>
     <value>Синхронизировать купол</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+    <value>Триггер для ограничения синхронизирующих движений купола между этапами последовательности, чтобы уменьшить вибрацию во время экспонирования. Это не должно использоваться с включенным слежением за куполом, которое постоянно работает в фоновом режиме.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
     <value>Азимут</value>
@@ -5780,11 +5780,11 @@ Dec: {1}</value>
     <value>Высота</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
-    <value>Turn dome following off to use the Synchronize Dome Trigger</value>
+    <value>Выключите слежение за куполом, чтобы использовать синхронизацию спускового крючка купола</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
+    <value>Условие, которое проверяет подключенное устройство монитора безопасности, если оно небезопасно, и зацикливает набор инструкций, пока монитор безопасности сообщает, что он небезопасен. Если устройство возвращается в безопасное состояние, текущий набор команд останавливается.
+Лучше всего использовать в сочетании с другим условием цикла, чтобы не попасть в бесконечный цикл, когда монитор безопасности остается небезопасным.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Цикл пока небезопасно</value>
@@ -5793,21 +5793,21 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Не удалось возобновить гидирование после изменения фильтра, которое привело к перемещению фокуса</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
-    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
+    <value>Обнаружена неизвестная инструкция! Пожалуйста, дважды проверьте свою последовательность и проверьте, какие инструкции стали недействительными. Кроме того, убедитесь, что все обновлено.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
-    <value>Toggle</value>
+    <value>Переключить</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
-    <value>Reset Target</value>
+    <value>Сбросить цель</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
-    <value>Reset all rows in the current target?</value>
+    <value>Сбросить все строки в текущей цели?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+    <value>Использует распознавание поля для определения текущего поворота текущей позиции и использует вращатель для достижения заданного угла неба. (Он не будет центрировать цель!)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
-    <value>Solve and rotate</value>
+    <value>Решить и повернуть</value>
   </data>
 </root>
