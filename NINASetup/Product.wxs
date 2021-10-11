@@ -102,6 +102,7 @@
 			<ComponentGroupRef Id="External_x64_VCRedis_files" />
 			<ComponentGroupRef Id="External_x64_SVBony_files" />
 			<ComponentGroupRef Id="External_x64_SBIG_files" />
+			<ComponentGroupRef Id="External_x64_MallinCam_files" />
 			<?else?>
 			<ComponentGroupRef Id="External_x86_FTDI_files" />
 			<ComponentGroupRef Id="External_x86_AllPro_files" />
@@ -151,6 +152,7 @@
 			<ComponentGroupRef Id="External_x86_VCRedis_files" />
 			<ComponentGroupRef Id="External_x86_SVBony_files" />
 			<ComponentGroupRef Id="External_x86_SBIG_files" />
+			<ComponentGroupRef Id="External_x86_MallinCam_files" />
 			<?endif?>
 			<ComponentGroupRef Id="Utility_ColorSchema_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -193,8 +195,6 @@
 			<ComponentGroupRef Id="zh_Hans_files" />
 			<ComponentGroupRef Id="zh_Hant_files" />
 			<ComponentGroupRef Id="de_files" />
-			<ComponentGroupRef Id="External_x64_MallinCam_files" />
-			<ComponentGroupRef Id="External_x86_MallinCam_files" />
 		</Feature>
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
@@ -1451,6 +1451,14 @@
 		</ComponentGroup>
 	</Fragment>
 
+	<Fragment>
+		<ComponentGroup Id="External_x64_MallinCam_files" Directory="External_x64_MallinCam">
+			<Component Win64="$(var.Win64)" Id="External_x64_MallinCam_mallincam.dll" Guid="a02a555a-10f1-4d60-83d1-82f0ba731e2f">
+				<File Id="External_x64_MallinCam_mallincam.dll" Name="mallincam.dll" Source="$(var.NINA_TargetDir)External\x64\MallinCam\mallincam.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
 	<?else?>
 
 	<!-- x86 Dependencies -->
@@ -1973,13 +1981,6 @@
 		</ComponentGroup>
 	</Fragment>
 
-	<Fragment>
-		<ComponentGroup Id="External_x64_MallinCam_files" Directory="External_x64_MallinCam">
-			<Component Win64="$(var.Win64)" Id="External_x64_MallinCam_mallincam.dll" Guid="a02a555a-10f1-4d60-83d1-82f0ba731e2f">
-				<File Id="External_x64_MallinCam_mallincam.dll" Name="mallincam.dll" Source="$(var.NINA_TargetDir)External\x64\MallinCam\mallincam.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
 	<Fragment>
 		<ComponentGroup Id="External_x86_MallinCam_files" Directory="External_x86_MallinCam">
 			<Component Win64="$(var.Win64)" Id="External_x86_MallinCam_mallincam.dll" Guid="5a676019-685b-486c-b3b2-5fabf1bf02fc">
