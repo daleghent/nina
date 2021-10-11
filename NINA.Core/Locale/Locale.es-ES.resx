@@ -5802,9 +5802,9 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
     <value>¿Reinicializar todas las filas del objetivo actual?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+    <value>Utiliza la astrometría (platesolve) para determinar la rotación actual de la posición actual y utiliza un rotador para conseguir el ángulo de cielo especificado. (¡No centrará el objetivo!)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
-    <value>Solve and rotate</value>
+    <value>Resolver y rotar</value>
   </data>
 </root>
