@@ -213,6 +213,7 @@ namespace NINA.WPF.Base.ViewModel {
         public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
 
         private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
+            Logger.Info($"Meridian Flip - Running Autofocus");
             var autoFocus = AutoFocusVMFactory.Create();
             progress.Report(new ApplicationStatus { Status = Loc.Instance["LblAutoFocus"] });
             var service = WindowServiceFactory.Create();
