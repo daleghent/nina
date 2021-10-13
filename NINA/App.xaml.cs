@@ -23,6 +23,8 @@ using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -39,6 +41,27 @@ namespace NINA {
 
         protected override void OnStartup(StartupEventArgs e) {
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+
+            Exception configProblem = null;
+            try {
+                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                try {
+                    var backup = config.FilePath + ".bkp";
+                    config.SaveAs(backup, ConfigurationSaveMode.Full, true);
+                } catch (Exception) { }
+            } catch (ConfigurationErrorsException configException) {
+                try {
+                    configProblem = configException;
+                    File.Delete(configException.Filename);
+
+                    var backup = configException.Filename + ".bkp";
+                    if (File.Exists(backup)) {
+                        File.Copy(backup, configException.Filename, true);
+                    }
+                } catch (Exception configRestoreException) {
+                    configProblem = configRestoreException;
+                }
+            }
 
             if (NINA.Properties.Settings.Default.UpdateSettings) {
                 NINA.Properties.Settings.Default.Upgrade();
@@ -69,6 +92,10 @@ namespace NINA {
             _profileService.CreateWatcher();
 
             Logger.SetLogLevel(_profileService.ActiveProfile.ApplicationSettings.LogLevel);
+
+            if (configProblem != null) {
+                Logger.Error("There was an issue loading the user settings and the application tried to delete the file and reload default settings.", configProblem);
+            }
 
             _mainWindowViewModel = CompositionRoot.Compose(_profileService);
             EventManager.RegisterClassHandler(typeof(TextBox),
