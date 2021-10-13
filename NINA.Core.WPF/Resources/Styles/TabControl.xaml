@@ -84,11 +84,13 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TabPanel
-                MinWidth="{TemplateBinding MinWidth}"
-                HorizontalAlignment="Left"
-                Background="{StaticResource SecondaryBackgroundBrush}"
-                IsItemsHost="true" />
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <TabPanel
+                    MinWidth="{TemplateBinding MinWidth}"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource SecondaryBackgroundBrush}"
+                    IsItemsHost="true" />
+            </ScrollViewer>
             <Border
                 Grid.Column="1"
                 BorderBrush="{StaticResource BorderBrush}"
@@ -177,11 +179,13 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TabPanel
-                MinWidth="65"
-                HorizontalAlignment="Left"
-                Background="{StaticResource TertiaryBackgroundBrush}"
-                IsItemsHost="true" />
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <TabPanel
+                    MinWidth="65"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource TertiaryBackgroundBrush}"
+                    IsItemsHost="true" />
+            </ScrollViewer>
             <Border
                 Grid.Column="1"
                 BorderBrush="{StaticResource BorderBrush}"
