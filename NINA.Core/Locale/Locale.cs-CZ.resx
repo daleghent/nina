@@ -151,7 +151,7 @@
     <value>Detekce Kontrastu (Experimentální)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
-    <value>Auto-Focus is enabled, yet focuser is not connected</value>
+    <value>Auto-Ostření povoleno, ale zaostření není připojen</value>
   </data>
   <data name="LblAFStarHFR" xml:space="preserve">
     <value>Hvězda HFR</value>
@@ -197,7 +197,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba nadmořské
     <value>Namiřte dalekohled na východ nebo na západ, blízko deklinace 0, nebo blízko obzoru.</value>
   </data>
   <data name="LblAltitudeMeasurementSide" xml:space="preserve">
-    <value>Altitude Measurement side</value>
+    <value>Měření Nadmořské výšky</value>
   </data>
   <data name="LblAnnotateConstellationBoundaries" xml:space="preserve">
     <value>Zobrazit Hranice Souhvězdí</value>
@@ -375,10 +375,10 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Čas</value>
   </data>
   <data name="LblAutoFocusSwitchingBackToFilter" xml:space="preserve">
-    <value>Switching back to original filter</value>
+    <value>Přepnutí na původní filtr</value>
   </data>
   <data name="LblAutoFocusSwitchingToDefaultFilter" xml:space="preserve">
-    <value>Switching to Auto Focus filter</value>
+    <value>Přepnutí na filtr AutoOstření</value>
   </data>
   <data name="LblAutoMeridianFlip" xml:space="preserve">
     <value>Automatické Překlopení Poledníku</value>
@@ -387,7 +387,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Koeficient Autorozpětí</value>
   </data>
   <data name="LblAutoStretchFactorTooltip" xml:space="preserve">
-    <value>The factor for the autostretch algorithm that is used to display an image and detect stars. Must be a value between 0 and 1. A value of 0.2 should work most of the time.</value>
+    <value>Faktor pro algoritmus Autorozpětí. Slouží k zobrazení obrázků a k rozpoznání hvězd. Hodnota musí být mezi 0 a 1. Pro většinu případů by měla stačit hodnota 0.2.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
     <value>Aktualizace Zdroje</value>
@@ -445,10 +445,10 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Černý výřez</value>
   </data>
   <data name="LblBlindSolveAttemptForFraming" xml:space="preserve">
-    <value>Image has to be solved for framing.
-Should reference coordinates be taken?
+    <value>Na obraz je třeba aplikovat rámování.
+Mají se použít následující referenční souřadnice?
 RA: {0}
-Dec: {1}</value>
+Pro: {1}</value>
   </data>
   <data name="LblBlindSolver" xml:space="preserve">
     <value>Řešení Naslepo</value>
@@ -1346,9 +1346,9 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Kalkulačka Optimální Expozice</value>
   </data>
   <data name="LblExposureCalculatorDescription" xml:space="preserve">
-    <value>This tool will suggest a recommended exposure time based on the read noise from your sensor and the average skyglow.
-If you have SharpCap installed and perform a Sensor Analysis, then use the drop down below to retrieve the read noise and full well capacity for the specified gain.
-You can also calculate the bias by clicking the Snapshot button next to Bias Mean.</value>
+    <value>Tento nástroj navrhne doporučenou dobu expozice na základě čteného šumu ze senzoru a průměrné záře oblohy.
+Pokud máte nainstalován SharpCap a provádíte analýzu senzorů, použijte rozevírací nabídku níže k načtení šumu čtení a plné kapacity pro zadaný zisk.
+Můžete také vypočítat zkreslení kliknutím na tlačítko Vypočítat Bias.</value>
   </data>
   <data name="LblExposureCalculatorMeanLessThanOffset" xml:space="preserve">
     <value>Nelze určit doporučení doby expozice. Střední hodnota aktuálního obrázku je menší než zadaný střední hodnotu zkreslení. Vezměte si delší expozici nebo upravte nesprávné hodnoty.</value>
@@ -1499,7 +1499,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Použít expoziční časy z průvodce</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
-    <value>Mean ADU was {0}, starting Exposure Time calculation at {1}</value>
+    <value>Střední ADU byla {0} a začal výpočet doby expozice na {1}</value>
   </data>
   <data name="LblFlatExposureCalcFinished" xml:space="preserve">
     <value>Střední ADU je {0} cílová doba expozice je {1}</value>
@@ -1508,7 +1508,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Výpočet Času Expozice začíná v {0}</value>
   </data>
   <data name="LblFlatHistogramMeanTarget" xml:space="preserve">
-    <value>Histogram Mean Target</value>
+    <value>Cílový Průměr Histogramu</value>
   </data>
   <data name="LblFlatHistogramTolerance" xml:space="preserve">
     <value>Střední Tolerance</value>
@@ -1586,7 +1586,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Počáteční Krok AutoOstření</value>
   </data>
   <data name="LblFocuserAutoFocusInitialOffsetStepsTooltip" xml:space="preserve">
-    <value>Initial amount of steps the focuser will move out to begin auto focus procedure.</value>
+    <value>Prvotní počet kroků, které zaostření posune směrem ven před zahájením procesu auto-ostření.</value>
   </data>
   <data name="LblFocuserAutoFocusStepSize" xml:space="preserve">
     <value>Velikost Kroku AutoOstření</value>
@@ -1637,10 +1637,10 @@ Vypočtené HFR: {2}
     <value>Složka ke sledování</value>
   </data>
   <data name="LblFrameNFocus" xml:space="preserve">
-    <value>Frame &amp; Focus</value>
+    <value>Snímek &amp; Ostřit</value>
   </data>
   <data name="LblFrameNrDescription" xml:space="preserve">
-    <value># of the Frame with format ####</value>
+    <value># Snímek s formátem ####</value>
   </data>
   <data name="LblFraming" xml:space="preserve">
     <value>Rámování</value>
@@ -2844,7 +2844,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Nastavit jako filtr automatického zaostření</value>
   </data>
   <data name="LblSetAutoFocusFilterTooltip" xml:space="preserve">
-    <value>If set, auto-focus will always use the selected filter, using filter wheel offsets</value>
+    <value>Pokud je nastaveno, automatické zaostřování bude vždy používat vybraný filtr pomocí offsetu filtrového kola</value>
   </data>
   <data name="LblSetForFramingAssistant" xml:space="preserve">
     <value>Přejít na průvodce rámováním</value>
@@ -2913,7 +2913,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Atlas Hvězd</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Sky Atlas Image Directory</value>
+    <value>Adresář obrázků Sky Atlas</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>Mapa Hvězd (Offline Rámování)</value>
@@ -2937,7 +2937,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Přejezd</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>Přejezd a Vystředit</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Čas Přejezdu</value>
@@ -3001,7 +3001,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Pointace povolena, pointační kamera nepřipojena</value>
   </data>
   <data name="LblStartGuidingFailed" xml:space="preserve">
-    <value>Start guiding failed</value>
+    <value>Zahájit pointaci selhalo</value>
   </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>Měření Zpětné Vůle DOVNITŘ Začíná</value>
@@ -3307,7 +3307,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Sledovat</value>
   </data>
   <data name="LblTracking" xml:space="preserve">
-    <value>Tracking</value>
+    <value>Sledování</value>
   </data>
   <data name="LblTrackingRate" xml:space="preserve">
     <value>Rychlost Sledování</value>
@@ -3389,7 +3389,7 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
     <value>Ampérhodina</value>
   </data>
   <data name="LblUPBV2AutoDewControl" xml:space="preserve">
-    <value>Automatická Kontrola Rosy</value>
+    <value>Automatické Ovládání Rosení</value>
   </data>
   <data name="LblUPBV2AverageCurrent" xml:space="preserve">
     <value>Průměrný Proud</value>
@@ -3512,7 +3512,7 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
     <value>Počkat na dokončení ditheringu</value>
   </data>
   <data name="LblWaitForImageProcessing" xml:space="preserve">
-    <value>Waiting for previous image to finish processing</value>
+    <value>Počkat na dokončení zpracování předchozího obrazu</value>
   </data>
   <data name="LblWaitForTemperatureStep" xml:space="preserve">
     <value>Počkat, až kamera dosáhne dalšího teplotního kroku</value>
@@ -3675,7 +3675,7 @@ Standard Auto používá standard, který může poskytnout ovladač kamery. To 
     <value>Aktuální</value>
   </data>
   <data name="LblRunningEndOfSequence" xml:space="preserve">
-    <value>Running end of sequence options</value>
+    <value>Spuštění možnosti konce sekvence</value>
   </data>
   <data name="LblSQMPatternDescription" xml:space="preserve">
     <value>Měření Kvality Oblohy</value>
@@ -3995,7 +3995,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Překlopení Poledníku v</value>
   </data>
   <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
-    <value>Vystředí po Překlopení Poledníku Selhalo</value>
+    <value>Vycentrování po Překlopení Poledníku Selhalo</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>Výchozí Zisk</value>
@@ -4328,7 +4328,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Kamera nepodporuje režim čtení. Hodnota musí být mezi 0 a {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
-    <value>Otočí kolem filtru na zadaný filtr</value>
+    <value>Otočí filtrovým kolem na zadaný filtr</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
     <value>Přepínání Filtru</value>
@@ -4385,7 +4385,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Přejezd k cíli a vystředí dalekohled pomocí platesolvingu pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Přejezd a centrovat</value>
+    <value>Přejezd a Vycentrovat</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkovat dalekohled do parkovací polohy</value>
@@ -5426,7 +5426,7 @@ Dobrým výchozím bodem pro prahovou hodnotu je hodnota 0,8 - vše, co je níž
     <value>Počkat na bezpečí</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Čekání na bezpečné podmínky</value>
+    <value>Čekat na bezpečné podmínky</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
     <value>Nastavená Teplota Kamery</value>
@@ -5456,7 +5456,7 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>PHD2 - Stabilizuje se</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Čekání na zahájení pointace</value>
+    <value>PHD2 - Čeká na zahájení pointace</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Čas pointace vypršel. Opakování...</value>
