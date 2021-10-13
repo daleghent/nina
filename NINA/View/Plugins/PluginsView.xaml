@@ -29,321 +29,346 @@
         </DataTemplate>
         <plugin:PluginOptionsDataTemplateSelector x:Key="TemplateSelector" Default="{StaticResource DefaultPluginOption}" />
     </UserControl.Resources>
-    <TabControl Style="{StaticResource SecondLevelTabControl}" TabStripPlacement="Left">
+    <Grid>
+        <Grid Visibility="{Binding Initialized, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <TabItem>
-            <TabItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <ninactrl:LoadingControl
+                    Width="50"
+                    Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    LoadingImageBrush="{StaticResource PrimaryBrush}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="{ns:Loc LblInitializingPlugins}" />
+            </StackPanel>
+        </Grid>
+        <TabControl
+            Style="{StaticResource SecondLevelTabControl}"
+            TabStripPlacement="Left"
+            Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+
+            <TabItem>
+                <TabItem.Header>
                     <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource SaveSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
-                        </Grid>
-                    </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblInstalled}" />
-                </Grid>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid Opacity="0.4" Visibility="{Binding InstalledPlugins, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
+                            <RowDefinition Height="10" />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="1" Orientation="Vertical">
-                            <Path
-                                MaxWidth="100"
-                                MaxHeight="100"
-                                Margin="5"
-                                Data="{StaticResource PuzzlePieceSVG}"
-                                Fill="{StaticResource PrimaryBrush}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
-
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="20"
-                                FontStyle="Italic"
-                                Text="{ns:Loc LblNoPluginsFound}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource SaveSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+                        </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblInstalled}" />
                     </Grid>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid Opacity="0.4" Visibility="{Binding InstalledPlugins, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="1" Orientation="Vertical">
+                                <Path
+                                    MaxWidth="100"
+                                    MaxHeight="100"
+                                    Margin="5"
+                                    Data="{StaticResource PuzzlePieceSVG}"
+                                    Fill="{StaticResource PrimaryBrush}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
 
-                    <Grid Visibility="{Binding InstalledPlugins, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="250" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
-                            <GroupBox Header="{ns:Loc LblPlugins}">
-                                <Grid>
-                                    <ListView
-                                        MinWidth="180"
-                                        MaxWidth="350"
-                                        Margin="-25,0,-25,0"
-                                        BorderThickness="0"
-                                        ItemsSource="{Binding InstalledPlugins}"
-                                        SelectedItem="{Binding SelectedInstalledPlugin}">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="ListViewItem">
-                                                <Style.Setters>
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="ListBoxItem">
-                                                                <Border
-                                                                    Name="Border"
-                                                                    Margin="0,2.5,0,2.5"
-                                                                    Padding="2,0,2,0"
-                                                                    HorizontalAlignment="Stretch"
-                                                                    BorderBrush="{StaticResource BorderBrush}"
-                                                                    BorderThickness="0,0,0,1"
-                                                                    SnapsToDevicePixels="true">
-                                                                    <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsSelected" Value="true">
-                                                                        <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBrush}" />
-                                                                    </Trigger>
-                                                                    <Trigger Property="IsMouseOver" Value="true">
-                                                                        <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
-                                                                    </Trigger>
-                                                                    <Trigger Property="IsEnabled" Value="false">
-                                                                        <Setter Property="Foreground" Value="{StaticResource ButtonForegroundDisabledBrush}" />
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Style.Setters>
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.Resources>
-                                            <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </Style>
-                                        </ListView.Resources>
-                                        <ListView.View>
-                                            <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                                                <GridViewColumn Width="Auto" Header="">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Image
-                                                                MaxWidth="25"
-                                                                MaxHeight="25"
-                                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                                Source="{Binding Key.Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Width="Auto" Header="">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock
-                                                                VerticalAlignment="Center"
-                                                                FontSize="16"
-                                                                Text="{Binding Path=Key.Name}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Width="Auto" Header="">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <CheckBox
-                                                                Height="25"
-                                                                Margin="2.5"
-                                                                VerticalAlignment="Center"
-                                                                IsChecked="{Binding Path=Value, Mode=OneWay}"
-                                                                Style="{StaticResource CheckmarkCheckbox}"
-                                                                Visibility="{Binding Value, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </Grid>
-                            </GroupBox>
-                        </Border>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    FontStyle="Italic"
+                                    Text="{ns:Loc LblNoPluginsFound}" />
+                            </StackPanel>
+                        </Grid>
 
-                        <mdxam:MarkdownScrollViewer
-                            Grid.Column="1"
-                            Margin="0,5,0,5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Markdown="{Binding Descriptions.LongDescription}"
-                            MarkdownStyle="{StaticResource MarkdownStyle}"
-                            VerticalScrollBarVisibility="Disabled" />
-                        <ScrollViewer
-                            Grid.Column="1"
-                            Margin="5"
-                            DataContext="{Binding SelectedInstalledPlugin.Key}"
-                            VerticalScrollBarVisibility="Auto">
-                            <StackPanel Orientation="Vertical">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock
-                                            FontSize="30"
-                                            FontWeight="Bold"
-                                            Text="{Binding Name}"
-                                            TextDecorations="Underline" />
-                                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                                            <TextBlock FontSize="16" Text="{ns:Loc LblAuthor}" />
-                                            <TextBlock FontSize="16" Text=":" />
-                                            <TextBlock
-                                                Margin="5,0,0,0"
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="{Binding Author}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontSize="16" Text="{ns:Loc LblVersion}" />
-                                            <TextBlock FontSize="16" Text=":" />
-                                            <TextBlock
-                                                Margin="5,0,0,0"
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="{Binding Version.Major}" />
-                                            <TextBlock
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="." />
-                                            <TextBlock
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="{Binding Version.Minor}" />
-                                            <TextBlock
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="." />
-                                            <TextBlock
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="{Binding Version.Patch}" />
-                                            <TextBlock
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="." />
-                                            <TextBlock
-                                                FontSize="16"
-                                                FontWeight="Bold"
-                                                Text="{Binding Version.Build}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Visibility="{Binding Homepage, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                FontSize="16"
-                                                Text="{ns:Loc LblHomepage}" />
-                                            <TextBlock FontSize="16" Text=":" />
-                                            <TextBlock
-                                                Margin="5,0,0,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="16"
-                                                TextWrapping="Wrap">
-                                                <Hyperlink NavigateUri="{Binding Homepage, FallbackValue=''}" RequestNavigate="Hyperlink_RequestNavigate">
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        FontSize="16"
-                                                        Text="{Binding Homepage, FallbackValue=''}"
-                                                        TextWrapping="Wrap" />
-                                                </Hyperlink>
-                                            </TextBlock>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Visibility="{Binding ChangelogURL, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                FontSize="16"
-                                                Text="{ns:Loc LblChangelog}" />
-                                            <TextBlock FontSize="16" Text=":" />
-                                            <TextBlock
-                                                Margin="5,0,0,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="16"
-                                                TextWrapping="Wrap">
-                                                <Hyperlink NavigateUri="{Binding ChangelogURL, FallbackValue=''}" RequestNavigate="Hyperlink_RequestNavigate">
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        FontSize="16"
-                                                        Text="{Binding ChangelogURL, FallbackValue=''}"
-                                                        TextWrapping="Wrap" />
-                                                </Hyperlink>
-                                            </TextBlock>
-                                        </StackPanel>
-                                        <TextBlock
-                                            Margin="0,10,0,10"
-                                            FontSize="16"
-                                            FontStyle="Italic"
-                                            Text="{Binding Descriptions.ShortDescription}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
+                        <Grid Visibility="{Binding InstalledPlugins, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" MinWidth="250" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+                                <GroupBox Header="{ns:Loc LblPlugins}">
+                                    <Grid>
+                                        <ListView
+                                            MinWidth="180"
+                                            MaxWidth="350"
+                                            Margin="-25,0,-25,0"
+                                            BorderThickness="0"
+                                            ItemsSource="{Binding InstalledPlugins}"
+                                            SelectedItem="{Binding SelectedInstalledPlugin}">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Style.Setters>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListBoxItem">
+                                                                    <Border
+                                                                        Name="Border"
+                                                                        Margin="0,2.5,0,2.5"
+                                                                        Padding="2,0,2,0"
+                                                                        HorizontalAlignment="Stretch"
+                                                                        BorderBrush="{StaticResource BorderBrush}"
+                                                                        BorderThickness="0,0,0,1"
+                                                                        SnapsToDevicePixels="true">
+                                                                        <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="true">
+                                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBrush}" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsEnabled" Value="false">
+                                                                            <Setter Property="Foreground" Value="{StaticResource ButtonForegroundDisabledBrush}" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style.Setters>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.Resources>
+                                                <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </Style>
+                                            </ListView.Resources>
+                                            <ListView.View>
+                                                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                                                    <GridViewColumn Width="Auto" Header="">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <Image
+                                                                    MaxWidth="25"
+                                                                    MaxHeight="25"
+                                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                                    Source="{Binding Key.Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}}" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                    <GridViewColumn Width="Auto" Header="">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock
+                                                                    VerticalAlignment="Center"
+                                                                    FontSize="16"
+                                                                    Text="{Binding Path=Key.Name}" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                    <GridViewColumn Width="Auto" Header="">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox
+                                                                    Height="25"
+                                                                    Margin="2.5"
+                                                                    VerticalAlignment="Center"
+                                                                    IsChecked="{Binding Path=Value, Mode=OneWay}"
+                                                                    Style="{StaticResource CheckmarkCheckbox}"
+                                                                    Visibility="{Binding Value, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                </GroupBox>
+                            </Border>
 
-                                    <Grid Grid.Column="1">
+                            <mdxam:MarkdownScrollViewer
+                                Grid.Column="1"
+                                Margin="0,5,0,5"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Markdown="{Binding Descriptions.LongDescription}"
+                                MarkdownStyle="{StaticResource MarkdownStyle}"
+                                VerticalScrollBarVisibility="Disabled" />
+                            <ScrollViewer
+                                Grid.Column="1"
+                                Margin="5"
+                                DataContext="{Binding SelectedInstalledPlugin.Key}"
+                                VerticalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Vertical">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                FontSize="30"
+                                                FontWeight="Bold"
+                                                Text="{Binding Name}"
+                                                TextDecorations="Underline" />
+                                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                                <TextBlock FontSize="16" Text="{ns:Loc LblAuthor}" />
+                                                <TextBlock FontSize="16" Text=":" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Author}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="16" Text="{ns:Loc LblVersion}" />
+                                                <TextBlock FontSize="16" Text=":" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Version.Major}" />
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="." />
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Version.Minor}" />
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="." />
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Version.Patch}" />
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="." />
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Version.Build}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding Homepage, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    Text="{ns:Loc LblHomepage}" />
+                                                <TextBlock FontSize="16" Text=":" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    TextWrapping="Wrap">
+                                                    <Hyperlink NavigateUri="{Binding Homepage, FallbackValue=''}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                        <TextBlock
+                                                            VerticalAlignment="Center"
+                                                            FontSize="16"
+                                                            Text="{Binding Homepage, FallbackValue=''}"
+                                                            TextWrapping="Wrap" />
+                                                    </Hyperlink>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding ChangelogURL, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    Text="{ns:Loc LblChangelog}" />
+                                                <TextBlock FontSize="16" Text=":" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    TextWrapping="Wrap">
+                                                    <Hyperlink NavigateUri="{Binding ChangelogURL, FallbackValue=''}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                        <TextBlock
+                                                            VerticalAlignment="Center"
+                                                            FontSize="16"
+                                                            Text="{Binding ChangelogURL, FallbackValue=''}"
+                                                            TextWrapping="Wrap" />
+                                                    </Hyperlink>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <TextBlock
+                                                Margin="0,10,0,10"
+                                                FontSize="16"
+                                                FontStyle="Italic"
+                                                Text="{Binding Descriptions.ShortDescription}"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
+
                                         <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
 
-                                            <ninactrl:AsyncProcessButton
-                                                Width="150"
-                                                Height="35"
-                                                VerticalAlignment="Top"
-                                                ButtonText="{ns:Loc LblUninstall}"
-                                                Command="{Binding DataContext.UninstallPluginCommand, RelativeSource={RelativeSource AncestorType=local:PluginsView}}" />
+                                                <ninactrl:AsyncProcessButton
+                                                    Width="150"
+                                                    Height="35"
+                                                    VerticalAlignment="Top"
+                                                    ButtonText="{ns:Loc LblUninstall}"
+                                                    Command="{Binding DataContext.UninstallPluginCommand, RelativeSource={RelativeSource AncestorType=local:PluginsView}}" />
 
-                                            <Image
-                                                Grid.Row="1"
-                                                MaxWidth="150"
-                                                MaxHeight="150"
-                                                Margin="0,10,0,0"
-                                                VerticalAlignment="Top"
-                                                RenderOptions.BitmapScalingMode="HighQuality"
-                                                Source="{Binding Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}}" />
+                                                <Image
+                                                    Grid.Row="1"
+                                                    MaxWidth="150"
+                                                    MaxHeight="150"
+                                                    Margin="0,10,0,0"
+                                                    VerticalAlignment="Top"
+                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                    Source="{Binding Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}}" />
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
 
-                                <GroupBox
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    Header="{ns:Loc LblDescription}"
-                                    Visibility="{Binding Descriptions.LongDescription, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
-                                    <i:Interaction.Behaviors>
-                                        <behavior:BubbleScrollEvent />
-                                    </i:Interaction.Behaviors>
-                                    <mdxam:MarkdownScrollViewer
-                                        Margin="0,5,0,5"
+                                    <GroupBox
                                         HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Stretch"
-                                        ClickAction="OpenBrowser"
-                                        Markdown="{Binding Descriptions.LongDescription}"
-                                        MarkdownStyle="{StaticResource MarkdownStyle}"
-                                        VerticalScrollBarVisibility="Disabled" />
-                                </GroupBox>
+                                        Header="{ns:Loc LblDescription}"
+                                        Visibility="{Binding Descriptions.LongDescription, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
+                                        <i:Interaction.Behaviors>
+                                            <behavior:BubbleScrollEvent />
+                                        </i:Interaction.Behaviors>
+                                        <mdxam:MarkdownScrollViewer
+                                            Margin="0,5,0,5"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            ClickAction="OpenBrowser"
+                                            Markdown="{Binding Descriptions.LongDescription}"
+                                            MarkdownStyle="{StaticResource MarkdownStyle}"
+                                            VerticalScrollBarVisibility="Disabled" />
+                                    </GroupBox>
 
-                                <GroupBox Header="{ns:Loc LblOptions}">
-                                    <ContentControl
-                                        Margin="0,5,0,0"
-                                        Content="{Binding}"
-                                        ContentTemplateSelector="{StaticResource TemplateSelector}" />
-                                </GroupBox>
-                            </StackPanel>
-                        </ScrollViewer>
-                        <!--<Grid
+                                    <GroupBox Header="{ns:Loc LblOptions}">
+                                        <ContentControl
+                                            Margin="0,5,0,0"
+                                            Content="{Binding}"
+                                            ContentTemplateSelector="{StaticResource TemplateSelector}" />
+                                    </GroupBox>
+                                </StackPanel>
+                            </ScrollViewer>
+                            <!--<Grid
                         Grid.Column="1"
                         Margin="5"
                         DataContext="{Binding SelectedInstalledPlugin.Key}">
@@ -396,64 +421,65 @@
                             Content="{Binding}"
                             ContentTemplateSelector="{StaticResource TemplateSelector}" />
                     </Grid>-->
-                    </Grid>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem>
-            <TabItem.Style>
-                <Style BasedOn="{StaticResource LeftTabItem}" TargetType="TabItem">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Content" Value="{Binding Path=(util:DeferredContent.Content), RelativeSource={RelativeSource Self}}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="Content" Value="{Binding Content, RelativeSource={RelativeSource Self}}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TabItem.Style>
-            <TabItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource GridSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
-
-                            <Border
-                                Width="15"
-                                Height="15"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                Background="{StaticResource ButtonBackgroundBrush}"
-                                CornerRadius="1"
-                                Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontWeight="Bold"
-                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                    Text="{Binding AvailablePluginUpdateCount}" />
-                            </Border>
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblAvailable}" />
-                </Grid>
-            </TabItem.Header>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Style>
+                    <Style BasedOn="{StaticResource LeftTabItem}" TargetType="TabItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Content" Value="{Binding Path=(util:DeferredContent.Content), RelativeSource={RelativeSource Self}}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter Property="Content" Value="{Binding Content, RelativeSource={RelativeSource Self}}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
+                <TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource GridSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
 
-            <util:DeferredContent.Content>
-                <local:AvailablePluginsView />
-            </util:DeferredContent.Content>
-        </TabItem>
-    </TabControl>
+                                <Border
+                                    Width="15"
+                                    Height="15"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Background="{StaticResource ButtonBackgroundBrush}"
+                                    CornerRadius="1"
+                                    Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                        Text="{Binding AvailablePluginUpdateCount}" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblAvailable}" />
+                    </Grid>
+                </TabItem.Header>
+
+                <util:DeferredContent.Content>
+                    <local:AvailablePluginsView />
+                </util:DeferredContent.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </UserControl>

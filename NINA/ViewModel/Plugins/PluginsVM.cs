@@ -65,10 +65,29 @@ namespace NINA.ViewModel.Plugins {
                 RaisePropertyChanged(nameof(AvailablePlugins));
                 RaisePropertyChanged(nameof(SelectedAvailablePlugin));
 
+                Initialized = true;
+
                 if (InstalledPlugins?.Count > 0) {
                     await FetchPluginsCommand.ExecuteAsync("Initial");
                 }
             });
+        }
+
+        private object lockObj = new object();
+        private bool initialized;
+
+        public bool Initialized {
+            get {
+                lock (lockObj) {
+                    return initialized;
+                }
+            }
+            private set {
+                lock (lockObj) {
+                    initialized = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private Task<bool> UninstallPlugin() {

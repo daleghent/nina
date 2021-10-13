@@ -9408,6 +9408,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initializing Plugins.
+        /// </summary>
+        internal static string LblInitializingPlugins {
+            get {
+                return ResourceManager.GetString("LblInitializingPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initializing Sequencer....
         /// </summary>
         internal static string LblInitializingSequencer {
