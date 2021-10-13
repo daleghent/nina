@@ -39,19 +39,21 @@ namespace NINA {
         private ProfileService _profileService;
         private IMainWindowVM _mainWindowViewModel;
 
-        protected override void OnStartup(StartupEventArgs e) {
-            Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
-
-            Exception configProblem = null;
+        private Exception InitializeUserSettings() {
+            Exception userSettingsException = null;
+            Configuration config;
             try {
-                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                NINA.Properties.Settings.Default.GetPreviousVersion("UpdateSettings");
                 try {
-                    var backup = config.FilePath + ".bkp";
-                    config.SaveAs(backup, ConfigurationSaveMode.Full, true);
+                    if (config.HasFile) {
+                        var backup = config.FilePath + ".bkp";
+                        config.SaveAs(backup, ConfigurationSaveMode.Full, true);
+                    }
                 } catch (Exception) { }
             } catch (ConfigurationErrorsException configException) {
                 try {
-                    configProblem = configException;
+                    userSettingsException = configException;
                     File.Delete(configException.Filename);
 
                     var backup = configException.Filename + ".bkp";
@@ -59,15 +61,32 @@ namespace NINA {
                         File.Copy(backup, configException.Filename, true);
                     }
                 } catch (Exception configRestoreException) {
-                    configProblem = configRestoreException;
+                    userSettingsException = configRestoreException;
                 }
             }
 
-            if (NINA.Properties.Settings.Default.UpdateSettings) {
-                NINA.Properties.Settings.Default.Upgrade();
-                NINA.Properties.Settings.Default.UpdateSettings = false;
-                NINA.Properties.Settings.Default.Save();
+            try {
+                if (NINA.Properties.Settings.Default.UpdateSettings) {
+                    NINA.Properties.Settings.Default.Upgrade();
+                    NINA.Properties.Settings.Default.UpdateSettings = false;
+                    NINA.Properties.Settings.Default.Save();
+                }
+            } catch (ConfigurationErrorsException configException) {
+                try {
+                    userSettingsException = configException;
+                    File.Delete(configException.Filename);
+                } catch (Exception configDeleteException) {
+                    userSettingsException = configDeleteException;
+                }
             }
+
+            return userSettingsException;
+        }
+
+        protected override void OnStartup(StartupEventArgs e) {
+            Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+
+            var userSettingsException = InitializeUserSettings();
 
             _profileService =
                 //TODO: Eliminate Smell by reversing direction of this dependency
@@ -93,8 +112,8 @@ namespace NINA {
 
             Logger.SetLogLevel(_profileService.ActiveProfile.ApplicationSettings.LogLevel);
 
-            if (configProblem != null) {
-                Logger.Error("There was an issue loading the user settings and the application tried to delete the file and reload default settings.", configProblem);
+            if (userSettingsException != null) {
+                Logger.Error("There was an issue loading the user settings and the application tried to delete the file and reload default settings.", userSettingsException);
             }
 
             _mainWindowViewModel = CompositionRoot.Compose(_profileService);
