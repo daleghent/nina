@@ -67,7 +67,6 @@
     <Compile Include="HitTestGroupBox.cs" />
     <Compile Include="OutlinedTextBlock.cs" />
     <Compile Include="UnitTextBox.cs" />
-    <Compile Include="TickSlider.cs" />
     <Page Include="Themes\Arc.Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

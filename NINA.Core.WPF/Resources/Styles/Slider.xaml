@@ -200,44 +200,6 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="HorizontalTickSlider" TargetType="{x:Type ninactrl:TickSlider}">
-        <Grid Margin="5">
-            <Grid.RowDefinitions>
-
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
-            </Grid.RowDefinitions>
-            <Track x:Name="PART_Track" Grid.Row="1">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton
-                        Height="12"
-                        Command="{x:Static Slider.DecreaseLarge}"
-                        Style="{StaticResource SliderRepeatButtonIncreaseFromCenterStyle}" />
-                </Track.DecreaseRepeatButton>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton
-                        Height="12"
-                        Command="{x:Static Slider.IncreaseLarge}"
-                        Style="{StaticResource SliderRepeatButtonDecreaseFromCenterStyle}" />
-                </Track.IncreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb x:Name="Thumb" Style="{StaticResource SliderThumbStyle}" />
-                </Track.Thumb>
-            </Track>
-            <TickBar
-                Height="16"
-                Margin="0,-4,0,0"
-                Fill="{StaticResource BackgroundBrush}"
-                IsHitTestVisible="False"
-                SnapsToDevicePixels="True"
-                Visibility="Visible" />
-        </Grid>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="PART_Track" Property="Opacity" Value="0.5" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
     <Style x:Key="MyFocusVisualStyte">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -264,24 +226,6 @@
                 <Setter Property="MinWidth" Value="104" />
                 <Setter Property="MinHeight" Value="21" />
                 <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
-            </Trigger>
-            <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="MinWidth" Value="21" />
-                <Setter Property="MinHeight" Value="104" />
-                <Setter Property="Template" Value="{StaticResource VerticalSlider}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style TargetType="{x:Type ninactrl:TickSlider}">
-        <!--<Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisualStyte}" />-->
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Style.Triggers>
-            <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="MinWidth" Value="104" />
-                <Setter Property="MinHeight" Value="21" />
-                <Setter Property="Template" Value="{StaticResource HorizontalTickSlider}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="MinWidth" Value="21" />

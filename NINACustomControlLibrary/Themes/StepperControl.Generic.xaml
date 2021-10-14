@@ -62,7 +62,53 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <Style TargetType="{x:Type local:PrecisionStepperControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PrecisionStepperControl}">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="25" />
+                        </Grid.ColumnDefinitions>
+                        <Button Name="PART_Decrement" Height="25">
+                            <Path
+                                Margin="5"
+                                Data="{TemplateBinding SubstractSVG}"
+                                Fill="{TemplateBinding ButtonForegroundBrush}"
+                                Stretch="Uniform" />
+                        </Button>
+                        <ContentControl
+                            Name="PART_ContentControl"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Content="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}}"
+                            Visibility="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
+                        <TextBox
+                            Name="PART_Textbox"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Text="{Binding Value, UpdateSourceTrigger=LostFocus, RelativeSource={RelativeSource TemplatedParent}}"
+                            TextAlignment="Center"
+                            Visibility="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}" />
+                        <Button
+                            Name="PART_Increment"
+                            Grid.Column="2"
+                            Height="25">
+                            <Path
+                                Margin="5"
+                                Data="{TemplateBinding AddSVG}"
+                                Fill="{TemplateBinding ButtonForegroundBrush}"
+                                Stretch="Uniform" />
+                        </Button>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="{x:Type local:IntStepperControl}">
         <Setter Property="Template">
             <Setter.Value>
