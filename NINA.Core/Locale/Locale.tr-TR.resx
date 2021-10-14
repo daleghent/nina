@@ -5804,4 +5804,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>Solve and rotate</value>
   </data>
+  <data name="LblInitializingPlugins" xml:space="preserve">
+    <value>Initializing Plugins</value>
+  </data>
 </root>

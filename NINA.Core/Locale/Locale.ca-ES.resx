@@ -5803,9 +5803,12 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
     <value>Voleu restablir totes les files de l'objectiu actual?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+    <value>Utilitza la resolució de plaques per determinar la rotació actual de la posició actual i utilitza un rotador per arribar a l’angle de cel especificat. (No centrarà l'objectiu!)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
-    <value>Solve and rotate</value>
+    <value>Resoldre i girar</value>
+  </data>
+  <data name="LblInitializingPlugins" xml:space="preserve">
+    <value>Inicialitzant els connectors</value>
   </data>
 </root>

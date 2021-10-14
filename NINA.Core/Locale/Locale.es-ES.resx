@@ -5807,4 +5807,7 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>Resolver y rotar</value>
   </data>
+  <data name="LblInitializingPlugins" xml:space="preserve">
+    <value>Inicializando plugins</value>
+  </data>
 </root>

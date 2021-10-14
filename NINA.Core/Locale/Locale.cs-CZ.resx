@@ -3049,7 +3049,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Stsci Sky Survey</value>
   </data>
   <data name="LblSubSample" xml:space="preserve">
-    <value>Povolit Podvzorkování</value>
+    <value>Enable SubSampling</value>
   </data>
   <data name="LblSuccess" xml:space="preserve">
     <value>Úspěch</value>
@@ -5811,5 +5811,8 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>Vyřešit a otočit</value>
+  </data>
+  <data name="LblInitializingPlugins" xml:space="preserve">
+    <value>Inicializace Pluginů</value>
   </data>
 </root>

@@ -5810,4 +5810,7 @@ Dec: {1}</value>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>Решить и повернуть</value>
   </data>
+  <data name="LblInitializingPlugins" xml:space="preserve">
+    <value>Initializing Plugins</value>
+  </data>
 </root>
