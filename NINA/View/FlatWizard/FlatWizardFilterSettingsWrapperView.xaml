@@ -58,6 +58,7 @@
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.MinFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -95,6 +96,7 @@
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -131,6 +133,8 @@
                                 Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
+                                MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.StepSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -276,7 +280,7 @@
                                 Orientation="Horizontal">
                                 <TextBlock Text="{Binding Settings.FlatDeviceAbsoluteStepSize, Mode=OneWay}" />
                             </StackPanel>
-                            <ninactrl:PrecisionStepperControl
+                            <ninactrl:IntStepperControl
                                 Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
@@ -319,6 +323,7 @@
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -362,6 +367,7 @@
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.MinFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -399,6 +405,7 @@
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -435,6 +442,8 @@
                                 Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 Margin="0,2.5,0,0"
+                                MinValue="0"
+                                Precision="4"
                                 StepSize="1"
                                 Value="{Binding Settings.StepSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -490,14 +499,14 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Text="{Binding HistogramMeanTargetADU, Mode=OneWay, StringFormat={}{0:N0}}" />
-                <ninactrl:PrecisionStepperControl
+                <ninactrl:IntStepperControl
                     Grid.Row="1"
                     Grid.ColumnSpan="3"
                     Margin="0,2.5,0,0"
-                    MaxValue="1"
+                    MaxValue="100"
                     MinValue="0"
-                    StepSize="0.1"
-                    Value="{Binding Settings.HistogramMeanTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    StepSize="10"
+                    Value="{Binding Settings.HistogramMeanTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PercentageConverter}}" />
             </Grid>
         </Border>
         <Border
@@ -525,15 +534,15 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Text="{Binding HistogramToleranceADU, Mode=OneWay}" />
-                <ninactrl:PrecisionStepperControl
+                <ninactrl:IntStepperControl
                     Grid.Row="1"
                     Grid.ColumnSpan="3"
                     Margin="0,2.5,0,0"
                     HorizontalAlignment="Stretch"
-                    MaxValue="1"
+                    MaxValue="100"
                     MinValue="0"
-                    StepSize="0.1"
-                    Value="{Binding Settings.HistogramTolerance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    StepSize="10"
+                    Value="{Binding Settings.HistogramTolerance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PercentageConverter}}" />
             </Grid>
         </Border>
     </StackPanel>

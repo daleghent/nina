@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -274,7 +275,7 @@ namespace NINACustomControlLibrary {
                 return (double)GetValue(ValueProperty);
             }
             set {
-                SetValue(ValueProperty, value);
+                SetValue(ValueProperty, Math.Round(value, Precision));
             }
         }
 
@@ -311,6 +312,18 @@ namespace NINACustomControlLibrary {
             }
             set {
                 SetValue(StepSizeProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty PrecisionProperty =
+           DependencyProperty.Register(nameof(Precision), typeof(int), typeof(PrecisionStepperControl), new UIPropertyMetadata(4));
+
+        public int Precision {
+            get {
+                return (int)GetValue(PrecisionProperty);
+            }
+            set {
+                SetValue(PrecisionProperty, value);
             }
         }
 
