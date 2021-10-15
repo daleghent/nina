@@ -216,13 +216,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool CanFastReadout {
-            get {
-                if (Connected) {
-                    return Info.HasReadoutSpeed;
-                }
-
-                return false;
-            }
+            get => Info.HasReadoutSpeed;
             private set {
                 Logger.Debug($"QHYCCD: Setting CanFastReadout to {value}");
                 Info.HasReadoutSpeed = value;
@@ -703,6 +697,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             StringBuilder cameraID = new StringBuilder(QhySdk.QHYCCD_ID_LEN);
             StringBuilder modeName = new StringBuilder(0);
             uint num_modes = 0;
+            Info.HasReadoutSpeed = false;
 
             try {
                 Sdk.InitSdk();
