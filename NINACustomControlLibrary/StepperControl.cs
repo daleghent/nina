@@ -44,7 +44,7 @@ namespace NINACustomControlLibrary {
     /// <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    [TemplatePart(Name = "PART_TextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_TextBox", Type = typeof(UnitTextBox))]
     [TemplatePart(Name = "PART_Decrement", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Increment", Type = typeof(Button))]
     public class StepperControl : UserControl {
@@ -137,6 +137,18 @@ namespace NINACustomControlLibrary {
             }
         }
 
+        public static readonly DependencyProperty UnitProperty =
+           DependencyProperty.Register(nameof(Unit), typeof(string), typeof(StepperControl), new UIPropertyMetadata(string.Empty));
+
+        public string Unit {
+            get {
+                return (string)GetValue(UnitProperty);
+            }
+            set {
+                SetValue(UnitProperty, value);
+            }
+        }
+
         /// <summary>
         /// Customizing Hook to overwrite the default Textbox. "Value" still needs proper binding for the increment/decrement buttons to work properly
         /// </summary>
@@ -160,7 +172,7 @@ namespace NINACustomControlLibrary {
                 button.Click += Button_PART_Decrement_Click;
             }
 
-            var tb = GetTemplateChild("PART_Textbox") as TextBox;
+            var tb = GetTemplateChild("PART_Textbox") as UnitTextBox;
             if (tb != null) {
                 tb.LostFocus += PART_TextBox_LostFocus;
             }
@@ -222,7 +234,7 @@ namespace NINACustomControlLibrary {
     /// <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    [TemplatePart(Name = "PART_TextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_TextBox", Type = typeof(UnitTextBox))]
     [TemplatePart(Name = "PART_Decrement", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Increment", Type = typeof(Button))]
     public class PrecisionStepperControl : UserControl {
@@ -327,6 +339,18 @@ namespace NINACustomControlLibrary {
             }
         }
 
+        public static readonly DependencyProperty UnitProperty =
+           DependencyProperty.Register(nameof(Unit), typeof(string), typeof(PrecisionStepperControl), new UIPropertyMetadata(string.Empty));
+
+        public string Unit {
+            get {
+                return (string)GetValue(UnitProperty);
+            }
+            set {
+                SetValue(UnitProperty, value);
+            }
+        }
+
         /// <summary>
         /// Customizing Hook to overwrite the default Textbox. "Value" still needs proper binding for the increment/decrement buttons to work properly
         /// </summary>
@@ -350,7 +374,7 @@ namespace NINACustomControlLibrary {
                 button.Click += Button_PART_Decrement_Click;
             }
 
-            var tb = GetTemplateChild("PART_Textbox") as TextBox;
+            var tb = GetTemplateChild("PART_Textbox") as UnitTextBox;
             if (tb != null) {
                 tb.LostFocus += PART_TextBox_LostFocus;
             }

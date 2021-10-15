@@ -39,13 +39,14 @@
                             VerticalAlignment="Center"
                             Content="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}}"
                             Visibility="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
-                        <TextBox
-                            Name="PART_Textbox"
+                        <local:UnitTextBox
+                            x:Name="PART_Textbox"
                             Grid.Column="1"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             Text="{Binding Value, StringFormat=\{0:0.00\}, UpdateSourceTrigger=LostFocus, RelativeSource={RelativeSource TemplatedParent}}"
                             TextAlignment="Center"
+                            Unit="{Binding Unit, RelativeSource={RelativeSource TemplatedParent}}"
                             Visibility="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}" />
                         <Button
                             Name="PART_Increment"
@@ -86,13 +87,14 @@
                             VerticalAlignment="Center"
                             Content="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}}"
                             Visibility="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
-                        <TextBox
-                            Name="PART_Textbox"
+                        <local:UnitTextBox
+                            x:Name="PART_Textbox"
                             Grid.Column="1"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             Text="{Binding Value, UpdateSourceTrigger=LostFocus, RelativeSource={RelativeSource TemplatedParent}}"
                             TextAlignment="Center"
+                            Unit="{Binding Unit, RelativeSource={RelativeSource TemplatedParent}}"
                             Visibility="{Binding InnerContent, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}" />
                         <Button
                             Name="PART_Increment"
@@ -126,13 +128,14 @@
                                 Fill="{TemplateBinding ButtonForegroundBrush}"
                                 Stretch="Uniform" />
                         </Button>
-                        <TextBox
-                            Name="PART_Textbox"
+                        <local:UnitTextBox
+                            x:Name="PART_Textbox"
                             Grid.Column="1"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             Text="{Binding Value, UpdateSourceTrigger=LostFocus, RelativeSource={RelativeSource TemplatedParent}}"
-                            TextAlignment="Center" />
+                            TextAlignment="Center"
+                            Unit="{Binding Unit, RelativeSource={RelativeSource TemplatedParent}}" />
                         <Button
                             Name="PART_Increment"
                             Grid.Column="2"

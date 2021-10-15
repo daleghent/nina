@@ -31,35 +31,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatMinExposureTime}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MinFlatExposureTime, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.MinFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -69,35 +56,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatMaxExposureTime}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MaxFlatExposureTime, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -107,35 +81,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatStepSize}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.StepSize, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.StepSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -146,28 +107,17 @@
                         Visibility="{Binding ElementName=SettingsHost, Path=DataContext.FlatDeviceInfo.Connected, FallbackValue=Collapsed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, UpdateSourceTrigger=PropertyChanged}">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatPanelBrightness}"
                                 TextWrapping="WrapWithOverflow" />
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Text="{Binding Settings.MaxAbsoluteFlatDeviceBrightness, Mode=OneWay}" />
                             <ninactrl:IntStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MaxValue="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MaxBrightness}"
                                 MinValue="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MinBrightness}"
@@ -187,30 +137,17 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatPanelMinBrightness}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MinAbsoluteFlatDeviceBrightness, Mode=OneWay}" />
-                            </StackPanel>
                             <ninactrl:IntStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 StepSize="1"
@@ -223,30 +160,17 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatPanelMaxBrightness}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MaxAbsoluteFlatDeviceBrightness, Mode=OneWay}" />
-                            </StackPanel>
                             <ninactrl:IntStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 StepSize="1"
@@ -259,30 +183,17 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatStepSize}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.FlatDeviceAbsoluteStepSize, Mode=OneWay}" />
-                            </StackPanel>
                             <ninactrl:IntStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 StepSize="1"
@@ -296,35 +207,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblExposureTime}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MaxFlatExposureTime, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -340,35 +238,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatMinExposureTime}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MinFlatExposureTime, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.MinFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -378,35 +263,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatMaxExposureTime}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.MaxFlatExposureTime, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -416,35 +288,22 @@
                         BorderThickness="0,0,0,1">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblFlatStepSize}"
                                 TextWrapping="WrapWithOverflow" />
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock Text="{Binding Settings.StepSize, Mode=OneWay}" />
-                                <TextBlock Text="s" />
-                            </StackPanel>
                             <ninactrl:PrecisionStepperControl
-                                Grid.Row="1"
-                                Grid.ColumnSpan="3"
+                                Grid.Column="1"
                                 Margin="0,2.5,0,0"
                                 MinValue="0"
                                 Precision="4"
                                 StepSize="1"
+                                Unit="s"
                                 Value="{Binding Settings.StepSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
@@ -480,13 +339,10 @@
             BorderThickness="0,0,0,1">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
@@ -496,16 +352,17 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
+                    Margin="0,0,5,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Text="{Binding HistogramMeanTargetADU, Mode=OneWay, StringFormat={}{0:N0}}" />
                 <ninactrl:IntStepperControl
-                    Grid.Row="1"
-                    Grid.ColumnSpan="3"
+                    Grid.Column="2"
                     Margin="0,2.5,0,0"
                     MaxValue="100"
                     MinValue="0"
                     StepSize="10"
+                    Unit="%"
                     Value="{Binding Settings.HistogramMeanTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PercentageConverter}}" />
             </Grid>
         </Border>
@@ -515,13 +372,10 @@
             BorderThickness="0,0,0,1">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
@@ -531,17 +385,18 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
+                    Margin="0,0,5,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Text="{Binding HistogramToleranceADU, Mode=OneWay}" />
                 <ninactrl:IntStepperControl
-                    Grid.Row="1"
-                    Grid.ColumnSpan="3"
+                    Grid.Column="2"
                     Margin="0,2.5,0,0"
                     HorizontalAlignment="Stretch"
                     MaxValue="100"
                     MinValue="0"
                     StepSize="10"
+                    Unit="%"
                     Value="{Binding Settings.HistogramTolerance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PercentageConverter}}" />
             </Grid>
         </Border>
