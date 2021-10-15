@@ -456,7 +456,7 @@
                                                 Padding="4"
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
+                                                Foreground="{StaticResource PrimaryBrush}"
                                                 Text="{ns:Loc LblSlew}"
                                                 TextWrapping="Wrap" />
                                         </Button>
@@ -469,7 +469,7 @@
                                                 Padding="4"
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
+                                                Foreground="{StaticResource PrimaryBrush}"
                                                 Text="{ns:Loc LblSlewCenterRotate}"
                                                 TextWrapping="Wrap" />
                                         </Button>
@@ -563,7 +563,7 @@
                                         Padding="4"
                                         VerticalAlignment="Center"
                                         FontSize="12"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                        Foreground="{StaticResource PrimaryBrush}"
                                         Text="{ns:Loc LblAddTargetToTargetList}"
                                         TextWrapping="Wrap" />
                                     <Button.ToolTip>

@@ -250,7 +250,7 @@
                                                     Height="25"
                                                     Margin="5"
                                                     Data="{StaticResource FlagFinishSVG}"
-                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Fill="{StaticResource PrimaryBrush}"
                                                     RenderTransformOrigin="0.5,0.5"
                                                     Stretch="Uniform" />
                                             </Button>
