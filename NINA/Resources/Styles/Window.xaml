@@ -80,6 +80,7 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontWeight="Bold"
+                                    Foreground="{StaticResource ButtonForegroundDisabledBrush}"
                                     Visibility="{Binding Source={x:Static coreutil:CoreUtil.IsReleaseBuild}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                                     ! PREVIEW VERSION !
                                 </TextBlock>
