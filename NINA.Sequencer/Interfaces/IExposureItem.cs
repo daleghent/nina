@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Interfaces {
 
-    internal interface IExposureItem : ISequenceItem {
+    public interface IExposureItem : ISequenceItem {
         double ExposureTime { get; }
         int Gain { get; }
         int Offset { get; }

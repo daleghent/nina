@@ -39,6 +39,7 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Model;
 using NINA.WPF.Base.Utility.AutoFocus;
 using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Interfaces;
 
 namespace NINATest.Sequencer.Trigger.Autofocus {
 
@@ -129,7 +130,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            var trigger = sut.ShouldTrigger(null, new Mock<IExposureItem>().Object);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -156,7 +157,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             sut.SampleSize = 4;
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            var trigger = sut.ShouldTrigger(null, new Mock<IExposureItem>().Object);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -196,7 +197,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            var trigger = sut.ShouldTrigger(null, new Mock<IExposureItem>().Object);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -253,7 +254,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            var trigger = sut.ShouldTrigger(null, new Mock<IExposureItem>().Object);
 
             trigger.Should().Be(shouldTrigger);
         }

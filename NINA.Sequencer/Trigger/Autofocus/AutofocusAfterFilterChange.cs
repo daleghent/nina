@@ -36,6 +36,7 @@ using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
 using NINA.Sequencer.Utility;
 using NINA.Core.Utility;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -103,6 +104,8 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
+            if (!(nextItem is IExposureItem)) { return false; }
+
             var currentFwInfo = filterWheelMediator.GetInfo();
             bool shouldTrigger = false;
             if (LastAutoFocusFilter == null) {

@@ -34,6 +34,7 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
 using NINA.Sequencer.Utility;
 using NINA.Core.Utility;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -118,6 +119,8 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
+            if (!(nextItem is IExposureItem)) { return false; }
+
             if (history.ImageHistory == null) { return false; }
             if (history.ImageHistory.Count == 0) { return false; }
 
