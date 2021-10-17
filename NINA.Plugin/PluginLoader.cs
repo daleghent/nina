@@ -232,13 +232,14 @@ namespace NINA.Plugin {
                 if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
                     fileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
+                var assemblyCheck = Assembly.ReflectionOnlyLoadFrom(file);
 
-                var assembly = Assembly.LoadFrom(file);
-                var plugin = new AssemblyCatalog(assembly);
-
-                var references = plugin.Assembly.GetReferencedAssemblies();
-                if (references.FirstOrDefault(x => x.FullName.Contains("NINA")) != null) {
+                var references = assemblyCheck.GetReferencedAssemblies();
+                if (references.FirstOrDefault(x => x.FullName.Contains("NINA.Plugin")) != null) {
                     try {
+                        var assembly = Assembly.LoadFrom(file);
+                        var plugin = new AssemblyCatalog(assembly);
+
                         var manifestImport = new ManifestImport();
                         var container = GetContainer(plugin);
                         container.ComposeParts(manifestImport);
@@ -309,6 +310,9 @@ namespace NINA.Plugin {
                         Plugins[failedManifest] = false;
                         Logger.Error($"Failed to load plugin at {file} - {failedManifest.Name} version {failedManifest.Version} {message}");
                     }
+                } else {
+
+                    Logger.Trace($"The dll {file} does not reference NINA.Plugin");
                 }
             } catch (Exception ex) {
                 //This should only happen for non plugin assemblies, that are not even targeting .NET
