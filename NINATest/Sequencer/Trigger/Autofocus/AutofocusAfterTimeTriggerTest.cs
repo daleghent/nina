@@ -40,6 +40,7 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
 using NINA.WPF.Base.Model;
 using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Interfaces;
 
 namespace NINATest.Sequencer.Trigger.Autofocus {
 
@@ -100,7 +101,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             historyMock.SetupGet(x => x.AutoFocusPoints).Returns(afHistory);
 
-            var should = afTrigger.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            var should = afTrigger.ShouldTrigger(null, new Mock<IExposureItem>().Object);
 
             should.Should().Be(shouldTrigger);
         }
@@ -118,7 +119,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             await Task.Delay(TimeSpan.FromMilliseconds(initDelay));
 
-            var should = afTrigger.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            var should = afTrigger.ShouldTrigger(null, new Mock<IExposureItem>().Object);
 
             should.Should().Be(shouldTrigger);
         }
