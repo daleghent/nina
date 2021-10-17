@@ -159,22 +159,23 @@ namespace NINA.ViewModel {
 
         private void ExitApplication(object obj) {
             Sequencer.ISequenceNavigationVM vm = ((Interfaces.IMainWindowVM)Application.Current.MainWindow.DataContext).SequenceNavigationVM;
-            if (vm.Sequence2VM.Sequencer.MainContainer.AskHasChanged(vm.Sequence2VM.Sequencer.MainContainer.Name)) {
-                return;
-            }
-            if (((SimpleSequenceVM)vm.SimpleSequenceVM).AskHasChanged()) {
-                return;
-            }
-            if (cameraInfo.Connected) {
-                var diag = MyMessageBox.Show(Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
-                if (diag != MessageBoxResult.OK) {
+            if (vm.Initialized) {
+                if (vm.Sequence2VM.Sequencer.MainContainer.AskHasChanged(vm.Sequence2VM.Sequencer.MainContainer.Name)) {
                     return;
+                }
+                if (((SimpleSequenceVM)vm.SimpleSequenceVM).AskHasChanged()) {
+                    return;
+                }
+                if (cameraInfo.Connected) {
+                    var diag = MyMessageBox.Show(Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
+                    if (diag != MessageBoxResult.OK) {
+                        return;
+                    }
                 }
             }
 
             imageSaveMediator.Shutdown();
 
-            AsyncContext.Run(pluginProvider.Load);
             foreach (var plugin in pluginProvider.Plugins) {
                 if (plugin.Value) {
                     try {

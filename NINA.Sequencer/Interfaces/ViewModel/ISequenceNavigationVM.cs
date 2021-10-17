@@ -23,6 +23,7 @@ using System.Windows.Input;
 namespace NINA.ViewModel.Sequencer {
 
     public interface ISequenceNavigationVM : IDockableVM {
+        bool Initialized { get; }
         object ActiveSequencerVM { get; set; }
         ISimpleSequenceVM SimpleSequenceVM { get; }
         ISequence2VM Sequence2VM { get; }
