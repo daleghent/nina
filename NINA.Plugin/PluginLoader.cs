@@ -31,6 +31,7 @@ using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Utility.DateTimeProvider;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -170,7 +171,7 @@ namespace NINA.Plugin {
         }
 
         public Task Load() {
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 lock (lockobj) {
                     if (!initialized) {
                         Stopwatch sw = Stopwatch.StartNew();
@@ -204,7 +205,7 @@ namespace NINA.Plugin {
                         }
 
                         foreach (var file in files) {
-                            LoadPlugin(file);
+                            AsyncContext.Run(() => LoadPlugin(file));
                         }
 
                         if (Directory.Exists(Constants.UserExtensionsFolder)) {
@@ -212,7 +213,7 @@ namespace NINA.Plugin {
                         }
 
                         foreach (var file in files) {
-                            LoadPlugin(file);
+                            AsyncContext.Run(() => LoadPlugin(file));
                         }
 
                         initialized = true;
@@ -222,7 +223,7 @@ namespace NINA.Plugin {
             });
         }
 
-        private void LoadPlugin(string file) {
+        private async Task LoadPlugin(string file) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
                 var applicationVersion = new Version(CoreUtil.Version);
@@ -251,7 +252,10 @@ namespace NINA.Plugin {
                                 && manifest.MinimumApplicationVersion.Minor <= applicationVersion.Minor
                                 && manifest.MinimumApplicationVersion.Patch <= applicationVersion.Build
                                 && manifest.MinimumApplicationVersion.Build <= applicationVersion.Revision) {
+                                await manifest.Initialize();
+
                                 Plugins[manifest] = true;
+
                                 //Add the loaded plugin assembly to the assembly resolver
                                 Assemblies.Add(plugin.Assembly);
                                 Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");

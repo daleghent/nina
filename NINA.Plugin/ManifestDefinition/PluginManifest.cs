@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using NINA.Plugin.Interfaces;
 using System;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace NINA.Plugin.ManifestDefinition {
 
@@ -265,5 +266,13 @@ namespace NINA.Plugin.ManifestDefinition {
         [JsonProperty(Required = Required.Always)]
         [JsonConverter(typeof(ConcreteManifestConverter<PluginInstallerDetails>))]
         public IPluginInstallerDetails Installer { get; set; }
+
+        public Task Initialize() {
+            return Task.CompletedTask;
+        }
+
+        public Task Teardown() {
+            return Task.CompletedTask;
+        }
     }
 }

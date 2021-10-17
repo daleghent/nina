@@ -138,6 +138,14 @@ namespace NINA.Plugin {
             }
         }
 
+        public virtual Task Initialize() {
+            return Task.CompletedTask;
+        }
+
+        public virtual Task Teardown() {
+            return Task.CompletedTask;
+        }
+
         private string GetCustomMetadata(string key) {
             var assembly = this.GetType().Assembly;
             var attribute = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().FirstOrDefault(x => x.Key == key);

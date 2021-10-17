@@ -89,5 +89,9 @@ namespace NINA.Plugin.Interfaces {
         /// Describe the plugin in detail to give an overview about its capabilities.
         /// </summary>
         IPluginDescription Descriptions { get; }
+
+        Task Initialize();
+
+        Task Teardown();
     }
 }

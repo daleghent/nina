@@ -34,16 +34,19 @@ using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using System.IO;
 using System.Linq;
+using NINA.Plugin.Interfaces;
+using Nito.AsyncEx;
 
 namespace NINA.ViewModel {
 
     internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
 
-        public ApplicationVM(IProfileService profileService, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator, IImageSaveMediator imageSaveMediator) : base(profileService) {
+        public ApplicationVM(IProfileService profileService, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator, IImageSaveMediator imageSaveMediator, IPluginLoader pluginProvider) : base(profileService) {
             applicationMediator.RegisterHandler(this);
             this.projectVersion = projectVersion;
             this.cameraMediator = cameraMediator;
             this.imageSaveMediator = imageSaveMediator;
+            this.pluginProvider = pluginProvider;
             cameraMediator.RegisterConsumer(this);
 
             ExitCommand = new RelayCommand(ExitApplication);
@@ -130,6 +133,7 @@ namespace NINA.ViewModel {
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private readonly ICameraMediator cameraMediator;
         private readonly IImageSaveMediator imageSaveMediator;
+        private readonly IPluginLoader pluginProvider;
 
         public int TabIndex {
             get {
@@ -169,6 +173,18 @@ namespace NINA.ViewModel {
             }
 
             imageSaveMediator.Shutdown();
+
+            AsyncContext.Run(pluginProvider.Load);
+            foreach (var plugin in pluginProvider.Plugins) {
+                if (plugin.Value) {
+                    try {
+                        Logger.Debug($"Tearing down plugin {plugin.Key.Name}");
+                        AsyncContext.Run(plugin.Key.Teardown);
+                    } catch (Exception ex) {
+                        Logger.Error($"Failed to teardown plugin {plugin.Key.Name}", ex);
+                    }
+                }
+            }
 
             /*if (Directory.Exists(Plugin.Constants.StagingFolder) && Directory.EnumerateFileSystemEntries(Plugin.Constants.StagingFolder).Any()
                 || Directory.Exists(Plugin.Constants.DeletionFolder) && Directory.EnumerateFileSystemEntries(Plugin.Constants.DeletionFolder).Any()) {
