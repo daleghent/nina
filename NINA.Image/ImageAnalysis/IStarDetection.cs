@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace NINA.Image.ImageAnalysis {
+
     public interface IStarDetection {
+
         Task<StarDetectionResult> Detect(IRenderedImage image, System.Windows.Media.PixelFormat pf, StarDetectionParams p, IProgress<ApplicationStatus> progress, CancellationToken token);
     }
 
@@ -20,7 +22,7 @@ namespace NINA.Image.ImageAnalysis {
         public double InnerCropRatio { get; set; }
         public double OuterCropRatio { get; set; }
         public int NumberOfAFStars { get; set; }
-        public List<Accord.Point> MatchStarPositions { get; set; }
+        public List<Accord.Point> MatchStarPositions { get; set; } = new List<Accord.Point>();
     }
 
     public class DetectedStar {
