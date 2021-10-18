@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -979,7 +980,7 @@ namespace QHYCCD {
             /// The camera's current state (managed by NINA, not by SDK)
             /// <seealso cref="QHYCCDSDK.QHYCCD_CAMERA_STATE"/>
             /// </summary>
-            public string CamState;
+            public CameraStates CamState;
 
             /// <summary>
             /// Physical width of the sensor (in mm)

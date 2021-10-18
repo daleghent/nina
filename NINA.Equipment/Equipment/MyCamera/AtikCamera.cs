@@ -274,9 +274,30 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState {
+        public CameraStates CameraState {
             get {
-                return AtikCameraDll.CameraState(_cameraP).ToString();
+                CameraStates state = CameraStates.Idle;
+
+                switch (AtikCameraDll.CameraState(_cameraP)) {
+                    case AtikCameraDll.ArtemisCameraStateEnum.CAMERA_EXPOSING:
+                        state = CameraStates.Exposing;
+                        break;
+
+                    case AtikCameraDll.ArtemisCameraStateEnum.CAMERA_WAITING:
+                    case AtikCameraDll.ArtemisCameraStateEnum.CAMERA_FLUSHING:
+                        state = CameraStates.Waiting;
+                        break;
+
+                    case AtikCameraDll.ArtemisCameraStateEnum.CAMERA_DOWNLOADING:
+                        state = CameraStates.Download;
+                        break;
+
+                    case AtikCameraDll.ArtemisCameraStateEnum.CAMERA_ERROR:
+                        state = CameraStates.Error;
+                        break;
+                }
+
+                return state;
             }
         }
 

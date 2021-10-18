@@ -61,7 +61,10 @@
                 </GroupBox.Header>
                 <Grid>
                     <StackPanel>
-                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <Border
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0"
+                            Visibility="{Binding CameraInfo.CameraState, Converter={StaticResource CameraStateToVisibilityConverter}, FallbackValue=Collapsed}">
                             <UniformGrid Columns="2">
                                 <UniformGrid
                                     Margin="0,6,0,6"
@@ -598,7 +601,7 @@
                                 x:Key="ContentSelector"
                                 Default="{StaticResource Default}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}" 
+                                Touptek="{StaticResource Altair}"
                                 LegacySbig="{StaticResource LegacySbig}" />
                         </Grid.Resources>
                         <ContentControl

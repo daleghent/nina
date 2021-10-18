@@ -37,6 +37,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
+using NINA.Core.Enum;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -509,7 +510,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             CameraInfo.DewHeaterOn = (bool)(o ?? false);
 
             cameraValues.TryGetValue(nameof(CameraInfo.CameraState), out o);
-            CameraInfo.CameraState = (string)(o ?? string.Empty);
+            CameraInfo.CameraState = (CameraStates)(o ?? CameraStates.NoState);
 
             cameraValues.TryGetValue(nameof(CameraInfo.Battery), out o);
             CameraInfo.Battery = (int)(o ?? -1);
@@ -570,7 +571,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             cameraValues.Add(nameof(CameraInfo.Temperature), _cam?.Temperature ?? double.NaN);
             cameraValues.Add(nameof(CameraInfo.CoolerPower), _cam?.CoolerPower ?? double.NaN);
             cameraValues.Add(nameof(CameraInfo.DewHeaterOn), _cam?.DewHeaterOn ?? false);
-            cameraValues.Add(nameof(CameraInfo.CameraState), _cam?.CameraState ?? string.Empty);
+            cameraValues.Add(nameof(CameraInfo.CameraState), _cam?.CameraState ?? CameraStates.NoState);
             cameraValues.Add(nameof(CameraInfo.TemperatureSetPoint), _cam?.TemperatureSetPoint ?? double.NaN);
             cameraValues.Add(nameof(CameraInfo.ElectronsPerADU), _cam?.ElectronsPerADU ?? double.NaN);
             cameraValues.Add(nameof(CameraInfo.SubSampleX), _cam?.SubSampleX ?? -1);

@@ -96,7 +96,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (ConnectedDevice.CameraType == SBIG.CameraType.NoCamera) {
                         throw new InvalidOperationException($"SBIGCCD: Cannot connect {this.queriedCameraInfo.DeviceId} since it is not a camera");
                     }
-                    
+
                     var cameraInfo = this.exposureCcd == SBIG.CCD.Imaging ? ConnectedDevice.CameraInfo : ConnectedDevice.TrackingCameraInfo;
                     if (cameraInfo.HasValue) {
                         SetCameraProperties(cameraInfo.Value);
@@ -373,8 +373,38 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState {
-            get => _cameraStatus.ToString();
+        public CameraStates CameraState {
+            get {
+                CameraStates cameraState;
+
+                switch (CameraStatus) {
+                    case SBIGCameraStatus.EXPOSING:
+                        cameraState = CameraStates.Exposing;
+                        break;
+
+                    case SBIGCameraStatus.DOWNLOAD:
+                        cameraState = CameraStates.Download;
+                        break;
+
+                    case SBIGCameraStatus.WAITING:
+                        cameraState = CameraStates.Waiting;
+                        break;
+
+                    case SBIGCameraStatus.ERROR:
+                        cameraState = CameraStates.Error;
+                        break;
+
+                    case SBIGCameraStatus.IDLE:
+                        cameraState = CameraStates.Idle;
+                        break;
+
+                    default:
+                        cameraState = CameraStates.NoState;
+                        break;
+                }
+
+                return cameraState;
+            }
         }
 
         public bool CanSubSample => true;

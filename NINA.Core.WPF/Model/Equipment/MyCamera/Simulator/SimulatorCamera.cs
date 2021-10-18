@@ -205,11 +205,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
-        public string CameraState {
-            get {
-                return "TestState";
-            }
-        }
+        public CameraStates CameraState { get => CameraStates.NoState; }
 
         public int Offset {
             get {

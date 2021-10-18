@@ -142,9 +142,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get => (int)Info.Bpp;
         }
 
-        public string CameraState {
+        public CameraStates CameraState {
             get => Info.CamState;
-            set => Info.CamState = value;
+            set {
+                if (Info.CamState != value) {
+                    Info.CamState = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public int CameraXSize {
@@ -923,7 +928,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 /*
                  * Announce that this camera is now initialized and ready
                  */
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
+                CameraState = CameraStates.Idle;
                 Connected = true;
                 success = true;
 
@@ -990,7 +995,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 /*
                  * Download the image from the camera
                  */
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.DOWNLOADING.ToString();
+                CameraState = CameraStates.Download;
                 if (is16bit) {
                     rv = Sdk.GetSingleFrame(ref width, ref height, ref bpp, ref channels, ImgData);
                 } else {
@@ -1007,7 +1012,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
 
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
+                CameraState = CameraStates.Idle;
 
                 return new ImageArrayExposureData(
                     input: ImgData,
@@ -1061,8 +1066,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             uint rv;
             Logger.Debug($"QHYCCD: Setting image resolution: startx={startx}, starty={starty}, sizex={sizex}, sizey={sizey}");
             if ((rv = Sdk.SetResolution(startx, starty, sizex, sizey)) != QhySdk.QHYCCD_SUCCESS) {
-                Logger.Warning($"QHYCCD: Failed to set exposure resolution: rv = {rv}");
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                Logger.Error($"QHYCCD: Failed to set exposure resolution: rv = {rv}");
                 return false;
             }
             return true;
@@ -1104,13 +1108,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             /* Exposure bit depth */
             if (Sdk.SetBitsMode((uint)BitDepth) != QhySdk.QHYCCD_SUCCESS) {
                 Logger.Warning("QHYCCD: Failed to set exposure bit depth. This may not be a fatal error.");
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
             }
 
             /* Exposure length (in microseconds) */
             if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_EXPOSURE, sequence.ExposureTime * 1e6)) {
-                Logger.Warning("QHYCCD: Failed to set exposure time");
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                Logger.Error("QHYCCD: Failed to set exposure time");
                 return;
             }
 
@@ -1128,7 +1130,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
                 return;
             }
 
@@ -1143,10 +1144,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * Initiate the exposure
              */
             Logger.Debug("QHYCCD: Starting exposure...");
-            CameraState = QhySdk.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
+            CameraState = CameraStates.Exposing;
             if (Sdk.ExpSingleFrame() == QhySdk.QHYCCD_ERROR) {
-                Logger.Warning("QHYCCD: Failed to initiate the exposure!");
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                Logger.Error("QHYCCD: Failed to initiate the exposure!");
+                CameraState = CameraStates.Idle;
                 return;
             }
 
@@ -1162,7 +1163,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public void StopExposure() {
             RaiseIfNotConnected();
             if (Sdk.CancelExposingAndReadout() != QhySdk.QHYCCD_ERROR) {
-                CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
+                CameraState = CameraStates.Idle;
             }
         }
 

@@ -313,12 +313,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState {
-            get {
-                /* No State available */
-                return string.Empty;
-            }
-        }
+        public CameraStates CameraState { get => CameraStates.NoState; }
 
         public bool CanSubSample {
             get {

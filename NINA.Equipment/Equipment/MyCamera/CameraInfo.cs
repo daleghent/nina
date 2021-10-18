@@ -157,9 +157,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set { if (isSubSampleEnabled != value) { isSubSampleEnabled = value; RaisePropertyChanged(); } }
         }
 
-        private string cameraState;
+        private CameraStates cameraState = CameraStates.NoState;
 
-        public string CameraState {
+        public CameraStates CameraState {
             get { return cameraState; }
             set { if (cameraState != value) { cameraState = value; RaisePropertyChanged(); } }
         }

@@ -34,6 +34,7 @@ using NINA.Equipment.Model;
 using NINA.Image.Interfaces;
 using NINA.Image.ImageData;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Enum;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -166,22 +167,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState {
-            get {
-                string state;
-                try {
-                    if (Connected) {
-                        state = device.CameraState.ToString();
-                    } else {
-                        state = CameraStates.cameraIdle.ToString();
-                    }
-                } catch (NotConnectedException ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                    state = CameraStates.cameraError.ToString();
-                }
-                return state;
-            }
+        public Core.Enum.CameraStates CameraState {
+            get => GetProperty<Core.Enum.CameraStates>(nameof(Camera.CameraState), 0);
         }
 
         public int CameraXSize {

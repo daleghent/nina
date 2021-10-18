@@ -387,11 +387,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private ASICameraDll.ASI_EXPOSURE_STATUS ExposureStatus {
-            get {
-                return ASICameraDll.GetExposureStatus(_cameraId);
-            }
-        }
+        private ASICameraDll.ASI_EXPOSURE_STATUS ExposureStatus => ASICameraDll.GetExposureStatus(_cameraId);
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
@@ -658,9 +654,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState {
+        public CameraStates CameraState {
             get {
-                return ExposureStatus.ToString();
+                CameraStates state = CameraStates.Idle;
+
+                switch (ExposureStatus) {
+                    case ASICameraDll.ASI_EXPOSURE_STATUS.ASI_EXP_WORKING:
+                        state = CameraStates.Exposing;
+                        break;
+                }
+
+                return state;
             }
         }
 

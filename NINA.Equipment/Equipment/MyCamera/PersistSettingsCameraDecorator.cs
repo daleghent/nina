@@ -180,7 +180,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState => this.Camera.CameraState;
+        public CameraStates CameraState => this.Camera.CameraState;
 
         public bool CanSubSample => this.Camera.CanSubSample;
 
@@ -200,7 +200,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public int BitDepth => this.Camera.BitDepth;
 
-        public int Offset { 
+        public int Offset {
             get => this.Camera.Offset;
             set {
                 if (this.Camera.CanSetOffset) {

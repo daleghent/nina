@@ -88,4 +88,5 @@
     <converters:AllNullOrEmptyStringToVisibilityCollapsedMultiConverter x:Key="AllNullOrEmptyStringToVisibilityCollapsedMultiConverter" />
     <converters:StringCollectionToStringConverter x:Key="StringCollectionToStringConverter" />
     <converters:EnumTooltipTypeConverter x:Key="EnumTooltipTypeConverter" />
+    <converters:CameraStateToVisibilityConverter x:Key="CameraStateToVisibilityConverter" />
 </ResourceDictionary>

@@ -143,47 +143,40 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string CameraState {
+        public CameraStates CameraState {
             get {
-                string statusString;
-                uint status = (uint)LibFLI.CameraStatus.UNKNOWN;
+                CameraStates status;
+                uint camstatus = (uint)LibFLI.CameraStatus.UNKNOWN;
                 uint rv;
 
                 if (Connected) {
-                    if ((rv = LibFLI.FLIGetDeviceStatus(CameraH, ref status)) != LibFLI.FLI_SUCCESS) {
+                    if ((rv = LibFLI.FLIGetDeviceStatus(CameraH, ref camstatus)) != LibFLI.FLI_SUCCESS) {
                         Logger.Error($"FLI: FLIGetDeviceStatus() failed. Returned {rv}");
 
-                        status = (uint)LibFLI.CameraStatus.UNKNOWN;
+                        camstatus = (uint)LibFLI.CameraStatus.UNKNOWN;
                     }
                 }
 
-                switch (status & (long)LibFLI.CameraStatus.MASK) {
-                    case (long)LibFLI.CameraStatus.IDLE:
-                        statusString = "Idle";
-                        break;
-
+                switch (camstatus & (long)LibFLI.CameraStatus.MASK) {
                     case (long)LibFLI.CameraStatus.EXPOSING:
-                        statusString = "Exposing";
+                        status = CameraStates.Exposing;
                         break;
 
                     case (long)LibFLI.CameraStatus.READING_CCD:
-                        statusString = "Reading Sensor";
-                        break;
-
-                    case (long)LibFLI.CameraStatus.DATA_READY:
-                        statusString = "Data Ready";
+                        status = CameraStates.Reading;
                         break;
 
                     case (long)LibFLI.CameraStatus.WAITING_FOR_TRIGGER:
-                        statusString = "Awaiting Trigger";
+                    case (long)LibFLI.CameraStatus.DATA_READY:
+                        status = CameraStates.Waiting;
                         break;
 
                     default:
-                        statusString = "Unknown";
+                        status = CameraStates.Idle;
                         break;
                 }
 
-                return statusString;
+                return status;
             }
         }
 

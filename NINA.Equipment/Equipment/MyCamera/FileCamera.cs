@@ -41,7 +41,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             OpenFolderDiagCommand = new RelayCommand(OpenFolderDiag);
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
-            CameraState = "Idle";
+            CameraState = CameraStates.Idle;
             SelectedFileExtension = FileExtensions.FirstOrDefault(x => x.Name == profileService.ActiveProfile.CameraSettings.FileCameraExtension) ?? FileExtensions.First();
         }
 
@@ -214,9 +214,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private string cameraState;
+        private CameraStates cameraState;
 
-        public string CameraState {
+        public CameraStates CameraState {
             get {
                 return cameraState;
             }
@@ -526,7 +526,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             try {
                 string path;
                 while ((path = folderWatcher.GetNextItem()) == null) {
-                    CameraState = "Waiting for file";
+                    CameraState = CameraStates.Waiting;
                     await CoreUtil.Wait(TimeSpan.FromSeconds(1), token);
                 }
 
@@ -534,7 +534,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     folderWatcher.Suspend();
                 }
 
-                CameraState = "Loading from file";
+                CameraState = CameraStates.LoadingFile;
                 var tries = 0;
                 while (true) {
                     tries++;
@@ -549,7 +549,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
                 }
             } finally {
-                CameraState = "Idle";
+                CameraState = CameraStates.LoadingFile;
             }
         }
 

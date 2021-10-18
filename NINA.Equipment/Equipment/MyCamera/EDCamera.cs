@@ -168,15 +168,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set { }
         }
 
-        private string _cameraState;
-
-        public string CameraState {
-            get => _cameraState;
-            set {
-                _cameraState = value;
-                RaisePropertyChanged();
-            }
-        }
+        public CameraStates CameraState { get => CameraStates.NoState; }
 
         public bool CanSetOffset => false;
 

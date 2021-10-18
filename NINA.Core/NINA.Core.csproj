@@ -86,6 +86,7 @@
     <Compile Include="Database\Schema\DsoDetail.cs" />
     <Compile Include="Database\Schema\EarthRotationParameters.cs" />
     <Compile Include="Database\Schema\VisualDescription.cs" />
+    <Compile Include="Enum\CameraStates.cs" />
     <Compile Include="Enum\CameraType.cs" />
     <Compile Include="Enum\Hemisphere.cs" />
     <Compile Include="Enum\MountTypeEnum.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Utility\Converters\BoolToLabelConverter.cs" />
     <Compile Include="Utility\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\CameraDefaultValueConverter.cs" />
+    <Compile Include="Utility\Converters\CameraStateToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\CollectionContainsItemsToBooleanConverter.cs" />
     <Compile Include="Utility\Converters\CollectionContainsItemsToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\CollectionContainsMoreThanOneItemToVisibilityConverter.cs" />

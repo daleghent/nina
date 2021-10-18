@@ -4059,6 +4059,78 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading.
+        /// </summary>
+        internal static string LblCameraStateDownload {
+            get {
+                return ResourceManager.GetString("LblCameraStateDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string LblCameraStateError {
+            get {
+                return ResourceManager.GetString("LblCameraStateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exposing.
+        /// </summary>
+        internal static string LblCameraStateExposing {
+            get {
+                return ResourceManager.GetString("LblCameraStateExposing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Idle.
+        /// </summary>
+        internal static string LblCameraStateIdle {
+            get {
+                return ResourceManager.GetString("LblCameraStateIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading file.
+        /// </summary>
+        internal static string LblCameraStateLoadingFile {
+            get {
+                return ResourceManager.GetString("LblCameraStateLoadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State unavailable.
+        /// </summary>
+        internal static string LblCameraStateNoState {
+            get {
+                return ResourceManager.GetString("LblCameraStateNoState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading out.
+        /// </summary>
+        internal static string LblCameraStateReading {
+            get {
+                return ResourceManager.GetString("LblCameraStateReading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting.
+        /// </summary>
+        internal static string LblCameraStateWaiting {
+            get {
+                return ResourceManager.GetString("LblCameraStateWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera Timeout - Camera did not set image as ready after exposuretime + {0} seconds.
         /// </summary>
         internal static string LblCameraTimeout {

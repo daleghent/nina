@@ -46,7 +46,7 @@ namespace NINA.Equipment.Interfaces {
         double CoolerPower { get; }
         bool HasDewHeater { get; }
         bool DewHeaterOn { get; set; }
-        string CameraState { get; }
+        CameraStates CameraState { get; }
         bool CanSubSample { get; }
         bool EnableSubSample { get; set; }
         int SubSampleX { get; set; }

@@ -402,7 +402,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         #region "Misc. Unsupported Features"
 
-        public string CameraState { get => string.Empty; }
+        public CameraStates CameraState { get => CameraStates.NoState; }
 
         public bool HasSetupDialog { get => false; }
 
