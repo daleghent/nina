@@ -258,33 +258,43 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 pixelFormat = System.Windows.Media.PixelFormats.Gray16;
             }
 
-            var analysis = new StarDetection(image, pixelFormat, profileService.ActiveProfile.ImageSettings.StarSensitivity, profileService.ActiveProfile.ImageSettings.NoiseReduction);
-            if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && !IsSubSampleEnabled()) {
-                analysis.UseROI = true;
-                analysis.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
-                analysis.OuterCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio;
-            }
-
             if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
-                analysis.NumberOfAFStars = profileService.ActiveProfile.FocuserSettings.AutoFocusUseBrightestStars;
-                await analysis.DetectAsync(progress, token);
+                var analysis = new StarDetection();
+                var analysisParams = new StarDetectionParams() {
+                    Sensitivity = profileService.ActiveProfile.ImageSettings.StarSensitivity,
+                    NoiseReduction = profileService.ActiveProfile.ImageSettings.NoiseReduction,
+                    NumberOfAFStars = profileService.ActiveProfile.FocuserSettings.AutoFocusUseBrightestStars
+                };
+                if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && !IsSubSampleEnabled()) {
+                    analysisParams.UseROI = true;
+                    analysisParams.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
+                    analysisParams.OuterCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio;
+                }
+                var analysisResult = await analysis.Detect(image, pixelFormat, analysisParams, progress, token);
 
                 if (profileService.ActiveProfile.ImageSettings.AnnotateImage) {
-                    imagingMediator.SetImage(analysis.GetAnnotatedImage());
+                    var starAnnotator = new StarAnnotator();
+                    var annotatedImage = await starAnnotator.GetAnnotatedImage(analysisParams, analysisResult, image.Image, token: token);
+                    imagingMediator.SetImage(annotatedImage);
                 }
 
-                Logger.Debug($"Current Focus: Position: {_focusPosition}, HFR: {analysis.AverageHFR}");
+                Logger.Debug($"Current Focus: Position: {_focusPosition}, HFR: {analysisResult.AverageHFR}");
 
-                return new MeasureAndError() { Measure = analysis.AverageHFR, Stdev = analysis.HFRStdDev };
+                return new MeasureAndError() { Measure = analysisResult.AverageHFR, Stdev = analysisResult.HFRStdDev };
             } else {
-                analysis.ContrastDetectionMethod = profileService.ActiveProfile.FocuserSettings.ContrastDetectionMethod;
-                await analysis.MeasureContrastAsync(progress, token);
-
-                if (profileService.ActiveProfile.ImageSettings.AnnotateImage) {
-                    imagingMediator.SetImage(analysis.GetAnnotatedImage());
+                var analysis = new ContrastDetection();
+                var analysisParams = new ContrastDetectionParams() {
+                    Sensitivity = profileService.ActiveProfile.ImageSettings.StarSensitivity,
+                    NoiseReduction = profileService.ActiveProfile.ImageSettings.NoiseReduction,
+                    Method = profileService.ActiveProfile.FocuserSettings.ContrastDetectionMethod
+                };
+                if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && !IsSubSampleEnabled()) {
+                    analysisParams.UseROI = true;
+                    analysisParams.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
                 }
+                var analysisResult = await analysis.Measure(image, analysisParams, progress, token);
 
-                MeasureAndError ContrastMeasurement = new MeasureAndError() { Measure = analysis.AverageContrast, Stdev = analysis.ContrastStdev };
+                MeasureAndError ContrastMeasurement = new MeasureAndError() { Measure = analysisResult.AverageContrast, Stdev = analysisResult.ContrastStdev };
                 return ContrastMeasurement;
             }
         }

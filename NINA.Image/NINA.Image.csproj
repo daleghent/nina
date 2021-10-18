@@ -169,11 +169,17 @@
     <Compile Include="ImageAnalysis\BahtinovImage.cs" />
     <Compile Include="ImageAnalysis\BayerFilter16bpp.cs" />
     <Compile Include="ImageAnalysis\ColorRemappingGeneral.cs" />
+    <Compile Include="ImageAnalysis\ContrastDetection.cs" />
+    <Compile Include="ImageAnalysis\DetectionUtility.cs" />
     <Compile Include="ImageAnalysis\FastGaussianBlur.cs" />
     <Compile Include="ImageAnalysis\HistogramMath.cs" />
+    <Compile Include="ImageAnalysis\IContrastDetection.cs" />
     <Compile Include="ImageAnalysis\ImageUtility.cs" />
+    <Compile Include="ImageAnalysis\IStarAnnotator.cs" />
+    <Compile Include="ImageAnalysis\IStarDetection.cs" />
     <Compile Include="ImageAnalysis\NoBlurCannyEdgeDetector.cs" />
     <Compile Include="ImageAnalysis\SharpCapSensorAnalysisReader.cs" />
+    <Compile Include="ImageAnalysis\StarAnnotator.cs" />
     <Compile Include="ImageAnalysis\StarDetection.cs" />
     <Compile Include="ImageData\AllImageStatistics.cs" />
     <Compile Include="ImageData\DebayeredImage.cs" />
@@ -233,11 +239,11 @@
   <Import Project="..\packages\VVVV.FreeImage.3.15.1.1\build\net40\VVVV.FreeImage.targets" Condition="Exists('..\packages\VVVV.FreeImage.3.15.1.1\build\net40\VVVV.FreeImage.targets')" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == SignedRelease (
-		if exist "$(SolutionDir)code_sign.pfx" (
-			echo  "Trying to sign $(TargetPath)"
-			signtool sign /t http://timestamp.digicert.com /a /v /fd SHA256 $(TargetPath)
-		)
-	
-)</PostBuildEvent>
+      if exist "$(SolutionDir)code_sign.pfx" (
+      echo  "Trying to sign $(TargetPath)"
+      signtool sign /t http://timestamp.digicert.com /a /v /fd SHA256 $(TargetPath)
+      )
+
+      )</PostBuildEvent>
   </PropertyGroup>
 </Project>

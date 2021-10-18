@@ -324,9 +324,15 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             _imageProcessingTask = Task.Run(async () => {
-                var processedData = await ImageControl.PrepareImage(data, parameters, cancelToken);
-                await ImgStatisticsVM.UpdateStatistics(data);
-                return processedData;
+                try {
+                    var processedData = await ImageControl.PrepareImage(data, parameters, cancelToken);
+                    await ImgStatisticsVM.UpdateStatistics(data);
+                    return processedData;
+                } catch (Exception e) {
+                    Logger.Error(e, "Failed to prepare image");
+                    Notification.ShowError($"Failed to prepare image for display: {e.Message}");
+                    throw;
+                }
             }, cancelToken);
             return _imageProcessingTask;
         }

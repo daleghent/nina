@@ -65,11 +65,20 @@ namespace NINA.Image.ImageData {
             NoiseReductionEnum noiseReduction,
             CancellationToken cancelToken = default,
             IProgress<ApplicationStatus> progress = default(Progress<ApplicationStatus>)) {
-            var starDetection = new StarDetection(this, this.Image.Format, sensitivity, noiseReduction);
-            await starDetection.DetectAsync(progress, cancelToken);
-            var image = annotateImage ? starDetection.GetAnnotatedImage() : this.Image;
-            this.RawImageData.StarDetectionAnalysis.HFR = starDetection.AverageHFR;
-            this.RawImageData.StarDetectionAnalysis.DetectedStars = starDetection.DetectedStars;
+            var starDetection = new StarDetection();
+            var starDetectionParams = new StarDetectionParams() {
+                Sensitivity = sensitivity,
+                NoiseReduction = noiseReduction
+            };
+            var starDetectionResult = await starDetection.Detect(this, this.Image.Format, starDetectionParams, progress, cancelToken);
+            var image = this.Image;
+            if (annotateImage) {
+                var starAnnotator = new StarAnnotator();
+                image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.Image, token: cancelToken);
+            }
+
+            this.RawImageData.StarDetectionAnalysis.HFR = starDetectionResult.AverageHFR;
+            this.RawImageData.StarDetectionAnalysis.DetectedStars = starDetectionResult.DetectedStars;
             return new RenderedImage(image: image, rawImageData: this.RawImageData);
         }
 
