@@ -29,6 +29,7 @@ namespace NINA.Image.ImageAnalysis {
         public double HFR { get; set; }
         public Accord.Point Position { get; set; }
         public double AverageBrightness { get; set; }
+        public double MaxBrightness { get; set; }
         public double Background { get; set; }
         public Rectangle BoundingBox { get; set; }
     }
