@@ -156,6 +156,7 @@ namespace NINA.Image.ImageAnalysis {
                     HFR = HFR,
                     Position = Position,
                     AverageBrightness = Average,
+                    MaxBrightness = maxPixelValue,
                     Background = SurroundingMean,
                     BoundingBox = Rectangle
                 };
@@ -299,6 +300,7 @@ namespace NINA.Image.ImageAnalysis {
                                 starPixelSum += pixelValue;
                                 starPixelCount++;
                                 innerStarPixelValues.Add(pixelValue);
+                                s.maxPixelValue = Math.Max(s.maxPixelValue, pixelValue);
                             }
                             ushort value = pixelValue;
                             PixelData pd = new PixelData { PosX = x, PosY = y, value = (ushort)value };
@@ -311,7 +313,6 @@ namespace NINA.Image.ImageAnalysis {
                 }
 
                 s.meanBrightness = starPixelSum / (double)starPixelCount;
-                s.maxPixelValue = innerStarPixelValues.Max();
                 double largeRectPixelCount = largeRect.Height * largeRect.Width - rect.Height * rect.Width;
                 double largeRectMean = largeRectPixelSum / largeRectPixelCount;
                 s.SurroundingMean = largeRectMean;
