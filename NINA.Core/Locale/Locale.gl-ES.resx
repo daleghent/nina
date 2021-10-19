@@ -5821,4 +5821,28 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblInitializingPlugins" xml:space="preserve">
     <value>Initializing Plugins</value>
   </data>
+  <data name="LblCameraStateDownload" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="LblCameraStateError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="LblCameraStateExposing" xml:space="preserve">
+    <value>Exposing</value>
+  </data>
+  <data name="LblCameraStateIdle" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="LblCameraStateLoadingFile" xml:space="preserve">
+    <value>Loading file</value>
+  </data>
+  <data name="LblCameraStateNoState" xml:space="preserve">
+    <value>State unavailable</value>
+  </data>
+  <data name="LblCameraStateReading" xml:space="preserve">
+    <value>Reading out</value>
+  </data>
+  <data name="LblCameraStateWaiting" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
 </root>
