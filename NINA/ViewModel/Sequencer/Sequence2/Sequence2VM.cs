@@ -357,9 +357,11 @@ namespace NINA.ViewModel.Sequencer {
             TaskBarProgressState = TaskbarItemProgressState.Normal;
             try {
                 cameraMediator.RegisterCaptureBlock(this);
+                Logger.Info("Advanced Sequence started");
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;
             } finally {
+                Logger.Info("Advanced Sequence finished");
                 cameraMediator.ReleaseCaptureBlock(this);
                 TaskBarProgressState = TaskbarItemProgressState.None;
                 IsRunning = false;

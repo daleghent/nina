@@ -223,6 +223,7 @@ namespace NINA.ViewModel {
             TaskBarProgressState = TaskbarItemProgressState.Normal;
             try {
                 cameraMediator.RegisterCaptureBlock(this);
+                Logger.Info("Simple Sequence started");
                 //Reset start and end of sequence options in case they were both already done
                 if (Sequencer.MainContainer.Items[2].Status == SequenceEntityStatus.FINISHED) {
                     Sequencer.MainContainer.Items[0].ResetProgress();
@@ -232,6 +233,7 @@ namespace NINA.ViewModel {
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;
             } finally {
+                Logger.Info("Simple Sequence finished");
                 cameraMediator.ReleaseCaptureBlock(this);
                 TaskBarProgressState = TaskbarItemProgressState.None;
                 IsRunning = false;

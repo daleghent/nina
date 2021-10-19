@@ -159,6 +159,8 @@ namespace NINA.ViewModel.FramingAssistant {
                     var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
                     dso.Rotation = Rectangle.TotalRotation;
                     dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
+
+                    Logger.Info($"Adding target to simple sequencer: {dso.Name} - {dso.Coordinates}");
                     sequenceMediator.AddSimpleTarget(dso);
                 }
             }, (object o) => RectangleCalculated);
@@ -167,6 +169,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 var template = o as IDeepSkyObjectContainer;
                 foreach (var container in GetDSOContainerListFromFraming(template)) {
+                    Logger.Info($"Adding target to advanced sequencer: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
                     sequenceMediator.AddAdvancedTarget(container);
                 }
             }, (object o) => RectangleCalculated);
@@ -174,6 +177,7 @@ namespace NINA.ViewModel.FramingAssistant {
             AddTargetToTargetListCommand = new RelayCommand((object o) => {
                 var template = o as IDeepSkyObjectContainer;
                 foreach (var container in GetDSOContainerListFromFraming(template)) {
+                    Logger.Info($"Adding target to target list: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
                     sequenceMediator.AddTargetToTargetList(container);
                 }
             }, (object o) => RectangleCalculated);
