@@ -328,6 +328,8 @@ namespace NINA.ViewModel {
                     var processedData = await ImageControl.PrepareImage(data, parameters, cancelToken);
                     await ImgStatisticsVM.UpdateStatistics(data);
                     return processedData;
+                } catch (OperationCanceledException) {
+                    throw;
                 } catch (Exception e) {
                     Logger.Error(e, "Failed to prepare image");
                     Notification.ShowError($"Failed to prepare image for display: {e.Message}");
