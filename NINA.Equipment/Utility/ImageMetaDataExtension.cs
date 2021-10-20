@@ -73,6 +73,7 @@ namespace NINA.Equipment.Utility {
                 data.Telescope.Altitude = info.Altitude;
                 data.Telescope.Azimuth = info.Azimuth;
                 data.Telescope.Airmass = Astrometry.AstroUtil.Airmass(info.Altitude);
+                data.Telescope.SideOfPier = info.SideOfPier;
             }
         }
 

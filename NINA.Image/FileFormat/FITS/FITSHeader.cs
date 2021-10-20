@@ -187,6 +187,10 @@ namespace NINA.Image.FileFormat.FITS {
                 metaData.Telescope.FocalRatio = ParseDouble(card.OriginalValue);
             }
 
+            if (_headerCards.TryGetValue("PIERSIDE", out card)) {
+                metaData.Telescope.SideOfPier = ParsePierSide(card.OriginalValue);
+            }
+
             if (_headerCards.ContainsKey("RA") && _headerCards.ContainsKey("DEC")) {
                 string raHdrVal = _headerCards["RA"].OriginalValue;
                 string decHdrVal = _headerCards["DEC"].OriginalValue;
@@ -441,6 +445,18 @@ namespace NINA.Image.FileFormat.FITS {
             }
         }
 
+        private PierSide ParsePierSide(string value) {
+            var strVal = value.Trim();
+
+            if (strVal.StartsWith("west", true, CultureInfo.InvariantCulture)) {
+                return PierSide.pierWest;
+            } else if (strVal.StartsWith("east", true, CultureInfo.InvariantCulture)) {
+                return PierSide.pierEast;
+            } else {
+                return PierSide.pierUnknown;
+            }
+        }
+
         /// <summary>
         /// Fills FITS Header Cards using all available ImageMetaData information
         /// </summary>
@@ -544,6 +560,17 @@ namespace NINA.Image.FileFormat.FITS {
 
             if (!double.IsNaN(metaData.Telescope.Airmass)) {
                 Add("AIRMASS", metaData.Telescope.Airmass, "Airmass at frame center (Gueymard 1993)");
+            }
+
+            if (metaData.Telescope.SideOfPier != PierSide.pierUnknown) {
+                string keyword = "PIERSIDE";
+                string comment = "Telescope pointing state";
+
+                if (metaData.Telescope.SideOfPier == PierSide.pierEast) {
+                    Add(keyword, "East", comment);
+                } else if (metaData.Telescope.SideOfPier == PierSide.pierWest) {
+                    Add(keyword, "West", comment);
+                }
             }
 
             /* Observer */

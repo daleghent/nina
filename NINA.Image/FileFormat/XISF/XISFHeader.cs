@@ -186,6 +186,10 @@ namespace NINA.Image.FileFormat.XISF {
                 }
             }
 
+            if (TryGetFITSProperty("PIERSIDE", out value)) {
+                metaData.Telescope.SideOfPier = ParsePierSide(value);
+            }
+
             /* Target */
             if (TryGetImageProperty(XISFImageProperty.Observation.Object.Name, out value)) {
                 metaData.Target.Name = value;
@@ -456,6 +460,17 @@ namespace NINA.Image.FileFormat.XISF {
                 AddImageFITSKeyword("AIRMASS", metaData.Telescope.Airmass, "Airmass at frame center (Gueymard 1993)");
             }
 
+            if (metaData.Telescope.SideOfPier != PierSide.pierUnknown) {
+                string keyword = "PIERSIDE";
+                string comment = "Telescope pointing state";
+
+                if (metaData.Telescope.SideOfPier == PierSide.pierEast) {
+                    AddImageFITSKeyword(keyword, "East", comment);
+                } else if (metaData.Telescope.SideOfPier == PierSide.pierWest) {
+                    AddImageFITSKeyword(keyword, "West", comment);
+                }
+            }
+
             /* Target */
             if (!string.IsNullOrWhiteSpace(metaData.Target.Name)) {
                 AddImageProperty(XISFImageProperty.Observation.Object.Name, metaData.Target.Name, "Name of the object of interest");
@@ -708,6 +723,18 @@ namespace NINA.Image.FileFormat.XISF {
                 );
             }
             elem.Add(xelem);
+        }
+
+        private PierSide ParsePierSide(string value) {
+            var strVal = value.Trim();
+
+            if (strVal.StartsWith("west", true, CultureInfo.InvariantCulture)) {
+                return PierSide.pierWest;
+            } else if (strVal.StartsWith("east", true, CultureInfo.InvariantCulture)) {
+                return PierSide.pierEast;
+            } else {
+                return PierSide.pierUnknown;
+            }
         }
 
         public void AddCfaAttribute(string cfaPattern, int cfaWidth, int cfaHeight) {

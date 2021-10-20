@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using NINA.Equipment.Utility;
 using NINA.Core.Model.Equipment;
 using NINA.Profile;
+using NINA.Core.Enum;
 
 namespace NINATest {
 
@@ -210,7 +211,8 @@ namespace NINATest {
                 Connected = true,
                 Name = "TestName",
                 SiteElevation = 120.3,
-                Coordinates = coordinates
+                Coordinates = coordinates,
+                SideOfPier = PierSide.pierWest
             };
             var sut = new ImageMetaData();
             sut.FromTelescopeInfo(telescopeInfo);
@@ -223,6 +225,7 @@ namespace NINATest {
             Assert.AreEqual(Epoch.J2000, sut.Telescope.Coordinates.Epoch);
             Assert.AreEqual(59.694545025696307d, sut.Telescope.Coordinates.RADegrees);
             Assert.AreEqual(28.945185789035015d, sut.Telescope.Coordinates.Dec);
+            Assert.AreEqual(PierSide.pierWest, sut.Telescope.SideOfPier);
         }
 
         [Test]

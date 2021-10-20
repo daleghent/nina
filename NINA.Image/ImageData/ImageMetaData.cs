@@ -91,6 +91,7 @@ namespace NINA.Image.ImageData {
         public double Altitude { get; set; } = double.NaN;
         public double Azimuth { get; set; } = double.NaN;
         public double Airmass { get; set; } = double.NaN;
+        public PierSide SideOfPier { get; set; } = PierSide.pierUnknown;
 
         private Coordinates coordinates = null;
 
