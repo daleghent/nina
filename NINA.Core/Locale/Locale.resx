@@ -4083,6 +4083,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Dome synchronization error. No longer following telescope. {0}</value>
   </data>
+  <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
+    <value>Dome failed to synchronize after Meridian Flip</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Close dome shutter at sequence end</value>
   </data>

@@ -7106,6 +7106,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dome failed to synchronize after Meridian Flip.
+        /// </summary>
+        internal static string LblDomeSyncFailureDuringMeridianFlip {
+            get {
+                return ResourceManager.GetString("LblDomeSyncFailureDuringMeridianFlip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Synchronization.
         /// </summary>
         internal static string LblDomeSynchronization {

@@ -28,7 +28,7 @@ namespace NINA.Equipment.Interfaces {
 
         Task Start();
 
-        void TriggerTelescopeSync();
+        Task<bool> TriggerTelescopeSync();
 
         Task WaitForDomeSynchronization(CancellationToken cancellationToken);
 

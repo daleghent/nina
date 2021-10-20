@@ -143,8 +143,10 @@ namespace NINA.WPF.Base.ViewModel {
             if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
                 progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
                 Logger.Info($"Meridian Flip - Synchronize dome to scope since dome following is not enabled");
-                domeFollower.TriggerTelescopeSync();
-                await domeFollower.WaitForDomeSynchronization(token);
+                if (!await domeFollower.TriggerTelescopeSync()) {
+                    Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringMeridianFlip"]);
+                    Logger.Warning("Meridian Flip - Synchronize dome operation didn't complete successfully. Moving on");
+                }
             }
 
             return flipsuccess;

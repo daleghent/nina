@@ -183,25 +183,25 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
         }
 
-        public void TriggerTelescopeSync() {
+        public Task<bool> TriggerTelescopeSync() {
             if (!domeInfo.Connected || !telescopeInfo.Connected) {
-                return;
+                return Task.FromResult(false);
             }
 
             var isLastSyncStillRotating = domeRotationTask?.IsCompleted == false;
             if (isLastSyncStillRotating) {
-                return;
+                return Task.FromResult(false);
             }
 
             if (domeInfo.Slewing) {
                 Logger.Trace("Cannot synchronize with telescope while dome is slewing");
-                return;
+                return Task.FromResult(false);
             }
 
             // If TargetCoordinates is not null then NINA initiated the slew and we know the target coordinates
             if (telescopeInfo.Slewing && telescopeInfo.TargetCoordinates == null && !profileService.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew) {
                 Logger.Info("Will not synchronize telescope while it is slewing since SynchronizeDuringMountSlew is disabled");
-                return;
+                return Task.FromResult(false);
             }
 
             var calculatedTargetDomeCoordinates = GetSynchronizedDomeCoordinates(telescopeInfo);
@@ -211,7 +211,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 IsSynchronized = false;
                 domeRotationCTS = new CancellationTokenSource();
                 domeRotationTask = this.domeMediator.SlewToAzimuth(calculatedTargetDomeCoordinates.Azimuth.Degree, domeRotationCTS.Token);
+                return domeRotationTask;
             }
+            return Task.FromResult(true);
         }
 
         public bool IsDomeWithinTolerance(Angle currentDomeAzimuth, TopocentricCoordinates targetDomeCoordinates) {
