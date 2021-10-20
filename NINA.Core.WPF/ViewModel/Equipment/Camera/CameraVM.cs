@@ -139,7 +139,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 });
 
                 Cam.CoolerOn = true;
-                return await RegulateTemperature(temperature, duration, progressRouter, ct);
+                return await RegulateTemperature(temperature, duration, true, progressRouter, ct);
             } catch (CannotReachTargetTemperatureException) {
                 Logger.Error($"Could not reach target temperature. Target Temp: {temperature}, Current Temp: {Cam.Temperature}");
                 Notification.ShowError(Loc.Instance["LblCouldNotReachTargetTemperature"]);
@@ -163,7 +163,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 if (Cam.Temperature < 20) {
                     try {
-                        await RegulateTemperature(20, duration, progressRouter, ct);
+                        await RegulateTemperature(20, duration, false, progressRouter, ct);
                     } catch (CannotReachTargetTemperatureException) {
                         Logger.Debug("Could not reach warming temperature. Most likley due to ambient temperature being lower. Continuing...");
                     }
@@ -180,11 +180,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
-        private async Task<bool> RegulateTemperature(double temperature, TimeSpan duration, IProgress<double> progress, CancellationToken ct) {
+        private async Task<bool> RegulateTemperature(double temperature, TimeSpan duration, bool cooling, IProgress<double> progress, CancellationToken ct) {
             try {
                 double currentTemp = Cam.Temperature;
                 var totalDeltaTemp = Math.Abs(currentTemp - temperature);
-                var cooling = temperature < currentTemp;
 
                 // Only wait if we're outside of the 1C tolerance at the start
                 if (duration > TimeSpan.Zero && totalDeltaTemp > 1.0d) {
