@@ -19,6 +19,7 @@ namespace NINA.Image.ImageData {
 
     public class StarDetectionAnalysis : BaseINPC, IStarDetectionAnalysis {
         private double _hfr = double.NaN;
+        private double _hfrStDev = double.NaN;
         private int _detectedStars = -1;
 
         public double HFR {
@@ -27,6 +28,16 @@ namespace NINA.Image.ImageData {
             }
             set {
                 this._hfr = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public double HFRStDev {
+            get {
+                return this._hfrStDev;
+            }
+            set {
+                this._hfrStDev = value;
                 this.RaisePropertyChanged();
             }
         }

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Image.FileFormat;
 using NINA.Image.ImageData;
 using System.Threading;
@@ -40,5 +41,11 @@ namespace NINA.Image.Interfaces {
         Task<string> PrepareSave(FileSaveInfo fileSaveInfo, CancellationToken cancelToken = default);
 
         string FinalizeSave(string file, string pattern);
+    }
+
+    public interface IImageDataFactory {
+        BaseImageData CreateBaseImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData);
+        BaseImageData CreateBaseImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData);
+        Task<IImageData> CreateFromFile(string path, int bitDepth, bool isBayered, RawConverterEnum rawConverter, CancellationToken ct = default);
     }
 }

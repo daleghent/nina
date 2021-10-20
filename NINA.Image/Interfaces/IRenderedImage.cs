@@ -14,6 +14,7 @@
 
 using NINA.Core.Enum;
 using NINA.Core.Model;
+using NINA.Image.ImageAnalysis;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

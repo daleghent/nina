@@ -21,6 +21,7 @@ namespace NINA.Profile.Interfaces {
         bool DebayerImage { get; set; }
         bool DebayeredHFR { get; set; }
         bool UnlinkedStretch { get; set; }
+        bool AnnotateUnlimitedStars { get; set; }
         double AutoStretchFactor { get; set; }
         double BlackClipping { get; set; }
         StarSensitivityEnum StarSensitivity { get; set; }

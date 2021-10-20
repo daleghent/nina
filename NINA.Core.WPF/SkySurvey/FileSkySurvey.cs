@@ -27,6 +27,11 @@ using NINA.Image.Interfaces;
 namespace NINA.WPF.Base.SkySurvey {
 
     public class FileSkySurvey : ISkySurvey {
+        private readonly IImageDataFactory imageDataFactory;
+
+        public FileSkySurvey(IImageDataFactory imageDataFactory) {
+            this.imageDataFactory = imageDataFactory;
+        }
 
         public async Task<SkySurveyImage> GetImage(string name, Coordinates coordinates, double fieldOfView, int width,
             int height, CancellationToken ct, IProgress<int> progress) {
@@ -38,7 +43,7 @@ namespace NINA.WPF.Base.SkySurvey {
             dialog.Filter = "Image files|*.tif;*.tiff;*.jpeg;*.jpg;*.png;*.cr2;*.cr3;*.nef;*.fit;*.fits;*.xisf|TIFF files|*.tif;*.tiff;|JPEG files|*.jpeg;*.jpg|PNG Files|*.png|RAW Files|*.cr2;*.cr3;*.nef|XISF Files|*.xisf|FITS Files|*.fit;*.fits";
 
             if (dialog.ShowDialog() == true) {
-                var arr = await BaseImageData.FromFile(dialog.FileName, 16, false, RawConverterEnum.FREEIMAGE, ct);
+                var arr = await imageDataFactory.CreateFromFile(dialog.FileName, 16, false, RawConverterEnum.FREEIMAGE, ct);
                 var renderedImage = arr.RenderImage();
                 renderedImage = await renderedImage.Stretch(factor: 0.2, blackClipping: -2.8, unlinked: false);
 

@@ -23,16 +23,19 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.ViewModel.AutoFocus;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Image.ImageAnalysis;
 
 namespace NINA.WPF.Base.ViewModel {
 
     public class AutoFocusVMFactory : IAutoFocusVMFactory {
-        private IProfileService profileService;
-        private ICameraMediator cameraMediator;
-        private IFilterWheelMediator filterWheelMediator;
-        private IFocuserMediator focuserMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
+        private readonly IProfileService profileService;
+        private readonly ICameraMediator cameraMediator;
+        private readonly IFilterWheelMediator filterWheelMediator;
+        private readonly IFocuserMediator focuserMediator;
+        private readonly IGuiderMediator guiderMediator;
+        private readonly IImagingMediator imagingMediator;
+        private readonly IStarDetection starDetection;
+        private readonly IStarAnnotator starAnnotator;
 
         public AutoFocusVMFactory(
                 IProfileService profileService,
@@ -40,17 +43,21 @@ namespace NINA.WPF.Base.ViewModel {
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
                 IGuiderMediator guiderMediator,
-                IImagingMediator imagingMediator) {
+                IImagingMediator imagingMediator,
+                IStarDetection starDetection,
+                IStarAnnotator starAnnotator) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.focuserMediator = focuserMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
         }
 
         public IAutoFocusVM Create() {
-            return new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
+            return new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, starDetection, starAnnotator);
         }
     }
 }

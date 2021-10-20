@@ -33,6 +33,12 @@ namespace NINATest {
 
     [TestFixture]
     public class XISFTest {
+        private ImageDataFactoryTestUtility dataFactoryUtility;
+
+        [SetUp]
+        public void Setup() {
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+        }
 
         #region "XISF"
 
@@ -123,7 +129,7 @@ namespace NINATest {
                 sut.Save(s);
             }
 
-            var x = await XISF.Load(new Uri(file), false, new CancellationToken());
+            var x = await XISF.Load(new Uri(file), false, dataFactoryUtility.ImageDataFactory, new CancellationToken());
 
             sut.Header.Image.Attribute("location").Should().NotBeNull();
             sut.Header.Image.Attribute("location")?.Value.Split(':')[1].Should().Be(expectedAttachmentLocation);

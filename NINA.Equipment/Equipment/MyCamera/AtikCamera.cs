@@ -31,8 +31,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public class AtikCamera : BaseINPC, ICamera {
 
-        public AtikCamera(int id, IProfileService profileService) {
+        public AtikCamera(int id, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             _cameraId = id;
             Name = AtikCameraDll.GetDeviceName(_cameraId);
         }
@@ -499,7 +500,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             await Task.Delay(100, token);
                         }
 
-                        return AtikCameraDll.DownloadExposure(_cameraP, BitDepth, SensorType != SensorType.Monochrome);
+                        return AtikCameraDll.DownloadExposure(_cameraP, BitDepth, SensorType != SensorType.Monochrome, exposureDataFactory);
                     } catch (OperationCanceledException) {
                     } catch (Exception ex) {
                         Logger.Error(ex);
@@ -555,6 +556,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
         public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public int BatteryLevel => -1;

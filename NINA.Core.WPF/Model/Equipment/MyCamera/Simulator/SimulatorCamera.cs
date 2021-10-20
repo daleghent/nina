@@ -37,9 +37,11 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class SimulatorCamera : BaseINPC, ICamera, ITelescopeConsumer {
 
-        public SimulatorCamera(IProfileService profileService, ITelescopeMediator telescopeMediator) {
+        public SimulatorCamera(IProfileService profileService, ITelescopeMediator telescopeMediator, IExposureDataFactory exposureDataFactory, IImageDataFactory imageDataFactory) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
+            this.exposureDataFactory = exposureDataFactory;
+            this.imageDataFactory = imageDataFactory;
 
             LoadImageCommand = new AsyncCommand<bool>(() => LoadImage(), (object o) => Settings.ImageSettings.RAWImageStream == null);
             UnloadImageCommand = new RelayCommand((object o) => Settings.ImageSettings.Image = null);
@@ -495,7 +497,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                         input[i] = (ushort)randNormal;
                     }
 
-                    return new ImageArrayExposureData(
+                    return exposureDataFactory.CreateImageArrayExposureData(
                         input: input,
                         width: width,
                         height: height,
@@ -505,15 +507,14 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
                 case CameraType.IMAGE:
                     if (Settings.ImageSettings.Image != null) {
-                        return new CachedExposureData(Settings.ImageSettings.Image.RawImageData);
+                        return exposureDataFactory.CreateCachedExposureData(Settings.ImageSettings.Image.RawImageData);
                     }
 
                     if (Settings.ImageSettings.RAWImageStream != null) {
                         byte[] rawBytes = Settings.ImageSettings.RAWImageStream.ToArray();
                         Settings.ImageSettings.RAWImageStream.Position = 0;
-                        var rawConverter = RawConverterFactory.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
-                        return new RAWExposureData(
-                            rawConverter: rawConverter,
+                        return exposureDataFactory.CreateRAWExposureData(
+                            converter: profileService.ActiveProfile.CameraSettings.RawConverter,
                             rawBytes: rawBytes,
                             rawType: Settings.ImageSettings.RawType,
                             bitDepth: this.BitDepth,
@@ -541,7 +542,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                         image = await survey.GetImage(string.Empty, coordinates, AstroUtil.DegreeToArcmin(1), Settings.SkySurveySettings.WidthAndHeight, Settings.SkySurveySettings.WidthAndHeight, token, default);
                         ImageCache[coordinates.ToString()] = image;
                     }
-                    var data = await ImageArrayExposureData.FromBitmapSource(image.Image);
+                    var data = await exposureDataFactory.CreateImageArrayExposureDataFromBitmapSource(image.Image);
 
                     var arcsecPerPix = image.Image.PixelWidth / AstroUtil.ArcminToArcsec(image.FoVWidth);
                     // Assume a fixed pixel Size of 3
@@ -562,6 +563,8 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
+        private readonly IExposureDataFactory exposureDataFactory;
+        private readonly IImageDataFactory imageDataFactory;
 
         public void SetBinning(short x, short y) {
         }
@@ -612,7 +615,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             dialog.DefaultExt = ".tiff";
 
             if (dialog.ShowDialog() == true) {
-                var rawData = await BaseImageData.FromFile(dialog.FileName, BitDepth, Settings.ImageSettings.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                var rawData = await imageDataFactory.CreateFromFile(dialog.FileName, BitDepth, Settings.ImageSettings.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 Settings.ImageSettings.Image = rawData.RenderImage();
                 Settings.ImageSettings.MetaData = rawData.MetaData;
 

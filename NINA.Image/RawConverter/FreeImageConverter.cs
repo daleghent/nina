@@ -25,8 +25,10 @@ using System.Windows.Media.Imaging;
 namespace NINA.Image.RawConverter {
 
     internal class FreeImageConverter : IRawConverter {
+        private readonly IImageDataFactory imageDataFactory;
 
-        public FreeImageConverter() {
+        public FreeImageConverter(IImageDataFactory imageDataFactory) {
+            this.imageDataFactory = imageDataFactory;
             DllLoader.LoadDll(Path.Combine("FreeImage", "FreeImage.dll"));
         }
 
@@ -65,7 +67,7 @@ namespace NINA.Image.RawConverter {
                         FreeImage.UnloadEx(ref img);
 
                         var imageArray = new ImageArray(flatArray: outArray, rawData: s.ToArray(), rawType: rawType);
-                        var data = new BaseImageData(
+                        var data = imageDataFactory.CreateBaseImageData(
                             imageArray: imageArray,
                             width: cropped.PixelWidth,
                             height: cropped.PixelHeight,

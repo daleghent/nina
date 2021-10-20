@@ -19,6 +19,8 @@ using NINA.Core.Utility.WindowService;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Image.ImageAnalysis;
+using NINA.Image.Interfaces;
 using NINA.PlateSolving.Interfaces;
 using NINA.Plugin.Interfaces;
 using NINA.Plugin.ManifestDefinition;
@@ -29,6 +31,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Utility.DateTimeProvider;
+using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using Nito.AsyncEx;
@@ -74,7 +77,12 @@ namespace NINA.Plugin {
                               IFramingAssistantVM framingAssistantVM,
                               IPlateSolverFactory plateSolverFactory,
                               IWindowServiceFactory windowServiceFactory,
-                              IDomeFollower domeFollower) {
+                              IDomeFollower domeFollower,
+                              IStarDetection starDetection,
+                              IStarAnnotator starAnnotator,
+                              IImageDataFactory imageDataFactory,
+                              IMeridianFlipVMFactory meridianFlipVMFactory,
+                              IAutoFocusVMFactory autoFocusVMFactory) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -100,6 +108,11 @@ namespace NINA.Plugin {
             this.platesolverFactory = plateSolverFactory;
             this.windowServiceFactory = windowServiceFactory;
             this.domeFollower = domeFollower;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
+            this.imageDataFactory = imageDataFactory;
+            this.meridianFlipVMFactory = meridianFlipVMFactory;
+            this.autoFocusVMFactory = autoFocusVMFactory;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -372,6 +385,11 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(platesolverFactory);
             container.ComposeExportedValue(windowServiceFactory);
             container.ComposeExportedValue(domeFollower);
+            container.ComposeExportedValue(starDetection);
+            container.ComposeExportedValue(starAnnotator);
+            container.ComposeExportedValue(imageDataFactory);
+            container.ComposeExportedValue(autoFocusVMFactory);
+            container.ComposeExportedValue(meridianFlipVMFactory);
 
             return container;
         }
@@ -412,6 +430,11 @@ namespace NINA.Plugin {
         private readonly IPlateSolverFactory platesolverFactory;
         private readonly IWindowServiceFactory windowServiceFactory;
         private readonly IDomeFollower domeFollower;
+        private readonly IStarDetection starDetection;
+        private readonly IStarAnnotator starAnnotator;
+        private readonly IImageDataFactory imageDataFactory;
+        private readonly IAutoFocusVMFactory autoFocusVMFactory;
+        private readonly IMeridianFlipVMFactory meridianFlipVMFactory;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
             return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);

@@ -35,12 +35,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public class ASICamera : BaseINPC, ICamera {
 
-        public ASICamera(int cameraId, IProfileService profileService) {
+        public ASICamera(int cameraId, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             _cameraId = cameraId;
         }
 
         private IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
         private int _cameraId;
 
         public string Category { get; } = "ZWOptical";
@@ -417,7 +419,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                     }
 
-                    return new ImageArrayExposureData(
+                    return exposureDataFactory.CreateImageArrayExposureData(
                         input: arr,
                         width: width,
                         height: height,

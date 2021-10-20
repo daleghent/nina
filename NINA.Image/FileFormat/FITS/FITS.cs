@@ -23,6 +23,8 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Image.ImageAnalysis;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Image.FileFormat.FITS {
 
@@ -38,7 +40,7 @@ namespace NINA.Image.FileFormat.FITS {
             this.Data = new FITSData(data);
         }
 
-        public static Task<IImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
+        public static Task<IImageData> Load(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
             return Task.Run<IImageData>(() => {
                 Fits f = new Fits(filePath);
                 ImageHDU hdu = (ImageHDU)f.ReadHDU();
@@ -91,7 +93,7 @@ namespace NINA.Image.FileFormat.FITS {
                 } catch (Exception ex) {
                     Logger.Error(ex.Message);
                 }
-                return new BaseImageData(pixels, width, height, 16, isBayered, metaData);
+                return imageDataFactory.CreateBaseImageData(pixels, width, height, 16, isBayered, metaData);
             }, ct);
         }
 

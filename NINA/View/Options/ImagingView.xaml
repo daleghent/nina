@@ -583,6 +583,21 @@
                                                 ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:NoiseReductionEnum}}}"
                                                 SelectedItem="{Binding NoiseReduction}" />
                                         </StackPanel>
+                                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding AnnotateImage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                            <TextBlock
+                                                MinWidth="200"
+                                                MinHeight="20"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblAnnotateUnlimitedStars}">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblAnnotateUnlimitedStarsTooltip}" />
+                                                </TextBlock.ToolTip>
+                                            </TextBlock>
+                                            <CheckBox
+                                                Height="25"
+                                                HorizontalAlignment="Left"
+                                                IsChecked="{Binding AnnotateUnlimitedStars}" />
+                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </Expander>

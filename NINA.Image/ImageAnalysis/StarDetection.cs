@@ -207,9 +207,9 @@ namespace NINA.Image.ImageAnalysis {
 
                     token.ThrowIfCancellationRequested();
 
-                    if (result.StarList.Count > 0) {
+                    if (result.StarList.Count > 1) {
                         var m = (from star in result.StarList select star.HFR).Average();
-                        var s = Math.Sqrt(((from star in result.StarList select star.HFR * star.HFR).Sum() - result.StarList.Count() * m * m) / result.StarList.Count());
+                        var s = Math.Sqrt((from star in result.StarList select (star.HFR - m) * (star.HFR - m)).Sum() / (result.StarList.Count() - 1));
 
                         Logger.Info($"Average HFR: {m}, HFR σ: {s}, Detected Stars {result.StarList.Count}");
 
@@ -335,7 +335,7 @@ namespace NINA.Image.ImageAnalysis {
             //We are performing AF with only a limited number of stars
             if (p.NumberOfAFStars > 0) {
                 //First AF exposure, let's find the brightest star positions and store them
-                if (starlist.Count() != 0 && p.MatchStarPositions.Count() == 0) {
+                if (starlist.Count() != 0 && (p.MatchStarPositions == null || p.MatchStarPositions.Count() == 0)) {
                     if (starlist.Count() <= p.NumberOfAFStars) {
                         result.BrightestStarPositions = starlist.ConvertAll(s => s.Position);
                     } else {

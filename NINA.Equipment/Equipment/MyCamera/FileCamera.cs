@@ -37,10 +37,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public class FileCamera : BaseINPC, ICamera {
 
-        public FileCamera(IProfileService profileService, ITelescopeMediator telescopeMediator) {
+        public FileCamera(IProfileService profileService, ITelescopeMediator telescopeMediator, IImageDataFactory imageDataFactory, IExposureDataFactory exposureDataFactory) {
             OpenFolderDiagCommand = new RelayCommand(OpenFolderDiag);
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
+            this.imageDataFactory = imageDataFactory;
+            this.exposureDataFactory = exposureDataFactory;
             CameraState = CameraStates.Idle;
             SelectedFileExtension = FileExtensions.FirstOrDefault(x => x.Name == profileService.ActiveProfile.CameraSettings.FileCameraExtension) ?? FileExtensions.First();
         }
@@ -539,8 +541,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 while (true) {
                     tries++;
                     try {
-                        var image = await BaseImageData.FromFile(path, BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter, token);
-                        return new CachedExposureData(image);
+                        var image = await imageDataFactory.CreateFromFile(path, BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter, token);
+                        return exposureDataFactory.CreateCachedExposureData(image);
                     } catch (Exception ex) {
                         if (tries > 3) {
                             throw;
@@ -555,6 +557,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
+        private readonly IImageDataFactory imageDataFactory;
+        private readonly IExposureDataFactory exposureDataFactory;
 
         public void SetBinning(short x, short y) {
         }

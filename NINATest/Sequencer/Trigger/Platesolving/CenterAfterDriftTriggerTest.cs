@@ -15,6 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Equipment.Interfaces.Mediator;
+using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Trigger.Platesolving;
 using NINA.WPF.Base.Interfaces.Mediator;
@@ -40,6 +41,7 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
         private Mock<ICameraMediator> cameraMediatorMock;
         private Mock<IImageHistoryVM> historyMock;
         private Mock<IImageSaveMediator> imageSaveMediatorMock;
+        private Mock<IImageDataFactory> imageDataFactoryMock;
 
         [SetUp]
         public void Setup() {
@@ -53,6 +55,7 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
             focuserMediatorMock = new Mock<IFocuserMediator>();
             historyMock = new Mock<IImageHistoryVM>();
             imageSaveMediatorMock = new Mock<IImageSaveMediator>();
+            imageDataFactoryMock = new Mock<IImageDataFactory>();
         }
 
         [Test]
@@ -72,7 +75,8 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
                 imagingMediatorMock.Object,
                 cameraMediatorMock.Object,
                 imageSaveMediatorMock.Object,
-                applicationStatusMediatorMock.Object);
+                applicationStatusMediatorMock.Object,
+                imageDataFactoryMock.Object);
 
             sut.DistanceArcMinutes = arcmin;
 

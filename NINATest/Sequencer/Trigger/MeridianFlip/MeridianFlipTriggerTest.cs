@@ -31,6 +31,8 @@ using NINA.Core.Enum;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
@@ -38,33 +40,23 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
     public class MeridianFlipTriggerTest {
         private Mock<IProfileService> profileServiceMock;
         private Mock<ITelescopeMediator> telescopeMediatorMock;
-        private Mock<IGuiderMediator> guiderMediatorMock;
-        private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
-        private Mock<IFilterWheelMediator> filterMediatorMock;
         private Mock<IFocuserMediator> focuserMediatorMock;
         private Mock<ICameraMediator> cameraMediatorMock;
-        private Mock<IDomeMediator> domeMediatorMock;
-        private Mock<IDomeFollower> domeFollowerMock;
-        private Mock<IImageHistoryVM> historyMock;
+        private Mock<IMeridianFlipVMFactory> meridianFlipVMFactoryMock;
 
         [SetUp]
         public void Setup() {
             profileServiceMock = new Mock<IProfileService>();
             telescopeMediatorMock = new Mock<ITelescopeMediator>();
-            guiderMediatorMock = new Mock<IGuiderMediator>();
-            imagingMediatorMock = new Mock<IImagingMediator>();
             applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
-            filterMediatorMock = new Mock<IFilterWheelMediator>();
             cameraMediatorMock = new Mock<ICameraMediator>();
             focuserMediatorMock = new Mock<IFocuserMediator>();
-            domeMediatorMock = new Mock<IDomeMediator>();
-            domeFollowerMock = new Mock<IDomeFollower>();
-            historyMock = new Mock<IImageHistoryVM>();
+            meridianFlipVMFactoryMock = new Mock<IMeridianFlipVMFactory>();
         }
 
         private MeridianFlipTrigger CreateSUT() {
-            return new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            return new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object, applicationStatusMediatorMock.Object, meridianFlipVMFactoryMock.Object);
         }
 
         [Test]

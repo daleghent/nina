@@ -38,8 +38,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public class EDCamera : BaseINPC, ICamera {
 
-        public EDCamera(IntPtr cam, EDSDK.EdsDeviceInfo info, IProfileService profileService) {
+        public EDCamera(IntPtr cam, EDSDK.EdsDeviceInfo info, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             _cam = cam;
             Id = info.szDeviceDescription;
             Name = info.szDeviceDescription;
@@ -48,6 +49,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public string Category { get; } = "Canon";
 
         private IProfileService profileService;
+
+        private readonly IExposureDataFactory exposureDataFactory;
 
         private IntPtr _cam;
 
@@ -481,9 +484,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                         token.ThrowIfCancellationRequested();
 
-                        var rawConverter = RawConverterFactory.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
-                        return new RAWExposureData(
-                            rawConverter: rawConverter,
+                        return this.exposureDataFactory.CreateRAWExposureData(
+                            converter: profileService.ActiveProfile.CameraSettings.RawConverter,
                             rawBytes: rawImageData,
                             rawType: GetFileType(directoryItemInfo),
                             bitDepth: BitDepth,
@@ -906,7 +908,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                         ushort[] outArray = new ushort[bitmap.PixelWidth * bitmap.PixelHeight];
                         bitmap.CopyPixels(outArray, 2 * bitmap.PixelWidth, 0);
-                        return new ImageArrayExposureData(
+                        return exposureDataFactory.CreateImageArrayExposureData(
                             input: outArray,
                             width: bitmap.PixelWidth,
                             height: bitmap.PixelHeight,

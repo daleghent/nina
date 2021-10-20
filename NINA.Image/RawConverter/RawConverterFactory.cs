@@ -19,16 +19,16 @@ namespace NINA.Image.RawConverter {
 
     public class RawConverterFactory {
 
-        public static IRawConverter CreateInstance(RawConverterEnum converter) {
+        public static IRawConverter CreateInstance(RawConverterEnum converter, IImageDataFactory imageDataFactory) {
             switch (converter) {
                 case RawConverterEnum.DCRAW:
-                    return new DCRaw();
+                    return new DCRaw(imageDataFactory);
 
                 case RawConverterEnum.FREEIMAGE:
-                    return new FreeImageConverter();
+                    return new FreeImageConverter(imageDataFactory);
 
                 default:
-                    return new FreeImageConverter();
+                    return new FreeImageConverter(imageDataFactory);
             }
         }
     }

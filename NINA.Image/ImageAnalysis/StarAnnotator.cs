@@ -16,7 +16,7 @@ namespace NINA.Image.ImageAnalysis {
         private static Pen RECTPEN = new Pen(Brushes.LightYellow, 2);
         private static SolidBrush TEXTBRUSH = new SolidBrush(Color.Yellow);
         private static FontFamily FONTFAMILY = new FontFamily("Arial");
-        private static Font FONT = new Font(FONTFAMILY, 32, FontStyle.Regular, GraphicsUnit.Pixel);
+        private static Font FONT = new Font(FONTFAMILY, 24, FontStyle.Regular, GraphicsUnit.Pixel);
 
         public Task<BitmapSource> GetAnnotatedImage(StarDetectionParams p, StarDetectionResult result, BitmapSource imageToAnnotate, int maxStars = 200, CancellationToken token = default) {
             return Task.Run(() => {

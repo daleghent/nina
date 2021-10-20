@@ -15,6 +15,7 @@
 using NINA.Core.Enum;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
@@ -22,23 +23,30 @@ namespace NINA.Image.ImageData {
 
     public class DebayeredImage : RenderedImage, IDebayeredImage {
         public LRGBArrays DebayeredData { get; private set; }
-        private bool _saveColorChannels;
-        private bool _saveLumChannel;
+
+        public bool SaveColorChannels { get; private set; }
+        public bool SaveLumChannel { get; private set; }
 
         protected DebayeredImage(
             BitmapSource image,
             IImageData rawImageData,
             LRGBArrays debayeredData,
             bool saveColorChannels,
-            bool saveLumChannels) :
-            base(image: image, rawImageData: rawImageData) {
+            bool saveLumChannels, 
+            IProfileService profileService, 
+            IStarDetection starDetection, 
+            IStarAnnotator starAnnotator) :
+            base(image, rawImageData, profileService, starDetection, starAnnotator) {
             this.DebayeredData = debayeredData;
-            this._saveColorChannels = saveColorChannels;
-            this._saveLumChannel = saveLumChannels;
+            this.SaveColorChannels = saveColorChannels;
+            this.SaveLumChannel = saveLumChannels;
         }
 
         public static IDebayeredImage Debayer(
             IRenderedImage imageData,
+            IProfileService profileService,
+            IStarDetection starDetection,
+            IStarAnnotator starAnnotator,
             bool saveColorChannels = false,
             bool saveLumChannel = false,
             SensorType bayerPattern = SensorType.RGGB) {
@@ -48,7 +56,10 @@ namespace NINA.Image.ImageData {
                 rawImageData: imageData.RawImageData,
                 debayeredData: debayeredImage.Data,
                 saveColorChannels: saveColorChannels,
-                saveLumChannels: saveLumChannel);
+                saveLumChannels: saveLumChannel,
+                profileService: profileService,
+                starDetection: starDetection,
+                starAnnotator: starAnnotator);
         }
 
         public override async Task<IRenderedImage> Stretch(double factor, double blackClipping, bool unlinked) {
@@ -62,13 +73,16 @@ namespace NINA.Image.ImageData {
                 image: stretchedImage,
                 rawImageData: this.RawImageData,
                 debayeredData: this.DebayeredData,
-                saveColorChannels: this._saveColorChannels,
-                saveLumChannels: this._saveLumChannel);
+                saveColorChannels: this.SaveColorChannels,
+                saveLumChannels: this.SaveLumChannel,
+                profileService: this.profileService,
+                starDetection: this.starDetection,
+                starAnnotator: this.starAnnotator);
         }
 
         public override IRenderedImage ReRender() {
             var reRenderedImage = base.ReRender();
-            return reRenderedImage.Debayer(saveColorChannels: this._saveColorChannels, saveLumChannel: this._saveLumChannel);
+            return reRenderedImage.Debayer(saveColorChannels: this.SaveColorChannels, saveLumChannel: this.SaveLumChannel);
         }
     }
 }

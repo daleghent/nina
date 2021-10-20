@@ -37,7 +37,9 @@ using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
 using NINA.Sequencer.Utility;
+using NINA.Image.ImageAnalysis;
 using NINA.Sequencer.Interfaces;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -53,24 +55,22 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;
         private IFocuserMediator focuserMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
+        private IAutoFocusVMFactory autoFocusVMFactory;
 
         [ImportingConstructor]
-        public AutofocusAfterHFRIncreaseTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) : base() {
+        public AutofocusAfterHFRIncreaseTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IAutoFocusVMFactory autoFocusVMFactory) : base() {
             this.history = history;
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.focuserMediator = focuserMediator;
-            this.guiderMediator = guiderMediator;
-            this.imagingMediator = imagingMediator;
+            this.autoFocusVMFactory = autoFocusVMFactory;
             Amount = 5;
             SampleSize = 10;
-            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator));
+            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, autoFocusVMFactory));
         }
 
-        private AutofocusAfterHFRIncreaseTrigger(AutofocusAfterHFRIncreaseTrigger cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.guiderMediator, cloneMe.imagingMediator) {
+        private AutofocusAfterHFRIncreaseTrigger(AutofocusAfterHFRIncreaseTrigger cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.autoFocusVMFactory) {
             CopyMetaData(cloneMe);
         }
 

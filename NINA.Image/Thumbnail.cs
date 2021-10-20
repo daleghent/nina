@@ -26,8 +26,10 @@ using NINA.Image.Interfaces;
 namespace NINA.Image {
 
     public class Thumbnail : BaseINPC {
+        protected readonly IImageDataFactory imageDataFactory;
 
-        public Thumbnail() {
+        public Thumbnail(IImageDataFactory imageDataFactory) {
+            this.imageDataFactory = imageDataFactory;
             Grade = "";
         }
 
@@ -35,7 +37,7 @@ namespace NINA.Image {
             try {
                 var filePath = GetFilePath();
                 if (File.Exists(filePath)) {
-                    return await BaseImageData.FromFile(filePath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                    return await imageDataFactory.CreateFromFile(filePath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 } else {
                     Notification.ShowError($"File ${filePath} does not exist");
                 }

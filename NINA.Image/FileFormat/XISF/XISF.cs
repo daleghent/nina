@@ -19,8 +19,10 @@ using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Image.FileFormat.XISF.DataConverter;
+using NINA.Image.ImageAnalysis;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using SHA3;
 using System;
 using System.IO;
@@ -34,13 +36,13 @@ using System.Xml.Linq;
 namespace NINA.Image.FileFormat.XISF {
 
     public class XISF {
+        public XISF(XISFHeader header) {
+            this.Header = header;
+        }
+
         public XISFHeader Header { get; private set; }
 
         public XISFData Data { get; private set; }
-
-        public XISF(XISFHeader header) {
-            Header = header;
-        }
 
         // XISF0100
         private static readonly byte[] xisfSignature = new byte[] { 0x58, 0x49, 0x53, 0x46, 0x30, 0x31, 0x30, 0x30 };
@@ -50,7 +52,7 @@ namespace NINA.Image.FileFormat.XISF {
         /// </summary>
         public int PaddedBlockSize => 1024;
 
-        public static async Task<IImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
+        public static async Task<IImageData> Load(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
             return await Task.Run(() => {
                 using (FileStream fs = new FileStream(filePath.LocalPath, FileMode.Open, FileAccess.Read)) {
                     // First make sure we are opening a XISF file by looking for the XISF signature at bytes 1-8
@@ -219,7 +221,7 @@ namespace NINA.Image.FileFormat.XISF {
                         var converter = GetConverter(sampleFormat);
                         var img = converter.Convert(raw);
 
-                        imageData = new BaseImageData(img, width, height, 16, isBayered, metaData);
+                        imageData = imageDataFactory.CreateBaseImageData(img, width, height, 16, isBayered, metaData);
                     } else {
                         string base64Img = header.Image.Element("Data").Value;
                         byte[] encodedImg = Convert.FromBase64String(base64Img);
@@ -227,7 +229,7 @@ namespace NINA.Image.FileFormat.XISF {
                         var converter = GetConverter(sampleFormat);
                         var img = converter.Convert(encodedImg);
 
-                        imageData = new BaseImageData(img, width, height, 16, isBayered, metaData);
+                        imageData = imageDataFactory.CreateBaseImageData(img, width, height, 16, isBayered, metaData);
                     }
 
                     return imageData;

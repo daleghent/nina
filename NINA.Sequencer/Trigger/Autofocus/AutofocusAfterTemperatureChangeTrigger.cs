@@ -35,6 +35,8 @@ using NINA.Core.Locale;
 using NINA.Sequencer.Utility;
 using NINA.Core.Utility;
 using NINA.Sequencer.Interfaces;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -50,24 +52,22 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;
         private IFocuserMediator focuserMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
+        private IAutoFocusVMFactory autoFocusVMFactory;
         private double initialTemperature;
 
         [ImportingConstructor]
-        public AutofocusAfterTemperatureChangeTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) : base() {
+        public AutofocusAfterTemperatureChangeTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IAutoFocusVMFactory autoFocusVMFactory) : base() {
             this.history = history;
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.focuserMediator = focuserMediator;
-            this.guiderMediator = guiderMediator;
-            this.imagingMediator = imagingMediator;
-            Amount = 5;
-            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator));
+            this.autoFocusVMFactory = autoFocusVMFactory;
+             Amount = 5;
+            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, autoFocusVMFactory));
         }
 
-        private AutofocusAfterTemperatureChangeTrigger(AutofocusAfterTemperatureChangeTrigger cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.guiderMediator, cloneMe.imagingMediator) {
+        private AutofocusAfterTemperatureChangeTrigger(AutofocusAfterTemperatureChangeTrigger cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.autoFocusVMFactory) {
             CopyMetaData(cloneMe);
         }
 

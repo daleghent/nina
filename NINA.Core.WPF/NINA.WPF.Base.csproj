@@ -172,6 +172,7 @@
     <Compile Include="Behaviors\MouseFollowBehavior.cs" />
     <Compile Include="Behaviors\MouseWheelCommandBehavior.cs" />
     <Compile Include="Interfaces\IAutoFocusVMFactory.cs" />
+    <Compile Include="Interfaces\IMeridianFlipVMFactory.cs" />
     <Compile Include="Interfaces\Mediator\IApplicationMediator.cs" />
     <Compile Include="Interfaces\Mediator\IApplicationStatusMediator.cs" />
     <Compile Include="Interfaces\Mediator\IImageSaveMediator.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Interfaces\ViewModel\IImageHistoryVM.cs" />
     <Compile Include="Interfaces\ViewModel\IImageSaveController.cs" />
     <Compile Include="Interfaces\ViewModel\IImageStatisticsVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IMeridianFlipVM.cs" />
     <Compile Include="Interfaces\ViewModel\IOptionsVM.cs" />
     <Compile Include="Interfaces\ViewModel\IPolarAlignmentVM.cs" />
     <Compile Include="Interfaces\ViewModel\ISkyAtlasVM.cs" />
@@ -297,6 +299,7 @@
     <Compile Include="ViewModel\Imaging\AutoFocusToolVM.cs" />
     <Compile Include="Interfaces\ViewModel\IAutoFocusToolVM.cs" />
     <Compile Include="ViewModel\MeridianFlipVM.cs" />
+    <Compile Include="ViewModel\MeridianFlipVMFactory.cs" />
     <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
     <Compile Include="View\AltitudeChart.xaml.cs">
       <DependentUpon>AltitudeChart.xaml</DependentUpon>

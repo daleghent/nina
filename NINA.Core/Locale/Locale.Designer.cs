@@ -2760,6 +2760,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Annotate All.
+        /// </summary>
+        internal static string LblAnnotateUnlimitedStars {
+            get {
+                return ResourceManager.GetString("LblAnnotateUnlimitedStars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By default, only 200 stars are annotated. If this is enabled, all detected stars are..
+        /// </summary>
+        internal static string LblAnnotateUnlimitedStarsTooltip {
+            get {
+                return ResourceManager.GetString("LblAnnotateUnlimitedStarsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to API Key.
         /// </summary>
         internal static string LblAPIKey {
@@ -9138,6 +9156,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HFR SD.
+        /// </summary>
+        internal static string LblHFRStDev {
+            get {
+                return ResourceManager.GetString("LblHFRStDev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HFR Trend.
         /// </summary>
         internal static string LblHFRTrend {
@@ -14235,6 +14262,51 @@ namespace NINA.Core.Locale {
         internal static string LblStarCount {
             get {
                 return ResourceManager.GetString("LblStarCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Noise Reduction.
+        /// </summary>
+        internal static string LblStarDetectorNoiseReduction {
+            get {
+                return ResourceManager.GetString("LblStarDetectorNoiseReduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing for Structure Detection.
+        /// </summary>
+        internal static string LblStarDetectorPrepareForStructureDetection {
+            get {
+                return ResourceManager.GetString("LblStarDetectorPrepareForStructureDetection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan and Analyze Stars.
+        /// </summary>
+        internal static string LblStarDetectorStarScan {
+            get {
+                return ResourceManager.GetString("LblStarDetectorStarScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Structure Detection.
+        /// </summary>
+        internal static string LblStarDetectorStructureDetection {
+            get {
+                return ResourceManager.GetString("LblStarDetectorStructureDetection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Star Detector V2.
+        /// </summary>
+        internal static string LblStarDetectorV2 {
+            get {
+                return ResourceManager.GetString("LblStarDetectorV2", resourceCulture);
             }
         }
         

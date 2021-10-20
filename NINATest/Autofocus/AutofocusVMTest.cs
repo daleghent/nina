@@ -26,6 +26,7 @@ using NINA.Image.FileFormat.XISF;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
+using NINA.Image.RawConverter;
 using NINA.PlateSolving.Interfaces;
 using NINA.Profile.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
@@ -38,6 +39,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace NINATest.Autofocus {
 
@@ -53,17 +55,19 @@ namespace NINATest.Autofocus {
         private IRenderedImage blurred1xRenderedImage;
         private IRenderedImage blurred2xRenderedImage;
         private IRenderedImage blurred3xRenderedImage;
+        private ImageDataFactoryTestUtility dataFactoryUtility;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp() {
-            profileServiceMock = new Mock<IProfileService>();
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+            profileServiceMock = dataFactoryUtility.ProfileServiceMock;
             cameraMediatorMock = new Mock<ICameraMediator>();
             fwMediatorMock = new Mock<IFilterWheelMediator>();
             focuserMediatorMock = new Mock<IFocuserMediator>();
             guiderMediatorMock = new Mock<IGuiderMediator>();
             imagingMediatorMock = new Mock<IImagingMediator>();
 
-            var testImageData = await XISF.Load(new Uri(Path.Combine(TestContext.CurrentContext.TestDirectory, "Autofocus", "TestImage_Jelly.xisf")), false, default);
+            var testImageData = await XISF.Load(new Uri(Path.Combine(TestContext.CurrentContext.TestDirectory, "Autofocus", "TestImage_Jelly.xisf")), false, dataFactoryUtility.ImageDataFactory, default);
             renderedTestImage = testImageData.RenderImage();
 
             var bmp = ImageUtility.BitmapFromSource(renderedTestImage.Image);
@@ -77,9 +81,9 @@ namespace NINATest.Autofocus {
             source2.Freeze();
             var source3 = ImageUtility.ConvertBitmap(position3Bmp);
             source3.Freeze();
-            blurred1xRenderedImage = await RenderedImage.FromBitmapSource(source1);
-            blurred2xRenderedImage = await RenderedImage.FromBitmapSource(source2);
-            blurred3xRenderedImage = await RenderedImage.FromBitmapSource(source3);
+            blurred1xRenderedImage = await dataFactoryUtility.ExposureDataFactory.CreateRenderedImageFromBitmapSource(source1);
+            blurred2xRenderedImage = await dataFactoryUtility.ExposureDataFactory.CreateRenderedImageFromBitmapSource(source2);
+            blurred3xRenderedImage = await dataFactoryUtility.ExposureDataFactory.CreateRenderedImageFromBitmapSource(source3);
         }
 
         [SetUp]
@@ -127,7 +131,8 @@ namespace NINATest.Autofocus {
                 .ReturnsAsync(blurred2xRenderedImage)
                 .ReturnsAsync(renderedTestImage);
 
-            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
+            var realStarDetection = new StarDetection();
+            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, realStarDetection, dataFactoryUtility.StarAnnotator);
 
             var imagingFilter = new FilterInfo();
 
@@ -143,7 +148,7 @@ namespace NINATest.Autofocus {
         public async Task StartAutofocus_Trendlines_WithCameraDownloadFailures_FiveMeasurePoints_FocusStillAtInitialPosition() {
             var ct = new CancellationToken();
 
-            var testImageData = await XISF.Load(new Uri(Path.Combine(TestContext.CurrentContext.TestDirectory, "Autofocus", "TestImage_Jelly.xisf")), false, ct);
+            var testImageData = await XISF.Load(new Uri(Path.Combine(TestContext.CurrentContext.TestDirectory, "Autofocus", "TestImage_Jelly.xisf")), false, dataFactoryUtility.ImageDataFactory, ct);
             var renderedTestImage = testImageData.RenderImage();
 
             var bmp = ImageUtility.BitmapFromSource(renderedTestImage.Image);
@@ -154,8 +159,8 @@ namespace NINATest.Autofocus {
             source1.Freeze();
             var source2 = ImageUtility.ConvertBitmap(position2Bmp);
             source2.Freeze();
-            var blurredRenderedImage1 = await RenderedImage.FromBitmapSource(source1);
-            var blurredRenderedImage2 = await RenderedImage.FromBitmapSource(source2);
+            var blurredRenderedImage1 = await dataFactoryUtility.ExposureDataFactory.CreateRenderedImageFromBitmapSource(source1);
+            var blurredRenderedImage2 = await dataFactoryUtility.ExposureDataFactory.CreateRenderedImageFromBitmapSource(source2);
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusMethod).Returns(AFMethodEnum.STARHFR);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusCurveFitting).Returns(AFCurveFittingEnum.TRENDLINES);
@@ -191,7 +196,8 @@ namespace NINATest.Autofocus {
                 .ReturnsAsync(blurredRenderedImage2)
                 .ReturnsAsync(renderedTestImage);
 
-            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
+            var realStarDetection = new StarDetection();
+            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, realStarDetection, dataFactoryUtility.StarAnnotator);
 
             var imagingFilter = new FilterInfo();
 
@@ -239,7 +245,8 @@ namespace NINATest.Autofocus {
                 .ReturnsAsync(blurred2xRenderedImage)
                 .ReturnsAsync(renderedTestImage);
 
-            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
+            var realStarDetection = new StarDetection();
+            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, realStarDetection, dataFactoryUtility.StarAnnotator);
 
             var imagingFilter = new FilterInfo();
 

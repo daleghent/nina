@@ -36,6 +36,7 @@ namespace NINA.Profile {
             debayerImage = true;
             debayeredHFR = true;
             unlinkedStretch = true;
+            annotateUnlimitedStars = false;
             starSensitivity = StarSensitivityEnum.Normal;
             noiseReduction = NoiseReductionEnum.None;
             detectStars = false;
@@ -141,6 +142,21 @@ namespace NINA.Profile {
                     if (unlinkedStretch) {
                         DebayerImage = unlinkedStretch;
                     }
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool annotateUnlimitedStars;
+
+        [DataMember]
+        public bool AnnotateUnlimitedStars {
+            get {
+                return annotateUnlimitedStars;
+            }
+            set {
+                if (annotateUnlimitedStars != value) {
+                    annotateUnlimitedStars = value;
                     RaisePropertyChanged();
                 }
             }

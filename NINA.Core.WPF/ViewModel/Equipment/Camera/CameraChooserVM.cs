@@ -31,18 +31,23 @@ using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;
 using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
+using NINA.Image.Interfaces;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
     public class CameraChooserVM : DeviceChooserVM {
         private readonly ITelescopeMediator telescopeMediator;
         private readonly ISbigSdk sbigSdk;
+        private readonly IExposureDataFactory exposureDataFactory;
+        private readonly IImageDataFactory imageDataFactory;
 
         public CameraChooserVM(
-            IProfileService profileService, ITelescopeMediator telescopeMediator, ISbigSdk sbigSdk
+            IProfileService profileService, ITelescopeMediator telescopeMediator, ISbigSdk sbigSdk, IExposureDataFactory exposureDataFactory, IImageDataFactory imageDataFactory
             ) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.sbigSdk = sbigSdk;
+            this.exposureDataFactory = exposureDataFactory;
+            this.imageDataFactory = imageDataFactory;
         }
 
         public override void GetEquipment() {
@@ -55,7 +60,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 try {
                     Logger.Trace("Adding ASI Cameras");
                     for (int i = 0; i < ASICameras.Count; i++) {
-                        var cam = ASICameras.GetCamera(i, profileService);
+                        var cam = ASICameras.GetCamera(i, profileService, exposureDataFactory);
                         if (!string.IsNullOrEmpty(cam.Name)) {
                             Logger.Trace(string.Format("Adding {0}", cam.Name));
                             devices.Add(cam);
@@ -69,7 +74,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 try {
                     Logger.Trace("Adding Altair Cameras");
                     foreach (var instance in Altair.AltairCam.EnumV2()) {
-                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new AltairSDKWrapper(), profileService);
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new AltairSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {
@@ -83,7 +88,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     Logger.Trace($"Cameras found: {atikDevices}");
                     if (atikDevices > 0) {
                         for (int i = 0; i < atikDevices; i++) {
-                            var cam = new AtikCamera(i, profileService);
+                            var cam = new AtikCamera(i, profileService, exposureDataFactory);
                             devices.Add(cam);
                         }
                     }
@@ -98,7 +103,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                     if (cameras.Count > 0) {
                         foreach (var entry in cameras) {
-                            var camera = new FLICamera(entry, profileService);
+                            var camera = new FLICamera(entry, profileService, exposureDataFactory);
 
                             if (!string.IsNullOrEmpty(camera.Name)) {
                                 Logger.Debug($"Adding FLI camera {camera.Id} (as {camera.Name})");
@@ -112,7 +117,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* QHYCCD */
                 try {
-                    var qhy = new QHYCameras();
+                    var qhy = new QHYCameras(exposureDataFactory);
                     Logger.Trace("Adding QHYCCD Cameras");
                     uint numCameras = qhy.Count;
 
@@ -133,7 +138,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 try {
                     Logger.Debug("Adding ToupTek Cameras");
                     foreach (var instance in ToupTek.ToupCam.EnumV2()) {
-                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new ToupTekSDKWrapper(), profileService);
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new ToupTekSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {
@@ -144,7 +149,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 try {
                     Logger.Debug("Adding Omegon Cameras");
                     foreach (var instance in Omegon.Omegonprocam.EnumV2()) {
-                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new OmegonSDKWrapper(), profileService);
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new OmegonSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {
@@ -155,7 +160,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 try {
                     Logger.Debug("Adding RisingCam Cameras");
                     foreach (var instance in Nncam.EnumV2()) {
-                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new RisingcamSDKWrapper(), profileService);
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new RisingcamSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {
@@ -166,7 +171,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 try {
                     Logger.Trace("Adding MallinCam Cameras");
                     foreach (var instance in MallinCam.MallinCam.EnumV2()) {
-                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new MallinCamSDKWrapper(), profileService);
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new MallinCamSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {
@@ -175,7 +180,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* SVBony */
                 try {
-                    var provider = new SVBonyProvider(profileService);
+                    var provider = new SVBonyProvider(profileService, exposureDataFactory);
                     devices.AddRange(provider.GetEquipment());
                 } catch (Exception ex) {
                     Logger.Error(ex);
@@ -183,7 +188,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* SBIG */
                 try {
-                    var provider = new SBIGCameraProvider(sbigSdk, profileService);
+                    var provider = new SBIGCameraProvider(sbigSdk, profileService, exposureDataFactory);
                     devices.AddRange(provider.GetEquipment());
                 } catch (Exception ex) {
                     Logger.Error(ex);
@@ -191,7 +196,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* ASCOM */
                 try {
-                    foreach (ICamera cam in ASCOMInteraction.GetCameras(profileService)) {
+                    foreach (ICamera cam in ASCOMInteraction.GetCameras(profileService, exposureDataFactory)) {
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {
@@ -214,7 +219,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                             err = EDSDK.EdsGetDeviceInfo(cam, out info);
 
                             Logger.Trace(string.Format("Adding {0}", info.szDeviceDescription));
-                            devices.Add(new EDCamera(cam, info, profileService));
+                            devices.Add(new EDCamera(cam, info, profileService, exposureDataFactory));
                         }
                     }
                 } catch (Exception ex) {
@@ -223,13 +228,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* NIKON */
                 try {
-                    devices.Add(new NikonCamera(profileService, telescopeMediator));
+                    devices.Add(new NikonCamera(profileService, telescopeMediator, exposureDataFactory));
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
 
-                devices.Add(new FileCamera(profileService, telescopeMediator));
-                devices.Add(new SimulatorCamera(profileService, telescopeMediator));
+                devices.Add(new FileCamera(profileService, telescopeMediator, imageDataFactory, exposureDataFactory));
+                devices.Add(new SimulatorCamera(profileService, telescopeMediator, exposureDataFactory, imageDataFactory));
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.CameraSettings.Id);
             }

@@ -134,6 +134,10 @@
       <Project>{20B7C98E-F7F8-497E-B5E5-02FA99D4B98B}</Project>
       <Name>NINA.Equipment</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
+      <Project>{2E7B7C6F-FB8E-49F2-9579-6D16CD263E64}</Project>
+      <Name>NINA.Image</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
       <Project>{A721D420-3C8E-4E96-9558-37B50801FF6B}</Project>
       <Name>NINA.PlateSolving</Name>

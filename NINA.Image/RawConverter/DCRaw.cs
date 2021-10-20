@@ -27,8 +27,10 @@ using NINA.Image.Interfaces;
 namespace NINA.Image.RawConverter {
 
     internal class DCRaw : IRawConverter {
+        private readonly IImageDataFactory imageDataFactory;
 
-        public DCRaw() {
+        public DCRaw(IImageDataFactory imageDataFactory) {
+            this.imageDataFactory = imageDataFactory;
         }
 
         private static string DCRAWLOCATION = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Utility", "DCRaw", "dcraw.exe");
@@ -97,7 +99,7 @@ namespace NINA.Image.RawConverter {
                                 bitDepth = 16;
 
                                 var imageArray = new ImageArray(flatArray: pixels, rawData: s.ToArray(), rawType: rawType);
-                                data = new BaseImageData(
+                                data = imageDataFactory.CreateBaseImageData(
                                     imageArray: imageArray,
                                     width: (int)bmp.PixelWidth,
                                     height: (int)bmp.PixelHeight,

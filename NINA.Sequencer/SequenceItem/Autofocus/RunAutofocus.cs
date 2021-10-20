@@ -20,17 +20,13 @@ using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
 using NINA.WPF.Base.Interfaces.ViewModel;
-using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Autofocus {
@@ -47,22 +43,20 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;
         private IFocuserMediator focuserMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
+        private IAutoFocusVMFactory autoFocusVMFactory;
 
         [ImportingConstructor]
-        public RunAutofocus(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) {
+        public RunAutofocus(
+            IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IAutoFocusVMFactory autoFocusVMFactory) {
             this.profileService = profileService;
             this.history = history;
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.focuserMediator = focuserMediator;
-            this.guiderMediator = guiderMediator;
-            this.imagingMediator = imagingMediator;
-            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
+            this.autoFocusVMFactory = autoFocusVMFactory;
         }
 
-        private RunAutofocus(RunAutofocus cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.guiderMediator, cloneMe.imagingMediator) {
+        private RunAutofocus(RunAutofocus cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.autoFocusVMFactory) {
             CopyMetaData(cloneMe);
         }
 
@@ -81,10 +75,9 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         }
 
         public IWindowServiceFactory WindowServiceFactory { get; set; } = new WindowServiceFactory();
-        public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var autoFocus = AutoFocusVMFactory.Create();
+            var autoFocus = this.autoFocusVMFactory.Create();
             var service = WindowServiceFactory.Create();
             service.Show(autoFocus, Loc.Instance["LblAutoFocus"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {

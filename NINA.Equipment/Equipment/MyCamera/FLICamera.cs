@@ -38,9 +38,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool _connected = false;
         private LibFLI.FLICameraInfo Info;
         private IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
 
-        public FLICamera(string camera, IProfileService profileService) {
+        public FLICamera(string camera, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             string[] cameraInfo;
             StringBuilder cameraSerial = new StringBuilder(64);
             uint rv;
@@ -727,7 +729,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 BGFlushStart();
 
-                return new ImageArrayExposureData(
+                return exposureDataFactory.CreateImageArrayExposureData(
                     input: imgData,
                     width: width,
                     height: height,

@@ -40,11 +40,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     internal class AscomCamera : AscomDevice<Camera>, ICamera, IDisposable {
 
-        public AscomCamera(string cameraId, string name, IProfileService profileService) : base(cameraId, name) {
+        public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory) : base(cameraId, name) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
         }
 
         private IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
 
         private void Initialize() {
             _hasCooler = true;
@@ -772,7 +774,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             await CoreUtil.Wait(TimeSpan.FromMilliseconds(100), token);
                         }
 
-                        return new Flipped2DExposureData(
+                        return exposureDataFactory.CreateFlipped2DExposureData(
                             flipped2DArray: (int[,])ImageArray,
                             bitDepth: BitDepth,
                             isBayered: SensorType != SensorType.Monochrome,

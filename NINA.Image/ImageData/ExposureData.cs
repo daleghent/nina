@@ -12,25 +12,31 @@
 
 #endregion "copyright"
 
-using NINA.Image.ImageData;
 using NINA.Core.Utility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Model;
-using NINA.Image.RawConverter;
 using NINA.Core.Locale;
 using NINA.Image.Interfaces;
+using System.Windows.Media.Imaging;
+using NINA.Core.Enum;
+using NINA.Image.RawConverter;
+using NINA.Image.ImageAnalysis;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Image.ImageData {
 
     public abstract class BaseExposureData : IExposureData {
+        protected readonly IImageDataFactory imageDataFactory;
+
         public int BitDepth { get; private set; }
         public ImageMetaData MetaData { get; private set; }
 
-        protected BaseExposureData(int bitDepth, ImageMetaData metadata) {
+        protected BaseExposureData(int bitDepth, ImageMetaData metadata, IImageDataFactory imageDataFactory) {
             this.BitDepth = bitDepth;
             this.MetaData = metadata;
+            this.imageDataFactory = imageDataFactory;
         }
 
         public abstract Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default);
@@ -39,8 +45,8 @@ namespace NINA.Image.ImageData {
     public class CachedExposureData : BaseExposureData {
         private readonly IImageData imageData;
 
-        public CachedExposureData(IImageData imageData)
-            : base(imageData.Properties.BitDepth, imageData.MetaData) {
+        public CachedExposureData(IImageData imageData, IImageDataFactory imageDataFactory)
+            : base(imageData.Properties.BitDepth, imageData.MetaData, imageDataFactory) {
             this.imageData = imageData;
         }
 
@@ -57,8 +63,9 @@ namespace NINA.Image.ImageData {
             Array flipped2DArray,
             int bitDepth,
             bool isBayered,
-            ImageMetaData metaData)
-            : base(bitDepth, metaData) {
+            ImageMetaData metaData,
+            IImageDataFactory imageDataFactory)
+            : base(bitDepth, metaData, imageDataFactory) {
             if (flipped2DArray.Rank > 2) { throw new NotSupportedException(); }
             this.flipped2DArray = flipped2DArray;
             this.IsBayered = isBayered;
@@ -68,7 +75,7 @@ namespace NINA.Image.ImageData {
             try {
                 progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblPrepareExposure"] });
                 var flatArray = await Task.Run(() => FlipAndConvert2d(this.flipped2DArray), cancelToken);
-                return new BaseImageData(
+                return imageDataFactory.CreateBaseImageData(
                     imageArray: new ImageArray(flatArray),
                     width: this.flipped2DArray.GetLength(0),
                     height: this.flipped2DArray.GetLength(1),
@@ -119,8 +126,9 @@ namespace NINA.Image.ImageData {
             byte[] rawBytes,
             string rawType,
             int bitDepth,
-            ImageMetaData metaData)
-            : base(bitDepth, metaData) {
+            ImageMetaData metaData,
+            IImageDataFactory imageDataFactory)
+            : base(bitDepth, metaData, imageDataFactory) {
             this.rawConverter = rawConverter;
             this.rawBytes = rawBytes;
             this.rawType = rawType;
@@ -141,6 +149,44 @@ namespace NINA.Image.ImageData {
             } finally {
                 progress?.Report(new ApplicationStatus { Status = string.Empty });
             }
+        }
+    }
+
+    public class ExposureDataFactory : IExposureDataFactory {
+        protected readonly IImageDataFactory imageDataFactory;
+        protected readonly IProfileService profileService;
+        protected readonly IStarDetection starDetection;
+        protected readonly IStarAnnotator starAnnotator;
+
+        public ExposureDataFactory(IImageDataFactory imageDataFactory, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
+            this.imageDataFactory = imageDataFactory;
+            this.profileService = profileService;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
+        }
+
+        public CachedExposureData CreateCachedExposureData(IImageData imageData) {
+            return new CachedExposureData(imageData, imageDataFactory);
+        }
+
+        public Flipped2DExposureData CreateFlipped2DExposureData(Array flipped2DArray, int bitDepth, bool isBayered, ImageMetaData metaData) {
+            return new Flipped2DExposureData(flipped2DArray, bitDepth, isBayered, metaData, imageDataFactory);
+        }
+
+        public RAWExposureData CreateRAWExposureData(RawConverterEnum converter, byte[] rawBytes, string rawType, int bitDepth, ImageMetaData metaData) {
+            return new RAWExposureData(RawConverterFactory.CreateInstance(converter, imageDataFactory), rawBytes, rawType, bitDepth, metaData, imageDataFactory);
+        }
+
+        public ImageArrayExposureData CreateImageArrayExposureData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
+            return new ImageArrayExposureData(input, width, height, bitDepth, isBayered, metaData, imageDataFactory);
+        }
+
+        public Task<ImageArrayExposureData> CreateImageArrayExposureDataFromBitmapSource(BitmapSource source) {
+            return ImageArrayExposureData.FromBitmapSource(source, imageDataFactory);
+        }
+
+        public Task<IRenderedImage> CreateRenderedImageFromBitmapSource(BitmapSource source, bool calculateStatistics = false) {
+            return RenderedImage.FromBitmapSource(source, this, profileService, starDetection, starAnnotator, calculateStatistics);
         }
     }
 }

@@ -35,10 +35,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private IToupTekAlikeCameraSDK sdk;
         private string internalId;
 
-        public ToupTekAlikeCamera(ToupTekAlikeDeviceInfo deviceInfo, IToupTekAlikeCameraSDK sdk, IProfileService profileService) {
+        public ToupTekAlikeCamera(ToupTekAlikeDeviceInfo deviceInfo, IToupTekAlikeCameraSDK sdk, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             Category = sdk.Category;
 
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             this.sdk = sdk;
             this.internalId = deviceInfo.id;
             if (sdk is ToupTekAlike.AltairSDKWrapper || sdk is ToupTekAlike.ToupTekSDKWrapper) {
@@ -58,6 +59,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
 
         public string Category { get; }
 
@@ -832,7 +834,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             }
 
-            var imageData = new ImageArrayExposureData(
+            var imageData = exposureDataFactory.CreateImageArrayExposureData(
                     input: data,
                     width: width,
                     height: height,

@@ -37,9 +37,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public class NikonCamera : BaseINPC, ICamera {
 
-        public NikonCamera(IProfileService profileService, ITelescopeMediator telescopeMediator) {
+        public NikonCamera(IProfileService profileService, ITelescopeMediator telescopeMediator, IExposureDataFactory exposureDataFactory) {
             this.telescopeMediator = telescopeMediator;
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             /* NIKON */
             Name = "Nikon";
             _nikonManagers = new List<NikonManager>();
@@ -49,6 +50,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private ITelescopeMediator telescopeMediator;
         private IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
         private List<NikonManager> _nikonManagers;
         private NikonManager _activeNikonManager;
 
@@ -121,7 +123,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     ushort[] outArray = new ushort[bitmap.PixelWidth * bitmap.PixelHeight];
                     bitmap.CopyPixels(outArray, 2 * bitmap.PixelWidth, 0);
 
-                    return new ImageArrayExposureData(
+                    return exposureDataFactory.CreateImageArrayExposureData(
                             input: outArray,
                             width: bitmap.PixelWidth,
                             height: bitmap.PixelHeight,
@@ -705,9 +707,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             try {
                 var rawImageData = _memoryStream.ToArray();
-                var rawConverter = RawConverterFactory.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
-                return new RAWExposureData(
-                    rawConverter: rawConverter,
+                return exposureDataFactory.CreateRAWExposureData(
+                    converter: profileService.ActiveProfile.CameraSettings.RawConverter,
                     rawBytes: rawImageData,
                     rawType: "nef",
                     bitDepth: this.BitDepth,

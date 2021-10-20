@@ -18,6 +18,7 @@ namespace NINA.Image.Interfaces {
 
     public interface IStarDetectionAnalysis : INotifyPropertyChanged {
         double HFR { get; set; }
+        double HFRStDev { get; set; }
         int DetectedStars { get; set; }
     }
 }

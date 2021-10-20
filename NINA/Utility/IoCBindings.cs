@@ -69,6 +69,10 @@ using NINA.PlateSolving.Interfaces;
 using NINA.PlateSolving;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Core.Interfaces.Utility;
+using NINA.Image.Interfaces;
+using NINA.Image.ImageData;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINA.Utility {
 
@@ -125,6 +129,12 @@ namespace NINA.Utility {
                     Bind<IMicroCacheFactory>().To<DefaultMicroCacheFactory>().InSingletonScope();
                     Bind<ISbigSdk>().To<SbigSdk>().InSingletonScope();
                     Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(NINA.Core.Utility.CoreUtil.Version)).InSingletonScope();
+                    Bind<IStarDetection>().To<StarDetection>().InSingletonScope();
+                    Bind<IStarAnnotator>().To<StarAnnotator>().InSingletonScope();
+                    Bind<IImageDataFactory>().To<ImageDataFactory>().InSingletonScope();
+                    Bind<IExposureDataFactory>().To<ExposureDataFactory>().InSingletonScope();
+                    Bind<IAutoFocusVMFactory>().To<AutoFocusVMFactory>().InSingletonScope();
+                    Bind<IMeridianFlipVMFactory>().To<MeridianFlipVMFactory>().InSingletonScope();
 
                     Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),
                         new ImagingVM(

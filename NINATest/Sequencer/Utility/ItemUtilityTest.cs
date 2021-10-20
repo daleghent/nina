@@ -18,12 +18,14 @@ using NINA.Astrometry;
 using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
+using NINA.Image.ImageAnalysis;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Interfaces;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Sequencer.Utility;
+using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NUnit.Framework;
@@ -204,15 +206,10 @@ namespace NINATest.Sequencer.Utility {
         private IMeridianFlipTrigger PrepareTrigger(TimeSpan timeToFlip) {
             var profileServiceMock = new Mock<IProfileService>();
             var telescopeMediatorMock = new Mock<ITelescopeMediator>();
-            var guiderMediatorMock = new Mock<IGuiderMediator>();
-            var imagingMediatorMock = new Mock<IImagingMediator>();
             var applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
-            var filterMediatorMock = new Mock<IFilterWheelMediator>();
             var cameraMediatorMock = new Mock<ICameraMediator>();
-            var domeMediatorMock = new Mock<IDomeMediator>();
-            var domeFollowerMock = new Mock<IDomeFollower>();
             var focuserMediatorMock = new Mock<IFocuserMediator>();
-            var historyMock = new Mock<IImageHistoryVM>();
+            var meridianFlipVMFactoryMock = new Mock<IMeridianFlipVMFactory>();
 
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
@@ -221,7 +218,7 @@ namespace NINATest.Sequencer.Utility {
             });
             profileServiceMock.SetupGet(x => x.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(false);
 
-            var flip = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var flip = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object, applicationStatusMediatorMock.Object, meridianFlipVMFactoryMock.Object);
 
             flip.ShouldTrigger(null, null);
 

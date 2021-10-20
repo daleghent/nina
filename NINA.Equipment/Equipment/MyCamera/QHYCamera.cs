@@ -46,12 +46,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private CancellationTokenSource sensorStatsCts;
         private QhySdk.QHYCCD_CAMERA_INFO Info;
         private readonly IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
         private CancellationTokenSource downloadExposureTaskCTS;
         private Task<IExposureData> downloadExposureTask;
         public IQhySdk Sdk { get; set; } = QhySdk.Instance;
 
-        public QHYCamera(uint cameraIdx, IProfileService profileService) {
+        public QHYCamera(uint cameraIdx, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
 
             StringBuilder cameraId = new StringBuilder(QhySdk.QHYCCD_ID_LEN);
             StringBuilder cameraModel = new StringBuilder(0);
@@ -1014,7 +1016,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 CameraState = CameraStates.Idle;
 
-                return new ImageArrayExposureData(
+                return exposureDataFactory.CreateImageArrayExposureData(
                     input: ImgData,
                     width: (int)width,
                     height: (int)height,

@@ -20,29 +20,30 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Interfaces;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINATest.Sequencer.Trigger.Autofocus {
 
     [TestFixture]
     public class AutofocusAfterFilterChangeTest {
+        private ImageDataFactoryTestUtility dataFactoryUtility;
         private Mock<IProfileService> profileServiceMock;
         private Mock<IImageHistoryVM> historyMock;
         private Mock<ICameraMediator> cameraMediatorMock;
         private Mock<IFilterWheelMediator> filterWheelMediatorMock;
         private Mock<IFocuserMediator> focuserMediatorMock;
-        private Mock<IGuiderMediator> guiderMediatorMock;
-        private Mock<IImagingMediator> imagingMediatorMock;
+        private Mock<IAutoFocusVMFactory> autoFocusVMFactoryMock;
         private AutofocusAfterFilterChange sut;
 
         [SetUp]
         public void Setup() {
-            profileServiceMock = new Mock<IProfileService>();
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+            profileServiceMock = dataFactoryUtility.ProfileServiceMock;
             historyMock = new Mock<IImageHistoryVM>();
             cameraMediatorMock = new Mock<ICameraMediator>();
             filterWheelMediatorMock = new Mock<IFilterWheelMediator>();
             focuserMediatorMock = new Mock<IFocuserMediator>();
-            guiderMediatorMock = new Mock<IGuiderMediator>();
-            imagingMediatorMock = new Mock<IImagingMediator>();
+            autoFocusVMFactoryMock = new Mock<IAutoFocusVMFactory>();
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusExposureTime).Returns(2);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps).Returns(4);
@@ -51,7 +52,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo { Connected = true });
             focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo { Connected = true });
-            sut = new AutofocusAfterFilterChange(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
+            sut = new AutofocusAfterFilterChange(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, autoFocusVMFactoryMock.Object);
         }
 
         [Test]

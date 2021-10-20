@@ -21,7 +21,9 @@ using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Interfaces.Mediator;
+using NINA.Image.ImageAnalysis;
 using NINA.Profile.Interfaces;
+using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
@@ -43,21 +45,20 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
         private bool _chartListSelectable;
         private Chart _selectedChart;
         private ApplicationStatus _status;
-        private IApplicationStatusMediator applicationStatusMediator;
+        private readonly IApplicationStatusMediator applicationStatusMediator;
         private CameraInfo cameraInfo;
-        private ICameraMediator cameraMediator;
-        private IFilterWheelMediator filterWheelMediator;
+        private readonly ICameraMediator cameraMediator;
+        private readonly IFilterWheelMediator filterWheelMediator;
         private FocuserInfo focuserInfo;
-        private IFocuserMediator focuserMediator;
+        private readonly IFocuserMediator focuserMediator;
 
         public AutoFocusToolVM(
                 IProfileService profileService,
                 ICameraMediator cameraMediator,
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
-                IGuiderMediator guiderMediator,
-                IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator
+                IApplicationStatusMediator applicationStatusMediator,
+                IAutoFocusVMFactory autoFocusVMFactory
         ) : base(profileService) {
             Title = Loc.Instance["LblAutoFocus"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["AutoFocusSVG"];
@@ -72,7 +73,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
 
             this.applicationStatusMediator = applicationStatusMediator;
 
-            this.AutoFocusVM = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator).Create();
+            this.AutoFocusVM = autoFocusVMFactory.Create();
 
             ChartList = new AsyncObservableCollection<Chart>();
             ChartListSelectable = true;

@@ -18,5 +18,7 @@ namespace NINA.Image.Interfaces {
 
     public interface IDebayeredImage : IRenderedImage {
         LRGBArrays DebayeredData { get; }
+        bool SaveColorChannels { get; }
+        bool SaveLumChannel { get; }
     }
 }

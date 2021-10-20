@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
 using ZWOptical.ASISDK;
@@ -24,11 +25,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get { return ASICameraDll.GetNumOfConnectedCameras(); }
         }
 
-        public static ASICamera GetCamera(int cameraId, IProfileService profileService) {
+        public static ASICamera GetCamera(int cameraId, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             if (cameraId >= Count || cameraId < 0)
                 throw new IndexOutOfRangeException();
 
-            return new ASICamera(cameraId, profileService);
+            return new ASICamera(cameraId, profileService, exposureDataFactory);
         }
     }
 }

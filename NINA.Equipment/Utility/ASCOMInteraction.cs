@@ -25,6 +25,7 @@ using NINA.Equipment.Equipment.MySwitch.Ascom;
 using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Equipment.Equipment.MyWeatherData;
 using NINA.Equipment.Interfaces;
+using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -34,12 +35,12 @@ namespace NINA.Equipment.Utility {
 
     public class ASCOMInteraction {
 
-        public static List<ICamera> GetCameras(IProfileService profileService) {
+        public static List<ICamera> GetCameras(IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             var l = new List<ICamera>();
             using (var ascomDevices = new ASCOM.Utilities.Profile()) {
                 foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Camera")) {
                     try {
-                        AscomCamera cam = new AscomCamera(device.Key, device.Value + " (ASCOM)", profileService);
+                        AscomCamera cam = new AscomCamera(device.Key, device.Value + " (ASCOM)", profileService, exposureDataFactory);
                         Logger.Trace(string.Format("Adding {0}", cam.Name));
                         l.Add(cam);
                     } catch (Exception) {

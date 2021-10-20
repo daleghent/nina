@@ -16,6 +16,7 @@ using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -25,13 +26,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
     public class SVBonyProvider : IEquipmentProvider<ICamera> {
         private IProfileService profileService;
         private ISVBonyPInvokeProxy sVBonyPInvoke;
+        private IExposureDataFactory exposureDataFactory;
 
         [ExcludeFromCodeCoverage]
-        public SVBonyProvider(IProfileService profileService) : this(profileService, new SVBonyPInvokeProxy()) {
+        public SVBonyProvider(IProfileService profileService, IExposureDataFactory exposureDataFactory) : this(profileService, exposureDataFactory, new SVBonyPInvokeProxy()) {
         }
 
-        public SVBonyProvider(IProfileService profileService, ISVBonyPInvokeProxy sVBonyPInvoke) {
+        public SVBonyProvider(IProfileService profileService, IExposureDataFactory exposureDataFactory, ISVBonyPInvokeProxy sVBonyPInvoke) {
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             this.sVBonyPInvoke = sVBonyPInvoke;
         }
 
@@ -44,7 +47,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
                     var info = sVBonyPInvoke.GetCameraInfo(i);
 
                     Logger.Debug($"Found SVBony camera - id: {info.CameraID}; name: {info.FriendlyName}");
-                    devices.Add(new SVBonyCamera((int)info.CameraID, info.FriendlyName, sVBonyPInvoke.GetSDKVersion(), new SVBonySDK((int)info.CameraID), profileService));
+                    devices.Add(new SVBonyCamera((int)info.CameraID, info.FriendlyName, sVBonyPInvoke.GetSDKVersion(), new SVBonySDK((int)info.CameraID), profileService, exposureDataFactory));
                 }
             }
             return devices;

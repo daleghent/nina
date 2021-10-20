@@ -52,6 +52,7 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.SkySurvey;
 using NINA.WPF.Base.ViewModel;
 using NINA.Core.Utility.WindowService;
+using NINA.Image.Interfaces;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -60,7 +61,8 @@ namespace NINA.ViewModel.FramingAssistant {
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
             ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
-            IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator, IRotatorMediator rotatorMediator) : base(profileService) {
+            IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator, IRotatorMediator rotatorMediator,
+            IImageDataFactory imageDataFactory) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -73,6 +75,7 @@ namespace NINA.ViewModel.FramingAssistant {
             this.filterWheelMediator = filterWheelMediator;
             this.guiderMediator = guiderMediator;
             this.rotatorMediator = rotatorMediator;
+            this.imageDataFactory = imageDataFactory;
             Opacity = 0.2;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
@@ -372,7 +375,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public ISkySurveyFactory SkySurveyFactory {
             get {
                 if (skySurveyFactory == null) {
-                    skySurveyFactory = new SkySurveyFactory();
+                    skySurveyFactory = new SkySurveyFactory(imageDataFactory);
                 }
                 return skySurveyFactory;
             }
@@ -483,6 +486,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private IGuiderMediator guiderMediator;
         private IRotatorMediator rotatorMediator;
         private NighttimeData nighttimeData;
+        private IImageDataFactory imageDataFactory;
 
         public NighttimeData NighttimeData {
             get => nighttimeData;

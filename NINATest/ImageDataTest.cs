@@ -25,12 +25,14 @@ using System.Threading.Tasks;
 using NINA.Image.Interfaces;
 using NINA.Image.FileFormat;
 using NINA.Core.Model;
+using Moq;
 
 namespace NINATest {
 
     [TestFixture]
     public class ImageDataTest {
         private ImageMetaData MetaData;
+        private ImageDataFactoryTestUtility dataFactoryUtility;
 
         [SetUp]
         public void Setup() {
@@ -88,6 +90,7 @@ namespace NINATest {
                 }
             };
             MetaData.Image.RecordedRMS.SetScale(5);
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
         }
 
         [Test]
@@ -105,7 +108,7 @@ namespace NINATest {
             ushort[] expFlatArr = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 };
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
 
             //Assert
             Assert.AreEqual(expX, result.Properties.Width);
@@ -125,7 +128,7 @@ namespace NINATest {
             ushort[] expFlatArr = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 };
 
             //Act
-            BaseImageData result = new BaseImageData(arr, width, height, 16, false, new ImageMetaData());
+            BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, new ImageMetaData());
 
             //Assert
             Assert.AreEqual(expX, result.Properties.Width);
@@ -139,7 +142,7 @@ namespace NINATest {
                 //Arrange
                 var arr = new Int32[5, 5, 5];
                 //Act
-                IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+                IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             }
             );
         }
@@ -174,7 +177,7 @@ namespace NINATest {
             double mean = 4116;
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -212,7 +215,7 @@ namespace NINATest {
             double mean = 32767.5;
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -234,7 +237,7 @@ namespace NINATest {
             }
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -254,7 +257,7 @@ namespace NINATest {
             }
 
             //Act
-            var imgData = await new ImageArrayExposureData(arr, width, height, bitDepth, isBayered, new ImageMetaData()).ToImageData();
+            var imgData = await dataFactoryUtility.ExposureDataFactory.CreateImageArrayExposureData(arr, width, height, bitDepth, isBayered, new ImageMetaData()).ToImageData();
 
             //Assert
             Assert.AreEqual(width, imgData.Properties.Width);
@@ -277,7 +280,7 @@ namespace NINATest {
             }
 
             //Act
-            var imgData = await new Flipped2DExposureData(arr, bitDepth, isBayered, new ImageMetaData()).ToImageData();
+            var imgData = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, bitDepth, isBayered, new ImageMetaData()).ToImageData();
 
             //Assert
             Assert.AreEqual(width, imgData.Properties.Width);
@@ -313,7 +316,7 @@ namespace NINATest {
             arr[3, 4] = 5;
 
             //Act
-            var result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            var result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -331,7 +334,7 @@ namespace NINATest {
         [TestCase(new ushort[] { 10, 10, 10, 10, 10, 10, 10, 10, 15, 20, 20, 20, 20, 20, 50, 50, 50, 50 }, 10, 17.5, 7.5)]
         [TestCase(new ushort[] { 0, 0, 65535, 65535 }, 16, 32767.5, 32767.5)]
         public async Task MedianTest(ushort[] arr, int bitDepth, double expectedMedian, double expectedMAD) {
-            var result = await new ImageArrayExposureData(arr, arr.Length / 2, 2, bitDepth, false, new ImageMetaData()).ToImageData();
+            var result = await dataFactoryUtility.ExposureDataFactory.CreateImageArrayExposureData(arr, arr.Length / 2, 2, bitDepth, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             Assert.AreEqual(expectedMedian, resultStatistics.Median);
@@ -355,7 +358,7 @@ namespace NINATest {
                 FileType = fileType
             };
 
-            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
 
             var file = await sut.SaveToDisk(fileSaveInfo, default);
 
@@ -383,7 +386,7 @@ namespace NINATest {
                 FileType = fileType
             };
 
-            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
 
             var file = await sut.SaveToDisk(fileSaveInfo, default);
 
@@ -424,7 +427,7 @@ namespace NINATest {
                 FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
-            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
@@ -482,7 +485,7 @@ namespace NINATest {
                 TIFFCompressionType = NINA.Core.Enum.TIFFCompressionTypeEnum.LZW
             };
 
-            var sut = new BaseImageData(data, 3, 3, 16, false, new ImageMetaData());
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, new ImageMetaData());
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
@@ -523,7 +526,7 @@ namespace NINATest {
                 FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
-            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.PrepareSave(fileSaveInfo, default);
             file = sut.FinalizeSave(file, pattern);
             File.Delete(file);
@@ -584,7 +587,7 @@ namespace NINATest {
             var invalidChars = Path.GetInvalidPathChars();
             MetaData.Target.Name = string.Join("", invalidChars);
 
-            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.PrepareSave(fileSaveInfo, default);
             file = sut.FinalizeSave(file, pattern);
             File.Delete(file);

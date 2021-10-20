@@ -26,14 +26,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private readonly ISbigSdk sdk;
         private readonly SBIG.CCD exposureCcd;
         private readonly IProfileService profileService;
+        private readonly IExposureDataFactory exposureDataFactory;
         private SDK.CameraSDKs.SBIGSDK.DeviceInfo? connectedDevice;
 
-        public SBIGCamera(ISbigSdk sdk, SBIG.CCD exposureCcd, DeviceQueryInfo queriedCameraInfo, IProfileService profileService) {
+        public SBIGCamera(ISbigSdk sdk, SBIG.CCD exposureCcd, DeviceQueryInfo queriedCameraInfo, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.sdk = sdk;
             this.exposureCcd = exposureCcd;
             this.BinningModes = new AsyncObservableCollection<BinningMode>();
             this.queriedCameraInfo = queriedCameraInfo;
             this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
             this.Id = queriedCameraInfo.SerialNumber;
             this.Name = queriedCameraInfo.Name;
             this.DriverVersion = sdk.GetSdkVersion();
@@ -106,7 +108,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         HasTrackingCcd = ConnectedDevice.TrackingCameraInfo.HasValue;
                         if (HasTrackingCcd) {
                             _trackingCamera?.Disconnect();
-                            _trackingCamera = new SBIGCamera(this.sdk, SBIG.CCD.Tracking, this.queriedCameraInfo, this.profileService);
+                            _trackingCamera = new SBIGCamera(this.sdk, SBIG.CCD.Tracking, this.queriedCameraInfo, this.profileService, this.exposureDataFactory);
                             if (TrackingCcdAscomServerEnabled) {
                                 await TurnOnTrackingASCOMServer(ct);
                             }
@@ -597,7 +599,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 try {
                     CameraStatus = SBIGCameraStatus.DOWNLOAD;
                     var exposureData = sdk.DownloadExposure(ConnectedDevice.DeviceId, this.exposureCcd, ct);
-                    return new ImageArrayExposureData(
+                    return exposureDataFactory.CreateImageArrayExposureData(
                         input: exposureData.Data,
                         width: exposureData.Width,
                         height: exposureData.Height,

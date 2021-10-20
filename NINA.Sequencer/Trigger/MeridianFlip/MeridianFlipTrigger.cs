@@ -36,6 +36,8 @@ using NINA.Core.Locale;
 using NINA.WPF.Base.ViewModel;
 using NINA.Sequencer.Interfaces;
 using NINA.Equipment.Interfaces;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINA.Sequencer.Trigger.MeridianFlip {
 
@@ -48,37 +50,26 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
     public class MeridianFlipTrigger : SequenceTrigger, IMeridianFlipTrigger, IValidatable {
         protected IProfileService profileService;
         protected ITelescopeMediator telescopeMediator;
-        protected IGuiderMediator guiderMediator;
-        protected IImagingMediator imagingMediator;
-        protected IFilterWheelMediator filterWheelMediator;
         protected IApplicationStatusMediator applicationStatusMediator;
         protected ICameraMediator cameraMediator;
-        protected IDomeMediator domeMediator;
-        protected IDomeFollower domeFollower;
         protected IFocuserMediator focuserMediator;
-        protected IImageHistoryVM history;
+        protected IMeridianFlipVMFactory meridianFlipVMFactory;
 
         protected DateTime lastFlipTime = DateTime.MinValue;
         protected Coordinates lastFlipCoordiantes;
 
         [ImportingConstructor]
-        public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator,
-            IFocuserMediator focuserMediator, IImagingMediator imagingMediator, IDomeMediator domeMediator, IDomeFollower domeFollower,
-            IApplicationStatusMediator applicationStatusMediator, IFilterWheelMediator filterWheelMediator, IImageHistoryVM historyVM) : base() {
+        public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, 
+            IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator, IMeridianFlipVMFactory meridianFlipVMFactory) : base() {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
-            this.guiderMediator = guiderMediator;
-            this.imagingMediator = imagingMediator;
-            this.filterWheelMediator = filterWheelMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             this.cameraMediator = cameraMediator;
-            this.domeMediator = domeMediator;
-            this.domeFollower = domeFollower;
             this.focuserMediator = focuserMediator;
-            this.history = historyVM;
+            this.meridianFlipVMFactory = meridianFlipVMFactory;
         }
 
-        protected MeridianFlipTrigger(MeridianFlipTrigger cloneMe) : this(cloneMe.profileService, cloneMe.cameraMediator, cloneMe.telescopeMediator, cloneMe.guiderMediator, cloneMe.focuserMediator, cloneMe.imagingMediator, cloneMe.domeMediator, cloneMe.domeFollower, cloneMe.applicationStatusMediator, cloneMe.filterWheelMediator, cloneMe.history) {
+        protected MeridianFlipTrigger(MeridianFlipTrigger cloneMe) : this(cloneMe.profileService, cloneMe.cameraMediator, cloneMe.telescopeMediator, cloneMe.focuserMediator, cloneMe.applicationStatusMediator, cloneMe.meridianFlipVMFactory) {
             CopyMetaData(cloneMe);
         }
 
@@ -165,8 +156,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             lastFlipTime = DateTime.Now;
             lastFlipCoordiantes = target;
-            return new MeridianFlipVM(profileService, cameraMediator, telescopeMediator, guiderMediator, focuserMediator, imagingMediator, domeMediator, domeFollower, applicationStatusMediator, filterWheelMediator, history)
-                .MeridianFlip(target, timeToFlip);
+            return meridianFlipVMFactory.Create().MeridianFlip(target, timeToFlip);
         }
 
         public override void AfterParentChanged() {

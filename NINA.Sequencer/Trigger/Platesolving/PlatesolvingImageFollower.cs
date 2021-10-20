@@ -25,6 +25,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         private readonly ITelescopeMediator telescopeMediator;
         private readonly IProfileService profileService;
         private readonly IApplicationStatusMediator applicationStatusMediator;
+        private readonly IImageDataFactory imageDataFactory;
         private readonly IProgress<ApplicationStatus> progress;
         private object lockObj = new object();
         private bool closed = false;
@@ -32,13 +33,14 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         private CancellationTokenSource solverBackgroundTaskCancellationSource = new CancellationTokenSource();
 
         public PlatesolvingImageFollower(IProfileService profileService, IImageHistoryVM history, ITelescopeMediator telescopeMediator, IImageSaveMediator imageSaveMediator,
-            IApplicationStatusMediator applicationStatusMediator) {
+            IApplicationStatusMediator applicationStatusMediator, IImageDataFactory imageDataFactory) {
             this.profileService = profileService;
             this.imageSaveMediator = imageSaveMediator;
             this.history = history;
             this.telescopeMediator = telescopeMediator;
             this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
             this.applicationStatusMediator = applicationStatusMediator;
+            this.imageDataFactory = imageDataFactory;
             this.progress = new Progress<ApplicationStatus>(ProgressStatusUpdate);
             var lastLightImage = history.ImageHistory.Where(x => x.LocalPath != null && x.Type == "LIGHT").LastOrDefault();
             LastPlatesolvedId = lastLightImage != null ? lastLightImage.Id : -1;
@@ -129,7 +131,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         private async Task<IImageData> LoadHistoryImage(ImageHistoryPoint historyImage) {
             try {
                 if (File.Exists(historyImage.LocalPath)) {
-                    return await BaseImageData.FromFile(historyImage.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, historyImage.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                    return await imageDataFactory.CreateFromFile(historyImage.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, historyImage.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 } else {
                     Notification.ShowError($"File {historyImage.Filename} does not exist");
                 }

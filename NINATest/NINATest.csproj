@@ -279,6 +279,7 @@
     <Compile Include="GuideStepsHistoryTest.cs" />
     <Compile Include="ImageAnalysis\SharpCapSensorAnalysisReaderTest.cs" />
     <Compile Include="FilePatternTest.cs" />
+    <Compile Include="ImageDataFactoryTestUtility.cs" />
     <Compile Include="ImageDataTest.cs" />
     <Compile Include="ImageHistoryVMTest.cs" />
     <Compile Include="ImageMetaDataTest.cs" />

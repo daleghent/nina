@@ -27,6 +27,12 @@ namespace NINATest.Equipment.SDK.CameraSDKs.SVBony {
 
     [TestFixture]
     public class SVBonyProviderTest {
+        private ImageDataFactoryTestUtility dataFactoryUtility;
+
+        [SetUp]
+        public void Setup() {
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+        }
 
         [Test]
         public void GetEquipment_NoCamerasFound_ReturnEmptyList() {
@@ -34,7 +40,7 @@ namespace NINATest.Equipment.SDK.CameraSDKs.SVBony {
             proxy.Setup(x => x.SVBGetNumOfConnectedCameras()).Returns(0);
             var profile = new Mock<IProfileService>();
 
-            var sut = new SVBonyProvider(profile.Object, proxy.Object);
+            var sut = new SVBonyProvider(profile.Object, dataFactoryUtility.ExposureDataFactory, proxy.Object);
 
             var cameras = sut.GetEquipment();
 
@@ -48,7 +54,7 @@ namespace NINATest.Equipment.SDK.CameraSDKs.SVBony {
             proxy.Setup(x => x.SVBGetNumOfConnectedCameras()).Returns(2);
             var profile = new Mock<IProfileService>();
 
-            var sut = new SVBonyProvider(profile.Object, proxy.Object);
+            var sut = new SVBonyProvider(profile.Object, dataFactoryUtility.ExposureDataFactory, proxy.Object);
 
             var cameras = sut.GetEquipment();
 

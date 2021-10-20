@@ -29,18 +29,20 @@ using NINA.Image;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using NINA.Core.Locale;
+using NINA.Image.Interfaces;
 
 namespace NINA.ViewModel {
 
     internal class ThumbnailVM : DockableVM, IThumbnailVM {
 
-        public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator) : base(profileService) {
+        public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageDataFactory imageDataFactory) : base(profileService) {
             Title = Loc.Instance["LblImageHistory"];
             CanClose = false;
             ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"];
 
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
+            this.imageDataFactory = imageDataFactory;
 
             this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
 
@@ -85,7 +87,7 @@ namespace NINA.ViewModel {
                 scaledBitmap.Freeze();
 
                 await _dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    var thumbnail = new Thumbnail() {
+                    var thumbnail = new Thumbnail(imageDataFactory) {
                         ThumbnailImage = scaledBitmap,
                         ImagePath = msg.PathToImage,
                         FileType = msg.FileType,
@@ -139,6 +141,7 @@ namespace NINA.ViewModel {
         private ObservableLimitedSizedStack<Thumbnail> _thumbnails;
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
+        private readonly IImageDataFactory imageDataFactory;
 
         public ICommand SelectCommand { get; set; }
         public ICommand GradeImageCommand { get; set; }

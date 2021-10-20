@@ -13,10 +13,16 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Image.Interfaces;
 
 namespace NINA.WPF.Base.SkySurvey {
 
     public class SkySurveyFactory : ISkySurveyFactory {
+        private readonly IImageDataFactory imageDataFactory;
+
+        public SkySurveyFactory(IImageDataFactory imageDataFactory) {
+            this.imageDataFactory = imageDataFactory;
+        }
 
         public ISkySurvey Create(SkySurveySource source) {
             switch (source) {
@@ -36,7 +42,7 @@ namespace NINA.WPF.Base.SkySurvey {
                     return new Hips2FitsSurvey();
 
                 case SkySurveySource.FILE:
-                    return new FileSkySurvey();
+                    return new FileSkySurvey(imageDataFactory);
 
                 case SkySurveySource.SKYATLAS:
                     return new SkyAtlasSkySurvey();

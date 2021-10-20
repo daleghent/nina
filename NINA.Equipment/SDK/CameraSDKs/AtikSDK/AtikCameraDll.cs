@@ -125,7 +125,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             return ArtemisShutdown();
         }
 
-        public static IExposureData DownloadExposure(IntPtr camera, int bitDepth, bool isBayered) {
+        public static IExposureData DownloadExposure(IntPtr camera, int bitDepth, bool isBayered, IExposureDataFactory exposureDataFactory) {
             CheckError(ArtemisGetImageData(camera, out var x, out var y, out var w, out var h, out var binX, out var binY), MethodBase.GetCurrentMethod(), camera);
 
             var ptr = ArtemisImageBuffer(camera);
@@ -133,7 +133,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             var cameraDataToManaged = new CameraDataToManaged(ptr, w, h, bitDepth, bitScaling: false);
             var arr = cameraDataToManaged.GetData();
 
-            return new ImageArrayExposureData(
+            return exposureDataFactory.CreateImageArrayExposureData(
                     input: arr,
                     width: w,
                     height: h,

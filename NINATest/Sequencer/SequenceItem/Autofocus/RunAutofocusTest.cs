@@ -37,30 +37,31 @@ using NINA.Core.Model;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.Utility.AutoFocus;
+using NINA.Image.ImageAnalysis;
 
 namespace NINATest.Sequencer.SequenceItem.Autofocus {
 
     [TestFixture]
     internal class RunAutofocusTest {
+        private ImageDataFactoryTestUtility dataFactoryUtility;
         private Mock<IProfileService> profileServiceMock;
         private Mock<IImageHistoryVM> historyMock;
         private Mock<ICameraMediator> cameraMediatorMock;
         private Mock<IFilterWheelMediator> filterWheelMediatorMock;
         private Mock<IFocuserMediator> focuserMediatorMock;
-        private Mock<IGuiderMediator> guiderMediatorMock;
-        private Mock<IImagingMediator> imagingMediatorMock;
+        private Mock<IAutoFocusVMFactory> autofocusVMFactoryMock;
         private RunAutofocus sut;
 
         [SetUp]
         public void Setup() {
-            profileServiceMock = new Mock<IProfileService>();
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+            profileServiceMock = dataFactoryUtility.ProfileServiceMock;
             historyMock = new Mock<IImageHistoryVM>();
             cameraMediatorMock = new Mock<ICameraMediator>();
             filterWheelMediatorMock = new Mock<IFilterWheelMediator>();
             focuserMediatorMock = new Mock<IFocuserMediator>();
-            guiderMediatorMock = new Mock<IGuiderMediator>();
-            imagingMediatorMock = new Mock<IImagingMediator>();
-            sut = new RunAutofocus(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
+            autofocusVMFactoryMock = new Mock<IAutoFocusVMFactory>();
+            sut = new RunAutofocus(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, autofocusVMFactoryMock.Object);
         }
 
         [Test]
@@ -190,7 +191,6 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             var report = new AutoFocusReport();
             var autofocusMock = new Mock<IAutoFocusVM>();
             autofocusMock.Setup(af => af.StartAutoFocus(It.IsAny<FilterInfo>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>())).Returns(Task.FromResult(report));
-            var autofocusVMFactoryMock = new Mock<IAutoFocusVMFactory>();
             autofocusVMFactoryMock.Setup(x => x.Create()).Returns(autofocusMock.Object);
 
             var filter = new FilterInfo() { Position = 0 };
@@ -198,7 +198,6 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             var profileFilter = new FilterInfo() { Position = 0 };
             profileServiceMock.Setup(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { profileFilter });
 
-            sut.AutoFocusVMFactory = autofocusVMFactoryMock.Object;
             sut.WindowServiceFactory = windowFactoryMock.Object;
 
             await sut.Execute(default, default);
@@ -219,7 +218,6 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
 
             var autofocusMock = new Mock<IAutoFocusVM>();
             autofocusMock.Setup(af => af.StartAutoFocus(It.IsAny<FilterInfo>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>())).Returns(Task.FromResult<AutoFocusReport>(null));
-            var autofocusVMFactoryMock = new Mock<IAutoFocusVMFactory>();
             autofocusVMFactoryMock.Setup(x => x.Create()).Returns(autofocusMock.Object);
 
             var filter = new FilterInfo() { Position = 0 };
@@ -227,7 +225,6 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             var profileFilter = new FilterInfo() { Position = 0 };
             profileServiceMock.Setup(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { profileFilter });
 
-            sut.AutoFocusVMFactory = autofocusVMFactoryMock.Object;
             sut.WindowServiceFactory = windowFactoryMock.Object;
 
             Func<Task> act = () => sut.Execute(default, default);

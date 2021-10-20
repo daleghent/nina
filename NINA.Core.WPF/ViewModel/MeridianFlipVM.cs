@@ -37,20 +37,19 @@ using NINA.Equipment.Interfaces;
 
 namespace NINA.WPF.Base.ViewModel {
 
-    public class MeridianFlipVM : BaseVM {
+    public class MeridianFlipVM : BaseVM, IMeridianFlipVM {
 
         public MeridianFlipVM(
                 IProfileService profileService,
-                ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
                 IGuiderMediator guiderMediator,
-                IFocuserMediator focuserMediator,
                 IImagingMediator imagingMediator,
                 IDomeMediator domeMediator,
                 IDomeFollower domeFollower,
                 IApplicationStatusMediator applicationStatusMediator,
                 IFilterWheelMediator filterWheelMediator,
-                IImageHistoryVM history) : base(profileService) {
+                IImageHistoryVM history,
+                IAutoFocusVMFactory autoFocusVMFactory) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
@@ -59,11 +58,9 @@ namespace NINA.WPF.Base.ViewModel {
             this.applicationStatusMediator = applicationStatusMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.history = history;
-            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
+            this.autoFocusVMFactory = autoFocusVMFactory;
             CancelCommand = new RelayCommand(Cancel);
         }
-
-        private ICommand _cancelCommand;
 
         private IProgress<ApplicationStatus> _progress;
 
@@ -84,15 +81,9 @@ namespace NINA.WPF.Base.ViewModel {
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IFilterWheelMediator filterWheelMediator;
         private readonly IImageHistoryVM history;
+        private readonly IAutoFocusVMFactory autoFocusVMFactory;
 
-        public ICommand CancelCommand {
-            get {
-                return _cancelCommand;
-            }
-            set {
-                _cancelCommand = value;
-            }
-        }
+        public ICommand CancelCommand { get; set; }
 
         public TimeSpan RemainingTime {
             get {
@@ -212,11 +203,9 @@ namespace NINA.WPF.Base.ViewModel {
             return true;
         }
 
-        public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
-
         private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
             Logger.Info($"Meridian Flip - Running Autofocus");
-            var autoFocus = AutoFocusVMFactory.Create();
+            var autoFocus = this.autoFocusVMFactory.Create();
             progress.Report(new ApplicationStatus { Status = Loc.Instance["LblAutoFocus"] });
             var service = WindowServiceFactory.Create();
             service.Show(autoFocus, Loc.Instance["LblAutoFocus"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);

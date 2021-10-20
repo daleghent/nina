@@ -56,6 +56,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         private IFocuserMediator focuserMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
+        private readonly IStarDetection starDetection;
+        private readonly IStarAnnotator starAnnotator;
         public static readonly string ReportDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "AutoFocus");
 
         static AutoFocusVM() {
@@ -72,7 +74,9 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
                 IGuiderMediator guiderMediator,
-                IImagingMediator imagingMediator
+                IImagingMediator imagingMediator,
+                IStarDetection starDetection,
+                IStarAnnotator starAnnotator
         ) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
@@ -80,6 +84,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
             this.imagingMediator = imagingMediator;
             this.guiderMediator = guiderMediator;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
 
             FocusPoints = new AsyncObservableCollection<ScatterErrorPoint>();
             PlotFocusPoints = new AsyncObservableCollection<DataPoint>();
@@ -259,7 +265,6 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
 
             if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
-                var analysis = new StarDetection();
                 var analysisParams = new StarDetectionParams() {
                     Sensitivity = profileService.ActiveProfile.ImageSettings.StarSensitivity,
                     NoiseReduction = profileService.ActiveProfile.ImageSettings.NoiseReduction,
@@ -270,10 +275,9 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     analysisParams.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
                     analysisParams.OuterCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio;
                 }
-                var analysisResult = await analysis.Detect(image, pixelFormat, analysisParams, progress, token);
+                var analysisResult = await starDetection.Detect(image, pixelFormat, analysisParams, progress, token);
 
                 if (profileService.ActiveProfile.ImageSettings.AnnotateImage) {
-                    var starAnnotator = new StarAnnotator();
                     var annotatedImage = await starAnnotator.GetAnnotatedImage(analysisParams, analysisResult, image.Image, token: token);
                     imagingMediator.SetImage(annotatedImage);
                 }

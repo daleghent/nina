@@ -23,40 +23,48 @@ using System.Windows.Threading;
 using NINA.Core.Model;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Image.ImageData {
 
     public class RenderedImage : IRenderedImage {
+        protected readonly IProfileService profileService;
+        protected readonly IStarDetection starDetection;
+        protected readonly IStarAnnotator starAnnotator;
+
         public IImageData RawImageData { get; private set; }
 
         public BitmapSource Image { get; private set; }
 
-        public RenderedImage(BitmapSource image, IImageData rawImageData) {
+        public RenderedImage(BitmapSource image, IImageData rawImageData, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
             this.Image = image;
             this.RawImageData = rawImageData;
+            this.profileService = profileService;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
         }
 
-        public static async Task<IRenderedImage> FromBitmapSource(BitmapSource source, bool calculateStatistics = false) {
-            var exposureData = await ImageArrayExposureData.FromBitmapSource(source);
+        public static async Task<IRenderedImage> FromBitmapSource(BitmapSource source, IExposureDataFactory exposureDataFactory, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator, bool calculateStatistics = false) {
+            var exposureData = await exposureDataFactory.CreateImageArrayExposureDataFromBitmapSource(source);
             var rawImageData = await exposureData.ToImageData();
-            return Create(source: source, rawImageData: rawImageData, calculateStatistics: calculateStatistics);
+            return Create(source, rawImageData, profileService, starDetection, starAnnotator, calculateStatistics: calculateStatistics);
         }
 
-        public static RenderedImage Create(BitmapSource source, IImageData rawImageData, bool calculateStatistics = false) {
-            return new RenderedImage(image: source, rawImageData: rawImageData);
+        public static RenderedImage Create(BitmapSource source, IImageData rawImageData, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator, bool calculateStatistics = false) {
+            return new RenderedImage(source, rawImageData, profileService, starDetection, starAnnotator);
         }
 
         public virtual IRenderedImage ReRender() {
-            return new RenderedImage(image: this.RawImageData.RenderBitmapSource(), rawImageData: this.RawImageData);
+            return new RenderedImage(this.RawImageData.RenderBitmapSource(), this.RawImageData, profileService, starDetection, starAnnotator);
         }
 
         public IDebayeredImage Debayer(bool saveColorChannels = false, bool saveLumChannel = false, SensorType bayerPattern = SensorType.RGGB) {
-            return DebayeredImage.Debayer(this, saveColorChannels: saveColorChannels, saveLumChannel: saveLumChannel, bayerPattern: bayerPattern);
+            return DebayeredImage.Debayer(this, profileService, starDetection, starAnnotator, saveColorChannels: saveColorChannels, saveLumChannel: saveLumChannel, bayerPattern: bayerPattern);
         }
 
         public virtual async Task<IRenderedImage> Stretch(double factor, double blackClipping, bool unlinked) {
             var stretchedImage = await ImageUtility.Stretch(this, factor, blackClipping);
-            return new RenderedImage(image: stretchedImage, rawImageData: this.RawImageData);
+            return new RenderedImage(stretchedImage, this.RawImageData, profileService, starDetection, starAnnotator);
         }
 
         public async Task<IRenderedImage> DetectStars(
@@ -65,7 +73,6 @@ namespace NINA.Image.ImageData {
             NoiseReductionEnum noiseReduction,
             CancellationToken cancelToken = default,
             IProgress<ApplicationStatus> progress = default(Progress<ApplicationStatus>)) {
-            var starDetection = new StarDetection();
             var starDetectionParams = new StarDetectionParams() {
                 Sensitivity = sensitivity,
                 NoiseReduction = noiseReduction
@@ -73,13 +80,15 @@ namespace NINA.Image.ImageData {
             var starDetectionResult = await starDetection.Detect(this, this.Image.Format, starDetectionParams, progress, cancelToken);
             var image = this.Image;
             if (annotateImage) {
-                var starAnnotator = new StarAnnotator();
-                image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.Image, token: cancelToken);
+                // TODO: Apply ROI and MaxAFStars settings from the profile so measured HFRs match up with those during autofocus
+                var maxStars = profileService.ActiveProfile.ImageSettings.AnnotateUnlimitedStars ? -1 : 200;
+                image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.Image, maxStars: maxStars, token: cancelToken);
             }
 
             this.RawImageData.StarDetectionAnalysis.HFR = starDetectionResult.AverageHFR;
+            this.RawImageData.StarDetectionAnalysis.HFRStDev = starDetectionResult.HFRStdDev;
             this.RawImageData.StarDetectionAnalysis.DetectedStars = starDetectionResult.DetectedStars;
-            return new RenderedImage(image: image, rawImageData: this.RawImageData);
+            return new RenderedImage(image, this.RawImageData, profileService, starDetection, starAnnotator);
         }
 
         public async Task<BitmapSource> GetThumbnail() {

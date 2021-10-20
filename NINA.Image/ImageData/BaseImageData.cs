@@ -21,6 +21,7 @@ using NINA.Image.FileFormat.XISF;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.Interfaces;
 using NINA.Image.RawConverter;
+using NINA.Profile.Interfaces;
 using System;
 using System.IO;
 using System.Text;
@@ -33,23 +34,32 @@ using System.Windows.Media.Imaging;
 namespace NINA.Image.ImageData {
 
     public class BaseImageData : IImageData {
+        protected readonly IProfileService profileService;
+        protected readonly IStarDetection starDetection;
+        protected readonly IStarAnnotator starAnnotator;
 
-        public BaseImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData)
+        public BaseImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator)
             : this(
                   imageArray: new ImageArray(flatArray: input),
                   width: width,
                   height: height,
                   bitDepth: bitDepth,
                   isBayered: isBayered,
-                  metaData: metaData) {
+                  metaData: metaData,
+                  profileService: profileService,
+                  starDetection: starDetection,
+                  starAnnotator: starAnnotator) {
         }
 
-        public BaseImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
+        public BaseImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
             this.Data = imageArray;
             this.MetaData = metaData;
             this.Properties = new ImageProperties(width: width, height: height, bitDepth: bitDepth, isBayered: isBayered, gain: metaData.Camera.Gain);
             this.StarDetectionAnalysis = new StarDetectionAnalysis();
             this.Statistics = new Nito.AsyncEx.AsyncLazy<IImageStatistics>(async () => await Task.Run(() => ImageStatistics.Create(this)));
+            this.profileService = profileService;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
         }
 
         public IImageArray Data { get; private set; }
@@ -63,7 +73,7 @@ namespace NINA.Image.ImageData {
         public IStarDetectionAnalysis StarDetectionAnalysis { get; private set; }
 
         public IRenderedImage RenderImage() {
-            return RenderedImage.Create(source: this.RenderBitmapSource(), rawImageData: this);
+            return RenderedImage.Create(this.RenderBitmapSource(), this, profileService, starDetection, starAnnotator);
         }
 
         public BitmapSource RenderBitmapSource() {
@@ -405,7 +415,7 @@ namespace NINA.Image.ImageData {
         /// <param name="rawConverter">Which type of raw converter to use, when image is in RAW format</param>
         /// <param name="ct">Token to cancel operation</param>
         /// <returns></returns>
-        public static Task<IImageData> FromFile(string path, int bitDepth, bool isBayered, RawConverterEnum rawConverter, CancellationToken ct = default) {
+        public static Task<IImageData> FromFile(string path, int bitDepth, bool isBayered, IRawConverter rawConverter, IImageDataFactory imageDataFactory, CancellationToken ct = default) {
             return Task.Run(async () => {
                 if (!File.Exists(path)) {
                     throw new FileNotFoundException();
@@ -414,28 +424,28 @@ namespace NINA.Image.ImageData {
                 switch (Path.GetExtension(path).ToLower()) {
                     case ".gif":
                         decoder = new GifBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered, imageDataFactory);
 
                     case ".tif":
                     case ".tiff":
                         decoder = new TiffBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered, imageDataFactory);
 
                     case ".jpg":
                     case ".jpeg":
                         decoder = new JpegBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered, imageDataFactory);
 
                     case ".png":
                         decoder = new PngBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered, imageDataFactory);
 
                     case ".xisf":
-                        return await XISF.Load(new Uri(path), isBayered, ct);
+                        return await XISF.Load(new Uri(path), isBayered, imageDataFactory, ct);
 
                     case ".fit":
                     case ".fits":
-                        return await FITS.Load(new Uri(path), isBayered, ct);
+                        return await FITS.Load(new Uri(path), isBayered, imageDataFactory, ct);
 
                     case ".cr2":
                     case ".cr3":
@@ -454,19 +464,18 @@ namespace NINA.Image.ImageData {
             }, ct);
         }
 
-        private static async Task<IImageData> RawToImageArray(string path, int bitDepth, RawConverterEnum rawConverter, CancellationToken ct) {
+        private static async Task<IImageData> RawToImageArray(string path, int bitDepth, IRawConverter rawConverter, CancellationToken ct) {
             using (var fs = new FileStream(path, FileMode.Open)) {
                 using (var ms = new System.IO.MemoryStream()) {
                     await fs.CopyToAsync(ms);
-                    var converter = RawConverterFactory.CreateInstance(rawConverter);
                     var rawType = Path.GetExtension(path).ToLower().Substring(1);
-                    var data = await converter.Convert(s: ms, bitDepth: bitDepth, rawType: rawType, metaData: new ImageMetaData(), token: ct);
+                    var data = await rawConverter.Convert(s: ms, bitDepth: bitDepth, rawType: rawType, metaData: new ImageMetaData(), token: ct);
                     return data;
                 }
             }
         }
 
-        private static IImageData BitmapToImageArray(BitmapDecoder decoder, bool isBayered) {
+        private static IImageData BitmapToImageArray(BitmapDecoder decoder, bool isBayered, IImageDataFactory imageDataFactory) {
             var bmp = new FormatConvertedBitmap();
             bmp.BeginInit();
             bmp.Source = decoder.Frames[0];
@@ -476,9 +485,32 @@ namespace NINA.Image.ImageData {
             var stride = (bmp.PixelWidth * bmp.Format.BitsPerPixel + 7) / 8;
             var pixels = new ushort[bmp.PixelWidth * bmp.PixelHeight];
             bmp.CopyPixels(pixels, stride, 0);
-            return new BaseImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, new ImageMetaData());
+            return imageDataFactory.CreateBaseImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, new ImageMetaData());
         }
 
         #endregion "Load"
+    }
+
+    public class ImageDataFactory : IImageDataFactory {
+        protected readonly IProfileService profileService;
+        protected readonly IStarDetection starDetection;
+        protected readonly IStarAnnotator starAnnotator;
+        public ImageDataFactory(IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
+            this.profileService = profileService;
+            this.starDetection = starDetection;
+            this.starAnnotator = starAnnotator;
+        }
+
+        public BaseImageData CreateBaseImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
+            return new BaseImageData(input, width, height, bitDepth, isBayered, metaData, this.profileService, this.starDetection, this.starAnnotator);
+        }
+
+        public BaseImageData CreateBaseImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
+            return new BaseImageData(imageArray, width, height, bitDepth, isBayered, metaData, this.profileService, this.starDetection, this.starAnnotator);
+        }
+
+        public Task<IImageData> CreateFromFile(string path, int bitDepth, bool isBayered, RawConverterEnum rawConverter, CancellationToken ct = default) {
+            return BaseImageData.FromFile(path, bitDepth, isBayered, RawConverterFactory.CreateInstance(rawConverter, this), this, ct);
+        }
     }
 }
