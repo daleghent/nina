@@ -71,7 +71,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="InstalledAndRequiresRestartButton">
-            <Button IsEnabled="False">
+            <Button Command="{Binding RestartCommand}" DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:AvailablePluginsView}}">
                 <TextBlock Text="{ns:Loc LblRequiresRestart}" />
             </Button>
         </DataTemplate>

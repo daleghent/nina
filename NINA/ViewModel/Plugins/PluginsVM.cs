@@ -28,6 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Plugins {
@@ -57,6 +58,7 @@ namespace NINA.ViewModel.Plugins {
             CancelInstallPluginCommand = new RelayCommand((object o) => { try { installCts?.Cancel(); } catch (Exception) { } });
             CancelFetchPluginsCommand = new RelayCommand((object o) => { try { fetchCts?.Cancel(); } catch (Exception) { } });
             UninstallPluginCommand = new AsyncCommand<bool>(UninstallPlugin);
+            RestartCommand = new RelayCommand(Restart);
 
             _ = Task.Run(async () => {
                 await pluginProvider.Load();
@@ -71,6 +73,12 @@ namespace NINA.ViewModel.Plugins {
                     await FetchPluginsCommand.ExecuteAsync("Initial");
                 }
             });
+        }
+
+        private void Restart(object obj) {
+            profileService.Release();
+            Application.Current.Shutdown();
+            System.Windows.Forms.Application.Restart();
         }
 
         private object lockObj = new object();
@@ -160,6 +168,7 @@ namespace NINA.ViewModel.Plugins {
         public IAsyncCommand InstallPluginCommand { get; }
         public ICommand CancelFetchPluginsCommand { get; }
         public ICommand CancelInstallPluginCommand { get; }
+        public ICommand RestartCommand { get; }
 
         public IAsyncCommand UpdatePluginCommand { get; }
         public IAsyncCommand UninstallPluginCommand { get; }

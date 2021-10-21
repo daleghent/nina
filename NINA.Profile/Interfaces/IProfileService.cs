@@ -39,9 +39,10 @@ namespace NINA.Profile.Interfaces {
 
         void ChangeHorizon(string horizonFilePath);
 
-        void PauseSave();
-
-        void ResumeSave();
+        /// <summary>
+        /// Release locks of active profile. Only call prior to shutdown to free ressources
+        /// </summary>
+        void Release();
 
         event EventHandler LocaleChanged;
 

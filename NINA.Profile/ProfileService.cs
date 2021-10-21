@@ -181,18 +181,8 @@ namespace NINA.Profile {
             }
         }
 
-        private bool saveProfiles = true;
-
-        public void PauseSave() {
-            saveProfiles = false;
-        }
-
-        public void ResumeSave() {
-            saveProfiles = true;
-        }
-
         private void SettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (saveProfiles && e.PropertyName == "Settings") {
+            if (e.PropertyName == "Settings") {
                 System.Threading.Tasks.Task.Run(() => TryScheduleSave());
             }
             if (e.PropertyName == nameof(IProfile.Name)) {
@@ -342,6 +332,16 @@ namespace NINA.Profile {
                         return false;
                     }
                     return true;
+                }
+            }
+        }
+
+        public void Release() {
+            lock (lockobj) {
+                if (ActiveProfile != null) {
+                    try {
+                        ActiveProfile.Dispose();
+                    } catch (Exception) { }
                 }
             }
         }

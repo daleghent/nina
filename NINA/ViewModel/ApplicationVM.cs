@@ -174,35 +174,37 @@ namespace NINA.ViewModel {
                 }
             }
 
-            imageSaveMediator.Shutdown();
-
-            foreach (var plugin in pluginProvider.Plugins) {
-                if (plugin.Value) {
-                    try {
-                        Logger.Debug($"Tearing down plugin {plugin.Key.Name}");
-                        AsyncContext.Run(plugin.Key.Teardown);
-                    } catch (Exception ex) {
-                        Logger.Error($"Failed to teardown plugin {plugin.Key.Name}", ex);
-                    }
-                }
-            }
-
-            /*if (Directory.Exists(Plugin.Constants.StagingFolder) && Directory.EnumerateFileSystemEntries(Plugin.Constants.StagingFolder).Any()
-                || Directory.Exists(Plugin.Constants.DeletionFolder) && Directory.EnumerateFileSystemEntries(Plugin.Constants.DeletionFolder).Any()) {
-                Approach doesn't seem to work well together with the profiles and it will switch the active profile, as the app is not closed in time
-                var diag = MyMessageBox.Show(Loc.Instance["LblPendingPluginsRestart"], "", MessageBoxButton.YesNo, MessageBoxResult.Cancel);
-                if (diag == MessageBoxResult.Yes) {
-                    System.Windows.Forms.Application.Restart();
-                }
-            }*/
-
             Application.Current.Shutdown();
         }
 
         private void ClosingApplication(object o) {
             try {
+                Logger.Debug("Releasing profile");
+                profileService.Release();
+            } catch (Exception) { }
+            try {
+                Logger.Debug("Saving user.settings");
                 Properties.Settings.Default.Save();
             } catch (Exception) { }
+
+            try {
+                Logger.Debug("Shutting down ImageSaveMediator");
+                imageSaveMediator.Shutdown();
+            } catch (Exception) { }
+
+            try {
+                foreach (var plugin in pluginProvider.Plugins) {
+                    if (plugin.Value) {
+                        try {
+                            Logger.Debug($"Tearing down plugin {plugin.Key.Name}");
+                            AsyncContext.Run(plugin.Key.Teardown);
+                        } catch (Exception ex) {
+                            Logger.Error($"Failed to teardown plugin {plugin.Key.Name}", ex);
+                        }
+                    }
+                }
+            } catch (Exception) { }
+
             Logger.CloseAndFlush();
             Notification.Dispose();
         }
