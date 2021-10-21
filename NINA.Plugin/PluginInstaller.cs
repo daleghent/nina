@@ -263,6 +263,9 @@ namespace NINA.Plugin {
                     Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
                     continue;
                 }
+                if (!Directory.Exists(Path.GetDirectoryName(completeFileName))) {
+                    Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
+                }
                 file.ExtractToFile(completeFileName, true);
             }
         }
