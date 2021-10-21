@@ -1,4 +1,5 @@
 ﻿using Moq;
+using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
@@ -15,16 +16,23 @@ namespace NINATest {
 
         public ImageDataFactoryTestUtility() {
             this.ProfileServiceMock = new Mock<IProfileService>();
-            this.StarAnnotator = new StarAnnotator();
+            this.StarAnnotatorMock = new Mock<IStarAnnotator>();
+            this.StarAnnotatorSelectorMock = new Mock<IPluggableBehaviorSelector<IStarAnnotator>>();
+            this.StarAnnotatorSelectorMock.Setup(x => x.GetBehavior()).Returns(this.StarAnnotatorMock.Object);
             this.StarDetectionMock = new Mock<IStarDetection>();
-            this.ImageDataFactory = new ImageDataFactory(this.ProfileServiceMock.Object, this.StarDetectionMock.Object, this.StarAnnotator);
-            this.ExposureDataFactory = new ExposureDataFactory(this.ImageDataFactory, this.ProfileServiceMock.Object, this.StarDetectionMock.Object, this.StarAnnotator);
+            this.StarDetectionMock.Setup(s => s.CreateAnalysis()).Returns(() => new StarDetectionAnalysis());
+            this.StarDetectionSelectorMock = new Mock<IPluggableBehaviorSelector<IStarDetection>>();
+            this.StarDetectionSelectorMock.Setup(x => x.GetBehavior()).Returns(this.StarDetectionMock.Object);
+            this.ImageDataFactory = new ImageDataFactory(this.ProfileServiceMock.Object, this.StarDetectionSelectorMock.Object, this.StarAnnotatorSelectorMock.Object);
+            this.ExposureDataFactory = new ExposureDataFactory(this.ImageDataFactory, this.ProfileServiceMock.Object, this.StarDetectionSelectorMock.Object, this.StarAnnotatorSelectorMock.Object);
         }
 
         public IExposureDataFactory ExposureDataFactory { get; set; }
         public IImageDataFactory ImageDataFactory { get; set; }
-        public IStarAnnotator StarAnnotator { get; set; }
-        public Mock<IStarDetection> StarDetectionMock { get; private set; }
-        public Mock<IProfileService> ProfileServiceMock { get; private set; }
+        public Mock<IStarAnnotator> StarAnnotatorMock { get; set; }
+        public Mock<IStarDetection> StarDetectionMock { get; set; }
+        public Mock<IPluggableBehaviorSelector<IStarAnnotator>> StarAnnotatorSelectorMock { get; set; }
+        public Mock<IPluggableBehaviorSelector<IStarDetection>> StarDetectionSelectorMock { get; set; }
+        public Mock<IProfileService> ProfileServiceMock { get; set; }
     }
 }

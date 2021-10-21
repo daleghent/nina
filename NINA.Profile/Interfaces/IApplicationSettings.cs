@@ -13,6 +13,8 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Utility;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace NINA.Profile.Interfaces {
@@ -24,5 +26,7 @@ namespace NINA.Profile.Interfaces {
         LogLevelEnum LogLevel { get; set; }
         string SkyAtlasImageRepository { get; set; }
         string SkySurveyCacheDirectory { get; set; }
+        AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors { get; set; }
+        IReadOnlyDictionary<string, string> SelectedPluggableBehaviorsLookup { get; }
     }
 }

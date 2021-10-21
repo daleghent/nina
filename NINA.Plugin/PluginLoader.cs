@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry.Interfaces;
+using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.WindowService;
@@ -78,8 +79,8 @@ namespace NINA.Plugin {
                               IPlateSolverFactory plateSolverFactory,
                               IWindowServiceFactory windowServiceFactory,
                               IDomeFollower domeFollower,
-                              IStarDetection starDetection,
-                              IStarAnnotator starAnnotator,
+                              IPluggableBehaviorSelector<IStarDetection> starDetectionSelector,
+                              IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector,
                               IImageDataFactory imageDataFactory,
                               IMeridianFlipVMFactory meridianFlipVMFactory,
                               IAutoFocusVMFactory autoFocusVMFactory) {
@@ -108,8 +109,8 @@ namespace NINA.Plugin {
             this.platesolverFactory = plateSolverFactory;
             this.windowServiceFactory = windowServiceFactory;
             this.domeFollower = domeFollower;
-            this.starDetection = starDetection;
-            this.starAnnotator = starAnnotator;
+            this.starDetectionSelector = starDetectionSelector;
+            this.starAnnotatorSelector = starAnnotatorSelector;
             this.imageDataFactory = imageDataFactory;
             this.meridianFlipVMFactory = meridianFlipVMFactory;
             this.autoFocusVMFactory = autoFocusVMFactory;
@@ -199,6 +200,7 @@ namespace NINA.Plugin {
                         Triggers = new List<ISequenceTrigger>();
                         Container = new List<ISequenceContainer>();
                         DockableVMs = new List<IDockableVM>();
+                        PluggableBehaviors = new List<IPluggableBehavior>();
                         Plugins = new Dictionary<IPluginManifest, bool>();
 
                         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
@@ -351,6 +353,7 @@ namespace NINA.Plugin {
                 Container = Container.Concat(AssignSequenceEntity(parts.ContainerImports, resourceDictionary)).ToList();
 
                 DockableVMs = DockableVMs.Concat(parts.DockableVMImports).ToList();
+                PluggableBehaviors = PluggableBehaviors.Concat(parts.PluggableBehaviorImports).ToList();
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;
@@ -385,8 +388,8 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(platesolverFactory);
             container.ComposeExportedValue(windowServiceFactory);
             container.ComposeExportedValue(domeFollower);
-            container.ComposeExportedValue(starDetection);
-            container.ComposeExportedValue(starAnnotator);
+            container.ComposeExportedValue(starDetectionSelector);
+            container.ComposeExportedValue(starAnnotatorSelector);
             container.ComposeExportedValue(imageDataFactory);
             container.ComposeExportedValue(autoFocusVMFactory);
             container.ComposeExportedValue(meridianFlipVMFactory);
@@ -402,6 +405,7 @@ namespace NINA.Plugin {
         public IList<ISequenceTrigger> Triggers { get; private set; }
         public IList<ISequenceContainer> Container { get; private set; }
         public IList<IDockableVM> DockableVMs { get; private set; }
+        public IList<IPluggableBehavior> PluggableBehaviors { get; private set; }
         public IDictionary<IPluginManifest, bool> Plugins { get; private set; }
         public IList<Assembly> Assemblies { get; private set; } = new List<Assembly>();
 
@@ -430,8 +434,8 @@ namespace NINA.Plugin {
         private readonly IPlateSolverFactory platesolverFactory;
         private readonly IWindowServiceFactory windowServiceFactory;
         private readonly IDomeFollower domeFollower;
-        private readonly IStarDetection starDetection;
-        private readonly IStarAnnotator starAnnotator;
+        private readonly IPluggableBehaviorSelector<IStarDetection> starDetectionSelector;
+        private readonly IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector;
         private readonly IImageDataFactory imageDataFactory;
         private readonly IAutoFocusVMFactory autoFocusVMFactory;
         private readonly IMeridianFlipVMFactory meridianFlipVMFactory;
@@ -529,5 +533,8 @@ namespace NINA.Plugin {
 
         [ImportMany(typeof(IDockableVM))]
         public IEnumerable<IDockableVM> DockableVMImports { get; private set; }
+
+        [ImportMany(typeof(IPluggableBehavior))]
+        public IEnumerable<IPluggableBehavior> PluggableBehaviorImports { get; private set; }
     }
 }

@@ -36,6 +36,7 @@ using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
+using NINA.Core.Interfaces;
 
 namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
@@ -56,8 +57,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         private IFocuserMediator focuserMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
-        private readonly IStarDetection starDetection;
-        private readonly IStarAnnotator starAnnotator;
+        private readonly IPluggableBehaviorSelector<IStarDetection> starDetectionSelector;
+        private readonly IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector;
         public static readonly string ReportDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "AutoFocus");
 
         static AutoFocusVM() {
@@ -75,8 +76,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 IFocuserMediator focuserMediator,
                 IGuiderMediator guiderMediator,
                 IImagingMediator imagingMediator,
-                IStarDetection starDetection,
-                IStarAnnotator starAnnotator
+                IPluggableBehaviorSelector<IStarDetection> starDetectionSelector,
+                IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector
         ) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
@@ -84,8 +85,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
             this.imagingMediator = imagingMediator;
             this.guiderMediator = guiderMediator;
-            this.starDetection = starDetection;
-            this.starAnnotator = starAnnotator;
+            this.starDetectionSelector = starDetectionSelector;
+            this.starAnnotatorSelector = starAnnotatorSelector;
 
             FocusPoints = new AsyncObservableCollection<ScatterErrorPoint>();
             PlotFocusPoints = new AsyncObservableCollection<DataPoint>();
@@ -275,9 +276,11 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     analysisParams.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
                     analysisParams.OuterCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio;
                 }
+                var starDetection = starDetectionSelector.GetBehavior();
                 var analysisResult = await starDetection.Detect(image, pixelFormat, analysisParams, progress, token);
 
                 if (profileService.ActiveProfile.ImageSettings.AnnotateImage) {
+                    var starAnnotator = starAnnotatorSelector.GetBehavior();
                     var annotatedImage = await starAnnotator.GetAnnotatedImage(analysisParams, analysisResult, image.Image, token: token);
                     imagingMediator.SetImage(annotatedImage);
                 }

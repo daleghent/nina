@@ -12,11 +12,12 @@
 
 #endregion "copyright"
 
+using NINA.Core.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.Interfaces {
 
-    public interface IAutoFocusVMFactory {
+    public interface IAutoFocusVMFactory : IPluggableBehavior<IAutoFocusVMFactory> {
 
         IAutoFocusVM Create();
     }

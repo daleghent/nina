@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Interfaces;
 using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Image.FileFormat;
@@ -55,7 +56,7 @@ namespace NINA.Image.ImageData {
             this.Data = imageArray;
             this.MetaData = metaData;
             this.Properties = new ImageProperties(width: width, height: height, bitDepth: bitDepth, isBayered: isBayered, gain: metaData.Camera.Gain);
-            this.StarDetectionAnalysis = new StarDetectionAnalysis();
+            this.StarDetectionAnalysis = starDetection.CreateAnalysis();
             this.Statistics = new Nito.AsyncEx.AsyncLazy<IImageStatistics>(async () => await Task.Run(() => ImageStatistics.Create(this)));
             this.profileService = profileService;
             this.starDetection = starDetection;
@@ -493,20 +494,20 @@ namespace NINA.Image.ImageData {
 
     public class ImageDataFactory : IImageDataFactory {
         protected readonly IProfileService profileService;
-        protected readonly IStarDetection starDetection;
-        protected readonly IStarAnnotator starAnnotator;
-        public ImageDataFactory(IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
+        protected readonly IPluggableBehaviorSelector<IStarDetection> starDetectionSelector;
+        protected readonly IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector;
+        public ImageDataFactory(IProfileService profileService, IPluggableBehaviorSelector<IStarDetection> starDetectionSelector, IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector) {
             this.profileService = profileService;
-            this.starDetection = starDetection;
-            this.starAnnotator = starAnnotator;
+            this.starDetectionSelector = starDetectionSelector;
+            this.starAnnotatorSelector = starAnnotatorSelector;
         }
 
         public BaseImageData CreateBaseImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
-            return new BaseImageData(input, width, height, bitDepth, isBayered, metaData, this.profileService, this.starDetection, this.starAnnotator);
+            return new BaseImageData(input, width, height, bitDepth, isBayered, metaData, this.profileService, this.starDetectionSelector.GetBehavior(), this.starAnnotatorSelector.GetBehavior());
         }
 
         public BaseImageData CreateBaseImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
-            return new BaseImageData(imageArray, width, height, bitDepth, isBayered, metaData, this.profileService, this.starDetection, this.starAnnotator);
+            return new BaseImageData(imageArray, width, height, bitDepth, isBayered, metaData, this.profileService, this.starDetectionSelector.GetBehavior(), this.starAnnotatorSelector.GetBehavior());
         }
 
         public Task<IImageData> CreateFromFile(string path, int bitDepth, bool isBayered, RawConverterEnum rawConverter, CancellationToken ct = default) {

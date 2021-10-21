@@ -1,8 +1,6 @@
 ﻿using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Interfaces;
-using NINA.ViewModel.FlatWizard;
-using NINA.ViewModel.FramingAssistant;
-using NINA.ViewModel.ImageHistory;
+using NINA.Utility;
 using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Sequencer;
 using NINA.WPF.Base.Interfaces.ViewModel;
@@ -25,5 +23,6 @@ namespace NINA.ViewModel {
         public IImageSaveController ImageSaveController { get; set; }
         public IImageHistoryVM ImageHistoryVM { get; set; }
         public IPluginsVM PluginsVM { get; set; }
+        public GlobalObjects GlobalObjects { get; set; }
     }
 }

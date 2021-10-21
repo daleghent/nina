@@ -18,6 +18,10 @@ namespace NINA.Image.ImageAnalysis {
         private static FontFamily FONTFAMILY = new FontFamily("Arial");
         private static Font FONT = new Font(FONTFAMILY, 24, FontStyle.Regular, GraphicsUnit.Pixel);
 
+        public string Name => "NINA";
+
+        public string ContentId => this.GetType().FullName;
+
         public Task<BitmapSource> GetAnnotatedImage(StarDetectionParams p, StarDetectionResult result, BitmapSource imageToAnnotate, int maxStars = 200, CancellationToken token = default) {
             return Task.Run(() => {
                 using (MyStopWatch.Measure()) {

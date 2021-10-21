@@ -131,8 +131,8 @@ namespace NINATest.Autofocus {
                 .ReturnsAsync(blurred2xRenderedImage)
                 .ReturnsAsync(renderedTestImage);
 
-            var realStarDetection = new StarDetection();
-            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, realStarDetection, dataFactoryUtility.StarAnnotator);
+            dataFactoryUtility.StarDetectionSelectorMock.Setup(s => s.GetBehavior()).Returns(new StarDetection());
+            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, dataFactoryUtility.StarDetectionSelectorMock.Object, dataFactoryUtility.StarAnnotatorSelectorMock.Object);
 
             var imagingFilter = new FilterInfo();
 
@@ -196,8 +196,8 @@ namespace NINATest.Autofocus {
                 .ReturnsAsync(blurredRenderedImage2)
                 .ReturnsAsync(renderedTestImage);
 
-            var realStarDetection = new StarDetection();
-            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, realStarDetection, dataFactoryUtility.StarAnnotator);
+            dataFactoryUtility.StarDetectionSelectorMock.Setup(s => s.GetBehavior()).Returns(new StarDetection());
+            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, dataFactoryUtility.StarDetectionSelectorMock.Object, dataFactoryUtility.StarAnnotatorSelectorMock.Object);
 
             var imagingFilter = new FilterInfo();
 
@@ -245,8 +245,8 @@ namespace NINATest.Autofocus {
                 .ReturnsAsync(blurred2xRenderedImage)
                 .ReturnsAsync(renderedTestImage);
 
-            var realStarDetection = new StarDetection();
-            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, realStarDetection, dataFactoryUtility.StarAnnotator);
+            dataFactoryUtility.StarDetectionSelectorMock.Setup(s => s.GetBehavior()).Returns(new StarDetection());
+            var sut = new AutoFocusVM(profileServiceMock.Object, cameraMediatorMock.Object, fwMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, dataFactoryUtility.StarDetectionSelectorMock.Object, dataFactoryUtility.StarAnnotatorSelectorMock.Object);
 
             var imagingFilter = new FilterInfo();
 

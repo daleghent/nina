@@ -455,6 +455,51 @@
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding UnlinkedStretch}" />
                         </StackPanel>
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding DataContext.PluggableStarDetection.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
+                            <TextBlock
+                                MinWidth="200"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblStarDetector}">
+                            </TextBlock>
+                            <ComboBox
+                                MinWidth="150"
+                                Margin="0,0,0,0"                                                
+                                ItemsSource="{Binding DataContext.PluggableStarDetection.Behaviors, ElementName=UC}"
+                                SelectedItem="{Binding DataContext.PluggableStarDetection.SelectedBehavior, ElementName=UC}" 
+                                SelectedValuePath="Name"
+                                DisplayMemberPath="Name" />
+                        </StackPanel>
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding DataContext.PluggableStarAnnotator.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
+                            <TextBlock
+                                MinWidth="200"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblStarAnnotator}">
+                            </TextBlock>
+                            <ComboBox
+                                MinWidth="150"
+                                Margin="0,0,0,0"                                                
+                                ItemsSource="{Binding DataContext.PluggableStarAnnotator.Behaviors, ElementName=UC}"
+                                SelectedItem="{Binding DataContext.PluggableStarAnnotator.SelectedBehavior, ElementName=UC}" 
+                                SelectedValuePath="Name"
+                                DisplayMemberPath="Name" />
+                        </StackPanel>
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding DataContext.PluggableAutoFocusVMFactory.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
+                            <TextBlock
+                                MinWidth="200"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblAutoFocus}">
+                            </TextBlock>
+                            <ComboBox
+                                MinWidth="150"
+                                Margin="0,0,0,0"                                                
+                                ItemsSource="{Binding DataContext.PluggableAutoFocusVMFactory.Behaviors, ElementName=UC}"
+                                SelectedItem="{Binding DataContext.PluggableAutoFocusVMFactory.SelectedBehavior, ElementName=UC}" 
+                                SelectedValuePath="Name"
+                                DisplayMemberPath="Name" />
+                        </StackPanel>
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />

@@ -35,6 +35,10 @@ namespace NINA.Image.ImageAnalysis {
     public class StarDetection : IStarDetection {
         private static int _maxWidth = 1552;
 
+        public string Name => "NINA";
+
+        public string ContentId => this.GetType().FullName;
+
         private class State {
             public IImageArray _iarr;
             public ImageProperties imageProperties;
@@ -458,6 +462,10 @@ namespace NINA.Image.ImageAnalysis {
                 sw = null;
             }
             return _bitmapToAnalyze;
+        }
+
+        public IStarDetectionAnalysis CreateAnalysis() {
+            return new StarDetectionAnalysis();
         }
     }
 }

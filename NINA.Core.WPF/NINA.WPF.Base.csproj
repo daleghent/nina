@@ -258,7 +258,7 @@
     <Compile Include="Utility\AutoFocus\Trendline.cs" />
     <Compile Include="Utility\AutoFocus\TrendlineFitting.cs" />
     <Compile Include="Utility\SharedResourceDictionary.cs" />
-    <Compile Include="ViewModel\AutoFocusVMFactory.cs" />
+    <Compile Include="ViewModel\BuiltInAutoFocusVMFactory.cs" />
     <Compile Include="ViewModel\AutoFocus\AutoFocusVM.cs" />
     <Compile Include="ViewModel\AutoFocus\FocusPointComparer.cs" />
     <Compile Include="ViewModel\AutoFocus\MeasureAndError.cs" />

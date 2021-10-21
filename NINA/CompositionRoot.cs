@@ -1,4 +1,5 @@
-﻿using NINA.Core.Utility;
+﻿using NINA.Core.Interfaces;
+using NINA.Core.Utility;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Interfaces;
 using NINA.Profile.Interfaces;
@@ -13,6 +14,8 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using Ninject;
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
 namespace NINA {
 
@@ -96,6 +99,10 @@ namespace NINA {
                 Debug.Print($"Time to create IPluginsVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
+                var globalObjects = _kernel.Get<GlobalObjects>();
+                Debug.Print($"Time to create GlobalObjects {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
                 var mainWindowVM = new MainWindowVM {
                     AppVM = appvm,
                     ImageSaveController = imageSaveController,
@@ -113,7 +120,8 @@ namespace NINA {
                     ApplicationStatusVM = applicationStatusVM,
 
                     ImageHistoryVM = imageHistoryVM,
-                    PluginsVM = pluginsVM
+                    PluginsVM = pluginsVM,
+                    GlobalObjects = globalObjects
                 };
                 Debug.Print($"Time to create MainWindowVM {sw.Elapsed}");
 

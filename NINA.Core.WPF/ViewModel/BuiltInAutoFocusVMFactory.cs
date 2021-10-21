@@ -14,50 +14,50 @@
 
 using NINA.Profile.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.ViewModel.AutoFocus;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Image.ImageAnalysis;
+using NINA.Core.Interfaces;
 
 namespace NINA.WPF.Base.ViewModel {
 
-    public class AutoFocusVMFactory : IAutoFocusVMFactory {
+    public class BuiltInAutoFocusVMFactory : IAutoFocusVMFactory {
         private readonly IProfileService profileService;
         private readonly ICameraMediator cameraMediator;
         private readonly IFilterWheelMediator filterWheelMediator;
         private readonly IFocuserMediator focuserMediator;
         private readonly IGuiderMediator guiderMediator;
         private readonly IImagingMediator imagingMediator;
-        private readonly IStarDetection starDetection;
-        private readonly IStarAnnotator starAnnotator;
+        private readonly IPluggableBehaviorSelector<IStarDetection> starDetectionSelector;
+        private readonly IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector;
 
-        public AutoFocusVMFactory(
+        public BuiltInAutoFocusVMFactory(
                 IProfileService profileService,
                 ICameraMediator cameraMediator,
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
                 IGuiderMediator guiderMediator,
                 IImagingMediator imagingMediator,
-                IStarDetection starDetection,
-                IStarAnnotator starAnnotator) {
+                IPluggableBehaviorSelector<IStarDetection> starDetectionSelector,
+                IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.focuserMediator = focuserMediator;
             this.guiderMediator = guiderMediator;
+
             this.imagingMediator = imagingMediator;
-            this.starDetection = starDetection;
-            this.starAnnotator = starAnnotator;
+            this.starDetectionSelector = starDetectionSelector;
+            this.starAnnotatorSelector = starAnnotatorSelector;
         }
 
+        public string Name => "NINA";
+
+        public string ContentId => this.GetType().FullName;
+
         public IAutoFocusVM Create() {
-            return new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, starDetection, starAnnotator);
+            return new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, starDetectionSelector, starAnnotatorSelector);
         }
     }
 }

@@ -16,8 +16,11 @@ using NINA.Core.Enum;
 using NINA.Core.Utility;
 using NINA.Profile.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {
@@ -42,6 +45,10 @@ namespace NINA.Profile {
             if (!Directory.Exists(SkyAtlasImageRepository)) {
                 SkyAtlasImageRepository = string.Empty;
             }
+            if (SelectedPluggableBehaviors == null) {
+                SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
+            }
+            SelectedPluggableBehaviorsLookup = SelectedPluggableBehaviors.ToList().ToImmutableDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         protected override void SetDefaultValues() {
@@ -50,6 +57,8 @@ namespace NINA.Profile {
             devicePollingInterval = 2;
             skyAtlasImageRepository = string.Empty;
             skySurveyCacheDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
+            SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
+            SelectedPluggableBehaviorsLookup = ImmutableDictionary<string, string>.Empty;
         }
 
         [DataMember]
@@ -132,6 +141,35 @@ namespace NINA.Profile {
             set {
                 if (skySurveyCacheDirectory != value) {
                     skySurveyCacheDirectory = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public IReadOnlyDictionary<string, string> SelectedPluggableBehaviorsLookup { get; private set; }
+
+        private void SelectedPluggableBehaviors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            SelectedPluggableBehaviorsLookup = SelectedPluggableBehaviors.ToList().ToImmutableDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            RaisePropertyChanged(nameof(SelectedPluggableBehaviors));
+            RaisePropertyChanged(nameof(SelectedPluggableBehaviorsLookup));
+        }
+
+        private AsyncObservableCollection<KeyValuePair<string, string>> selectedPluggableBehaviors;
+
+        [DataMember]
+        public AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors {
+            get {
+                return selectedPluggableBehaviors;
+            }
+            set {
+                if (selectedPluggableBehaviors != value) {
+                    if (selectedPluggableBehaviors != null) {
+                        selectedPluggableBehaviors.CollectionChanged -= SelectedPluggableBehaviors_CollectionChanged;
+                    }
+                    selectedPluggableBehaviors = value;
+                    if (selectedPluggableBehaviors != null) {
+                        selectedPluggableBehaviors.CollectionChanged += SelectedPluggableBehaviors_CollectionChanged;
+                    }
                     RaisePropertyChanged();
                 }
             }

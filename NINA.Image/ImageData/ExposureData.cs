@@ -24,6 +24,7 @@ using NINA.Core.Enum;
 using NINA.Image.RawConverter;
 using NINA.Image.ImageAnalysis;
 using NINA.Profile.Interfaces;
+using NINA.Core.Interfaces;
 
 namespace NINA.Image.ImageData {
 
@@ -155,14 +156,14 @@ namespace NINA.Image.ImageData {
     public class ExposureDataFactory : IExposureDataFactory {
         protected readonly IImageDataFactory imageDataFactory;
         protected readonly IProfileService profileService;
-        protected readonly IStarDetection starDetection;
-        protected readonly IStarAnnotator starAnnotator;
+        protected readonly IPluggableBehaviorSelector<IStarDetection> starDetectionSelector;
+        protected readonly IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector;
 
-        public ExposureDataFactory(IImageDataFactory imageDataFactory, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
+        public ExposureDataFactory(IImageDataFactory imageDataFactory, IProfileService profileService, IPluggableBehaviorSelector<IStarDetection> starDetectionSelector, IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector) {
             this.imageDataFactory = imageDataFactory;
             this.profileService = profileService;
-            this.starDetection = starDetection;
-            this.starAnnotator = starAnnotator;
+            this.starDetectionSelector = starDetectionSelector;
+            this.starAnnotatorSelector = starAnnotatorSelector;
         }
 
         public CachedExposureData CreateCachedExposureData(IImageData imageData) {
@@ -186,7 +187,7 @@ namespace NINA.Image.ImageData {
         }
 
         public Task<IRenderedImage> CreateRenderedImageFromBitmapSource(BitmapSource source, bool calculateStatistics = false) {
-            return RenderedImage.FromBitmapSource(source, this, profileService, starDetection, starAnnotator, calculateStatistics);
+            return RenderedImage.FromBitmapSource(source, this, profileService, starDetectionSelector.GetBehavior(), starAnnotatorSelector.GetBehavior(), calculateStatistics);
         }
     }
 }

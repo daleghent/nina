@@ -45,6 +45,9 @@ using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using System.Windows.Media;
 using NINA.Plugin.Interfaces;
+using NINA.Core.Interfaces;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINA.ViewModel {
 
@@ -58,7 +61,10 @@ namespace NINA.ViewModel {
                          ProjectVersion projectVersion,
                          IPlanetariumFactory planetariumFactory,
                          IDockManagerVM dockManagerVM,
-                         ISGPServiceHost sgpServiceHost) : base(profileService) {
+                         ISGPServiceHost sgpServiceHost,
+                         IPluggableBehaviorSelector<IStarDetection> starDetectionSelector,
+                         IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector,
+                         IPluggableBehaviorSelector<IAutoFocusVMFactory> autoFocusVMFactorySelector) : base(profileService) {
             Title = Loc.Instance["LblOptions"];
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
@@ -70,6 +76,9 @@ namespace NINA.ViewModel {
             this.planetariumFactory = planetariumFactory;
             this.filterWheelMediator = filterWheelMediator;
             this.sgpServiceHost = sgpServiceHost;
+            this.PluggableStarDetection = starDetectionSelector;
+            this.PluggableStarAnnotator = starAnnotatorSelector;
+            this.PluggableAutoFocusVMFactory = autoFocusVMFactorySelector;
             DockManagerVM = dockManagerVM;
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
@@ -765,5 +774,9 @@ namespace NINA.ViewModel {
                 return profileService.Profiles;
             }
         }
+
+        public IPluggableBehaviorSelector<IStarDetection> PluggableStarDetection { get; private set; }
+        public IPluggableBehaviorSelector<IStarAnnotator> PluggableStarAnnotator { get; private set; }
+        public IPluggableBehaviorSelector<IAutoFocusVMFactory> PluggableAutoFocusVMFactory { get; private set; }
     }
 }

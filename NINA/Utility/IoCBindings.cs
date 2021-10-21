@@ -15,19 +15,16 @@
 using NINA.API.SGP;
 using NINA.Equipment.Equipment.MyPlanetarium;
 using NINA.Profile.Interfaces;
-using NINA.Sequencer;
 using NINA.Astrometry;
 using NINA.ViewModel;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Imaging;
-using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Sequencer;
 using Ninject;
 using Ninject.Modules;
 using System;
-using System.Windows;
 using NINA.Plugin;
 using NINA.Core.Utility;
 using NINA.Core.Model;
@@ -52,7 +49,6 @@ using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel.Equipment.Switch;
 using NINA.WPF.Base.ViewModel.Equipment.Camera;
-using NINA.WPF.Base.ViewModel.AutoFocus;
 using NINA.WPF.Base.ViewModel.Equipment.WeatherData;
 using NINA.WPF.Base.ViewModel.Equipment.Telescope;
 using NINA.WPF.Base.ViewModel.Equipment.Dome;
@@ -81,6 +77,12 @@ namespace NINA.Utility {
 
         public IoCBindings(IProfileService profileService) =>
             _profileService = profileService;
+
+        private void BindPluggable<InterfaceT, DefaultT>() 
+            where DefaultT : InterfaceT
+            where InterfaceT : class, IPluggableBehavior {
+            Bind<IPluggableBehaviorSelector, IPluggableBehaviorSelector<InterfaceT>>().To<PluggableBehaviorSelector<InterfaceT, DefaultT>>().InSingletonScope();
+        }
 
         public override void Load() {
             using (MyStopWatch.Measure()) {
@@ -129,11 +131,12 @@ namespace NINA.Utility {
                     Bind<IMicroCacheFactory>().To<DefaultMicroCacheFactory>().InSingletonScope();
                     Bind<ISbigSdk>().To<SbigSdk>().InSingletonScope();
                     Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(NINA.Core.Utility.CoreUtil.Version)).InSingletonScope();
-                    Bind<IStarDetection>().To<StarDetection>().InSingletonScope();
-                    Bind<IStarAnnotator>().To<StarAnnotator>().InSingletonScope();
+                    BindPluggable<IStarDetection, StarDetection>();
+                    BindPluggable<IStarAnnotator, StarAnnotator>();
+                    BindPluggable<IAutoFocusVMFactory, BuiltInAutoFocusVMFactory>();
                     Bind<IImageDataFactory>().To<ImageDataFactory>().InSingletonScope();
                     Bind<IExposureDataFactory>().To<ExposureDataFactory>().InSingletonScope();
-                    Bind<IAutoFocusVMFactory>().To<AutoFocusVMFactory>().InSingletonScope();
+                    Bind<IAutoFocusVMFactory>().To<PluggableAutoFocusVMFactory>().InSingletonScope();
                     Bind<IMeridianFlipVMFactory>().To<MeridianFlipVMFactory>().InSingletonScope();
 
                     Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),

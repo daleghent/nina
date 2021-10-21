@@ -103,6 +103,8 @@
     <Compile Include="Interfaces\IGuideEvent.cs" />
     <Compile Include="Interfaces\IGuideStep.cs" />
     <Compile Include="Interfaces\IMyMessageBoxVM.cs" />
+    <Compile Include="Interfaces\IPluggableBehavior.cs" />
+    <Compile Include="Interfaces\IPluggableBehaviorSelector.cs" />
     <Compile Include="Interfaces\Utility\IMicroCache.cs" />
     <Compile Include="Model\AutoFocusPoint.cs" />
     <Compile Include="Model\CameraDataToManaged.cs" />

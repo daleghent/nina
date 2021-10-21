@@ -1,4 +1,5 @@
 ﻿using NINA.Core.Enum;
+using NINA.Core.Interfaces;
 using NINA.Core.Model;
 using NINA.Image.Interfaces;
 using System;
@@ -6,13 +7,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace NINA.Image.ImageAnalysis {
 
-    public interface IStarDetection {
+    public interface IStarDetection : IPluggableBehavior<IStarDetection> {
 
         Task<StarDetectionResult> Detect(IRenderedImage image, System.Windows.Media.PixelFormat pf, StarDetectionParams p, IProgress<ApplicationStatus> progress, CancellationToken token);
+        IStarDetectionAnalysis CreateAnalysis();
     }
 
     public class StarDetectionParams {

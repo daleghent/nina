@@ -14257,11 +14257,29 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Star Annotator.
+        /// </summary>
+        internal static string LblStarAnnotator {
+            get {
+                return ResourceManager.GetString("LblStarAnnotator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Star count.
         /// </summary>
         internal static string LblStarCount {
             get {
                 return ResourceManager.GetString("LblStarCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Star Detector.
+        /// </summary>
+        internal static string LblStarDetector {
+            get {
+                return ResourceManager.GetString("LblStarDetector", resourceCulture);
             }
         }
         

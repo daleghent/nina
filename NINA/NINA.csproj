@@ -326,8 +326,12 @@
     </Compile>
     <Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloaderVM.cs" />
     <Compile Include="Interfaces\IMainWindowVM.cs" />
+    <Compile Include="Utility\GlobalObjects.cs" />
     <Compile Include="Utility\IoCBindings.cs" />
     <Compile Include="Utility\PaneTemplateSelector.cs" />
+    <Compile Include="Utility\PluggableAutoFocusVMFactory.cs" />
+    <Compile Include="Utility\PluggableBehaviorManager.cs" />
+    <Compile Include="Utility\PluggableBehaviorSelector.cs" />
     <Compile Include="Utility\ProjectVersion.cs" />
     <Compile Include="ViewModel\AboutSDKsVM.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
