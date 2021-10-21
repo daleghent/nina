@@ -3010,6 +3010,9 @@
   <data name="LblStDev" xml:space="preserve">
     <value>標準偏差SD</value>
   </data>
+  <data name="LblHFRStDev" xml:space="preserve">
+    <value>HFR SD</value>
+  </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
   </data>
@@ -4060,6 +4063,9 @@
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>ドーム同期エラー. 望遠鏡に追従できません,{0}</value>
+  </data>
+  <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
+    <value>Dome failed to synchronize after Meridian Flip</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>シーケンス終了時にドームのシャッターを閉じる</value>
@@ -5793,27 +5799,48 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
     <value>プラグインを初期化</value>
   </data>
   <data name="LblCameraStateDownload" xml:space="preserve">
-    <value>Downloading</value>
+    <value>ダウンロード中</value>
   </data>
   <data name="LblCameraStateError" xml:space="preserve">
-    <value>Error</value>
+    <value>エラー</value>
   </data>
   <data name="LblCameraStateExposing" xml:space="preserve">
-    <value>Exposing</value>
+    <value>露出中</value>
   </data>
   <data name="LblCameraStateIdle" xml:space="preserve">
-    <value>Idle</value>
+    <value>アイドル</value>
   </data>
   <data name="LblCameraStateLoadingFile" xml:space="preserve">
-    <value>Loading file</value>
+    <value>ファイル読み込み中</value>
   </data>
   <data name="LblCameraStateNoState" xml:space="preserve">
-    <value>State unavailable</value>
+    <value>状態読み込み不可</value>
   </data>
   <data name="LblCameraStateReading" xml:space="preserve">
-    <value>Reading out</value>
+    <value>読み出し中</value>
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
-    <value>Waiting</value>
+    <value>待ち状態</value>
+  </data>
+  <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
+    <value>ノイズ低減</value>
+  </data>
+  <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
+    <value>Preparing for Structure Detection</value>
+  </data>
+  <data name="LblStarDetectorStructureDetection" xml:space="preserve">
+    <value>Structure Detection</value>
+  </data>
+  <data name="LblStarDetectorStarScan" xml:space="preserve">
+    <value>Scan and Analyze Stars</value>
+  </data>
+  <data name="LblStarDetectorV2" xml:space="preserve">
+    <value>Use Star Detector V2</value>
+  </data>
+  <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
+    <value>Annotate All</value>
+  </data>
+  <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
+    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
 </root>

@@ -3018,6 +3018,9 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
   <data name="LblStDev" xml:space="preserve">
     <value>SD</value>
   </data>
+  <data name="LblHFRStDev" xml:space="preserve">
+    <value>HFR SD</value>
+  </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
   </data>
@@ -4072,6 +4075,9 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Error de sincronización de la cúpula. Ya no sigue al telescopio. {0}</value>
+  </data>
+  <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
+    <value>La cúpula falló al sincronizarse tras el giro de Meridiano</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Cerrar el obturador de la cúpula al final de la secuencia</value>
@@ -5833,5 +5839,26 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
     <value>Esperando</value>
+  </data>
+  <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
+    <value>Noise Reduction</value>
+  </data>
+  <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
+    <value>Preparing for Structure Detection</value>
+  </data>
+  <data name="LblStarDetectorStructureDetection" xml:space="preserve">
+    <value>Structure Detection</value>
+  </data>
+  <data name="LblStarDetectorStarScan" xml:space="preserve">
+    <value>Scan and Analyze Stars</value>
+  </data>
+  <data name="LblStarDetectorV2" xml:space="preserve">
+    <value>Use Star Detector V2</value>
+  </data>
+  <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
+    <value>Annotate All</value>
+  </data>
+  <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
+    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
 </root>

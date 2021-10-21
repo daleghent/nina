@@ -3021,6 +3021,9 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
   <data name="LblStDev" xml:space="preserve">
     <value>SD</value>
   </data>
+  <data name="LblHFRStDev" xml:space="preserve">
+    <value>HFR SD</value>
+  </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
   </data>
@@ -4077,6 +4080,9 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Chyba synchronizace kopule. Již nesleduje dalekohled. {0}</value>
+  </data>
+  <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
+    <value>Kopule se po Překlopení Poledníku nesynchronizovala</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Až sekvence skončí, zavřít štěrbinu kopule</value>
@@ -5838,5 +5844,26 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
     <value>Počkat</value>
+  </data>
+  <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
+    <value>Noise Reduction</value>
+  </data>
+  <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
+    <value>Preparing for Structure Detection</value>
+  </data>
+  <data name="LblStarDetectorStructureDetection" xml:space="preserve">
+    <value>Structure Detection</value>
+  </data>
+  <data name="LblStarDetectorStarScan" xml:space="preserve">
+    <value>Scan and Analyze Stars</value>
+  </data>
+  <data name="LblStarDetectorV2" xml:space="preserve">
+    <value>Use Star Detector V2</value>
+  </data>
+  <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
+    <value>Annotate All</value>
+  </data>
+  <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
+    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
 </root>
