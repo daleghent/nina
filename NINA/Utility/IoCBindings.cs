@@ -78,7 +78,7 @@ namespace NINA.Utility {
         public IoCBindings(IProfileService profileService) =>
             _profileService = profileService;
 
-        private void BindPluggable<InterfaceT, DefaultT>() 
+        private void BindPluggable<InterfaceT, DefaultT>()
             where DefaultT : InterfaceT
             where InterfaceT : class, IPluggableBehavior {
             Bind<IPluggableBehaviorSelector, IPluggableBehaviorSelector<InterfaceT>>().To<PluggableBehaviorSelector<InterfaceT, DefaultT>>().InSingletonScope();
@@ -186,7 +186,12 @@ namespace NINA.Utility {
                     Bind<IDeviceChooserVM>().To<FocuserChooserVM>().WhenInjectedInto<IFocuserVM>().InSingletonScope();
                     Bind<IDeviceFactory>().To<FocuserFactory>().WhenInjectedInto<FocuserChooserVM>().InSingletonScope();
 
-                    Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
+                    if (DllLoader.IsX86()) {
+                        Bind<IImageSaveMediator>().To<ImageSaveMediatorX86>().InSingletonScope();
+                    } else {
+                        Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
+                    }
+
                     Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
                     Bind<ISGPServiceHost>().To<SGPServiceHost>().InSingletonScope();
                     Bind<ISGPService>().To<SGPServiceFrontend>().InSingletonScope();

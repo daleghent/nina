@@ -134,6 +134,10 @@ namespace NINA.ViewModel {
             FamilyTypeface = ApplicationFontFamily.FamilyTypefaces.FirstOrDefault(x => x.Weight == FontWeight && x.Style == FontStyle && x.Stretch == FontStretch);
         }
 
+        public bool IsX64 {
+            get => !DllLoader.IsX86();
+        }
+
         private void OpenHorizonFilePathDiag(object obj) {
             var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz;*.txt");
             if (dialog.ShowDialog() == true) {

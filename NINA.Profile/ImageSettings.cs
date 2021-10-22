@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Utility;
 using NINA.Profile.Interfaces;
 using System;
 using System.IO;
@@ -97,16 +98,22 @@ namespace NINA.Profile {
         [DataMember]
         public bool DebayerImage {
             get {
-                return debayerImage;
+                if (DllLoader.IsX86()) {
+                    return false;
+                } else {
+                    return debayerImage;
+                }
             }
             set {
-                if (debayerImage != value) {
-                    debayerImage = value;
-                    if (!debayerImage) {
-                        UnlinkedStretch = false;
-                        DebayeredHFR = false;
+                if (!DllLoader.IsX86()) {
+                    if (debayerImage != value) {
+                        debayerImage = value;
+                        if (!debayerImage) {
+                            UnlinkedStretch = false;
+                            DebayeredHFR = false;
+                        }
+                        RaisePropertyChanged();
                     }
-                    RaisePropertyChanged();
                 }
             }
         }
@@ -116,15 +123,21 @@ namespace NINA.Profile {
         [DataMember]
         public bool DebayeredHFR {
             get {
-                return debayeredHFR;
+                if (DllLoader.IsX86()) {
+                    return false;
+                } else {
+                    return debayeredHFR;
+                }
             }
             set {
-                if (debayeredHFR != value) {
-                    debayeredHFR = value;
-                    if (debayeredHFR) {
-                        DebayerImage = debayeredHFR;
+                if (!DllLoader.IsX86()) {
+                    if (debayeredHFR != value) {
+                        debayeredHFR = value;
+                        if (debayeredHFR) {
+                            DebayerImage = debayeredHFR;
+                        }
+                        RaisePropertyChanged();
                     }
-                    RaisePropertyChanged();
                 }
             }
         }
@@ -134,15 +147,21 @@ namespace NINA.Profile {
         [DataMember]
         public bool UnlinkedStretch {
             get {
-                return unlinkedStretch;
+                if (DllLoader.IsX86()) {
+                    return false;
+                } else {
+                    return unlinkedStretch;
+                }
             }
             set {
-                if (unlinkedStretch != value) {
-                    unlinkedStretch = value;
-                    if (unlinkedStretch) {
-                        DebayerImage = unlinkedStretch;
+                if (!DllLoader.IsX86()) {
+                    if (unlinkedStretch != value) {
+                        unlinkedStretch = value;
+                        if (unlinkedStretch) {
+                            DebayerImage = unlinkedStretch;
+                        }
+                        RaisePropertyChanged();
                     }
-                    RaisePropertyChanged();
                 }
             }
         }

@@ -21,6 +21,9 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="OptionsProxy" Data="{Binding}" />
+    </UserControl.Resources>
     <UniformGrid Columns="2" DataContext="{Binding ActiveProfile}">
         <GroupBox DataContext="{Binding ImageFileSettings}" Header="{ns:Loc LblFileSettings}">
             <Grid>
@@ -410,7 +413,10 @@
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding AnnotateImage}" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            IsEnabled="{Binding Source={StaticResource OptionsProxy}, Path=Data.IsX64}"
+                            Orientation="Horizontal">
                             <TextBlock
                                 MinWidth="200"
                                 MinHeight="20"
@@ -424,8 +430,16 @@
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DebayerImage}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblUnavailableForX86}"
+                                Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.IsX64, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            IsEnabled="{Binding Source={StaticResource OptionsProxy}, Path=Data.IsX64}"
+                            Orientation="Horizontal">
                             <TextBlock
                                 MinWidth="200"
                                 MinHeight="20"
@@ -439,8 +453,16 @@
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DebayeredHFR}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblUnavailableForX86}"
+                                Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.IsX64, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            IsEnabled="{Binding Source={StaticResource OptionsProxy}, Path=Data.IsX64}"
+                            Orientation="Horizontal">
                             <TextBlock
                                 MinWidth="200"
                                 MinHeight="20"
@@ -454,51 +476,62 @@
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding UnlinkedStretch}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblUnavailableForX86}"
+                                Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.IsX64, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding DataContext.PluggableStarDetection.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            Orientation="Horizontal"
+                            Visibility="{Binding DataContext.PluggableStarDetection.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
                             <TextBlock
                                 MinWidth="200"
                                 MinHeight="20"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblStarDetector}">
-                            </TextBlock>
+                                Text="{ns:Loc LblStarDetector}" />
                             <ComboBox
                                 MinWidth="150"
-                                Margin="0,0,0,0"                                                
+                                Margin="0,0,0,0"
+                                DisplayMemberPath="Name"
                                 ItemsSource="{Binding DataContext.PluggableStarDetection.Behaviors, ElementName=UC}"
-                                SelectedItem="{Binding DataContext.PluggableStarDetection.SelectedBehavior, ElementName=UC}" 
-                                SelectedValuePath="Name"
-                                DisplayMemberPath="Name" />
+                                SelectedItem="{Binding DataContext.PluggableStarDetection.SelectedBehavior, ElementName=UC}"
+                                SelectedValuePath="Name" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding DataContext.PluggableStarAnnotator.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            Orientation="Horizontal"
+                            Visibility="{Binding DataContext.PluggableStarAnnotator.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
                             <TextBlock
                                 MinWidth="200"
                                 MinHeight="20"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblStarAnnotator}">
-                            </TextBlock>
+                                Text="{ns:Loc LblStarAnnotator}" />
                             <ComboBox
                                 MinWidth="150"
-                                Margin="0,0,0,0"                                                
+                                Margin="0,0,0,0"
+                                DisplayMemberPath="Name"
                                 ItemsSource="{Binding DataContext.PluggableStarAnnotator.Behaviors, ElementName=UC}"
-                                SelectedItem="{Binding DataContext.PluggableStarAnnotator.SelectedBehavior, ElementName=UC}" 
-                                SelectedValuePath="Name"
-                                DisplayMemberPath="Name" />
+                                SelectedItem="{Binding DataContext.PluggableStarAnnotator.SelectedBehavior, ElementName=UC}"
+                                SelectedValuePath="Name" />
                         </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding DataContext.PluggableAutoFocusVMFactory.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
+                        <StackPanel
+                            Margin="0,5,0,0"
+                            Orientation="Horizontal"
+                            Visibility="{Binding DataContext.PluggableAutoFocusVMFactory.Behaviors, ElementName=UC, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}">
                             <TextBlock
                                 MinWidth="200"
                                 MinHeight="20"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblAutoFocus}">
-                            </TextBlock>
+                                Text="{ns:Loc LblAutoFocus}" />
                             <ComboBox
                                 MinWidth="150"
-                                Margin="0,0,0,0"                                                
+                                Margin="0,0,0,0"
+                                DisplayMemberPath="Name"
                                 ItemsSource="{Binding DataContext.PluggableAutoFocusVMFactory.Behaviors, ElementName=UC}"
-                                SelectedItem="{Binding DataContext.PluggableAutoFocusVMFactory.SelectedBehavior, ElementName=UC}" 
-                                SelectedValuePath="Name"
-                                DisplayMemberPath="Name" />
+                                SelectedItem="{Binding DataContext.PluggableAutoFocusVMFactory.SelectedBehavior, ElementName=UC}"
+                                SelectedValuePath="Name" />
                         </StackPanel>
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
@@ -628,7 +661,10 @@
                                                 ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:NoiseReductionEnum}}}"
                                                 SelectedItem="{Binding NoiseReduction}" />
                                         </StackPanel>
-                                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" Visibility="{Binding AnnotateImage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <StackPanel
+                                            Margin="0,5,0,0"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding AnnotateImage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                             <TextBlock
                                                 MinWidth="200"
                                                 MinHeight="20"

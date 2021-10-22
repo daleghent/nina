@@ -21,6 +21,11 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Model;
 using NINA.Image.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Core.Locale;
+using NINA.Image.FileFormat;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 
 namespace NINA.WPF.Base.Mediator {
 
@@ -46,6 +51,69 @@ namespace NINA.WPF.Base.Mediator {
 
         public void Shutdown() {
             this.handler?.Shutdown();
+        }
+    }
+
+    public class ImageSaveMediatorX86 : IImageSaveMediator {
+        private IProfileService profileService;
+
+        public ImageSaveMediatorX86(IProfileService profileService) {
+            this.profileService = profileService;
+        }
+
+        public Task Enqueue(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            return SequentialSaveAndPostProcessingForX86(imageData, prepareTask, progress, token);
+        }
+
+        public void RegisterHandler(IImageSaveController handler) {
+        }
+
+        public event EventHandler<ImageSavedEventArgs> ImageSaved;
+
+        public void OnImageSaved(ImageSavedEventArgs e) {
+            ImageSaved?.Invoke(this, e);
+        }
+
+        public void Shutdown() {
+        }
+
+        /// <summary>
+        /// Saves the image data and waits until finished before proceeding
+        /// This method is used in the flow when the application runs in x86 mode. There the process is restricted with memory and heavy concurrent calls are problematic.
+        /// </summary>
+        /// <param name="imageData"></param>
+        /// <param name="prepareTask"></param>
+        /// <param name="progress"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        private async Task SequentialSaveAndPostProcessingForX86(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            try {
+                var preparedData = await prepareTask;
+                var stats = await preparedData.RawImageData.Statistics;
+
+                progress?.Report(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = Loc.Instance["LblSavingImage"] });
+                var path = await imageData.SaveToDisk(new FileSaveInfo(profileService), token);
+
+                OnImageSaved(
+                    new ImageSavedEventArgs() {
+                        MetaData = preparedData.RawImageData.MetaData,
+                        PathToImage = new Uri(path),
+                        Image = preparedData.Image,
+                        FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
+                        Statistics = stats,
+                        StarDetectionAnalysis = preparedData.RawImageData.StarDetectionAnalysis,
+                        Duration = preparedData.RawImageData.MetaData.Image.ExposureTime,
+                        IsBayered = preparedData.RawImageData.Properties.IsBayered,
+                        Filter = preparedData.RawImageData.MetaData.FilterWheel.Filter
+                    }
+                );
+            } catch (OperationCanceledException) {
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(ex.Message);
+            } finally {
+                progress?.Report(new ApplicationStatus() { Status = string.Empty });
+            }
         }
     }
 }

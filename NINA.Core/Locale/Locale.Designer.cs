@@ -16010,6 +16010,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unavailable in x86.
+        /// </summary>
+        internal static string LblUnavailableForX86 {
+            get {
+                return ResourceManager.GetString("LblUnavailableForX86", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unexpected error occurred.
         /// </summary>
         internal static string LblUnexpectedError {
