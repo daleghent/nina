@@ -211,15 +211,17 @@ namespace NINA.Image.ImageAnalysis {
 
                     token.ThrowIfCancellationRequested();
 
-                    if (result.StarList.Count > 1) {
-                        var m = (from star in result.StarList select star.HFR).Average();
-                        var s = Math.Sqrt((from star in result.StarList select (star.HFR - m) * (star.HFR - m)).Sum() / (result.StarList.Count() - 1));
+                    if (result.StarList.Count > 0) {
+                        var mean = (from star in result.StarList select star.HFR).Average();
+                        var stdDev = double.NaN;
+                        if (result.StarList.Count > 1) {
+                            stdDev = Math.Sqrt((from star in result.StarList select (star.HFR - mean) * (star.HFR - mean)).Sum() / (result.StarList.Count() - 1));
+                        }
 
-                        Logger.Info($"Average HFR: {m}, HFR σ: {s}, Detected Stars {result.StarList.Count}");
+                        Logger.Info($"Average HFR: {mean}, HFR σ: {stdDev}, Detected Stars {result.StarList.Count}");
 
-                        //todo change
-                        result.AverageHFR = m;
-                        result.HFRStdDev = double.IsNaN(s) ? 0 : s;
+                        result.AverageHFR = mean;
+                        result.HFRStdDev = stdDev;
                         result.DetectedStars = result.StarList.Count;
                     }
 
