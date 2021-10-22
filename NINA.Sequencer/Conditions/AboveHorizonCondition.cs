@@ -73,7 +73,8 @@ namespace NINA.Sequencer.Conditions {
 
         public override object Clone() {
             return new AboveHorizonCondition(this) {
-                Coordinates = Coordinates.Clone()
+                Coordinates = Coordinates.Clone(),
+                AltitudeOffset = AltitudeOffset
             };
         }
 

@@ -54,7 +54,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         public override object Clone() {
             return new WaitUntilAboveHorizon(this) {
-                Coordinates = Coordinates.Clone()
+                Coordinates = Coordinates.Clone(),
+                AltitudeOffset = AltitudeOffset
             };
         }
 

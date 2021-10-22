@@ -43,10 +43,12 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             sut.Icon = new System.Windows.Media.GeometryGroup();
             sut.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
+            sut.AltitudeOffset = 10;
             var item2 = (AboveHorizonCondition)sut.Clone();
 
             item2.Should().NotBeSameAs(sut);
             item2.Icon.Should().BeSameAs(sut.Icon);
+            item2.AltitudeOffset.Should().Be(10);
             item2.Coordinates.Should().NotBeSameAs(sut.Coordinates);
             item2.Coordinates.Coordinates.RA.Should().Be(sut.Coordinates.Coordinates.RA);
             item2.Coordinates.Coordinates.Dec.Should().Be(sut.Coordinates.Coordinates.Dec);
