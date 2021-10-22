@@ -5841,24 +5841,30 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
     <value>Esperando</value>
   </data>
   <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
-    <value>Noise Reduction</value>
+    <value>Reducción de Ruido</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>Preparando la detección de estructuras</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
-    <value>Structure Detection</value>
+    <value>Detección de estructuras</value>
   </data>
   <data name="LblStarDetectorStarScan" xml:space="preserve">
-    <value>Scan and Analyze Stars</value>
+    <value>Escanear y analizar estrellas</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>Usar Detector de Estrellas V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>Anotar todo</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>Por defecto, sólo se anotarán 200 estrellas. Si se habilita, se anotarán todas.</value>
+  </data>
+  <data name="LblStarDetector" xml:space="preserve">
+    <value>Detector de estrellas</value>
+  </data>
+  <data name="LblStarAnnotator" xml:space="preserve">
+    <value>Anotador de estrellas</value>
   </data>
 </root>

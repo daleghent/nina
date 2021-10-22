@@ -5843,4 +5843,10 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
     <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
+  <data name="LblStarDetector" xml:space="preserve">
+    <value>Star Detector</value>
+  </data>
+  <data name="LblStarAnnotator" xml:space="preserve">
+    <value>Star Annotator</value>
+  </data>
 </root>

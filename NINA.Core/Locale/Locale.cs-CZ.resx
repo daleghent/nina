@@ -5846,24 +5846,30 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
     <value>Počkat</value>
   </data>
   <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
-    <value>Noise Reduction</value>
+    <value>Redukce Šumu</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>Příprava na Detekci Struktur</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
-    <value>Structure Detection</value>
+    <value>Detekce Struktur</value>
   </data>
   <data name="LblStarDetectorStarScan" xml:space="preserve">
-    <value>Scan and Analyze Stars</value>
+    <value>Skenovat a Analyzovat Hvězdy</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>Použít Detektor Hvězd V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>Označit Vše</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>Ve výchozím nastavení je označeno 200 hvězd. Pokud je toto povoleno, jsou detekovány všechny hvězdy.</value>
+  </data>
+  <data name="LblStarDetector" xml:space="preserve">
+    <value>Star Detector</value>
+  </data>
+  <data name="LblStarAnnotator" xml:space="preserve">
+    <value>Star Annotator</value>
   </data>
 </root>
