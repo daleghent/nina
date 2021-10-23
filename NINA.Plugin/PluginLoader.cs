@@ -238,6 +238,15 @@ namespace NINA.Plugin {
             });
         }
 
+        public class PluginAssemblyLoader : MarshalByRefObject {
+
+            public string[] GrabAssemblyReferences(string assemblyPath) {
+                var assembly = Assembly.ReflectionOnlyLoadFrom(assemblyPath);
+                var paths = assembly.GetReferencedAssemblies().Select(x => x.FullName).ToArray();
+                return paths;
+            }
+        }
+
         private async Task LoadPlugin(string file) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
@@ -247,10 +256,27 @@ namespace NINA.Plugin {
                 if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
                     fileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
-                var assemblyCheck = Assembly.ReflectionOnlyLoadFrom(file);
 
-                var references = assemblyCheck.GetReferencedAssemblies();
-                if (references.FirstOrDefault(x => x.FullName.Contains("NINA.Plugin")) != null) {
+                var settings = new AppDomainSetup {
+                    ApplicationBase = AppDomain.CurrentDomain.BaseDirectory
+                };
+                var childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
+                var handle = Activator.CreateInstance(
+                    childDomain,
+                    typeof(PluginAssemblyLoader).Assembly.FullName,
+                    typeof(PluginAssemblyLoader).FullName,
+                    false,
+                    BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                    null,
+                    null,
+                    System.Globalization.CultureInfo.CurrentCulture,
+                    new object[0]
+                );
+                var loader = (PluginAssemblyLoader)handle.Unwrap();
+                var references = loader.GrabAssemblyReferences(file);
+                AppDomain.Unload(childDomain);
+
+                if (references.FirstOrDefault(x => x.Contains("NINA.Plugin")) != null) {
                     try {
                         var assembly = Assembly.LoadFrom(file);
                         var plugin = new AssemblyCatalog(assembly);
@@ -326,7 +352,6 @@ namespace NINA.Plugin {
                         Logger.Error($"Failed to load plugin at {file} - {failedManifest.Name} version {failedManifest.Version} {message}");
                     }
                 } else {
-
                     Logger.Trace($"The dll {file} does not reference NINA.Plugin");
                 }
             } catch (Exception ex) {
