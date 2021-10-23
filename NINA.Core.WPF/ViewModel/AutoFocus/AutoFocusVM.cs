@@ -280,6 +280,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 var analysisResult = await starDetection.Detect(image, pixelFormat, analysisParams, progress, token);
 
                 if (profileService.ActiveProfile.ImageSettings.AnnotateImage) {
+                    cancelToken.ThrowIfCancellationRequested();
                     var starAnnotator = starAnnotatorSelector.GetBehavior();
                     var annotatedImage = await starAnnotator.GetAnnotatedImage(analysisParams, analysisResult, image.Image, token: token);
                     imagingMediator.SetImage(annotatedImage);

@@ -40,7 +40,7 @@ namespace NINA.Image.ImageAnalysis {
                             graphics.DrawImage(bmp, 0, 0);
                             var starList = result.StarList;
 
-                            if (starList.Count > 0) {
+                            if (starList?.Count > 0) {
                                 int offset = 10;
                                 float textposx, textposy;
 

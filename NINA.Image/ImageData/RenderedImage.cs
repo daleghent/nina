@@ -80,6 +80,7 @@ namespace NINA.Image.ImageData {
             var starDetectionResult = await starDetection.Detect(this, this.Image.Format, starDetectionParams, progress, cancelToken);
             var image = this.Image;
             if (annotateImage) {
+                cancelToken.ThrowIfCancellationRequested();
                 // TODO: Apply ROI and MaxAFStars settings from the profile so measured HFRs match up with those during autofocus
                 var maxStars = profileService.ActiveProfile.ImageSettings.AnnotateUnlimitedStars ? -1 : 200;
                 image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.Image, maxStars: maxStars, token: cancelToken);
