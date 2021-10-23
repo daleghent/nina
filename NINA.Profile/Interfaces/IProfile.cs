@@ -48,6 +48,7 @@ namespace NINA.Profile.Interfaces {
         IExposureCalculatorSettings ExposureCalculatorSettings { get; set; }
         ISnapShotControlSettings SnapShotControlSettings { get; set; }
         ISafetyMonitorSettings SafetyMonitorSettings { get; set; }
+        IPluginSettings PluginSettings { get; set; }
 
         void Save();
     }

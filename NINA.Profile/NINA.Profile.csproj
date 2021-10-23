@@ -107,6 +107,11 @@
     <Compile Include="MeridianFlipSettings.cs" />
     <Compile Include="PlanetariumSettings.cs" />
     <Compile Include="PlateSolveSettings.cs" />
+    <Compile Include="PluginSettingsTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PluginSettingsTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="PolarAlignmentSettings.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="ProfileInfo.cs" />
@@ -131,6 +136,15 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PluginSettingsTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PluginSettingsTemplate.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
