@@ -3022,7 +3022,7 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
     <value>SD</value>
   </data>
   <data name="LblHFRStDev" xml:space="preserve">
-    <value>HFR SD</value>
+    <value>HFR Desviació Estàndard</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -4078,7 +4078,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Error de sincronització de la cúpula. Ja no segueix el telescopi. {0}</value>
   </data>
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
-    <value>Dome failed to synchronize after Meridian Flip</value>
+    <value>La cúpula ha fallat després de la sincronització en el canvi de Meridià</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Tancar l'obturador de la cúpula al final de la seqüència</value>
@@ -5818,54 +5818,57 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
     <value>Inicialitzant els connectors</value>
   </data>
   <data name="LblCameraStateDownload" xml:space="preserve">
-    <value>Downloading</value>
+    <value>Descarregant</value>
   </data>
   <data name="LblCameraStateError" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="LblCameraStateExposing" xml:space="preserve">
-    <value>Exposing</value>
+    <value>Exposant</value>
   </data>
   <data name="LblCameraStateIdle" xml:space="preserve">
-    <value>Idle</value>
+    <value>Inactiu</value>
   </data>
   <data name="LblCameraStateLoadingFile" xml:space="preserve">
-    <value>Loading file</value>
+    <value>Carregant arxiu</value>
   </data>
   <data name="LblCameraStateNoState" xml:space="preserve">
-    <value>State unavailable</value>
+    <value>Estat no disponible</value>
   </data>
   <data name="LblCameraStateReading" xml:space="preserve">
-    <value>Reading out</value>
+    <value>Llegint</value>
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
-    <value>Waiting</value>
+    <value>Esperant</value>
   </data>
   <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
-    <value>Noise Reduction</value>
+    <value>Reducció de Soroll</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>Preparant la detecció d'estructures</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
-    <value>Structure Detection</value>
+    <value>Detecció d'estructures</value>
   </data>
   <data name="LblStarDetectorStarScan" xml:space="preserve">
-    <value>Scan and Analyze Stars</value>
+    <value>Escanejar i analitzar estrelles</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>Utilitzar el detector d'estrelles V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>Anotar tot</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>Per defecte, només s'anotaran 200 estrelles. Si s'activa, s'anotaran totes.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>Detector d'estrelles</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
-    <value>Star Annotator</value>
+    <value>Anotador d'estrelles</value>
+  </data>
+  <data name="LblUnavailableForX86" xml:space="preserve">
+    <value>No està disponible a X86</value>
   </data>
 </root>

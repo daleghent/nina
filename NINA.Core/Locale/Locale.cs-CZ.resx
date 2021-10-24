@@ -5867,9 +5867,12 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
     <value>Ve výchozím nastavení je označeno 200 hvězd. Pokud je toto povoleno, jsou detekovány všechny hvězdy.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>Detektor Hvězd</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
-    <value>Star Annotator</value>
+    <value>Anotace Hvězd</value>
+  </data>
+  <data name="LblUnavailableForX86" xml:space="preserve">
+    <value>Není k dispozici v x86</value>
   </data>
 </root>

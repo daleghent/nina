@@ -5867,4 +5867,7 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   <data name="LblStarAnnotator" xml:space="preserve">
     <value>Anotador de estrellas</value>
   </data>
+  <data name="LblUnavailableForX86" xml:space="preserve">
+    <value>No disponible para x86</value>
+  </data>
 </root>

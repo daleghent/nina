@@ -5869,4 +5869,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblStarAnnotator" xml:space="preserve">
     <value>Star Annotator</value>
   </data>
+  <data name="LblUnavailableForX86" xml:space="preserve">
+    <value>Unavailable in x86</value>
+  </data>
 </root>

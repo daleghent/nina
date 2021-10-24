@@ -5844,9 +5844,12 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
     <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>星検出プログラム</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
-    <value>Star Annotator</value>
+    <value>星注釈プログラム</value>
+  </data>
+  <data name="LblUnavailableForX86" xml:space="preserve">
+    <value>Unavailable in x86</value>
   </data>
 </root>
