@@ -142,6 +142,29 @@ namespace NINATest.Sequencer.Conditions {
         }
 
         [Test]
+        [TestCase(0, 2, 2)]
+        [TestCase(2, 6, 4)]
+        [TestCase(6, 11, 5)]
+        [TestCase(12, 12, 0)]
+        [TestCase(13, 11, 22)]
+        [TestCase(2, 22, 0)]
+        [TestCase(23, 22, 0)]
+        [TestCase(0, 22, 0)]
+        [TestCase(21, 22, 1)]
+        public void TimeCondition_RemainingTime_CalculatedCorrectly_WithDaySwitches(int nowHours, int conditionHours, int expectedTime) {
+            var dateMock = new Mock<ICustomDateTime>();
+            dateMock.SetupGet(x => x.Now).Returns(new DateTime(2000, 1, 1, nowHours, 0, 0));
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, conditionHours, 0, 0));
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.DateTime = dateMock.Object;
+
+            sut.RemainingTime.Should().Be(TimeSpan.FromHours(expectedTime));
+        }
+
+        [Test]
         /* RemainingTime Without Next Item taking any time */
         [TestCase(0, 10, 0, true)]
         [TestCase(5, 10, 0, true)]
