@@ -2873,15 +2873,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An ASCOM driver interop exception occurred. This is most likely caused by a mismatch between the driver being installed as {0} and N.I.N.A. being {1}. Please install the driver as {1}.
-        /// </summary>
-        internal static string LblAscomInterOpDriverException {
-            get {
-                return ResourceManager.GetString("LblAscomInterOpDriverException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ASCOM Platform Version is outdated. Please update to the latest ASCOM platform version. Otherwise the application might not be able to connect to all ASCOM devices..
         /// </summary>
         internal static string LblASCOMPlatformOutdated {

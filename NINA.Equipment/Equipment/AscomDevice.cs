@@ -182,10 +182,6 @@ namespace NINA.Equipment.Equipment {
                         await PostConnect();
                         RaiseAllPropertiesChanged();
                     }
-                } catch (ASCOM.DriverAccessCOMException ex) {
-                    CoreUtil.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    CoreUtil.HandleAscomCOMException(ex);
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(string.Format(Loc.Instance["LblUnableToConnect"], Name, ex.Message));
