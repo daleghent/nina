@@ -1,6 +1,5 @@
 ﻿<#@ template language="C#" #>
 <#@ output extension=".cs" #>
-<#@ import namespace="NINA.Profile" #>
 <#@ assembly name="$(TargetPath)" #>
 
 
