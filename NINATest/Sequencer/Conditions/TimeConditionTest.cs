@@ -151,6 +151,7 @@ namespace NINATest.Sequencer.Conditions {
         [TestCase(23, 22, 0)]
         [TestCase(0, 22, 0)]
         [TestCase(21, 22, 1)]
+        [TestCase(22, 2, 4)]
         public void TimeCondition_RemainingTime_CalculatedCorrectly_WithDaySwitches(int nowHours, int conditionHours, int expectedTime) {
             var dateMock = new Mock<ICustomDateTime>();
             dateMock.SetupGet(x => x.Now).Returns(new DateTime(2000, 1, 1, nowHours, 0, 0));
