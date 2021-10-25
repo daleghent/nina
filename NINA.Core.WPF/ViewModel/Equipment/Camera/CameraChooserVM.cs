@@ -58,8 +58,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* ASI */
                 try {
-                    Logger.Trace("Adding ASI Cameras");
-                    for (int i = 0; i < ASICameras.Count; i++) {
+                    var asiCameras = ASICameras.Count;
+                    Logger.Info($"Found {asiCameras} ASI Cameras");
+                    for (int i = 0; i < asiCameras; i++) {
                         var cam = ASICameras.GetCamera(i, profileService, exposureDataFactory);
                         if (!string.IsNullOrEmpty(cam.Name)) {
                             Logger.Trace(string.Format("Adding {0}", cam.Name));
@@ -72,8 +73,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* Altair */
                 try {
-                    Logger.Trace("Adding Altair Cameras");
-                    foreach (var instance in Altair.AltairCam.EnumV2()) {
+                    var altairCameras = Altair.AltairCam.EnumV2();
+                    Logger.Info($"Found {altairCameras?.Length} Altair Cameras");
+                    foreach (var instance in altairCameras) {
                         var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new AltairSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
@@ -83,9 +85,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* Atik */
                 try {
-                    Logger.Trace("Adding Atik Cameras");
                     var atikDevices = AtikCameraDll.GetDevicesCount();
-                    Logger.Trace($"Cameras found: {atikDevices}");
+                    Logger.Info($"Found {atikDevices} Atik Cameras");
                     if (atikDevices > 0) {
                         for (int i = 0; i < atikDevices; i++) {
                             var cam = new AtikCamera(i, profileService, exposureDataFactory);
@@ -98,8 +99,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* FLI */
                 try {
-                    Logger.Trace("Adding FLI Cameras");
                     List<string> cameras = FLICameras.GetCameras();
+                    Logger.Info($"Found {cameras.Count} FLI Cameras");
 
                     if (cameras.Count > 0) {
                         foreach (var entry in cameras) {
@@ -118,8 +119,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 /* QHYCCD */
                 try {
                     var qhy = new QHYCameras(exposureDataFactory);
-                    Logger.Trace("Adding QHYCCD Cameras");
                     uint numCameras = qhy.Count;
+                    Logger.Info($"Found {numCameras} QHYCCD Cameras");
 
                     if (numCameras > 0) {
                         for (uint i = 0; i < numCameras; i++) {
@@ -136,8 +137,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* ToupTek */
                 try {
-                    Logger.Debug("Adding ToupTek Cameras");
-                    foreach (var instance in ToupTek.ToupCam.EnumV2()) {
+                    var toupTekCameras = ToupTek.ToupCam.EnumV2();
+                    Logger.Info($"Found {toupTekCameras?.Length} ToupTek Cameras");
+                    foreach (var instance in toupTekCameras) {
                         var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new ToupTekSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
@@ -147,8 +149,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* Omegon */
                 try {
-                    Logger.Debug("Adding Omegon Cameras");
-                    foreach (var instance in Omegon.Omegonprocam.EnumV2()) {
+                    var omegonCameras = Omegon.Omegonprocam.EnumV2();
+                    Logger.Info($"Found {omegonCameras?.Length} Omegon Cameras");
+                    foreach (var instance in omegonCameras) {
                         var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new OmegonSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
@@ -158,8 +161,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* Risingcam */
                 try {
-                    Logger.Debug("Adding RisingCam Cameras");
-                    foreach (var instance in Nncam.EnumV2()) {
+                    var risingCamCameras = Nncam.EnumV2();
+                    Logger.Info($"Found {risingCamCameras?.Length} RisingCam Cameras");
+                    foreach (var instance in risingCamCameras) {
                         var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new RisingcamSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
@@ -169,8 +173,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* MallinCam */
                 try {
-                    Logger.Trace("Adding MallinCam Cameras");
-                    foreach (var instance in MallinCam.MallinCam.EnumV2()) {
+                    var mallinCamCameras = MallinCam.MallinCam.EnumV2();
+                    Logger.Info($"Found {mallinCamCameras?.Length} MallinCam Cameras");
+                    foreach (var instance in mallinCamCameras) {
                         var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new MallinCamSDKWrapper(), profileService, exposureDataFactory);
                         devices.Add(cam);
                     }
@@ -181,7 +186,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 /* SVBony */
                 try {
                     var provider = new SVBonyProvider(profileService, exposureDataFactory);
-                    devices.AddRange(provider.GetEquipment());
+                    var svBonyCameras = provider.GetEquipment();
+                    Logger.Info($"Found {svBonyCameras?.Count} SVBony Cameras");
+                    devices.AddRange(svBonyCameras);
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
@@ -189,7 +196,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 /* SBIG */
                 try {
                     var provider = new SBIGCameraProvider(sbigSdk, profileService, exposureDataFactory);
-                    devices.AddRange(provider.GetEquipment());
+                    var sbigCameras = provider.GetEquipment();
+                    Logger.Info($"Found {sbigCameras?.Count} SBIG Cameras");
+                    devices.AddRange(sbigCameras);
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
@@ -211,6 +220,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                         int count;
                         err = EDSDK.EdsGetChildCount(cameraList, out count);
 
+                        Logger.Info($"Found {count} Canon Cameras");
                         for (int i = 0; i < count; i++) {
                             IntPtr cam;
                             err = EDSDK.EdsGetChildAtIndex(cameraList, i, out cam);
