@@ -713,9 +713,6 @@
 			<Component Id="NINA.pdb" Guid="be3502d5-c1f2-4672-a6ff-51730392f7dc">
 				<File Id="NINA.pdb" Name="NINA.pdb" Source="$(var.NINA_TargetDir)NINA.pdb" />
 			</Component>
-			<Component Id="nikoncswrapper.pdb" Guid="a8b2668c-be0b-4007-9bca-521c973d1eec">
-				<File Id="nikoncswrapper.pdb" Name="nikoncswrapper.pdb" Source="$(var.NINA_TargetDir)nikoncswrapper.pdb" />
-			</Component>
 			<Component Id="NINA.Sequencer.pdb" Guid="d1f1818e-82b6-4fb3-92cb-2701c5cd8d0c">
 				<File Id="NINA.Sequencer.pdb" Name="NINA.Sequencer.pdb" Source="$(var.NINA_TargetDir)NINA.Sequencer.pdb" />
 			</Component>
