@@ -58,7 +58,7 @@ using NINA.Core.MyMessageBox;
 namespace NINA.Sequencer.Container {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class SimpleDSOContainer : SequenceContainer, IDeepSkyObjectContainer, IImmutableContainer, ISimpleDSOContainer {
+    public class SimpleDSOContainer : SequenceContainer, IDeepSkyObjectContainer, ISimpleDSOContainer {
         private readonly IProfileService profileService;
         private readonly ISequencerFactory factory;
         private readonly IFramingAssistantVM framingAssistantVM;

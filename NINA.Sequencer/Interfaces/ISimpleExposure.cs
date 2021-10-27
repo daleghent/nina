@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
-    public interface ISimpleExposure : ISequenceContainer, IDropContainer, IConditionable, ITriggerable, ISequenceItem {
+    public interface ISimpleExposure : ISequenceContainer, IDropContainer, IConditionable, ITriggerable, ISequenceItem, IImmutableContainer {
         bool Dither { get; set; }
         bool Enabled { get; set; }
 
