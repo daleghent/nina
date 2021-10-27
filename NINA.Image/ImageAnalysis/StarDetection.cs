@@ -469,5 +469,11 @@ namespace NINA.Image.ImageAnalysis {
         public IStarDetectionAnalysis CreateAnalysis() {
             return new StarDetectionAnalysis();
         }
+
+        public void UpdateAnalysis(IStarDetectionAnalysis analysis, StarDetectionParams p, StarDetectionResult result) {
+            analysis.HFR = result.AverageHFR;
+            analysis.HFRStDev = result.HFRStdDev;
+            analysis.DetectedStars = result.DetectedStars;
+        }
     }
 }

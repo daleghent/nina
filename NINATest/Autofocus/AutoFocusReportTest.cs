@@ -50,7 +50,8 @@ namespace NINATest.Autofocus {
                 new HyperbolicFitting(),
                 new GaussianFitting(),
                 0,
-                ""
+                "",
+                TimeSpan.Zero
             );
 
             report.Should().NotBeNull();
@@ -144,7 +145,8 @@ namespace NINATest.Autofocus {
                 hyperbolicFitting,
                 gaussianFitting,
                 0,
-                ""
+                "",
+                TimeSpan.FromSeconds(5)
             );
 
             var cultureVerification = $"{3.42}";
@@ -159,6 +161,7 @@ namespace NINATest.Autofocus {
             report.Fittings.Hyperbolic.Should().Be("y = 1 * cosh(asinh((5.0125 - x) / 0.248755215880869))");
             report.Fittings.Quadratic.Should().NotBeNull();
             report.Fittings.Quadratic.Should().Be("y = 1.01515151515152 * x^2 + -10.1848484848485 * x + 27.5");
+            report.Duration.Should().Be(TimeSpan.FromSeconds(5));
         }
     }
 }

@@ -83,7 +83,9 @@ namespace NINA.Plugin {
                               IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector,
                               IImageDataFactory imageDataFactory,
                               IMeridianFlipVMFactory meridianFlipVMFactory,
-                              IAutoFocusVMFactory autoFocusVMFactory) {
+                              IAutoFocusVMFactory autoFocusVMFactory,
+                              IImageControlVM imageControlVM,
+                              IImageStatisticsVM imageStatisticsVM) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -114,6 +116,8 @@ namespace NINA.Plugin {
             this.imageDataFactory = imageDataFactory;
             this.meridianFlipVMFactory = meridianFlipVMFactory;
             this.autoFocusVMFactory = autoFocusVMFactory;
+            this.imageControlVM = imageControlVM;
+            this.imageStatisticsVM = imageStatisticsVM;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -418,6 +422,8 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(imageDataFactory);
             container.ComposeExportedValue(autoFocusVMFactory);
             container.ComposeExportedValue(meridianFlipVMFactory);
+            container.ComposeExportedValue(imageControlVM);
+            container.ComposeExportedValue(imageStatisticsVM);
 
             return container;
         }
@@ -464,6 +470,8 @@ namespace NINA.Plugin {
         private readonly IImageDataFactory imageDataFactory;
         private readonly IAutoFocusVMFactory autoFocusVMFactory;
         private readonly IMeridianFlipVMFactory meridianFlipVMFactory;
+        private readonly IImageControlVM imageControlVM;
+        private readonly IImageStatisticsVM imageStatisticsVM;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
             return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);

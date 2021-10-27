@@ -297,13 +297,13 @@ namespace NINA.Image.ImageAnalysis {
         public static Task<BitmapSource> Stretch(IRenderedImage image, double factor, double blackClipping) {
             return Task.Run(async () => {
                 var imageStatistics = await image.RawImageData.Statistics.Task;
-                if (image.Image.Format == PixelFormats.Gray16) {
-                    using (var bmp = ImageUtility.BitmapFromSource(image.Image, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale)) {
-                        return Stretch(imageStatistics, bmp, image.Image.Format, factor, blackClipping);
+                if (image.OriginalImage.Format == PixelFormats.Gray16) {
+                    using (var bmp = ImageUtility.BitmapFromSource(image.OriginalImage, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale)) {
+                        return Stretch(imageStatistics, bmp, image.OriginalImage.Format, factor, blackClipping);
                     }
-                } else if (image.Image.Format == PixelFormats.Rgb48) {
-                    using (var bmp = ImageUtility.BitmapFromSource(image.Image, System.Drawing.Imaging.PixelFormat.Format48bppRgb)) {
-                        return Stretch(imageStatistics, bmp, image.Image.Format, factor, blackClipping);
+                } else if (image.OriginalImage.Format == PixelFormats.Rgb48) {
+                    using (var bmp = ImageUtility.BitmapFromSource(image.OriginalImage, System.Drawing.Imaging.PixelFormat.Format48bppRgb)) {
+                        return Stretch(imageStatistics, bmp, image.OriginalImage.Format, factor, blackClipping);
                     }
                 } else {
                     throw new NotSupportedException();
@@ -313,15 +313,15 @@ namespace NINA.Image.ImageAnalysis {
 
         public static Task<BitmapSource> StretchUnlinked(IDebayeredImage data, double factor, double blackClipping) {
             return Task.Run(async () => {
-                if (data.Image.Format != PixelFormats.Rgb48) {
+                if (data.OriginalImage.Format != PixelFormats.Rgb48) {
                     throw new NotSupportedException();
                 } else {
                     var asyncR = Task.Run(() => ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Red));
                     var asyncG = Task.Run(() => ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Green));
                     var asyncB = Task.Run(() => ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Blue));
                     await Task.WhenAll(asyncR, asyncG, asyncB);
-                    using (var img = ImageUtility.BitmapFromSource(data.Image, System.Drawing.Imaging.PixelFormat.Format48bppRgb)) {
-                        return StretchUnlinked(asyncR.Result, asyncG.Result, asyncB.Result, img, data.Image.Format, factor, blackClipping);
+                    using (var img = ImageUtility.BitmapFromSource(data.OriginalImage, System.Drawing.Imaging.PixelFormat.Format48bppRgb)) {
+                        return StretchUnlinked(asyncR.Result, asyncG.Result, asyncB.Result, img, data.OriginalImage.Format, factor, blackClipping);
                     }
                 }
             });

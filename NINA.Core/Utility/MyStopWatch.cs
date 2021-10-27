@@ -32,6 +32,12 @@ namespace NINA.Core.Utility {
             _stopWatch = Stopwatch.StartNew();
         }
 
+        public TimeSpan Elapsed {
+            get {
+                return _stopWatch.Elapsed;
+            }
+        }
+
         private void Log() {
             string message = string.Format("Start: {0}; Stopped: {1}; Elapsed: {2}", _startTime.ToString("dd.MM.yyyy hh:mm:ss.fff"), _stopTime.ToString("dd.MM.yyyy hh:mm:ss.fff"), _stopWatch.Elapsed);
             Debug.Print(string.Format("Method: {0}; File: {1} ", _memberName, _filePath) + message);

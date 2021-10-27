@@ -12,12 +12,13 @@
 
 #endregion "copyright"
 
+using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace NINA.Equipment.Interfaces.ViewModel {
 
-    public interface IDockableVM {
+    public interface IDockableVM : INotifyPropertyChanged {
         bool CanClose { get; set; }
         string ContentId { get; }
         ICommand HideCommand { get; }

@@ -24,20 +24,32 @@ using NINA.Core.Model;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 
 namespace NINA.Image.ImageData {
 
-    public class RenderedImage : IRenderedImage {
+    public class RenderedImage : BaseINPC, IRenderedImage {
         protected readonly IProfileService profileService;
         protected readonly IStarDetection starDetection;
         protected readonly IStarAnnotator starAnnotator;
 
         public IImageData RawImageData { get; private set; }
 
-        public BitmapSource Image { get; private set; }
+        private BitmapSource image;
+        public BitmapSource Image { 
+            get {
+                return this.image ?? OriginalImage;
+            }
+            private set {
+                this.image = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public BitmapSource OriginalImage { get; private set; }
 
         public RenderedImage(BitmapSource image, IImageData rawImageData, IProfileService profileService, IStarDetection starDetection, IStarAnnotator starAnnotator) {
-            this.Image = image;
+            this.OriginalImage = image;
             this.RawImageData = rawImageData;
             this.profileService = profileService;
             this.starDetection = starDetection;
@@ -74,22 +86,31 @@ namespace NINA.Image.ImageData {
             CancellationToken cancelToken = default,
             IProgress<ApplicationStatus> progress = default(Progress<ApplicationStatus>)) {
             var starDetectionParams = new StarDetectionParams() {
+                IsAutoFocus = false,
                 Sensitivity = sensitivity,
-                NoiseReduction = noiseReduction
+                NoiseReduction = noiseReduction,
             };
-            var starDetectionResult = await starDetection.Detect(this, this.Image.Format, starDetectionParams, progress, cancelToken);
-            var image = this.Image;
-            if (annotateImage) {
-                cancelToken.ThrowIfCancellationRequested();
-                // TODO: Apply ROI and MaxAFStars settings from the profile so measured HFRs match up with those during autofocus
-                var maxStars = profileService.ActiveProfile.ImageSettings.AnnotateUnlimitedStars ? -1 : 200;
-                image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.Image, maxStars: maxStars, token: cancelToken);
+            if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1) {
+                starDetectionParams.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
+                starDetectionParams.UseROI = true;
+            }
+            if (profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio < 1) {
+                starDetectionParams.OuterCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio;
+                starDetectionParams.UseROI = true;
+            }
+            if (profileService.ActiveProfile.FocuserSettings.AutoFocusUseBrightestStars > 0) {
+                starDetectionParams.NumberOfAFStars = profileService.ActiveProfile.FocuserSettings.AutoFocusUseBrightestStars;
             }
 
-            this.RawImageData.StarDetectionAnalysis.HFR = starDetectionResult.AverageHFR;
-            this.RawImageData.StarDetectionAnalysis.HFRStDev = starDetectionResult.HFRStdDev;
-            this.RawImageData.StarDetectionAnalysis.DetectedStars = starDetectionResult.DetectedStars;
-            return new RenderedImage(image, this.RawImageData, profileService, starDetection, starAnnotator);
+            var starDetectionResult = await starDetection.Detect(this, this.Image.Format, starDetectionParams, progress, cancelToken);
+            if (annotateImage && starDetectionResult != null) {
+                cancelToken.ThrowIfCancellationRequested();
+                var maxStars = profileService.ActiveProfile.ImageSettings.AnnotateUnlimitedStars ? -1 : 200;
+                this.Image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.OriginalImage, maxStars: maxStars, token: cancelToken);
+            }
+
+            starDetection.UpdateAnalysis(this.RawImageData.StarDetectionAnalysis, starDetectionParams, starDetectionResult);
+            return this;
         }
 
         public async Task<BitmapSource> GetThumbnail() {

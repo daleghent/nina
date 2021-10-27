@@ -16,6 +16,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -373,6 +374,23 @@
                     <TextBlock Margin="5,0,0,0" Text="|" />
                     <TextBlock Margin="5,0,0,0" Text="{Binding TrendlineFitting.RightTrend.RSquared, StringFormat=\{0:0.00\}}" />
                 </StackPanel>
+            </UniformGrid>
+            <UniformGrid VerticalAlignment="Center" Columns="2" Visibility="{Binding DurationSeconds, Converter={StaticResource ZeroToVisibilityConverter}}">
+                <TextBlock Text="{ns:Loc LblAutoFocusDuration}" />
+                <ninactrl:UnitTextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Unit="s">
+                    <ninactrl:UnitTextBox.Text>
+                        <Binding Mode="TwoWay" Path="DurationSeconds">
+                            <Binding.ValidationRules>
+                                <rules:GreaterThanZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ninactrl:UnitTextBox.Text>
+                </ninactrl:UnitTextBox>
             </UniformGrid>
         </StackPanel>
     </Grid>

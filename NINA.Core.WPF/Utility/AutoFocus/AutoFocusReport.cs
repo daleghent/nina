@@ -67,6 +67,9 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         [JsonProperty]
         public BacklashCompensation BacklashCompensation { get; set; }
 
+        [JsonProperty]
+        public TimeSpan Duration { get; set; }
+
         /// <summary>
         /// Generates a JSON report into %localappdata%\NINA\AutoFocus for the complete autofocus run containing all the measurements
         /// </summary>
@@ -84,7 +87,8 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             HyperbolicFitting hyperbolicFitting,
             GaussianFitting gaussianFitting,
             double temperature,
-            string filter) {
+            string filter,
+            TimeSpan duration) {
             var report = new AutoFocusReport() {
                 Filter = filter,
                 Timestamp = DateTime.Now,
@@ -127,7 +131,8 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
                     BacklashCompensationModel = profileService.ActiveProfile.FocuserSettings.BacklashCompensationModel.ToString(),
                     BacklashIN = profileService.ActiveProfile.FocuserSettings.BacklashIn,
                     BacklashOUT = profileService.ActiveProfile.FocuserSettings.BacklashOut,
-                }
+                },
+                Duration = duration
             };
 
             return report;

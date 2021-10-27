@@ -25,6 +25,8 @@ namespace NINA.Image.Interfaces {
     public interface IRenderedImage {
         IImageData RawImageData { get; }
 
+        BitmapSource OriginalImage { get; }
+
         BitmapSource Image { get; }
 
         IDebayeredImage Debayer(bool saveColorChannels = false, bool saveLumChannel = false, SensorType bayerPattern = SensorType.RGGB);

@@ -3138,6 +3138,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        internal static string LblAutoFocusDuration {
+            get {
+                return ResourceManager.GetString("LblAutoFocusDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Focus Exposure Time.
         /// </summary>
         internal static string LblAutoFocusExposureTime {

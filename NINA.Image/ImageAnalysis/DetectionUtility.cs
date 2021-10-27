@@ -42,23 +42,49 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public static bool InROI(Size imageSize, Rectangle blob, double outerCropRatio = 1.0, double innerCropRatio = 1.0) {
-            if (outerCropRatio == 1 && (blob.X + blob.Width / 2 > (1 - innerCropRatio) * imageSize.Width / 2
-                && blob.X + blob.Width / 2 < imageSize.Width * (1 - (1 - innerCropRatio) / 2)
-                && blob.Y + blob.Height / 2 > (1 - innerCropRatio) * imageSize.Height / 2
-                && blob.Y + blob.Height / 2 < imageSize.Height * (1 - (1 - innerCropRatio) / 2))) {
-                return true;
+            Rectangle outsideCropRect;
+
+            // NOTE: OuterCrop internally set to 0 if we took a subframe and want a donut shape
+            if (innerCropRatio >= 1.0 || outerCropRatio <= 0.0) {
+                outsideCropRect = new Rectangle(0, 0, imageSize.Width, imageSize.Height);
+            } else {
+                // if only inner crop is set, then it is the outer boundary. Otherwise we use the outer crop
+                var outsideCropRatio = outerCropRatio >= 1.0 ? innerCropRatio : outerCropRatio;
+                var startFactor = (1.0 - outsideCropRatio) / 2.0;
+                outsideCropRect = new Rectangle(
+                    (int)Math.Floor(imageSize.Width * startFactor), 
+                    (int)Math.Floor(imageSize.Height * startFactor), 
+                    (int)(imageSize.Width * outsideCropRatio), 
+                    (int)(imageSize.Height * outsideCropRatio));
             }
-            if (outerCropRatio < 1 && (blob.X + blob.Width / 2 < (1 - innerCropRatio) * imageSize.Width / 2
-                || blob.X + blob.Width / 2 > imageSize.Width * (1 - (1 - innerCropRatio) / 2)
-                || blob.Y + blob.Height / 2 < (1 - innerCropRatio) * imageSize.Height / 2
-                || blob.Y + blob.Height / 2 > imageSize.Height * (1 - (1 - innerCropRatio) / 2)) &&
-                (blob.X + blob.Width / 2 > (1 - outerCropRatio) * imageSize.Width / 2
-                && blob.X + blob.Width / 2 < imageSize.Width * (1 - (1 - outerCropRatio) / 2)
-                && blob.Y + blob.Height / 2 > (1 - outerCropRatio) * imageSize.Height / 2
-                && blob.Y + blob.Height / 2 < imageSize.Height * (1 - (1 - outerCropRatio) / 2))) {
-                return true;
+
+            Rectangle insideCropRect;
+            if (outerCropRatio >= 1.0) {
+                // This rectangle is used to indicate no inside cropping should be done
+                insideCropRect = new Rectangle(imageSize.Width / 2, imageSize.Height / 2, 0, 0);
+            } else {
+                var startFactor = (1.0 - innerCropRatio) / 2.0;
+                insideCropRect = new Rectangle(
+                    (int)Math.Floor(imageSize.Width * startFactor),
+                    (int)Math.Floor(imageSize.Height * startFactor),
+                    (int)(imageSize.Width * innerCropRatio),
+                    (int)(imageSize.Height * innerCropRatio));
             }
-            return false;
+            return blob.FullyInsideRect(outsideCropRect) && !blob.FullyInsideRect(insideCropRect);
+        }
+
+        public static bool FullyInsideRect(this Rectangle lhs, Rectangle rhs) {
+            // Top left of first rectangle starts outside of the other rectangle
+            var rhsRightX = rhs.X + rhs.Width;
+            var rhsBottomY = rhs.Y + rhs.Height;
+            if (lhs.X < rhs.X || lhs.Y < rhs.Y || lhs.X >= rhsRightX || lhs.Y >= rhsBottomY) {
+                return false;
+            }
+
+            // Now we know the top left corner is within the rectangle, so all we need to do is test the bottom-right corner
+            var lhsRightX = lhs.X + lhs.Width;
+            var lhsBottomY = lhs.Y + lhs.Height;
+            return lhsRightX <= rhsRightX && lhsBottomY <= rhsBottomY;
         }
     }
 }

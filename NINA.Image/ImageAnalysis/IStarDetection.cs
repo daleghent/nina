@@ -14,15 +14,17 @@ namespace NINA.Image.ImageAnalysis {
 
         Task<StarDetectionResult> Detect(IRenderedImage image, System.Windows.Media.PixelFormat pf, StarDetectionParams p, IProgress<ApplicationStatus> progress, CancellationToken token);
         IStarDetectionAnalysis CreateAnalysis();
+        void UpdateAnalysis(IStarDetectionAnalysis analysis, StarDetectionParams p, StarDetectionResult result);
     }
 
     public class StarDetectionParams {
         public StarSensitivityEnum Sensitivity { get; set; }
         public NoiseReductionEnum NoiseReduction { get; set; }
-        public bool UseROI { get; set; }
-        public double InnerCropRatio { get; set; }
-        public double OuterCropRatio { get; set; }
-        public int NumberOfAFStars { get; set; }
+        public bool IsAutoFocus { get; set; }
+        public bool UseROI { get; set; } = false;
+        public double InnerCropRatio { get; set; } = 1.0d;
+        public double OuterCropRatio { get; set; } = 1.0d;
+        public int NumberOfAFStars { get; set; } = 0;
         public List<Accord.Point> MatchStarPositions { get; set; } = new List<Accord.Point>();
     }
 
