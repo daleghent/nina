@@ -561,7 +561,7 @@ namespace NINA.ViewModel {
             }
             set {
                 NINA.Properties.Settings.Default.ApplicationFontFamily = value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
 
                 FamilyTypeface = value.FamilyTypefaces.FirstOrDefault(x => (x.AdjustedFaceNames.First().Value == "Regular") || (x.AdjustedFaceNames.First().Value == "Normal")) ?? value.FamilyTypefaces.FirstOrDefault();
                 FontStretch = FamilyTypeface.Stretch;
@@ -594,7 +594,7 @@ namespace NINA.ViewModel {
             }
             set {
                 NINA.Properties.Settings.Default.FontStretch = value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 RaisePropertyChanged();
             }
         }
@@ -605,7 +605,7 @@ namespace NINA.ViewModel {
             }
             set {
                 NINA.Properties.Settings.Default.FontStyle = value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 RaisePropertyChanged();
             }
         }
@@ -616,7 +616,7 @@ namespace NINA.ViewModel {
             }
             set {
                 NINA.Properties.Settings.Default.FontWeight = value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 RaisePropertyChanged();
             }
         }
@@ -706,7 +706,7 @@ namespace NINA.ViewModel {
             }
             set {
                 NINA.Properties.Settings.Default.AutoUpdateSource = (int)value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 versionCheckVM.CheckUpdate();
                 RaisePropertyChanged();
             }
@@ -718,7 +718,7 @@ namespace NINA.ViewModel {
             }
             set {
                 NINA.Properties.Settings.Default.UseSavedProfileSelection = value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 RaisePropertyChanged();
             }
         }
@@ -727,7 +727,7 @@ namespace NINA.ViewModel {
             get => NINA.Properties.Settings.Default.SGPServerEnabled;
             set {
                 NINA.Properties.Settings.Default.SGPServerEnabled = value;
-                NINA.Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 ToggleSGPService();
                 RaisePropertyChanged();
             }

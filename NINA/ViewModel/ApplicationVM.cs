@@ -184,7 +184,7 @@ namespace NINA.ViewModel {
             } catch (Exception) { }
             try {
                 Logger.Debug("Saving user.settings");
-                Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
             } catch (Exception) { }
 
             try {

@@ -14,9 +14,11 @@
 
 using NINA.Core.Model;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -248,6 +250,15 @@ namespace NINA.Core.Utility {
             dialog.FileName = filename;
             dialog.Filter = filter;
             return dialog;
+        }
+
+        public static void SaveSettings(ApplicationSettingsBase settings, [CallerMemberName] string memberName = "") {
+            try {
+                settings.Save();
+            } catch (Exception ex) {
+                Logger.Error($"Settings failed to save from {memberName}", ex);
+                settings.Reload();
+            }
         }
     }
 }

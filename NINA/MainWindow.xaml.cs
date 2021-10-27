@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Microsoft.Win32;
+using NINA.Core.Utility;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -81,7 +82,7 @@ namespace NINA {
         private void ThisWindow_StateChanged(object sender, EventArgs e) {
             if (sizeInitialized) {
                 Properties.Settings.Default.WindowState = this.WindowState;
-                Properties.Settings.Default.Save();
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
             }
         }
     }

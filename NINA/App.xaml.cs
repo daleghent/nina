@@ -69,7 +69,7 @@ namespace NINA {
                 if (NINA.Properties.Settings.Default.UpdateSettings) {
                     NINA.Properties.Settings.Default.Upgrade();
                     NINA.Properties.Settings.Default.UpdateSettings = false;
-                    NINA.Properties.Settings.Default.Save();
+                    CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                 }
             } catch (ConfigurationErrorsException configException) {
                 try {

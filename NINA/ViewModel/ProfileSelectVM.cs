@@ -130,7 +130,7 @@ namespace NINA.ViewModel {
                         } else {
                             if (UseSavedProfile == true) {
                                 Properties.Settings.Default.UseSavedProfileSelection = true;
-                                Properties.Settings.Default.Save();
+                                CoreUtil.SaveSettings(Properties.Settings.Default);
                             }
                         }
                     };
