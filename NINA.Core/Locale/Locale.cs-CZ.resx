@@ -246,9 +246,6 @@ Má se aplikace pokusit zotavit z chyby? (Může vést k neočekávanému chová
   <data name="LblAscending" xml:space="preserve">
     <value>Vzestupně</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>V ovladači ASCOM došlo k chybě interoperability. Pravděpodobně kvůli nekompatibilitě mezi ovladačem, který je nainstalovaný jako {0}, a N.I.N.A. je {1}. Nainstalujte ovladač jako {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Při načítání obrazových dat z kamery došlo k chybě!</value>
   </data>
@@ -3690,7 +3687,7 @@ Standard Auto používá standard, který může poskytnout ovladač kamery. To 
     <value>Nelze otevřít sériový port {0}: {1}</value>
   </data>
   <data name="LblPointingTolerance" xml:space="preserve">
-    <value>Tolerance při Pointaci</value>
+    <value>Tolerance Cíle</value>
   </data>
   <data name="LblAutoFocusAfterFlip" xml:space="preserve">
     <value>AutoOstření po překlopení Poledníku</value>

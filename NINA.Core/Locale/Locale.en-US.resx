@@ -246,9 +246,6 @@ Should the application try to recover from the error? (Can lead to unexpected be
   <data name="LblAscending" xml:space="preserve">
     <value>Ascending</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>An ASCOM driver interop exception occurred. This is most likely caused by a mismatch between the driver being installed as {0} and N.I.N.A. being {1}. Please install the driver as {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Error retrieving image data from camera!</value>
   </data>

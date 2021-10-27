@@ -245,9 +245,6 @@
   <data name="LblAscending" xml:space="preserve">
     <value>上昇</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>ASCOMドライバーが相互運用の例外に直面しました。恐らく{0}としてインストールされているドライバーと{1}のN.I.N.Aとの間のミスマッチが原因と思われます。ドライバーを{1}としてインストールして下さい。</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>カメラから画像データを取得中にエラーが発生しました。</value>
   </data>

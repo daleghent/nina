@@ -246,9 +246,6 @@
   <data name="LblAscending" xml:space="preserve">
     <value>升序</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>发生 ASCOM 驱动程序操作异常。这很可能是由于当前安装的驱动程序为 {0} ，与 {1} 的 N.I.N.A. 不匹配。请将驱动程序安装为 {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>从相机下载图像数据时出错！</value>
   </data>
@@ -313,7 +310,7 @@
     <value>当没有滤镜曝光时间设置或设置为0时，自动对焦采用的曝光时间</value>
   </data>
   <data name="LblAutoFocusFilter" xml:space="preserve">
-    <value>滤镜自动对焦</value>
+    <value>自动对焦滤镜</value>
   </data>
   <data name="LblAutoFocusGearNotConnected" xml:space="preserve">
     <value>无法启动自动对焦。相机或电调未连接！</value>
@@ -323,26 +320,26 @@
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
     <value>如果设置为小于 1 的值，自动对焦期间的星点检测将仅使用
-整个传感器中心的一个子区域（如果相机支持）。
-如果相机不支持，在星点检测时边缘附近的星点将被忽略。
-如果与小于1的外部裁剪比例结合使用，图像的矩形区域（在内部矩形和外部矩形之间）
-将用于自动对焦。</value>
+整个传感器中心的一个子区域（如果相机支持）。如果相机
+不支持，在星点侦测时图像边缘附近的星点将被忽略。
+如果与小于1的外部裁剪比例结合使用，位于一个矩形框内
+（在内部矩形和外部矩形之间）的图像将用于自动对焦。</value>
   </data>
   <data name="LblAutoFocusMethod" xml:space="preserve">
     <value>自动对焦方式</value>
   </data>
   <data name="LblAutoFocusMethodTooltip" xml:space="preserve">
-    <value>当星点 HFR 选定后，NINA 将在视场中检测星点，
-通过数个对焦点计算他们的 HFR 并找到最小的 HFR。
-反差对焦模式是通过图像算法来估测多个对焦点的
-对比度以找到最高的对比度。这种方法主要被用于
-地面目标或者太阳系内的目标，有时对噪点敏感。</value>
+    <value>如果选择 HFR 模式，NINA 将在视场中检测星点，在数个对焦点处
+计算它们的 HFR，并找到 HFR 最小的位置。
+反差对焦模式通过图像处理算法来估测各个对焦点的图像对比度，
+以找到对比度最高的位置。这种方法主要用于地面目标或者太阳系
+内的目标，有时会受噪点影响。</value>
   </data>
   <data name="LblAutoFocusNewWorseThanOriginal" xml:space="preserve">
     <value>新焦点的HFR {0} 比原来的HFR {1} 差很多</value>
   </data>
   <data name="LblAutoFocusNotEnoughtSpreadedPoints" xml:space="preserve">
-    <value>采集的 HFR 差异不足。电调步长设置太小或没有聚焦。</value>
+    <value>HFR 差异不足以确定焦点。电调步长设置太小或离焦点太远。</value>
   </data>
   <data name="LblAutoFocusNrOfExposures" xml:space="preserve">
     <value>张数</value>
@@ -357,7 +354,7 @@
     <value>对焦点拍摄张数</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPointTooltip" xml:space="preserve">
-    <value>每个自动对焦拍摄的张数。如果大于一张，将对一个焦点的多张 HFR 取平均值。</value>
+    <value>每个对焦点拍摄的张数。如果大于 1，将在一个对焦点处拍摄多张照片，并将多张照片的 HFR 取平均值来计算该对焦点的 HFR</value>
   </data>
   <data name="LblAutoFocusOnFilterChange" xml:space="preserve">
     <value>更换滤镜时</value>
@@ -999,14 +996,14 @@
     <value>暗平场拍摄张数</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
-    <value>极轴漂移法移动</value>
+    <value>Robert Vice 极轴漂移法</value>
   </data>
   <data name="LblDARVSlewButtonTooltip" xml:space="preserve">
-    <value>这将在赤道仪缓慢移动中进行一次曝光
-当线条没有对齐时，会出现一些极轴对齐错误。</value>
+    <value>将进行一次曝光，望远镜在此期间缓慢移动
+若图上线条没有重合，表明极轴校准仍有误差</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
-    <value>指定极轴漂移法程序的持续时间。望远镜将用一半时间在赤经轴上沿一个方向移动，剩余时间反向移动。如果没有极轴校准误差，星点轨迹将显示为一条直线。否则将会是 V 字形。要测量方位角误差，镜筒要指向中天附近，高度角误差则是向东或向西。</value>
+    <value>指定极轴漂移法程序的持续时间。望远镜将用一半时间在赤经轴上沿一个方向移动，剩余时间反向移动。如果没有极轴校准误差，星点轨迹将显示为一条直线。否则将会是 V 字形。要测量方位角误差，镜筒要指向中天附近，测量高度角误差则是向东或向西。</value>
   </data>
   <data name="LblDataProvidedBy" xml:space="preserve">
     <value>深空天体数据来自:</value>
@@ -1018,7 +1015,7 @@
     <value>日期格式 YYYY-MM-DD</value>
   </data>
   <data name="LblDateFormatDescription2" xml:space="preserve">
-    <value>中午 12 时变更日期 YYYY-MM-DD</value>
+    <value>当前日期减去12小时，格式 YYYY-MM-DD</value>
   </data>
   <data name="LblDateTimeFormatDescription" xml:space="preserve">
     <value>日期格式 YYYY-MM-DD_HH-mm-ss</value>
@@ -1069,10 +1066,10 @@
     <value>默认曝光时间</value>
   </data>
   <data name="LblDefaultSequenceFolder" xml:space="preserve">
-    <value>序列文件默认保存目录</value>
+    <value>序列文件默认保存文件夹</value>
   </data>
   <data name="LblDefaultSequenceFolderTooltip" xml:space="preserve">
-    <value>默认加载序列和保存序列的文件夹</value>
+    <value>默认加载和保存序列的文件夹</value>
   </data>
   <data name="LblDegree" xml:space="preserve">
     <value>度</value>
@@ -1081,7 +1078,7 @@
     <value>°</value>
   </data>
   <data name="LblDeleteProfileInUseWarning" xml:space="preserve">
-    <value>无法删除个人资料。 它正被另一个 N.I.N.A 实例使用。</value>
+    <value>无法删除配置文件。 它正被另一个 N.I.N.A 实例使用。</value>
   </data>
   <data name="LblDescending" xml:space="preserve">
     <value>降序</value>
@@ -1240,7 +1237,7 @@
     <value>圆顶无法设置天窗</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>无法为圆顶设置方位角</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>圆顶无法同步方位角</value>
@@ -1306,7 +1303,7 @@
     <value>关闭平场设备（镜头盖）</value>
   </data>
   <data name="LblEndOfSequenceDecision" xml:space="preserve">
-    <value>确定停止运行本序列？</value>
+    <value>运行序列结束选项？</value>
   </data>
   <data name="LblEndOfSequenceOptions" xml:space="preserve">
     <value>序列结束选项</value>
@@ -1480,7 +1477,7 @@
     <value>运行中</value>
   </data>
   <data name="LblFlatDeviceNoDevice" xml:space="preserve">
-    <value>无平场板</value>
+    <value>没有平场板</value>
   </data>
   <data name="LblFlatDeviceOpen" xml:space="preserve">
     <value>打开</value>
@@ -1618,7 +1615,7 @@
     <value>稳定时间</value>
   </data>
   <data name="LblFocuserSettleTimeTooltip" xml:space="preserve">
-    <value>如果因为电调的移动导致焦点偏移，请在此处以秒为单位设置稳定时间。</value>
+    <value>如果电调移动会导致图像偏移，请在此处设置稳定时间，以秒为单位。</value>
   </data>
   <data name="LblFocuserTempDescription" xml:space="preserve">
     <value>电调温度</value>
@@ -1645,7 +1642,7 @@
     <value>帧数 &amp; 对焦</value>
   </data>
   <data name="LblFrameNrDescription" xml:space="preserve">
-    <value>此格式的第N张 ####</value>
+    <value>第 # 张，#### 格式</value>
   </data>
   <data name="LblFraming" xml:space="preserve">
     <value>构图助手</value>
@@ -1654,7 +1651,7 @@
     <value>构图助手</value>
   </data>
   <data name="LblFreeImage" xml:space="preserve">
-    <value>自由拍摄</value>
+    <value>FreeImage</value>
   </data>
   <data name="LblFrom" xml:space="preserve">
     <value>从</value>
@@ -1738,7 +1735,7 @@
     <value>所有的</value>
   </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
-    <value>计算图像的 HFR（必须启用HFR检测）</value>
+    <value>计算出的图像 HFR（必须启用HFR检测）</value>
   </data>
   <data name="LblHigh" xml:space="preserve">
     <value>高</value>
@@ -1813,7 +1810,7 @@
     <value>亮场，平场，暗场，偏置场，快照</value>
   </data>
   <data name="LblImaging" xml:space="preserve">
-    <value>拍摄</value>
+    <value>主控台</value>
   </data>
   <data name="LblImportFromFilterWheel" xml:space="preserve">
     <value>从滤镜轮设置导入滤镜</value>
@@ -1882,7 +1879,7 @@
     <value>加载配置文件</value>
   </data>
   <data name="LblLoadProfileInUseWarning" xml:space="preserve">
-    <value>无法加载个人资料。它正被另一个 N.I.N.A. 使用！</value>
+    <value>无法加载配置文件。它正被另一个 N.I.N.A. 使用！</value>
   </data>
   <data name="LblLoadSequence" xml:space="preserve">
     <value>加载序列</value>
@@ -2319,7 +2316,7 @@
     <value>已暂停</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>中天前暂停</value>
+    <value>中天前暂停时间</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>Pegasus平场板</value>
@@ -2453,7 +2450,7 @@
     <value>解析极轴校正</value>
   </data>
   <data name="LblPlateSolveEnding" xml:space="preserve">
-    <value>已尝试最大解析次数，或需要中天翻转。</value>
+    <value>已达到最大尝试解析次数，可能需要中天翻转。</value>
   </data>
   <data name="LblPlatesolveFailed" xml:space="preserve">
     <value>解析失败</value>
@@ -2462,7 +2459,7 @@
     <value>解析失败间隔</value>
   </data>
   <data name="LblPlateSolveFailedDelayTooltip" xml:space="preserve">
-    <value>两次解析失败的尝试间隔（分钟）</value>
+    <value>解析失败后再次尝试的间隔（分钟）</value>
   </data>
   <data name="LblPlateSolveImage" xml:space="preserve">
     <value>解析当前图像</value>
@@ -2480,13 +2477,13 @@
     <value>解析中止。望远镜的有效焦距必须在 选项 &gt; 设备 中设置</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceRepeating" xml:space="preserve">
-    <value>望远镜不在容许范围内。重复...</value>
+    <value>望远镜指向不在容许范围内。重复...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceReslew" xml:space="preserve">
-    <value>望远镜不在容许范围内。重新回转至目标...</value>
+    <value>望远镜指向不在容许范围内。重新回转至目标...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceSyncing" xml:space="preserve">
-    <value>望远镜不在容许范围内。同步中...</value>
+    <value>望远镜指向不在容许范围内。同步中...</value>
   </data>
   <data name="LblPlatesolveProvidedBy" xml:space="preserve">
     <value>解析服务提供：</value>
@@ -2507,7 +2504,7 @@
     <value>偏移过多后重新居中</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>没有设置目标</value>
+    <value>没有目标组</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>请更换滤镜 {0}</value>
@@ -2606,7 +2603,7 @@
     <value>模式</value>
   </data>
   <data name="LblReadoutModeTooltip" xml:space="preserve">
-    <value>与摄像头读取模式相对应的数字值</value>
+    <value>与摄像头读出模式相对应的数字值</value>
   </data>
   <data name="LblReadoutForNormalImages" xml:space="preserve">
     <value>序列的读出模式</value>
@@ -2615,16 +2612,16 @@
     <value>相机的这种读出模式将用于序列中的亮场，偏置，暗场，平场和暗平场。</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
-    <value>快照的读取模式</value>
+    <value>快照的读出模式</value>
   </data>
   <data name="LblReadoutForSnapImagesToolTip" xml:space="preserve">
-    <value>相机的这种读数模式将用于解析，取景和自动对焦</value>
+    <value>相机的这种读出模式将用于解析，取景和自动对焦</value>
   </data>
   <data name="LblRecenter" xml:space="preserve">
     <value>重新居中</value>
   </data>
   <data name="LblRecenterAfterFlip" xml:space="preserve">
-    <value>翻转后重新居中</value>
+    <value>中天翻转后重新居中</value>
   </data>
   <data name="LblRecenterImage" xml:space="preserve">
     <value>重新居中图像</value>
@@ -2654,7 +2651,7 @@
     <value>区域</value>
   </data>
   <data name="LblRelease" xml:space="preserve">
-    <value>正式</value>
+    <value>正式版</value>
   </data>
   <data name="LblRemaining" xml:space="preserve">
     <value>剩余</value>
@@ -2663,7 +2660,7 @@
     <value>剩余数</value>
   </data>
   <data name="LblRemoveProfileCaption" xml:space="preserve">
-    <value>删除配置文件</value>
+    <value>删除配置文件？</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
     <value>名称为: {0} ， ID为: {1} 的PHD2配置文件是否应该删除？</value>
@@ -2756,7 +2753,7 @@
     <value>保存目标设置</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>翻转后稳定时间</value>
+    <value>中天翻转后稳定时间</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>搜索</value>
@@ -2804,10 +2801,10 @@
     <value>序列完成后运行命令</value>
   </data>
   <data name="LblSequenceCommandAtCompletionTooltip" xml:space="preserve">
-    <value>选择在序列完成后运行的命令。</value>
+    <value>选择在序列完成后运行的命令</value>
   </data>
   <data name="LblSequenceCommandAtCompletionNotFound" xml:space="preserve">
-    <value>序列结束命令未找到 '{0}'</value>
+    <value>序列结束命令 '{0}' 未找到</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
     <value>延迟开始</value>
@@ -2853,10 +2850,10 @@
     <value>设置新值</value>
   </data>
   <data name="LblSetPark" xml:space="preserve">
-    <value>设置赤道仪停放</value>
+    <value>设置为停放</value>
   </data>
   <data name="LblSetParkToolTip" xml:space="preserve">
-    <value>设置当前位置为赤道仪停放位置</value>
+    <value>设置当前位置为停放位置</value>
   </data>
   <data name="LblSettings" xml:space="preserve">
     <value>设置</value>
@@ -2946,7 +2943,7 @@
     <value>指向到目标已启用，但望远镜没有连接</value>
   </data>
   <data name="LblSlewRateDegSec" xml:space="preserve">
-    <value>指向速率(度每秒)</value>
+    <value>移动速率(度/秒)</value>
   </data>
   <data name="LblSlewToTarget" xml:space="preserve">
     <value>指向到目标</value>
@@ -3367,7 +3364,7 @@
     <value>无法启动相机曝光</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>无法同步。赤道仪没有连接</value>
+    <value>无法同步。望远镜没有连接</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>发生未知错误</value>
@@ -3490,7 +3487,7 @@
     <value>USB 限制</value>
   </data>
   <data name="LblUseBlindSolveFailover" xml:space="preserve">
-    <value>解析失败。将尝试进行盲解析</value>
+    <value>解析失败。尝试进行盲解析?</value>
   </data>
   <data name="LblUseBlindSolveNoCoordinatesRollover" xml:space="preserve">
     <value>没有可用的参考坐标。要使用盲解析吗?</value>
@@ -3529,7 +3526,7 @@
     <value>相机设置为在序列结束时升温，但它无法这样做</value>
   </data>
   <data name="LblWarming" xml:space="preserve">
-    <value>升温</value>
+    <value>升温中...</value>
   </data>
   <data name="LblWarning" xml:space="preserve">
     <value>警告</value>
@@ -3607,7 +3604,7 @@
     <value>Y轴单位</value>
   </data>
   <data name="LblYes" xml:space="preserve">
-    <value>是的</value>
+    <value>是</value>
   </data>
   <data name="LblZoomIn" xml:space="preserve">
     <value>放大25%</value>
@@ -3680,7 +3677,7 @@
     <value>正在运行序列结束选项...</value>
   </data>
   <data name="LblSQMPatternDescription" xml:space="preserve">
-    <value>SQM（天空质量）读取...</value>
+    <value>SQM（天空质量）</value>
   </data>
   <data name="LblReadoutModePatternDescription" xml:space="preserve">
     <value>相机读出模式</value>
@@ -3692,7 +3689,7 @@
     <value>指向容错范围</value>
   </data>
   <data name="LblAutoFocusAfterFlip" xml:space="preserve">
-    <value>翻转后自动对焦</value>
+    <value>中天翻转后自动对焦</value>
   </data>
   <data name="LblExposureFinished" xml:space="preserve">
     <value>曝光完成</value>
@@ -3769,7 +3766,7 @@
     <value>序列中的部分项目使用了不兼容的增益设置。这些项目将被忽略！</value>
   </data>
   <data name="LblIncompatibleOffsetsInSequence" xml:space="preserve">
-    <value>序列中的部分项目使用了不兼容的偏置设置。这些项目将被忽略！</value>
+    <value>序列中的部分项目使用了不兼容的偏移设置。这些项目将被忽略！</value>
   </data>
   <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
     <value>添加合并像素模式</value>
@@ -3793,7 +3790,7 @@
     <value>相机无法达到指定的温度！</value>
   </data>
   <data name="LblWaitingToTurnCoolerOff" xml:space="preserve">
-    <value>相机正在等待关闭制冷器</value>
+    <value>相机正在等待关闭制冷</value>
   </data>
   <data name="LblWarmCamBtnTooltip" xml:space="preserve">
     <value>加热相机使其回到环境温度，并关闭制冷。
@@ -3877,7 +3874,7 @@
     <value>同步</value>
   </data>
   <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
-    <value>使圆顶方位角同步到由望远镜指向和圆顶参数算出的值</value>
+    <value>将圆顶方位角与望远镜方向同步</value>
   </data>
   <data name="LblDomeStopTooltip" xml:space="preserve">
     <value>停止所有圆顶天窗、转向器的移动</value>
@@ -3940,7 +3937,7 @@
     <value>望远镜位置 东/西</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>测量支架中心到圆顶中心的东西偏移量(mm)。东方为正。</value>
+    <value>测量从圆顶中心到安装轴中心(见 +上/-下)的东西偏移量(毫米)。向东为正。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>望远镜位置 北/南</value>
@@ -3955,7 +3952,7 @@
     <value>取消序列</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>测量从圆顶中心到安装座中心的南北偏移量(毫米)。向北为正。</value>
+    <value>测量从圆顶中心到安装轴中心(见 +上/-下)的南北偏移量(毫米)。向北为正。</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>暂停序列</value>
@@ -3964,7 +3961,7 @@
     <value>望远镜位置 +上/-下</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
-    <value>测量安装轴中心相对于圆顶底座的高度差(单位：mm)。对于经纬仪/赤道仪，这是从高度轴的中心开始的，对于赤道仪，这是赤经和赤纬轴相交的地方。正数表示轴中心高于圆顶底部，负数表示轴中心低于圆顶。</value>
+    <value>测量安装轴中心相对于圆顶基点的高度差(单位：毫米)。对于经纬仪，安装轴中心为俯仰轴的中心；对于赤道仪，安装轴中心是赤经轴和赤纬轴的交点。正数表示轴中心高于圆顶基点，负数表示轴中心较低。</value>
   </data>
   <data name="LblDomeSettings" xml:space="preserve">
     <value>圆顶设置</value>
@@ -4003,13 +4000,13 @@
     <value>默认增益</value>
   </data>
   <data name="LblDefaultOffset" xml:space="preserve">
-    <value>默认偏置</value>
+    <value>默认偏移</value>
   </data>
   <data name="LblDefaultGainTooltip" xml:space="preserve">
     <value>此数值将在没有特别指定增益的情况下被使用</value>
   </data>
   <data name="LblDefaultOffsetTooltip" xml:space="preserve">
-    <value>此数值将在没有特别指定偏置的情况下被使用</value>
+    <value>此数值将在没有特别指定偏移的情况下被使用</value>
   </data>
   <data name="LbLUsbLimitDescription" xml:space="preserve">
     <value>相机 USB 速度限制设置</value>
@@ -4093,7 +4090,7 @@
     <value>序列结束时停放圆顶</value>
   </data>
   <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
-    <value>允许在望远镜指向的同时同步</value>
+    <value>允许在望远镜快速转向时同步</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>当圆顶跟随启用时，NINA会经常检查圆顶是否需要旋转以与望远镜对齐。当使用外部应用程序，如虚拟天文馆或手柄等移动望远镜时，等待直到望远镜停止移动后再旋转圆顶可能会有帮助。</value>
@@ -4276,16 +4273,16 @@
     <value>HFR趋势</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
-    <value>触发序列循环指定次数的条件</value>
+    <value>使序列循环指定次数</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
-    <value>用于迭代的循环</value>
+    <value>循环指定次数</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
-    <value>指定一个条件，否则达到指定时间后停止当前指令集</value>
+    <value>循环到指定时刻，然后跳过该组内的其余指令。</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
-    <value>到某时间前循环</value>
+    <value>循环到某时刻</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
     <value>它的工作原理类似于一个顺序指令集，但可以在内部指定一个深空对象，它将在必要时用坐标和旋转角度来自动填充其中的所有指令。</value>
@@ -4306,10 +4303,10 @@
     <value>顺序指令集</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
-    <value>执行自动对焦</value>
+    <value>运行一次自动对焦</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
-    <value>开始自动对焦</value>
+    <value>自动对焦</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
     <value>在指定时间内冷却相机到指定温度</value>
@@ -4330,7 +4327,7 @@
     <value>设置读出模式</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_InvalidReadoutMode" xml:space="preserve">
-    <value>摄像头不支此持读取模式。必须是 0 和 {0} 之间的值</value>
+    <value>摄像头不支此持读出模式。必须是 0 和 {0} 之间的值</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
     <value>转动到指定滤镜</value>
@@ -4345,16 +4342,16 @@
     <value>关闭平场镜头盖</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
-    <value>将调焦器移动到指定位置</value>
+    <value>移动电调到指定位置</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
-    <value>移动电调焦到指定的相对位置</value>
+    <value>移动电调到指定的相对位置</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
-    <value>移动对焦器</value>
+    <value>移动电调</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
-    <value>相对移动电调焦</value>
+    <value>相对移动电调</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>向导星发送抖动信号</value>
@@ -4387,7 +4384,7 @@
     <value>指向，居中并旋转</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>通过解析，将望远镜指向目标并居中到指定的坐标</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>指向并居中</value>
@@ -4399,16 +4396,16 @@
     <value>停放望远镜</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
-    <value>将望远镜指向到给定的高度和方位坐标</value>
+    <value>将望远镜指向到给定的高度角和方位角</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
-    <value>旋转至高度角/方位角</value>
+    <value>指向高度角/方位角</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
-    <value>将望远镜指向到给定的赤经和赤纬坐标</value>
+    <value>将望远镜指向到给定的赤经和赤纬</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
-    <value>旋转到赤经/赤纬</value>
+    <value>指向赤经/赤纬</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
     <value>解除停放望远镜</value>
@@ -4420,16 +4417,16 @@
     <value>设置跟踪</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
-    <value>设置安装座的跟踪模式</value>
+    <value>设置望远镜的跟踪模式</value>
   </data>
   <data name="LblTrackingModeNotSupported" xml:space="preserve">
     <value>安装座不支持此跟踪模式</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
-    <value>向序列添加标注项</value>
+    <value>向序列添加批注项</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
-    <value>标注</value>
+    <value>批注</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
     <value>调用指定路径的外部脚本</value>
@@ -4444,22 +4441,22 @@
     <value>消息框</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
-    <value>待机，直到拍摄坐标达到指定高度</value>
+    <value>等待目标达到指定高度</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
     <value>等待到达高度</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
-    <value>待机给定的持续时间（秒）</value>
+    <value>等待一段给定的时间（秒）</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
     <value>等待时间</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
-    <value>待机到hh:mm:ss格式的时间。另外，可以使用辅助工具自动设置日落、黄昏、晨光和日出的时间</value>
+    <value>等待到指定时刻，格式为hh:mm:ss。另外，可以使用下拉选框自动设置为日落、黄昏、晨光、日出等的时刻</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
-    <value>等待到达时间</value>
+    <value>等待到达时刻</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
     <value>偏移后居中</value>
@@ -4471,19 +4468,19 @@
     <value>自上次自动对焦运行或序列拍摄开始后，当HFR增加给定量（以百分比表示）后，启动自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
-    <value>HFR增加</value>
+    <value>HFR增加后自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
     <value>自上次自动对焦运行或序列拍摄开始后，当温度加给定量（以度表示）后，启动自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
-    <value>温度变化</value>
+    <value>温度变化后自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
-    <value>自上次自动对焦运行或序列拍摄开始后，当达到给定时间（以分钟表示）后，启动自动对焦</value>
+    <value>自上次自动对焦运行或序列拍摄开始后，当经过给定时间（以分钟表示）后，启动自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
-    <value>特定时间</value>
+    <value>特定时间后自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Description" xml:space="preserve">
     <value>满足条件时启动中天翻转（触发器）</value>
@@ -4531,7 +4528,7 @@
     <value>工具</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
-    <value>在制定数量的曝光次数之后向导星发送抖动命令</value>
+    <value>在指定数量的曝光次数之后向导星发送抖动命令</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>曝光之后抖动</value>
@@ -4543,10 +4540,10 @@
     <value>恢复导星</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>曝光后计算</value>
+    <value>曝光 # 次后估计</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
-    <value>曝光后</value>
+    <value>曝光 # 次后</value>
   </data>
   <data name="LblDragOver_BottomText" xml:space="preserve">
     <value>在下方插入器材</value>
@@ -4594,25 +4591,25 @@
     <value>模板 '{0}' 将被删除。你想要删除现有模板吗？此操作是不可逆的。</value>
   </data>
   <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
-    <value>删除物品</value>
+    <value>删除项目</value>
   </data>
   <data name="LblAddTargetToSequence" xml:space="preserve">
     <value>将目标添加到序列</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
-    <value>检测到滤镜切换之后执行自动对焦</value>
+    <value>检测到滤镜切换之后启动自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
-    <value>切换滤镜后</value>
+    <value>切换滤镜后自动对焦</value>
   </data>
   <data name="LblLastFilter" xml:space="preserve">
     <value>上一个滤镜</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
-    <value>达到指定的曝光的次数之后触发自动对焦</value>
+    <value>达到指定的曝光次数后触发自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
-    <value>拍摄#张数后</value>
+    <value>拍摄 # 张后</value>
   </data>
   <data name="LblUnreachableAltitude" xml:space="preserve">
     <value>永远不会达到高度</value>
@@ -4624,13 +4621,13 @@
     <value>为一组目标建立序列计划</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
-    <value>根据指定的数量、时间、增益和偏移进行曝光，在曝光间隔评估触发器和状态</value>
+    <value>根据指定的张数、时长、增益和偏移进行曝光，在曝光间隔评估触发器和循环条件</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
     <value>多次曝光</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
-    <value>根据指定的数量、时间、增益、偏移和抖动设置进行曝光，在曝光间隔评估触发器和状态</value>
+    <value>根据指定的张数、时长、增益、偏移和抖动设置进行曝光，在曝光间隔评估触发器和循环条件</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
     <value>智能曝光</value>
@@ -4700,7 +4697,7 @@
     <value>未选择开关！</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
-    <value>在指定的曝光次数抖动。值为0将禁用此条目的抖动。</value>
+    <value>在指定的曝光次数后抖动。值为0将禁用此条目的抖动。</value>
   </data>
   <data name="LblInstructionSet" xml:space="preserve">
     <value>指令集</value>
@@ -4739,7 +4736,7 @@
     <value>重置当前指令集的状态和进度以及所有内部指令。</value>
   </data>
   <data name="Lbl_SequenceItem_Delete_Tooltip" xml:space="preserve">
-    <value>从指令集中删除当前指令。</value>
+    <value>从指令集中删除当前指令</value>
   </data>
   <data name="Lbl_SequenceItem_MoveDown_Tooltip" xml:space="preserve">
     <value>将指令向下移动一个位置。
@@ -4752,7 +4749,7 @@
 如果上面的位置是当前未扩展的指令集，它将被移动到指令集之上。</value>
   </data>
   <data name="Lbl_SequenceItem_Reset_Tooltip" xml:space="preserve">
-    <value>重置当前指令的状态和进度。</value>
+    <value>重置当前指令的状态和进度</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Progress" xml:space="preserve">
     <value>等待目标达到指定高度。 {0}° / {1}°</value>
@@ -4788,19 +4785,19 @@
     <value>打开目标组</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>简单序列生成器</value>
+    <value>简单序列器</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>最后目标结束后选项</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>序列生成器模板</value>
+    <value>简单序列器模板</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>导入目标</value>
   </data>
   <data name="Lbl_Sequencer_Title" xml:space="preserve">
-    <value>高级序列器</value>
+    <value>序列器</value>
   </data>
   <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
     <value>相机</value>
@@ -4924,7 +4921,7 @@
     <value>时间间隔</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
-    <value>在制定时间内循环指令。当时间结束时，该组内的其余指令将会被跳过。</value>
+    <value>在一段指定时间内循环指令。当时间结束时，该组内的其余指令将会被跳过。</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>以时间循环</value>
@@ -4979,7 +4976,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <comment>The slope of a line</comment>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
-    <value>这将使用斜率和截距进行计算，通过温度来决定调焦器位置。
+    <value>这将使用斜率和截距进行计算，通过温度来决定电调位置。
 示例：
   - 斜率=2
   - 截距= 1000
@@ -4987,10 +4984,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     =&gt; 位置 = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>根据温度移动调焦器</value>
+    <value>根据温度移动电调</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
-    <value>调焦器没有显示任何有效温度</value>
+    <value>电调没有提供有效温度</value>
   </data>
   <data name="LblServerEnabled" xml:space="preserve">
     <value>服务器已启用</value>
@@ -5043,7 +5040,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvancedTooltip" xml:space="preserve">
     <value>切换到高级序列规划模式。
-可以从零开始使用细分的指令、触发器和条件对序列进行规划。</value>
+可以从零开始使用细分的指令、触发器和循环条件对序列进行规划。</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
     <value>禁用简单序列器</value>
@@ -5098,7 +5095,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>序列模板文件夹</value>
   </data>
   <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
-    <value>高级序列生成的模板所在的存放位置</value>
+    <value>存放高级序列模板的文件夹</value>
   </data>
   <data name="LblWeatherUndergroundClientDescription" xml:space="preserve">
     <value>使用 WU PWS API。每 10 分钟刷新天气一次</value>
@@ -5367,10 +5364,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>旋转器</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the specified mechanical angle</value>
+    <value>将旋转器转到指定的机械角度</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Rotate by mechanical angle</value>
+    <value>旋转到指定角度</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>中天</value>
@@ -5379,7 +5376,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>天文晨光</value>
   </data>
   <data name="LblAstronomicalDusk" xml:space="preserve">
-    <value>天文黄昏</value>
+    <value>天文昏影</value>
   </data>
   <data name="LblSkytechX" xml:space="preserve">
     <value>SkytechX</value>
@@ -5425,13 +5422,13 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>安全监视器</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>等待安全监视器再次报告安全状况</value>
+    <value>等待安全监视器再次报告情况安全</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
-    <value>等待，直到安全</value>
+    <value>等待到安全</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>等待安全条件...</value>
+    <value>等待情况安全...</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
     <value>相机温度设定点</value>
@@ -5470,11 +5467,11 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>字体</value>
   </data>
   <data name="LblPrimaryRate" xml:space="preserve">
-    <value>主要速率</value>
+    <value>主轴速率</value>
     <comment>Primary telescope axis rate</comment>
   </data>
   <data name="LblSecondaryRate" xml:space="preserve">
-    <value>第二速率</value>
+    <value>次轴速率</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
@@ -5523,10 +5520,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>检查更新</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>通过 N.I.N.A. 插件管理器安装或手动下载并复制DLL 文件到 %localappdata%\NINA\Plugins</value>
+    <value>通过 N.I.N.A. 插件管理器安装，或手动下载并复制DLL 文件到 %localappdata%\NINA\Plugins ，下载地址：</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
-    <value>通过 N.I.N.A. 插件管理器安装或手动下载并复制DLL 文件到 \NINA\Plugins</value>
+    <value>通过 N.I.N.A. 插件管理器安装，或手动下载并运行安装程序，下载地址：</value>
   </data>
   <data name="LblScreenshots" xml:space="preserve">
     <value>屏幕截图</value>
@@ -5542,7 +5539,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>插件正等待程序下次启动时更改，是否现在重启程序？</value>
   </data>
   <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
-    <value>通过 N.I.N.A. 插件管理器安装或手动下载并复制DLL 文件到 %localappdata%\NINA\Plugins</value>
+    <value>通过 N.I.N.A. 插件管理器安装，或手动下载并将压缩包解压到 %localappdata%\NINA\Plugins ，下载地址：</value>
   </data>
   <data name="LblPluginInstallationFailed" xml:space="preserve">
     <value>插件 {0} 安装失败。</value>
@@ -5563,10 +5560,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>标签</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>平均值合并像素</value>
+    <value>合并像素时取平均</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>默认情况下，合并像素是加法运算。数据的位深仍保持不变，因此亮的像素可以被剪裁。 平均值算法可以使用整数除法运算，牺牲部分动态范围以防止剪裁。</value>
+    <value>默认情况下，合并像素是加法运算。数据的位深保持不变，因此亮的像素可能会溢出。 平均值模式使用整数除法运算，牺牲部分动态范围以防止溢出。</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
     <value>中止运行，并执行结束指令</value>
@@ -5584,13 +5581,13 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>无法连接到 {0}。原因： {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>中止</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
     <value>继续</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>发生错误时</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
     <value>重试</value>
@@ -5599,14 +5596,14 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>跳过当前指令集</value>
   </data>
   <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
-    <value>Skip to end of sequence instructions</value>
+    <value>跳至序列结束指令</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
     <value>尝试次数</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>设定在所有尝试次数耗尽后将要执行的操作。
+默认操作是在错误的情况下继续执行，但对于某些指令，您可能希望NINA不要继续执行。 例如，当居中操作无法正确为目标构图时，可以采取恢复操作。</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
     <value>未能执行指令时，NINA应尝试的次数。</value>
@@ -5667,13 +5664,13 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>按名称</value>
   </data>
   <data name="LblByRelevance" xml:space="preserve">
-    <value>By Relevance</value>
+    <value>按权重</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
     <value>序列目标文件夹</value>
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
-    <value>存储高级序列目标的文件夹</value>
+    <value>存放高级序列目标的文件夹</value>
   </data>
   <data name="LblNotInstalled" xml:space="preserve">
     <value>未安装</value>
@@ -5694,7 +5691,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>全局触发器</value>
   </data>
   <data name="LblTargetOptions" xml:space="preserve">
-    <value>Target Options</value>
+    <value>选项</value>
   </data>
   <data name="LblCoolCamera" xml:space="preserve">
     <value>冷却相机</value>
@@ -5778,7 +5775,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>同步圆顶</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+    <value>用于使圆顶的同步移动仅限制在序列步骤之间，以避免曝光期间的震动的触发器。不应在启用了“圆顶跟随”（在后台连续运行）的情况下使用。</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
     <value>方位角</value>
@@ -5812,7 +5809,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Reset all rows in the current target?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+    <value>使用解析来确定当前视场的旋转角度并使用旋转器来调整到指定角度。(这不会使目标居中！)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>解析并旋转</value>
@@ -5848,7 +5845,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>降噪</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>准备结构检测</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
     <value>结构检测</value>
@@ -5860,18 +5857,18 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Use Star Detector V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>标注所有</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
     <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>星点侦测器</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
     <value>Star Annotator</value>
   </data>
   <data name="LblUnavailableForX86" xml:space="preserve">
-    <value>Unavailable in x86</value>
+    <value>在x86上不可用</value>
   </data>
 </root>

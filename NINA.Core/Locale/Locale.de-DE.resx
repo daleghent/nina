@@ -246,9 +246,6 @@ Soll die Anwendung versuchen, den Fehler zu beheben? (kann zu unerwartetem Verha
   <data name="LblAscending" xml:space="preserve">
     <value>Aufsteigend</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Eine ASCOM Treiber Interop Ausnahme ist aufgetreten. Dies passiert wahrscheinlich durch einen Unterschied zwischen dem Treiber, der als {0} installiert wurde und N.I.N.A. als {1}. Bitte den Treiber als {1} installieren.</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Fehler beim Abrufen der Bilddaten von der Kamera!</value>
   </data>

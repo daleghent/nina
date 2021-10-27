@@ -246,9 +246,6 @@
   <data name="LblAscending" xml:space="preserve">
     <value>Αύξουσα</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Εμφανίστηκε ένα σφάλμα διαλειτουργικότητας στον οδηγό ASCOM. Αυτό πιθανόν προκαλείτε από αναντιστοιχία ανάμεσα στον οδηγό που εγκαθιστάτε σαν {0} και το N.I.N.A. που είναι {1}. Παρακαλώ εγκαταστήστε τον οδηγό σαν {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Σφάλμα ανάκτησης δεδομένων εικόνας από την κάμερα!</value>
   </data>

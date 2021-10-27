@@ -246,9 +246,6 @@ Skal applikationen forsøge at genetablere sig efter fejlen? (Kan forårsage uve
   <data name="LblAscending" xml:space="preserve">
     <value>Stigende</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>En interop fejl forekom i ASCOM driveren. Dette sker højest sandsynlift fordi der er et mismatch imellem driveren der er installeret som {0} og N.I.N.A. der er {1}. Venligst installer driveren som {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Fejl under hentning af billeddata fra kamera!</value>
   </data>

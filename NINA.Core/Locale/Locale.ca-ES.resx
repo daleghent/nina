@@ -246,9 +246,6 @@ L'aplicació ha de provar de recuperar-se de l'error? (Pot provocar un comportam
   <data name="LblAscending" xml:space="preserve">
     <value>Ascendent</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>S'ha produït una excepció de connectivitat del controlador ASCOM. Això és probablement causat per un desajustament entre el controlador que s’instal·la com a {0} i N.I.N.A. essent {1}. Instal·leu el controlador com a {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>S'ha produït un error al recuperar les dades de la imatge de la càmera!</value>
   </data>

@@ -246,9 +246,6 @@
   <data name="LblAscending" xml:space="preserve">
     <value>升序</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>發生 ascom 驅動程序操作異常。 好可能係由於安裝的驅動程序唔匹配造成的當前安裝 {0},n.i.n.a. 出現 {1}. 請將驅動程序安裝為 {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>由相機下載圖像數據時出錯!</value>
   </data>

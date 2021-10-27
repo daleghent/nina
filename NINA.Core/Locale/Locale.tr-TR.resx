@@ -245,9 +245,6 @@ Uygulama, hatayı düzeltmeyi denesin mi? (Beklenmedik sonuçlar oluşabilir)</v
   <data name="LblAscending" xml:space="preserve">
     <value>Artan</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Beklenmedik bir ASCOM sürücü durması oluştu. Bu durum genellikle sürücünün {0} ve N.I.N.A'nın {1} olarak yüklenmesinden kaynaklanır. Lütfen sürücüyü {1} olarak yükleyin</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Kameradan resim verileri alınırken hata oluştu!</value>
   </data>

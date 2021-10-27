@@ -246,9 +246,6 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
   <data name="LblAscending" xml:space="preserve">
     <value>Ascendiendo</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Se ha producido una excepción de la interoperación del controlador ASCOM. Esto probablemente haya sido causado por una discordancia entre el controlador que se instala como {0} y N.I.N.A. siendo {1}. Por favor instale el controlador como {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>¡Error al recuperar los datos de la imagen de la cámara!</value>
   </data>

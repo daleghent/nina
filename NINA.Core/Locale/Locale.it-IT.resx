@@ -246,9 +246,6 @@ Vuoi che l'applicazione provi a risolvere l'errore? (Può portare a comportament
   <data name="LblAscending" xml:space="preserve">
     <value>Ascendente</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Eccezione nella comnuicazione con un driver ASCOM. Questo è probabilmetne causato da fatto che il driver è instalalto come {0} mentre N.I.N.A. è {1}. Pregasi installare il driver a {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Errore durante il recuepro dell'immagine dalla camera!</value>
   </data>

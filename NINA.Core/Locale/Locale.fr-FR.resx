@@ -246,9 +246,6 @@ L'application doit-elle tenter de redémarrer? (Peut conduire à un comportement
   <data name="LblAscending" xml:space="preserve">
     <value>Ascendant</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Une exception d'interopérabilité du pilote ASCOM s'est produite. Cela est probablement dû à une incompatibilité entre le pilote installé en tant que {0} et N.I.N.A. étant {1}. Veuillez installer le pilote comme {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Erreur lors de la récupération des données de l'image depuis la caméra !</value>
   </data>

@@ -246,9 +246,6 @@ Czy aplikacja powinna samodzielnie uruchomić się po błędzie? (może prowadzi
   <data name="LblAscending" xml:space="preserve">
     <value>Rosnąco</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Wystąpił wyjątek dla sterowników ASCOM. Jest to najprawdopodobniej spowodowane niedopasowaniem między sterownikami. Twoja wersja sterowników: {0}, N.I.N.A. jest w wersji {1}. Zainstaluj sterowniki w wersji {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Błąd podczas pobierania obrazu z kamery!</value>
   </data>

@@ -245,9 +245,6 @@ Moet het programma proberen te herstellen van de fout? (Dit kan tot onverwacht g
   <data name="LblAscending" xml:space="preserve">
     <value>Oplopend</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Er is een ASCOM stuurprogramma uitzondering voorgevallen. Dit is waarschijnlijk het gevolg van een conflict omdat het stuurprogramma is geïnstalleerd als {1} en NINA als {0}. Installeer het stuurprogramma als {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Fout tijdens het ontvangen van data van de camera!</value>
   </data>

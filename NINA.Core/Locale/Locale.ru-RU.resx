@@ -245,9 +245,6 @@
   <data name="LblAscending" xml:space="preserve">
     <value>Возрастающий</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Возниклаисключение при взаимодействии с драйвером ASCOM. Скорее всего, это вызвано несоответствием между драйвером, устанавливаемым как {0}, и в N.I.N.A. {1}. Пожалуйста, установите драйвер как {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Ошибка получения данных изображения из камеры!</value>
   </data>

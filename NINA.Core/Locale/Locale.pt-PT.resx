@@ -246,9 +246,6 @@ A Aplicação deve tentar recuperar do erro? (Pode levar a um comportamento ines
   <data name="LblAscending" xml:space="preserve">
     <value>Ascendente</value>
   </data>
-  <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>Ocorreu uma excepção de interoperabilidade num driver ASCOM. Foi provavelmente causada por uma incompatibilidade entre o driver que está a instalar como {0} e i N.I.N.A. sendo {1}. Por favor instale o driver como {1}</value>
-  </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Erro ao obter dados da imagem da câmera!</value>
   </data>
