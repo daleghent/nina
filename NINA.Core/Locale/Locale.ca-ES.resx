@@ -5868,4 +5868,7 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
   <data name="LblUnavailableForX86" xml:space="preserve">
     <value>No està disponible a X86</value>
   </data>
+  <data name="LblAutoFocusDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
 </root>

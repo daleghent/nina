@@ -5876,4 +5876,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblUnavailableForX86" xml:space="preserve">
     <value>Unavailable in x86</value>
   </data>
+  <data name="LblAutoFocusDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
 </root>

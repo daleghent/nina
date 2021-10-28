@@ -5872,4 +5872,7 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   <data name="LblUnavailableForX86" xml:space="preserve">
     <value>Není k dispozici v x86</value>
   </data>
+  <data name="LblAutoFocusDuration" xml:space="preserve">
+    <value>Čas trvání</value>
+  </data>
 </root>
