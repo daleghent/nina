@@ -5849,4 +5849,7 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   <data name="LblUnavailableForX86" xml:space="preserve">
     <value>Unavailable in x86</value>
   </data>
+  <data name="LblAutoFocusDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
 </root>

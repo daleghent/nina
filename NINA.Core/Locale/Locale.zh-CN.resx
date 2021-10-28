@@ -2005,7 +2005,7 @@
     <value>来自下载速率的最短曝光时间</value>
   </data>
   <data name="LblMinExpTime" xml:space="preserve">
-    <value>最小曝光时间</value>
+    <value>最短曝光时间</value>
   </data>
   <data name="LblMinimumAltitude" xml:space="preserve">
     <value>最低高度</value>
@@ -4654,7 +4654,7 @@
     <value>切换灯光</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
-    <value>根据训练后的曝光时间拍摄平场</value>
+    <value>根据“训练过的平场曝光时间”，拍摄平场</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>受过训练的平场曝光</value>
@@ -5818,7 +5818,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>正在初始化插件</value>
   </data>
   <data name="LblCameraStateDownload" xml:space="preserve">
-    <value>正在下载</value>
+    <value>下载中</value>
   </data>
   <data name="LblCameraStateError" xml:space="preserve">
     <value>错误</value>
@@ -5870,5 +5870,8 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
   </data>
   <data name="LblUnavailableForX86" xml:space="preserve">
     <value>在x86上不可用</value>
+  </data>
+  <data name="LblAutoFocusDuration" xml:space="preserve">
+    <value>Duration</value>
   </data>
 </root>
