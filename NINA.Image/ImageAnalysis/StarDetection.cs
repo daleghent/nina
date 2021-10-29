@@ -207,7 +207,7 @@ namespace NINA.Image.ImageAnalysis {
 
                     progress?.Report(new ApplicationStatus() { Status = "Analyzing stars" });
 
-                    result.StarList = IdentifyStars(p, state, _bitmapToAnalyze, result, token);
+                    result.StarList = IdentifyStars(p, state, _bitmapToAnalyze, result, token, out var detectedStars);
 
                     token.ThrowIfCancellationRequested();
 
@@ -218,11 +218,11 @@ namespace NINA.Image.ImageAnalysis {
                             stdDev = Math.Sqrt((from star in result.StarList select (star.HFR - mean) * (star.HFR - mean)).Sum() / (result.StarList.Count() - 1));
                         }
 
-                        Logger.Info($"Average HFR: {mean}, HFR σ: {stdDev}, Detected Stars {result.StarList.Count}");
+                        Logger.Info($"Average HFR: {mean}, HFR σ: {stdDev}, Detected Stars {detectedStars}");
 
                         result.AverageHFR = mean;
                         result.HFRStdDev = stdDev;
-                        result.DetectedStars = result.StarList.Count;
+                        result.DetectedStars = detectedStars;
                     }
 
                     _blobCounter = null;
@@ -243,7 +243,8 @@ namespace NINA.Image.ImageAnalysis {
                 innerCropRatio: p.InnerCropRatio);
         }
 
-        private List<DetectedStar> IdentifyStars(StarDetectionParams p, State state, Bitmap _bitmapToAnalyze, StarDetectionResult result, CancellationToken token) {
+        private List<DetectedStar> IdentifyStars(StarDetectionParams p, State state, Bitmap _bitmapToAnalyze, StarDetectionResult result, CancellationToken token, out int detectedStars) {
+            detectedStars = 0;
             Blob[] blobs = _blobCounter.GetObjectsInformation();
             SimpleShapeChecker checker = new SimpleShapeChecker();
             List<Star> starlist = new List<Star>();
@@ -337,6 +338,21 @@ namespace NINA.Image.ImageAnalysis {
             if (starlist.Count() == 0) {
                 return new List<DetectedStar>();
             }
+            
+            //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
+            if (starlist.Count > 0) {
+                double avg = sumRadius / (double)starlist.Count();
+                double stdev = Math.Sqrt((sumSquares - starlist.Count() * avg * avg) / starlist.Count());
+                if (p.Sensitivity == StarSensitivityEnum.Normal) {
+                    starlist = starlist.Where(s => s.radius <= avg + 1.5 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
+                } else {
+                    //More sensitivity means getting fainter and smaller stars, and maybe some noise, skewing the distribution towards low radius. Let's be more permissive towards the large star end.
+                    starlist = starlist.Where(s => s.radius <= avg + 2 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
+                }
+            }
+
+            // Ensure we provide the list of detected stars, even if NumberOfAF stars is used
+            detectedStars = starlist.Count;
 
             //We are performing AF with only a limited number of stars
             if (p.NumberOfAFStars > 0) {
@@ -354,19 +370,7 @@ namespace NINA.Image.ImageAnalysis {
                     p.MatchStarPositions.ForEach(pos => topStars.Add(starlist.Aggregate((min, next) => min.Position.DistanceTo(pos) < next.Position.DistanceTo(pos) ? min : next)));
                     return topStars.Select(s => s.ToDetectedStar()).ToList(); ;
                 }
-            }
-
-            //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
-            if (starlist.Count > 0) {
-                double avg = sumRadius / (double)starlist.Count();
-                double stdev = Math.Sqrt((sumSquares - starlist.Count() * avg * avg) / starlist.Count());
-                if (p.Sensitivity == StarSensitivityEnum.Normal) {
-                    starlist = starlist.Where(s => s.radius <= avg + 1.5 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
-                } else {
-                    //More sensitivity means getting fainter and smaller stars, and maybe some noise, skewing the distribution towards low radius. Let's be more permissive towards the large star end.
-                    starlist = starlist.Where(s => s.radius <= avg + 2 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
-                }
-            }
+            }            
             return starlist.Select(s => s.ToDetectedStar()).ToList();
         }
 
