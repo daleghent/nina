@@ -1,3 +1,4 @@
+cd /D "%~dp0"
 nuget pack ../NINA.Core/NINA.Core.csproj								%1 %2 -Properties Configuration=SignedRelease -IncludeReferencedProjects -exclude "**\*.tt" -exclude "**\Accord.dll.config"
 nuget pack ../NINA.Profile/NINA.Profile.csproj							%1 %2 -Properties Configuration=SignedRelease -IncludeReferencedProjects -exclude "**\*.tt" -exclude "**\Accord.dll.config"
 nuget pack ../NINA.Astrometry/NINA.Astrometry.csproj					%1 %2 -Properties Configuration=SignedRelease -IncludeReferencedProjects -exclude "**\*.tt" -exclude "**\Accord.dll.config"
