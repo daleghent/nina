@@ -88,7 +88,8 @@
                         ItemsSource="{Binding Sequencer.MainContainer.Items[1].Items}"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        SelectedItem="{Binding SelectedTarget}">
+                        SelectedItem="{Binding SelectedTarget}"
+                        SelectionMode="Single">
                         <ListView.Resources>
                             <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="Visibility" Value="Collapsed" />

@@ -49,7 +49,8 @@
                         MaxHeight="300"
                         VerticalAlignment="Top"
                         ItemsSource="{Binding Profiles}"
-                        SelectedItem="{Binding SelectedProfile}">
+                        SelectedItem="{Binding SelectedProfile}"
+                        SelectionMode="Single">
                         <ListView.ItemContainerStyle>
                             <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />

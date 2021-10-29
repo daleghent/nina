@@ -248,7 +248,8 @@
                     MinWidth="180"
                     MaxWidth="250"
                     ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:PlateSolverEnum}}}"
-                    SelectedIndex="0">
+                    SelectedIndex="0"
+                    SelectionMode="Single">
                     <ListView.Resources>
                         <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
                             <Setter Property="Visibility" Value="Collapsed" />

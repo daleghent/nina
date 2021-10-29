@@ -82,7 +82,7 @@ namespace NINA.Sequencer.Container {
         });
 
         [JsonProperty]
-        public bool IsExpanded {
+        public virtual bool IsExpanded {
             get {
                 return isExpanded;
             }

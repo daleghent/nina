@@ -147,6 +147,9 @@ namespace NINA.Sequencer.Container {
             }
         }
 
+        //Workaround to prevent the container being moved into another dso container
+        public override bool IsExpanded { get => false; set { } }
+
         public override void MoveUp() {
             if (this.Parent.Items.IndexOf(this) > 0) {
                 base.MoveUp();

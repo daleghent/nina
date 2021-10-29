@@ -141,7 +141,8 @@
                                 Margin="-25,0,-25,0"
                                 BorderThickness="0"
                                 ItemsSource="{Binding AvailablePlugins}"
-                                SelectedItem="{Binding SelectedAvailablePlugin}">
+                                SelectedItem="{Binding SelectedAvailablePlugin}"
+                                SelectionMode="Single">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Style.Setters>
