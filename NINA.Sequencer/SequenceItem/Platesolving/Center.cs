@@ -36,6 +36,9 @@ using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
 using NINA.WPF.Base.ViewModel;
 using NINA.PlateSolving.Interfaces;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -51,6 +54,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         protected IImagingMediator imagingMediator;
         protected IFilterWheelMediator filterWheelMediator;
         protected IGuiderMediator guiderMediator;
+        protected IDomeMediator domeMediator;
+        protected IDomeFollower domeFollower;
         protected IPlateSolverFactory plateSolverFactory;
         protected IWindowServiceFactory windowServiceFactory;
         public PlateSolvingStatusVM PlateSolveStatusVM { get; } = new PlateSolvingStatusVM();
@@ -61,6 +66,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                       IImagingMediator imagingMediator,
                       IFilterWheelMediator filterWheelMediator,
                       IGuiderMediator guiderMediator,
+                      IDomeMediator domeMediator,
+                      IDomeFollower domeFollower,
                       IPlateSolverFactory plateSolverFactory,
                       IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
@@ -68,6 +75,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             this.imagingMediator = imagingMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.guiderMediator = guiderMediator;
+            this.domeMediator = domeMediator;
+            this.domeFollower = domeFollower;
             this.plateSolverFactory = plateSolverFactory;
             this.windowServiceFactory = windowServiceFactory;
             Coordinates = new InputCoordinates();
@@ -78,6 +87,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                                               cloneMe.imagingMediator,
                                               cloneMe.filterWheelMediator,
                                               cloneMe.guiderMediator,
+                                              cloneMe.domeMediator,
+                                              cloneMe.domeFollower,
                                               cloneMe.plateSolverFactory,
                                               cloneMe.windowServiceFactory) {
             CopyMetaData(cloneMe);
@@ -116,10 +127,20 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
             await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
+            var domeInfo = domeMediator.GetInfo();
+            if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
+                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
+                Logger.Info($"Centering Solver - Synchronize dome to scope since dome following is not enabled");
+                if (!await domeFollower.TriggerTelescopeSync()) {
+                    Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringCentering"]);
+                    Logger.Warning("Centering Solver - Synchronize dome operation didn't complete successfully. Moving on");
+                }
+            }
+
             var plateSolver = plateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = plateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
-            var solver = plateSolverFactory.GetCenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
+            var solver = plateSolverFactory.GetCenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator, domeMediator, domeFollower);
             var parameter = new CenterSolveParameter() {
                 Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
                 Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,

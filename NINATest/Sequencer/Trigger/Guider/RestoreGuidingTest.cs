@@ -69,7 +69,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
         }
 
         [Test]
-        public async Task ShouldTrigger_NextItemLightExposure() {
+        public void ShouldTrigger_NextItemLightExposure() {
             var sut = new RestoreGuiding(guiderMediatorMock.Object);
 
             var profileServiceMock = new Mock<IProfileService>();

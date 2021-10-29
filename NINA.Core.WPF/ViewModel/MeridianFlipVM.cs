@@ -266,7 +266,7 @@ namespace NINA.WPF.Base.ViewModel {
                 );
                 seq.Gain = profileService.ActiveProfile.PlateSolveSettings.Gain;
 
-                var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
+                var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator, domeMediator, domeFollower);
                 var parameter = new CenterSolveParameter() {
                     Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
                     Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,

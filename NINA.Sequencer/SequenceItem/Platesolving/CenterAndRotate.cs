@@ -37,6 +37,7 @@ using NINA.Equipment.Model;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility.Notification;
 using NINA.PlateSolving.Interfaces;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -56,12 +57,16 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                                IRotatorMediator rotatorMediator,
                                IFilterWheelMediator filterWheelMediator,
                                IGuiderMediator guiderMediator,
+                               IDomeMediator domeMediator,
+                               IDomeFollower domeFollower,
                                IPlateSolverFactory plateSolverFactory,
                                IWindowServiceFactory windowServiceFactory) : base(profileService,
                                                                         telescopeMediator,
                                                                         imagingMediator,
                                                                         filterWheelMediator,
                                                                         guiderMediator,
+                                                                        domeMediator,
+                                                                        domeFollower,
                                                                         plateSolverFactory,
                                                                         windowServiceFactory) {
             this.rotatorMediator = rotatorMediator;
@@ -73,6 +78,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                                                                 cloneMe.rotatorMediator,
                                                                 cloneMe.filterWheelMediator,
                                                                 cloneMe.guiderMediator,
+                                                                cloneMe.domeMediator,
+                                                                cloneMe.domeFollower,
                                                                 cloneMe.plateSolverFactory,
                                                                 cloneMe.windowServiceFactory) {
             CopyMetaData(cloneMe);
@@ -105,6 +112,16 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
                 var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
+
+                var domeInfo = domeMediator.GetInfo();
+                if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
+                    Logger.Info($"Center and Rotate - Synchronize dome to scope since dome following is not enabled");
+                    if (!await domeFollower.TriggerTelescopeSync()) {
+                        Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringCentering"]);
+                        Logger.Warning("Center and Rotate - Synchronize dome operation didn't complete successfully. Moving on");
+                    }
+                }
 
                 var targetRotation = (float)Rotation;
 

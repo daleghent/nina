@@ -33,6 +33,7 @@ using System.Windows.Input;
 using NINA.Equipment.Equipment;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.ViewModel.Imaging {
 
@@ -66,11 +67,13 @@ namespace NINA.ViewModel.Imaging {
 
         private ITelescopeMediator telescopeMediator;
         private IDomeMediator domeMediator;
+        private IDomeFollower domeFollower;
 
         public AnchorablePlateSolverVM(IProfileService profileService,
                 ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
                 IDomeMediator domeMediator,
+                IDomeFollower domeFollower,
                 IImagingMediator imagingMediator,
                 IApplicationStatusMediator applicationStatusMediator,
                 IFilterWheelMediator filterWheelMediator) : base(profileService) {
@@ -81,6 +84,7 @@ namespace NINA.ViewModel.Imaging {
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
             this.domeMediator = domeMediator;
+            this.domeFollower = domeFollower;
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             this.filterWheelMediator = filterWheelMediator;
@@ -307,7 +311,7 @@ namespace NINA.ViewModel.Imaging {
                 });
 
                 if (this.SlewToTarget) {
-                    var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
+                    var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator, domeMediator, domeFollower);
                     var parameter = new CenterSolveParameter() {
                         Attempts = 1,
                         Binning = SnapBin?.X ?? CameraInfo.BinX,

@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
@@ -37,11 +38,12 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
         private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
         private Mock<IFilterWheelMediator> filterMediatorMock;
-        private Mock<IFocuserMediator> focuserMediatorMock;
         private Mock<ICameraMediator> cameraMediatorMock;
         private Mock<IImageHistoryVM> historyMock;
         private Mock<IImageSaveMediator> imageSaveMediatorMock;
         private Mock<IImageDataFactory> imageDataFactoryMock;
+        private Mock<IDomeMediator> domeMediatorMock;
+        private Mock<IDomeFollower> domeFollowerMock;
 
         [SetUp]
         public void Setup() {
@@ -52,10 +54,11 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
             applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
             filterMediatorMock = new Mock<IFilterWheelMediator>();
             cameraMediatorMock = new Mock<ICameraMediator>();
-            focuserMediatorMock = new Mock<IFocuserMediator>();
             historyMock = new Mock<IImageHistoryVM>();
             imageSaveMediatorMock = new Mock<IImageSaveMediator>();
             imageDataFactoryMock = new Mock<IImageDataFactory>();
+            domeMediatorMock = new Mock<IDomeMediator>();
+            domeFollowerMock = new Mock<IDomeFollower>();
         }
 
         [Test]
@@ -73,7 +76,9 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
                 filterMediatorMock.Object,
                 guiderMediatorMock.Object,
                 imagingMediatorMock.Object,
-                cameraMediatorMock.Object,
+                cameraMediatorMock.Object, 
+                domeMediatorMock.Object, 
+                domeFollowerMock.Object,
                 imageSaveMediatorMock.Object,
                 applicationStatusMediatorMock.Object,
                 imageDataFactoryMock.Object);

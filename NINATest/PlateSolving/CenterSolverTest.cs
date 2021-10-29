@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using NINA.Equipment.Model;
 using NINA.Core.Model;
 using NINA.PlateSolving.Interfaces;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.PlateSolving {
 
@@ -37,6 +38,8 @@ namespace NINATest.PlateSolving {
         private Mock<ITelescopeMediator> telescopeMediatorMock;
         private Mock<ICaptureSolver> captureSolverMock;
         private Mock<IFilterWheelMediator> filterMediatorMock;
+        private Mock<IDomeMediator> domeMediatorMock;
+        private Mock<IDomeFollower> domeFollowerMock;
 
         [SetUp]
         public void Setup() {
@@ -45,6 +48,9 @@ namespace NINATest.PlateSolving {
             captureSolverMock = new Mock<ICaptureSolver>();
             telescopeMediatorMock = new Mock<ITelescopeMediator>();
             filterMediatorMock = new Mock<IFilterWheelMediator>();
+            domeMediatorMock = new Mock<IDomeMediator>();
+            domeMediatorMock.Setup(m => m.GetInfo()).Returns(new NINA.Equipment.Equipment.MyDome.DomeInfo() { Connected = false });
+            domeFollowerMock = new Mock<IDomeFollower>();
         }
 
         [Test]
@@ -68,7 +74,7 @@ namespace NINATest.PlateSolving {
                 .Setup(x => x.GetCurrentPosition())
                 .Returns(coordinates);
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -100,7 +106,7 @@ namespace NINATest.PlateSolving {
                 .Setup(x => x.GetCurrentPosition())
                 .Returns(coordinates);
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -144,7 +150,7 @@ namespace NINATest.PlateSolving {
                 .Returns(Task.FromResult(true))
                 .Returns(Task.FromResult(true));
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -181,7 +187,7 @@ namespace NINATest.PlateSolving {
                 .ReturnsAsync(false)
                 .ReturnsAsync(false);
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -225,7 +231,7 @@ namespace NINATest.PlateSolving {
                 .ReturnsAsync(false)
                 .ReturnsAsync(false);
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -267,7 +273,7 @@ namespace NINATest.PlateSolving {
                 .SetupSequence(x => x.Sync(It.IsAny<Coordinates>()))
                 .Returns(Task.FromResult(true));
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);

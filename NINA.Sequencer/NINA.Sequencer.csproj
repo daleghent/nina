@@ -212,6 +212,7 @@
     <Compile Include="SequenceItem\Camera\SetReadoutMode.cs" />
     <Compile Include="SequenceItem\Camera\WarmCamera.cs" />
     <Compile Include="SequenceItem\Dome\CloseDomeShutter.cs" />
+    <Compile Include="SequenceItem\Dome\SynchronizeDome.cs" />
     <Compile Include="SequenceItem\Dome\EnableDomeSynchronization.cs" />
     <Compile Include="SequenceItem\Dome\OpenDomeShutter.cs" />
     <Compile Include="SequenceItem\Dome\ParkDome.cs" />

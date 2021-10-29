@@ -14,6 +14,7 @@
 
 using NINA.Profile.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.PlateSolving.Interfaces {
 
@@ -27,6 +28,6 @@ namespace NINA.PlateSolving.Interfaces {
 
         ICaptureSolver GetCaptureSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator);
 
-        ICenteringSolver GetCenteringSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, ITelescopeMediator telescopeMediator, IFilterWheelMediator filterWheelMediator);
+        ICenteringSolver GetCenteringSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, ITelescopeMediator telescopeMediator, IFilterWheelMediator filterWheelMediator, IDomeMediator domeMediator, IDomeFollower domeFollower);
     }
 }

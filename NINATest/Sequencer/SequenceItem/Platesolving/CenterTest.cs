@@ -19,6 +19,7 @@ using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.Utility.WindowService;
 using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Model;
 using NINA.PlateSolving;
@@ -47,6 +48,8 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
         private Mock<IGuiderMediator> guiderMediatorMock;
         private Mock<IPlateSolverFactory> plateSolverFactoryMock;
         private Mock<IWindowServiceFactory> windowServiceFactoryMock;
+        private Mock<IDomeMediator> domeMediatorMock;
+        private Mock<IDomeFollower> domeFollowerMock;
 
         private Center sut;
 
@@ -59,6 +62,9 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             guiderMediatorMock = new Mock<IGuiderMediator>();
             plateSolverFactoryMock = new Mock<IPlateSolverFactory>();
             windowServiceFactoryMock = new Mock<IWindowServiceFactory>();
+            domeMediatorMock = new Mock<IDomeMediator>();
+            domeMediatorMock.Setup(m => m.GetInfo()).Returns(new NINA.Equipment.Equipment.MyDome.DomeInfo() { Connected = false });
+            domeFollowerMock = new Mock<IDomeFollower>();
         }
 
         [SetUp]
@@ -73,7 +79,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.PlateSolveSettings).Returns(new Mock<IPlateSolveSettings>().Object);
 
-            sut = new Center(profileServiceMock.Object, telescopeMediatorMock.Object, imagingMediatorMock.Object, filterWheelMediatorMock.Object, guiderMediatorMock.Object, plateSolverFactoryMock.Object, windowServiceFactoryMock.Object);
+            sut = new Center(profileServiceMock.Object, telescopeMediatorMock.Object, imagingMediatorMock.Object, filterWheelMediatorMock.Object, guiderMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object, plateSolverFactoryMock.Object, windowServiceFactoryMock.Object);
         }
 
         [Test]
@@ -121,7 +127,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             plateSolverFactoryMock.Setup(x => x.GetPlateSolver(It.IsAny<IPlateSolveSettings>())).Returns(new Mock<IPlateSolver>().Object);
             plateSolverFactoryMock.Setup(x => x.GetBlindSolver(It.IsAny<IPlateSolveSettings>())).Returns(new Mock<IPlateSolver>().Object);
-            plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(centeringSolver.Object);
+            plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>(), It.IsAny<IDomeMediator>(), It.IsAny<IDomeFollower>())).Returns(centeringSolver.Object);
 
             Func<Task> act = () => sut.Execute(default, default);
 
@@ -152,7 +158,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             plateSolverFactoryMock.Setup(x => x.GetPlateSolver(It.IsAny<IPlateSolveSettings>())).Returns(new Mock<IPlateSolver>().Object);
             plateSolverFactoryMock.Setup(x => x.GetBlindSolver(It.IsAny<IPlateSolveSettings>())).Returns(new Mock<IPlateSolver>().Object);
-            plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(centeringSolver.Object);
+            plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>(), It.IsAny<IDomeMediator>(), It.IsAny<IDomeFollower>())).Returns(centeringSolver.Object);
 
             await sut.Execute(default, default);
 

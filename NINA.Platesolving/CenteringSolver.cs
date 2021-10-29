@@ -22,18 +22,26 @@ using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Locale;
 using NINA.Equipment.Model;
 using NINA.PlateSolving.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.Core.Utility.Notification;
 
 namespace NINA.PlateSolving {
 
     public class CenteringSolver : ICenteringSolver {
-        private ITelescopeMediator telescopeMediator;
+        private readonly ITelescopeMediator telescopeMediator;
+        private readonly IDomeMediator domeMediator;
+        private readonly IDomeFollower domeFollower;
 
         public CenteringSolver(IPlateSolver plateSolver,
                 IPlateSolver blindSolver,
                 IImagingMediator imagingMediator,
                 ITelescopeMediator telescopeMediator,
-                IFilterWheelMediator filterWheelMediator) {
+                IFilterWheelMediator filterWheelMediator,
+                IDomeMediator domeMediator,
+                IDomeFollower domeFollower) {
             this.telescopeMediator = telescopeMediator;
+            this.domeMediator = domeMediator;
+            this.domeFollower = domeFollower;
             this.CaptureSolver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
         }
 
@@ -89,6 +97,15 @@ namespace NINA.PlateSolving {
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
                     await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset, ct);
+                    var domeInfo = domeMediator.GetInfo();
+                    if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
+                        Logger.Info($"Centering Solver - Synchronize dome to scope since dome following is not enabled");
+                        if (!await domeFollower.TriggerTelescopeSync()) {
+                            Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringCentering"]);
+                            Logger.Warning("Centering Solver - Synchronize dome operation didn't complete successfully. Moving on");
+                        }
+                    }
 
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceRepeating"] });
                 } else {

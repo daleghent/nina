@@ -104,7 +104,7 @@ namespace NINATest.Dome {
 
             sut.UpdateDeviceInfo(t1);
             sut.UpdateDeviceInfo(d1);
-            sut.TriggerTelescopeSync();
+            await sut.TriggerTelescopeSync();
             await sut.WaitForDomeSynchronization(CancellationToken.None);
             mockDomeMediator.Verify();
             Assert.AreEqual(domeAzimuth, domeTargetAzimuth.Degree);

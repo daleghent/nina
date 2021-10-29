@@ -978,6 +978,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Synchronizes the Dome to the current telescope position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_SynchronizeDome_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_SynchronizeDome_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronize Dome.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_SynchronizeDome_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_SynchronizeDome_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creates a duplicate of current item and append it to the parent instruction set.
         /// </summary>
         internal static string Lbl_SequenceItem_Duplicate_Tooltip {
@@ -7120,6 +7138,15 @@ namespace NINA.Core.Locale {
         internal static string LblDomeSyncError_SyncTimeout {
             get {
                 return ResourceManager.GetString("LblDomeSyncError_SyncTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome failed to synchronize during Centering.
+        /// </summary>
+        internal static string LblDomeSyncFailureDuringCentering {
+            get {
+                return ResourceManager.GetString("LblDomeSyncFailureDuringCentering", resourceCulture);
             }
         }
         
@@ -14734,6 +14761,15 @@ namespace NINA.Core.Locale {
         internal static string LblSynchronizedPHD2ServiceCrashed {
             get {
                 return ResourceManager.GetString("LblSynchronizedPHD2ServiceCrashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronizing Dome.
+        /// </summary>
+        internal static string LblSynchronizingDome {
+            get {
+                return ResourceManager.GetString("LblSynchronizingDome", resourceCulture);
             }
         }
         
