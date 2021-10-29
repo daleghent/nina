@@ -125,7 +125,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             var i = new List<string>();
             var info = guiderMediator.GetInfo();
 
-            if (!info.Connected) {
+            if (AfterExposures > 0 && !info.Connected) {
                 i.Add(Loc.Instance["LblGuiderNotConnected"]);
             }
 
