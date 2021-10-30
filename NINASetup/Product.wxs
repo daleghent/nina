@@ -955,6 +955,9 @@
 			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcruntime140_1.dll" Guid="EFCC3E8B-DA53-4385-8282-D78E66860A54">
 				<File Id="External_x64_VCRedis_vcruntime140_1.dll" Name="vcruntime140_1.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140_1.dll" />
 			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcomp140.dll" Guid="3A262497-11B7-4996-9526-48424A269C23">
+				<File Id="External_x64_VCRedis_vcomp140.dll" Name="vcomp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcomp140.dll" />
+			</Component>
 		</ComponentGroup>
 	</Fragment>
 
@@ -1472,6 +1475,9 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_vcruntime140.dll" Guid="583EAF30-DAE3-47E3-AB18-35B2DB9E22D2">
 				<File Id="External_x86_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\vcruntime140.dll" />
+			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_vcomp140.dll" Guid="2E50CDA0-7936-41D3-87D7-0CBB3D1EF2A7">
+				<File Id="External_x86_VCRedis_vcomp140.dll" Name="vcomp140.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\vcomp140.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>

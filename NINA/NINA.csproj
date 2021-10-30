@@ -1,1636 +1,1644 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7DEC1B46-9701-4E49-90C1-F4427845669E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NINA</RootNamespace>
-    <AssemblyName>NINA</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.1.0.0</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Logo_Nina.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>D53E041E3EAACF37CBF5FD6A81ECCF6577A70301</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>AstrophotographyBuddy_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>default</LangVersion>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>default</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>default</LangVersion>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>NINA.App</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignedRelease|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\SignedRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>default</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignedRelease|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\SignedRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>default</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
-    </Reference>
-    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
-    </Reference>
-    <Reference Include="AsyncEnumerable, Version=4.0.2.0, Culture=neutral, PublicKeyToken=0426b068161bd1d1, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncEnumerator.4.0.2\lib\net461\AsyncEnumerable.dll</HintPath>
-    </Reference>
-    <Reference Include="AvalonDock, Version=4.60.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dirkster.AvalonDock.4.60.0\lib\net40\AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="CSharpFITS_v1.1, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CSharpFITS.1.1\lib\Net20\CSharpFITS_v1.1.dll</HintPath>
-    </Reference>
-    <Reference Include="CsvHelper, Version=27.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.27.1.1\lib\net47\CsvHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetProjects.Wpf.Extended.Toolkit, Version=4.6.97.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetProjects.Extended.Wpf.Toolkit.4.6.97\lib\net40\DotNetProjects.Wpf.Extended.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=6.1.2.30, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.6.1.2.30\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
-    <Reference Include="MdXaml, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MdXaml.1.11.0\lib\net45\MdXaml.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
-    </Reference>
-    <Reference Include="Namotion.Reflection, Version=2.0.3.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\Namotion.Reflection.2.0.3\lib\net45\Namotion.Reflection.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.4.0.0-beta-0134\lib\net45\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Context, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Context.5.1.2\lib\net461\Nito.AsyncEx.Context.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Coordination, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Coordination.5.1.2\lib\net461\Nito.AsyncEx.Coordination.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Interop.WaitHandles, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Interop.WaitHandles.5.1.2\lib\net461\Nito.AsyncEx.Interop.WaitHandles.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Oop, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Oop.5.1.2\lib\net461\Nito.AsyncEx.Oop.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.AsyncEx.Tasks, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.AsyncEx.Tasks.5.1.2\lib\net461\Nito.AsyncEx.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Cancellation, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Cancellation.1.1.2\lib\net461\Nito.Cancellation.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Collections.Deque, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Collections.Deque.1.1.1\lib\net461\Nito.Collections.Deque.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Disposables, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Disposables.2.2.1\lib\net461\Nito.Disposables.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Mvvm.Async, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Mvvm.Async.1.0.0-pre-03\lib\netstandard2.0\Nito.Mvvm.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="Nito.Mvvm.Core, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nito.Mvvm.Core.1.3.1\lib\net461\Nito.Mvvm.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema, Version=10.5.2.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.10.5.2\lib\net45\NJsonSchema.dll</HintPath>
-    </Reference>
-    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
-      <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
-    </Reference>
-    <Reference Include="OxyPlot.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
-      <HintPath>..\packages\OxyPlot.Wpf.2.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="ReachFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\lib\net46\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.115.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.115.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Printing" />
-    <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="ToastNotifications, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
-      <HintPath>..\packages\ToastNotifications.2.5.1\lib\net40\ToastNotifications.dll</HintPath>
-    </Reference>
-    <Reference Include="ToastNotifications.Messages, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
-      <HintPath>..\packages\ToastNotifications.Messages.2.5.1\lib\net40\ToastNotifications.Messages.dll</HintPath>
-    </Reference>
-    <Reference Include="ToggleSwitch, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ToggleSwitch.1.2.0\lib\net46\ToggleSwitch.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>Properties\CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="AppJumpListExtensions.cs" />
-    <Compile Include="API\SGP\SGPServiceBackend.cs" />
-    <Compile Include="API\SGP\SGPServiceFrontend.cs" />
-    <Compile Include="API\SGP\SGPServiceHost.cs" />
-    <Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml.cs">
-      <DependentUpon>AstrometryIndexDownloader.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloaderVM.cs" />
-    <Compile Include="Interfaces\IMainWindowVM.cs" />
-    <Compile Include="Utility\GlobalObjects.cs" />
-    <Compile Include="Utility\IoCBindings.cs" />
-    <Compile Include="Utility\PaneTemplateSelector.cs" />
-    <Compile Include="Utility\PluggableAutoFocusVMFactory.cs" />
-    <Compile Include="Utility\PluggableBehaviorManager.cs" />
-    <Compile Include="Utility\PluggableBehaviorSelector.cs" />
-    <Compile Include="Utility\ProjectVersion.cs" />
-    <Compile Include="ViewModel\AboutSDKsVM.cs" />
-    <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
-    <Compile Include="ViewModel\ImageControlVM.cs" />
-    <Compile Include="Interfaces\IPluginsVM.cs" />
-    <Compile Include="ViewModel\Plugins\ExtendedPluginManifest.cs" />
-    <Compile Include="ViewModel\Plugins\PluginInstallerDescriptionTemplateSelector.cs" />
-    <Compile Include="ViewModel\Plugins\PluginState.cs" />
-    <Compile Include="ViewModel\Plugins\PluginStateToDataTemplateSelector.cs" />
-    <Compile Include="ViewModel\Plugins\PluginsVM.cs" />
-    <Compile Include="ViewModel\Plugins\PluginOptionsDataTemplateSelector.cs" />
-    <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
-    <Compile Include="ViewModel\Sequencer\SequencerBaseVM.cs" />
-    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
-    <Compile Include="ViewModel\MainWindowVM.cs" />
-    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
-    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
-    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleStartContainer.cs" />
-    <Compile Include="View\About\AboutSDKsView.xaml.cs">
-      <DependentUpon>AboutSDKsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\CameraControlView.xaml.cs">
-      <DependentUpon>CameraControlView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\IsMGEN2ToVisibilityConverter.cs" />
-    <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
-      <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableSequenceNavigationView.xaml.cs">
-      <DependentUpon>AnchorableSequenceNavigationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Plugins\AvailablePluginsView.xaml.cs">
-      <DependentUpon>AvailablePluginsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Plugins\PluginsView.xaml.cs">
-      <DependentUpon>PluginsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\ApplicationDeviceConnectionVM.cs" />
-    <Compile Include="ViewModel\EquipmentVM.cs" />
-    <Compile Include="ViewModel\ImageGeometryProvider.cs" />
-    <Compile Include="ViewModel\ImageSaveController.cs" />
-    <Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
-    <Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
-    <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
-    <Compile Include="ViewModel\Sequencer\Sequence2\Sequence2VM.cs" />
-    <Compile Include="CompositionRoot.cs" />
-    <Compile Include="View\AboutView.xaml.cs">
-      <DependentUpon>AboutView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\About\AboutNINAView.xaml.cs">
-      <DependentUpon>AboutNINAView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\About\AboutPageView.xaml.cs">
-      <DependentUpon>AboutPageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\About\AuthorsView.xaml.cs">
-      <DependentUpon>AuthorsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\About\LicenseView.xaml.cs">
-      <DependentUpon>LicenseView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\About\ThirdPartyLicensesView.xaml.cs">
-      <DependentUpon>ThirdPartyLicensesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Camera\CameraTemplateSelector.cs" />
-    <Compile Include="View\Equipment\Guider\MetaGuideSetupView.xaml.cs">
-      <DependentUpon>MetaGuideSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\PHD2SetupView.xaml.cs">
-      <DependentUpon>PHD2SetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Camera\FLICameraSetupView.xaml.cs">
-      <DependentUpon>FLICameraSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Dome\DomeView.xaml.cs">
-      <DependentUpon>DomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\FlatDevice\ArteskyFlatBoxSetupView.xaml.cs">
-      <DependentUpon>ArteskyFlatBoxSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\FlatDevice\PegasusAstroFlatMasterSetupView.xaml.cs">
-      <DependentUpon>PegasusAstroFlatMasterSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\FlatDevice\AlnitakSetupView.xaml.cs">
-      <DependentUpon>AlnitakSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\FlatDevice\WizardGridCellTemplateSelector.cs" />
-    <Compile Include="View\Equipment\Focuser\PegasusAstroUltimatePowerBoxV2StepperMotorSetupView.xaml.cs">
-      <DependentUpon>PegasusAstroUltimatePowerBoxV2StepperMotorSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\DefaultDetailView.xaml.cs">
-      <DependentUpon>DefaultDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\GuiderTemplateSelector.cs" />
-    <Compile Include="View\Equipment\Guider\DirectGuiderDetailView.xaml.cs">
-      <DependentUpon>DirectGuiderDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\PHD2DetailView.xaml.cs">
-      <DependentUpon>PHD2DetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\MetaGuideDetailView.xaml.cs">
-      <DependentUpon>MetaGuideDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\MGenDetailView.xaml.cs">
-      <DependentUpon>MGenDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\FlatDevice\FlatDeviceView.xaml.cs">
-      <DependentUpon>FlatDeviceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\SafetyMonitor\SafetyMonitorView.xaml.cs">
-      <DependentUpon>SafetyMonitorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\EagleBooleanSwitchConverter.cs" />
-    <Compile Include="View\Equipment\Switch\EagleVariablePowerSwitchConverter.cs" />
-    <Compile Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2ChartsView.xaml.cs">
-      <DependentUpon>PegasusAstroUltimatePowerboxV2ChartsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2.xaml.cs">
-      <DependentUpon>PegasusAstroUltimatePowerboxV2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2SetupView.xaml.cs">
-      <DependentUpon>PegasusAstroUltimatePowerboxV2SetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\EagleSetupView.xaml.cs">
-      <DependentUpon>EagleSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\SwitchHubTemplateSelector.cs" />
-    <Compile Include="ViewModel\DeepSkyObjectSearchVM.cs" />
-    <Compile Include="ViewModel\FocusTargetsVM.cs" />
-    <Compile Include="ViewModel\AberrationInspectorVM.cs" />
-    <Compile Include="ViewModel\ApplicationStatusVM.cs" />
-    <Compile Include="ViewModel\DockManagerVM.cs" />
-    <Compile Include="ViewModel\FlatWizard\FlatWizardUserPromptVM.cs" />
-    <Compile Include="ViewModel\FlatWizard\FlatWizardVM.cs" />
-    <Compile Include="ViewModel\FramingAssistant\SkyMapAnnotator.cs" />
-    <Compile Include="ViewModel\FramingAssistant\FramingAssistantVM.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\ImageHistory\ImageHistoryVM.cs" />
-    <Compile Include="ViewModel\ImageStatisticsVM.cs" />
-    <Compile Include="ViewModel\ImagingVM.cs" />
-    <Compile Include="ViewModel\OptionsVM.cs" />
-    <Compile Include="ViewModel\PolarAlignmentVM.cs" />
-    <Compile Include="ViewModel\ProfileSelectVM.cs" />
-    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleSequenceVM.cs" />
-    <Compile Include="ViewModel\SkyAtlasVM.cs" />
-    <Compile Include="ViewModel\ThumbnailVM.cs" />
-    <Compile Include="ViewModel\VersionCheckVM.cs" />
-    <Compile Include="View\AberrationInspectorView.xaml.cs">
-      <DependentUpon>AberrationInspectorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Camera\FileCameraSetupView.xaml.cs">
-      <DependentUpon>FileCameraSetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\WeatherData\WeatherDataView.xaml.cs">
-      <DependentUpon>WeatherDataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableAutoFocusView.xaml.cs">
-      <DependentUpon>AnchorableAutoFocusView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableExposureCalculatorView.xaml.cs">
-      <DependentUpon>AnchorableExposureCalculatorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableFlatDeviceView.xaml.cs">
-      <DependentUpon>AnchorableFlatDeviceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableFocusTargetsView.xaml.cs">
-      <DependentUpon>AnchorableFocusTargetsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableCameraControlView.xaml.cs">
-      <DependentUpon>AnchorableCameraControlView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableCameraView.xaml.cs">
-      <DependentUpon>AnchorableCameraView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableFilterWheelView.xaml.cs">
-      <DependentUpon>AnchorableFilterWheelView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableFocuserView.xaml.cs">
-      <DependentUpon>AnchorableFocuserView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableImageHistoryView.xaml.cs">
-      <DependentUpon>AnchorableImageHistoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableImageStatisticsView.xaml.cs">
-      <DependentUpon>AnchorableImageStatisticsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableGuiderView.xaml.cs">
-      <DependentUpon>AnchorableGuiderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorablePlateSolveView.xaml.cs">
-      <DependentUpon>AnchorablePlateSolveView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorablePolarAlignmentView.xaml.cs">
-      <DependentUpon>AnchorablePolarAlignmentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableRotatorView.xaml.cs">
-      <DependentUpon>AnchorableRotatorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableSafetyMonitorView.xaml.cs">
-      <DependentUpon>AnchorableSafetyMonitorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableSequenceView.xaml.cs">
-      <DependentUpon>AnchorableSequenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableSwitchHubView.xaml.cs">
-      <DependentUpon>AnchorableSwitchHubView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableTelescopeView.xaml.cs">
-      <DependentUpon>AnchorableTelescopeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableDomeView.xaml.cs">
-      <DependentUpon>AnchorableDomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableWeatherDataView.xaml.cs">
-      <DependentUpon>AnchorableWeatherDataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AutoFocusChart.xaml.cs">
-      <DependentUpon>AutoFocusChart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Camera\CameraCoolingChartsView.xaml.cs">
-      <DependentUpon>CameraCoolingChartsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Camera\CameraView.xaml.cs">
-      <DependentUpon>CameraView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Connector.xaml.cs">
-      <DependentUpon>Connector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\Eagle.xaml.cs">
-      <DependentUpon>Eagle.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\Generic.xaml.cs">
-      <DependentUpon>Generic.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\SwitchHubView.xaml.cs">
-      <DependentUpon>SwitchHubView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Switch\SwitchTemplateSelector.cs" />
-    <Compile Include="View\Equipment\TabPage.xaml.cs">
-      <DependentUpon>TabPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\FilterWheel\FilterWheelView.xaml.cs">
-      <DependentUpon>FilterWheelView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FlatWizard\FlatWizardFilterSettingsWrapperView.xaml.cs">
-      <DependentUpon>FlatWizardFilterSettingsWrapperView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FlatWizard\FlatWizardUserPrompt.xaml.cs">
-      <DependentUpon>FlatWizardUserPrompt.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FlatWizard\FlatWizardView.xaml.cs">
-      <DependentUpon>FlatWizardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Focuser\FocuserView.xaml.cs">
-      <DependentUpon>FocuserView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FrameFocusView.xaml.cs">
-      <DependentUpon>FrameFocusView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FramingAssistantView.xaml.cs">
-      <DependentUpon>FramingAssistantView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HistogramView.xaml.cs">
-      <DependentUpon>HistogramView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ImageControlView.xaml.cs">
-      <DependentUpon>ImageControlView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ImageHistoryPlotView.xaml.cs">
-      <DependentUpon>ImageHistoryPlotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ImageStatisticsView.xaml.cs">
-      <DependentUpon>ImageStatisticsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ImageView.xaml.cs">
-      <DependentUpon>ImageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ManualRotatorView.xaml.cs">
-      <DependentUpon>ManualRotatorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MeridianFlipView.xaml.cs">
-      <DependentUpon>MeridianFlipView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\EquipmentView.xaml.cs">
-      <DependentUpon>EquipmentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\DomeView.xaml.cs">
-      <DependentUpon>DomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\AutoFocusView.xaml.cs">
-      <DependentUpon>AutoFocusView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\ImagingView.xaml.cs">
-      <DependentUpon>ImagingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\PlateSolverView.xaml.cs">
-      <DependentUpon>PlateSolverView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\GeneralView.xaml.cs">
-      <DependentUpon>GeneralView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\OverView.xaml.cs">
-      <DependentUpon>OverView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\GuiderGraph.xaml.cs">
-      <DependentUpon>GuiderGraph.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Guider\GuiderView.xaml.cs">
-      <DependentUpon>GuiderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Options\TabPage.xaml.cs">
-      <DependentUpon>TabPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PlateSolveView.xaml.cs">
-      <DependentUpon>PlateSolveView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PolarAlignmentView.xaml.cs">
-      <DependentUpon>PolarAlignmentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PolarScopeView.xaml.cs">
-      <DependentUpon>PolarScopeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Rotator\RotatorView.xaml.cs">
-      <DependentUpon>RotatorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\AdvancedSequencer\AdvancedSequencerView.xaml.cs">
-      <DependentUpon>AdvancedSequencerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\SequencerVMTemplateSelector.cs" />
-    <Compile Include="View\Sequencer\SequenceView.xaml.cs">
-      <DependentUpon>SequenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\SimpleSequencer\SequenceModeIsRotateToVisibilityConverter.cs" />
-    <Compile Include="View\Sequencer\SimpleSequencer\SimpleDSOContainerView.xaml.cs">
-      <DependentUpon>SimpleDSOContainerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\SimpleSequencer\SimpleSequenceView.xaml.cs">
-      <DependentUpon>SimpleSequenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SkyAtlasView.xaml.cs">
-      <DependentUpon>SkyAtlasView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SkyMapOverlayView.xaml.cs">
-      <DependentUpon>SkyMapOverlayView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Telescope\TelescopeLatLongSyncView.xaml.cs">
-      <DependentUpon>TelescopeLatLongSyncView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Equipment\Telescope\TelescopeView.xaml.cs">
-      <DependentUpon>TelescopeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SubSampleView.xaml.cs">
-      <DependentUpon>SubSampleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Thumbnail\ThumbnailGradeToImageConverter.cs" />
-    <Compile Include="View\Thumbnail\ThumbnailListView.xaml.cs">
-      <DependentUpon>ThumbnailListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ProfileSelectView.xaml.cs">
-      <DependentUpon>ProfileSelectView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Thumbnail\ThumbnailGradeToButtonImageConverter.cs" />
-    <Compile Include="View\VersionCheckView.xaml.cs">
-      <DependentUpon>VersionCheckView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ViewModel\ApplicationVM.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Resources\StaticResources\DataTemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\Markdown.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\Oxyplot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\AvalonDock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Styles\Window.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AberrationInspectorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AboutView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\About\AboutNINAView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\About\AboutPageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\About\AboutSDKsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\About\AuthorsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\About\LicenseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\About\ThirdPartyLicensesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CameraControlView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Guider\MetaGuideSetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Guider\PHD2SetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Camera\FileCameraSetupView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Camera\FLICameraSetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Dome\DomeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\FlatDevice\ArteskyFlatBoxSetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\FlatDevice\PegasusAstroFlatMasterSetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Focuser\PegasusAstroUltimatePowerBoxV2StepperMotorSetupView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Guider\DefaultDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Guider\DirectGuiderDetailView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Guider\PHD2DetailView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Guider\MetaGuideDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Guider\MGenDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\FlatDevice\AlnitakSetupView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\FlatDevice\FlatDeviceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\SafetyMonitor\SafetyMonitorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2ChartsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2SetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Equipment\WeatherData\WeatherDataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableAutoFocusView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableExposureCalculatorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableFlatDeviceView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Imaging\AnchorableFocusTargetsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableCameraControlView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableCameraView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableFilterWheelView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableFocuserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableImageHistoryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableImageStatisticsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableGuiderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorablePlateSolveView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorablePolarAlignmentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableRotatorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableSafetyMonitorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableSequence2View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Imaging\AnchorableSequenceNavigationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableSequenceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableSwitchHubView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableTelescopeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableDomeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Imaging\AnchorableWeatherDataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AutoFocusChart.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Camera\CameraCoolingChartsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Camera\CameraView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Connector.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Switch\Eagle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Switch\EagleSetupView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Switch\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Switch\SwitchHubView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\TabPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\FilterWheel\FilterWheelView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\FlatWizard\FlatWizardFilterSettingsWrapperView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\FlatWizard\FlatWizardUserPrompt.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\FlatWizard\FlatWizardView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Focuser\FocuserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\FrameFocusView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\FramingAssistantView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HistogramView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ImageControlView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ImageHistoryPlotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ImageStatisticsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ImageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ManualRotatorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MeridianFlipView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Plugins\AvailablePluginsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\EquipmentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\DomeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\AutoFocusView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\ImagingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\PlateSolverView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\GeneralView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\OverView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Guider\GuiderGraph.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Guider\GuiderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Plugins\PluginsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Options\TabPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PlateSolveView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PolarAlignmentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PolarScopeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Rotator\RotatorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\AdvancedSequencer\AdvancedSequencerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\SequenceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\SimpleSequencer\SimpleDSOContainerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\SimpleSequencer\SimpleSequenceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SkyAtlasView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SkyMapOverlayView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Telescope\TelescopeLatLongSyncView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Equipment\Telescope\TelescopeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SubSampleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Thumbnail\ThumbnailListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ProfileSelectView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\VersionCheckView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Content Include="Database\Initial\initial_data.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\Initial\initial_schema.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\Migration\1.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\Migration\2.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\Migration\3.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\Migration\5.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\MallinCam\mallincam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Risingcam\nncam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\SBIG\SBIGUDrv.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\SQLite\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <ContentWithTargetPath Include="External\x64\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x64'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>msvcp100.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x64\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x64'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>msvcp140.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x64\VCRedis\msvcr100.dll" Condition="'$(Platform)' == 'x64'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>msvcr100.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x64\VCRedis\vcruntime140.dll" Condition="'$(Platform)' == 'x64'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>vcruntime140.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x64\VCRedis\vcruntime140_1.dll" Condition="'$(Platform)' == 'x64'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>vcruntime140_1.dll</TargetPath>
-    </ContentWithTargetPath>
-    <Content Include="External\x64\SVBony\SVBCameraSDK.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\MallinCam\mallincam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Risingcam\nncam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\SBIG\SBIGUDrv.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\SQLite\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <ContentWithTargetPath Include="External\x86\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x86'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>msvcp100.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x86\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x86'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>msvcp140.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x86\VCRedis\msvcr100.dll" Condition="'$(Platform)' == 'x86'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>msvcr100.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="External\x86\VCRedis\vcruntime140.dll" Condition="'$(Platform)' == 'x86'">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>vcruntime140.dll</TargetPath>
-    </ContentWithTargetPath>
-    <Content Include="External\x86\SVBony\SVBCameraSDK.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Utility\DCRaw\dcraw.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Utility\ExifTool\exiftool.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="..\NINA.sln.licenseheader">
-      <Link>NINA.sln.licenseheader</Link>
-    </None>
-    <None Include="Resources\avalondock.config" />
-    <Content Include="Sequencer\Examples\Basic Sequence End.template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sequencer\Examples\Basic Sequence Startup.template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sequencer\Examples\Basic Sequence Target.template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="Resources\astrometry.net.png" />
-    <Content Include="3rd-party-licenses.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\AllPro\spikahidapi64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\AllPro\spikausbd.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\ASI\ASICamera2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\ASI\EFW_filter.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Atik\Atik.Core.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Atik\AtikCameras.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Atik\FlyCapture2_v140.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Atik\libiomp5md.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\FLI\libfli.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\FreeImage\FreeImage.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\FTDI\ftd2xx.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\MGEN\MG3lib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\NOVAS\NOVAS31lib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Omegon\omegonprocam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\QHYCCD\ftd2xx.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\QHYCCD\qhyccd.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\QHYCCD\tbb.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\SOFA\SOFAlib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\ToupTek\toupcam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\AllPro\hidapi.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\AllPro\spikausbd.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\ASI\ASICamera2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\ASI\EFW_filter.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Atik\Atik.Core.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Atik\AtikCameras.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Atik\FlyCapture2_v140.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Atik\libiomp5md.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\FLI\libfli.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\FreeImage\FreeImage.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\FTDI\ftd2xx.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\MGEN\MG3lib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\NOVAS\NOVAS31lib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Omegon\omegonprocam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\QHYCCD\ftd2xx.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\QHYCCD\qhyccd.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\QHYCCD\tbb.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\SOFA\SOFAlib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="Logo_Nina.ico" />
-    <Resource Include="Resources\Logo_Nina.png" />
-    <Resource Include="Resources\Logo_Nina.ico" />
-    <Content Include="External\x86\ToupTek\toupcam.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="Resources\cancel-32.png" />
-    <Resource Include="Resources\pause-32.png" />
-    <Resource Include="Resources\play-32.png" />
-    <Content Include="External\x64\NOVAS\cio_ra.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\JPLEPH">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\NOVAS\cio_ra.bin">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\ToupTek\toupcam.lib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\Omegon\omegonprocam.lib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x64\ASI\ASICamera2.lib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\Omegon\omegonprocam.lib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="External\x86\ToupTek\toupcam.lib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="NINA.ruleset" />
-    <None Include="packages.config" />
-    <SplashScreen Include="Resources\ninasplash.png" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Content Include="LICENSE.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Properties\app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\observatory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="observatory.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Credits.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\nikoncswrapper\nikoncswrapper.csproj">
-      <Project>{aade1df5-4c46-4760-b72b-474d90336f5b}</Project>
-      <Name>nikoncswrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
-      <Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
-      <Name>NINA.Astrometry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Core.WPF\NINA.WPF.Base.csproj">
-      <Project>{a407425a-4bf0-429e-8867-045c4cd10d3f}</Project>
-      <Name>NINA.WPF.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
-      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
-      <Name>NINA.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
-      <Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
-      <Name>NINA.Equipment</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
-      <Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
-      <Name>NINA.Image</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
-      <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
-      <Name>NINA.MGEN</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
-      <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
-      <Name>NINA.PlateSolving</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Plugin\NINA.Plugin.csproj">
-      <Project>{03ace0fa-069a-43cf-8b20-7bb3c32d8c1d}</Project>
-      <Name>NINA.Plugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
-      <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
-      <Name>NINA.Profile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINA.Sequencer\NINA.Sequencer.csproj">
-      <Project>{537a7a82-8c12-45e9-abad-b6b3729d6cb1}</Project>
-      <Name>NINA.Sequencer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NINACustomControlLibrary\NINACustomControlLibrary.csproj">
-      <Project>{39fefc1e-7a69-440d-b38a-5b9469353491}</Project>
-      <Name>NINACustomControlLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="External\x64\Altair\" />
-    <Folder Include="External\x64\Canon\" />
-    <Folder Include="External\x64\Nikon\Type0001\" />
-    <Folder Include="External\x64\Nikon\Type0002\" />
-    <Folder Include="External\x64\Nikon\Type0003\" />
-    <Folder Include="External\x64\Nikon\Type0004\" />
-    <Folder Include="External\x64\Nikon\Type0005\" />
-    <Folder Include="External\x64\Nikon\Type0006\" />
-    <Folder Include="External\x64\Nikon\Type0007\" />
-    <Folder Include="External\x64\Nikon\Type0008\" />
-    <Folder Include="External\x64\Nikon\Type0009\" />
-    <Folder Include="External\x64\Nikon\Type0010\" />
-    <Folder Include="External\x64\Nikon\Type0011\" />
-    <Folder Include="External\x64\Nikon\Type0012\" />
-    <Folder Include="External\x64\Nikon\Type0013\" />
-    <Folder Include="External\x64\Nikon\Type0014\" />
-    <Folder Include="External\x64\Nikon\Type0015\" />
-    <Folder Include="External\x64\Nikon\Type0016\" />
-    <Folder Include="External\x64\Nikon\Type0017\" />
-    <Folder Include="External\x64\Nikon\Type0018\" />
-    <Folder Include="External\x64\Nikon\Type0019\" />
-    <Folder Include="External\x64\Nikon\Type0020\" />
-    <Folder Include="External\x64\Nikon\Type0021\" />
-    <Folder Include="External\x64\Nikon\Type0022\" />
-    <Folder Include="External\x64\Nikon\Type0023\" />
-    <Folder Include="External\x64\Nikon\Type0024\" />
-    <Folder Include="External\x64\Nikon\Type0025\" />
-    <Folder Include="External\x64\Nikon\Type0026\" />
-    <Folder Include="External\x64\Nikon\Type0027\" />
-    <Folder Include="External\x64\Nikon\Type0028\" />
-    <Folder Include="External\x64\Nikon\Type0029\" />
-    <Folder Include="External\x86\Altair\" />
-    <Folder Include="External\x86\Canon\" />
-    <Folder Include="External\x86\Nikon\Type0001\" />
-    <Folder Include="External\x86\Nikon\Type0002\" />
-    <Folder Include="External\x86\Nikon\Type0003\" />
-    <Folder Include="External\x86\Nikon\Type0004\" />
-    <Folder Include="External\x86\Nikon\Type0005\" />
-    <Folder Include="External\x86\Nikon\Type0006\" />
-    <Folder Include="External\x86\Nikon\Type0007\" />
-    <Folder Include="External\x86\Nikon\Type0008\" />
-    <Folder Include="External\x86\Nikon\Type0009\" />
-    <Folder Include="External\x86\Nikon\Type0010\" />
-    <Folder Include="External\x86\Nikon\Type0011\" />
-    <Folder Include="External\x86\Nikon\Type0012\" />
-    <Folder Include="External\x86\Nikon\Type0013\" />
-    <Folder Include="External\x86\Nikon\Type0014\" />
-    <Folder Include="External\x86\Nikon\Type0015\" />
-    <Folder Include="External\x86\Nikon\Type0016\" />
-    <Folder Include="External\x86\Nikon\Type0017\" />
-    <Folder Include="External\x86\Nikon\Type0018\" />
-    <Folder Include="External\x86\Nikon\Type0019\" />
-    <Folder Include="External\x86\Nikon\Type0020\" />
-    <Folder Include="External\x86\Nikon\Type0021\" />
-    <Folder Include="External\x86\Nikon\Type0022\" />
-    <Folder Include="External\x86\Nikon\Type0023\" />
-    <Folder Include="External\x86\Nikon\Type0024\" />
-    <Folder Include="External\x86\Nikon\Type0025\" />
-    <Folder Include="External\x86\Nikon\Type0026\" />
-    <Folder Include="External\x86\Nikon\Type0027\" />
-    <Folder Include="External\x86\Nikon\Type0028\" />
-    <Folder Include="External\x86\Nikon\Type0029\" />
-    <Folder Include="ViewModel\Equipment\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-      if exist "$(ProjectDir)External\x64\Altair" (
-      echo "Copy Altair x64 DLLs"
-      xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
-      )
-      if exist "$(ProjectDir)External\x86\Altair" (
-      echo "Copy Altair x86 DLLs"
-      xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
-      )
+	<Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{7DEC1B46-9701-4E49-90C1-F4427845669E}</ProjectGuid>
+		<OutputType>WinExe</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>NINA</RootNamespace>
+		<AssemblyName>NINA</AssemblyName>
+		<TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+		<FileAlignment>512</FileAlignment>
+		<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+		<WarningLevel>4</WarningLevel>
+		<IsWebBootstrapper>false</IsWebBootstrapper>
+		<NuGetPackageImportStamp>
+		</NuGetPackageImportStamp>
+		<TargetFrameworkProfile />
+		<PublishUrl>publish\</PublishUrl>
+		<Install>true</Install>
+		<InstallFrom>Disk</InstallFrom>
+		<UpdateEnabled>false</UpdateEnabled>
+		<UpdateMode>Foreground</UpdateMode>
+		<UpdateInterval>7</UpdateInterval>
+		<UpdateIntervalUnits>Days</UpdateIntervalUnits>
+		<UpdatePeriodically>false</UpdatePeriodically>
+		<UpdateRequired>false</UpdateRequired>
+		<MapFileExtensions>true</MapFileExtensions>
+		<ApplicationRevision>0</ApplicationRevision>
+		<ApplicationVersion>0.1.0.0</ApplicationVersion>
+		<UseApplicationTrust>false</UseApplicationTrust>
+		<PublishWizardCompleted>true</PublishWizardCompleted>
+		<BootstrapperEnabled>true</BootstrapperEnabled>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationIcon>Logo_Nina.ico</ApplicationIcon>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ManifestCertificateThumbprint>D53E041E3EAACF37CBF5FD6A81ECCF6577A70301</ManifestCertificateThumbprint>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ManifestKeyFile>AstrophotographyBuddy_TemporaryKey.pfx</ManifestKeyFile>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateManifests>false</GenerateManifests>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetZone>LocalIntranet</TargetZone>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+	</PropertyGroup>
+	<PropertyGroup>
+		<SignManifests>false</SignManifests>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\x64\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DebugType>full</DebugType>
+		<PlatformTarget>x64</PlatformTarget>
+		<ErrorReport>prompt</ErrorReport>
+		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+		<UseVSHostingProcess>false</UseVSHostingProcess>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+		<OutputPath>bin\x64\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Optimize>true</Optimize>
+		<DebugType>full</DebugType>
+		<PlatformTarget>x64</PlatformTarget>
+		<ErrorReport>prompt</ErrorReport>
+		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+		<LangVersion>default</LangVersion>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\x86\Debug\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DebugType>full</DebugType>
+		<PlatformTarget>x86</PlatformTarget>
+		<ErrorReport>prompt</ErrorReport>
+		<CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
+		<LangVersion>default</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+		<OutputPath>bin\x86\Release\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Optimize>true</Optimize>
+		<DebugType>full</DebugType>
+		<PlatformTarget>x86</PlatformTarget>
+		<ErrorReport>prompt</ErrorReport>
+		<CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
+		<LangVersion>default</LangVersion>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<PropertyGroup>
+		<StartupObject>NINA.App</StartupObject>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignedRelease|x64'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\x64\SignedRelease\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Optimize>true</Optimize>
+		<DebugType>full</DebugType>
+		<PlatformTarget>x64</PlatformTarget>
+		<LangVersion>default</LangVersion>
+		<ErrorReport>prompt</ErrorReport>
+		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+		<Prefer32Bit>true</Prefer32Bit>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignedRelease|x86'">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\x86\SignedRelease\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Optimize>true</Optimize>
+		<DebugType>full</DebugType>
+		<PlatformTarget>x86</PlatformTarget>
+		<LangVersion>default</LangVersion>
+		<ErrorReport>prompt</ErrorReport>
+		<CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
+		<Prefer32Bit>true</Prefer32Bit>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+			<HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
+		</Reference>
+		<Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+			<HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
+		</Reference>
+		<Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+			<HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+			<HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
+		</Reference>
+		<Reference Include="AsyncEnumerable, Version=4.0.2.0, Culture=neutral, PublicKeyToken=0426b068161bd1d1, processorArchitecture=MSIL">
+			<HintPath>..\packages\AsyncEnumerator.4.0.2\lib\net461\AsyncEnumerable.dll</HintPath>
+		</Reference>
+		<Reference Include="AvalonDock, Version=4.60.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+			<HintPath>..\packages\Dirkster.AvalonDock.4.60.0\lib\net40\AvalonDock.dll</HintPath>
+		</Reference>
+		<Reference Include="CSharpFITS_v1.1, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\CSharpFITS.1.1\lib\Net20\CSharpFITS_v1.1.dll</HintPath>
+		</Reference>
+		<Reference Include="CsvHelper, Version=27.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+			<HintPath>..\packages\CsvHelper.27.1.1\lib\net47\CsvHelper.dll</HintPath>
+		</Reference>
+		<Reference Include="DotNetProjects.Wpf.Extended.Toolkit, Version=4.6.97.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+			<HintPath>..\packages\DotNetProjects.Extended.Wpf.Toolkit.4.6.97\lib\net40\DotNetProjects.Wpf.Extended.Toolkit.dll</HintPath>
+		</Reference>
+		<Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+			<HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+		</Reference>
+		<Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+			<HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+		</Reference>
+		<Reference Include="ICSharpCode.AvalonEdit, Version=6.1.2.30, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+			<HintPath>..\packages\AvalonEdit.6.1.2.30\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
+		</Reference>
+		<Reference Include="MdXaml, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\MdXaml.1.11.0\lib\net45\MdXaml.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+			<HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+			<HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+			<HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+			<HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+			<HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+		</Reference>
+		<Reference Include="Namotion.Reflection, Version=2.0.3.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+			<HintPath>..\packages\Namotion.Reflection.2.0.3\lib\net45\Namotion.Reflection.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+			<HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Ninject, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+			<HintPath>..\packages\Ninject.4.0.0-beta-0134\lib\net45\Ninject.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.AsyncEx.Context, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.AsyncEx.Context.5.1.2\lib\net461\Nito.AsyncEx.Context.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.AsyncEx.Coordination, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.AsyncEx.Coordination.5.1.2\lib\net461\Nito.AsyncEx.Coordination.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.AsyncEx.Interop.WaitHandles, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.AsyncEx.Interop.WaitHandles.5.1.2\lib\net461\Nito.AsyncEx.Interop.WaitHandles.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.AsyncEx.Oop, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.AsyncEx.Oop.5.1.2\lib\net461\Nito.AsyncEx.Oop.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.AsyncEx.Tasks, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.AsyncEx.Tasks.5.1.2\lib\net461\Nito.AsyncEx.Tasks.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.Cancellation, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.Cancellation.1.1.2\lib\net461\Nito.Cancellation.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.Collections.Deque, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.Collections.Deque.1.1.1\lib\net461\Nito.Collections.Deque.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.Disposables, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.Disposables.2.2.1\lib\net461\Nito.Disposables.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.Mvvm.Async, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.Mvvm.Async.1.0.0-pre-03\lib\netstandard2.0\Nito.Mvvm.Async.dll</HintPath>
+		</Reference>
+		<Reference Include="Nito.Mvvm.Core, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\Nito.Mvvm.Core.1.3.1\lib\net461\Nito.Mvvm.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="NJsonSchema, Version=10.5.2.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+			<HintPath>..\packages\NJsonSchema.10.5.2\lib\net45\NJsonSchema.dll</HintPath>
+		</Reference>
+		<Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+			<HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
+		</Reference>
+		<Reference Include="OxyPlot.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+			<HintPath>..\packages\OxyPlot.Wpf.2.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+		</Reference>
+		<Reference Include="ReachFramework" />
+		<Reference Include="System" />
+		<Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Collections.Immutable, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Collections.Immutable.5.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
+		</Reference>
+		<Reference Include="System.ComponentModel.Composition" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Configuration" />
+		<Reference Include="System.Configuration.Install" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Data.SQLite, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+			<HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\lib\net46\System.Data.SQLite.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Data.SQLite.EF6, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Data.SQLite.EF6.1.0.115.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Data.SQLite.Linq, Version=1.0.115.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Data.SQLite.Linq.1.0.115.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Deployment" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.IO.Compression" />
+		<Reference Include="System.IO.Compression.FileSystem" />
+		<Reference Include="System.Management" />
+		<Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Net" />
+		<Reference Include="System.Numerics" />
+		<Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Printing" />
+		<Reference Include="System.Runtime.Caching" />
+		<Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Runtime.Serialization" />
+		<Reference Include="System.ServiceModel" />
+		<Reference Include="System.ServiceModel.Web" />
+		<Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Web" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+			<HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Xml" />
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="System.Xaml">
+			<RequiredTargetFramework>4.0</RequiredTargetFramework>
+		</Reference>
+		<Reference Include="ToastNotifications, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+			<HintPath>..\packages\ToastNotifications.2.5.1\lib\net40\ToastNotifications.dll</HintPath>
+		</Reference>
+		<Reference Include="ToastNotifications.Messages, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+			<HintPath>..\packages\ToastNotifications.Messages.2.5.1\lib\net40\ToastNotifications.Messages.dll</HintPath>
+		</Reference>
+		<Reference Include="ToggleSwitch, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<HintPath>..\packages\ToggleSwitch.1.2.0\lib\net46\ToggleSwitch.dll</HintPath>
+		</Reference>
+		<Reference Include="WindowsBase" />
+		<Reference Include="PresentationCore" />
+		<Reference Include="PresentationFramework" />
+	</ItemGroup>
+	<ItemGroup>
+		<ApplicationDefinition Include="App.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</ApplicationDefinition>
+		<Compile Include="..\CommonAssemblyInfo.cs">
+			<Link>Properties\CommonAssemblyInfo.cs</Link>
+		</Compile>
+		<Compile Include="AppJumpListExtensions.cs" />
+		<Compile Include="API\SGP\SGPServiceBackend.cs" />
+		<Compile Include="API\SGP\SGPServiceFrontend.cs" />
+		<Compile Include="API\SGP\SGPServiceHost.cs" />
+		<Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml.cs">
+			<DependentUpon>AstrometryIndexDownloader.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloaderVM.cs" />
+		<Compile Include="Interfaces\IMainWindowVM.cs" />
+		<Compile Include="Utility\GlobalObjects.cs" />
+		<Compile Include="Utility\IoCBindings.cs" />
+		<Compile Include="Utility\PaneTemplateSelector.cs" />
+		<Compile Include="Utility\PluggableAutoFocusVMFactory.cs" />
+		<Compile Include="Utility\PluggableBehaviorManager.cs" />
+		<Compile Include="Utility\PluggableBehaviorSelector.cs" />
+		<Compile Include="Utility\ProjectVersion.cs" />
+		<Compile Include="ViewModel\AboutSDKsVM.cs" />
+		<Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
+		<Compile Include="ViewModel\ImageControlVM.cs" />
+		<Compile Include="Interfaces\IPluginsVM.cs" />
+		<Compile Include="ViewModel\Plugins\ExtendedPluginManifest.cs" />
+		<Compile Include="ViewModel\Plugins\PluginInstallerDescriptionTemplateSelector.cs" />
+		<Compile Include="ViewModel\Plugins\PluginState.cs" />
+		<Compile Include="ViewModel\Plugins\PluginStateToDataTemplateSelector.cs" />
+		<Compile Include="ViewModel\Plugins\PluginsVM.cs" />
+		<Compile Include="ViewModel\Plugins\PluginOptionsDataTemplateSelector.cs" />
+		<Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
+		<Compile Include="ViewModel\Sequencer\SequencerBaseVM.cs" />
+		<Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
+		<Compile Include="ViewModel\MainWindowVM.cs" />
+		<Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
+		<Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
+		<Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleStartContainer.cs" />
+		<Compile Include="View\About\AboutSDKsView.xaml.cs">
+			<DependentUpon>AboutSDKsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\CameraControlView.xaml.cs">
+			<DependentUpon>CameraControlView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\IsMGEN2ToVisibilityConverter.cs" />
+		<Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
+			<DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableSequenceNavigationView.xaml.cs">
+			<DependentUpon>AnchorableSequenceNavigationView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Plugins\AvailablePluginsView.xaml.cs">
+			<DependentUpon>AvailablePluginsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Plugins\PluginsView.xaml.cs">
+			<DependentUpon>PluginsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="ViewModel\ApplicationDeviceConnectionVM.cs" />
+		<Compile Include="ViewModel\EquipmentVM.cs" />
+		<Compile Include="ViewModel\ImageGeometryProvider.cs" />
+		<Compile Include="ViewModel\ImageSaveController.cs" />
+		<Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
+		<Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
+		<Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
+		<Compile Include="ViewModel\Sequencer\Sequence2\Sequence2VM.cs" />
+		<Compile Include="CompositionRoot.cs" />
+		<Compile Include="View\AboutView.xaml.cs">
+			<DependentUpon>AboutView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\About\AboutNINAView.xaml.cs">
+			<DependentUpon>AboutNINAView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\About\AboutPageView.xaml.cs">
+			<DependentUpon>AboutPageView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\About\AuthorsView.xaml.cs">
+			<DependentUpon>AuthorsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\About\LicenseView.xaml.cs">
+			<DependentUpon>LicenseView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\About\ThirdPartyLicensesView.xaml.cs">
+			<DependentUpon>ThirdPartyLicensesView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Camera\CameraTemplateSelector.cs" />
+		<Compile Include="View\Equipment\Guider\MetaGuideSetupView.xaml.cs">
+			<DependentUpon>MetaGuideSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\PHD2SetupView.xaml.cs">
+			<DependentUpon>PHD2SetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Camera\FLICameraSetupView.xaml.cs">
+			<DependentUpon>FLICameraSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Dome\DomeView.xaml.cs">
+			<DependentUpon>DomeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\FlatDevice\ArteskyFlatBoxSetupView.xaml.cs">
+			<DependentUpon>ArteskyFlatBoxSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\FlatDevice\PegasusAstroFlatMasterSetupView.xaml.cs">
+			<DependentUpon>PegasusAstroFlatMasterSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\FlatDevice\AlnitakSetupView.xaml.cs">
+			<DependentUpon>AlnitakSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\FlatDevice\WizardGridCellTemplateSelector.cs" />
+		<Compile Include="View\Equipment\Focuser\PegasusAstroUltimatePowerBoxV2StepperMotorSetupView.xaml.cs">
+			<DependentUpon>PegasusAstroUltimatePowerBoxV2StepperMotorSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\DefaultDetailView.xaml.cs">
+			<DependentUpon>DefaultDetailView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\GuiderTemplateSelector.cs" />
+		<Compile Include="View\Equipment\Guider\DirectGuiderDetailView.xaml.cs">
+			<DependentUpon>DirectGuiderDetailView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\PHD2DetailView.xaml.cs">
+			<DependentUpon>PHD2DetailView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\MetaGuideDetailView.xaml.cs">
+			<DependentUpon>MetaGuideDetailView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\MGenDetailView.xaml.cs">
+			<DependentUpon>MGenDetailView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\FlatDevice\FlatDeviceView.xaml.cs">
+			<DependentUpon>FlatDeviceView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\SafetyMonitor\SafetyMonitorView.xaml.cs">
+			<DependentUpon>SafetyMonitorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\EagleBooleanSwitchConverter.cs" />
+		<Compile Include="View\Equipment\Switch\EagleVariablePowerSwitchConverter.cs" />
+		<Compile Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2ChartsView.xaml.cs">
+			<DependentUpon>PegasusAstroUltimatePowerboxV2ChartsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2.xaml.cs">
+			<DependentUpon>PegasusAstroUltimatePowerboxV2.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2SetupView.xaml.cs">
+			<DependentUpon>PegasusAstroUltimatePowerboxV2SetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\EagleSetupView.xaml.cs">
+			<DependentUpon>EagleSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\SwitchHubTemplateSelector.cs" />
+		<Compile Include="ViewModel\DeepSkyObjectSearchVM.cs" />
+		<Compile Include="ViewModel\FocusTargetsVM.cs" />
+		<Compile Include="ViewModel\AberrationInspectorVM.cs" />
+		<Compile Include="ViewModel\ApplicationStatusVM.cs" />
+		<Compile Include="ViewModel\DockManagerVM.cs" />
+		<Compile Include="ViewModel\FlatWizard\FlatWizardUserPromptVM.cs" />
+		<Compile Include="ViewModel\FlatWizard\FlatWizardVM.cs" />
+		<Compile Include="ViewModel\FramingAssistant\SkyMapAnnotator.cs" />
+		<Compile Include="ViewModel\FramingAssistant\FramingAssistantVM.cs" />
+		<Compile Include="Properties\Settings.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+		<Compile Include="ViewModel\ImageHistory\ImageHistoryVM.cs" />
+		<Compile Include="ViewModel\ImageStatisticsVM.cs" />
+		<Compile Include="ViewModel\ImagingVM.cs" />
+		<Compile Include="ViewModel\OptionsVM.cs" />
+		<Compile Include="ViewModel\PolarAlignmentVM.cs" />
+		<Compile Include="ViewModel\ProfileSelectVM.cs" />
+		<Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleSequenceVM.cs" />
+		<Compile Include="ViewModel\SkyAtlasVM.cs" />
+		<Compile Include="ViewModel\ThumbnailVM.cs" />
+		<Compile Include="ViewModel\VersionCheckVM.cs" />
+		<Compile Include="View\AberrationInspectorView.xaml.cs">
+			<DependentUpon>AberrationInspectorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Camera\FileCameraSetupView.xaml.cs">
+			<DependentUpon>FileCameraSetupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\WeatherData\WeatherDataView.xaml.cs">
+			<DependentUpon>WeatherDataView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableAutoFocusView.xaml.cs">
+			<DependentUpon>AnchorableAutoFocusView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableExposureCalculatorView.xaml.cs">
+			<DependentUpon>AnchorableExposureCalculatorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableFlatDeviceView.xaml.cs">
+			<DependentUpon>AnchorableFlatDeviceView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableFocusTargetsView.xaml.cs">
+			<DependentUpon>AnchorableFocusTargetsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableCameraControlView.xaml.cs">
+			<DependentUpon>AnchorableCameraControlView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableCameraView.xaml.cs">
+			<DependentUpon>AnchorableCameraView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableFilterWheelView.xaml.cs">
+			<DependentUpon>AnchorableFilterWheelView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableFocuserView.xaml.cs">
+			<DependentUpon>AnchorableFocuserView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableImageHistoryView.xaml.cs">
+			<DependentUpon>AnchorableImageHistoryView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableImageStatisticsView.xaml.cs">
+			<DependentUpon>AnchorableImageStatisticsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableGuiderView.xaml.cs">
+			<DependentUpon>AnchorableGuiderView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorablePlateSolveView.xaml.cs">
+			<DependentUpon>AnchorablePlateSolveView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorablePolarAlignmentView.xaml.cs">
+			<DependentUpon>AnchorablePolarAlignmentView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableRotatorView.xaml.cs">
+			<DependentUpon>AnchorableRotatorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableSafetyMonitorView.xaml.cs">
+			<DependentUpon>AnchorableSafetyMonitorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableSequenceView.xaml.cs">
+			<DependentUpon>AnchorableSequenceView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableSwitchHubView.xaml.cs">
+			<DependentUpon>AnchorableSwitchHubView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableTelescopeView.xaml.cs">
+			<DependentUpon>AnchorableTelescopeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableDomeView.xaml.cs">
+			<DependentUpon>AnchorableDomeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\AnchorableWeatherDataView.xaml.cs">
+			<DependentUpon>AnchorableWeatherDataView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\AutoFocusChart.xaml.cs">
+			<DependentUpon>AutoFocusChart.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Camera\CameraCoolingChartsView.xaml.cs">
+			<DependentUpon>CameraCoolingChartsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Camera\CameraView.xaml.cs">
+			<DependentUpon>CameraView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Connector.xaml.cs">
+			<DependentUpon>Connector.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\Eagle.xaml.cs">
+			<DependentUpon>Eagle.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\Generic.xaml.cs">
+			<DependentUpon>Generic.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\SwitchHubView.xaml.cs">
+			<DependentUpon>SwitchHubView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Switch\SwitchTemplateSelector.cs" />
+		<Compile Include="View\Equipment\TabPage.xaml.cs">
+			<DependentUpon>TabPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\FilterWheel\FilterWheelView.xaml.cs">
+			<DependentUpon>FilterWheelView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\FlatWizard\FlatWizardFilterSettingsWrapperView.xaml.cs">
+			<DependentUpon>FlatWizardFilterSettingsWrapperView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\FlatWizard\FlatWizardUserPrompt.xaml.cs">
+			<DependentUpon>FlatWizardUserPrompt.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\FlatWizard\FlatWizardView.xaml.cs">
+			<DependentUpon>FlatWizardView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Focuser\FocuserView.xaml.cs">
+			<DependentUpon>FocuserView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\FrameFocusView.xaml.cs">
+			<DependentUpon>FrameFocusView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\FramingAssistantView.xaml.cs">
+			<DependentUpon>FramingAssistantView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\HistogramView.xaml.cs">
+			<DependentUpon>HistogramView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\ImageControlView.xaml.cs">
+			<DependentUpon>ImageControlView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\ImageHistoryPlotView.xaml.cs">
+			<DependentUpon>ImageHistoryPlotView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\ImageStatisticsView.xaml.cs">
+			<DependentUpon>ImageStatisticsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\ImageView.xaml.cs">
+			<DependentUpon>ImageView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\ManualRotatorView.xaml.cs">
+			<DependentUpon>ManualRotatorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\MeridianFlipView.xaml.cs">
+			<DependentUpon>MeridianFlipView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\EquipmentView.xaml.cs">
+			<DependentUpon>EquipmentView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\DomeView.xaml.cs">
+			<DependentUpon>DomeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\AutoFocusView.xaml.cs">
+			<DependentUpon>AutoFocusView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\ImagingView.xaml.cs">
+			<DependentUpon>ImagingView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\PlateSolverView.xaml.cs">
+			<DependentUpon>PlateSolverView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\GeneralView.xaml.cs">
+			<DependentUpon>GeneralView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Imaging\OverView.xaml.cs">
+			<DependentUpon>OverView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\GuiderGraph.xaml.cs">
+			<DependentUpon>GuiderGraph.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Guider\GuiderView.xaml.cs">
+			<DependentUpon>GuiderView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Options\TabPage.xaml.cs">
+			<DependentUpon>TabPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\PlateSolveView.xaml.cs">
+			<DependentUpon>PlateSolveView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\PolarAlignmentView.xaml.cs">
+			<DependentUpon>PolarAlignmentView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\PolarScopeView.xaml.cs">
+			<DependentUpon>PolarScopeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Rotator\RotatorView.xaml.cs">
+			<DependentUpon>RotatorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Sequencer\AdvancedSequencer\AdvancedSequencerView.xaml.cs">
+			<DependentUpon>AdvancedSequencerView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Sequencer\SequencerVMTemplateSelector.cs" />
+		<Compile Include="View\Sequencer\SequenceView.xaml.cs">
+			<DependentUpon>SequenceView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Sequencer\SimpleSequencer\SequenceModeIsRotateToVisibilityConverter.cs" />
+		<Compile Include="View\Sequencer\SimpleSequencer\SimpleDSOContainerView.xaml.cs">
+			<DependentUpon>SimpleDSOContainerView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Sequencer\SimpleSequencer\SimpleSequenceView.xaml.cs">
+			<DependentUpon>SimpleSequenceView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\SkyAtlasView.xaml.cs">
+			<DependentUpon>SkyAtlasView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\SkyMapOverlayView.xaml.cs">
+			<DependentUpon>SkyMapOverlayView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Telescope\TelescopeLatLongSyncView.xaml.cs">
+			<DependentUpon>TelescopeLatLongSyncView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Equipment\Telescope\TelescopeView.xaml.cs">
+			<DependentUpon>TelescopeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\SubSampleView.xaml.cs">
+			<DependentUpon>SubSampleView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Thumbnail\ThumbnailGradeToImageConverter.cs" />
+		<Compile Include="View\Thumbnail\ThumbnailListView.xaml.cs">
+			<DependentUpon>ThumbnailListView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\ProfileSelectView.xaml.cs">
+			<DependentUpon>ProfileSelectView.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="View\Thumbnail\ThumbnailGradeToButtonImageConverter.cs" />
+		<Compile Include="View\VersionCheckView.xaml.cs">
+			<DependentUpon>VersionCheckView.xaml</DependentUpon>
+		</Compile>
+		<Page Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="MainWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Compile Include="App.xaml.cs">
+			<DependentUpon>App.xaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="ViewModel\ApplicationVM.cs" />
+		<Compile Include="MainWindow.xaml.cs">
+			<DependentUpon>MainWindow.xaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Page Include="Resources\StaticResources\DataTemplates.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="Resources\Styles\Markdown.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="Resources\Styles\Oxyplot.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="Resources\Styles\AvalonDock.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="Resources\Styles\Window.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\AberrationInspectorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\AboutView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\About\AboutNINAView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\About\AboutPageView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\About\AboutSDKsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\About\AuthorsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\About\LicenseView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\About\ThirdPartyLicensesView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\CameraControlView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Guider\MetaGuideSetupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Guider\PHD2SetupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Camera\FileCameraSetupView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Camera\FLICameraSetupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Dome\DomeView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\FlatDevice\ArteskyFlatBoxSetupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\FlatDevice\PegasusAstroFlatMasterSetupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Focuser\PegasusAstroUltimatePowerBoxV2StepperMotorSetupView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Guider\DefaultDetailView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Guider\DirectGuiderDetailView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Guider\PHD2DetailView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Guider\MetaGuideDetailView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Guider\MGenDetailView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\FlatDevice\AlnitakSetupView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\FlatDevice\FlatDeviceView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\SafetyMonitor\SafetyMonitorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2ChartsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\Switch\PegasusAstroUltimatePowerboxV2SetupView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Equipment\WeatherData\WeatherDataView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableAutoFocusView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableExposureCalculatorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableFlatDeviceView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Imaging\AnchorableFocusTargetsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableCameraControlView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableCameraView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableFilterWheelView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableFocuserView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableImageHistoryView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableImageStatisticsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableGuiderView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorablePlateSolveView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorablePolarAlignmentView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableRotatorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableSafetyMonitorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableSequence2View.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Imaging\AnchorableSequenceNavigationView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableSequenceView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableSwitchHubView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableTelescopeView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\AnchorableDomeView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\Imaging\AnchorableWeatherDataView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\AutoFocusChart.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Camera\CameraCoolingChartsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Camera\CameraView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Connector.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Switch\Eagle.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Switch\EagleSetupView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Switch\Generic.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Switch\SwitchHubView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\TabPage.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\FilterWheel\FilterWheelView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\FlatWizard\FlatWizardFilterSettingsWrapperView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\FlatWizard\FlatWizardUserPrompt.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\FlatWizard\FlatWizardView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Focuser\FocuserView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\FrameFocusView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\FramingAssistantView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\HistogramView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\ImageControlView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\ImageHistoryPlotView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\ImageStatisticsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\ImageView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\ManualRotatorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\MeridianFlipView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Plugins\AvailablePluginsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\EquipmentView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\DomeView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\AutoFocusView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\ImagingView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\PlateSolverView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\GeneralView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Imaging\OverView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Guider\GuiderGraph.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Guider\GuiderView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Plugins\PluginsView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Options\TabPage.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\PlateSolveView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\PolarAlignmentView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\PolarScopeView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Rotator\RotatorView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Sequencer\AdvancedSequencer\AdvancedSequencerView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Sequencer\SequenceView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Sequencer\SimpleSequencer\SimpleDSOContainerView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Sequencer\SimpleSequencer\SimpleSequenceView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\SkyAtlasView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\SkyMapOverlayView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Telescope\TelescopeLatLongSyncView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Equipment\Telescope\TelescopeView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\SubSampleView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\Thumbnail\ThumbnailListView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Include="View\ProfileSelectView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Include="View\VersionCheckView.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Properties\AssemblyInfo.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Properties\Resources.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DesignTime>True</DesignTime>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Content Include="Database\Initial\initial_data.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Database\Initial\initial_schema.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Database\Migration\1.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Database\Migration\2.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Database\Migration\3.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Database\Migration\5.sql">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\MallinCam\mallincam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Risingcam\nncam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\SBIG\SBIGUDrv.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\SQLite\SQLite.Interop.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<ContentWithTargetPath Include="External\x64\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x64'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>msvcp100.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x64\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x64'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>msvcp140.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x64\VCRedis\msvcr100.dll" Condition="'$(Platform)' == 'x64'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>msvcr100.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x64\VCRedis\vcruntime140.dll" Condition="'$(Platform)' == 'x64'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>vcruntime140.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x64\VCRedis\vcruntime140_1.dll" Condition="'$(Platform)' == 'x64'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>vcruntime140_1.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x64\VCRedis\vcomp140.dll" Condition="'$(Platform)' == 'x64'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>vcomp140.dll</TargetPath>
+		</ContentWithTargetPath>
+		<Content Include="External\x64\SVBony\SVBCameraSDK.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\MallinCam\mallincam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Risingcam\nncam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\SBIG\SBIGUDrv.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\SQLite\SQLite.Interop.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<ContentWithTargetPath Include="External\x86\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x86'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>msvcp100.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x86\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x86'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>msvcp140.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x86\VCRedis\msvcr100.dll" Condition="'$(Platform)' == 'x86'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>msvcr100.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x86\VCRedis\vcruntime140.dll" Condition="'$(Platform)' == 'x86'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>vcruntime140.dll</TargetPath>
+		</ContentWithTargetPath>
+		<ContentWithTargetPath Include="External\x86\VCRedis\vcomp140.dll" Condition="'$(Platform)' == 'x86'">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>vcomp140.dll</TargetPath>
+		</ContentWithTargetPath>
+		<Content Include="External\x86\SVBony\SVBCameraSDK.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Utility\DCRaw\dcraw.exe">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Utility\ExifTool\exiftool.exe">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<None Include="..\NINA.sln.licenseheader">
+			<Link>NINA.sln.licenseheader</Link>
+		</None>
+		<None Include="Resources\avalondock.config" />
+		<Content Include="Sequencer\Examples\Basic Sequence End.template.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Sequencer\Examples\Basic Sequence Startup.template.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Sequencer\Examples\Basic Sequence Target.template.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Resource Include="Resources\astrometry.net.png" />
+		<Content Include="3rd-party-licenses.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\AllPro\spikahidapi64.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\AllPro\spikausbd.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\ASI\ASICamera2.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\ASI\EFW_filter.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Atik\Atik.Core.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Atik\AtikCameras.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Atik\FlyCapture2_v140.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Atik\libiomp5md.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\FLI\libfli.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\FreeImage\FreeImage.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\FTDI\ftd2xx.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\MGEN\MG3lib.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\NOVAS\NOVAS31lib.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Omegon\omegonprocam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\QHYCCD\ftd2xx.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\QHYCCD\qhyccd.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\QHYCCD\tbb.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\SOFA\SOFAlib.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\ToupTek\toupcam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\AllPro\hidapi.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\AllPro\spikausbd.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\ASI\ASICamera2.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\ASI\EFW_filter.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Atik\Atik.Core.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Atik\AtikCameras.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Atik\FlyCapture2_v140.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Atik\libiomp5md.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\FLI\libfli.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\FreeImage\FreeImage.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\FTDI\ftd2xx.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\MGEN\MG3lib.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\NOVAS\NOVAS31lib.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Omegon\omegonprocam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\QHYCCD\ftd2xx.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\QHYCCD\qhyccd.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\QHYCCD\tbb.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\SOFA\SOFAlib.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Resource Include="Logo_Nina.ico" />
+		<Resource Include="Resources\Logo_Nina.png" />
+		<Resource Include="Resources\Logo_Nina.ico" />
+		<Content Include="External\x86\ToupTek\toupcam.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Resource Include="Resources\cancel-32.png" />
+		<Resource Include="Resources\pause-32.png" />
+		<Resource Include="Resources\play-32.png" />
+		<Content Include="External\x64\NOVAS\cio_ra.bin">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\JPLEPH">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\NOVAS\cio_ra.bin">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\ToupTek\toupcam.lib">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\Omegon\omegonprocam.lib">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x64\ASI\ASICamera2.lib">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\Omegon\omegonprocam.lib">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="External\x86\ToupTek\toupcam.lib">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<None Include="NINA.ruleset" />
+		<None Include="packages.config" />
+		<SplashScreen Include="Resources\ninasplash.png" />
+		<EmbeddedResource Include="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<Content Include="LICENSE.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<None Include="Properties\app.manifest" />
+		<None Include="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+			<SubType>Designer</SubType>
+		</None>
+		<AppDesigner Include="Properties\" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="App.config">
+			<SubType>Designer</SubType>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\observatory.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="observatory.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="Credits.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<BootstrapperPackage Include=".NETFramework,Version=v4.5">
+			<Visible>False</Visible>
+			<ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+			<Install>true</Install>
+		</BootstrapperPackage>
+		<BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+			<Visible>False</Visible>
+			<ProductName>.NET Framework 3.5 SP1</ProductName>
+			<Install>false</Install>
+		</BootstrapperPackage>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\nikoncswrapper\nikoncswrapper.csproj">
+			<Project>{aade1df5-4c46-4760-b72b-474d90336f5b}</Project>
+			<Name>nikoncswrapper</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
+			<Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
+			<Name>NINA.Astrometry</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Core.WPF\NINA.WPF.Base.csproj">
+			<Project>{a407425a-4bf0-429e-8867-045c4cd10d3f}</Project>
+			<Name>NINA.WPF.Base</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+			<Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+			<Name>NINA.Core</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
+			<Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
+			<Name>NINA.Equipment</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
+			<Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
+			<Name>NINA.Image</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
+			<Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
+			<Name>NINA.MGEN</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
+			<Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
+			<Name>NINA.PlateSolving</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Plugin\NINA.Plugin.csproj">
+			<Project>{03ace0fa-069a-43cf-8b20-7bb3c32d8c1d}</Project>
+			<Name>NINA.Plugin</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
+			<Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
+			<Name>NINA.Profile</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINA.Sequencer\NINA.Sequencer.csproj">
+			<Project>{537a7a82-8c12-45e9-abad-b6b3729d6cb1}</Project>
+			<Name>NINA.Sequencer</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\NINACustomControlLibrary\NINACustomControlLibrary.csproj">
+			<Project>{39fefc1e-7a69-440d-b38a-5b9469353491}</Project>
+			<Name>NINACustomControlLibrary</Name>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="External\x64\Altair\" />
+		<Folder Include="External\x64\Canon\" />
+		<Folder Include="External\x64\Nikon\Type0001\" />
+		<Folder Include="External\x64\Nikon\Type0002\" />
+		<Folder Include="External\x64\Nikon\Type0003\" />
+		<Folder Include="External\x64\Nikon\Type0004\" />
+		<Folder Include="External\x64\Nikon\Type0005\" />
+		<Folder Include="External\x64\Nikon\Type0006\" />
+		<Folder Include="External\x64\Nikon\Type0007\" />
+		<Folder Include="External\x64\Nikon\Type0008\" />
+		<Folder Include="External\x64\Nikon\Type0009\" />
+		<Folder Include="External\x64\Nikon\Type0010\" />
+		<Folder Include="External\x64\Nikon\Type0011\" />
+		<Folder Include="External\x64\Nikon\Type0012\" />
+		<Folder Include="External\x64\Nikon\Type0013\" />
+		<Folder Include="External\x64\Nikon\Type0014\" />
+		<Folder Include="External\x64\Nikon\Type0015\" />
+		<Folder Include="External\x64\Nikon\Type0016\" />
+		<Folder Include="External\x64\Nikon\Type0017\" />
+		<Folder Include="External\x64\Nikon\Type0018\" />
+		<Folder Include="External\x64\Nikon\Type0019\" />
+		<Folder Include="External\x64\Nikon\Type0020\" />
+		<Folder Include="External\x64\Nikon\Type0021\" />
+		<Folder Include="External\x64\Nikon\Type0022\" />
+		<Folder Include="External\x64\Nikon\Type0023\" />
+		<Folder Include="External\x64\Nikon\Type0024\" />
+		<Folder Include="External\x64\Nikon\Type0025\" />
+		<Folder Include="External\x64\Nikon\Type0026\" />
+		<Folder Include="External\x64\Nikon\Type0027\" />
+		<Folder Include="External\x64\Nikon\Type0028\" />
+		<Folder Include="External\x64\Nikon\Type0029\" />
+		<Folder Include="External\x86\Altair\" />
+		<Folder Include="External\x86\Canon\" />
+		<Folder Include="External\x86\Nikon\Type0001\" />
+		<Folder Include="External\x86\Nikon\Type0002\" />
+		<Folder Include="External\x86\Nikon\Type0003\" />
+		<Folder Include="External\x86\Nikon\Type0004\" />
+		<Folder Include="External\x86\Nikon\Type0005\" />
+		<Folder Include="External\x86\Nikon\Type0006\" />
+		<Folder Include="External\x86\Nikon\Type0007\" />
+		<Folder Include="External\x86\Nikon\Type0008\" />
+		<Folder Include="External\x86\Nikon\Type0009\" />
+		<Folder Include="External\x86\Nikon\Type0010\" />
+		<Folder Include="External\x86\Nikon\Type0011\" />
+		<Folder Include="External\x86\Nikon\Type0012\" />
+		<Folder Include="External\x86\Nikon\Type0013\" />
+		<Folder Include="External\x86\Nikon\Type0014\" />
+		<Folder Include="External\x86\Nikon\Type0015\" />
+		<Folder Include="External\x86\Nikon\Type0016\" />
+		<Folder Include="External\x86\Nikon\Type0017\" />
+		<Folder Include="External\x86\Nikon\Type0018\" />
+		<Folder Include="External\x86\Nikon\Type0019\" />
+		<Folder Include="External\x86\Nikon\Type0020\" />
+		<Folder Include="External\x86\Nikon\Type0021\" />
+		<Folder Include="External\x86\Nikon\Type0022\" />
+		<Folder Include="External\x86\Nikon\Type0023\" />
+		<Folder Include="External\x86\Nikon\Type0024\" />
+		<Folder Include="External\x86\Nikon\Type0025\" />
+		<Folder Include="External\x86\Nikon\Type0026\" />
+		<Folder Include="External\x86\Nikon\Type0027\" />
+		<Folder Include="External\x86\Nikon\Type0028\" />
+		<Folder Include="External\x86\Nikon\Type0029\" />
+		<Folder Include="ViewModel\Equipment\" />
+	</ItemGroup>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+	<PropertyGroup>
+		<PostBuildEvent>
+			if exist "$(ProjectDir)External\x64\Altair" (
+			echo "Copy Altair x64 DLLs"
+			xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
+			)
+			if exist "$(ProjectDir)External\x86\Altair" (
+			echo "Copy Altair x86 DLLs"
+			xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
+			)
 
-      if exist "$(ProjectDir)External\x64\Canon" (
-      echo "Copy Canon x64 DLLs"
-      xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
-      )
-      if exist "$(ProjectDir)External\x86\Canon" (
-      echo "Copy Canon x86 DLLs"
-      xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
-      )
+			if exist "$(ProjectDir)External\x64\Canon" (
+			echo "Copy Canon x64 DLLs"
+			xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
+			)
+			if exist "$(ProjectDir)External\x86\Canon" (
+			echo "Copy Canon x86 DLLs"
+			xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
+			)
 
-      if exist "$(ProjectDir)External\x64\Nikon" (
-      echo "Copy Nikon x64 DLLs"
-      xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
-      )
-      if exist "$(ProjectDir)External\x86\Nikon" (
-      echo "Copy Nikon x86 DLLs"
-      xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
-      )
+			if exist "$(ProjectDir)External\x64\Nikon" (
+			echo "Copy Nikon x64 DLLs"
+			xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
+			)
+			if exist "$(ProjectDir)External\x86\Nikon" (
+			echo "Copy Nikon x86 DLLs"
+			xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
+			)
 
-      if $(Platform) == x86 (
-      if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
-      echo "Making x86 large address aware"
-      call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
-      editbin /largeaddressaware "$(TargetPath)"
-      )
-      )
+			if $(Platform) == x86 (
+			if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
+			echo "Making x86 large address aware"
+			call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
+			editbin /largeaddressaware "$(TargetPath)"
+			)
+			)
 
-      if $(ConfigurationName) == SignedRelease (
-      if exist "$(SolutionDir)code_sign.pfx" (
-      echo  "Trying to sign $(TargetPath)"
-      signtool sign /t http://timestamp.digicert.com /v /a /fd SHA256 $(TargetPath)
-      )
+			if $(ConfigurationName) == SignedRelease (
+			if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign $(TargetPath)"
+			signtool sign /t http://timestamp.digicert.com /v /a /fd SHA256 $(TargetPath)
+			)
 
-      )
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+			)
+		</PostBuildEvent>
+	</PropertyGroup>
+	<Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+	<Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+		<PropertyGroup>
+			<ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+		</PropertyGroup>
+		<Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+		<Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+		<Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+		<Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+		<Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
+	</Target>
+	<Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+	<Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+	<Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
