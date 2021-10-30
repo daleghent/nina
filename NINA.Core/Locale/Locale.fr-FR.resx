@@ -4083,6 +4083,9 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>Dome failed to synchronize after Meridian Flip</value>
   </data>
+  <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
+    <value>Dome failed to synchronize during Centering</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Fermer l'obturateur du dôme à la fin de la séquence</value>
   </data>
@@ -4879,6 +4882,12 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Activer la synchronisation Dome</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
+    <value>Synchronizes the Dome to the current telescope position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
+    <value>Synchronize Dome</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La séquence contient des lignes qui sont soit désactivées, ou dans lesquelles le nombre d'expositions atteint le nombre total d'expositions. Ces éléments sont ignorés et aucun élément pour ces lignes n'est généré pour le séquenceur.</value>
@@ -5876,5 +5885,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
     <value>Duration</value>
+  </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>Synchronizing Dome</value>
   </data>
 </root>

@@ -4077,6 +4077,9 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>La cúpula ha fallat després de la sincronització en el canvi de Meridià</value>
   </data>
+  <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
+    <value>La cúpula no s'ha pogut sincronitzar durant el centrat</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Tancar l'obturador de la cúpula al final de la seqüència</value>
   </data>
@@ -4873,6 +4876,12 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Activa la Sincronització de Cúpula</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
+    <value>Sincronitza la cúpula amb la posició actual del telescopi</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
+    <value>Sincronitzar la Cúpula</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La seqüència conté files desactivades o en les que en el recompte d'exposició de progres és igual al recompte total d'exposicions. Aquests elements es saltaran i no es generaran elements per a aquestes files per al seqüènciador.</value>
@@ -5869,6 +5878,9 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
     <value>No està disponible a X86</value>
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Durada</value>
+  </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>Sincronitzant la Cúpula</value>
   </data>
 </root>

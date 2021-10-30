@@ -4076,6 +4076,9 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>La cúpula falló al sincronizarse tras el giro de Meridiano</value>
   </data>
+  <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
+    <value>Fallo en la sincronización de la cúpula durante el centrado</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Cerrar el obturador de la cúpula al final de la secuencia</value>
   </data>
@@ -4872,6 +4875,12 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Habilitar sincronización de la cúpula</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
+    <value>Sincroniza la cúpula con la actual posición del telescopio</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
+    <value>Sincronizar la cúpula</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La secuencia contiene filas desactivadas o en los que el recuento de exposición de progreso es igual al recuento total de exposiciones. Estos elementos se omiten y no se generan elementos para estas filas para el secuenciador.</value>
@@ -5869,5 +5878,8 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
     <value>Duración</value>
+  </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>Sincronizando la cúpula</value>
   </data>
 </root>

@@ -4080,6 +4080,9 @@
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>中天翻转后同步圆顶失败</value>
   </data>
+  <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
+    <value>Dome failed to synchronize during Centering</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>序列结束时关闭圆顶天窗</value>
   </data>
@@ -4195,7 +4198,7 @@
     <value>消息</value>
   </data>
   <data name="LblLoopUntil" xml:space="preserve">
-    <value>循环直到...</value>
+    <value>循环直到</value>
   </data>
   <data name="LblTriggers" xml:space="preserve">
     <value>触发器</value>
@@ -4876,6 +4879,12 @@
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>启用圆顶同步</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
+    <value>Synchronizes the Dome to the current telescope position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
+    <value>Synchronize Dome</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>序列包含已禁用或进度曝光次数等于总曝光次数的条目。 这些项目被跳过，序列中没有任何新的项目。</value>
@@ -5873,5 +5882,8 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
     <value>Duration</value>
+  </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>Synchronizing Dome</value>
   </data>
 </root>

@@ -4064,6 +4064,9 @@
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>Dome failed to synchronize after Meridian Flip</value>
   </data>
+  <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
+    <value>センタリング中にドームが同期できませんでした</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>シーケンス終了時にドームのシャッターを閉じる</value>
   </data>
@@ -4860,6 +4863,12 @@
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>ドーム同期を有効化</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
+    <value>ドームを現在の望遠鏡の位置に同期します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
+    <value>ドームの同期</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>シーケンスには、無効な行または進行した撮影枚数が合計撮影枚数と等しい行が含まれています。 これらの項目はスキップされ、行内のどの項目も、シーケンサーに生成されません。</value>
@@ -5851,5 +5860,8 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
     <value>Duration</value>
+  </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>ドームを同期中</value>
   </data>
 </root>

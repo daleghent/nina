@@ -4073,6 +4073,9 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>Dome failed to synchronize after Meridian Flip</value>
   </data>
+  <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
+    <value>Dome failed to synchronize during Centering</value>
+  </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Sekans sonunda kubbe tepesini kapat</value>
   </data>
@@ -4869,6 +4872,12 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Kubbe senkronizasyonunu etkinleştir</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
+    <value>Synchronizes the Dome to the current telescope position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
+    <value>Synchronize Dome</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>Sekans, devre dışı bırakılan veya devam eden pozlama sayısının toplam poz sayısına eşit olduğu satırlar içerir. Bu öğeler atlanır ve sıralayıcı için bu satırlar için hiçbir öğe oluşturulmaz.</value>
@@ -5866,5 +5875,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
     <value>Duration</value>
+  </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>Synchronizing Dome</value>
   </data>
 </root>
