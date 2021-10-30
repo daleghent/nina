@@ -78,54 +78,58 @@ namespace NINA.ViewModel {
             LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => InitializeAvalonDockLayout(o)));
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
 
-            Anchorables.Add(imageControlVM);
-            Anchorables.Add(cameraVM);
-            Anchorables.Add(filterWheelVM);
-            Anchorables.Add(focuserVM);
-            Anchorables.Add(rotatorVM);
-            Anchorables.Add(telescopeVM);
-            Anchorables.Add(guiderVM);
-            Anchorables.Add(switchVM);
-            Anchorables.Add(weatherDataVM);
-            Anchorables.Add(domeVM);
+            var initAnchorables = new List<IDockableVM>();
+            var initAnchorableInfoPanels = new List<IDockableVM>();
+            var initAnchorableTools = new List<IDockableVM>();
 
-            Anchorables.Add(sequenceNavigationVM);
-            Anchorables.Add(imageStatisticsVM);
-            Anchorables.Add(imageHistoryVM);
+            initAnchorables.Add(imageControlVM);
+            initAnchorables.Add(cameraVM);
+            initAnchorables.Add(filterWheelVM);
+            initAnchorables.Add(focuserVM);
+            initAnchorables.Add(rotatorVM);
+            initAnchorables.Add(telescopeVM);
+            initAnchorables.Add(guiderVM);
+            initAnchorables.Add(switchVM);
+            initAnchorables.Add(weatherDataVM);
+            initAnchorables.Add(domeVM);
 
-            Anchorables.Add(snapshotVM);
-            Anchorables.Add(thumbnailVM);
-            Anchorables.Add(plateSolverVM);
-            Anchorables.Add(polarAlignmentVM);
-            Anchorables.Add(autoFocusToolVM);
-            Anchorables.Add(focusTargetsVM);
-            Anchorables.Add(exposureCalculatorVM);
-            Anchorables.Add(flatDeviceVM);
-            Anchorables.Add(safetyMonitorVM);
+            initAnchorables.Add(sequenceNavigationVM);
+            initAnchorables.Add(imageStatisticsVM);
+            initAnchorables.Add(imageHistoryVM);
 
-            AnchorableInfoPanels.Add(imageControlVM);
-            AnchorableInfoPanels.Add(cameraVM);
-            AnchorableInfoPanels.Add(filterWheelVM);
-            AnchorableInfoPanels.Add(focuserVM);
-            AnchorableInfoPanels.Add(rotatorVM);
-            AnchorableInfoPanels.Add(telescopeVM);
-            AnchorableInfoPanels.Add(guiderVM);
-            AnchorableInfoPanels.Add(sequenceNavigationVM);
-            AnchorableInfoPanels.Add(switchVM);
-            AnchorableInfoPanels.Add(weatherDataVM);
-            AnchorableInfoPanels.Add(domeVM);
-            AnchorableInfoPanels.Add(imageStatisticsVM);
-            AnchorableInfoPanels.Add(imageHistoryVM);
-            AnchorableInfoPanels.Add(flatDeviceVM);
-            AnchorableInfoPanels.Add(safetyMonitorVM);
+            initAnchorables.Add(snapshotVM);
+            initAnchorables.Add(thumbnailVM);
+            initAnchorables.Add(plateSolverVM);
+            initAnchorables.Add(polarAlignmentVM);
+            initAnchorables.Add(autoFocusToolVM);
+            initAnchorables.Add(focusTargetsVM);
+            initAnchorables.Add(exposureCalculatorVM);
+            initAnchorables.Add(flatDeviceVM);
+            initAnchorables.Add(safetyMonitorVM);
 
-            AnchorableTools.Add(snapshotVM);
-            AnchorableTools.Add(thumbnailVM);
-            AnchorableTools.Add(plateSolverVM);
-            AnchorableTools.Add(polarAlignmentVM);
-            AnchorableTools.Add(autoFocusToolVM);
-            AnchorableTools.Add(focusTargetsVM);
-            AnchorableTools.Add(exposureCalculatorVM);
+            initAnchorableInfoPanels.Add(imageControlVM);
+            initAnchorableInfoPanels.Add(cameraVM);
+            initAnchorableInfoPanels.Add(filterWheelVM);
+            initAnchorableInfoPanels.Add(focuserVM);
+            initAnchorableInfoPanels.Add(rotatorVM);
+            initAnchorableInfoPanels.Add(telescopeVM);
+            initAnchorableInfoPanels.Add(guiderVM);
+            initAnchorableInfoPanels.Add(sequenceNavigationVM);
+            initAnchorableInfoPanels.Add(switchVM);
+            initAnchorableInfoPanels.Add(weatherDataVM);
+            initAnchorableInfoPanels.Add(domeVM);
+            initAnchorableInfoPanels.Add(imageStatisticsVM);
+            initAnchorableInfoPanels.Add(imageHistoryVM);
+            initAnchorableInfoPanels.Add(flatDeviceVM);
+            initAnchorableInfoPanels.Add(safetyMonitorVM);
+
+            initAnchorableTools.Add(snapshotVM);
+            initAnchorableTools.Add(thumbnailVM);
+            initAnchorableTools.Add(plateSolverVM);
+            initAnchorableTools.Add(polarAlignmentVM);
+            initAnchorableTools.Add(autoFocusToolVM);
+            initAnchorableTools.Add(focusTargetsVM);
+            initAnchorableTools.Add(exposureCalculatorVM);
 
             ClosingCommand = new RelayCommand(ClosingApplication);
 
@@ -134,13 +138,16 @@ namespace NINA.ViewModel {
             Task.Run(async () => {
                 await pluginProvider.Load();
                 foreach (var dockable in pluginProvider.DockableVMs) {
-                    Anchorables.Add(dockable);
+                    initAnchorables.Add(dockable);
                     if (dockable.IsTool) {
-                        AnchorableTools.Add(dockable);
+                        initAnchorableTools.Add(dockable);
                     } else {
-                        AnchorableInfoPanels.Add(dockable);
+                        initAnchorableInfoPanels.Add(dockable);
                     }
                 }
+                Anchorables = initAnchorables;
+                AnchorableInfoPanels = initAnchorableInfoPanels;
+                AnchorableTools = initAnchorableTools;
                 Initialized = true;
             });
         }
