@@ -319,7 +319,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         Logger.Debug("MGEN - Not actively guiding, attempting to start guiding");
                         await MGen.StartGuiding(ct);
                         Logger.Debug("MGEN - Guiding successfully resumed");
-                    } catch (NoStarSeenException ex) {
+                    } catch (NoStarSeenException) {
                         Logger.Debug("MGEN - Guiding didn't start, selecting new guide star");
                         await AutoSelectGuideStar();
                     }

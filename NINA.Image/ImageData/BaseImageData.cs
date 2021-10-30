@@ -96,7 +96,7 @@ namespace NINA.Image.ImageData {
                     actualPath = await SaveToDiskAsync(fileSaveInfo, cancelToken, false);
                     Logger.Debug($"Saving temporary image at {actualPath}");
                 }
-            } catch (OperationCanceledException ex) {
+            } catch (OperationCanceledException) {
                 throw;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -292,7 +292,7 @@ namespace NINA.Image.ImageData {
                     string tempPath = await SaveToDiskAsync(fileSaveInfo, token, forceFileType);
                     actualPath = FinalizeSave(tempPath, fileSaveInfo.FilePattern);
                 }
-            } catch (OperationCanceledException ex) {
+            } catch (OperationCanceledException) {
                 throw;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -496,6 +496,7 @@ namespace NINA.Image.ImageData {
         protected readonly IProfileService profileService;
         protected readonly IPluggableBehaviorSelector<IStarDetection> starDetectionSelector;
         protected readonly IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector;
+
         public ImageDataFactory(IProfileService profileService, IPluggableBehaviorSelector<IStarDetection> starDetectionSelector, IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector) {
             this.profileService = profileService;
             this.starDetectionSelector = starDetectionSelector;

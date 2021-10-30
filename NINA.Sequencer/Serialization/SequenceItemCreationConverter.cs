@@ -40,7 +40,7 @@ namespace NINA.Sequencer.Serialization {
                     var obj = method.Invoke(factory, null);
                     return (ISequenceItem)obj;
                 } catch (Exception e) {
-                    Logger.Error($"Encountered unknown sequence item: {token?.ToString()}");
+                    Logger.Error($"Encountered unknown sequence item: {token?.ToString()}", e);
                     return new UnknownSequenceItem(token?.ToString());
                 }
             } else {

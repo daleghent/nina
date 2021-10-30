@@ -241,7 +241,7 @@ namespace NINA.ViewModel {
 
                             _imageProcessingTask = PrepareImage(data, parameters, token);
                         }
-                    } catch (System.OperationCanceledException ex) {
+                    } catch (System.OperationCanceledException) {
                         cameraMediator.AbortExposure();
                         throw;
                     } catch (CameraConnectionLostException ex) {

@@ -34,7 +34,7 @@ namespace NINA.Sequencer.Serialization {
                     var obj = method.Invoke(factory, null);
                     return (ISequenceTrigger)obj;
                 } catch (Exception e) {
-                    Logger.Error($"Encountered unknown sequence trigger: {token?.ToString()}");
+                    Logger.Error($"Encountered unknown sequence trigger: {token?.ToString()}", e);
                     return new UnknownSequenceTrigger(token?.ToString());
                 }
             } else {

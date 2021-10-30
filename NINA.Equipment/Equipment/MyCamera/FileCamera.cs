@@ -545,6 +545,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         return exposureDataFactory.CreateCachedExposureData(image);
                     } catch (Exception ex) {
                         if (tries > 3) {
+                            Logger.Error(ex);
                             throw;
                         }
                         await CoreUtil.Wait(TimeSpan.FromSeconds(1), token);
@@ -648,7 +649,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 try {
                     folderWatcher.Suspend();
                     bulbCompletionCTS?.Cancel();
-                } catch (Exception ex) { };
+                } catch (Exception) { };
             }
         }
 

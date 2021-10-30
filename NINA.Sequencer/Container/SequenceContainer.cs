@@ -265,7 +265,7 @@ namespace NINA.Sequencer.Container {
                 using (localCTS = CancellationTokenSource.CreateLinkedTokenSource(token)) {
                     try {
                         await Strategy.Execute(this, progress, localCTS.Token);
-                    } catch (OperationCanceledException ex) {
+                    } catch (OperationCanceledException) {
                         if (token.IsCancellationRequested) {
                             // The main token got cancelled - bubble up exception
                             throw;

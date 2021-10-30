@@ -532,7 +532,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                             lockPos = await GetLockPosition(5000);
                         }
                         return true;
-                    } catch (OperationCanceledException ex) {
+                    } catch (OperationCanceledException) {
                         if (ct.IsCancellationRequested) {
                             throw;
                         } else {
