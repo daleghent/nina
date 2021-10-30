@@ -23,10 +23,8 @@ namespace NINA {
 
         public static IMainWindowVM Compose(IProfileService profileService) {
             try {
-                IReadOnlyKernel _kernel =
-                new KernelConfiguration(
-                    new IoCBindings(profileService))
-                .BuildReadonlyKernel();
+                IKernel _kernel =
+                    new StandardKernel(new IoCBindings(profileService));
 
                 Stopwatch sw;
 
