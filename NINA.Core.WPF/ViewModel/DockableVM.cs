@@ -28,6 +28,9 @@ namespace NINA.WPF.Base.ViewModel {
         public DockableVM(IProfileService profileService) : base(profileService) {
             this.CanClose = true;
             this.IsClosed = false;
+
+            // Default image when nothing is set
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PuzzlePieceSVG"];
             IsVisible = true;
 
             HideCommand = new RelayCommand(Hide);
