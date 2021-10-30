@@ -340,7 +340,7 @@
                                         MinHeight="20"
                                         Margin="5,0,5,0"
                                         VerticalAlignment="Center"
-                                        Text="{ns:Loc LblAutoMeridianFlip}" />
+                                        Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
                                     <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" />
                                 </StackPanel>
                             </ScrollViewer>
