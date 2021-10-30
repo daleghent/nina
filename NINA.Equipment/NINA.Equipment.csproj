@@ -276,8 +276,6 @@
     <Compile Include="Equipment\MyGuider\MGENGuider.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\PHD2Guider.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\PHD2Methods.cs" />
-    <Compile Include="Equipment\MyGuider\PHD2\SynchronizedPHD2Guider.cs" />
-    <Compile Include="Equipment\MyGuider\PHD2\SynchronizedPHD2GuiderService.cs" />
     <Compile Include="Equipment\MyPlanetarium\C2A.cs" />
     <Compile Include="Equipment\MyPlanetarium\CartesDuCiel.cs" />
     <Compile Include="Equipment\MyPlanetarium\HNSKY.cs" />
@@ -331,7 +329,6 @@
     <Compile Include="Interfaces\ISVBonySDK.cs" />
     <Compile Include="Interfaces\ISwitch.cs" />
     <Compile Include="Interfaces\ISwitchHub.cs" />
-    <Compile Include="Interfaces\ISynchronizedPHD2GuiderService.cs" />
     <Compile Include="Interfaces\ITelescope.cs" />
     <Compile Include="Interfaces\IToupTekAlikeCameraSDK.cs" />
     <Compile Include="Interfaces\IWeatherData.cs" />

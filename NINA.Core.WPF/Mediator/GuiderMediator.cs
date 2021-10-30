@@ -23,7 +23,6 @@ using NINA.Equipment.Interfaces.ViewModel;
 namespace NINA.WPF.Base.Mediator {
 
     public class GuiderMediator : DeviceMediator<IGuiderVM, IGuiderConsumer, GuiderInfo>, IGuiderMediator {
-        public bool IsUsingSynchronizedGuider => handler.GuiderIsSynchronized;
 
         public Task<bool> Dither(CancellationToken token) {
             return handler.Dither(token);

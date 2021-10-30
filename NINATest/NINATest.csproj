@@ -415,7 +415,6 @@
     <Compile Include="Switch\PegasusAstro\PegasusCommandsTest.cs" />
     <Compile Include="Switch\PegasusAstro\PegasusDeviceTest.cs" />
     <Compile Include="Switch\PegasusAstro\PegasusResponsesTest.cs" />
-    <Compile Include="SynchronizedPHD2GuiderServiceTest.cs" />
     <Compile Include="FlatDevice\AlnitakFlatDeviceTest.cs" />
     <Compile Include="FlatDevice\AlnitakFlatDeviceConnectTest.cs" />
     <Compile Include="FlatDevice\FlatDeviceVMTest.cs" />

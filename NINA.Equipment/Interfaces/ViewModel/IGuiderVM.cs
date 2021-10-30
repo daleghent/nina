@@ -35,7 +35,5 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> ClearCalibration(CancellationToken token);
 
         RMS StopRMSRecording(Guid handle);
-
-        bool GuiderIsSynchronized { get; }
     }
 }
