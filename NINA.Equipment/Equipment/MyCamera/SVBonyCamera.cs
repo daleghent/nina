@@ -35,7 +35,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private readonly IExposureDataFactory exposureDataFactory;
 
         public SVBonyCamera(int id, string name, string driverVersion, ISVBonySDK sdk, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
-            this.Id = id.ToString();
             this.Name = name;
             this.sdk = sdk;
             this.Category = "SVBony";
@@ -44,6 +43,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.DriverVersion = driverVersion;
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;
+            this.Id = Category + "_" + id.ToString();
         }
 
         public bool Connected {
@@ -338,6 +338,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         isBayered: SensorType != SensorType.Monochrome,
                         metaData: new ImageMetaData());
         }
+
+        private int internalId;
 
         #region "Meta Data"
 
