@@ -51,7 +51,7 @@ namespace NINATest.Equipment.Camera {
 
             var sut = new SVBonyCamera(id, name, "Some SDK Version", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
-            sut.Id.Should().Be(id.ToString());
+            sut.Id.Should().Be("SVBony_" + id.ToString());
             sut.Name.Should().Be(name);
             sut.Category.Should().Be("SVBony");
             sut.Description.Should().Be("Native driver implementation for SVBony Cameras");
