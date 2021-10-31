@@ -10,6 +10,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 The Release Notes below will only mention the changes compared to the last released version.  
 To identify what has changed in between nightly builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/develop)
 
+## Change of setting locations
+
+- Sequencer end options have been moved into the simple sequencer tab
+- Meridian Flip settings show no longer an enabled flag, but can be enabled in the simple sequencer or added as a trigger into the advanced sequencer
+- Autofocus options have been moved into a separate tab
+
 ## Complete Sequencer Rework
 
 ### Sequence Tab changed to show a sequence navigation first
@@ -54,14 +60,11 @@ To identify what has changed in between nightly builds, please refer to the [bit
     - These target store all info that has been set inside the deep sky object sequence and can be restored for later usage
     - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
 - For more details on the usage refer to the documentation
-  
-### Sequence Change Warning
-- A warning dialog is displayed whenever a sequence is changed and not saved whenever exiting NINA or overloading the sequence.
 
 ## New Plugin Tab
 - With the introduction of the advanced sequencer, a sequence can be planned with individual building blocks. These blocks have been designed to work like small plugins that will be initialized on startup. This opens up the possibility for specialized custom plugins that can be installed independently on demand.
 - To manage these custom plugins for the advanced sequencer a new application tab page has been introduced. There a user can setup and see all installed plugins as well as having the possiblity to see, install and update plugins from the official online plugin repository.
-- Currently plugins are limited to be hooked into the advanced sequencer. More areas to be plugin enabled are planned for the future.
+- Plugins can currently hook into the advanced sequencer, add new dock panels in the imaging tab or add different behaviors for autofocus, star detection and star annotation. More areas to be pluggable are planned for the future.
 - The main benefit of these plugins are the possibility to create very specialized behavior, that would only benefit by a smaller user base, without cluttering the application with these capabilities for users that do not need this special behavior.
 
 ### Framing Tab
@@ -84,6 +87,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Displays star drift during guiding in a graph
 - Dithering during sequencing
 
+### MetaGuide
+- MetaGuide is now available as an option for a guiding application
+
 ### SVBony
 - Added a native driver for SVBony cameras. Currently without temperature control and tested with SVBony 305M Pro.
 
@@ -92,6 +98,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ### MallinCam
 - Added native driver for MallinCam cameras.
+
+### Risingcam
+- Native support for Risingcam added
 
 ### ASCOM Dome
 - ASCOM Domes are supported throughout the application
@@ -118,23 +127,18 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
 
-### Improvements for Altair, Touptek, Omegaon and Risingcam native drivers
+### Improvements for Altair, Touptek, Omegaon, Mallincam and Risingcam native drivers
 - Native driver implementation unified for a common interface, as the underlying SDKs are similar
-- Native support for Risingcam added
 - Additive binning can be turned on
 - Fan speed can be controlled when available
 - Binning info for these cameras are now properly inserted into Metadata
-
-### Guiders
-- MetaGuide is now supported
-- MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips
-- A ROI percentage can now be set for PHD2 to be considered during guidestar search
 
 ### PHD2
 - Dither will be skipped when not actively guiding or the guide star was lost
 - Settle time will now correctly be considered when starting guiding
 - Guiding start timeout will not consider calibration time and will also be used when "Guiding start retry" is off
 - Guiding start retry will not retry more than three times to prevent an infinite loop
+- A ROI percentage can now be set for PHD2 to be considered during guidestar search
 - Profiles can now be switched from the list of available PHD2 profiles
 
 ### Device-related Improvements
@@ -149,6 +153,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - ASCOM connection that is lost without any raised error will now be tried to be reconnected one time. If an error happens due to that the application will disconnect like before.
 - ASCOM get and set methods use a unified logic to ensure same behavior for all devices
 - *FLI*: Background flush is now disabled prior to readout to prevent a hung readout
+- *MGEN2* now supports unattended guide star selection and calibration, and automatic meridian flips
 
 ## Application Improvements
 ### General
@@ -157,8 +162,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Application initialization is utilizing more parallel processing to startup faster.
 - Application logs are vastly improved to log a lot more info of what is happening at the various levels. INFO level will also contain a lot more info of what is happening at a high level.
 - It is now possible to change the application font in the options
-- Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence
-- It is now possible to start, pause, resume and cancel sequences from the preview window
+- It is now possible to start, resume and cancel sequences from the preview window
 - Options menu has been restructured to adhere to the Equipment layout
 - Auto-focus is now its own tab in the Options menu
 - Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)
@@ -179,9 +183,11 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - The imaging tab layout is now saved per profile, instead of one layout for all profiles
 - Most options and values now also display a unit of measure if applicable
 - Weather information in equipment tab now shows correct wind direction.
+- Various layout improvements and redesign of controls
+- Flat Wizard page controls are streamlined with the rest of the application by replacing the sliders with steppers
 
 ### Subsampling
-- The sub sample button above the image has been removed
+- The sub sample button above the image panel has been removed
 - In the imaging camera control panel when subsampling is enabled a new control will be visible to adjust the subsampling directly there
 - This should be more intuitive to use and does not require a certain order of operations and an active non sub sampled image to set up
 
