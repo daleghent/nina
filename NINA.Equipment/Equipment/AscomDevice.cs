@@ -115,7 +115,7 @@ namespace NINA.Equipment.Equipment {
                                     val = true;
                                     Logger.Info($"{Name} reconnection successful");
                                 } catch (Exception ex) {
-                                    Logger.Error("Reconnection failed. The device might be disconnected! - ", ex.Message);
+                                    Logger.Error("Reconnection failed. The device might be disconnected! - ", ex);
                                     DisconnectOnConnectionError();
                                 }
                             }
@@ -289,8 +289,8 @@ namespace NINA.Equipment.Equipment {
                             Logger.Error($"{Name} is not connected ", ex.InnerException);
                         }
 
-                        var message = ex.InnerException?.Message ?? ex.Message;
-                        Logger.Error($"An unexpected exception occurred during GET of {type.Name}.{propertyName}: ", message);
+                        var logEx = ex.InnerException ?? ex;
+                        Logger.Error($"An unexpected exception occurred during GET of {type.Name}.{propertyName}: ", logEx);
                     }
                 }
 

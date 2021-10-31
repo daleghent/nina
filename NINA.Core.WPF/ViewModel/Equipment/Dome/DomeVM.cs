@@ -405,12 +405,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             try {
                 await this.domeFollower.Stop();
             } catch (Exception ex) {
-                Logger.Error("Stopping dome follower failed", ex.Message);
+                Logger.Error("Stopping dome follower failed", ex);
             }
             try {
                 await Dome?.StopAll();
             } catch (Exception ex) {
-                Logger.Error("Stopping all Dome actions failed", ex.Message);
+                Logger.Error("Stopping all Dome actions failed", ex);
             }
             FollowEnabled = false;
             return true;

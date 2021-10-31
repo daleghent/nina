@@ -79,7 +79,7 @@ namespace NINA.API.SGP {
                     serviceTask.Wait(new CancellationTokenSource(2000).Token);
                     Logger.Info("SGP Service stopped");
                 } catch (Exception ex) {
-                    Logger.Error("Failed to stop SGP Server", ex.Message);
+                    Logger.Error("Failed to stop SGP Server", ex);
                 } finally {
                     serviceTask = null;
                 }
