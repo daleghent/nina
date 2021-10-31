@@ -105,6 +105,11 @@ namespace NINA.Sequencer.Trigger {
                 }
 
                 await this.Execute(context, progress, token);
+                foreach (var instruction in TriggerRunner.GetItemsSnapshot()) {
+                    if (instruction.Status == SequenceEntityStatus.FAILED) {
+                        throw new SequenceItemSkippedException($"{instruction} failed to exectue");
+                    }
+                }
                 Status = SequenceEntityStatus.FINISHED;
             } catch (SequenceEntityFailedException ex) {
                 Logger.Error($"Failed: {this} - " + ex.Message);
