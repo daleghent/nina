@@ -88,8 +88,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => CameraChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                CameraChooserVM.GetEquipment();
+                return CameraChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private ApplicationStatus _status;

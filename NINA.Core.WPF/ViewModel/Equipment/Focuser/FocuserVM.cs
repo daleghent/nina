@@ -31,6 +31,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
+using System.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
@@ -80,8 +81,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             });
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => FocuserChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                FocuserChooserVM.GetEquipment();
+                return FocuserChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private void ToggleTempComp(object obj) {

@@ -14,6 +14,7 @@
 
 using NINA.Core.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Interfaces.Mediator {
@@ -24,7 +25,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         void RemoveConsumer(TConsumer consumer);
 
-        Task Rescan();
+        Task<IList<string>> Rescan();
 
         Task<bool> Connect();
 

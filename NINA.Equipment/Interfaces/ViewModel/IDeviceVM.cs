@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IDeviceVM<TInfo> {
 
-        Task Rescan();
+        Task<IList<string>> Rescan();
 
         Task<bool> Connect();
 

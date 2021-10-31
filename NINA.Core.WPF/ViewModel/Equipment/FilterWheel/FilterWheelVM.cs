@@ -72,8 +72,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => FilterWheelChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                FilterWheelChooserVM.GetEquipment();
+                return FilterWheelChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private CancellationTokenSource _changeFilterCancellationSource;

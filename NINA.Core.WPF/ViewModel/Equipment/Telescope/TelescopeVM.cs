@@ -97,8 +97,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => TelescopeChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                TelescopeChooserVM.GetEquipment();
+                return TelescopeChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         public bool SendToSnapPort(bool start) {

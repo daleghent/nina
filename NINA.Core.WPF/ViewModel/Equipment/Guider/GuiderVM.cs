@@ -34,6 +34,7 @@ using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using Nito.AsyncEx;
+using System.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
@@ -63,8 +64,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => GuiderChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                GuiderChooserVM.GetEquipment();
+                return GuiderChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         public IDeviceChooserVM GuiderChooserVM { get; private set; }

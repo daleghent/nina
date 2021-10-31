@@ -73,8 +73,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => SwitchChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                SwitchChooserVM.GetEquipment();
+                return SwitchChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private static double SWITCHTOLERANCE = 0.00001;

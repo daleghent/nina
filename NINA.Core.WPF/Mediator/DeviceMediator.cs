@@ -52,7 +52,7 @@ namespace NINA.WPF.Base.Mediator {
             consumers.Remove(consumer);
         }
 
-        public Task Rescan() {
+        public Task<IList<string>> Rescan() {
             return handler?.Rescan();
         }
 

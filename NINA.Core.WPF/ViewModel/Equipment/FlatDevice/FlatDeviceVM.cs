@@ -90,8 +90,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             UpdateWizardValueBlocks();
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => FlatDeviceChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                FlatDeviceChooserVM.GetEquipment();
+                return FlatDeviceChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private void FlatDeviceSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {

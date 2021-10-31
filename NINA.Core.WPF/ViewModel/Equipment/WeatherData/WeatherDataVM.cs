@@ -30,6 +30,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
+using System.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
@@ -60,8 +61,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => WeatherDataChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                WeatherDataChooserVM.GetEquipment();
+                return WeatherDataChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private CancellationTokenSource _cancelChooseWeatherDataSource;

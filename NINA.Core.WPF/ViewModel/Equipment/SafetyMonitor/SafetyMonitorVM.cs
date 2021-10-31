@@ -68,8 +68,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => SafetyMonitorChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                SafetyMonitorChooserVM.GetEquipment();
+                return SafetyMonitorChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private SafetyMonitorChooserVM safetyMonitorChooserVM;

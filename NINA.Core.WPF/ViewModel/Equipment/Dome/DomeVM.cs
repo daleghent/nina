@@ -34,6 +34,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
+using System.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
@@ -94,8 +95,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => DomeChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                DomeChooserVM.GetEquipment();
+                return DomeChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private void DomeFollower_PropertyChanged(object sender, PropertyChangedEventArgs e) {

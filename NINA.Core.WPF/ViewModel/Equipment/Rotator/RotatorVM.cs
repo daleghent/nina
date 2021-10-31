@@ -31,6 +31,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using Nito.AsyncEx;
+using System.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
@@ -71,8 +72,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             };
         }
 
-        public async Task Rescan() {
-            await Task.Run(() => RotatorChooserVM.GetEquipment());
+        public async Task<IList<string>> Rescan() {
+            return await Task.Run(() => {
+                RotatorChooserVM.GetEquipment();
+                return RotatorChooserVM.Devices.Select(x => x.Id).ToList();
+            });
         }
 
         private void Reverse(object obj) {
