@@ -923,8 +923,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 var systemTime = DateTime.UtcNow;
                 var timeDiff = Math.Abs((mountTime - systemTime).TotalSeconds);
 
-                // Warn the user if the mount time differs from system time by 15 seconds (7.5 arcmin) or more
-                double warningThreshold = 15;
+                double warningThreshold = 60;
 
                 Logger.Info($"Mount UTC Time: {mountTime:u} / System UTC Time: {systemTime:u}; Difference: {timeDiff:0.0##} seconds");
 
