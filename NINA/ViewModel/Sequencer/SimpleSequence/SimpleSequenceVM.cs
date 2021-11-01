@@ -230,6 +230,12 @@ namespace NINA.ViewModel {
                     Sequencer.MainContainer.Items[2].ResetProgress();
                 }
 
+                //Set base containers to created to rerun
+                Sequencer.MainContainer.Status = SequenceEntityStatus.CREATED;
+                Sequencer.MainContainer.Items[0].Status = SequenceEntityStatus.CREATED;
+                Sequencer.MainContainer.Items[1].Status = SequenceEntityStatus.CREATED;
+                Sequencer.MainContainer.Items[2].Status = SequenceEntityStatus.CREATED;
+
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;
             } finally {

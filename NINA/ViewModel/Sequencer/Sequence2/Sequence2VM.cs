@@ -357,6 +357,13 @@ namespace NINA.ViewModel.Sequencer {
             TaskBarProgressState = TaskbarItemProgressState.Normal;
             try {
                 cameraMediator.RegisterCaptureBlock(this);
+
+                //Set base containers to created to rerun
+                Sequencer.MainContainer.Status = SequenceEntityStatus.CREATED;
+                Sequencer.MainContainer.Items[0].Status = SequenceEntityStatus.CREATED;
+                Sequencer.MainContainer.Items[1].Status = SequenceEntityStatus.CREATED;
+                Sequencer.MainContainer.Items[2].Status = SequenceEntityStatus.CREATED;
+
                 Logger.Info("Advanced Sequence started");
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;

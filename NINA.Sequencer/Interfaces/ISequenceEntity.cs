@@ -33,7 +33,7 @@ namespace NINA.Sequencer {
         /// <summary>
         /// Indicator that the item is currently active and running
         /// </summary>
-        SequenceEntityStatus Status { get; }
+        SequenceEntityStatus Status { get; set; }
 
         /// <summary>
         /// When the sequencer is started this method is called
