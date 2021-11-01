@@ -134,7 +134,11 @@ namespace NINA.Sequencer.Conditions {
 
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
-            return (RemainingTime - nextItemDuration) > TimeSpan.Zero;
+            var hasTimeRemaining = (RemainingTime - nextItemDuration) > TimeSpan.Zero;
+            if (!hasTimeRemaining) {
+                startTime = DateTime.Now.Subtract(TimeSpan.FromHours(Hours) + TimeSpan.FromMinutes(Minutes) + TimeSpan.FromSeconds(Seconds));
+            }
+            return hasTimeRemaining;
         }
 
         public override void SequenceBlockInitialize() {
