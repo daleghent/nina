@@ -57,6 +57,26 @@ namespace NINA.Sequencer.Container {
             }
         );
 
+        public override ICommand DetachCommand => new RelayCommand(
+            (o) => {
+                if (MyMessageBox.Show(Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt"], Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ClearCaption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
+                    foreach (var trigger in GetTriggersSnapshot()) {
+                        trigger.Detach();
+                    }
+
+                    ClearContainer(Items[0] as ISequenceContainer);
+                    ClearContainer(Items[1] as ISequenceContainer);
+                    ClearContainer(Items[2] as ISequenceContainer);
+                }
+            }
+        );
+
+        private void ClearContainer(ISequenceContainer container) {
+            foreach (var item in container.GetItemsSnapshot()) {
+                item.Detach();
+            }
+        }
+
         private object runningItemsLock = new object();
         private List<ISequenceItem> runningItems = new List<ISequenceItem>();
 

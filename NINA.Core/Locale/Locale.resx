@@ -5892,4 +5892,13 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>Synchronizing Dome</value>
   </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
+    <value>Clear sequence?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
+    <value>Do you want to clear the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+  </data>
 </root>

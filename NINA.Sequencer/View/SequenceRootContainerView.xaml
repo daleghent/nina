@@ -141,6 +141,30 @@
                 x:Name="ButtonCommands"
                 Grid.Column="2"
                 Orientation="Horizontal">
+
+                <Button
+                    x:Name="CloseButton"
+                    Width="25"
+                    Height="25"
+                    Margin="25,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding DetachCommand}"
+                    Style="{StaticResource SecondaryBackgroundButton}"
+                    Visibility="{Binding DetachCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                    <Grid>
+                        <Path
+                            Margin="5"
+                            Data="{StaticResource TrashCanSVG}"
+                            Fill="{StaticResource ButtonForegroundBrush}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip}" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
                 <Button
                     x:Name="ResetProgressButton"
                     Width="25"

@@ -52,7 +52,7 @@ namespace NINA.Sequencer.SequenceItem {
         public ICommand AddCloneToParentCommand => new RelayCommand((o) => { AddCloneToParent(); ShowMenu = false; });
         public string Category { get; set; }
         public string Description { get; set; }
-        public ICommand DetachCommand => new RelayCommand((o) => Detach());
+        public virtual ICommand DetachCommand => new RelayCommand((o) => Detach());
         public GeometryGroup Icon { get; set; }
         public ICommand MoveDownCommand => new RelayCommand((o) => MoveDown());
         public ICommand MoveUpCommand => new RelayCommand((o) => MoveUp());

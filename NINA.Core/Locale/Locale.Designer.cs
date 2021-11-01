@@ -716,6 +716,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear sequence?.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_ClearCaption {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_ClearCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to clear the complete sequence run?.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deletes all instructions, triggers and conditions from all areas inside the sequence.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sequence End Area.
         /// </summary>
         internal static string Lbl_SequenceContainer_SequenceRootContainer_EndArea {
