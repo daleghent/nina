@@ -752,7 +752,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 token.ThrowIfCancellationRequested();
                 CameraInfo.IsExposing = false;
-                Cam.EnableSubSample = false;
+                if(Cam != null) { 
+                    Cam.EnableSubSample = false;
+                }
                 BroadcastCameraInfo();
             }
         }
