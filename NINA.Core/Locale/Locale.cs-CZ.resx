@@ -4082,7 +4082,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Kopule se po Překlopení Poledníku nesynchronizovala</value>
   </data>
   <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
-    <value>Dome failed to synchronize during Centering</value>
+    <value>Kopule se během centrování nesynchronizovala</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Až sekvence skončí, zavřít štěrbinu kopule</value>
@@ -4882,10 +4882,10 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Povolit Synchronizaci Kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
-    <value>Synchronizes the Dome to the current telescope position</value>
+    <value>Synchronizuje kopuli s aktuální pozicí dalekohledu</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Synchronizovat Kopuli</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>Sekvence obsahuje řádky, které jsou buď zakázány, nebo kde se počet expozice průběhu rovná celkovému počtu expozic. Tyto položky jsou přeskočeny a pro sekvencer nejsou generovány žádné položky pro tyto řádky.</value>
@@ -5885,6 +5885,6 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
     <value>Čas trvání</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
-    <value>Synchronizing Dome</value>
+    <value>Synchronizace Kopule</value>
   </data>
 </root>
