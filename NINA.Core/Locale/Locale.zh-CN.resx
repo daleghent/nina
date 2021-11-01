@@ -1699,7 +1699,7 @@
     <value>导星程序没有在指定时间内恢复通信，序列将继续拍摄，但请手动确认导星已经在进行</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
+    <value>导星软件没有在预定时间({0}s + 10s)后返回“已稳定”消息。跳过。</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>导星恢复失败</value>
@@ -4881,10 +4881,10 @@
     <value>启用圆顶同步</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
-    <value>Synchronizes the Dome to the current telescope position</value>
+    <value>将圆顶同步至当前望远镜位置</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>同步圆顶</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>序列包含已禁用或进度曝光次数等于总曝光次数的条目。 这些项目被跳过，序列中没有任何新的项目。</value>
@@ -4948,9 +4948,9 @@
     <value>无效偏移。偏移必须设置在 {0} 和 {1} 之间，但设置为 {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>拍摄图像，并使用当前望远镜指向坐标作为参考来解析图像。
+解析成功后，望远镜将同步到解析出的坐标。
+警告：此指令不会使望远镜对准目标，而是同步当前实际坐标给望远镜！</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>解析和同步</value>
@@ -5636,7 +5636,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Waiting for prior slew</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>Do you want to reset the complete sequence run?</value>
+    <value>您想要完全重置整个序列吗？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
     <value>重置序列？</value>
@@ -5884,6 +5884,6 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Duration</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
-    <value>Synchronizing Dome</value>
+    <value>正在同步圆顶</value>
   </data>
 </root>
