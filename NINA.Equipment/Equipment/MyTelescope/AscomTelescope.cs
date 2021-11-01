@@ -917,6 +917,25 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             return epoch;
         }
 
+        private void CheckMountTime() {
+            try {
+                var mountTime = device.UTCDate;
+                var systemTime = DateTime.UtcNow;
+                var timeDiff = Math.Abs((mountTime - systemTime).TotalSeconds);
+
+                // Warn the user if the mount time differs from system time by 15 seconds (7.5 arcmin) or more
+                double warningThreshold = 15;
+
+                Logger.Info($"Mount UTC Time: {mountTime:u} / System UTC Time: {systemTime:u}; Difference: {timeDiff:0.0##} seconds");
+
+                if (timeDiff >= warningThreshold) {
+                    Notification.ShowWarning(string.Format(Loc.Instance["LblMountTimeDifferenceTooLarge"], timeDiff));
+                }
+            } catch (Exception e) {
+                Logger.Error(e, "Failed to retrieve the UTC Date from the mount");
+            }
+        }
+
         private ImmutableList<TrackingMode> GetTrackingModes() {
             var trackingRateEnum = device.TrackingRates.GetEnumerator();
             var trackingModes = ImmutableList.CreateBuilder<TrackingMode>();
@@ -1048,12 +1067,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             Initialize();
             EquatorialSystem = DetermineEquatorialSystem();
             trackingModes = GetTrackingModes();
-
-            try {
-                Logger.Info($"Mount UTC Time: {device.UTCDate:u} / System UTC Time: {DateTime.UtcNow:u}");
-            } catch (Exception e) {
-                Logger.Error(e, "Failed to retrieve the UTC Date from the mount");
-            }
+            CheckMountTime();
 
             return Task.CompletedTask;
         }

@@ -10515,6 +10515,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The mount&apos;s clock differs from the computer&apos;s clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount&apos;s documentation regarding time configuration..
+        /// </summary>
+        internal static string LblMountTimeDifferenceTooLarge {
+            get {
+                return ResourceManager.GetString("LblMountTimeDifferenceTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mount Type.
         /// </summary>
         internal static string LblMountType {
