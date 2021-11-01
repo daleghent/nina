@@ -31,6 +31,7 @@ using NINA.WPF.Base.ViewModel.AutoFocus;
 using OxyPlot;
 using OxyPlot.Series;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -51,6 +52,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
         private readonly IFilterWheelMediator filterWheelMediator;
         private FocuserInfo focuserInfo;
         private readonly IFocuserMediator focuserMediator;
+        private FileSystemWatcher reportFileWatcher;
 
         public AutoFocusToolVM(
                 IProfileService profileService,
@@ -77,6 +79,16 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
 
             ChartList = new AsyncObservableCollection<Chart>();
             ChartListSelectable = true;
+
+            reportFileWatcher = new FileSystemWatcher() {
+                Path = AutoFocus.AutoFocusVM.ReportDirectory,
+                NotifyFilter = NotifyFilters.FileName,
+                Filter = "*.json",
+                EnableRaisingEvents = true,
+                IncludeSubdirectories = false
+            };
+            reportFileWatcher.Created += ReportFileWatcher_Created;
+            reportFileWatcher.Deleted += ReportFileWatcher_Deleted;
             Task.Run(() => { ListCharts(); });
 
             StartAutoFocusCommand = new AsyncCommand<AutoFocusReport>(
@@ -91,9 +103,6 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                                 var latestReport = (from f in dir.GetFiles()
                                                     orderby f.LastWriteTime descending
                                                     select f).FirstOrDefault();
-                                if (latestReport != null) {
-                                    ChartList.Add(new Chart(latestReport.Name, latestReport.FullName));
-                                }
                                 return result;
                             } finally {
                                 cameraMediator.ReleaseCaptureBlock(this);
@@ -178,14 +187,40 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             return filter;
         }
 
-        private AsyncObservableCollection<Chart> ListCharts() {
+        private void ListCharts() {
             var files = Directory.GetFiles(Path.Combine(AutoFocus.AutoFocusVM.ReportDirectory));
-            foreach (String file in files) {
+
+            foreach (string file in files) {
                 var item = new Chart(Path.GetFileName(file), file);
-                if (!ChartList.Any(x => x.Name == item.Name))
-                    ChartList.Add(item);
+                ChartList.AddSorted(item, new ChartComparer());
             }
-            return ChartList;
+            SelectedChart = ChartList.FirstOrDefault();
+            _ = LoadChart();
+        }
+
+        private void ReportFileWatcher_Created(object sender, FileSystemEventArgs e) {
+            var item = new Chart(Path.GetFileName(e.FullPath), e.FullPath);
+            ChartList.AddSorted(item, new ChartComparer());
+            SelectedChart = ChartList.FirstOrDefault();
+            _ = LoadChart();
+        }
+
+        private void ReportFileWatcher_Deleted(object sender, FileSystemEventArgs e) {
+            var toRemove = ChartList.FirstOrDefault(x => x.FilePath == e.FullPath);
+            if (toRemove != null) {
+                ChartList.Remove(toRemove);
+                if (SelectedChart == null) {
+                    SelectedChart = ChartList.FirstOrDefault();
+                    _ = LoadChart();
+                }
+            }
+        }
+
+        public class ChartComparer : IComparer<Chart> {
+
+            public int Compare(Chart x, Chart y) {
+                return string.Compare(x.FilePath, y.FilePath) * -1;
+            }
         }
 
         public void Dispose() {
@@ -195,31 +230,34 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
 
         public async Task<bool> LoadChart() {
             if (SelectedChart != null) {
-                ListCharts();
-                var comparer = new FocusPointComparer();
-                var plotComparer = new PlotPointComparer();
-                AutoFocusVM.FocusPoints.Clear();
-                AutoFocusVM.PlotFocusPoints.Clear();
+                try {
+                    var comparer = new FocusPointComparer();
+                    var plotComparer = new PlotPointComparer();
+                    AutoFocusVM.FocusPoints.Clear();
+                    AutoFocusVM.PlotFocusPoints.Clear();
 
-                using (var reader = File.OpenText(SelectedChart.FilePath)) {
-                    var text = await reader.ReadToEndAsync();
-                    var report = JsonConvert.DeserializeObject<AutoFocusReport>(text);
+                    using (var reader = File.OpenText(SelectedChart.FilePath)) {
+                        var text = await reader.ReadToEndAsync();
+                        var report = JsonConvert.DeserializeObject<AutoFocusReport>(text);
 
-                    if (Enum.TryParse<AFCurveFittingEnum>(report.Fitting, out var afCurveFittingEnum)) {
-                        AutoFocusVM.FinalFocusPoint = new DataPoint(report.CalculatedFocusPoint.Position, report.CalculatedFocusPoint.Value);
-                        AutoFocusVM.LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = AutoFocusVM.FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp, Filter = report.Filter };
+                        if (Enum.TryParse<AFCurveFittingEnum>(report.Fitting, out var afCurveFittingEnum)) {
+                            AutoFocusVM.FinalFocusPoint = new DataPoint(report.CalculatedFocusPoint.Position, report.CalculatedFocusPoint.Value);
+                            AutoFocusVM.LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = AutoFocusVM.FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp, Filter = report.Filter };
 
-                        foreach (FocusPoint fp in report.MeasurePoints) {
-                            AutoFocusVM.FocusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
-                            AutoFocusVM.PlotFocusPoints.AddSorted(new DataPoint(Convert.ToInt32(fp.Position), fp.Value), plotComparer);
+                            foreach (FocusPoint fp in report.MeasurePoints) {
+                                AutoFocusVM.FocusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
+                                AutoFocusVM.PlotFocusPoints.AddSorted(new DataPoint(Convert.ToInt32(fp.Position), fp.Value), plotComparer);
+                            }
+
+                            AutoFocusVM.AutoFocusChartMethod = report.Method == AFMethodEnum.STARHFR.ToString() ? AFMethodEnum.STARHFR : AFMethodEnum.CONTRASTDETECTION;
+                            AutoFocusVM.AutoFocusChartCurveFitting = afCurveFittingEnum;
+                            AutoFocusVM.SetCurveFittings(report.Method, report.Fitting);
                         }
 
-                        AutoFocusVM.AutoFocusChartMethod = report.Method == AFMethodEnum.STARHFR.ToString() ? AFMethodEnum.STARHFR : AFMethodEnum.CONTRASTDETECTION;
-                        AutoFocusVM.AutoFocusChartCurveFitting = afCurveFittingEnum;
-                        AutoFocusVM.SetCurveFittings(report.Method, report.Fitting);
+                        return true;
                     }
-
-                    return true;
+                } catch (Exception ex) {
+                    Logger.Error("Failed to load autofocus chart", ex);
                 }
             }
             return false;
