@@ -135,8 +135,10 @@ namespace NINA.Sequencer.Conditions {
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
             var hasTimeRemaining = (RemainingTime - nextItemDuration) > TimeSpan.Zero;
-            if (!hasTimeRemaining) {
+            if (!hasTimeRemaining && nextItemDuration > TimeSpan.Zero) {
+                // There is no time remaining due to the next instruction taking longer - cut off any remaining time
                 startTime = DateTime.Now.Subtract(TimeSpan.FromHours(Hours) + TimeSpan.FromMinutes(Minutes) + TimeSpan.FromSeconds(Seconds));
+                RaisePropertyChanged(nameof(RemainingTime));
             }
             return hasTimeRemaining;
         }

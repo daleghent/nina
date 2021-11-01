@@ -188,7 +188,15 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
-            return DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
+            var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
+            var hasTimeRemaining = DateTime.Now + nextItemDuration <= CalculateRemainingTime();
+            if (!hasTimeRemaining && nextItemDuration > TimeSpan.Zero) {
+                // There is no time remaining due to the next instruction taking longer - cut off any remaining time
+                Hours = DateTime.Now.Hour;
+                Minutes = DateTime.Now.Minute;
+                Seconds = DateTime.Now.Second;
+            }
+            return hasTimeRemaining;
         }
 
         public override string ToString() {
