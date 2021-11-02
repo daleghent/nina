@@ -54,5 +54,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
         Task WaitForSlew(CancellationToken token);
 
         Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
+
+        void StopSlew();
     }
 }

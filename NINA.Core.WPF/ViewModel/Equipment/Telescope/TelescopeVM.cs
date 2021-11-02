@@ -82,7 +82,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
             MoveCommand = new RelayCommand(Move);
             StopMoveCommand = new RelayCommand(StopMove);
-            StopSlewCommand = new RelayCommand(StopSlew);
+            StopSlewCommand = new RelayCommand(o => StopSlew());
             SetTrackingEnabledCommand = new RelayCommand(HandleSetTrackingEnabledCommand);
             SetTrackingModeCommand = new RelayCommand(HandleSetTrackingModeCommand);
 
@@ -773,7 +773,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
-        private void StopSlew(object obj) {
+        public void StopSlew() {
             try {
                 Telescope.StopSlew();
                 CancelSlewTelescope();

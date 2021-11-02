@@ -86,5 +86,9 @@ namespace NINA.WPF.Base.Mediator {
         public Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token) {
             return handler.FindHome(progress, token);
         }
+
+        public void StopSlew() {
+            handler.StopSlew();
+        }
     }
 }
