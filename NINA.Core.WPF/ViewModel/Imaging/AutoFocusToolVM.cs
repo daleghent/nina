@@ -89,7 +89,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             };
             reportFileWatcher.Created += ReportFileWatcher_Created;
             reportFileWatcher.Deleted += ReportFileWatcher_Deleted;
-            Task.Run(() => { ListCharts(); });
+            Task.Run(() => { InitializeChartList(); });
 
             StartAutoFocusCommand = new AsyncCommand<AutoFocusReport>(
                 () =>
@@ -98,12 +98,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                             cameraMediator.RegisterCaptureBlock(this);
                             ChartListSelectable = false;
                             try {
-                                var result = await AutoFocusVM.StartAutoFocus(CommandInitialization(), _autoFocusCancelToken.Token, new Progress<ApplicationStatus>(p => Status = p));
-                                var dir = new DirectoryInfo(AutoFocus.AutoFocusVM.ReportDirectory);
-                                var latestReport = (from f in dir.GetFiles()
-                                                    orderby f.LastWriteTime descending
-                                                    select f).FirstOrDefault();
-                                return result;
+                                return await AutoFocusVM.StartAutoFocus(CommandInitialization(), _autoFocusCancelToken.Token, new Progress<ApplicationStatus>(p => Status = p));
                             } finally {
                                 cameraMediator.ReleaseCaptureBlock(this);
                                 ChartListSelectable = true;
@@ -187,31 +182,43 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             return filter;
         }
 
-        private void ListCharts() {
+        private object lockobj = new object();
+
+        private void InitializeChartList() {
             var files = Directory.GetFiles(Path.Combine(AutoFocus.AutoFocusVM.ReportDirectory));
+            var l = new SortedSet<Chart>(new ChartComparer());
 
             foreach (string file in files) {
                 var item = new Chart(Path.GetFileName(file), file);
-                ChartList.AddSorted(item, new ChartComparer());
+                l.Add(item);
             }
-            SelectedChart = ChartList.FirstOrDefault();
+            lock (lockobj) {
+                ChartList = new AsyncObservableCollection<Chart>(l);
+                SelectedChart = ChartList.FirstOrDefault();
+            }
             _ = LoadChart();
         }
 
         private void ReportFileWatcher_Created(object sender, FileSystemEventArgs e) {
             var item = new Chart(Path.GetFileName(e.FullPath), e.FullPath);
-            ChartList.AddSorted(item, new ChartComparer());
-            SelectedChart = ChartList.FirstOrDefault();
+
+            lock (lockobj) {
+                ChartList.Insert(0, item);
+                SelectedChart = item;
+            }
+
             _ = LoadChart();
         }
 
         private void ReportFileWatcher_Deleted(object sender, FileSystemEventArgs e) {
-            var toRemove = ChartList.FirstOrDefault(x => x.FilePath == e.FullPath);
-            if (toRemove != null) {
-                ChartList.Remove(toRemove);
-                if (SelectedChart == null) {
-                    SelectedChart = ChartList.FirstOrDefault();
-                    _ = LoadChart();
+            lock (lockobj) {
+                var toRemove = ChartList.FirstOrDefault(x => x.FilePath == e.FullPath);
+                if (toRemove != null) {
+                    ChartList.Remove(toRemove);
+                    if (SelectedChart == null) {
+                        SelectedChart = ChartList.FirstOrDefault();
+                        _ = LoadChart();
+                    }
                 }
             }
         }
