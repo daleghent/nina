@@ -5887,4 +5887,16 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>Synchronizace Kopule</value>
   </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
+    <value>Vymazat sekvenci?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
+    <value>Chcete vymazat celý běh sekvence?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Odstraní všechny instrukce, spouštěče a podmínky ze všech oblastí v sekvenci</value>
+  </data>
+  <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
+    <value>Hodiny montáže se liší od hodin počítače o {0:0} sekund. To může vést k nepřesnému zaměřením a problémům s platesolvingem. Nastavení času naleznete v dokumentaci vaší montáže.</value>
+  </data>
 </root>

@@ -2543,7 +2543,7 @@
     <value>平场拍摄滤镜: {0}</value>
   </data>
   <data name="LblPreSequenceChecklist" xml:space="preserve">
-    <value>在您的序列中发现了以下潜在问题：</value>
+    <value>在你的序列中发现了以下潜在问题：</value>
   </data>
   <data name="LblPreSequenceChecklistHeader" xml:space="preserve">
     <value>拍摄前检查表</value>
@@ -3325,7 +3325,7 @@
     <value>月球速</value>
   </data>
   <data name="LblTrackingKing" xml:space="preserve">
-    <value>King</value>
+    <value>King (补偿大气折射)</value>
   </data>
   <data name="LblTrackingCustom" xml:space="preserve">
     <value>自定义</value>
@@ -3804,7 +3804,7 @@
     <value>高增益模式</value>
   </data>
   <data name="LblHighGainModeTooltip" xml:space="preserve">
-    <value>将相机设置为高增益模式。与低增益相比，这个模式的读出噪声更低。除非您想获最高的动态范围，否则不需要使用最低增益。</value>
+    <value>将相机设置为高增益模式。与低增益相比，这个模式的读出噪声更低。除非你想获最高的动态范围，否则不需要使用最低增益。</value>
   </data>
   <data name="LblRelativeFocuserNotSupported" xml:space="preserve">
     <value>当前调焦器不支持使用“绝对位置”的对焦方式</value>
@@ -4381,13 +4381,13 @@
     <value>开始曝光</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>通过解析和旋转，将望远镜居中到目标的坐标，视场旋转到指定角度</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
     <value>指向，居中并旋转</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>通过解析，将望远镜指向目标并居中到指定的坐标</value>
+    <value>通过解析，将望远镜居中到目标的坐标</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>指向并居中</value>
@@ -4582,7 +4582,7 @@
     <value>覆盖已有模板？</value>
   </data>
   <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
-    <value>模板{0} 已存在。您想要覆盖现有模板吗？此操作是不可逆的。</value>
+    <value>模板{0} 已存在。你想要覆盖现有模板吗？此操作是不可逆的。</value>
   </data>
   <data name="LblTemplate_UserTemplates" xml:space="preserve">
     <value>用户模板</value>
@@ -4723,7 +4723,7 @@
 还有一些触发器适用于当前指令集和集合中的每个子集。</value>
   </data>
   <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
-    <value>从序列中删除当前指令集及其所有项目。</value>
+    <value>从序列中删除当前指令集及其所有项目</value>
   </data>
   <data name="Lbl_SequenceContainer_MoveDown_Tooltip" xml:space="preserve">
     <value>将指令集和全部内容下移一个位置。
@@ -4736,7 +4736,7 @@
 如果上面的位置是当前未扩展的指令集，它将被移动到指令集之上。</value>
   </data>
   <data name="Lbl_SequenceContainer_Reset_Tooltip" xml:space="preserve">
-    <value>重置当前指令集的状态和进度以及所有内部指令。</value>
+    <value>重置当前指令集以及内部所有指令的状态和进度</value>
   </data>
   <data name="Lbl_SequenceItem_Delete_Tooltip" xml:space="preserve">
     <value>从指令集中删除当前指令</value>
@@ -4953,7 +4953,7 @@
 警告：此指令不会使望远镜对准目标，而是同步当前实际坐标给望远镜！</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
-    <value>解析和同步</value>
+    <value>解析并同步</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
     <value>保存目标</value>
@@ -4965,13 +4965,13 @@
     <value>覆盖目标？</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text" xml:space="preserve">
-    <value>目标 '{0} 已经存在。您想要覆盖现有目标吗？此操作是不可逆的。</value>
+    <value>目标 '{0} 已经存在。你想要覆盖现有目标吗？此操作是不可逆的。</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption" xml:space="preserve">
     <value>删除目标？</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text" xml:space="preserve">
-    <value>目标'{0}'将被删除。您想要删除现有目标吗？此操作是不可逆的。</value>
+    <value>目标'{0}'将被删除。你想要删除现有目标吗？此操作是不可逆的。</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
     <value>保存当前目标和所有内容以便重新使用</value>
@@ -5002,7 +5002,7 @@
     <value>服务器已启用</value>
   </data>
   <data name="LblServerEnabledTooltip" xml:space="preserve">
-    <value>在59590端口上托管一个服务，使用与 SGP 相同的 API 以便与现有程序交互。 如果服务未启动，您可能需要更新一些防火墙设置(参见NINA文档)。</value>
+    <value>在59590端口上托管一个服务，使用与 SGP 相同的 API 以便与现有程序交互。 如果服务未启动，你可能需要更新一些防火墙设置(参见NINA文档)。</value>
   </data>
   <data name="LblServerFailed" xml:space="preserve">
     <value>服务器启动失败。请检查NINA文档。 {0}</value>
@@ -5041,8 +5041,8 @@
     <value>是否建立高级序列？</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>您确定要将序列导出到高级序列吗？
-注意：高级序列不能向下兼容，无法恢复到简单序列！</value>
+    <value>你确定要将序列导出到高级序列器吗？
+注意：高级序列器不能向下兼容，无法恢复到简单序列！</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>高级序列</value>
@@ -5636,7 +5636,7 @@
     <value>Waiting for prior slew</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>您想要完全重置整个序列吗？</value>
+    <value>你想要重置整个序列吗？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
     <value>重置序列？</value>
@@ -5815,7 +5815,7 @@
     <value>重置目标</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
-    <value>Reset all rows in the current target?</value>
+    <value>重置此目标中所有拍摄条目？</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
     <value>使用解析来确定当前视场的旋转角度并使用旋转器来调整到指定角度。(这不会使目标居中！)</value>
@@ -5885,5 +5885,17 @@
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>正在同步圆顶</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
+    <value>清空序列？</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
+    <value>Do you want to clear the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+  </data>
+  <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
+    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
   </data>
 </root>

@@ -5880,4 +5880,16 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>Synchronizing Dome</value>
   </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
+    <value>Clear sequence?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
+    <value>Do you want to clear the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+  </data>
+  <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
+    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+  </data>
 </root>

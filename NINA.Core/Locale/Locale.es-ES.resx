@@ -5882,4 +5882,16 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>Sincronizando la cúpula</value>
   </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
+    <value>Clear sequence?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
+    <value>¿Quieres borrar la ejecución completa de la secuencia?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Elimina todas las instrucciones, los activadores y las condiciones de todas las áreas de la secuencia</value>
+  </data>
+  <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
+    <value>El reloj de la montura difiere del reloj del ordenador en {0:0} segundos. Esto puede llevar a un apuntado inexacto y a problemas con la resolución de placas. Por favor, revisa la documentación de su montura con respecto a la configuración del tiempo.</value>
+  </data>
 </root>
