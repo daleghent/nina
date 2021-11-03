@@ -713,7 +713,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private uint SendStartExposureCmd(bool useBulb) {
             uint error;
             const int PsbNonAF = (int)EDSDK.EdsShutterButton.CameraCommand_ShutterButton_Completely_NonAF;
-            EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_MirrorUpSetting, 0, out uint batteryLevel);
+
             if (useBulb) {
                 /*
                  * Cameras that feature a Bulb ("B") mode on the mode selection dial use the PressShutterButton command to
