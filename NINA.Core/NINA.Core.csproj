@@ -205,12 +205,10 @@
     <Compile Include="Model\ImagePattern.cs" />
     <Compile Include="Model\NullFilter.cs" />
     <Compile Include="Model\PagedList.cs" />
-    <Compile Include="Model\ProfileCameraState.cs" />
     <Compile Include="Model\RMS.cs" />
     <Compile Include="Model\SequenceEntityFailedException.cs" />
     <Compile Include="Model\SequenceEntityFailedValidationException.cs" />
     <Compile Include="Model\SequenceItemSkippedException.cs" />
-    <Compile Include="Model\SynchronizedClientInfo.cs" />
     <Compile Include="Model\TooltipDescriptionAttribute.cs" />
     <Compile Include="MyMessageBox\MyMessageBox.cs" />
     <Compile Include="MyMessageBox\MyMessageBoxView.xaml.cs">
@@ -523,9 +521,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Sequence\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <PackageReference Include="Accord.Imaging">
       <Version>3.8.0</Version>

@@ -1577,7 +1577,6 @@
     <Folder Include="External\x86\Nikon\Type0027\" />
     <Folder Include="External\x86\Nikon\Type0028\" />
     <Folder Include="External\x86\Nikon\Type0029\" />
-    <Folder Include="ViewModel\Equipment\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
