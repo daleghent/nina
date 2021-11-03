@@ -323,11 +323,11 @@
                                 </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
-                                    Default="{StaticResource Default}"
-                                    QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}"
                                     Canon="{StaticResource Default}"
-                                    LegacySbig="{StaticResource Default}" />
+                                    Default="{StaticResource Default}"
+                                    LegacySbig="{StaticResource Default}"
+                                    QhyCcd="{StaticResource QhyCcd}"
+                                    Touptek="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -564,8 +564,7 @@
                             <DataTemplate x:Key="Canon">
                                 <StackPanel Orientation="Vertical">
                                     <DockPanel Margin="0,0,0,6">
-                                        <TextBlock VerticalAlignment="Center"
-                                            Text="{ns:Loc LblMirrorLockupDelay}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMirrorLockupDelay}" />
                                         <ninactrl:UnitTextBox
                                             Width="200"
                                             Margin="5,0,0,0"
@@ -586,6 +585,11 @@
                                             </TextBox.ToolTip>
                                         </ninactrl:UnitTextBox>
                                     </DockPanel>
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        FontStyle="Italic"
+                                        Text="{ns:Loc LblMirrorLockupDelayTooltip}"
+                                        TextAlignment="Right" />
                                 </StackPanel>
                             </DataTemplate>
 
@@ -614,14 +618,13 @@
                                             Text="{ns:Loc LblTrackingASCOMServerPipeName}" />
                                         <TextBox
                                             Width="250"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Right">
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center">
                                             <TextBox.Text>
                                                 <Binding
                                                     Path="ActiveProfile.CameraSettings.TrackingCameraASCOMServerPipeName"
                                                     Source="{StaticResource ProfileService}"
-                                                    UpdateSourceTrigger="LostFocus">
-                                                </Binding>
+                                                    UpdateSourceTrigger="LostFocus" />
                                             </TextBox.Text>
                                         </TextBox>
                                     </DockPanel>
@@ -630,11 +633,11 @@
 
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
-                                Default="{StaticResource Default}"
-                                QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}"
                                 Canon="{StaticResource Canon}"
-                                LegacySbig="{StaticResource LegacySbig}" />
+                                Default="{StaticResource Default}"
+                                LegacySbig="{StaticResource LegacySbig}"
+                                QhyCcd="{StaticResource QhyCcd}"
+                                Touptek="{StaticResource Altair}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"
