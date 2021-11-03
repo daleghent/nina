@@ -4275,11 +4275,38 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} has been disconnected from the computer. Check its USB connection and power source.
+        /// </summary>
+        internal static string LblCanonCameraDisconnected {
+            get {
+                return ResourceManager.GetString("LblCanonCameraDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A Canon error occored: {0}.
         /// </summary>
         internal static string LblCanonErrorOccurred {
             get {
                 return ResourceManager.GetString("LblCanonErrorOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera&apos;s Custom Function menu for exposures to succeed..
+        /// </summary>
+        internal static string LblCanonMluNotSupported {
+            get {
+                return ResourceManager.GetString("LblCanonMluNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Canon SDK has experienced an internal error. Unreliable camera operation might result.
+        /// </summary>
+        internal static string LblCanonSdkError {
+            get {
+                return ResourceManager.GetString("LblCanonSdkError", resourceCulture);
             }
         }
         
@@ -10484,6 +10511,27 @@ namespace NINA.Core.Locale {
         internal static string LblMinutesShort {
             get {
                 return ResourceManager.GetString("LblMinutesShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mirror lockup delay.
+        /// </summary>
+        internal static string LblMirrorLockupDelay {
+            get {
+                return ResourceManager.GetString("LblMirrorLockupDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The desired length of time between when the mirror is locked up and when the exposure starts.
+        ///A delay of 0 seconds deactivates this option.
+        ///The mirror lockup option must be enabled in the camera as well.
+        ///Refer to your camera&apos;s manual for the location of this setting.
+        /// </summary>
+        internal static string LblMirrorLockupDelayTooltip {
+            get {
+                return ResourceManager.GetString("LblMirrorLockupDelayTooltip", resourceCulture);
             }
         }
         

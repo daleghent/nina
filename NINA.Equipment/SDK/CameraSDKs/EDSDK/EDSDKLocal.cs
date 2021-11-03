@@ -99,7 +99,7 @@ namespace EDSDKLib {
 
         /*
          * Camera shutter speeds
-         * This should enumerate all possible shuttder speeds that all supported Canon cameras
+         * This should enumerate all possible shutter speeds that all supported Canon cameras
          * are capable of. See table defined in EDSDK documentation, section 5.2.26 kEdsPropID_Tv
          */
 
@@ -178,6 +178,69 @@ namespace EDSDKLib {
             {0x9C, 1/6000d },
             {0x9D, 1/6400d },
             {0xA0, 1/8000d }
+        };
+
+        /*
+         * Camera AE mode
+         * This should enumerate all possible AE modes that all supported Canon cameras
+         * are capable of. See table defined in EDSDK documentation, section 5.2.19 kEdsPropID_AEMode
+         */
+
+        public static Dictionary<uint, string> AeModes = new Dictionary<uint, string> {
+            {0x00, "Program AE"},
+            {0x01, "Shutter-Speed Priority AE" },
+            {0x02, "Aperture Priority AE" },
+            {0x03, "Manual Exposure" },
+            {0x04, "Bulb" },
+            {0x05, "Auto Depth-of-Field AE" },
+            {0x06, "Depth-of-field AE" },
+            {0x07, "Camera settings registered" },
+            {0x08, "Lock" },
+            {0x09, "Auto" },
+            {0x0a, "Night Scene Portrait" },
+            {0x0b, "Sports" },
+            {0x0c, "Portrait" },
+            {0x0d, "Landscape" },
+            {0x0e, "Close-Up" },
+            {0x0f, "Fash Off" },
+            {0x13, "Creative Auto" },
+            {0x14, "Movie" },
+            {0x15, "Photo In Movie" },
+            {0x16, "Scene Intelligent Auto" },
+            {0x17, "Night Scenes" },
+            {0x18, "Backlit Scenes" },
+            {0x1a, "Kids" },
+            {0x1b, "Food" },
+            {0x1d, "Candlelight" },
+            {0x1e, "Grainy B/W" },
+            {0x1f, "Soft focus" },
+            {0x20, "Toy camera effect" },
+            {0x21, "Fish-eye effect" },
+            {0x22, "Water painting effect" },
+            {0x23, "Miniature effect" },
+            {0x24, "HDR art standard" },
+            {0x25, "HDR art vivid" },
+            {0x26, "HDR art bold" },
+            {0x27, "HDR art embossed" },
+            {0x28, "Dream" },
+            {0x29, "Old Movies" },
+            {0x2a, "Memory" },
+            {0x2b, "Dramatic B&W" },
+            {0x2c, "Miniatur effect movie" },
+            {0x2d, "Panning" },
+            {0x2e, "Group Photo" },
+            {0x32, "Myself (Self Portrait)" },
+            {0x33, "Plus Movie Auto" },
+            {0x34, "Smooth Skin" },
+            {0x35, "Silent Movie" },
+            {0x36, "Flexible-priority AE" },
+            {0x37, "Oil painting (Art bold effect)" },
+            {0x38, "Fireworks" },
+            {0x39, "Star portrait" },
+            {0x3a, "Star nightscape" },
+            {0x3b, "Star trails" },
+            {0x3c, "Star time-lapse movie" },
+            {0x3d, "Background blur" }
         };
 
         /*

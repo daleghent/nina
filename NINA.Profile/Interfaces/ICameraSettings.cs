@@ -53,6 +53,7 @@ namespace NINA.Profile.Interfaces {
         int Timeout { get; set; }
         bool? DewHeaterOn { get; set; }
         bool ASCOMAllowUnevenPixelDimension { get; set; }
+        double MirrorLockupDelay { get; set; }
         bool? BinAverageEnabled { get; set; }
         bool? TrackingCameraASCOMServerEnabled { get; set; }
         string TrackingCameraASCOMServerPipeName { get; set; }

@@ -37,6 +37,7 @@ using NINA.WPF.Base.ViewModel;
 using NINA.Astrometry;
 using NINA.WPF.Base.Behaviors;
 using System.ComponentModel;
+using NINA.Equipment.Exceptions;
 
 namespace NINA.ViewModel.Imaging {
 
@@ -388,6 +389,7 @@ namespace NINA.ViewModel.Imaging {
 
                     _captureImageToken.Token.ThrowIfCancellationRequested();
                 } while (Loop && success);
+            } catch (CameraExposureFailedException) {
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);

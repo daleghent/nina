@@ -30,6 +30,7 @@ using NINA.Core.Locale;
 using NINA.Core.Model.Equipment;
 using NINA.Core.MyMessageBox;
 using NINA.Image.RawConverter;
+using NINA.Equipment.Exceptions;
 using NINA.Equipment.Model;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Interfaces;
@@ -283,6 +284,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             ValidateMode();
             GetISOSpeeds();
             GetShutterSpeeds();
+            GetBatteryLevel();
             SetRawFormat();
             SetSaveLocation();
             SubscribeEvents();
@@ -294,29 +296,70 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         protected event EDSDK.EdsStateEventHandler SDKStateEvent;
 
+        protected event EDSDK.EdsPropertyEventHandler SDKPropertyEvent;
+
         private void SubscribeEvents() {
             SDKObjectEvent += new EDSDK.EdsObjectEventHandler(Camera_SDKObjectEvent);
-            SDKStateEvent = new EDSDK.EdsStateEventHandler(Camera_SDKStateEvent);
+            SDKStateEvent += new EDSDK.EdsStateEventHandler(Camera_SDKStateEvent);
+            SDKPropertyEvent += new EDSDK.EdsPropertyEventHandler(Camera_SDKPropertyEvent);
 
             EDSDK.EdsSetObjectEventHandler(_cam, EDSDK.ObjectEvent_All, SDKObjectEvent, IntPtr.Zero);
             EDSDK.EdsSetCameraStateEventHandler(_cam, EDSDK.StateEvent_All, SDKStateEvent, IntPtr.Zero);
+            EDSDK.EdsSetPropertyEventHandler(_cam, EDSDK.PropertyEvent_All, SDKPropertyEvent, IntPtr.Zero);
         }
 
         private uint Camera_SDKStateEvent(uint inEvent, uint inParameter, IntPtr inContext) {
-            if (inEvent == EDSDK.StateEvent_WillSoonShutDown) {
-                Logger.Info("CANON: Will soon shutdown - sending request to extend shutdown timer");
-                CheckError(EDSDK.EdsSendCommand(_cam, EDSDK.CameraCommand_ExtendShutDownTimer, 0));
+            Logger.Debug($"CANON: Received state event: 0x{inEvent:x}, parameter: 0x{inParameter:x}");
+
+            switch (inEvent) {
+                case EDSDK.StateEvent_WillSoonShutDown:
+                    Logger.Info("CANON: Will soon shutdown - sending request to extend shutdown timer");
+                    CheckError(EDSDK.EdsSendCommand(_cam, EDSDK.CameraCommand_ExtendShutDownTimer, 0));
+                    break;
+
+                case EDSDK.StateEvent_Shutdown:
+                    Logger.Error("CANON: Camera has suddenly disconnected");
+                    Notification.ShowError(string.Format(Loc.Instance["LblCanonCameraDisconnected"], Name));
+                    break;
+
+                case EDSDK.StateEvent_InternalError:
+                    Logger.Error("CANON: Canon SDK has encountered an internal error");
+                    Notification.ShowError(Loc.Instance["LblCanonSdkError"]);
+                    break;
             }
 
             return EDSDK.EDS_ERR_OK;
         }
 
         private uint Camera_SDKObjectEvent(uint inEvent, IntPtr inRef, IntPtr inContext) {
+            Logger.Debug($"CANON: Received object event: 0x{inEvent:x}");
+
             if (inEvent == EDSDK.ObjectEvent_DirItemRequestTransfer) {
                 this.DirectoryItem = inRef;
                 bulbCompletionCTS?.Cancel();
                 downloadExposure?.TrySetResult(true);
             }
+            return EDSDK.EDS_ERR_OK;
+        }
+
+        private uint Camera_SDKPropertyEvent(uint inEvent, uint inPropertyID, uint inParam, IntPtr inContext) {
+            Logger.Debug($"CANON: Received property event: 0x{inEvent:x}, propertyID: 0x{inPropertyID:x}, parameter: 0x{inParam:x}");
+
+            if (inEvent == EDSDK.PropertyEvent_PropertyChanged) {
+                EDSDK.EdsGetPropertyData(_cam, inPropertyID, 0, out uint data);
+                Logger.Trace($"CANON: Property changed: 0x{inPropertyID:x} = 0x{data:x}");
+
+                switch (inPropertyID) {
+                    case EDSDK.PropID_AEMode:
+                        Logger.Info($"CANON: Camera mode switched to {EDSDKLocal.AeModes[data]}");
+                        break;
+
+                    case EDSDK.PropID_BatteryLevel:
+                        GetBatteryLevel();
+                        break;
+                }
+            }
+
             return EDSDK.EDS_ERR_OK;
         }
 
@@ -334,7 +377,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private void SetRawFormat() {
-            CheckAndThrowError(SetProperty(EDSDK.PropID_ImageQuality, (uint)EDSDK.ImageQuality.EdsImageQuality_LR));
+            CheckError(SetProperty(EDSDK.PropID_ImageQuality, (uint)EDSDK.ImageQuality.EdsImageQuality_LR));
         }
 
         /// <summary>
@@ -387,9 +430,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 if (mode == EDSDK.AEMode_Mamual && speed == 0x0C) {
                     Logger.Debug("CANON: Camera is in manual mode but has a BULB speed (0x0C)");
-                    isBulb = IsManualBulb = true;
+                    isBulb = IsManualModeBulb = true;
                 } else {
-                    IsManualBulb = false;
+                    IsManualModeBulb = false;
                 }
             }
 
@@ -421,6 +464,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        private void GetBatteryLevel() {
+            try {
+                if (!CheckError(EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_BatteryLevel, 0, out uint batteryLevel))) {
+                    BatteryLevel = (int)batteryLevel;
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                BatteryLevel = -1;
+            }
+        }
+
         public void Disconnect() {
             CheckError(EDSDK.EdsCloseSession(_cam));
             Connected = false;
@@ -434,6 +488,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public Task<IExposureData> DownloadExposure(CancellationToken token) {
             return Task.Run<IExposureData>(async () => {
+                while (DirectoryItem == IntPtr.Zero) {
+                    Logger.Error("CANON: No new image is ready for downlaod");
+                }
+
                 if (downloadExposure.Task.IsCanceled) { return null; }
 
                 EDSDK.EdsDirectoryItemInfo directoryItemInfo;
@@ -603,15 +661,39 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 Logger.Warning("An exposure was still in progress. Cancelling it to start another.");
                 CancelDownloadExposure();
             }
-            var exposureTime = sequence.ExposureTime;
-            ValidateModeForExposure(exposureTime);
-
-            /* Start exposure */
-            bool useBulb = (IsManualMode() && exposureTime > 30.0) || (IsBulbMode() && exposureTime >= 1.0);
 
             downloadExposure = new TaskCompletionSource<object>();
-            SendStartExposureCmd(useBulb);
+            var exposureTime = sequence.ExposureTime;
+            bool useBulb = (IsManualMode() && exposureTime > 30.0) || (IsBulbMode() && exposureTime >= 1.0);
 
+            ValidateModeForExposure(exposureTime);
+
+            // Start exposure
+            uint error = SendStartExposureCmd(useBulb);
+
+            // This is to catch 450D/Rebel XSi cameras that do not support MLU exposures via USB.
+            // TODO: implement MLU-like functionality by driving the camera in LiveView mode and taking the exposures via that
+            if (error == EDSDK.EDS_ERR_TAKE_PICTURE_MIRROR_UP_NG) {
+                throw new CameraExposureFailedException(string.Format(Loc.Instance["LblCanonMluNotSupported"], Name));
+            }
+
+            // Do mirror lockup
+            if (MirrorLockupDelay > 0d) {
+                Logger.Debug($"CANON: MLU: Releasing first shutter trigger");
+
+                // Release the shutter button after the first press. The mirror should remain flipped (locked) up.
+                SendStopExposureCmd(useBulb);
+
+                // Sleep for the user-specified delay
+                Logger.Debug($"CANON: MLU: Waiting {MirrorLockupDelay} seconds before 2nd trigger");
+                Thread.Sleep(Convert.ToInt32(MirrorLockupDelay * 1000d));
+
+                // Press the shutter button again to open the curtain and start the actual exposure
+                Logger.Debug($"CANON: MLU: Starting 2nd trigger");
+                SendStartExposureCmd(useBulb);
+            }
+
+            // Finish exposure
             if (useBulb) {
                 /* Stop Exposure after exposure time */
                 bulbCompletionCTS?.Cancel();
@@ -623,12 +705,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
                 }, bulbCompletionCTS.Token);
             } else {
-                /* Immediately release shutter button when having a set exposure */
+                // Immediately release shutter button when having a set exposure
                 SendStopExposureCmd(false);
             }
         }
 
-        private void SendStartExposureCmd(bool useBulb) {
+        private uint SendStartExposureCmd(bool useBulb) {
             uint error;
             const int PsbNonAF = (int)EDSDK.EdsShutterButton.CameraCommand_ShutterButton_Completely_NonAF;
 
@@ -638,11 +720,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * start and stop bulb exposures when in that mode. Cameras that lack a "B" mode on the mode selection dial
                  * and instead set bulb mode as a shutter speed while in Manual ("M") mode on the dial use BulbStart/BulbEnd.
                  */
-                if (IsManualBulb && usesCameraCommandBulb) {
+                if (IsManualModeBulb && usesCameraCommandBulb) {
                     Logger.Debug("CANON: Initiating BULB mode exposure (via BulbStart)");
-
                     error = EDSDK.EdsSendCommand(_cam, EDSDK.CameraCommand_BulbStart, 0);
-                    // workaround: 500d is reporting 44313 for bulbStart but still triggers bulb successfully
+
+                    if (error == EDSDK.EDS_ERR_TAKE_PICTURE_MIRROR_UP_NG) return error;
+
+                    // workaround: 500D is returns 44313 (0xAD19) for BulbStart yet it still successfully starts a bulb exposure.
                     // it's also an unknown error code, probably safe to assume OK here for other devices
                     if (error == 44313) error = EDSDK.EDS_ERR_OK;
 
@@ -684,7 +768,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             }
 
-            CheckAndThrowError(error);
+            return error;
+            //CheckAndThrowError(error);
         }
 
         private bool SetExposureTime(double exposureTime) {
@@ -718,19 +803,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int USBLimitMin => -1;
         public int USBLimitStep => -1;
 
+        private int batteryLevel = -1;
+
         public int BatteryLevel {
-            get {
-                try {
-                    if (!CheckError(EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_BatteryLevel, 0, out uint batteryLevel))) {
-                        return (int)batteryLevel;
-                    } else {
-                        return -1;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    return -1;
-                }
-            }
+            get => batteryLevel;
+            private set => batteryLevel = value;
         }
 
         public void StopExposure() {
@@ -741,7 +818,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             uint error;
 
             if (useBulb) {
-                if (IsManualBulb && usesCameraCommandBulb) {
+                if (IsManualModeBulb && usesCameraCommandBulb) {
                     Logger.Debug("CANON: Ending BULB mode exposure (via BulbEnd)");
 
                     if ((error = EDSDK.EdsSendCommand(_cam, EDSDK.CameraCommand_BulbEnd, 0)) != EDSDK.EDS_ERR_OK) {
@@ -841,11 +918,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private bool usesCameraCommandBulb = true;
-        private bool IsManualBulb { get; set; } = false;
+        private bool IsManualModeBulb { get; set; } = false;
 
         public int BitDepth => (int)profileService.ActiveProfile.CameraSettings.BitDepth;
 
         public bool HasBattery => true;
+
+        public double MirrorLockupDelay {
+            get => profileService.ActiveProfile.CameraSettings.MirrorLockupDelay;
+            set => profileService.ActiveProfile.CameraSettings.MirrorLockupDelay = value;
+        }
 
         public void StartLiveView() {
             uint err = EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_Evf_OutputDevice, 0, out uint device);

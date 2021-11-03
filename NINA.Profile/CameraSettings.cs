@@ -52,6 +52,7 @@ namespace NINA.Profile {
 
             qhyIncludeOverscan = false;
             ascomAllowUnevenPixelSize = true;
+            mirrorLockupDelay = 0;
 
             binAverageEnabled = false;
             trackingCameraASCOMServerEnabled = false;
@@ -499,6 +500,19 @@ namespace NINA.Profile {
             set {
                 if (ascomAllowUnevenPixelSize != value) {
                     ascomAllowUnevenPixelSize = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double mirrorLockupDelay;
+
+        [DataMember]
+        public double MirrorLockupDelay {
+            get => mirrorLockupDelay;
+            set {
+                if (mirrorLockupDelay != value) {
+                    mirrorLockupDelay = value;
                     RaisePropertyChanged();
                 }
             }

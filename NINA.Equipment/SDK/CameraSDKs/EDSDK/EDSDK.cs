@@ -73,19 +73,21 @@ namespace EDSDKLib {
         public const uint PropID_Unknown = 0x0000ffff;
 
         public const uint PropID_ProductName = 0x00000002;
-        public const uint PropID_BodyIDEx = 0x00000015;
         public const uint PropID_OwnerName = 0x00000004;
         public const uint PropID_MakerName = 0x00000005;
         public const uint PropID_DateTime = 0x00000006;
         public const uint PropID_FirmwareVersion = 0x00000007;
         public const uint PropID_BatteryLevel = 0x00000008;
-        public const uint PropID_CFn = 0x00000009;
         public const uint PropID_SaveTo = 0x0000000b;
         public const uint kEdsPropID_CurrentStorage = 0x0000000c;
         public const uint kEdsPropID_CurrentFolder = 0x0000000d;
 
         public const uint PropID_BatteryQuality = 0x00000010;
 
+        public const uint PropID_BodyIDEx = 0x00000015;
+        public const uint PropID_HDDirectoryStructure = 0x00000020;
+
+        public const uint PropID_TempStatus = 0x01000415;
         /*----------------------------------
          Image Properties
         ----------------------------------*/
@@ -180,7 +182,6 @@ namespace EDSDKLib {
         public const uint PropID_LensBarrelStatus = 0x00000605;
 
 
-        public const uint PropID_TempStatus = 0x01000415;
         public const uint PropID_Evf_RollingPitching = 0x01000544;
         public const uint PropID_FixedMovie = 0x01000422;
         public const uint PropID_MovieParam = 0x01000423;
@@ -215,8 +216,9 @@ namespace EDSDKLib {
         public const uint CameraCommand_MovieSelectSwOFF = 0x00000108;
 
         public const uint CameraCommand_PressShutterButton = 0x00000004;
-        public const uint CameraCommand_SetRemoteShootingMode = 0x0000010f;
         public const uint CameraCommand_RequestRollPitchLevel = 0x00000109;
+        public const uint CameraCommand_DrivePowerZoom = 0x0000010d;
+        public const uint CameraCommand_SetRemoteShootingMode = 0x0000010f;
 
         public enum EdsEvfAf : uint {
             CameraCommand_EvfAf_OFF = 0,
@@ -906,6 +908,10 @@ namespace EDSDKLib {
         public const uint StateEvent_InternalError = 0x00000306;
 
         public const uint StateEvent_AfResult = 0x00000309;
+
+        public const uint StateEvent_BulbExposureTime = 0x00000310;
+
+        public const uint StateEvent_PowerZoomInfoChanged = 0x00000311;
 
         #endregion
 

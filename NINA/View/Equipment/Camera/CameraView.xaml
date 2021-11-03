@@ -326,6 +326,7 @@
                                     Default="{StaticResource Default}"
                                     QhyCcd="{StaticResource QhyCcd}"
                                     Touptek="{StaticResource Default}"
+                                    Canon="{StaticResource Default}"
                                     LegacySbig="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
@@ -559,6 +560,35 @@
                                     </CheckBox>
                                 </DockPanel>
                             </DataTemplate>
+
+                            <DataTemplate x:Key="Canon">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6">
+                                        <TextBlock VerticalAlignment="Center"
+                                            Text="{ns:Loc LblMirrorLockupDelay}" />
+                                        <ninactrl:UnitTextBox
+                                            Width="200"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            VerticalContentAlignment="Center"
+                                            Unit="s">
+                                            <TextBox.Text>
+                                                <Binding Mode="TwoWay" Path="MirrorLockupDelay">
+                                                    <Binding.ValidationRules>
+                                                        <util:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                            <TextBox.ToolTip>
+                                                <ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblMirrorLockupDelayTooltip}" />
+                                                </ToolTip>
+                                            </TextBox.ToolTip>
+                                        </ninactrl:UnitTextBox>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
+
                             <DataTemplate x:Key="LegacySbig">
                                 <StackPanel Orientation="Vertical">
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
@@ -597,11 +627,13 @@
                                     </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
+
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
                                 Default="{StaticResource Default}"
                                 QhyCcd="{StaticResource QhyCcd}"
                                 Touptek="{StaticResource Altair}"
+                                Canon="{StaticResource Canon}"
                                 LegacySbig="{StaticResource LegacySbig}" />
                         </Grid.Resources>
                         <ContentControl
