@@ -259,6 +259,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                             AutoFocusVM.AutoFocusChartMethod = report.Method == AFMethodEnum.STARHFR.ToString() ? AFMethodEnum.STARHFR : AFMethodEnum.CONTRASTDETECTION;
                             AutoFocusVM.AutoFocusChartCurveFitting = afCurveFittingEnum;
                             AutoFocusVM.SetCurveFittings(report.Method, report.Fitting);
+                            AutoFocusVM.AutoFocusDuration = report.Duration;
                         }
 
                         return true;

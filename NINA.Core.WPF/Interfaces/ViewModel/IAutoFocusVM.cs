@@ -43,6 +43,7 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         TrendlineFitting TrendlineFitting { get; set; }
         AFMethodEnum AutoFocusChartMethod { get; set; }
         AFCurveFittingEnum AutoFocusChartCurveFitting { get; set; }
+        TimeSpan AutoFocusDuration { get; set; }
 
         Task<AutoFocusReport> StartAutoFocus(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress);
 

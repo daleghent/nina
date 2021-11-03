@@ -89,4 +89,6 @@
     <converters:StringCollectionToStringConverter x:Key="StringCollectionToStringConverter" />
     <converters:EnumTooltipTypeConverter x:Key="EnumTooltipTypeConverter" />
     <converters:CameraStateToVisibilityConverter x:Key="CameraStateToVisibilityConverter" />
+    <converters:TimeSpanZeroToVisibilityConverter x:Key="TimeSpanZeroToVisibilityConverter" />
+    <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
 </ResourceDictionary>

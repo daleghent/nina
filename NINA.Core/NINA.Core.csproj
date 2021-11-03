@@ -298,6 +298,8 @@
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
     <Compile Include="Utility\Converters\PercentageConverter.cs" />
     <Compile Include="Utility\Converters\StringCollectionToStringConverter.cs" />
+    <Compile Include="Utility\Converters\TimeSpanToStringConverter.cs" />
+    <Compile Include="Utility\Converters\TimeSpanZeroToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\UnitConverter.cs" />
     <Compile Include="Utility\Converters\SetAlphaToColorConverter.cs" />
     <Compile Include="Utility\Converters\SideOfPierConverter.cs" />

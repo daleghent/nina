@@ -52,7 +52,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         private AsyncObservableCollection<DataPoint> _plotFocusPoints;
         private QuadraticFitting _quadraticFitting;
         private TrendlineFitting _trendLineFitting;
-        private int _durationSeconds;
+        private TimeSpan _autoFocusDuration;
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;
         private IFocuserMediator focuserMediator;
@@ -192,11 +192,11 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
         }
 
-        public int DurationSeconds {
-            get => _durationSeconds;
+        public TimeSpan AutoFocusDuration {
+            get => _autoFocusDuration;
             set {
-                if (_durationSeconds != value) {
-                    _durationSeconds = value;
+                if (_autoFocusDuration != value) {
+                    _autoFocusDuration = value;
                     RaisePropertyChanged();
                 }
             }
@@ -213,7 +213,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             GaussianFitting = null;
             FinalFocusPoint = new DataPoint(0, 0);
             LastAutoFocusPoint = null;
-            DurationSeconds = 0;
+            AutoFocusDuration = TimeSpan.Zero;
         }
 
         private DataPoint DetermineFinalFocusPoint() {
@@ -676,8 +676,9 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                         FinalFocusPoint = DetermineFinalFocusPoint();
 
-                        report = GenerateReport(initialFocusPosition, initialHFR, autofocusFilter?.Name ?? string.Empty, stopWatch.Elapsed);
-                        DurationSeconds = (int)Math.Ceiling(stopWatch.Elapsed.TotalSeconds);
+                        var duration = stopWatch.Elapsed;
+                        report = GenerateReport(initialFocusPosition, initialHFR, autofocusFilter?.Name ?? string.Empty, duration);
+                        AutoFocusDuration = duration;
 
                         LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = focuserMediator.GetInfo().Temperature, Timestamp = DateTime.Now, Filter = autofocusFilter?.Name };
 
@@ -695,6 +696,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                                 HyperbolicFitting = null;
                                 GaussianFitting = null;
                                 FinalFocusPoint = new DataPoint(0, 0);
+                                AutoFocusDuration = TimeSpan.Zero;
                                 reattempt = true;
                             } else {
                                 Notification.ShowWarning(Loc.Instance["LblAutoFocusRestoringOriginalPosition"]);
