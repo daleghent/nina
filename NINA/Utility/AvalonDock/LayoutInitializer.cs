@@ -15,7 +15,7 @@
 using AvalonDock.Layout;
 using System.Linq;
 
-namespace NINA.Core.Utility.AvalonDock {
+namespace NINA.Utility.AvalonDock {
 
     public class LayoutInitializer : ILayoutUpdateStrategy {
 

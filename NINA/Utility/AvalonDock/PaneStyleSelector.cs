@@ -15,7 +15,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NINA.Core.Utility.AvalonDock {
+namespace NINA.Utility.AvalonDock {
 
     public class PaneStyleSelector : StyleSelector {
 
