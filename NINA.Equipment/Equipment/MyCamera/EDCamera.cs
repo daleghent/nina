@@ -403,7 +403,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private bool IsManualMode() {
-            EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_AEMode, 0, out uint mode);
+            var err = EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_AEMode, 0, out uint mode);
+            if (err == EDSDK.EDS_ERR_INVALID_HANDLE) {
+                throw new CameraConnectionLostException(string.Format(Loc.Instance["LblCanonCameraDisconnected"], Name));
+            }
 
             if (mode == EDSDK.AEMode_Mamual) {
                 Logger.Debug("CANON: Camera is in MANUAL mode");
@@ -416,7 +419,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool IsBulbMode() {
             bool isBulb = false;
 
-            EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_AEMode, 0, out uint mode);
+            var err = EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_AEMode, 0, out uint mode);
+            if (err == EDSDK.EDS_ERR_INVALID_HANDLE) {
+                throw new CameraConnectionLostException(string.Format(Loc.Instance["LblCanonCameraDisconnected"], Name));
+            }
 
             if (mode == EDSDK.AEMode_Bulb) {
                 Logger.Debug("CANON: Camera is in BULB mode");
@@ -850,11 +856,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private uint SetProperty(uint property, object value) {
-            var err = EDSDK.EdsGetPropertySize(_cam, property, 0, out EDSDK.EdsDataType proptype, out int propsize);
-            if (err != EDSDK.EDS_ERR_OK) {
-                return err;
-            }
-            err = EDSDK.EdsSetPropertyData(_cam, property, 0, propsize, value);
+            uint err;
+            int retries = 0;
+            int propsize;
+            do {
+                err = EDSDK.EdsGetPropertySize(_cam, property, 0, out EDSDK.EdsDataType proptype, out propsize);
+                if (err != EDSDK.EDS_ERR_OK && err != EDSDK.EDS_ERR_DEVICE_BUSY) {
+                    return err;
+                }
+                err = EDSDK.EdsSetPropertyData(_cam, property, 0, propsize, value);
+                if (err == EDSDK.EDS_ERR_DEVICE_BUSY) {
+                    Thread.Sleep(1000);
+                    retries++;
+                }
+            } while (err == EDSDK.EDS_ERR_DEVICE_BUSY && retries < 32);
+
             return err;
         }
 
@@ -870,6 +886,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void CheckAndThrowError(uint err, [CallerMemberName] string memberName = "") {
             if (err != EDSDK.EDS_ERR_OK) {
                 var ex = new Exception(string.Format(Loc.Instance["LblCanonErrorOccurred"], ErrorCodeToString(err)));
+                if (err == EDSDK.EDS_ERR_INVALID_HANDLE) {
+                    ex = new CameraConnectionLostException(string.Format(Loc.Instance["LblCanonCameraDisconnected"], Name));
+                }
+
                 Logger.Error(ex, memberName);
                 throw ex;
             }
