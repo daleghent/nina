@@ -344,6 +344,46 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return ((int)property.MaxWidth, (int)property.MaxHeight);
         }
 
+        public bool HasTemperatureControl() {
+            CheckAndLogError(sVBonyPInvoke.SVBGetCameraPropertyEx(id, out var property));
+            return (property.bSupportControlTemp == SVB_BOOL.SVB_TRUE);
+        }
+
+        public bool SetTargetTemperature(double temperature) {
+            var convertedTemp = temperature * 10;
+            var nearest = (int)Math.Round(convertedTemp);
+
+            var minTemperatureSetpoint = GetMinControlValue(SVB_CONTROL_TYPE.SVB_TARGET_TEMPERATURE);
+            var maxTemperatureSetpoint = GetMaxControlValue(SVB_CONTROL_TYPE.SVB_TARGET_TEMPERATURE);
+
+            if (nearest > maxTemperatureSetpoint) {
+                nearest = maxTemperatureSetpoint;
+            } else if (nearest < minTemperatureSetpoint) {
+                nearest = minTemperatureSetpoint;
+            }
+            return SetControlValue(SVB_CONTROL_TYPE.SVB_TARGET_TEMPERATURE, nearest);
+        }
+
+        public double GetTargetTemperature() {
+            return GetControlValue(SVB_CONTROL_TYPE.SVB_TARGET_TEMPERATURE) / 10d;
+        }
+
+        public double GetTemperature() {
+            return GetControlValue(SVB_CONTROL_TYPE.SVB_CURRENT_TEMPERATURE) / 10d;
+        }
+
+        public bool SetCooler(bool onOff) {
+            return SetControlValue(SVB_CONTROL_TYPE.SVB_COOLER_ENABLE, onOff ? 1 : 0);
+        }
+
+        public bool GetCoolerOnOff() {
+            return GetControlValue(SVB_CONTROL_TYPE.SVB_COOLER_ENABLE) > 0 ? true : false;
+        }
+
+        public double GetCoolerPower() {
+            return GetControlValue(SVB_CONTROL_TYPE.SVB_COOLER_POWER);
+        }
+
         private int GetControlValue(SVB_CONTROL_TYPE type) {
             if (controls.TryGetValue(type, out var control)) {
                 if (CheckAndLogError(sVBonyPInvoke.SVBGetControlValue(id, type, out var value, out var auto))) {
@@ -367,7 +407,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return -1;
         }
 
-        public bool SetControlValue(SVB_CONTROL_TYPE type, int value) {
+        private bool SetControlValue(SVB_CONTROL_TYPE type, int value) {
             if (controls.TryGetValue(type, out var control)) {
                 if (value < control.Min) { value = control.Min; }
                 if (value > control.Max) { value = control.Max; }

@@ -27,6 +27,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
         SVB_ERROR_CODE SVBGetCameraProperty(int iCameraID, out SVB_CAMERA_PROPERTY pCameraProperty);
 
+        SVB_ERROR_CODE SVBGetCameraPropertyEx(int iCameraID, out SVB_CAMERA_PROPERTY_EX pCameraProperty);
+
         SVB_ERROR_CODE SVBGetControlCaps(int iCameraID, int iControlIndex, out SVB_CONTROL_CAPS pControlCaps);
 
         SVB_ERROR_CODE SVBGetControlValue(int iCameraID, SVB_CONTROL_TYPE ControlType, out int value, out SVB_BOOL pbAuto);

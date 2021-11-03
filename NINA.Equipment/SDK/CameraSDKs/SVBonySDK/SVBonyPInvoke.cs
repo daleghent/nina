@@ -37,6 +37,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return SVBonyPInvoke.SVBGetCameraProperty(iCameraID, out pCameraProperty);
         }
 
+        public SVB_ERROR_CODE SVBGetCameraPropertyEx(int iCameraID, out SVB_CAMERA_PROPERTY_EX pCameraProperty) {
+            return SVBonyPInvoke.SVBGetCameraPropertyEx(iCameraID, out pCameraProperty);
+        }
+
         public SVB_ERROR_CODE SVBOpenCamera(int iCameraID) {
             return SVBonyPInvoke.SVBOpenCamera(iCameraID);
         }
@@ -194,14 +198,17 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         [DllImport(DLLNAME, EntryPoint = nameof(SVBGetCameraProperty), CallingConvention = CallingConvention.Cdecl)]
         public static extern SVB_ERROR_CODE SVBGetCameraProperty(int iCameraID, out SVB_CAMERA_PROPERTY pCameraProperty);
 
+        [DllImport(DLLNAME, EntryPoint = nameof(SVBGetCameraPropertyEx), CallingConvention = CallingConvention.Cdecl)]
+        public static extern SVB_ERROR_CODE SVBGetCameraPropertyEx(int iCameraID, out SVB_CAMERA_PROPERTY_EX pCameraProperty);
+
         /// <summary>
         /// /***************************************************************************
         /// Descriptions:
-	    ///     open the camera before any operation to the camera, this will not affect the camera which is capturing
+        ///     open the camera before any operation to the camera, this will not affect the camera which is capturing
         ///     All APIs below need to open the camera at first.
         ///
         /// Paras:
-	    ///     int CameraID: this is get from the camera property use the API SVBGetCameraInfo
+        ///     int CameraID: this is get from the camera property use the API SVBGetCameraInfo
         ///
         /// return:
         /// SVB_SUCCESS: Operation is successful
@@ -629,6 +636,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         public SVB_BOOL IsTriggerCam;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct SVB_CAMERA_PROPERTY_EX {
+        public SVB_BOOL bSupportPulseGuide;
+        public SVB_BOOL bSupportControlTemp;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public int[] Unused;
+    }
+
     [ExcludeFromCodeCoverage]
     public struct SVB_CONTROL_CAPS {
 
@@ -685,6 +701,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
         SVB_AUTO_TARGET_BRIGHTNESS,
         SVB_BLACK_LEVEL, //black level offset
+        SVB_COOLER_ENABLE,  //0:disable, 1:enable
+        SVB_TARGET_TEMPERATURE,  //unit is 0.1C
+        SVB_CURRENT_TEMPERATURE, //unit is 0.1C
+        SVB_COOLER_POWER,  //range: 0-100
     }
 
     public enum SVB_IMG_TYPE {//Supported Video Format

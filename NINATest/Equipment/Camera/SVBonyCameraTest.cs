@@ -423,5 +423,103 @@ namespace NINATest.Equipment.Camera {
             var imgData = await result.ToImageData(default, default);
             imgData.Data.FlatArray.Should().BeEquivalentTo(new ushort[] { 16, 16, 16, 16, 2048, 2048, 2048, 2048 });
         }
+
+        [Test]
+        public async Task HasNoTemperatureControl_ReturnsFalseWhenSdkFalse() {
+            var sdk = new Mock<ISVBonySDK>();
+            sdk.SetupGet(x => x.Connected).Returns(true);
+            sdk.Setup(x => x.HasTemperatureControl()).Returns(false);
+            var profile = new Mock<IProfileService>();
+            var deviceId = 12345;
+
+            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+
+            var connected = await sut.Connect(default);
+
+            connected.Should().Be(true);
+            sut.CanSetTemperature.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task HasTemperatureControl_ReturnsTrueWhenSdkTrue() {
+            var sdk = new Mock<ISVBonySDK>();
+            sdk.SetupGet(x => x.Connected).Returns(true);
+            sdk.Setup(x => x.HasTemperatureControl()).Returns(true);
+            var profile = new Mock<IProfileService>();
+            var deviceId = 12345;
+
+            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+
+            var connected = await sut.Connect(default);
+
+            connected.Should().Be(true);
+            sut.CanSetTemperature.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task HasTemperatureControl_CanAdjustTemperatureAndCooler() {
+            var sdk = new Mock<ISVBonySDK>();
+            sdk.SetupGet(x => x.Connected).Returns(true);
+            sdk.Setup(x => x.HasTemperatureControl()).Returns(true);
+            sdk.Setup(x => x.GetCoolerOnOff()).Returns(true);
+            sdk.Setup(x => x.GetCoolerPower()).Returns(30);
+            sdk.Setup(x => x.GetTemperature()).Returns(20);
+            sdk.Setup(x => x.GetTargetTemperature()).Returns(10);
+            var profile = new Mock<IProfileService>();
+            var deviceId = 12345;
+
+            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+
+            var connected = await sut.Connect(default);
+            sut.TemperatureSetPoint = 10;
+            sut.CoolerOn = true;
+
+            connected.Should().Be(true);
+
+            sut.Temperature.Should().Be(20);
+            sut.CoolerPower.Should().Be(30);
+            sut.TemperatureSetPoint.Should().Be(10);
+            sut.CoolerOn.Should().BeTrue();
+
+            sdk.Verify(x => x.SetTargetTemperature(10), Times.Once);
+            sdk.Verify(x => x.SetCooler(true), Times.Once);
+            sdk.Verify(x => x.GetTargetTemperature(), Times.Once);
+            sdk.Verify(x => x.GetTemperature(), Times.Once);
+            sdk.Verify(x => x.GetCoolerOnOff(), Times.Once);
+            sdk.Verify(x => x.GetCoolerPower(), Times.Once);
+        }
+
+        [Test]
+        public async Task HasNoTemperatureControl_CannotAdjustTemperatureAndCooler() {
+            var sdk = new Mock<ISVBonySDK>();
+            sdk.SetupGet(x => x.Connected).Returns(true);
+            sdk.Setup(x => x.HasTemperatureControl()).Returns(false);
+            sdk.Setup(x => x.GetCoolerOnOff()).Returns(true);
+            sdk.Setup(x => x.GetCoolerPower()).Returns(30);
+            sdk.Setup(x => x.GetTemperature()).Returns(20);
+            sdk.Setup(x => x.GetTargetTemperature()).Returns(10);
+            var profile = new Mock<IProfileService>();
+            var deviceId = 12345;
+
+            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+
+            var connected = await sut.Connect(default);
+            sut.TemperatureSetPoint = 10;
+            sut.CoolerOn = true;
+
+            connected.Should().Be(true);
+
+            sut.Temperature.Should().Be(double.NaN);
+            sut.CoolerPower.Should().Be(double.NaN);
+            sut.TemperatureSetPoint.Should().Be(double.NaN);
+            sut.CoolerOn.Should().BeFalse();
+
+            sdk.Verify(x => x.SetTargetTemperature(10), Times.Never);
+            sdk.Verify(x => x.SetCooler(true), Times.Never);
+            sdk.Verify(x => x.GetTargetTemperature(), Times.Never);
+            sdk.Verify(x => x.GetTemperature(), Times.Never);
+            sdk.Verify(x => x.GetCoolerOnOff(), Times.Never);
+            sdk.Verify(x => x.GetCoolerPower(), Times.Never);
+        }
     }
 }

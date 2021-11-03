@@ -28,7 +28,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyCamera {
-
     public class SVBonyCamera : BaseINPC, ICamera {
         private ISVBonySDK sdk;
         private IProfileService profileService;
@@ -77,6 +76,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             (CameraXSize, CameraYSize) = sdk.GetDimensions();
 
             SensorType = sdk.GetSensorInfo();
+
+            CanSetTemperature = sdk.HasTemperatureControl();
         }
 
         public int BitDepth { get => sdk.GetBitDepth(); }
@@ -339,7 +340,61 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         metaData: new ImageMetaData());
         }
 
-        private int internalId;
+        #region "Temperature Control"
+
+        public bool CanSetTemperature { get; private set; }
+
+        public bool CoolerOn {
+            get {
+                if (CanSetTemperature) {
+                    return sdk.GetCoolerOnOff();
+                }
+                return false;
+            }
+            set {
+                if (CanSetTemperature) {
+                    if (sdk.SetCooler(value)) {
+                        RaisePropertyChanged();
+                    }
+                }
+            }
+        }
+
+        public double CoolerPower {
+            get {
+                if (CanSetTemperature) {
+                    return sdk.GetCoolerPower();
+                }
+                return double.NaN;
+            }
+        }
+
+        public double Temperature {
+            get {
+                if (CanSetTemperature) {
+                    return sdk.GetTemperature();
+                }
+                return double.NaN;
+            }
+        }
+
+        public double TemperatureSetPoint {
+            get {
+                if (CanSetTemperature) {
+                    return sdk.GetTargetTemperature();
+                }
+                return double.NaN;
+            }
+            set {
+                if (CanSetTemperature) {
+                    if (sdk.SetTargetTemperature(value)) {
+                        RaisePropertyChanged();
+                    }
+                }
+            }
+        }
+
+        #endregion "Temperature Control"
 
         #region "Meta Data"
 
@@ -363,26 +418,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         #endregion "Subsample"
 
-        #region "Temperature Control"
-
-        // Currently no temperature controllable cameras implemented.
-        public bool CanSetTemperature { get => false; }
-
-        public bool CoolerOn { get => false; set { } }
-        public double CoolerPower { get => double.NaN; }
-        public bool HasDewHeater { get => false; }
-        public bool DewHeaterOn { get => false; set { } }
-
-        public double Temperature => double.NaN;
-
-        public double TemperatureSetPoint {
-            get => double.NaN;
-            set {
-            }
-        }
-
-        #endregion "Temperature Control"
-
         #region "LiveView"
 
         // Live view is deprecated
@@ -404,7 +439,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         #endregion "LiveView"
 
-        #region "Misc. Unsupported Features"
+        #region "Unsupported Features"
 
         public CameraStates CameraState { get => CameraStates.NoState; }
 
@@ -440,6 +475,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        #endregion "Misc. Unsupported Features"
+        // So far there is no adjustable dew heater available
+        public bool HasDewHeater { get => false; }
+
+        public bool DewHeaterOn { get => false; set { } }
+
+        #endregion "Unsupported Features"
     }
 }

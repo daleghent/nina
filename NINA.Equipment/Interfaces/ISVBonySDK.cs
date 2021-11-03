@@ -73,5 +73,19 @@ namespace NINA.Equipment.Interfaces {
         int GetBitDepth();
 
         (int, int, int, int, int) GetROI();
+
+        bool HasTemperatureControl();
+
+        bool SetCooler(bool onOff);
+
+        bool GetCoolerOnOff();
+
+        bool SetTargetTemperature(double temperature);
+
+        double GetTargetTemperature();
+
+        double GetTemperature();
+
+        double GetCoolerPower();
     }
 }
