@@ -676,13 +676,14 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                         FinalFocusPoint = DetermineFinalFocusPoint();
 
-                        var duration = stopWatch.Elapsed;
-                        report = GenerateReport(initialFocusPosition, initialHFR, autofocusFilter?.Name ?? string.Empty, duration);
-                        AutoFocusDuration = duration;
-
                         LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = focuserMediator.GetInfo().Temperature, Timestamp = DateTime.Now, Filter = autofocusFilter?.Name };
 
                         bool goodAutoFocus = await ValidateCalculatedFocusPosition(FinalFocusPoint, autofocusFilter, token, progress, initialHFR);
+
+                        var duration = stopWatch.Elapsed;
+                        AutoFocusDuration = duration;
+
+                        report = GenerateReport(initialFocusPosition, initialHFR, autofocusFilter?.Name ?? string.Empty, duration);
 
                         if (!goodAutoFocus) {
                             if (numberOfAttempts < profileService.ActiveProfile.FocuserSettings.AutoFocusTotalNumberOfAttempts) {
