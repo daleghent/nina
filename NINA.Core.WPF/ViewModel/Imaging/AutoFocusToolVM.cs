@@ -89,7 +89,9 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             };
             reportFileWatcher.Created += ReportFileWatcher_Created;
             reportFileWatcher.Deleted += ReportFileWatcher_Deleted;
-            Task.Run(() => { InitializeChartList(); });
+            Task.Run(() => {
+                InitializeChartList();
+            });
 
             StartAutoFocusCommand = new AsyncCommand<AutoFocusReport>(
                 () =>
@@ -251,10 +253,15 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                             AutoFocusVM.FinalFocusPoint = new DataPoint(report.CalculatedFocusPoint.Position, report.CalculatedFocusPoint.Value);
                             AutoFocusVM.LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = AutoFocusVM.FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp, Filter = report.Filter };
 
+                            var focusPoints = new AsyncObservableCollection<ScatterErrorPoint>();
+                            var plotFocusPoints = new AsyncObservableCollection<DataPoint>();
                             foreach (FocusPoint fp in report.MeasurePoints) {
-                                AutoFocusVM.FocusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
-                                AutoFocusVM.PlotFocusPoints.AddSorted(new DataPoint(Convert.ToInt32(fp.Position), fp.Value), plotComparer);
+                                focusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
+                                plotFocusPoints.AddSorted(new DataPoint(Convert.ToInt32(fp.Position), fp.Value), plotComparer);
                             }
+
+                            AutoFocusVM.FocusPoints = focusPoints;
+                            AutoFocusVM.PlotFocusPoints = plotFocusPoints;
 
                             AutoFocusVM.AutoFocusChartMethod = report.Method == AFMethodEnum.STARHFR.ToString() ? AFMethodEnum.STARHFR : AFMethodEnum.CONTRASTDETECTION;
                             AutoFocusVM.AutoFocusChartCurveFitting = afCurveFittingEnum;
