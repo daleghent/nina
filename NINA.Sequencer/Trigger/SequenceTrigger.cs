@@ -95,6 +95,7 @@ namespace NINA.Sequencer.Trigger {
         public async Task Run(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             Status = SequenceEntityStatus.RUNNING;
             try {
+                Logger.Info($"Starting {this}");
                 this.TriggerRunner.ResetAll();
 
                 if (this is IValidatable && !(this is ISequenceContainer)) {
