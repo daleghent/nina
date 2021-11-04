@@ -168,13 +168,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     try {
                         await RegulateTemperature(20, duration, false, progressRouter, ct);
                     } catch (CannotReachTargetTemperatureException) {
-                        Logger.Debug("Could not reach warming temperature. Most likley due to ambient temperature being lower. Continuing...");
+                        Logger.Info("Could not reach warming temperature. Most likley due to ambient temperature being lower. Continuing...");
                     }
                 }
 
                 Logger.Debug("Waiting to turn cooler off");
                 await CoreUtil.Wait(TimeSpan.FromSeconds(20), ct, progress, Loc.Instance["LblWaitingToTurnCoolerOff"]);
-                Logger.Debug("Turning cooler off");
+                Logger.Info("Turning cooler off");
                 Cam.CoolerOn = false;
                 return true;
             } finally {
@@ -752,7 +752,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 token.ThrowIfCancellationRequested();
                 CameraInfo.IsExposing = false;
-                if(Cam != null) { 
+                if (Cam != null) {
                     Cam.EnableSubSample = false;
                 }
                 BroadcastCameraInfo();

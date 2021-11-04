@@ -803,6 +803,8 @@ namespace NINA.ViewModel.FramingAssistant {
                 _loadImageSource?.Dispose();
                 _loadImageSource = new CancellationTokenSource();
                 try {
+                    Logger.Info($"Loading image from source {FramingAssistantSource} with field of view {FieldOfView}° for coordinates {DSO?.Coordinates}");
+
                     SkySurveyImage skySurveyImage = null;
 
                     if (Cache != null && DSO != null) {
@@ -866,8 +868,9 @@ namespace NINA.ViewModel.FramingAssistant {
                         CalculateRectangle(SkyMapAnnotator.ViewportFoV);
                     }
                 } catch (OperationCanceledException) {
+                    Logger.Info("Loading image for framing has been cancelled");
                 } catch (Exception ex) {
-                    Logger.Error(ex);
+                    Logger.Error($"Failed to load image from source {FramingAssistantSource} with field of view {FieldOfView}° for coordinates {DSO?.Coordinates}.", ex);
                     Notification.ShowError(ex.Message);
                 }
                 return true;

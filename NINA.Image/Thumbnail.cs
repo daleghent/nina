@@ -36,9 +36,11 @@ namespace NINA.Image {
         public async Task<IImageData> LoadOriginalImage(IProfileService profileService) {
             try {
                 var filePath = GetFilePath();
+                Logger.Info($"Reloading image from {filePath}");
                 if (File.Exists(filePath)) {
                     return await imageDataFactory.CreateFromFile(filePath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 } else {
+                    Logger.Info($"Unable to reload image as the file does not exist at {filePath}");
                     Notification.ShowError($"File ${filePath} does not exist");
                 }
             } catch (Exception ex) {
