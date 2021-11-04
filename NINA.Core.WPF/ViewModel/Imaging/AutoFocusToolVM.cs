@@ -238,7 +238,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
         }
 
         public async Task<bool> LoadChart() {
-            if (SelectedChart != null) {
+            if (SelectedChart != null && ChartListSelectable) {
                 try {
                     var comparer = new FocusPointComparer();
                     var plotComparer = new PlotPointComparer();
