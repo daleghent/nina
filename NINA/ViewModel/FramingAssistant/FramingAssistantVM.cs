@@ -53,6 +53,7 @@ using NINA.WPF.Base.SkySurvey;
 using NINA.WPF.Base.ViewModel;
 using NINA.Core.Utility.WindowService;
 using NINA.Image.Interfaces;
+using NINA.Core.Model.Equipment;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -148,6 +149,8 @@ namespace NINA.ViewModel.FramingAssistant {
             ClearCacheCommand = new RelayCommand(ClearCache, (object o) => Cache != null);
             RefreshSkyMapAnnotationCommand = new RelayCommand((object o) => SkyMapAnnotator.UpdateSkyMap(), (object o) => SkyMapAnnotator.Initialized);
             MouseWheelCommand = new RelayCommand(MouseWheel);
+            GetRotationFromCameraCommand = new AsyncCommand<bool>(GetRotationFromCamera, (object o) => RectangleCalculated && cameraMediator.GetInfo().Connected);
+            CancelGetRotationFromCameraCommand = new RelayCommand(o => { try { getRotationTokenSource?.Cancel(); } catch (Exception) { } });
 
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
 
@@ -237,6 +240,56 @@ namespace NINA.ViewModel.FramingAssistant {
                     resizeTimer.Start();
                 }
             });
+        }
+
+        private async Task<bool> GetRotationFromCamera(object arg) {
+            try {
+                using (getRotationTokenSource = new CancellationTokenSource()) {
+                    Logger.Info("Determining camera rotation for framing");
+                    var camerainfo = cameraMediator.GetInfo();
+
+                    var seq = new Equipment.Model.CaptureSequence() {
+                        Binning = new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
+                        Gain = profileService.ActiveProfile.PlateSolveSettings.Gain,
+                        FilterType = profileService.ActiveProfile.PlateSolveSettings.Filter,
+                        ExposureTime = profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
+                        TotalExposureCount = 1
+                    };
+
+                    var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+                    var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+
+                    var parameter = new CaptureSolverParameter() {
+                        Attempts = 1,
+                        Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
+                        DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
+                        FocalLength = profileService.ActiveProfile.TelescopeSettings.FocalLength,
+                        MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
+                        PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
+                        ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
+                        Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
+                        SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                        Coordinates = telescopeMediator.GetCurrentPosition()
+                    };
+
+                    var captureSolver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
+                    var result = await captureSolver.Solve(seq, parameter, default, _statusUpdate, getRotationTokenSource.Token);
+
+                    if (result.Success) {
+                        this.Rectangle.TotalRotation = result.Orientation;
+                        Logger.Info($"Camera rotation has been determined: {result.Orientation}°");
+                        Notification.ShowInformation(string.Format(Loc.Instance["LblCameraRotationSolved"], Math.Round(result.Orientation, 2)));
+                    } else {
+                        Logger.Info("Camera rotation import failed. Plate sovling was unsuccessful");
+                        Notification.ShowError(Loc.Instance["LblCameraRotationImportFailed"]);
+                    }
+                }
+            } catch (OperationCanceledException) {
+            } catch (Exception ex) {
+                Logger.Error("Camera rotation import failed", ex);
+                Notification.ShowError(Loc.Instance["LblCameraRotationImportFailed"]);
+            }
+            return true;
         }
 
         private async Task<bool> Center(Coordinates coordinates, CancellationToken token) {
@@ -794,6 +847,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private CancellationTokenSource _loadImageSource;
         private CancellationTokenSource slewTokenSource;
+        private CancellationTokenSource getRotationTokenSource;
 
         private IProgress<ApplicationStatus> _statusUpdate;
 
@@ -1157,6 +1211,8 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand ScrollViewerSizeChangedCommand { get; private set; }
         public ICommand RefreshSkyMapAnnotationCommand { get; private set; }
         public ICommand MouseWheelCommand { get; private set; }
+        public IAsyncCommand GetRotationFromCameraCommand { get; private set; }
+        public ICommand CancelGetRotationFromCameraCommand { get; private set; }
 
         public ISkyMapAnnotator SkyMapAnnotator {
             get => skyMapAnnotator;

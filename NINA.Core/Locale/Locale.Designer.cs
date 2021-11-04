@@ -4113,6 +4113,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to determine camera rotation..
+        /// </summary>
+        internal static string LblCameraRotationImportFailed {
+            get {
+                return ResourceManager.GetString("LblCameraRotationImportFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Camera rotation has been determined: {0}°.
+        /// </summary>
+        internal static string LblCameraRotationSolved {
+            get {
+                return ResourceManager.GetString("LblCameraRotationSolved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera State.
         /// </summary>
         internal static string LblCameraState {
@@ -6202,6 +6220,34 @@ namespace NINA.Core.Locale {
         internal static string LblDetectedStars {
             get {
                 return ResourceManager.GetString("LblDetectedStars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Determine rotation from camera.
+        /// </summary>
+        internal static string LblDetermineRotationFromCamera {
+            get {
+                return ResourceManager.GetString("LblDetermineRotationFromCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancels to determine rotation from camera for framing..
+        /// </summary>
+        internal static string LblDetermineRotationFromCameraCancel {
+            get {
+                return ResourceManager.GetString("LblDetermineRotationFromCameraCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
+        ///Once successfully solved, the rotation will be set for framing..
+        /// </summary>
+        internal static string LblDetermineRotationFromCameraTooltip {
+            get {
+                return ResourceManager.GetString("LblDetermineRotationFromCameraTooltip", resourceCulture);
             }
         }
         

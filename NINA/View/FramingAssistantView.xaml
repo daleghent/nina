@@ -478,7 +478,19 @@
                                 </xceed:SplitButton.DropDownContent>
                             </xceed:SplitButton>
                         </Grid>
-                        <Grid />
+                        <Grid>
+                            <ninactrl:AsyncProcessButton
+                                Height="25"
+                                Margin="5"
+                                HorizontalAlignment="Stretch"
+                                ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
+                                ButtonText="{ns:Loc LblDetermineRotationFromCamera}"
+                                CancelToolTip="{ns:Loc LblDetermineRotationFromCameraCancel}"
+                                CancelButtonImage="{StaticResource CancelSVG}"
+                                CancelCommand="{Binding CancelGetRotationFromCameraCommand}"
+                                Command="{Binding GetRotationFromCameraCommand}"
+                                ToolTip="{ns:Loc LblDetermineRotationFromCameraTooltip}" />
+                        </Grid>
                         <xceed:SplitButton
                             Height="25"
                             Margin="5,0,5,0"
