@@ -3008,7 +3008,7 @@
     <value>標準偏差SD</value>
   </data>
   <data name="LblHFRStDev" xml:space="preserve">
-    <value>HFR SD</value>
+    <value>HFR標準偏差</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -4062,7 +4062,7 @@
     <value>ドーム同期エラー. 望遠鏡に追従できません,{0}</value>
   </data>
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
-    <value>Dome failed to synchronize after Meridian Flip</value>
+    <value>子午線反転後に、ドームが同期に失敗しました</value>
   </data>
   <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
     <value>センタリング中にドームが同期できませんでした</value>
@@ -5847,22 +5847,22 @@ Refer to your camera's manual for the location of this setting</value>
     <value>ノイズ低減</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>構造検出の準備中</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
-    <value>Structure Detection</value>
+    <value>構造検出</value>
   </data>
   <data name="LblStarDetectorStarScan" xml:space="preserve">
-    <value>Scan and Analyze Stars</value>
+    <value>星のスキャンと分析</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>星検出プログラムV2を使用</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>全てに注釈をつける</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>デフォルトでは、200個の星のみに注釈がつけられます。これを有効にすると、検出された星全てに注釈がつけられます。</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
     <value>星検出プログラム</value>
@@ -5871,27 +5871,46 @@ Refer to your camera's manual for the location of this setting</value>
     <value>星注釈プログラム</value>
   </data>
   <data name="LblUnavailableForX86" xml:space="preserve">
-    <value>Unavailable in x86</value>
+    <value>x86では利用できません</value>
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>継続時間</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>ドームを同期中</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
-    <value>Clear sequence?</value>
+    <value>シーケンスを消去しますか？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
-    <value>Do you want to clear the complete sequence run?</value>
+    <value>シーケンス実行の全体を消去しますか？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
-    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+    <value>シーケンス内の全ての場所から、命令・トリガー・条件の全てを削除します</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+    <value>架台の時計がコンピュータの時計と {0:0} 秒異なっています。 これにより導入が不正確になったり、プレートソルブの問題を引き起こしたりする可能性があります。時間設定に関する架台の説明書を確認してください。</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
     <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
+  </data>
+  <data name="LblQhyUvloActiveError" xml:space="preserve">
+    <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
+  </data>
+  <data name="LblCameraRotationImportFailed" xml:space="preserve">
+    <value>Unable to determine camera rotation.</value>
+  </data>
+  <data name="LblCameraRotationSolved" xml:space="preserve">
+    <value>Camera rotation has been determined: {0}°</value>
+  </data>
+  <data name="LblDetermineRotationFromCamera" xml:space="preserve">
+    <value>Determine rotation from camera</value>
+  </data>
+  <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
+    <value>Cancels to determine rotation from camera for framing.</value>
+  </data>
+  <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
+    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
+Once successfully solved, the rotation will be set for framing.</value>
   </data>
 </root>

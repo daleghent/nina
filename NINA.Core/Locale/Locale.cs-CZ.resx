@@ -3668,8 +3668,8 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
     <value>RGGB</value>
   </data>
   <data name="LblBayerPatternTooltip" xml:space="preserve">
-    <value>Standard Bayer, který se má použít pro klíčové slovo BAYERPAT v záhlaví FITS nebo XISF pro obrazy generované barevnými senzory.
-Standard Auto používá standard, který může poskytnout ovladač kamery. To se nevztahuje na digitální zrcadlovky.</value>
+    <value>Matice Bayer, která se má použít pro klíčové slovo BAYERPAT v záhlaví obrázku FITS nebo XISF pro obrázky generované barevnými senzory.
+Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout ovladač fotoaparátu. Neplatí pro zrcadlovky.</value>
   </data>
   <data name="LblCurrent" xml:space="preserve">
     <value>Aktuální</value>
@@ -3794,9 +3794,9 @@ Metodu kompenzace zpětné vůle lze změnit, pouze když je zaostření odpojen
     <value>Kamera čeká na vypnutí chladiče</value>
   </data>
   <data name="LblWarmCamBtnTooltip" xml:space="preserve">
-    <value>Zahřeje kameru zpět na okolní teplotu a vypne chladič.
-Doba trvání je nepovinná. Většina ovladačů kamer již automaticky reguluje výkon chladiče a pouze postupně zvyšuje teplotu.
-V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace pomalu zvýší cílovou teplotu kamery na základě dané doby trvání.</value>
+    <value>Zahřeje kameru na okolní teplotu a vypne chladič.
+Doba trvání je volitelná. Většina ovladačů kamer již automaticky reguluje výkon chladiče a bude pouze postupně zvyšuje teplotu.
+V případě, že je požadována delší doba trvání, lze dobu trvání specifikovat a aplikace bude pomalu zvyšovat cílovou teplotu kamery podle dané doby.</value>
   </data>
   <data name="LblWaitForImageSaving" xml:space="preserve">
     <value>Počkat, na uložení obrazu</value>
@@ -4949,9 +4949,9 @@ Použijte ve spojení s jinou podmínkou smyčky, kdy bezpečnost hlásí bezpe�
     <value>Neplatný Offset. Offset musí být mezi {0} a {1}, ale je nastaven na {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Pořídí snímek a vyřeší obraz pomocí aktuální polohy dalekohledu jako reference.
-Po úspěšném vyřešení snímku bude dalekohled synchronizován s řešenou pozicí.
-Upozornění: Tento pokyn nevystředí dalekohled na cíl, ale bude pouze synchronizovat aktuální ukazovací polohu!</value>
+    <value>Pořídí snímek a vyhodnotí jej pomocí aktuální polohy dalekohledu jako reference.
+Po úspěšném vyřešení snímku bude dalekohled synchronizován do vyřešené polohy.
+Upozornění: Tento pokyn NEVYcentruje dalekohled na cíl, ale bude pouze synchronizovat aktuální pozici zaměření!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Platesolving a Synchronizace</value>
@@ -4986,7 +4986,7 @@ Upozornění: Tento pokyn nevystředí dalekohled na cíl, ale bude pouze synchr
     <comment>The slope of a line</comment>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
-    <value>Tím se určí poloha ostření na základě teploty pomocí sklonu a průsečíku.
+    <value>Tím určíte polohu ostření v závislosti na teplotě pomocí sklonu a průsečíku.
 Příklad:
   - Sklon= 2
   - Průsečík= 1000
@@ -5183,9 +5183,9 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Velikost Vzorku</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
-    <value>Maximální velikost vzorku obrazových HFR odečtů, které mají být použity k určení trendu HFR. 
-Velká velikost vzorků může pomoci zabránit krátkodobým problémům, jako jsou poryvy větru nebo problémy s pointací, které aktivují automatické zaostření.
-U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reagovat na posunutí zaostření, například u optiky citlivé na teplotu při rychle se měnící teplotě okolí.</value>
+    <value>Maximální počet vzorků odečtů HFR hvězd, které by měly být použity k určení trendu HFR.
+Větší počet může pomoci předejít krátkodobým problémům, jako je nárazový vítr nebo problémy s naváděním ke spuštění automatického ostření.
+Menší číslo pomůže rychleji reagovat na změnu ohniska, například u teplotně citlivé optiky s rychle se měnící teplotou okolí.</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
     <value>Žádný přepisovatelný přepínač</value>
@@ -5344,7 +5344,7 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Neznámá Instrukce</value>
   </data>
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
-    <value>Nainstalovaná verze ovladače QHYCCD USB {0} pod minimální doporučované verze {1}. Aktualizace ovladačů jsou k dispozici na webových stránkách QHYCCD a jsou doporučeny pro optimální funkci kamery</value>
+    <value>Nainstalovaná verze ovladače USB QHYCCD, {0}, je nižší než minimální doporučená verze {1}. Aktualizace ovladačů jsou k dispozici na webu QHYCCD a jsou doporučeny pro optimální provoz kamery</value>
   </data>
   <data name="LblSDKVersion" xml:space="preserve">
     <value>SDK Verze</value>
@@ -5573,7 +5573,7 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Binning s průměrnou hodnotou pixelů</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>Ve výchozím nastavení je binning aditivní. Data jsou stále stejná jako u kamery, takže lze oříznout jasné obrazové body. Průměrný režim zabraňuje tomuto oříznutí na úkor určitého dynamického rozsahu z důvodu celého dělení.</value>
+    <value>Ve výchozím nastavení je binning aditivní. Data mají stále stejný počet bitů jako fotoaparát, takže světlé pixely mohou být oříznuty. Střední režim tomuto ořezávání brání na úkor určitého dynamického rozsahu díky rozdělení na celá čísla.</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
     <value>Přerušit a spustit pokyny ke konci sekvence</value>
@@ -5743,7 +5743,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>90 Stupňů</value>
   </data>
   <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
-    <value>Je podporováno 90 stupňů mechanického rozsahu polohy. To je užitečné především pro čtvercové senzory. Orientace mimo tento rozsah jsou upraveny tak, aby se vešly do nakonfigurovaného rozsahu.</value>
+    <value>Je podporováno 90 stupňů mechanického rozsahu polohy. To je užitečné především pro čtvercové senzory. Orientace mimo tento rozsah jsou upraveny tak, aby odpovídaly nakonfigurovanému rozsahu.</value>
   </data>
   <data name="LblRotatorRangeAdjusted" xml:space="preserve">
     <value>Cíl rotátoru byl upraven na {0}</value>
@@ -5785,7 +5785,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Synchronizovat Kopuli</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>Spouštěč pro omezení synchronizačních pohybů kopule mezi kroky sekvence za účelem snížení vibrací během expozic. To by nemělo být použito s povolenou funkcí Kopule Sledování, která běží nepřetržitě na pozadí.</value>
+    <value>Spouštěč pro omezení synchronizačních pohybů kopule mezi kroky sekvence za účelem snížení vibrací během expozic. Tato funkce by se neměla používat s možností Sledování kopule, která běží nepřetržitě na pozadí.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
     <value>Azimut</value>
@@ -5797,8 +5797,8 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Chcete -li použít Spouštěč Synchronizace Kopule, deaktivujte sledování kopule</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
-    <value>Podmínka, která zkontroluje, zda je připojené zařízení pro řízení Bezpečnosti nebezpečné, a řetězí sadu pokynů, kdykoli bezpečnost nahlásí, že není bezpečný. Pokud je zařízení opět zabezpečené, aktuální sada instrukcí se zastaví.
-Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v nekonečné smyčce, když je monitor zabezpečení nebezpečný.</value>
+    <value>Stav, který kontroluje, zda připojený Bezpečnostní Monitor není bezpečný, a opakuje sadu instrukcí tak dlouho, dokud bezpečnostní monitor hlásí, že není bezpečný. Pokud je zařízení shledáno jako bezpečné, aktuální instrukční sada se zastaví.
+Nejlepší je použít jej ve spojení s jinou podmínkou smyčky, aby nedošlo ke konci v nekonečné smyčce, když bezpečnostní monitor zůstane nebezpečný.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Opakovat, dokud není bezpečno</value>
@@ -5813,19 +5813,19 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
     <value>Přepínač</value>
   </data>
   <data name="LblMirrorLockupDelay" xml:space="preserve">
-    <value>Mirror lockup delay</value>
+    <value>Zpoždění zamykání zrcátka</value>
   </data>
   <data name="LblMirrorLockupDelayTooltip" xml:space="preserve">
-    <value>The desired length of time between when the mirror is locked up and when the exposure starts.
-A delay of 0 seconds deactivates this option.
-The mirror lockup option must be enabled in the camera as well.
-Refer to your camera's manual for the location of this setting</value>
+    <value>Požadovaná doba mezi uzamčením zrcátka a zahájením expozice.
+Zpoždění 0 sekund tuto možnost deaktivuje.
+Ve fotoaparátu musí být také povolena možnost uzamčení zrcátka.
+Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
-    <value>{0} has been disconnected from the computer. Check its USB connection and power source</value>
+    <value>Aplikace {0} byla odpojena od počítače. Zkontrolujte jeho připojení USB a zdroj napájení</value>
   </data>
   <data name="LblCanonSdkError" xml:space="preserve">
-    <value>The Canon SDK has experienced an internal error. Unreliable camera operation might result</value>
+    <value>V sadě Canon SDK došlo k vnitřní chybě. Může dojít k nespolehlivému provozu fotoaparátu</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
     <value>Resetovat Cíl</value>
@@ -5915,6 +5915,25 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Hodiny montáže se liší od hodin počítače o {0:0} sekund. To může vést k nepřesnému zaměřením a problémům s platesolvingem. Nastavení času naleznete v dokumentaci vaší montáže.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
-    <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
+    <value>{0} je nakonfigurován s povolenou funkcí Mirror Lock-Up (MLU), ale nepodporuje expozice MLU přes USB. Pro úspěšné expozice deaktivujte MLU v menu uživatelských funkcí fotoaparátu.</value>
+  </data>
+  <data name="LblQhyUvloActiveError" xml:space="preserve">
+    <value>Kamera je v režimu ultra-nízkého napětí (UVLO) pro ochranu jejích součástí. To naznačuje možný problém s napájením. Kontaktujte prosím podporu QHY pro poradenství při řešení tohoto problému.</value>
+  </data>
+  <data name="LblCameraRotationImportFailed" xml:space="preserve">
+    <value>Unable to determine camera rotation.</value>
+  </data>
+  <data name="LblCameraRotationSolved" xml:space="preserve">
+    <value>Camera rotation has been determined: {0}°</value>
+  </data>
+  <data name="LblDetermineRotationFromCamera" xml:space="preserve">
+    <value>Determine rotation from camera</value>
+  </data>
+  <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
+    <value>Cancels to determine rotation from camera for framing.</value>
+  </data>
+  <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
+    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
+Once successfully solved, the rotation will be set for framing.</value>
   </data>
 </root>

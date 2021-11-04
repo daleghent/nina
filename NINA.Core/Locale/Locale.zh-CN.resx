@@ -5916,4 +5916,23 @@ Refer to your camera's manual for the location of this setting</value>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
     <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
   </data>
+  <data name="LblQhyUvloActiveError" xml:space="preserve">
+    <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
+  </data>
+  <data name="LblCameraRotationImportFailed" xml:space="preserve">
+    <value>Unable to determine camera rotation.</value>
+  </data>
+  <data name="LblCameraRotationSolved" xml:space="preserve">
+    <value>Camera rotation has been determined: {0}°</value>
+  </data>
+  <data name="LblDetermineRotationFromCamera" xml:space="preserve">
+    <value>Determine rotation from camera</value>
+  </data>
+  <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
+    <value>Cancels to determine rotation from camera for framing.</value>
+  </data>
+  <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
+    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
+Once successfully solved, the rotation will be set for framing.</value>
+  </data>
 </root>
