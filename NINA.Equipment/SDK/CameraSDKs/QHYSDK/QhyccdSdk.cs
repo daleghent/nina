@@ -1,7 +1,7 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
-    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -775,9 +775,44 @@ namespace QHYCCD {
             CONTROL_VACUUM_PUMP,
 
             /// <summary>
-            /// Unknown/Undocumented
+            /// air cycle pump for sensor drying
             /// </summary>
-            CONTROL_SensorChamberCycle_PUMP
+            CONTROL_SensorChamberCycle_PUMP,
+
+            /// <summary>
+            /// camera supports 32bit output
+            /// </summary>
+            CAM_32BITS,
+
+            /// <summary>
+            /// Sensor working status [0:init  1:good  2:checkErr  3:monitorErr 8:good 9:powerChipErr]  410 461 411 600 268 [Eris board]
+            /// </summary>
+            CAM_Sensor_ULVO_Status,
+
+            /// <summary>
+            /// Sensor phase retraining for 2020, 4040/PRO，6060, 42PRO
+            /// </summary>
+            CAM_SensorPhaseReTrain,
+
+            /// <summary>
+            /// 2410 461 411 600 268 for now
+            /// </summary>
+            CAM_InitConfigFromFlash,
+
+            /// <summary>
+            /// check if camera has multiple triger mode
+            /// </summary>
+            CAM_TRIGER_MODE,
+
+            /// <summary>
+            /// check if camera support triger out function
+            /// </summary>
+            CAM_TRIGER_OUT,
+
+            /// <summary>
+            /// check if camera support burst mode
+            /// </summary>
+            CAM_BURST_MODE,
         };
 
         /// <summary>

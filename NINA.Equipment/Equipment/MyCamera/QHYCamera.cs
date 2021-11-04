@@ -31,6 +31,7 @@ using NINA.Core.Locale;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Exceptions;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -135,9 +136,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         // to the getters for X pixels.
         /// </summary>
         public short BinY {
-            get => BinX;
-            set {
-            }
+            get => Info.CurBin;
+            set { }
         }
 
         public int BitDepth {
@@ -465,6 +465,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                                 Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {mode} ({modeName})");
 
+                                if ((rv = Sdk.SetBinMode(1, 1)) != QhySdk.QHYCCD_SUCCESS) {
+                                    Logger.Error($"QHYCCD: SetQHYCCDBinMode() failed. Returned {rv}");
+                                    return;
+                                }
+
                                 if ((rv = Sdk.SetReadMode(mode)) != QhySdk.QHYCCD_SUCCESS) {
                                     Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
                                     return;
@@ -727,6 +732,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * Initialize the camera and make it available for use
                  */
                 Sdk.InitCamera();
+
+                if (CheckUvloIsActive()) {
+                    Sdk.Close();
+                    Notification.ShowError(Loc.Instance["LblQhyUvloActiveError"]);
+                    return false;
+                }
 
                 SetImageResolution();
 
@@ -1081,6 +1092,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             bool isSnap;
             short readoutMode;
 
+            if (CheckUvloIsActive()) {
+                throw new CameraExposureFailedException(Loc.Instance["LblQhyUvloActiveError"]);
+            }
+
             /*
              * Setup camera with the desired exposure setttings
              */
@@ -1336,7 +1351,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void DriverVersionCheck() {
             // Minimum driver versions. Key: Driver name. Value: Minimum driver version
             Dictionary<string, string> driverDatabase = new Dictionary<string, string> {
-                { "QHY5IIISeries_IO", "21.2.20.0" },
+                { "QHY5IIISeries_IO", "21.10.18.0" },
                 { "QHY5II_IO", "0.0.9.0" },
                 { "QHY8LBASE", "0.0.9.0" },
                 { "QHY8PBASE", "0.0.9.0" },
@@ -1399,6 +1414,25 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } catch (Exception e) {
                 Logger.Error($"QHYCCD: Fx3DriverVersionCheck failed: {e}");
             }
+        }
+
+        private bool CheckUvloIsActive() {
+            bool uvloActive = false;
+
+            if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_Sensor_ULVO_Status)) {
+                var uvloState = Sdk.GetControlValue(QhySdk.CONTROL_ID.CAM_Sensor_ULVO_Status);
+                Logger.Debug($"UVLO status: {uvloState:0}");
+
+                switch (uvloState) {
+                    case 2d:
+                    case 9d:
+                        Logger.Error($"UVLO is active! Status = {uvloState:0}");
+                        uvloActive = true;
+                        break;
+                }
+            }
+
+            return uvloActive;
         }
 
         ///<summary>

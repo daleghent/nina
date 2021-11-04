@@ -12576,6 +12576,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue..
+        /// </summary>
+        internal static string LblQhyUvloActiveError {
+            get {
+                return ResourceManager.GetString("LblQhyUvloActiveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RA.
         /// </summary>
         internal static string LblRA {
