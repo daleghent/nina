@@ -41,11 +41,14 @@ using NINA.Core.Utility;
 using NINA.Core.Locale;
 using NINA.Core.MyMessageBox;
 using NINA.Profile;
+using System.Linq;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.ViewModel.Imaging;
 using NINA.Plugin.Interfaces;
+using System.Diagnostics;
+using System.Threading;
 
 namespace NINA.ViewModel {
 
@@ -256,7 +259,7 @@ namespace NINA.ViewModel {
 
             // In rare cases the layout was not loaded properly. The root cause remains yet unknown
             // With this delay the failure seems to be prevented
-            await Task.Delay(1000);
+            //await Task.Delay(1000);
 
             await _dispatcher.BeginInvoke(new Action(() => {
                 lock (lockObj) {
@@ -268,8 +271,21 @@ namespace NINA.ViewModel {
                         }
 
                         var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+                        var success = true;
                         serializer.LayoutSerializationCallback += (s, args) => {
-                            args.Content = args.Content;
+                            if (args.Content == null) {
+                                var context = Anchorables.FirstOrDefault(x => x.ContentId == args.Model.ContentId);
+                                if (context == null) {
+                                    Logger.Debug($"Content not found for content id: {args.Model.ContentId}");
+                                    args.Cancel = true;
+                                } else {
+                                    Logger.Trace($"Manually setting content for id: {args.Model.ContentId}");
+                                    args.Content = context;
+                                    success = false;
+                                }
+                            } else {
+                                args.Content = args.Content;
+                            }
                         };
 
                         var profileId = profileService.ActiveProfile.Id;
@@ -279,7 +295,29 @@ namespace NINA.ViewModel {
                                 Logger.Info($"Initializing imaging tab layout from {profilePath}");
                                 using (var sw = new FileStream(profilePath, FileMode.Open, FileAccess.Read)) {
                                     serializer.Deserialize(sw);
-                                    _dockloaded = true;
+                                    if (success) {
+                                        _dockloaded = true;
+                                    } else {
+                                        // Retry
+                                        Logger.Debug("The dock did not succeed to load. Trying again");
+                                        _dockloaded = false;
+
+                                        foreach (var item in Anchorables) {
+                                            item.IsVisible = false;
+                                        }
+
+                                        var serializer2 = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+                                        serializer2.LayoutSerializationCallback += (s, args) => {
+                                            var d = (DockableVM)args.Content;
+                                            if (d != null) {
+                                                d.IsVisible = true;
+                                                args.Content = d;
+                                            }
+                                        };
+                                        sw.Seek(0, SeekOrigin.Begin);
+                                        serializer2.Deserialize(sw);
+                                        _dockloaded = true;
+                                    }
                                 }
                             } catch (Exception ex) {
                                 Logger.Error("Failed to load imaging tab layout. Loading default Layout!", ex);
