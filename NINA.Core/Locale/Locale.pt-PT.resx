@@ -267,9 +267,6 @@ A Aplicação deve tentar recuperar do erro? (Pode levar a um comportamento ines
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Localização do ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Nota: Requer a versão 0.9.192 ou superior do ASTAP. Para versões anteriores, por favor utilize o ASTAP como substituição do Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>Executável do ASTAP não encontrado</value>
   </data>

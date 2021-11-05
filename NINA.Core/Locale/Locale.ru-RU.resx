@@ -266,9 +266,6 @@
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Расположение ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Примечание: Требуется ASTAP версии 0.9.192 или выше. Для более ранних версий используйте ASTAP как замену Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exe не найден</value>
   </data>

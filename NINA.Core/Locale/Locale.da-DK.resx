@@ -267,9 +267,6 @@ Skal applikationen forsøge at genetablere sig efter fejlen? (Kan forårsage uve
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP lokation</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Note: Kræver en version af ASTAP der er af version 0.9.192 eller nyere. For brug af lavere versioner, venligst brug ASTAP som en Platesolve2 erstatning.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exe ikke fundet</value>
   </data>

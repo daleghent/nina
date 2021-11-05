@@ -266,9 +266,6 @@
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP位置</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>注意：ASTAP 0.9.192かそれ以上のバージョンが必要です。以前のバージョンの場合は、ASTAPをPlatesolve2の代用としてお使い下さい。</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exeが見つかりません。</value>
   </data>
@@ -5898,19 +5895,19 @@ Refer to your camera's manual for the location of this setting</value>
     <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Unable to determine camera rotation.</value>
+    <value>カメラの回転角度が確定できません。</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Camera rotation has been determined: {0}°</value>
+    <value>カメラの回転角度が確定しました: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Determine rotation from camera</value>
+    <value>カメラの回転角度を確定</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>フレーミングのための、カメラの回転角度を確定することを中止します。</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>カメラから画像を取得し、プレートソルブによってカメラのを向きを確定します。
+プレートソルブが成功すると、フレーミングの回転角度が設定されます。</value>
   </data>
 </root>

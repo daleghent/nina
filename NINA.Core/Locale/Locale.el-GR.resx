@@ -267,9 +267,6 @@
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Τοποθεσία ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Σημείωση: Απαιτείται η έκδοση ASTAP 0.9.192 ή νεότερη. Για προηγούμενες εκδόσεις, παρακαλώ χρησιμοποιήστε το ASTAP σαν αντικατάσταση του Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>Το ASTAP exe δεν βρέθηκε</value>
   </data>

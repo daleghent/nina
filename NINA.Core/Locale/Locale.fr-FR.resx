@@ -267,9 +267,6 @@ L'application doit-elle tenter de redémarrer? (Peut conduire à un comportement
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Emplacement ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Note: requière la version 0.9.192 d'ASTAP ou supérieure. Pour une version antérieure, utilisez ASTAP comme un remplacement à Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP non trouvé</value>
   </data>

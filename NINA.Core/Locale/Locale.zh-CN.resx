@@ -267,9 +267,6 @@
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP 位置</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>注意：需要ASTAP 0.9.192 或更高版本。如果版本较低，请使用 Platesolve2 作为替代品。</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP 程序未找到</value>
   </data>
@@ -1522,7 +1519,7 @@
     <value>平场最短曝光</value>
   </data>
   <data name="LblFlatSequenceCancelled" xml:space="preserve">
-    <value>平场顺序取消，无法确定平场曝光时间</value>
+    <value>平场序列取消，无法确定平场曝光时间</value>
   </data>
   <data name="LblFlatStepSize" xml:space="preserve">
     <value>平场曝光步长</value>
@@ -3086,9 +3083,8 @@
   </data>
   <data name="LblSynchronizedPHD2ServiceClientAlreadyExists" xml:space="preserve">
     <value>
-        此配置文件已经连接到同步 PHD2 向导。
-        您无法以相同的配置文件两次连接，请选择其他NINA配置文件。
-    </value>
+此配置文件已经连接到同步 PHD2 导星。
+你无法连接相同的配置文件两次，请选择其他NINA配置文件。</value>
   </data>
   <data name="LblSynchronizedPHD2ServiceCrashed" xml:space="preserve">
     <value>同步 PHD2 服务崩溃，将以此同步数据重启 PHD2 导星服务</value>
@@ -3695,7 +3691,7 @@
     <value>曝光完成</value>
   </data>
   <data name="LblCameraTimeout" xml:space="preserve">
-    <value>相机超时——相机在曝光时间+ {0} 秒后仍没有将图像设置为就绪装填</value>
+    <value>相机超时 - 相机在曝光完成后 {0} 秒仍没有将图像状态设置为就绪</value>
   </data>
   <data name="LblImagePatternPreview" xml:space="preserve">
     <value>图片名预览</value>
@@ -4042,7 +4038,7 @@
     <value>相机超时</value>
   </data>
   <data name="LblCameraTimeoutTooltip" xml:space="preserve">
-    <value>相机曝光之后直到图像被视为丢失的时间量。当相机曝光完成+秒后，依然没有收到图像准备就绪指令，则曝光将被取消。</value>
+    <value>相机曝光后直到图像被视为丢失的等待时间。曝光完成后，若经过该设定时间相机仍没有发出图像就绪的消息，则曝光将被取消。</value>
   </data>
   <data name="LblCalibrationState" xml:space="preserve">
     <value>校准状态</value>
@@ -4282,7 +4278,7 @@
     <value>循环指定次数</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
-    <value>循环到指定时刻，然后跳过该组内的其余指令。</value>
+    <value>循环直到指定时刻，然后跳过该组内的其余指令</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
     <value>循环到某时刻</value>
@@ -4612,7 +4608,7 @@
     <value>达到指定的曝光次数后触发自动对焦</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
-    <value>拍摄 # 张后</value>
+    <value>拍摄 # 张后自动对焦</value>
   </data>
   <data name="LblUnreachableAltitude" xml:space="preserve">
     <value>永远不会达到高度</value>
@@ -4836,10 +4832,10 @@
     <value>工具</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>当目标高于给定高度时的停止当前指令集的循环条件</value>
+    <value>循环直到目标低于指定高度，然后跳过该组内的其余指令</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>循环直到目标低于设置的高度角</value>
+    <value>循环到低于高度角</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>圆顶</value>
@@ -4933,7 +4929,7 @@
     <value>在一段指定时间内循环指令。当时间结束时，该组内的其余指令将会被跳过。</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
-    <value>以时间循环</value>
+    <value>循环一段时间</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>平场光源设备连接丢失！</value>
@@ -4985,11 +4981,11 @@
     <comment>The slope of a line</comment>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
-    <value>这将使用斜率和截距进行计算，通过温度来决定电调位置。
+    <value>这将根据温度线性决定电调位置，基于斜率和截距。
 示例：
-  - 斜率=2
-  - 截距= 1000
-  - 当前温度=10°C
+  - 斜率 = 2
+  - 截距 = 1000
+  - 当前温度 = 10°C
     =&gt; 位置 = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
@@ -5061,7 +5057,7 @@
     <value>切换回序列器仪表板</value>
   </data>
   <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
-    <value>目标准备说明</value>
+    <value>目标起始指令</value>
   </data>
   <data name="LblUnparked" xml:space="preserve">
     <value>已解除停放</value>
@@ -5176,7 +5172,7 @@
     <value>月相</value>
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
-    <value>目标关闭说明</value>
+    <value>目标结束指令</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
     <value>样本大小</value>
@@ -5304,10 +5300,10 @@
     <value>望远镜没有归零功能</value>
   </data>
   <data name="LblTelescopeFindHomeCancelled" xml:space="preserve">
-    <value>归零操作已取消</value>
+    <value>已取消归零动作</value>
   </data>
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
-    <value>停放动作已被取消</value>
+    <value>已取消停放动作</value>
   </data>
   <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
     <value>测算平场板的亮度</value>
@@ -5560,7 +5556,7 @@
     <value>卸载</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>取消插件在线更新检查。</value>
+    <value>取消可用插件和更新检查。</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
     <value>检查在线插件库是否有可用的插件，并检查现有插件是否有新版本。</value>
@@ -5691,7 +5687,7 @@
     <value>供应商SDK</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Unpark operation was cancelled</value>
+    <value>已取消解除停放动作</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>等待望远镜解除停放</value>
@@ -5745,7 +5741,7 @@
     <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
   </data>
   <data name="LblRotatorRangeAdjusted" xml:space="preserve">
-    <value>Adjusted rotator target to {0}</value>
+    <value>调整后的旋转器角度为 {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
     <value>无法从构图助手 {0}</value>
@@ -5781,10 +5777,10 @@
     <value>{0}不再被Microsoft和N.I.N.A.项目支持。在不被支持的Windows系统版本上运行N.I.N.A.将会导致程序故障或崩溃。N.I.N.A.当前的系统需求已列在在线文档中。</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>同步圆顶</value>
+    <value>同步圆顶 (触发器)</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>用于使圆顶的同步移动仅限制在序列步骤之间，以避免曝光期间的震动的触发器。不应在启用了“圆顶跟随”（在后台连续运行）的情况下使用。</value>
+    <value>用于使圆顶的同步移动仅限制在序列步骤之间，以避免曝光期间的震动的触发器。不应在启用了 圆顶跟随（在后台连续运行）的情况下使用。</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
     <value>方位角</value>
@@ -5793,7 +5789,7 @@
     <value>高度角</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
-    <value>关闭“圆顶跟随”，以使用 同步圆顶 触发器</value>
+    <value>关闭 圆顶跟随 ，以使用 同步圆顶 触发器</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
     <value>查询已连接的安全监视器，在情况不安全时循环执行指令集。如果监视器反馈安全，则当前指令集将停止。
@@ -5806,7 +5802,7 @@
     <value>在切换滤镜后调焦器移动，无法恢复导星</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
-    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
+    <value>检测到未知的指令！请重新检查您序列中有哪些指令是无效的。此外请确保一切（软硬件驱动等）为最新版本。</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
     <value>切换</value>
@@ -5896,7 +5892,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>在x86上不可用</value>
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>持续时间</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>正在同步圆顶</value>
@@ -5905,19 +5901,19 @@ Refer to your camera's manual for the location of this setting</value>
     <value>清空序列？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
-    <value>Do you want to clear the complete sequence run?</value>
+    <value>你想要清空整个序列吗？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
-    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+    <value>删除整个序列的所有指令、触发器和条件</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+    <value>望远镜时间与计算机时间相差 {0:0} 秒。 这可能导致指向偏差和解析错误。请查看望远镜文档以配置时间。</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
     <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
   </data>
   <data name="LblQhyUvloActiveError" xml:space="preserve">
-    <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
+    <value>相机处于低压保护预警 (UVLO) 模式中。这表明电源可能存在问题。请联系QHY技术支持以获取相关建议。</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
     <value>Unable to determine camera rotation.</value>

@@ -187,10 +187,10 @@
     <value>Měření Nadmořské výšky</value>
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
-    <value>Měří Chybu Nadmořské výšky v třech krocích.
-1. Pořídí snímek a výpočtem aktuální souřadnice pomocí platesolvingu získáte aktuální polohu
-2. Otočte dalekohled o 0,5 stupně kolem osy RA
-3. Pořídí další snímek v nové poloze a pomocí platesolvingu vypočítáte nové souřadnice
+    <value>Změření Chyby Nadmořské výšky v následujících třech krocích.
+1. Získat snímek a vypočítat souřadnice pomocí astrometrie z aktuální polohy
+2. Otočit dalekohled o 0,5 stupně kolem osy Ra
+3. Znovu podpořit snímek v této poloze a vypočítat souřadnice pomocí astrometrie
 Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba nadmořské výšky</value>
   </data>
   <data name="LblAltitudeMeasurementDescription" xml:space="preserve">
@@ -266,9 +266,6 @@ Má se aplikace pokusit zotavit z chyby? (Může vést k neočekávanému chová
   </data>
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Umístění ASTAP</value>
-  </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Poznámka: Vyžaduje verzi ASTAP verze 0.9.192 nebo vyšší. Pro nižší verze použijte ASTAP jako náhradu Platesolve2.</value>
   </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP nenalezen</value>
@@ -399,11 +396,11 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Měření Azimutu</value>
   </data>
   <data name="LblAzimuthMeasurementButtonTooltip" xml:space="preserve">
-    <value>Změření Chyby Výšky v následujících třech krocích.
-1. Získat snímek a vypočítat souřadnice pomocí platesolvingu z aktuální polohy
+    <value>Změření Chyby Azimutu v následujících třech krocích.
+1. Získat snímek a vypočítat souřadnice pomocí astrometrie z aktuální polohy
 2. Otočit dalekohled o 0,5 stupně kolem osy Ra
-3. Znovu podpořit snímek v této poloze a vypočítat souřadnice pomocí platesolvingu
-Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</value>
+3. Znovu podpořit snímek v této poloze a vypočítat souřadnice pomocí astrometrie
+Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chybu azimutu</value>
   </data>
   <data name="LblAzimuthMeasurementDescription" xml:space="preserve">
     <value>Nasměrujte dalekohled na jih poblíž deklinace 0 stupňů poblíž poledníku</value>
@@ -442,7 +439,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Černý výřez</value>
   </data>
   <data name="LblBlindSolveAttemptForFraming" xml:space="preserve">
-    <value>Na obraz je třeba aplikovat rámování.
+    <value>Na snímek je třeba aplikovat řešení.
 Mají se použít následující referenční souřadnice?
 RA: {0}
 Pro: {1}</value>
@@ -505,7 +502,7 @@ Pro: {1}</value>
     <value>Kamera má chlazení, ale není povoleno</value>
   </data>
   <data name="LblCameraDownloadFailed" xml:space="preserve">
-    <value>Přenos z kamery se nezdařil.
+    <value>Přenos z kamery selhal.
 Expoziční čas: {0} s
 Typ: {1}
 Zisk: {2}
@@ -545,7 +542,7 @@ Filtr: {3}</value>
     <value>Na fotoaparátu Canon došlo k chybě: {0}</value>
   </data>
   <data name="LblCaptureImageAndPlatesolve" xml:space="preserve">
-    <value>Pořídit Snímek a Platesolving</value>
+    <value>Pořídit Obraz a Astrometrii</value>
   </data>
   <data name="LblCaptureImageCovered" xml:space="preserve">
     <value>Zakrýt Senzor a Pořídit Snímek</value>
@@ -1172,7 +1169,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Kopule</value>
   </data>
   <data name="LblDomeASCOMConnectFailed" xml:space="preserve">
-    <value>Nelze se připojit k ovladači ASCOM Dome:</value>
+    <value>Připojit k ovladači ASCOM Dome selhalo:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
     <value>Ovladač může sledovat</value>
@@ -1532,7 +1529,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Zrušit Průvodce Flat</value>
   </data>
   <data name="LblFlatUserPromptFailure" xml:space="preserve">
-    <value>Nepodařilo se získat ideální Expozici pro Flat</value>
+    <value>Selhalo získání ideální Expozice pro Flat</value>
   </data>
   <data name="LblFlatUserPromptFlatTooBright" xml:space="preserve">
     <value>Flat je příliš jasný. Snižte množství světla nebo upravte toleranci, průměrnou hodnotu nebo minimální expoziční čas</value>
@@ -1640,10 +1637,10 @@ Vypočtené HFR: {2}
     <value># Snímek s formátem ####</value>
   </data>
   <data name="LblFraming" xml:space="preserve">
-    <value>Rámování</value>
+    <value>Snímkování</value>
   </data>
   <data name="LblFramingAssistant" xml:space="preserve">
-    <value>Průvodce Rámováním</value>
+    <value>Průvodce Snímkováním</value>
   </data>
   <data name="LblFreeImage" xml:space="preserve">
     <value>FreeImage</value>
@@ -1698,7 +1695,7 @@ Vypočtené HFR: {2}
 Přeskočit.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
-    <value>Obnova pointace se nezdařila</value>
+    <value>Obnova pointace selhala</value>
   </data>
   <data name="LblGuiderSettings" xml:space="preserve">
     <value>Nastavení Pointace</value>
@@ -1818,7 +1815,7 @@ Přeskočit.</value>
     <value>Informace</value>
   </data>
   <data name="LblInitiatePlatesolve" xml:space="preserve">
-    <value>Zahájit Platesolving</value>
+    <value>Zahájit Astrometrii</value>
   </data>
   <data name="LblInvalidMode" xml:space="preserve">
     <value>Neplatný režim</value>
@@ -1881,10 +1878,10 @@ Přeskočit.</value>
     <value>Načíst Sekvenci</value>
   </data>
   <data name="LblLoadSequenceFailed" xml:space="preserve">
-    <value>Načítání sekvence se nezdařilo</value>
+    <value>Načítání sekvence selhalo</value>
   </data>
   <data name="LblLoadSequenceSetFailed" xml:space="preserve">
-    <value>Načtení cílové sady se nezdařilo</value>
+    <value>Načtení cílové sady selhalo</value>
   </data>
   <data name="LblLoadSequenceToolTip" xml:space="preserve">
     <value>Načíst sekvence z xml souboru</value>
@@ -1893,7 +1890,7 @@ Přeskočit.</value>
     <value>Nahrát cílovou sadu</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
-    <value>Místní Platesolving</value>
+    <value>Místní Astrometrie</value>
   </data>
   <data name="LblLocation" xml:space="preserve">
     <value>Poloha</value>
@@ -1968,7 +1965,7 @@ Přeskočit.</value>
     <value>Střední</value>
   </data>
   <data name="LblMeridianFlipFailed" xml:space="preserve">
-    <value>Překlopení Poledníku Selhalo</value>
+    <value>Překlopení Poledníku selhalo</value>
   </data>
   <data name="LblMeridianFlipInit" xml:space="preserve">
     <value>Zahájeno překlopení poledníku</value>
@@ -2384,7 +2381,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Profil PHD2 byl změněn na {0}</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Změna PHD2 profilu se nezdařila</value>
+    <value>Změna PHD2 profilu selhala</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
     <value>Profilové ID {0} PHD2 nebylo nalezeno. Použit {1}</value>
@@ -2447,34 +2444,34 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Platesolve2 exe nenalezen</value>
   </data>
   <data name="LblPlateSolvedPolarAlignment" xml:space="preserve">
-    <value>Platesolving Polárního Zarovnání</value>
+    <value>Astrometrie Polárního Zarovnání</value>
   </data>
   <data name="LblPlateSolveEnding" xml:space="preserve">
-    <value>Platesolving dosáhl maximálního počtu pokusů, nebo je nutné změnit překlopení poledníku.</value>
+    <value>Astrometrie dosáhla maximálního počtu pokusů, nebo je nutné změnit překlopení poledníku.</value>
   </data>
   <data name="LblPlatesolveFailed" xml:space="preserve">
-    <value>Platesolving selhal</value>
+    <value>Astrometrie selhala</value>
   </data>
   <data name="LblPlateSolveFailedDelay" xml:space="preserve">
     <value>Zpoždění mezi pokusy</value>
   </data>
   <data name="LblPlateSolveFailedDelayTooltip" xml:space="preserve">
-    <value>Interval v minutách mezi dvěma neúspěšnými pokusy o platesolving</value>
+    <value>Interval v minutách mezi dvěma neúspěšnými pokusy o astrometrii</value>
   </data>
   <data name="LblPlateSolveImage" xml:space="preserve">
-    <value>Platesolving aktuálního obrazu</value>
+    <value>Astrometrie aktuálního obrazu</value>
   </data>
   <data name="LblPlateSolveNbOfAttempts" xml:space="preserve">
     <value>Počet Pokusů</value>
   </data>
   <data name="LblPlateSolveNbOfAttemptsTooltip" xml:space="preserve">
-    <value>Kolik neúspěšných pokusů platesolvingu se považuje za selhání během prováděné sekvence</value>
+    <value>Kolik neúspěšných pokusů astrometrie se považuje za selhání během prováděné sekvence</value>
   </data>
   <data name="LblPlatesolveNoCoordinates" xml:space="preserve">
     <value>Neexistují žádné referenční souřadnice</value>
   </data>
   <data name="LblPlateSolveNoFocalLength" xml:space="preserve">
-    <value>Platesolving přerušen. Upřesněte ohniskovou vzdálenost dalekohledu pomocí Možnosti &gt; Zařízení</value>
+    <value>Astrometrie přerušena. Upřesněte ohniskovou vzdálenost dalekohledu pomocí Možnosti &gt; Zařízení</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceRepeating" xml:space="preserve">
     <value>Dalekohled je mimo toleranci. Opakuji...</value>
@@ -2486,16 +2483,16 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Dalekohled je mimo toleranci. Synchronizuji...</value>
   </data>
   <data name="LblPlatesolveProvidedBy" xml:space="preserve">
-    <value>Službu Platesolvingu poskytuje</value>
+    <value>Službu Astrometrie poskytuje</value>
   </data>
   <data name="LblPlateSolver" xml:space="preserve">
-    <value>Plate Solver</value>
+    <value>Astrometrie</value>
   </data>
   <data name="LblPlateSolveReattemptDelay" xml:space="preserve">
-    <value>Počkat na další pokus platesolvingu: {0}</value>
+    <value>Počkat na další pokus astrometrie: {0}</value>
   </data>
   <data name="LblPlateSolveSettings" xml:space="preserve">
-    <value>Nastavení Platesolvingu</value>
+    <value>Nastavení Astrometrie</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate Solving</value>
@@ -2615,7 +2612,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Režim čtení pro snímky</value>
   </data>
   <data name="LblReadoutForSnapImagesToolTip" xml:space="preserve">
-    <value>Tento režim čtení kamery se použije k provedení platesolvingu, rámování a auto-ostření</value>
+    <value>Tento režim čtení kamery se použije k provedení platesolvingu, snímkování a auto-ostření</value>
   </data>
   <data name="LblRecenter" xml:space="preserve">
     <value>Znovu Vycentrovat</value>
@@ -2844,7 +2841,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Pokud je nastaveno, automatické zaostřování bude vždy používat vybraný filtr pomocí offsetu filtrového kola</value>
   </data>
   <data name="LblSetForFramingAssistant" xml:space="preserve">
-    <value>Přejít na průvodce rámováním</value>
+    <value>Přejít na průvodce snímkování</value>
   </data>
   <data name="LblSetNewValue" xml:space="preserve">
     <value>Nastavit novou hodnotu</value>
@@ -2913,7 +2910,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Adresář obrázků Sky Atlas</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>Mapa Hvězd (Offline Rámování)</value>
+    <value>Mapa Hvězd (Offline Snímkování)</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Jas Oblohy</value>
@@ -3079,7 +3076,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Synchronizace</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Synchronizace dalekohledu se nezdařila</value>
+    <value>Synchronizace dalekohledu selhala</value>
   </data>
   <data name="LblSynchronizedPHD2Guider" xml:space="preserve">
     <value>Synchronizace PHD2 (Experimentální)</value>
@@ -3488,7 +3485,7 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
     <value>USB Limit</value>
   </data>
   <data name="LblUseBlindSolveFailover" xml:space="preserve">
-    <value>Platesolving se nezdařil. Spustit Řešení Naslepo?</value>
+    <value>Astrometrie selhala. Spustit Řešení Naslepo?</value>
   </data>
   <data name="LblUseBlindSolveNoCoordinatesRollover" xml:space="preserve">
     <value>Referenční souřadnice nezjištěny. Použít řešení naslepo?</value>
@@ -3539,13 +3536,13 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
     <value>Počasí</value>
   </data>
   <data name="LblWeatherASCOMConnectFailed" xml:space="preserve">
-    <value>Nelze se připojit k ovladači ASCOM ObservingConditions:</value>
+    <value>Selhalo připojení k ovladači ASCOM ObservingConditions:</value>
   </data>
   <data name="LblWeatherConnected" xml:space="preserve">
     <value>Připojeno ke zdroji dat o počasí</value>
   </data>
   <data name="LblWeatherConnectionLost" xml:space="preserve">
-    <value>Připojení ke zdroji dat o počasí se nezdařilo.</value>
+    <value>Připojení ke zdroji dat o počasí selhalo.</value>
   </data>
   <data name="LblWeatherDisconnect" xml:space="preserve">
     <value>Odpojit počasí</value>
@@ -3944,7 +3941,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Poloha Dalekohledu S/J</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
-    <value>Sledování kupole může být nepřesné. Zkontrolujte, zda je vaše epocha správně nakonfigurována, a proveďte platesolving a synchronizaci</value>
+    <value>Sledování kupole může být nepřesné. Zkontrolujte, zda je vaše epocha správně nakonfigurována, a proveďte astrometrii a synchronizaci</value>
   </data>
   <data name="LblDomeFollowError" xml:space="preserve">
     <value>Chyba při synchronizaci kupole. Sledování kopule se zastavilo.</value>
@@ -4064,13 +4061,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Seeing</value>
   </data>
   <data name="LblMetaGuideConnectionFailed" xml:space="preserve">
-    <value>Nepodařilo se připojit MetaGuide</value>
+    <value>Selhalo připojit MetaGuide</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuiding" xml:space="preserve">
     <value>Pointace obnovena</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
-    <value>Po obnovení pointační hvězdy se nepodařilo obnovit pointování</value>
+    <value>Po obnovení pointační hvězdy selhala obnova pointování</value>
   </data>
   <data name="LblSkyFlat" xml:space="preserve">
     <value>Sky Flats</value>
@@ -4217,7 +4214,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Při pointování zamknout hvězdu</value>
   </data>
   <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
-    <value>Odeslat souřadnice Průvodci Rámování</value>
+    <value>Odeslat souřadnice Průvodci Snímkováním</value>
   </data>
   <data name="LblImportTargets" xml:space="preserve">
     <value>Importovat Cíle z externího zdroje</value>
@@ -4232,7 +4229,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Povolí Režim Ultra pro velmi nízký čtecí šum </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
-    <value>Otočit směr pohybu rotátoru. Přepnout pokud se rotátor po platesolvingu otáčí špatným směrem.</value>
+    <value>Otočit směr pohybu rotátoru. Přepnout pokud se rotátor po astrometrii otáčí špatným směrem.</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey</value>
@@ -4674,7 +4671,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
     <value>Cílová Oblast Sekvence
-Sem přidejte sekvence objektů deep sky nebo přidejte cíle prostřednictvím Atlasu oblohy nebo Pomocníka pro rámování</value>
+Sem přidejte sekvence objektů deep sky nebo přidejte cíle prostřednictvím Atlasu oblohy nebo Průvodce Snímkování</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Podmínky Smyčky</value>
@@ -4777,7 +4774,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Vytvoří duplikát aktuální položky a připojí ji k nadřazené sadě pokynů</value>
   </data>
   <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
-    <value>Přidání nového sekvenčního cíle pomocí tlačítka +, otevření existujícího Cíle nebo přidání Cílů pomocí Pomocníka pro rámování</value>
+    <value>Přidání nového sekvenčního cíle pomocí tlačítka +, otevření existujícího Cíle nebo přidání Cílů pomocí Průvodce Snímkování</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
     <value>Přidat nový Cíl</value>
@@ -4954,7 +4951,7 @@ Po úspěšném vyřešení snímku bude dalekohled synchronizován do vyřešen
 Upozornění: Tento pokyn NEVYcentruje dalekohled na cíl, ale bude pouze synchronizovat aktuální pozici zaměření!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
-    <value>Platesolving a Synchronizace</value>
+    <value>Astrometrie a Synchronizace</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
     <value>ULOŽIT CÍL</value>
@@ -5227,7 +5224,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Načte soubor vlastního horizontu, který se použije k určení místního limitu horizontu a zobrazení limitu v grafu nadmořské výšky.</value>
   </data>
   <data name="LblFailedToLoadCustomHorizon" xml:space="preserve">
-    <value>Nepodařilo se načíst vlastní horizont</value>
+    <value>Selhalo načtení vlastního horizontu</value>
   </data>
   <data name="LblPlanetariumLocationTooltip" xml:space="preserve">
     <value>Získat polohu z Programu Planetária</value>
@@ -5353,7 +5350,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Verze Ovladače USB</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
-    <value>Nepodařilo se změnit stav připojení zařízení.</value>
+    <value>Selhala změna stavu připojení zařízení.</value>
   </data>
   <data name="LblRms" xml:space="preserve">
     <value>RMS</value>
@@ -5407,7 +5404,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Stanovená poloha bodu ostření křivky je mimo měřicí body. Příslušenství je nepřesné nebo nastavení auto-ostření je pravděpodobně špatně nastavené.</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Uložení Sekvence se Nezdařilo "{0}": {1}</value>
+    <value>Uložení Sekvence Selhalo "{0}": {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
     <value>Prahová hodnota R²</value>
@@ -5421,11 +5418,11 @@ Dobrým výchozím bodem pro prahovou hodnotu je hodnota 0,8 - vše, co je níž
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Automatické zaostření se nezdařilo! R² (Koeficient stanovení) pro přizpůsobení křivky je pod prahovou hodnotou. {0} / {1}</value>
+    <value>Automatické zaostření selhalo! R² (Koeficient stanovení) pro přizpůsobení křivky je pod prahovou hodnotou. {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Automatické zaostření se nezdařilo! R² (Koeficient stanovení) trendová křivka je pod prahovou hodnotou. Vlevo: {0} / {2}; Vpravo: {1} / {2}</value>
+    <value>Automatické zaostření selhalo! R² (Koeficient stanovení) trendová křivka je pod prahovou hodnotou. Vlevo: {0} / {2}; Vpravo: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
@@ -5524,7 +5521,7 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Verze</value>
   </data>
   <data name="LblFailedToFetchPlugins" xml:space="preserve">
-    <value>Načtení pluginů z úložiště "{0}" se nezdařilo</value>
+    <value>Načtení pluginů z úložiště "{0}" selhalo</value>
   </data>
   <data name="LblPluginCheckForUpdates" xml:space="preserve">
     <value>Zkontrolovat aktualizace</value>
@@ -5749,7 +5746,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Cíl rotátoru byl upraven na {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
-    <value>{0} se nezdařilo z průvodce rámování</value>
+    <value>Průvodce snímkování {0} selhalo</value>
   </data>
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
     <value>Zeměpisnou šířku {0} a {1} délku montáže nelze upravit!</value>
@@ -5758,7 +5755,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Čas stabilizace ditheringu</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
-    <value>Nepodařilo se spustit sledování CCD ASCOM serveru. {0}</value>
+    <value>Selhalo spuštění sledování CCD ASCOM serveru. {0}</value>
   </data>
   <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
     <value>Sledování CCD ASCOM serveru spuštěno</value>
@@ -5804,7 +5801,7 @@ Nejlepší je použít jej ve spojení s jinou podmínkou smyčky, aby nedošlo 
     <value>Opakovat, dokud není bezpečno</value>
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
-    <value>Obnovení pointace se nezdařilo po změně filtru, která způsobila pohyb ostření</value>
+    <value>Obnovení pointace selhalo po změně filtru, která způsobila pohyb ostření</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>Byla zjištěna neznámá instrukce! Zkontrolujte svou posloupnost a zkontrolujte, které instrukce se staly neplatnými. Dále ověřte, že vše je aktuální.</value>
@@ -5834,7 +5831,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Resetovat všechny řádky v aktuálním cíli?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Použít platesolving k určení aktuálního natočení aktuální polohy a pomocí rotátoru se dostane do zadaného úhlu oblohy. (Cíl se nevystředí!)</value>
+    <value>Použít astrometrii k určení aktuálního natočení aktuální polohy a pomocí rotátoru se dostane do zadaného úhlu oblohy. (Cíl se nevystředí!)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>Vyřešit a otočit</value>
@@ -5921,19 +5918,19 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Kamera je v režimu ultra-nízkého napětí (UVLO) pro ochranu jejích součástí. To naznačuje možný problém s napájením. Kontaktujte prosím podporu QHY pro poradenství při řešení tohoto problému.</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Unable to determine camera rotation.</value>
+    <value>Nelze určit natočení kamery.</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Camera rotation has been determined: {0}°</value>
+    <value>Otočení kamery bylo určeno: {0} °</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Determine rotation from camera</value>
+    <value>Určete rotaci z kamery</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>Zastaví určování úhlu natočení kamery pro snímek.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>Pořiďte snímek kamerou a spusťte astrometrii, abyste znovu získali orientaci kamery.
+Po úspěšném vyřešení se otočení nastaví na snímek.</value>
   </data>
 </root>

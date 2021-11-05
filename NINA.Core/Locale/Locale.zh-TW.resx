@@ -267,9 +267,6 @@
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP 位置</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>注意：需要ASTAP 0.9.192 或更高版本。如果版本較低，請使用 Platesolve2 作為替代品。</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP 程式未找到</value>
   </data>

@@ -267,9 +267,6 @@ Czy aplikacja powinna samodzielnie uruchomić się po błędzie? (może prowadzi
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Lokalizacja ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Uwaga: Wymaga wersji ASTAP 0.9.192 lub wyższa. W przypadku niższych wersji zamień ASTAP na Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>Nie znaleziono pliku exe do ASTAP</value>
   </data>

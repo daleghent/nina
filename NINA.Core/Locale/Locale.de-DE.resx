@@ -267,9 +267,6 @@ Soll die Anwendung versuchen, den Fehler zu beheben? (kann zu unerwartetem Verha
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP Ort</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Hinweis: Benötigt eine ASTAP Version von 0.9.192 oder höher. Bei niedrigeren Versionen verwenden Sie bitte ASTAP als wäre es Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exe wurde nicht gefunden</value>
   </data>

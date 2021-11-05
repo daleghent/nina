@@ -266,9 +266,6 @@ Moet het programma proberen te herstellen van de fout? (Dit kan tot onverwacht g
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP locatie</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Let op: Vereist een ASTAP versie van 0.9.192 of hoger. Gebruik voor lagere versies ASTAP als Platesolve2 vervanging.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exe niet gevonden</value>
   </data>

@@ -267,9 +267,6 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Ubicación de ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Nota : Requiere una version de ASTAP 0.9,192 o superior. Para versiones inferiores, por favor use ASTAP como segunda opción a Platesolve2</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>No se ha encontrado el archivo ejecutable de ASTAP</value>
   </data>

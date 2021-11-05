@@ -267,9 +267,6 @@ Vuoi che l'applicazione provi a risolvere l'errore? (Può portare a comportament
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Percorso ASTAP</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Nota: Richiede una versione di ASTAP uguale o superiore alla 0.9.192. Per versioni precedenti, usare ASTAP come solver in Platesolve2.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exe non trovato</value>
   </data>

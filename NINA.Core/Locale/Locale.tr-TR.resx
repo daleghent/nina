@@ -266,9 +266,6 @@ Uygulama, hatayı düzeltmeyi denesin mi? (Beklenmedik sonuçlar oluşabilir)</v
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP konumu</value>
   </data>
-  <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
-    <value>Not: 0.9.192 veya daha yüksek ASTAP sürümü gerektirir. Daha düşük sürümler için lütfen Platesolve2 değişimi olarak ASTAP kullanınız.</value>
-  </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
     <value>ASTAP exe bulunamadı</value>
   </data>
