@@ -49,6 +49,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public string Name { get; set; }
+        public virtual bool AllowMultiplePerSet => false;
 
         public string Description { get; set; }
         public GeometryGroup Icon { get; set; }

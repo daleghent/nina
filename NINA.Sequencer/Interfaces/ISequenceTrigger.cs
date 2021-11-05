@@ -24,6 +24,11 @@ namespace NINA.Sequencer.Trigger {
     public interface ISequenceTrigger : ISequenceEntity, ISequenceHasChanged {
 
         /// <summary>
+        /// Indicates if the trigger can be placed multiple times into an instruction set or should only be present once
+        /// </summary>
+        bool AllowMultiplePerSet { get; }
+
+        /// <summary>
         /// Before each Sequence Item is executed this method will be called to determine if the trigger should be executed
         /// </summary>
         /// <param name="previousItem">The previous instruction that was executed</param>

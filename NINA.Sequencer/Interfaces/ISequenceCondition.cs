@@ -20,6 +20,11 @@ namespace NINA.Sequencer.Conditions {
     public interface ISequenceCondition : ISequenceEntity, ISequenceHasChanged {
 
         /// <summary>
+        /// Indicates if the condition can be placed multiple times into an instruction set or should only be present once
+        /// </summary>
+        bool AllowMultiplePerSet { get; }
+
+        /// <summary>
         /// Determine if the condition is satisfied or not. Will be called after each processed sequence item.
         /// </summary>
         /// <param name="previousItem">The previous instruction that was executed</param>

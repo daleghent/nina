@@ -58,6 +58,8 @@ namespace NINA.Sequencer.Trigger {
 
         public string Name { get; set; }
 
+        public virtual bool AllowMultiplePerSet => false;
+
         public string Description { get; set; }
         public GeometryGroup Icon { get; set; }
         public string Category { get; set; }

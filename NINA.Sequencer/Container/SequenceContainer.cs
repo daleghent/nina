@@ -115,13 +115,14 @@ namespace NINA.Sequencer.Container {
                 var source = parameters.Source as ISequenceCondition;
                 //var target = parameters.Target as ISequenceItem;
 
-                if (source?.Parent != null) {
+                if (source?.Parent != null && !parameters.Duplicate) {
                     item = source;
                 } else {
                     item = (ISequenceCondition)source.Clone();
                 }
 
-                if (Conditions.FirstOrDefault(x => x.Name == item.Name) == null) {
+                var existing = Conditions.FirstOrDefault(x => x.Name == item.Name);
+                if (existing == null || item.AllowMultiplePerSet == true) {
                     InsertIntoSequenceBlocks(Conditions.Count, item);
                 }
             }
@@ -178,15 +179,15 @@ namespace NINA.Sequencer.Container {
             lock (lockObj) {
                 ISequenceTrigger item;
                 var source = parameters.Source as ISequenceTrigger;
-                //var target = parameters.Target as ISequenceItem;
 
-                if (source.Parent != null) {
+                if (source.Parent != null && !parameters.Duplicate) {
                     item = source;
                 } else {
                     item = (ISequenceTrigger)source.Clone();
                 }
 
-                if (Triggers.FirstOrDefault(x => x.Name == item.Name) == null) {
+                var existing = Triggers.FirstOrDefault(x => x.Name == item.Name);
+                if (existing == null || item.AllowMultiplePerSet == true) {
                     InsertIntoSequenceBlocks(Triggers.Count, item);
                 }
             }
