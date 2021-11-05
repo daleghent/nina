@@ -51,19 +51,27 @@
         </Grid>
         <Grid Background="{StaticResource TertiaryBackgroundBrush}" Visibility="{Binding LoadAvalonDockLayoutCommand.Execution.IsCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
             <Grid>
-                <StackPanel
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid
                     Margin="2,0,0,0"
                     HorizontalAlignment="Left"
-                    Orientation="Horizontal">
+                    VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
                     <ItemsControl ItemsSource="{Binding AnchorableInfoPanels}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
+                                <WrapPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
@@ -123,24 +131,31 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <TextBlock
+                        Grid.Column="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Foreground="{StaticResource ButtonForegroundBrush}"
                         Text="{ns:Loc LblInfo}"
                         TextAlignment="Center" />
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                </Grid>
+                <Grid
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Foreground="{StaticResource ButtonForegroundBrush}"
                         Text="{ns:Loc LblTools}"
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding AnchorableTools}">
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding AnchorableTools}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
+                                <WrapPanel FlowDirection="RightToLeft" Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
@@ -199,7 +214,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </StackPanel>
+                </Grid>
             </Grid>
             <dock:DockingManager
                 x:Name="dockManager"
