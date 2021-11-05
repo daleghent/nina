@@ -24,23 +24,27 @@ namespace NINA.Core.Utility.Converters {
     public class AFFittingToColorConverter : IMultiValueConverter {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-            var source = (string)values[0];
-            var method = (AFMethodEnum)values[1];
-            var fitting = (AFCurveFittingEnum)values[2];
+            if (values.Length > 2) {
+                if (values[0] != null && values[1] != null && values[2] != null && values[0] != DependencyProperty.UnsetValue && values[1] != DependencyProperty.UnsetValue && values[2] != DependencyProperty.UnsetValue) {
+                    var source = (string)values[0];
+                    var method = (AFMethodEnum)values[1];
+                    var fitting = (AFCurveFittingEnum)values[2];
 
-            if (method == AFMethodEnum.CONTRASTDETECTION) {
-                if (source == "GaussianFitting") {
-                    return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
-                }
-            } else {
-                if (source == "HyperbolicFitting" && (fitting == AFCurveFittingEnum.HYPERBOLIC || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC)) {
-                    return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
-                }
-                if (source == "QuadraticFitting" && (fitting == AFCurveFittingEnum.PARABOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC)) {
-                    return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
-                }
-                if (source == "Trendline" && (fitting == AFCurveFittingEnum.TRENDLINES || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC)) {
-                    return (Application.Current.TryFindResource("NotificationWarningBrush") as SolidColorBrush).Color;
+                    if (method == AFMethodEnum.CONTRASTDETECTION) {
+                        if (source == "GaussianFitting") {
+                            return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
+                        }
+                    } else {
+                        if (source == "HyperbolicFitting" && (fitting == AFCurveFittingEnum.HYPERBOLIC || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC)) {
+                            return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
+                        }
+                        if (source == "QuadraticFitting" && (fitting == AFCurveFittingEnum.PARABOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC)) {
+                            return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
+                        }
+                        if (source == "Trendline" && (fitting == AFCurveFittingEnum.TRENDLINES || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC)) {
+                            return (Application.Current.TryFindResource("NotificationWarningBrush") as SolidColorBrush).Color;
+                        }
+                    }
                 }
             }
 
