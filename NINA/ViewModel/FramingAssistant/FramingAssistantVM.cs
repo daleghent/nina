@@ -859,6 +859,13 @@ namespace NINA.ViewModel.FramingAssistant {
                 try {
                     Logger.Info($"Loading image from source {FramingAssistantSource} with field of view {FieldOfView}° for coordinates {DSO?.Coordinates}");
 
+                    if (DllLoader.IsX86()) {
+                        await _dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
+                            ImageParameter = null;
+                            GC.Collect();
+                        }));
+                    }
+
                     SkySurveyImage skySurveyImage = null;
 
                     if (Cache != null && DSO != null) {
