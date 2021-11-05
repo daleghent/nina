@@ -248,9 +248,10 @@
                                     Text="{ns:Loc LblImaging}" />
                             </Grid>
                         </TabItem.Header>
-                        <TabItem.Content>
+                        <!--  The load is deferred to make sure that floatable windows are not loaded on start  -->
+                        <util:DeferredContent.Content>
                             <view:OverView x:Name="Overview" />
-                        </TabItem.Content>
+                        </util:DeferredContent.Content>
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>
