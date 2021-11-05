@@ -2990,15 +2990,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Note: Requires an ASTAP version of 0.9.192 or above. For lower versions, please use ASTAP as Platesolve2 replacement..
-        /// </summary>
-        internal static string LblASTAPMinimumVersionNote {
-            get {
-                return ResourceManager.GetString("LblASTAPMinimumVersionNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ASTAP exe not found.
         /// </summary>
         internal static string LblASTAPNotFound {

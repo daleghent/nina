@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using NINA.Image.FileFormat;
 using NINA.Core.Model;
 using NINA.Core.Locale;
+using System.Collections.Generic;
 
 namespace NINA.PlateSolving.Solvers {
 
@@ -74,6 +75,12 @@ namespace NINA.PlateSolving.Solvers {
                 if (outputPath != null && File.Exists(outputPath)) {
                     File.Delete(outputPath);
                 }
+
+                foreach (var file in GetSideCarFilePaths(imagePath)) {
+                    if (File.Exists(file)) {
+                        File.Delete(file);
+                    }
+                }
             }
             return result;
         }
@@ -89,6 +96,16 @@ namespace NINA.PlateSolving.Solvers {
         }
 
         protected abstract string GetOutputPath(string imageFilePath);
+
+        /// <summary>
+        /// Some solvers create more files than the result output path.
+        /// Return a list of paths to those sidecar files be deleted.
+        /// </summary>
+        /// <param name="imageFilePath"></param>
+        /// <returns></returns>
+        protected virtual List<string> GetSideCarFilePaths(string imageFilePath) {
+            return new List<string>();
+        }
 
         protected async Task StartCLI(string imageFilePath, string outputFilePath, PlateSolveParameter parameter, PlateSolveImageProperties imageProperties, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (executableLocation != "cmd.exe" && !File.Exists(executableLocation)) {
