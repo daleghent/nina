@@ -67,8 +67,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                 return true;
             }, (object o) => FilterWheelInfo.Connected && !FilterWheelInfo.IsMoving);
 
-            profileService.ProfileChanged += (object sender, EventArgs e) => {
-                AsyncContext.Run(Rescan);
+            profileService.ProfileChanged += async (object sender, EventArgs e) => {
+                await Rescan();
             };
         }
 

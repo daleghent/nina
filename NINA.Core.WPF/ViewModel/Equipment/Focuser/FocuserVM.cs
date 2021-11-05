@@ -71,8 +71,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                 profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval
             );
 
-            profileService.ProfileChanged += (object sender, EventArgs e) => {
-                AsyncContext.Run(Rescan);
+            profileService.ProfileChanged += async (object sender, EventArgs e) => {
+                await Rescan();
             };
 
             progress = new Progress<ApplicationStatus>(p => {

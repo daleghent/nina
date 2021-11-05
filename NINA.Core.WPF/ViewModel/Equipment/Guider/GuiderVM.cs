@@ -59,8 +59,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
             GuideStepsHistory = new GuideStepsHistory(HistorySize, GuiderScale, GuiderMaxY);
 
-            profileService.ProfileChanged += (object sender, EventArgs e) => {
-                AsyncContext.Run(Rescan);
+            profileService.ProfileChanged += async (object sender, EventArgs e) => {
+                await Rescan();
             };
         }
 

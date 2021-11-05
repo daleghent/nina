@@ -107,10 +107,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             UpdateWizardValueBlocks();
         }
 
-        private void ProfileChanged(object sender, EventArgs e) {
+        private async void ProfileChanged(object sender, EventArgs e) {
             flatDeviceSettings.PropertyChanged -= FlatDeviceSettingsChanged;
             profileService.ActiveProfile.FilterWheelSettings.PropertyChanged += FilterWheelSettingsChanged;
-            AsyncContext.Run(Rescan);
+            await Rescan();
             flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
             flatDeviceSettings.PropertyChanged += FlatDeviceSettingsChanged;
             RaisePropertyChanged(nameof(Gains));

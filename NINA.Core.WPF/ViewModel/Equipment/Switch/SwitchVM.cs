@@ -68,8 +68,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                 return true;
             });
 
-            profileService.ProfileChanged += (object sender, EventArgs e) => {
-                AsyncContext.Run(Rescan);
+            profileService.ProfileChanged += async (object sender, EventArgs e) => {
+                await Rescan();
             };
         }
 

@@ -67,8 +67,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                 profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval
             );
 
-            profileService.ProfileChanged += (object sender, EventArgs e) => {
-                AsyncContext.Run(Rescan);
+            profileService.ProfileChanged += async (object sender, EventArgs e) => {
+                await Rescan();
             };
         }
 
