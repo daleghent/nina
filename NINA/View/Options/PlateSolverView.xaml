@@ -843,7 +843,6 @@
                                     </TextBox>
                                 </UniformGrid>
                             </UniformGrid>
-                            <TextBlock FontStyle="Italic" Text="{ns:Loc LblASTAPMinimumVersionNote}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
