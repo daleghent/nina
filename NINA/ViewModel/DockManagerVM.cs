@@ -246,12 +246,21 @@ namespace NINA.ViewModel {
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
         public async Task<bool> InitializeAvalonDockLayout(object o) {
+            lock (lockObj) {
+                if (Initialized && _dockloaded) { return true; }
+            }
+
             while (!Initialized) {
                 await Task.Delay(100);
-            }
-            lock (lockObj) {
-                if (!_dockloaded) {
-                    _dispatcher.Invoke(new Action(() => {
+            };
+
+            // In rare cases the layout was not loaded properly. The root cause remains yet unknown
+            // With this delay the failure seems to be prevented
+            await Task.Delay(1000);
+
+            await _dispatcher.BeginInvoke(new Action(() => {
+                lock (lockObj) {
+                    if (!_dockloaded) {
                         _dockmanager = (AvalonDock.DockingManager)o;
 
                         foreach (var item in Anchorables) {
@@ -265,30 +274,33 @@ namespace NINA.ViewModel {
 
                         var profileId = profileService.ActiveProfile.Id;
                         var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
-                        if (System.IO.File.Exists(profilePath)) {
+                        if (File.Exists(profilePath)) {
                             try {
-                                serializer.Deserialize(profilePath);
-                                _dockloaded = true;
+                                Logger.Info($"Initializing imaging tab layout from {profilePath}");
+                                using (var sw = new FileStream(profilePath, FileMode.Open, FileAccess.Read)) {
+                                    serializer.Deserialize(sw);
+                                    _dockloaded = true;
+                                }
                             } catch (Exception ex) {
-                                Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
+                                Logger.Error("Failed to load imaging tab layout. Loading default Layout!", ex);
                                 LoadDefaultLayout(serializer);
                             }
-                        } else if (File.Exists(Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
+                        } else if (File.Exists(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
                             try {
-                                Logger.Info("Migrating AvalonDock layout from old path");
-                                serializer.Deserialize(Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"));
+                                Logger.Info("Migrating imaging tab layout from old path");
+                                serializer.Deserialize(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"));
                                 _dockloaded = true;
                             } catch (Exception ex) {
-                                Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
+                                Logger.Error("Failed to load imaging tab layout. Loading default Layout!", ex);
                                 LoadDefaultLayout(serializer);
                             }
                         } else {
                             LoadDefaultLayout(serializer);
                         }
-                    }), System.Windows.Threading.DispatcherPriority.Background);
+                    }
                 }
-                return true;
-            }
+            }), DispatcherPriority.Normal);
+            return true;
         }
 
         private void LoadDefaultLayout(AvalonDock.Layout.Serialization.XmlLayoutSerializer serializer) {

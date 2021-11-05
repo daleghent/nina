@@ -248,9 +248,9 @@
                                     Text="{ns:Loc LblImaging}" />
                             </Grid>
                         </TabItem.Header>
-                        <util:DeferredContent.Content>
+                        <TabItem.Content>
                             <view:OverView x:Name="Overview" />
-                        </util:DeferredContent.Content>
+                        </TabItem.Content>
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>

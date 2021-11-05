@@ -185,6 +185,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Weather information in equipment tab now shows correct wind direction.
 - Various layout improvements and redesign of controls
 - Flat Wizard page controls are streamlined with the rest of the application by replacing the sliders with steppers
+- When closing a dock panel in the imaging tab and reopening it again, the position is properly restored
 
 ### Subsampling
 - The sub sample button above the image panel has been removed
