@@ -194,6 +194,7 @@ namespace NINA.ViewModel {
                     };
 
                     LoadDefaultLayout(serializer);
+                    SaveAvalonDockLayout();
                 }
             }
         }
@@ -257,10 +258,6 @@ namespace NINA.ViewModel {
                 await Task.Delay(100);
             };
 
-            // In rare cases the layout was not loaded properly. The root cause remains yet unknown
-            // With this delay the failure seems to be prevented
-            //await Task.Delay(1000);
-
             await _dispatcher.BeginInvoke(new Action(() => {
                 lock (lockObj) {
                     if (!_dockloaded) {
@@ -272,19 +269,30 @@ namespace NINA.ViewModel {
 
                         var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                         var success = true;
+                        var dupeCheck = new HashSet<string>();
                         serializer.LayoutSerializationCallback += (s, args) => {
-                            if (args.Content == null) {
-                                var context = Anchorables.FirstOrDefault(x => x.ContentId == args.Model.ContentId);
-                                if (context == null) {
-                                    Logger.Debug($"Content not found for content id: {args.Model.ContentId}");
+                            if (args?.Model != null) {
+                                if (dupeCheck.Contains(args.Model.ContentId)) {
+                                    Logger.Trace($"Duplicate entry detected for content id: {args.Model.ContentId}");
                                     args.Cancel = true;
                                 } else {
-                                    Logger.Trace($"Manually setting content for id: {args.Model.ContentId}");
-                                    args.Content = context;
-                                    success = false;
+                                    dupeCheck.Add(args.Model.ContentId);
+                                    if (args.Content == null) {
+                                        var context = Anchorables.FirstOrDefault(x => x.ContentId == args.Model.ContentId);
+                                        if (context == null) {
+                                            Logger.Debug($"Content not found for content id: {args.Model.ContentId}");
+                                            args.Cancel = true;
+                                        } else {
+                                            Logger.Trace($"Manually setting content for id: {args.Model.ContentId}");
+                                            args.Content = context;
+                                            success = false;
+                                        }
+                                    } else {
+                                        args.Content = args.Content;
+                                    }
                                 }
                             } else {
-                                args.Content = args.Content;
+                                args.Cancel = true;
                             }
                         };
 
@@ -305,13 +313,23 @@ namespace NINA.ViewModel {
                                         foreach (var item in Anchorables) {
                                             item.IsVisible = false;
                                         }
-
+                                        dupeCheck.Clear();
                                         var serializer2 = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                                         serializer2.LayoutSerializationCallback += (s, args) => {
-                                            var d = (DockableVM)args.Content;
-                                            if (d != null) {
-                                                d.IsVisible = true;
-                                                args.Content = d;
+                                            if (args?.Model != null) {
+                                                if (dupeCheck.Contains(args.Model.ContentId)) {
+                                                    Logger.Trace($"Duplicate entry detected for content id: {args.Model.ContentId}");
+                                                    args.Cancel = true;
+                                                } else {
+                                                    dupeCheck.Add(args.Model.ContentId);
+                                                    var d = (DockableVM)args.Content;
+                                                    if (d != null) {
+                                                        d.IsVisible = true;
+                                                        args.Content = d;
+                                                    }
+                                                }
+                                            } else {
+                                                args.Cancel = true;
                                             }
                                         };
                                         sw.Seek(0, SeekOrigin.Begin);
