@@ -3013,7 +3013,7 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>SD</value>
   </data>
   <data name="LblHFRStDev" xml:space="preserve">
-    <value>HFR SD</value>
+    <value>Desviación estándar del HFR</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -5805,19 +5805,19 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
     <value>Cambiar</value>
   </data>
   <data name="LblMirrorLockupDelay" xml:space="preserve">
-    <value>Mirror lockup delay</value>
+    <value>Retraso en el bloqueo del espejo</value>
   </data>
   <data name="LblMirrorLockupDelayTooltip" xml:space="preserve">
-    <value>The desired length of time between when the mirror is locked up and when the exposure starts.
-A delay of 0 seconds deactivates this option.
-The mirror lockup option must be enabled in the camera as well.
-Refer to your camera's manual for the location of this setting</value>
+    <value>Periodo de tiempo deseado entre el bloqueo del espejo y el inicio de la exposición.
+Un retraso de 0 segundos desactiva esta opción.
+La opción de bloqueo del espejo también debe estar habilitada en la cámara.
+Consulta el manual de la cámara para ver la localización de este ajuste</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
-    <value>{0} has been disconnected from the computer. Check its USB connection and power source</value>
+    <value>{0} ha sido desconectado por el ordenador. Comprueba tanto su conexión USB como la fuente de alimentación</value>
   </data>
   <data name="LblCanonSdkError" xml:space="preserve">
-    <value>The Canon SDK has experienced an internal error. Unreliable camera operation might result</value>
+    <value>El SDK de Canon ha experimentado un error interno. Puede provocar un comportamiento no fiable de la cámara</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
     <value>Restablecer objetivo</value>
@@ -5895,7 +5895,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Sincronizando la cúpula</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
-    <value>Clear sequence?</value>
+    <value>¿Borrar secuencia?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
     <value>¿Quieres borrar la ejecución completa de la secuencia?</value>
@@ -5907,25 +5907,25 @@ Refer to your camera's manual for the location of this setting</value>
     <value>El reloj de la montura difiere del reloj del ordenador en {0:0} segundos. Esto puede llevar a un apuntado inexacto y a problemas con la resolución de placas. Por favor, revisa la documentación de su montura con respecto a la configuración del tiempo.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
-    <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
+    <value>{0} está configurado con Mirror Lock-Up (MLU) encendido, pero no soporta exposiciones MLU a través de USB. Desconecta la opción de MLU en el menú de configuración personalizada de la cámara para que la exposición pueda llevarse a cabo.</value>
   </data>
   <data name="LblQhyUvloActiveError" xml:space="preserve">
-    <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
+    <value>La cámara se encuentra en bloqueo de voltaje ultra bajo (modo UVLO) para proteger sus componentes. Esto indica un posible problema de suministro de energía. Póngase en contacto con el soporte de QHY para averiguar cómo abordar este problema.</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Unable to determine camera rotation.</value>
+    <value>No se puede determinar la rotación de la cámara.</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Camera rotation has been determined: {0}°</value>
+    <value>La rotación de la cámara ha sido determinada: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Determine rotation from camera</value>
+    <value>Determinar rotación desde la cámara</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>Cancela para determinar la rotación desde la cámara para encuadrar.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>Toma una imagen con la cámara y empieza la resolución astrométrica para recuperar la orientación de la cámara.
+Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
   </data>
 </root>

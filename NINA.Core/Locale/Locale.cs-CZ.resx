@@ -2612,7 +2612,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Režim čtení pro snímky</value>
   </data>
   <data name="LblReadoutForSnapImagesToolTip" xml:space="preserve">
-    <value>Tento režim čtení kamery se použije k provedení platesolvingu, snímkování a auto-ostření</value>
+    <value>This readout mode of your camera will be used for plate solving, framing and autofocus</value>
   </data>
   <data name="LblRecenter" xml:space="preserve">
     <value>Znovu Vycentrovat</value>
@@ -4379,13 +4379,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Provést Expozici</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Přejezd k cíli, vystředí cíl a otočí dalekohled pomocí platesolvingu a rotátoru pro dané souřadnice a rotaci</value>
+    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
     <value>Přejezd, vystředí a otočit</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Přejezd k cíli a vystředí dalekohled pomocí platesolvingu pro dané souřadnice</value>
+    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>Přejezd a Vycentrovat</value>
@@ -4463,7 +4463,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Vystředí Po Posunu</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>Spouštěč, který určí pro znovu vycentrování a platesolvingu, zda se dalekohled vzdálil příliš daleko od cílových souřadnic</value>
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
@@ -5909,7 +5909,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Odstraní všechny instrukce, spouštěče a podmínky ze všech oblastí v sekvenci</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>Hodiny montáže se liší od hodin počítače o {0:0} sekund. To může vést k nepřesnému zaměřením a problémům s platesolvingem. Nastavení času naleznete v dokumentaci vaší montáže.</value>
+    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
     <value>{0} je nakonfigurován s povolenou funkcí Mirror Lock-Up (MLU), ale nepodporuje expozice MLU přes USB. Pro úspěšné expozice deaktivujte MLU v menu uživatelských funkcí fotoaparátu.</value>
