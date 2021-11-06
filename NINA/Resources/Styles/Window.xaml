@@ -160,15 +160,21 @@
 
     <Style TargetType="ToolTip">
         <Style.Resources>
+            <Style BasedOn="{StaticResource StandardTextBlock}" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
             <Style TargetType="ContentPresenter">
                 <Style.Resources>
-                    <Style TargetType="TextBlock">
+                    <Style BasedOn="{StaticResource StandardTextBlock}" TargetType="TextBlock">
                         <Setter Property="TextWrapping" Value="Wrap" />
                     </Style>
                 </Style.Resources>
             </Style>
         </Style.Resources>
-        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="MaxWidth" Value="600" />
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
     </Style>
 
     <Style x:Key="NoResizeWindow" TargetType="{x:Type win:CustomWindow}">
