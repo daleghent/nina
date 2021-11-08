@@ -36,5 +36,18 @@ namespace NINATest.Utility {
             // Assert
             Assert.AreEqual(inLatin, result);
         }
+
+        [Test]
+        public void LatinToLatinTest() {
+            // Arrange
+            string hasOnylLatin = "abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890!\"§$%&/()=?`*'_:;><-.,#+@²³{[]}\\~|'";
+            string inLatin = "abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890!\"§$%&/()=?`*'_:;><-.,#+@²³{[]}\\~|'";
+
+            // Act
+            string result = TextEncoding.GreekToLatinAbbreviation(hasOnylLatin);
+
+            // Assert
+            Assert.AreEqual(inLatin, result);
+        }
     }
 }
