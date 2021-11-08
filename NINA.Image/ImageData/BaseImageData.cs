@@ -93,8 +93,16 @@ namespace NINA.Image.ImageData {
             var actualPath = string.Empty;
             try {
                 using (MyStopWatch.Measure()) {
-                    actualPath = await SaveToDiskAsync(fileSaveInfo, cancelToken, false);
-                    Logger.Debug($"Saving temporary image at {actualPath}");
+                    // Reference: https://devblogs.microsoft.com/premier-developer/the-danger-of-taskcompletionsourcet-class/
+                    var cancelTaskSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    using (cancelToken.Register(() => cancelTaskSource.SetCanceled())) {
+                        var saveTask = SaveToDiskAsync(fileSaveInfo, cancelToken, false);
+                        await Task.WhenAny(cancelTaskSource.Task, saveTask);
+                        cancelToken.ThrowIfCancellationRequested();
+                        actualPath = saveTask.Result;
+                    }
+
+                    Logger.Debug($"Saved temporary image at {actualPath}");
                 }
             } catch (OperationCanceledException) {
                 throw;

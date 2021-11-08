@@ -252,19 +252,21 @@ namespace NINA.ViewModel.ImageHistory {
 
         public void AppendImageProperties(ImageSavedEventArgs imageSavedEventArgs) {
             if (imageSavedEventArgs != null) {
+                ImageHistoryPoint imageHistoryItem;
                 lock (lockObj) {
-                    var imageHistoryItem = ImageHistory.FirstOrDefault(item => item.Id == imageSavedEventArgs.MetaData.Image.Id);
-                    if (imageHistoryItem != null) {
-                        imageHistoryItem.PopulateProperties(imageSavedEventArgs);
-                        ObservableImageHistory.Add(imageHistoryItem);
-                        // Check if the filter needs to be added to the list
-                        if (!FilterList.Contains(imageSavedEventArgs.Filter))
-                            FilterList.Add(imageSavedEventArgs.Filter);
-                        // Add to view if it's not filtered
-                        if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryItem.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryItem.Type == "LIGHT")) {
-                            imageHistoryItem.Index = index++;
-                            ObservableImageHistoryView.Add(imageHistoryItem);
-                        }
+                    imageHistoryItem = ImageHistory.FirstOrDefault(item => item.Id == imageSavedEventArgs.MetaData.Image.Id);
+                }
+
+                if (imageHistoryItem != null) {
+                    imageHistoryItem.PopulateProperties(imageSavedEventArgs);
+                    ObservableImageHistory.Add(imageHistoryItem);
+                    // Check if the filter needs to be added to the list
+                    if (!FilterList.Contains(imageSavedEventArgs.Filter))
+                        FilterList.Add(imageSavedEventArgs.Filter);
+                    // Add to view if it's not filtered
+                    if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryItem.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryItem.Type == "LIGHT")) {
+                        imageHistoryItem.Index = index++;
+                        ObservableImageHistoryView.Add(imageHistoryItem);
                     }
                 }
             }
@@ -272,14 +274,16 @@ namespace NINA.ViewModel.ImageHistory {
 
         public void AppendAutoFocusPoint(AutoFocusReport report) {
             if (report != null) {
+                ImageHistoryPoint last;
                 lock (lockObj) {
-                    var last = ImageHistory.LastOrDefault();
-                    if (last != null) {
-                        last.PopulateAFPoint(report);
-                        AutoFocusPoints.Add(last);
-                        if ((this.SelectedFilter.Equals(AllFilters) || last.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || last.Type == "LIGHT")) {
-                            AutoFocusPointsView.Add(last);
-                        }
+                    last = ImageHistory.LastOrDefault();
+                }
+
+                if (last != null) {
+                    last.PopulateAFPoint(report);
+                    AutoFocusPoints.Add(last);
+                    if ((this.SelectedFilter.Equals(AllFilters) || last.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || last.Type == "LIGHT")) {
+                        AutoFocusPointsView.Add(last);
                     }
                 }
             }

@@ -50,40 +50,51 @@ namespace NINA.ViewModel {
         private AsyncProducerConsumerQueue<PrepareSaveItem> queue;
 
         public Task Enqueue(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return queue.EnqueueAsync(new PrepareSaveItem(imageData, prepareTask));
+            var mergedCts = CancellationTokenSource.CreateLinkedTokenSource(token, workerCTS.Token);
+            return queue.EnqueueAsync(new PrepareSaveItem(imageData, prepareTask), mergedCts.Token);
         }
 
         private async Task DoWork() {
             while (!workerCTS.IsCancellationRequested) {
+                CancellationTokenSource writeTimeoutCts = null;
                 try {
                     var item = await queue.DequeueAsync(workerCTS.Token);
+                    workerCTS.Token.ThrowIfCancellationRequested();
 
+                    // NOTE: Consider whether this should be configurable. 5 minutes for writing files should be exceptionally conservative
+                    writeTimeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = Loc.Instance["LblSavingImage"] });
-                    var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), default);
+                    var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), writeTimeoutCts.Token);
+                    writeTimeoutCts.Token.ThrowIfCancellationRequested();
 
                     var preparedData = await item.PrepareTask;
 
                     path = preparedData.RawImageData.FinalizeSave(path, profileService.ActiveProfile.ImageFileSettings.FilePattern);
                     var stats = await preparedData.RawImageData.Statistics;
 
-                    imageSaveMediator.OnImageSaved(
-                        new ImageSavedEventArgs() {
-                            MetaData = preparedData.RawImageData.MetaData,
-                            PathToImage = new Uri(path),
-                            Image = preparedData.Image,
-                            FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
-                            Statistics = stats,
-                            StarDetectionAnalysis = preparedData.RawImageData.StarDetectionAnalysis,
-                            Duration = preparedData.RawImageData.MetaData.Image.ExposureTime,
-                            IsBayered = preparedData.RawImageData.Properties.IsBayered,
-                            Filter = preparedData.RawImageData.MetaData.FilterWheel.Filter
-                        }
-                    );
+                    // Run this in a separate task to limit risk of deadlocks
+                    _ = Task.Run(() => imageSaveMediator.OnImageSaved(
+                          new ImageSavedEventArgs() {
+                              MetaData = preparedData.RawImageData.MetaData,
+                              PathToImage = new Uri(path),
+                              Image = preparedData.Image,
+                              FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
+                              Statistics = stats,
+                              StarDetectionAnalysis = preparedData.RawImageData.StarDetectionAnalysis,
+                              Duration = preparedData.RawImageData.MetaData.Image.ExposureTime,
+                              IsBayered = preparedData.RawImageData.Properties.IsBayered,
+                              Filter = preparedData.RawImageData.MetaData.FilterWheel.Filter
+                          }
+                      ), workerCTS.Token);
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
                 } finally {
+                    if (writeTimeoutCts?.IsCancellationRequested == true) {
+                        Notification.ShowError(Loc.Instance["LblSaveFileFailed"]);
+                        Logger.Error("Writing file timed out");
+                    }
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = string.Empty });
                 }
             }
@@ -91,6 +102,10 @@ namespace NINA.ViewModel {
 
         public void Shutdown() {
             workerCTS.Cancel();
+            // Give the worker at most 1 minute to shutdown cleanly, writing any files remaining in the queue
+            if (!worker.Wait(TimeSpan.FromMinutes(1))) {
+                Logger.Error("Image save worker failed to cleanly shutdown");
+            }
         }
 
         private class PrepareSaveItem {

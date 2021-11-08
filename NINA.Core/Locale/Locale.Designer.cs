@@ -13396,6 +13396,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to save image.
+        /// </summary>
+        internal static string LblSaveFileFailed {
+            get {
+                return ResourceManager.GetString("LblSaveFileFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Image as.
         /// </summary>
         internal static string LblSaveImageAs {
