@@ -86,7 +86,7 @@ namespace NINA.Core.Utility {
             { "ξ", "ksi" },
 
             { "Ο", "omi" },
-            { "o", "omi" },
+            { "ο", "omi" },
 
             { "Π", "pi." },
             { "π", "pi." },
