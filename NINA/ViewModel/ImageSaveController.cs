@@ -51,6 +51,7 @@ namespace NINA.ViewModel {
 
         public Task Enqueue(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
             var mergedCts = CancellationTokenSource.CreateLinkedTokenSource(token, workerCTS.Token);
+            Logger.Debug($"Enqueuing image to be saved with id {imageData.MetaData.Image.Id}");
             return queue.EnqueueAsync(new PrepareSaveItem(imageData, prepareTask), mergedCts.Token);
         }
 
@@ -59,6 +60,7 @@ namespace NINA.ViewModel {
                 CancellationTokenSource writeTimeoutCts = null;
                 try {
                     var item = await queue.DequeueAsync(workerCTS.Token);
+                    Logger.Debug($"Dequeuing image to be saved with id {item.Data.MetaData.Image.Id}");
                     workerCTS.Token.ThrowIfCancellationRequested();
 
                     // NOTE: Consider whether this should be configurable. 5 minutes for writing files should be exceptionally conservative
