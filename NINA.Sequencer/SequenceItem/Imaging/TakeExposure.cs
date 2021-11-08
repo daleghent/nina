@@ -190,7 +190,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
 
             if (target != null) {
-                imageData.MetaData.Target.Name = target.TargetName;
+                imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
                 imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
                 imageData.MetaData.Target.Rotation = target.Rotation;
             }

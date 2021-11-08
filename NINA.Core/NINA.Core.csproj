@@ -236,6 +236,7 @@
     <Compile Include="Utility\BindingProxy.cs" />
     <Compile Include="Utility\Blittable.cs" />
     <Compile Include="Utility\ButtonHelper.cs" />
+    <Compile Include="Utility\TextEncoding.cs" />
     <Compile Include="Utility\ColorSchema\ColorSchema.cs" />
     <Compile Include="Utility\Converters\AddToNumberConverter.cs" />
     <Compile Include="Utility\Converters\AFFittingToColorConverter.cs" />

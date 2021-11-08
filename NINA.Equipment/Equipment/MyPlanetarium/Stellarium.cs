@@ -113,11 +113,26 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 var jobj = JObject.Parse(response);
                 var status = jobj.ToObject<StellariumObject>();
 
+                // Some objects have no "name" field, but do have a "localized-name" field.
+                // Yet other objects have neither, but have a "designations" field that can hold multiple, hyphen-separated catalog designations.
+                // Prefer in the following order: localized-name, name, the first name in the designations field, and lastly the type.
+                var name = string.Empty;
+
+                if (!string.IsNullOrEmpty(status?.LocalizedName)) {
+                    name = status.LocalizedName;
+                } else if (!string.IsNullOrEmpty(status?.Name)) {
+                    name = status.Name;
+                } else if (!string.IsNullOrEmpty(status?.Designations)) {
+                    name = status.Designations.Split(new[] { " - " }, StringSplitOptions.None)[0];
+                } else if (!string.IsNullOrEmpty(status?.Type)) {
+                    name = status.Type;
+                }
+
                 var ra = AstroUtil.EuclidianModulus(status.RightAscension, 360d);
                 var dec = status.Declination;
 
                 var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                var dso = new DeepSkyObject(status.Name, coordinates, string.Empty, null);
+                var dso = new DeepSkyObject(name, coordinates, string.Empty, null);
                 return dso;
             } catch (Exception ex) {
                 Logger.Error($"Stellarium: Failed to import object info: {ex}");
@@ -214,10 +229,22 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
             [JsonProperty(PropertyName = "name")]
             public string Name;
 
-            public StellariumObject(double rightAscension, double declination, string name) {
+            [JsonProperty(PropertyName = "localized-name")]
+            public string LocalizedName;
+
+            [JsonProperty(PropertyName = "designations")]
+            public string Designations;
+
+            [JsonProperty(PropertyName = "type")]
+            public string Type;
+
+            public StellariumObject(double rightAscension, double declination, string name, string localizedName, string designations, string type) {
                 RightAscension = rightAscension;
                 Declination = declination;
                 Name = name;
+                LocalizedName = localizedName;
+                Designations = designations;
+                Type = type;
             }
         }
 

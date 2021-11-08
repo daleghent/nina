@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using NINA.Astrometry;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;
@@ -58,8 +57,11 @@ namespace NINA.Astrometry {
             set {
                 _name = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged("NameAsAscii");
             }
         }
+
+        public string NameAsAscii => TextEncoding.UnicodeToAscii(TextEncoding.GreekToLatinAbbreviation(_name));
 
         private Coordinates _coordinates;
 
