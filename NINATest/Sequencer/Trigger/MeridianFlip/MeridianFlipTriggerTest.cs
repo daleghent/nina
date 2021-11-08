@@ -420,5 +420,25 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
             sut.ShouldTrigger(null, nextItemMock.Object).Should().Be(expectToFlip);
         }
+
+        [Test]
+        public void LongMaxMinutesAfterMeridian_CorrectSide_NoFlip() {
+            // When an object is more than 1 hour (62 minutes) past the meridian cross above the pole, MaxMinutesAfterMeridian is even longer than that (65 minutes),
+            // and we're already on the target side of the pier, then the time to flip should be more than 12 hours from no (no flip should be scheduled)
+            var lst = 14.0;
+            var rightAscension = (TimeSpan.FromHours(lst) - TimeSpan.FromMinutes(62)).TotalHours;
+            var coordinates = new Coordinates(Angle.ByHours(rightAscension), Angle.ByDegree(20.0), Epoch.JNOW);
+            var expectedSideOfPier = NINA.Astrometry.MeridianFlip.ExpectedPierSide(coordinates, Angle.ByHours(lst));
+            var timeToMeridian = NINA.Astrometry.MeridianFlip.TimeToMeridian(coordinates, Angle.ByHours(lst));
+
+            var settings = new Mock<IMeridianFlipSettings>();
+            settings.SetupGet(m => m.MinutesAfterMeridian).Returns(55);
+            settings.SetupGet(m => m.MaxMinutesAfterMeridian).Returns(65);
+            settings.SetupGet(m => m.PauseTimeBeforeMeridian).Returns(0);
+            settings.SetupGet(m => m.UseSideOfPier).Returns(true);
+            var timeToFlip = NINA.Astrometry.MeridianFlip.TimeToMeridianFlip(settings.Object, coordinates, Angle.ByHours(lst), PierSide.pierEast);
+
+            Assert.That(timeToFlip > TimeSpan.FromHours(12));
+        }
     }
 }
