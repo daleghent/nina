@@ -236,6 +236,9 @@ namespace NINA.ViewModel {
                 Sequencer.MainContainer.Items[1].Status = SequenceEntityStatus.CREATED;
                 Sequencer.MainContainer.Items[2].Status = SequenceEntityStatus.CREATED;
 
+                // Ensure the trigger is set from the profile
+                DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
+
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;
             } finally {
@@ -264,8 +267,8 @@ namespace NINA.ViewModel {
             get => profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
             set {
                 profileService.ActiveProfile.SequenceSettings.DoMeridianFlip = value;
-                if (value) {
-                    (Sequencer.MainContainer as ITriggerable).Add(FlipTrigger);
+                if (profileService.ActiveProfile.SequenceSettings.DoMeridianFlip) {
+                    Sequencer.MainContainer.Add(FlipTrigger);
                 } else {
                     (Sequencer.MainContainer as ITriggerable).Remove(FlipTrigger);
                 }

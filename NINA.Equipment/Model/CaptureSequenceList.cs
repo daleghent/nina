@@ -607,18 +607,5 @@ namespace NINA.Equipment.Model {
                 RaisePropertyChanged();
             }
         }
-
-        private bool doMeridianFlip;
-
-        [XmlAttribute(nameof(DoMeridianFlip))]
-        public bool DoMeridianFlip {
-            get {
-                return doMeridianFlip;
-            }
-            set {
-                doMeridianFlip = value;
-                RaisePropertyChanged();
-            }
-        }
     }
 }
