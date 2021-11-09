@@ -33,6 +33,8 @@ namespace NINA.Sequencer.Mediator {
             this.sequenceNavigation = sequenceNavigation;
         }
 
+        public bool Initialized => sequenceNavigation.Initialized;
+
         public void AddSimpleTarget(DeepSkyObject deepSkyObject) {
             sequenceNavigation.AddSimpleTarget(deepSkyObject);
         }

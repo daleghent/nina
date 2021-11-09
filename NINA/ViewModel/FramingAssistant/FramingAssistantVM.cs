@@ -59,11 +59,22 @@ namespace NINA.ViewModel.FramingAssistant {
 
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
 
-        public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
-            IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
-            ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
-            IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator, IRotatorMediator rotatorMediator,
-            IDomeMediator domeMediator, IDomeFollower domeFollower, IImageDataFactory imageDataFactory) : base(profileService) {
+        public FramingAssistantVM(IProfileService profileService,
+                                  ICameraMediator cameraMediator,
+                                  ITelescopeMediator telescopeMediator,
+                                  IApplicationStatusMediator applicationStatusMediator,
+                                  INighttimeCalculator nighttimeCalculator,
+                                  IPlanetariumFactory planetariumFactory,
+                                  ISequenceMediator sequenceMediator,
+                                  IApplicationMediator applicationMediator,
+                                  IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
+                                  IImagingMediator imagingMediator,
+                                  IFilterWheelMediator filterWheelMediator,
+                                  IGuiderMediator guiderMediator,
+                                  IRotatorMediator rotatorMediator,
+                                  IDomeMediator domeMediator,
+                                  IDomeFollower domeFollower,
+                                  IImageDataFactory imageDataFactory) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -157,7 +168,7 @@ namespace NINA.ViewModel.FramingAssistant {
             GetDSOTemplatesCommand = new RelayCommand((object o) => {
                 DSOTemplates = sequenceMediator.GetDeepSkyObjectContainerTemplates();
                 RaisePropertyChanged(nameof(DSOTemplates));
-            }, (object o) => RectangleCalculated);
+            }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
             SetOldSequencerTargetCommand = new RelayCommand((object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
@@ -171,7 +182,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     Logger.Info($"Adding target to simple sequencer: {dso.Name} - {dso.Coordinates}");
                     sequenceMediator.AddSimpleTarget(dso);
                 }
-            }, (object o) => RectangleCalculated);
+            }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
             SetSequencerTargetCommand = new RelayCommand((object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
@@ -180,7 +191,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     Logger.Info($"Adding target to advanced sequencer: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
                     sequenceMediator.AddAdvancedTarget(container);
                 }
-            }, (object o) => RectangleCalculated);
+            }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
 
             AddTargetToTargetListCommand = new RelayCommand((object o) => {
                 var template = o as IDeepSkyObjectContainer;
@@ -188,7 +199,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     Logger.Info($"Adding target to target list: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
                     sequenceMediator.AddTargetToTargetList(container);
                 }
-            }, (object o) => RectangleCalculated);
+            }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
 
             RecenterCommand = new AsyncCommand<bool>(async () => {
                 DSO.Coordinates = Rectangle.Coordinates;
