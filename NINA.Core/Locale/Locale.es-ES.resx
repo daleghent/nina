@@ -5928,4 +5928,7 @@ Consulta el manual de la cámara para ver la localización de este ajuste</value
     <value>Toma una imagen con la cámara y empieza la resolución astrométrica para recuperar la orientación de la cámara.
 Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
   </data>
+  <data name="LblSaveFileFailed" xml:space="preserve">
+    <value>Failed to save image</value>
+  </data>
 </root>

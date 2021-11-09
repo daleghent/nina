@@ -4077,7 +4077,7 @@
     <value>中天翻转后同步圆顶失败</value>
   </data>
   <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
-    <value>Dome failed to synchronize during Centering</value>
+    <value>居中时同步圆顶失败</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>序列结束时关闭圆顶天窗</value>
@@ -5720,7 +5720,7 @@
     <value>旋转范围</value>
   </data>
   <data name="LblRotatorRangeStart" xml:space="preserve">
-    <value>Mechanical Range Start</value>
+    <value>旋转范围开始</value>
   </data>
   <data name="LblRotatorRangeFull" xml:space="preserve">
     <value>全角度</value>
@@ -5916,10 +5916,10 @@ Refer to your camera's manual for the location of this setting</value>
     <value>相机处于低压保护预警 (UVLO) 模式中。这表明电源可能存在问题。请联系QHY技术支持以获取相关建议。</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Unable to determine camera rotation.</value>
+    <value>无法确定相机旋转角度。</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Camera rotation has been determined: {0}°</value>
+    <value>已确定相机旋转角度: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
     <value>Determine rotation from camera</value>
@@ -5930,5 +5930,8 @@ Refer to your camera's manual for the location of this setting</value>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
     <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
 Once successfully solved, the rotation will be set for framing.</value>
+  </data>
+  <data name="LblSaveFileFailed" xml:space="preserve">
+    <value>保存图像失败</value>
   </data>
 </root>

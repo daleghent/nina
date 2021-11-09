@@ -384,7 +384,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Faktor pro algoritmus Autorozpětí. Slouží k zobrazení obrázků a k rozpoznání hvězd. Hodnota musí být mezi 0 a 1. Pro většinu případů by měla stačit hodnota 0.2.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
-    <value>Aktualizace Zdroje</value>
+    <value>Auto Update Source</value>
   </data>
   <data name="LblAzimuth" xml:space="preserve">
     <value>Azimut</value>
@@ -2495,10 +2495,10 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Nastavení Astrometrie</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
-    <value>Plate Solving</value>
+    <value>Astrometrie</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Znovu vystředit po příliš velkém posunu</value>
+    <value>Znovu vycentruje po příliš velkém posunu</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
     <value>Není nastaven žádný cíl</value>
@@ -2612,7 +2612,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Režim čtení pro snímky</value>
   </data>
   <data name="LblReadoutForSnapImagesToolTip" xml:space="preserve">
-    <value>This readout mode of your camera will be used for plate solving, framing and autofocus</value>
+    <value>Tento režim čtení kamery se použije k provedení astrometrie, snímkování a auto-ostření</value>
   </data>
   <data name="LblRecenter" xml:space="preserve">
     <value>Znovu Vycentrovat</value>
@@ -2750,7 +2750,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Uložit nastavení cíle</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>Stabilizace dal. po překlopení poledníku</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Hledat</value>
@@ -2859,7 +2859,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Stabilizace</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Settle Pixel Tolerance</value>
+    <value>Nastavte Toleranci Pixelů</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>Čas stabilizace po přejezdu</value>
@@ -2931,7 +2931,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Přejezd</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Přejezd a Vystředit</value>
+    <value>Přejezd a Vycentrovat</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Čas Přejezdu</value>
@@ -3374,9 +3374,9 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
   </data>
   <data name="LblUnlinkedStretchTooltip" xml:space="preserve">
     <value>
-        When enabled, color channels will be stretched separately, helping hide the
-        sky background and enhancing autofocus and platesolving reliablity, especially
-        in light polluted areas. Processing time is however increased.
+        Jsou-li povoleny, barevné kanály budou roztaženy samostatně, což pomůže skrýt
+        pozadí oblohy a zlepšení automatického zaostřování a  astrometrii, zejména se světlem znečištěných 
+         oblastech. Doba zpracování je však delší.
     </value>
   </data>
   <data name="LblUnpark" xml:space="preserve">
@@ -3730,19 +3730,19 @@ Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout 
     <value>Metoda Kompenzace Zpětné Vůle</value>
   </data>
   <data name="LblFocuserBacklashMethodTooltip" xml:space="preserve">
-    <value>V metodě kompenzace zpětné vůle se používají následující informace.
+    <value>This controls the backlash compensation method used.
 
-Absolutní hodnota:
-   Když uživatel změní směr pohybu zaostření, tato hodnota (počet kroků) se přičte ke směru pohybu zaostření.
-   Hystereze směrem dovnitř: Když ostření přepne z pohybu ven na pohyb dovnitř, zvýší se hodnota „hystereze směrem dovnitř“
-   Hystereze směrem ven: Když ostření přepne z pohybu směrem dovnitř na pohyb ven, zvýší se hodnota „hystereze směrem ven"
+Absolute: 
+  When the focuser changes directions, an absolute value will be added to the focuser movement.
+  Backlash IN: when the focuser changes from moving outwards to moving inwards the Backlash IN value will be added
+  Backlash OUT: when the focuser changes from moving inwards to moving outwards the Backlash OUT value will be added
   
-Překročení hodnoty:
-   Tato metoda bude i nadále po dosažení cíle přesouvat velký počet kroků a poté přesune zaostření do původně požadované polohy.
-   U této metody kompenzace zpětné vůle je poslední pohyb ostřiče vždy ve stejném směru, ať už se pohybuje dovnitř nebo ven
-   Pro hysterezi ve směru dovnitř / ven musí být nastavena jedna ze dvou! Při nastavování směru dovnitř bude počet kroků platit pro každý pohyb směrem dovnitř, takže konečný pohyb je vždy směrem ven a totéž platí pro směr ven.
+Overshoot:
+  This method will compensate for Backlash by overshooting the target position by a large amount and then moving the focuser back to the initially requested position.
+  Due to this compensation the last movement of the focuser will always be in the same direction (either always inwards or always outwards)
+  For Backlash IN and OUT only ONE of these two must be set! When setting IN, the amount will be applied on each inward movement, so the final movement will always be outwards. For Backlash OUT, it will be the other way around.
 
-Metodu kompenzace zpětné vůle lze změnit, pouze když je zaostření odpojeno!</value>
+The method can only be changed when the focuser is not connected!</value>
   </data>
   <data name="LblOvershoot" xml:space="preserve">
     <value>Překročení</value>
@@ -4379,13 +4379,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Provést Expozici</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Přejezd k cíli, vycentruje cíl a otočí dalekohled za pomocí astrometrie a rotátoru pro dané souřadnice a rotaci</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Přejezd, vycentruje a otočí</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Přejezd k cíli a vycentruje dalekohled pomocí astrometrie pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>Přejezd a Vycentrovat</value>
@@ -4460,10 +4460,10 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Čekat na Čas</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Vystředí Po Posunu</value>
+    <value>Vycentruje Po Posunu</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Spouštěč, který určí pro znovu vycentrování a astrometrii, zda se dalekohled vzdálil příliš daleko od cílových souřadnic</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
@@ -5272,7 +5272,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Fotka</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Přejezd, Vystředí a Otočí</value>
+    <value>Přejezd, Vycentruje a Otočí</value>
   </data>
   <data name="LblFindHomeToolTip" xml:space="preserve">
     <value>Informovat dalekohled, aby zjistil výchozí pozici</value>
@@ -5909,7 +5909,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Odstraní všechny instrukce, spouštěče a podmínky ze všech oblastí v sekvenci</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+    <value>Hodiny montáže se liší od hodin počítače o {0:0} sekund. To může vést k nepřesnému zaměřením a problémům s astrometrii. Nastavení času naleznete v dokumentaci vaší montáže.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
     <value>{0} je nakonfigurován s povolenou funkcí Mirror Lock-Up (MLU), ale nepodporuje expozice MLU přes USB. Pro úspěšné expozice deaktivujte MLU v menu uživatelských funkcí fotoaparátu.</value>
@@ -5930,7 +5930,10 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Zastaví určování úhlu natočení kamery pro snímek.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Pořiďte snímek kamerou a spusťte astrometrii, abyste znovu získali orientaci kamery.
-Po úspěšném vyřešení se otočení nastaví na snímek.</value>
+    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
+Once successfully solved, the rotation will be set for framing.</value>
+  </data>
+  <data name="LblSaveFileFailed" xml:space="preserve">
+    <value>Obrázek se nepodařilo uložit</value>
   </data>
 </root>

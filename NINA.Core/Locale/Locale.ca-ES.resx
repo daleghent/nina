@@ -5929,4 +5929,7 @@ Consulteu el manual de la càmera per conèixer la ubicació d'aquesta configura
     <value>Pren una imatge amb la càmera i inicia una resolució de plaques per recuperar l'orientació de la càmera.
 Un cop resolt amb èxit, s'establirà la rotació per enquadrar.</value>
   </data>
+  <data name="LblSaveFileFailed" xml:space="preserve">
+    <value>Failed to save image</value>
+  </data>
 </root>

@@ -5936,4 +5936,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
 Once successfully solved, the rotation will be set for framing.</value>
   </data>
+  <data name="LblSaveFileFailed" xml:space="preserve">
+    <value>Failed to save image</value>
+  </data>
 </root>
