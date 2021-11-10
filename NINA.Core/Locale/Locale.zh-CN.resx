@@ -188,7 +188,7 @@
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
     <value>通过三个步骤测量地平高度角误差。
-1. 在当前位置拍一张图像并解析，得到当前指向坐标
+1. 在当前位置拍摄一张图像并解析，得到当前指向坐标
 2. 沿赤经方向将望远镜移动0.5°
 3. 在新位置再拍一张图像，解析得到移动后的指向坐标
 通过这两个点来计算和显示地平高度角误差</value>
@@ -400,7 +400,7 @@
   </data>
   <data name="LblAzimuthMeasurementButtonTooltip" xml:space="preserve">
     <value>通过三个步骤测量方位角误差。
-1. 在当前位置拍一张图像并解析，得到当前指向坐标
+1. 在当前位置拍摄一张图像并解析，得到当前指向坐标
 2. 沿赤经方向将望远镜移动0.5°
 3. 在新位置再拍一张图像，解析得到移动后的指向坐标
 通过这两个点来计算和显示方位角误差</value>
@@ -436,7 +436,7 @@
     <value>位深度</value>
   </data>
   <data name="LblBitDepthADU" xml:space="preserve">
-    <value>ADU 中的位深度</value>
+    <value>位深度，单位为ADU</value>
   </data>
   <data name="LblBlackClipping" xml:space="preserve">
     <value>黑区剪裁</value>
@@ -2871,7 +2871,7 @@
     <value>开始导星重试</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
-    <value>如果导星没有反馈其正在导星，在指定的时间之后尝试重启导星。</value>
+    <value>如果在指定时间内导星没有正常工作，将尝试重启导星。</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeoutTooltip" xml:space="preserve">
     <value>在放弃“开始导星”命令前的重启超时（秒）</value>
@@ -2976,7 +2976,7 @@
     <value>亮星灵敏度</value>
   </data>
   <data name="LblStarSensitivityTooltip" xml:space="preserve">
-    <value>确定星检算法的灵敏度。较高的设置可能会错误地检测到噪音，并可能耗时更久</value>
+    <value>确定星点侦测算法的灵敏度。较高的设置可能会错误地检测到噪音，并可能耗时更久</value>
   </data>
   <data name="LblStartAutoFocus" xml:space="preserve">
     <value>开始自动对焦</value>
@@ -3082,8 +3082,7 @@
     <value>同步 PHD2（实验性）</value>
   </data>
   <data name="LblSynchronizedPHD2ServiceClientAlreadyExists" xml:space="preserve">
-    <value>
-此配置文件已经连接到同步 PHD2 导星。
+    <value>此配置文件已经连接到同步 PHD2 导星。
 你无法连接相同的配置文件两次，请选择其他NINA配置文件。</value>
   </data>
   <data name="LblSynchronizedPHD2ServiceCrashed" xml:space="preserve">
@@ -3576,7 +3575,7 @@
     <value>XISF</value>
   </data>
   <data name="LblXisfBadChecksum" xml:space="preserve">
-    <value>XISF 文件校验和未验证。图像数据可能已损坏。</value>
+    <value>XISF 文件校验和不匹配。图像数据可能已损坏。</value>
   </data>
   <data name="LblXisfInvalidFile" xml:space="preserve">
     <value>XISF文件无效</value>
@@ -4122,7 +4121,7 @@
     <value>序列自动对焦超时</value>
   </data>
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
-    <value>在一个序列中，在取消继续之前，等待自动对焦的时间（秒）</value>
+    <value>在序列中等待自对焦的时间（秒），超时后会取消自动对焦并继续</value>
   </data>
   <data name="LblMetaGuideLowIntensityStopGuiding" xml:space="preserve">
     <value>由于星点强度低而停止导星。可能会有云。</value>
@@ -4227,7 +4226,7 @@
     <value>开启“超级模式”，以获得额外的低读出噪声 </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
-    <value>反向移动旋转器。如果解析时转向错误的方向则打开此项目。</value>
+    <value>反转旋转器方向。如果解析后转向错误的方向则打开此开关。</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey数据源</value>
@@ -4377,7 +4376,7 @@
     <value>开始曝光</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>通过解析和旋转，将望远镜居中到目标的坐标，视场旋转到指定角度</value>
+    <value>通过解析和旋转，将望远镜居中到目标坐标，视场旋转到指定角度</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
     <value>指向，居中并旋转</value>
@@ -4617,7 +4616,7 @@
     <value>插件</value>
   </data>
   <data name="LblBuildSequenceTooltip" xml:space="preserve">
-    <value>为一组目标建立序列计划</value>
+    <value>为已计划的目标组建立高级序列</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
     <value>根据指定的张数、时长、增益和偏移进行曝光，在曝光间隔评估触发器和循环条件</value>
@@ -5054,7 +5053,7 @@
     <value>这将禁用简单序列，并在序列选项卡中直接显示高级序列器。</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
-    <value>切换回序列器仪表板</value>
+    <value>回到序列器主面板</value>
   </data>
   <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
     <value>目标起始指令</value>
@@ -5556,7 +5555,7 @@
     <value>卸载</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>取消可用插件和更新检查。</value>
+    <value>取消可用插件和更新检查</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
     <value>检查在线插件库是否有可用的插件，并检查现有插件是否有新版本。</value>
@@ -5726,7 +5725,7 @@
     <value>全角度</value>
   </data>
   <data name="LblRotatorRangeFullTooltip" xml:space="preserve">
-    <value>旋转范围没有限制</value>
+    <value>旋转位置没有限制</value>
   </data>
   <data name="LblRotatorRangeHalf" xml:space="preserve">
     <value>180 度</value>
@@ -5829,7 +5828,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>重置此目标中所有拍摄条目？</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>使用解析来确定当前视场的旋转角度并使用旋转器来调整到指定角度。(这不会使目标居中！)</value>
+    <value>通过解析确定当前视场的旋转角度并使用旋转器调整到指定角度。(这不会使目标居中！)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
     <value>解析并旋转</value>
@@ -5922,10 +5921,10 @@ Refer to your camera's manual for the location of this setting</value>
     <value>已确定相机旋转角度: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Determine rotation from camera</value>
+    <value>测定相机旋转角度</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>取消测定旋转角度</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
     <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.

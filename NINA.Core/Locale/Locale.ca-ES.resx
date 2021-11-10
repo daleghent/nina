@@ -5930,6 +5930,6 @@ Consulteu el manual de la càmera per conèixer la ubicació d'aquesta configura
 Un cop resolt amb èxit, s'establirà la rotació per enquadrar.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
-    <value>Failed to save image</value>
+    <value>No s'ha pogut desar la imatge</value>
   </data>
 </root>

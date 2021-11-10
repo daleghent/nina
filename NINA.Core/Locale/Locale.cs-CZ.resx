@@ -384,7 +384,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Faktor pro algoritmus Autorozpětí. Slouží k zobrazení obrázků a k rozpoznání hvězd. Hodnota musí být mezi 0 a 1. Pro většinu případů by měla stačit hodnota 0.2.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
-    <value>Auto Update Source</value>
+    <value>Aktualizace aplikace</value>
   </data>
   <data name="LblAzimuth" xml:space="preserve">
     <value>Azimut</value>
@@ -3730,19 +3730,19 @@ Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout 
     <value>Metoda Kompenzace Zpětné Vůle</value>
   </data>
   <data name="LblFocuserBacklashMethodTooltip" xml:space="preserve">
-    <value>This controls the backlash compensation method used.
+    <value>V metodě kompenzace zpětné vůle se používají následující informace.
 
-Absolute: 
-  When the focuser changes directions, an absolute value will be added to the focuser movement.
-  Backlash IN: when the focuser changes from moving outwards to moving inwards the Backlash IN value will be added
-  Backlash OUT: when the focuser changes from moving inwards to moving outwards the Backlash OUT value will be added
+Absolutní:
+   Když motor ostření změní směr, bude k pohybu motoru ostření přidána absolutní hodnota.
+   Směr dovnitř: Když se motor zaostření změní z vnějšího pohybu na vnitřní, bude přidána hodnota „směrem dovnitř“
+   Směr ven: když se motor zaostření změní z vnitřního pohybu na vnější, bude přidána hodnota „směrem ven"
   
-Overshoot:
-  This method will compensate for Backlash by overshooting the target position by a large amount and then moving the focuser back to the initially requested position.
-  Due to this compensation the last movement of the focuser will always be in the same direction (either always inwards or always outwards)
-  For Backlash IN and OUT only ONE of these two must be set! When setting IN, the amount will be applied on each inward movement, so the final movement will always be outwards. For Backlash OUT, it will be the other way around.
+Překročení:
+    Tato metoda bude kompenzovat vůli přetažením cílové pozice o velké množství a následným vrácením zaostřovacího motoru do požadované výchozí polohy.
+   U této kompenzace bude poslední pohyb zaostřovacího motoru vždy ve stejném směru (ať už dovnitř nebo ven)
+   Pro směr dovnitř / ven musí být vybrán pouze JEDEN z těchto dvou! Při nastavování směru dovnitř bude hodnota aplikována na každý pohyb dovnitř, takže konečný pohyb bude vždy ven. U kompenzace ven bude vše opačné.
 
-The method can only be changed when the focuser is not connected!</value>
+Metodu lze změnit pouze při odpojeném motoru ostření!</value>
   </data>
   <data name="LblOvershoot" xml:space="preserve">
     <value>Překročení</value>
@@ -5930,8 +5930,8 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Zastaví určování úhlu natočení kamery pro snímek.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>Pořiďte snímek kamerou a spusťte astrometrii, abyste získali orientaci kamery.
+Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Obrázek se nepodařilo uložit</value>
