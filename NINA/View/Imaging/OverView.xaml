@@ -229,7 +229,6 @@
                                                             <Path
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
-                                                                Fill="Pink"
                                                                 Stretch="Uniform" />
                                                         </Setter.Value>
                                                     </Setter>
@@ -307,14 +306,23 @@
                                     <ToggleButton.Style>
                                         <Style BasedOn="{StaticResource AvalonSideBarToggleButton}" TargetType="ToggleButton">
                                             <Style.Triggers>
+                                                <!--
+                                                    The render transform sections here are necessary due to the flow direction of the wrap panel.
+                                                    When a flow direction of right to left is specified the content will be flipped too.
+                                                    The render transform will flip it back to its original orientation.
+                                                -->
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Content">
                                                         <Setter.Value>
                                                             <Path
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
-                                                                Fill="Pink"
-                                                                Stretch="Uniform" />
+                                                                RenderTransformOrigin="0.5,0.5"
+                                                                Stretch="Uniform">
+                                                                <Path.RenderTransform>
+                                                                    <ScaleTransform ScaleX="-1" />
+                                                                </Path.RenderTransform>
+                                                            </Path>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
@@ -325,7 +333,12 @@
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
                                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                                Stretch="Uniform" />
+                                                                RenderTransformOrigin="0.5,0.5"
+                                                                Stretch="Uniform">
+                                                                <Path.RenderTransform>
+                                                                    <ScaleTransform ScaleX="-1" />
+                                                                </Path.RenderTransform>
+                                                            </Path>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
@@ -336,7 +349,12 @@
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
                                                                 Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                                Stretch="Uniform" />
+                                                                RenderTransformOrigin="0.5,0.5"
+                                                                Stretch="Uniform">
+                                                                <Path.RenderTransform>
+                                                                    <ScaleTransform ScaleX="-1" />
+                                                                </Path.RenderTransform>
+                                                            </Path>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
