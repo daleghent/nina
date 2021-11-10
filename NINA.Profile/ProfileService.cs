@@ -128,11 +128,7 @@ namespace NINA.Profile {
                         .ForEach(Profiles.Add);
 
                     if (!Profiles.Any() && !loadSpecificProfile) {
-                        if (File.Exists(OLDPROFILEFILEPATH)) {
-                            MigrateOldProfile();
-                        } else {
-                            AddDefaultProfile();
-                        }
+                        AddDefaultProfile();
                     }
 
                     var selectedProfile =
@@ -379,33 +375,6 @@ namespace NINA.Profile {
         }
 
         #region Migration
-
-        public static string OLDPROFILEFILEPATH = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "profiles.settings");
-
-        /// <summary>
-        /// Migrate old profile.settings into new separted profile files
-        /// Last active profile will get its LastUsed date to DateTime.Now to be selected first.
-        /// </summary>
-        private void MigrateOldProfile() {
-            var s = File.ReadAllText(OLDPROFILEFILEPATH);
-            s = s.Replace("NINA.Utility.Profile", "NINA.Profile");
-            var tmp = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "migration.profiles");
-            File.WriteAllText(tmp, s);
-
-            using (var fs = new FileStream(tmp, FileMode.Open, FileAccess.Read)) {
-                var serializer = new DataContractSerializer(typeof(Profiles));
-                var obj = serializer.ReadObject(fs);
-                var files = (Profiles)obj;
-
-                foreach (Profile p in files.ProfileList) {
-                    if (p.Id == files.ActiveProfileId) { p.LastUsed = DateTime.Now; }
-                    p.Save();
-                    var info = new ProfileMeta() { Id = p.Id, Name = p.Name, Location = p.Location, LastUsed = p.LastUsed };
-                    p.Dispose();
-                    Profiles.Add(info);
-                }
-            }
-        }
 
         private void MigrateModularizedSolutionNamespaceChange() {
             foreach (var profileFile in Directory.GetFiles(PROFILEFOLDER)) {

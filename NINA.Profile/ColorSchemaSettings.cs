@@ -81,10 +81,14 @@ namespace NINA.Profile {
 
         private void Initialize() {
             var index = ColorSchemas.Items.FindIndex(x => x.Name == ColorSchema.Name);
-            ColorSchemas.Items[index] = ColorSchema;
+            if (index > -1) {
+                ColorSchemas.Items[index] = ColorSchema;
+            }
 
             var index2 = ColorSchemas.Items.FindIndex(x => x.Name == AltColorSchema.Name);
-            ColorSchemas.Items[index2] = AltColorSchema;
+            if (index2 > -1) {
+                ColorSchemas.Items[index2] = AltColorSchema;
+            }
         }
 
         protected override void SetDefaultValues() {
