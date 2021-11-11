@@ -3,18 +3,19 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-### <span style="color:red;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
+### <span style="color:yellow;">Beta builds are preview builds that contain the full development effort for the next release. These builds contain the full set of features for the next version and are under evaluation to find and fix potential bugs. No major changes will occur in these builds and the focus is on bug fixing only - major changes may only occur if a critical issue is identified and a major change is necessary to fix it. Thus these builds should already be quite stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
 
-# Version 1.11 - Preview
+# Version 2.0 - Beta
 
 The Release Notes below will only mention the changes compared to the last released version.  
-To identify what has changed in between nightly builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/develop)
+To identify what has changed in between beta builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/release/2.0)
 
 ## Change of setting locations
 
 - Sequencer end options have been moved into the simple sequencer tab
-- Meridian Flip settings show no longer an enabled flag, but can be enabled in the simple sequencer or added as a trigger into the advanced sequencer
+- Meridian Flip settings show no longer an enabled flag, but can be enabled in the simple sequencer or added as a trigger into the advanced sequencer instead
 - Autofocus options have been moved into a separate tab
+- PHD2 specific settings are now available in the equipment guider tab after connection
 
 ## Complete Sequencer Rework
 
@@ -67,15 +68,16 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Plugins can currently hook into the advanced sequencer, add new dock panels in the imaging tab or add different behaviors for autofocus, star detection and star annotation. More areas to be pluggable are planned for the future.
 - The main benefit of these plugins are the possibility to create very specialized behavior, that would only benefit by a smaller user base, without cluttering the application with these capabilities for users that do not need this special behavior.
 
-### Framing Tab
+## Framing Tab
 - Instead of sending the current target to the sequencer, the user will be prompted to either choose the simple sequencer or directly send the target to the new advanced sequencer while also being able to choose from different templates
 - Replacing of the complete targets is removed, as this is not necessary. 
 - Possibility to manually enter target rotation 
 - A new multi action button replaces the slew button. This button can either "slew", "slew and center" or "slew, center and rotate" your current framing
 
-### Imaging Tab - Sequence Panel
-- As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore
-- Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details
+## Imaging Tab - Sequence Panel
+- As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore when using the advanced sequencer
+- Instead the sequence panel will show a minimized representation of the advanced sequence, where you can see the instructions with basic details
+- When using the simple sequencer the old style will still be shown instead
 
 ## New hardware support
 
@@ -141,7 +143,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - A ROI percentage can now be set for PHD2 to be considered during guidestar search
 - Profiles can now be switched from the list of available PHD2 profiles
 
-### Device-related Improvements
+## Device-related Improvements
 - *Canon*: Automatically send request to increase shutdown time, when camera is about to shutdown
 - *Nikon*: Fixed an issue where cancelling an exposure would lead to unexpected bulb exposure times
 - Flat Device Brightness is no longer expressed in percentage, but rather in the absolute values the flat panel supports

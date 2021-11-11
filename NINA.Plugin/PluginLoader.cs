@@ -294,10 +294,7 @@ namespace NINA.Plugin {
                         try {
                             Compose(plugin);
 
-                            if (manifest.MinimumApplicationVersion.Major <= applicationVersion.Major
-                                && manifest.MinimumApplicationVersion.Minor <= applicationVersion.Minor
-                                && manifest.MinimumApplicationVersion.Patch <= applicationVersion.Build
-                                && manifest.MinimumApplicationVersion.Build <= applicationVersion.Revision) {
+                            if (PluginVersion.IsPluginCompatible(manifest.MinimumApplicationVersion, applicationVersion)) {
                                 await manifest.Initialize();
 
                                 Plugins[manifest] = true;

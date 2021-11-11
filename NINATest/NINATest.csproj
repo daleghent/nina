@@ -314,6 +314,7 @@
     <Compile Include="PlateSolving\CaptureSolverTest.cs" />
     <Compile Include="PlateSolving\CenterSolverTest.cs" />
     <Compile Include="PlateSolving\ImageSolverTest.cs" />
+    <Compile Include="Plugin\VersionTests.cs" />
     <Compile Include="ProfileTest\PluginSettingsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RMSTest.cs" />
@@ -486,6 +487,10 @@
     <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
       <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
       <Name>NINA.PlateSolving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Plugin\NINA.Plugin.csproj">
+      <Project>{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}</Project>
+      <Name>NINA.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
       <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>

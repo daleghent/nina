@@ -51,5 +51,83 @@ namespace NINA.Plugin.ManifestDefinition {
         public override string ToString() {
             return $"{Major}.{Minor}.{Patch}.{Build}";
         }
+
+        public static bool IsPluginCompatible(IPluginVersion plugin, Version minimumApplicationVersion) {
+            if (plugin.Major < minimumApplicationVersion.Major) {
+                return true;
+            }
+
+            if (plugin.Major <= minimumApplicationVersion.Major
+                && plugin.Minor < minimumApplicationVersion.Minor) {
+                return true;
+            }
+
+            if (plugin.Major <= minimumApplicationVersion.Major
+                && plugin.Minor <= minimumApplicationVersion.Minor
+                && plugin.Patch < minimumApplicationVersion.Build) {
+                return true;
+            }
+
+            if (plugin.Major <= minimumApplicationVersion.Major
+                && plugin.Minor <= minimumApplicationVersion.Minor
+                && plugin.Patch <= minimumApplicationVersion.Build
+                && plugin.Build <= minimumApplicationVersion.Revision) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsPluginCompatible(IPluginVersion plugin, IPluginVersion minimumApplicationVersion) {
+            if (plugin.Major < minimumApplicationVersion.Major) {
+                return true;
+            }
+
+            if (plugin.Major <= minimumApplicationVersion.Major
+                && plugin.Minor < minimumApplicationVersion.Minor) {
+                return true;
+            }
+
+            if (plugin.Major <= minimumApplicationVersion.Major
+                && plugin.Minor <= minimumApplicationVersion.Minor
+                && plugin.Patch < minimumApplicationVersion.Patch) {
+                return true;
+            }
+
+            if (plugin.Major <= minimumApplicationVersion.Major
+                && plugin.Minor <= minimumApplicationVersion.Minor
+                && plugin.Patch <= minimumApplicationVersion.Patch
+                && plugin.Build <= minimumApplicationVersion.Build) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsPluginGreaterOrEqualVersion(IPluginVersion pluginToTest, IPluginVersion referencePlugin) {
+            if (pluginToTest.Major > referencePlugin.Major) {
+                return true;
+            }
+
+            if (pluginToTest.Major >= referencePlugin.Major
+                && pluginToTest.Minor > referencePlugin.Minor) {
+                return true;
+            }
+
+            if (pluginToTest.Major >= referencePlugin.Major
+                && pluginToTest.Minor >= referencePlugin.Minor
+                && pluginToTest.Patch > referencePlugin.Patch) {
+                return true;
+            }
+
+            if (pluginToTest.Major >= referencePlugin.Major
+                && pluginToTest.Minor >= referencePlugin.Minor
+                && pluginToTest.Patch >= referencePlugin.Patch
+                && pluginToTest.Build >= referencePlugin.Build) {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

@@ -237,10 +237,7 @@ namespace NINA.ViewModel.Plugins {
                     .GroupBy(x => x.Identifier)
                     .Select(grp => new ExtendedPluginManifest(grp
                         .Aggregate((max, cur) => (max == null ||
-                            (cur.Version.Major > max.Version.Major)
-                            && (cur.Version.Minor > max.Version.Minor)
-                            && (cur.Version.Patch > max.Version.Patch)
-                            && (cur.Version.Build > max.Version.Build)) ? max : cur))).ToDictionary(x => x.Identifier);
+                            PluginVersion.IsPluginGreaterOrEqualVersion(max.Version, cur.Version)) ? max : cur))).ToDictionary(x => x.Identifier);
 
                 //var extended = new List<ExtendedPluginManifest>();
                 foreach (var kv in InstalledPlugins) {

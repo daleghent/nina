@@ -45,11 +45,9 @@ namespace NINA.Plugin {
                     foreach (var item in arr) {
                         var plugin = await ValidateAndParseManifest(item);
                         if (plugin != null) {
-                            if (plugin.MinimumApplicationVersion.Major <= minimumApplicationVersion.Major
-                                && plugin.MinimumApplicationVersion.Minor <= minimumApplicationVersion.Minor
-                                && plugin.MinimumApplicationVersion.Patch <= minimumApplicationVersion.Patch
-                                && plugin.MinimumApplicationVersion.Build <= minimumApplicationVersion.Build)
+                            if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)) {
                                 plugins.Add(plugin);
+                            }
                         }
                     }
                 }
