@@ -147,6 +147,13 @@ namespace NINA.MGEN3 {
             return result;
         }
 
+        public int ClearCalibration() {
+            logger.Trace($"{nameof(IMG3SDK)} - Calling ClearCalibration");
+            var result = this.mg3sdk.ClearCalibration();
+            logger.Trace($"{nameof(IMG3SDK)} - ClearCalibration returned {result}");
+            return result;
+        }
+
         public int StopAutoGuiding() {
             logger.Trace($"{nameof(IMG3SDK)} - Calling StopAutoGuiding");
             var result = this.mg3sdk.StopAutoGuiding();

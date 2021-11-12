@@ -36,6 +36,8 @@ namespace NINA.MGEN3 {
 
         int ReadCalibration(out MG3SDK.MGEN3_Calibration calibration);
 
+        int ClearCalibration();
+
         int ReadDisplay(ushort[] buffer, byte[] leds, bool fullRead);
 
         int ReadImagingParameters(out int pgain, out int pexpo_ms);

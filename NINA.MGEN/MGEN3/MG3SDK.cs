@@ -152,6 +152,15 @@ namespace NINA.MGEN3 {
             }
         }
 
+        public int ClearCalibration() {
+            lock (lockobj) {
+                //"To clear the calibration data set RA vector's length lower than 1e-6 (practically zero)"
+                var zero = new MGEN3_Calibration() { rax = 0.00000000001F, ray = 0.00000000001F };
+                zero.strSize = (uint)(System.Runtime.InteropServices.Marshal.SizeOf(zero));
+                return MG3lib_SetCalibration(handle, ref zero);
+            }
+        }
+
         public int GetFunctionState(out int pires) {
             lock (lockobj) {
                 return MG3lib_GetFunctionState(handle, out pires);

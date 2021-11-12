@@ -358,6 +358,10 @@ namespace NINA.MGEN3 {
 
         public Task<bool> StartCalibration(CancellationToken ct = default) {
             return Task.Run(async () => {
+                var err = this.sdk.ClearCalibration();
+                if (err != MG3SDK.MG3_OK) {
+                    logger.Error($"Clearing calibration failed with return code {err}");
+                }
                 ValidateReturnCode(this.sdk.StartCalibration());
 
                 await WaitForFunction(ct);
