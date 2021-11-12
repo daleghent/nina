@@ -17,6 +17,7 @@ using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using NINA.Astrometry.Interfaces;
+using System.Globalization;
 
 namespace NINA.Astrometry {
 
@@ -39,7 +40,7 @@ namespace NINA.Astrometry {
                 var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
                 var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
 
-                var key = $"{referenceDate:yyyy-MM-dddd-HH-mm-ss}_{latitude}_{longitude}";
+                var key = $"{referenceDate:yyyy-MM-dd-HH-mm-ss}_{latitude.ToString("0.000000", CultureInfo.InvariantCulture)}_{longitude.ToString("0.000000", CultureInfo.InvariantCulture)}";
 
                 if (Cache.TryGetValue(key, out var nighttimeData)) {
                     return nighttimeData;

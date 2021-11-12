@@ -31,6 +31,7 @@ using System.Windows.Input;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Locale;
 using OxyPlot.Axes;
+using System.Threading;
 
 namespace NINA.Sequencer {
 
@@ -158,15 +159,6 @@ namespace NINA.Sequencer {
                 var path = existingTarget == null ? targetPath : Path.Combine(targetPath, Path.Combine(existingTarget.SubGroups));
 
                 File.WriteAllText(Path.Combine(path, NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(deepSkyObjectContainer.Name) + ".json"), jsonContainer);
-
-                if (existingTarget != null) {
-                    Targets.Remove(existingTarget);
-                    Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer) { SubGroups = existingTarget.SubGroups });
-                } else {
-                    Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
-                }
-
-                RefreshFilters();
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_AddNewTargetFailed"]);
@@ -229,10 +221,6 @@ namespace NINA.Sequencer {
                 if (File.Exists(file)) {
                     File.Delete(file);
                 }
-
-                Targets.Remove(targetSequenceContainer);
-
-                RefreshFilters();
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_DeleteTargetFailed"]);
@@ -261,6 +249,11 @@ namespace NINA.Sequencer {
         /// </summary>
         public double Weight {
             get {
+                while (Container.NighttimeData == null) {
+                    // In case the nighttime data has not been initialized yet - wait
+                    Thread.Sleep(100);
+                }
+
                 var sunSet = Container.NighttimeData.SunRiseAndSet.Set;
                 var sunRise = Container.NighttimeData.SunRiseAndSet.Rise;
 
