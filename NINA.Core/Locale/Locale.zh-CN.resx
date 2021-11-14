@@ -3914,7 +3914,7 @@
     <value>赤道仪轴长</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
-    <value>如果为经纬仪，则应为0。对于赤道仪，将赤经轴旋转至+/-90度，并测量从轴到望远镜孔径中心的横向距离(单位：毫米)</value>
+    <value>如果为经纬仪，则应为0。对于赤道仪，使赤纬为+/-90度，并测量从赤经轴到镜筒中心线的横向距离(单位：毫米)</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
     <value>横轴长度</value>
@@ -3956,7 +3956,7 @@
     <value>望远镜位置 +上/-下</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
-    <value>测量安装轴中心相对于圆顶基点的高度差(单位：毫米)。对于经纬仪，安装轴中心为俯仰轴的中心；对于赤道仪，安装轴中心是赤经轴和赤纬轴的交点。正数表示轴中心高于圆顶基点，负数表示轴中心较低。</value>
+    <value>测量安装轴中心相对于圆顶基点（圆心）的高度差(单位：毫米)。对于经纬仪，安装轴中心为俯仰轴的中心；对于赤道仪，安装轴中心是赤经轴和赤纬轴的交点。正数表示轴中心高于圆顶基点，负数表示轴中心较低。</value>
   </data>
   <data name="LblDomeSettings" xml:space="preserve">
     <value>圆顶设置</value>
@@ -4103,7 +4103,7 @@
     <value>逆时针移动</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>如果驱动支持回零位，在停放之前使用它，将能确保停放在精确的位置。 如果天窗的电机在停放时充电，这会很有帮助。</value>
+    <value>如果圆顶支持回零位，在停放之前使用它能确保停放在精确的位置。 如果天窗的电机在停放时充电，这会很有帮助。</value>
   </data>
   <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
     <value>情况不安全时关闭</value>
@@ -5500,10 +5500,10 @@
     <value>当前序列标题</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>打开快门失败。启动快门操作后，快门状态仍然被报告为已关闭。</value>
+    <value>打开天窗失败。尝试打开天窗后，天窗状态仍然报告为关闭。</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>关闭快门失败。启动关闭快门操作后，快门状态仍然被报告为打开状态。 </value>
+    <value>关闭天窗失败。尝试关闭天窗后，天窗状态仍然报告为打开。</value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
     <value>作者</value>

@@ -4074,10 +4074,10 @@ Dec: {1}</value>
     <value>Ошибка синхронизации купола. Больше не следует за телескопом. {0}</value>
   </data>
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
-    <value>Dome failed to synchronize after Meridian Flip</value>
+    <value>Купол не синхронизировался после перекладки меридиана</value>
   </data>
   <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
-    <value>Dome failed to synchronize during Centering</value>
+    <value>Купол не синхронизировался во время центрирования</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Закрыть затвор купола в конце серии</value>
@@ -4877,10 +4877,10 @@ Dec: {1}</value>
     <value>Включить синхронизацию купола</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
-    <value>Synchronizes the Dome to the current telescope position</value>
+    <value>Синхронизирует купол с текущим положением телескопа</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Синхронизировать купол</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>Серия содержит строки, которые либо неактивны, либо количество экспозиций в прогрессе равно общему количеству экспозиций. Эти элементы пропущены, и для этих строк не создаются никаких элементов для серии.</value>
@@ -5808,19 +5808,19 @@ Dec: {1}</value>
     <value>Переключить</value>
   </data>
   <data name="LblMirrorLockupDelay" xml:space="preserve">
-    <value>Mirror lockup delay</value>
+    <value>Задержка блокировки зеркала</value>
   </data>
   <data name="LblMirrorLockupDelayTooltip" xml:space="preserve">
-    <value>The desired length of time between when the mirror is locked up and when the exposure starts.
-A delay of 0 seconds deactivates this option.
-The mirror lockup option must be enabled in the camera as well.
-Refer to your camera's manual for the location of this setting</value>
+    <value>Желаемый промежуток времени между закрытием зеркала и началом экспозиции.
+Задержка в 0 секунд отключает эту опцию.
+В камере также должна быть включена опция блокировки зеркала.
+Обратитесь к руководству по эксплуатации вашей камеры, чтобы узнать, где находится этот параметр</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
-    <value>{0} has been disconnected from the computer. Check its USB connection and power source</value>
+    <value>{0} был отключен от компьютера. Проверьте его USB-соединение и источник питания</value>
   </data>
   <data name="LblCanonSdkError" xml:space="preserve">
-    <value>The Canon SDK has experienced an internal error. Unreliable camera operation might result</value>
+    <value>В Canon SDK произошла внутренняя ошибка. Это может привести к ненадежной работе камеры</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
     <value>Сбросить цель</value>
@@ -5835,103 +5835,103 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Решить и повернуть</value>
   </data>
   <data name="LblInitializingPlugins" xml:space="preserve">
-    <value>Initializing Plugins</value>
+    <value>Инициализация плагинов</value>
   </data>
   <data name="LblCameraStateDownload" xml:space="preserve">
-    <value>Downloading</value>
+    <value>Загружается</value>
   </data>
   <data name="LblCameraStateError" xml:space="preserve">
-    <value>Error</value>
+    <value>Ошибка</value>
   </data>
   <data name="LblCameraStateExposing" xml:space="preserve">
-    <value>Exposing</value>
+    <value>Экспозиция</value>
   </data>
   <data name="LblCameraStateIdle" xml:space="preserve">
-    <value>Idle</value>
+    <value>Простой</value>
   </data>
   <data name="LblCameraStateLoadingFile" xml:space="preserve">
-    <value>Loading file</value>
+    <value>Загрузка файла</value>
   </data>
   <data name="LblCameraStateNoState" xml:space="preserve">
-    <value>State unavailable</value>
+    <value>Состояние недоступно</value>
   </data>
   <data name="LblCameraStateReading" xml:space="preserve">
-    <value>Reading out</value>
+    <value>Чтение</value>
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
-    <value>Waiting</value>
+    <value>Ожидание</value>
   </data>
   <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
-    <value>Noise Reduction</value>
+    <value>Шумоподавление</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>Подготовка к обнаружению структуры</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
-    <value>Structure Detection</value>
+    <value>Обнаружение структуры</value>
   </data>
   <data name="LblStarDetectorStarScan" xml:space="preserve">
-    <value>Scan and Analyze Stars</value>
+    <value>Сканировать и анализировать звезды</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>Использовать детектор звезды V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>Аннотировать все</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>По умолчанию аннотируется только 200 звезд. Если это включено, то все обнаруженные звезды.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>Детектор Звёзд</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
-    <value>Star Annotator</value>
+    <value>Аннотатор звёзд</value>
   </data>
   <data name="LblUnavailableForX86" xml:space="preserve">
-    <value>Unavailable in x86</value>
+    <value>Недоступно в x86</value>
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Продолжительность</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
-    <value>Synchronizing Dome</value>
+    <value>Синхронизирование купола</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
-    <value>Clear sequence?</value>
+    <value>Очистить последовательность?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
-    <value>Do you want to clear the complete sequence run?</value>
+    <value>Вы хотите очистить полную последовательность?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
-    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+    <value>Удаляет все инструкции, триггеры и условия из всех областей внутри последовательности</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+    <value>Часы монтировки отличаются от часов компьютера на {0:0} секунд. Это может привести к неточному наведению и проблемам с установкой пластины. Пожалуйста, ознакомьтесь с документацией вашей монтировки относительно настройки времени.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
-    <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
+    <value>{0} настроен с включенной блокировкой зеркала (MLU), но не поддерживает экспозиции MLU через USB. Отключите MLU в меню пользовательских функций камеры для успешной экспозиции.</value>
   </data>
   <data name="LblQhyUvloActiveError" xml:space="preserve">
-    <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
+    <value>Камера находится в режиме блокировки сверхнизкого напряжения (UVLO) для защиты своих компонентов. Это указывает на возможную проблему с источником питания. Обратитесь в службу поддержки QHY за советом по решению этой проблемы.</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Unable to determine camera rotation.</value>
+    <value>Не удалось определить вращение камеры.</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Camera rotation has been determined: {0}°</value>
+    <value>Определен поворот камеры: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Determine rotation from camera</value>
+    <value>Определить вращение от камеры</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>Отменяет определение поворота камеры для кадрирования.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>Делает изображение с помощью камеры и запускает расчет формы для определения ориентации камеры.
+После успешного решения будет установлено вращение для кадрирования.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
-    <value>Failed to save image</value>
+    <value>Не удалось сохранить изображение</value>
   </data>
 </root>
