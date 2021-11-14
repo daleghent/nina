@@ -58,8 +58,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             RefreshRotatorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(rotator?.Connected == true));
             MoveCommand = new AsyncCommand<float>(() => Move(TargetPosition), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
             MoveMechanicalCommand = new AsyncCommand<float>(() => MoveMechanical(TargetPosition), (p) => RotatorInfo.Connected);
-            HaltCommand = new RelayCommand(Halt);
-            ReverseCommand = new RelayCommand(Reverse);
+            HaltCommand = new RelayCommand(Halt, (p) => RotatorInfo.Connected);
+            ReverseCommand = new RelayCommand(Reverse, (p) => RotatorInfo.Connected);
 
             updateTimer = new DeviceUpdateTimer(
                 GetRotatorValues,
@@ -80,23 +80,39 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         }
 
         private void Reverse(object obj) {
-            var reverse = (bool)obj;
-            rotator.Reverse = reverse;
-            profileService.ActiveProfile.RotatorSettings.Reverse = reverse;
+            try {
+                if (obj is bool) {
+                    var reverse = (bool)obj;
+                    if (rotator != null && RotatorInfo.Connected) {
+                        rotator.Reverse = reverse;
+                        profileService.ActiveProfile.RotatorSettings.Reverse = reverse;
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
         }
 
         private void Halt(object obj) {
-            _moveCts?.Cancel();
-            rotator?.Halt();
+            try {
+                _moveCts?.Cancel();
+                rotator?.Halt();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
         }
 
         public void Sync(float skyAngle) {
-            if (RotatorInfo.Connected) {
-                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}°");
-                rotator.Sync(skyAngle);
-                RotatorInfo.Position = rotator.Position;
-                RotatorInfo.Synced = true;
-                BroadcastRotatorInfo();
+            try {
+                if (RotatorInfo.Connected) {
+                    Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}°");
+                    rotator.Sync(skyAngle);
+                    RotatorInfo.Position = rotator.Position;
+                    RotatorInfo.Synced = true;
+                    BroadcastRotatorInfo();
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
             }
         }
 
@@ -376,15 +392,19 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         }
 
         public async Task Disconnect() {
-            if (RotatorInfo.Connected) {
-                if (updateTimer != null) {
-                    await updateTimer.Stop();
+            try {
+                if (RotatorInfo.Connected) {
+                    if (updateTimer != null) {
+                        await updateTimer.Stop();
+                    }
+                    rotator?.Disconnect();
+                    rotator = null;
+                    RotatorInfo = DeviceInfo.CreateDefaultInstance<RotatorInfo>();
+                    BroadcastRotatorInfo();
+                    Logger.Info("Disconnected Rotator");
                 }
-                rotator?.Disconnect();
-                rotator = null;
-                RotatorInfo = DeviceInfo.CreateDefaultInstance<RotatorInfo>();
-                BroadcastRotatorInfo();
-                Logger.Info("Disconnected Rotator");
+            } catch (Exception ex) {
+                Logger.Error(ex);
             }
         }
 
