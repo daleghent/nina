@@ -279,7 +279,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                             StepSize = Focuser.StepSize,
                             TempCompAvailable = Focuser.TempCompAvailable,
                             TempComp = Focuser.TempComp,
-                            Temperature = Focuser.Temperature
+                            Temperature = Focuser.Temperature,
+                            Description = Focuser.Description,
+                            DriverInfo = Focuser.DriverInfo,
+                            DriverVersion = Focuser.DriverVersion,
+                            DeviceId = Focuser.Id
                         };
 
                         Notification.ShowSuccess(Loc.Instance["LblFocuserConnected"]);

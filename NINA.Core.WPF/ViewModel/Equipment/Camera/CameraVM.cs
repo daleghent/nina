@@ -390,6 +390,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                                 CanGetGain = Cam.CanGetGain,
                                 LiveViewEnabled = Cam.LiveViewEnabled,
                                 Name = Cam.Name,
+                                DeviceId = Cam.Id,
                                 CanSetOffset = Cam.CanSetOffset,
                                 OffsetMin = Cam.OffsetMin,
                                 OffsetMax = Cam.OffsetMax,

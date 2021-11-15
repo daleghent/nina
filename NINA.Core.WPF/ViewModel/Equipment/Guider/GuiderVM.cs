@@ -149,7 +149,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
                     GuiderInfo = new GuiderInfo {
                         Connected = connected,
-                        CanClearCalibration = Guider.CanClearCalibration
+                        CanClearCalibration = Guider.CanClearCalibration,
+                        Name = Guider.Name,
+                        Description = Guider.Description,
+                        DriverInfo = Guider.DriverInfo,
+                        DriverVersion = Guider.DriverVersion,
+                        DeviceId = Guider.Id
                     };
                     BroadcastGuiderInfo();
                     Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);

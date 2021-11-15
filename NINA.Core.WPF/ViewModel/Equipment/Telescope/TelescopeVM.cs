@@ -447,6 +447,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 DeclinationString = Telescope.DeclinationString,
                                 HoursToMeridianString = Telescope.HoursToMeridianString,
                                 Name = Telescope.Name,
+                                DeviceId = Telescope.Id,
                                 RightAscension = Telescope.RightAscension,
                                 RightAscensionString = Telescope.RightAscensionString,
                                 SiderealTime = Telescope.SiderealTime,

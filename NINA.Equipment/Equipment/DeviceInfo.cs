@@ -43,6 +43,12 @@ namespace NINA.Equipment.Equipment {
             set { driverVersion = value; RaisePropertyChanged(); }
         }
 
+        private string deviceId;
+        public string DeviceId {
+            get => deviceId;
+            set { deviceId = value; RaisePropertyChanged(); }
+        }
+
         public static T CreateDefaultInstance<T>() where T : DeviceInfo, new() {
             return new T() {
                 Connected = false

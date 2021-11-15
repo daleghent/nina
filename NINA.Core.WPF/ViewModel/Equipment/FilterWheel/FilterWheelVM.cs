@@ -225,7 +225,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                             FilterWheelInfo = new FilterWheelInfo {
                                 Connected = true,
                                 IsMoving = false,
-                                Name = FW.Name
+                                Name = FW.Name,
+                                Description = FW.Description,
+                                DriverInfo = FW.DriverInfo,
+                                DriverVersion = FW.DriverVersion,
+                                DeviceId = FW.Id
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblFilterwheelConnected"]);

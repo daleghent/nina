@@ -247,7 +247,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                                 Description = switchHub.Description,
                                 DriverInfo = switchHub.DriverInfo,
                                 DriverVersion = switchHub.DriverVersion,
-                                WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(WritableSwitches)
+                                WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(WritableSwitches),
+                                DeviceId = switchHub.Id
                             };
 
                             RaisePropertyChanged(nameof(WritableSwitches));
