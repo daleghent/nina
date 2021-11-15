@@ -193,6 +193,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                             DriverVersion = newDevice.DriverVersion,
                             LightOn = newDevice.LightOn,
                             Name = newDevice.Name,
+                            DeviceId = newDevice.Id,
                             SupportsOpenClose = newDevice.SupportsOpenClose
                         };
                         this.Brightness = newDevice.Brightness;

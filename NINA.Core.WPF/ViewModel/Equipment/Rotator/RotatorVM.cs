@@ -349,7 +349,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                                 DriverInfo = rotator.DriverInfo,
                                 DriverVersion = rotator.DriverVersion,
                                 CanReverse = rotator.CanReverse,
-                                Reverse = rotator.Reverse
+                                Reverse = rotator.Reverse,
+                                DeviceId = rotator.Id
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblRotatorConnected"]);

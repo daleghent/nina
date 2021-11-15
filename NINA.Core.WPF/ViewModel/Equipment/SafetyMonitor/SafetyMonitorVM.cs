@@ -148,7 +148,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                                 Name = sm.Name,
                                 Description = sm.Description,
                                 DriverInfo = sm.DriverInfo,
-                                DriverVersion = sm.DriverVersion
+                                DriverVersion = sm.DriverVersion,
+                                DeviceId = sm.Id
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblSafetyMonitorConnected"]);

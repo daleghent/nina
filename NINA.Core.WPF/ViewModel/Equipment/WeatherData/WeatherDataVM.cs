@@ -118,7 +118,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                                 Temperature = WeatherData.Temperature,
                                 WindDirection = WeatherData.WindDirection,
                                 WindGust = WeatherData.WindGust,
-                                WindSpeed = WeatherData.WindSpeed
+                                WindSpeed = WeatherData.WindSpeed,
+                                Description = WeatherData.Description,
+                                DriverInfo = WeatherData.DriverInfo,
+                                DriverVersion = WeatherData.DriverVersion,
+                                DeviceId = WeatherData.Id
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblWeatherConnected"]);

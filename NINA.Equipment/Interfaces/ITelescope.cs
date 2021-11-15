@@ -99,10 +99,14 @@ namespace NINA.Equipment.Interfaces {
 
         void Unpark();
 
-        void SendCommandString(string command);
-
         void SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
         void FindHome();
+
+        string SendCommandString(string command, bool raw = true);
+
+        bool SendCommandBool(string command, bool raw = true);
+
+        void SendCommandBlind(string command, bool raw = true);
     }
 }

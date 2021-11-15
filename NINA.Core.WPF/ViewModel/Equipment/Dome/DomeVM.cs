@@ -146,6 +146,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
                             DomeInfo = new DomeInfo {
                                 Connected = true,
+                                Name = Dome.Name,
+                                DeviceId = Dome.Id,
+                                Description = Dome.Description,
+                                DriverInfo = Dome.DriverInfo,
+                                DriverVersion = Dome.DriverVersion,
                                 ShutterStatus = Dome.ShutterStatus,
                                 DriverCanFollow = Dome.DriverCanFollow,
                                 CanSetShutter = Dome.CanSetShutter,

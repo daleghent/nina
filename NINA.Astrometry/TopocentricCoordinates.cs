@@ -14,22 +14,33 @@
 
 using NINA.Core.Database;
 using NINA.Core.Enum;
+using NINA.Core.Utility;
 using System;
+using System.Xml.Serialization;
 
 namespace NINA.Astrometry {
 
     public class TopocentricCoordinates {
+        private static ICustomDateTime SystemDateTime = new SystemDateTime();
+
+        [XmlIgnore]
+        public ICustomDateTime DateTime { get; }
+
         public Angle Azimuth { get; set; }
         public Angle Altitude { get; set; }
         public Angle Latitude { get; private set; }
         public Angle Longitude { get; private set; }
         public AltitudeSite AltitudeSite => Azimuth.Degree >= 0 && Azimuth.Degree < 180 ? AltitudeSite.EAST : AltitudeSite.WEST;
-
-        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude) {
+        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude, ICustomDateTime dateTime) {
+            this.DateTime = dateTime;
             this.Azimuth = azimuth;
             this.Altitude = altitude;
             this.Latitude = latitude;
             this.Longitude = longitude;
+        }
+
+        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude) 
+            : this(azimuth, altitude, latitude, longitude, SystemDateTime) {
         }
 
         public TopocentricCoordinates Copy() {
@@ -49,7 +60,7 @@ namespace NINA.Astrometry {
             var ra = Angle.ByRadians(raRad);
             var dec = Angle.ByRadians(decRad);
 
-            var coordinates = new Coordinates(ra, dec, Epoch.J2000);
+            var coordinates = new Coordinates(ra, dec, Epoch.J2000, DateTime);
             return coordinates.Transform(epoch);
         }
 

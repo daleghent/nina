@@ -447,6 +447,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 DeclinationString = Telescope.DeclinationString,
                                 HoursToMeridianString = Telescope.HoursToMeridianString,
                                 Name = Telescope.Name,
+                                DeviceId = Telescope.Id,
                                 RightAscension = Telescope.RightAscension,
                                 RightAscensionString = Telescope.RightAscensionString,
                                 SiderealTime = Telescope.SiderealTime,
@@ -953,6 +954,28 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             set {
                 supportedTrackingModes = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            if (Telescope?.Connected == true) {
+                return Telescope.SendCommandString(command, raw);
+            } else {
+                return null;
+            }
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            if (Telescope?.Connected == true) {
+                return Telescope.SendCommandBool(command, raw);
+            } else {
+                return false;
+            }
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (Telescope?.Connected == true) {
+                Telescope.SendCommandBlind(command, raw);
             }
         }
 
