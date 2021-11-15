@@ -954,7 +954,7 @@
     <value>制冷功率</value>
   </data>
   <data name="LblCooling" xml:space="preserve">
-    <value>制冷中</value>
+    <value>制冷</value>
   </data>
   <data name="LblCoordinates" xml:space="preserve">
     <value>坐标</value>
@@ -3521,7 +3521,7 @@
     <value>相机设置为在序列结束时升温，但它无法这样做</value>
   </data>
   <data name="LblWarming" xml:space="preserve">
-    <value>升温中...</value>
+    <value>回温</value>
   </data>
   <data name="LblWarning" xml:space="preserve">
     <value>警告</value>
