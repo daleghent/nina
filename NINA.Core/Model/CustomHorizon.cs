@@ -50,7 +50,7 @@ namespace NINA.Core.Model {
             string line;
             while ((line = sr.ReadLine()?.Trim()) != null) {
                 // Lines starting with # are comments
-                if (!line.StartsWith("#")) {
+                if (!line.StartsWith("#") && !string.IsNullOrEmpty(line)) {
                     var columns = line.Split(' ');
                     if (columns.Length == 2) {
                         if (double.TryParse(columns[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var azimuth)) {
