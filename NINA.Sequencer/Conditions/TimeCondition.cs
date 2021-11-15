@@ -157,7 +157,7 @@ namespace NINA.Sequencer.Conditions {
             var now = DateTime.Now;
             var then = new DateTime(now.Year, now.Month, now.Day, Hours, Minutes, Seconds);
 
-            if (now.Hour <= 12 && then.Hour > 12) {
+            if (now.Hour < 12 && then.Hour >= 12) {
                 then = then.AddDays(-1);
             }
 

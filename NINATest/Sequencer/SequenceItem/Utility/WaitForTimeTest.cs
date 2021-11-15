@@ -15,6 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Astrometry;
+using NINA.Core.Utility;
 using NINA.Sequencer;
 using NINA.Sequencer.SequenceItem.Utility;
 using NINA.Sequencer.Utility.DateTimeProvider;
@@ -101,6 +102,36 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             sut.Hours.Should().Be(10);
             sut.Minutes.Should().Be(20);
             sut.Seconds.Should().Be(30);
+        }
+
+        [Test]
+        [TestCase(0, 0, 0, 1, 0, 0, 3600)]
+        [TestCase(18, 0, 0, 19, 0, 0, 3600)]
+        [TestCase(20, 0, 0, 19, 0, 0, 0)]
+        [TestCase(2, 0, 0, 3, 0, 0, 3600)]
+        [TestCase(4, 0, 0, 3, 0, 0, 0)]
+        [TestCase(22, 0, 0, 1, 0, 0, 10800)]
+        [TestCase(18, 0, 0, 3, 0, 0, 32400)]
+        [TestCase(18, 0, 0, 9, 0, 0, 54000)]
+        [TestCase(18, 0, 0, 12, 0, 0, 0)]
+        [TestCase(18, 0, 0, 11, 59, 59, 61200 + 3540 + 59)]
+        [TestCase(12, 0, 0, 13, 0, 0, 3600)]
+        [TestCase(12, 0, 0, 18, 0, 0, 21600)]
+        [TestCase(12, 0, 0, 12, 0, 0, 0)]
+        [TestCase(12, 0, 0, 12, 0, 1, 1)]
+        [TestCase(11, 0, 0, 12, 0, 0, 0)]
+        public void WaitForTime__(int nowHours, int nowMinutes, int nowSeconds, int thenHours, int thenMinutes, int thenSeconds, int estimatedDurationSeconds) {
+            var now = new Mock<ICustomDateTime>();
+            now.SetupGet(x => x.Now).Returns(new DateTime(1999, 1, 1, nowHours, nowMinutes, nowSeconds));
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(1, 2, 3, thenHours, thenMinutes, thenSeconds));
+
+            var sut = new WaitForTime(new List<IDateTimeProvider>() { providerMock.Object, });
+            sut.SelectedProvider = sut.DateTimeProviders.Last();
+            sut.DateTime = now.Object;
+
+            sut.GetEstimatedDuration().Should().Be(TimeSpan.FromSeconds(estimatedDurationSeconds));
         }
     }
 }

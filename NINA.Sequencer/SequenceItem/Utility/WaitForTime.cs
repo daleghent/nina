@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -43,11 +44,13 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         [ImportingConstructor]
         public WaitForTime(IList<IDateTimeProvider> dateTimeProviders) {
+            DateTime = new SystemDateTime();
             this.DateTimeProviders = dateTimeProviders;
             this.SelectedProvider = DateTimeProviders?.FirstOrDefault();
         }
 
         public WaitForTime(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
+            DateTime = new SystemDateTime();
             this.DateTimeProviders = dateTimeProviders;
             this.SelectedProvider = selectedProvider;
         }
@@ -142,6 +145,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             UpdateTime();
         }
 
+        public ICustomDateTime DateTime { get; set; }
+
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), token, progress);
         }
@@ -150,7 +155,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var now = DateTime.Now;
             var then = new DateTime(now.Year, now.Month, now.Day, Hours, Minutes, Seconds);
 
-            if (now.Hour <= 12 && then.Hour > 12) {
+            if (now.Hour < 12 && then.Hour >= 12) {
                 then = then.AddDays(-1);
             }
 
@@ -159,7 +164,12 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 then = then.AddDays(1);
             }
 
-            return then - DateTime.Now;
+            var diff = then - DateTime.Now;
+            if (diff < TimeSpan.Zero) {
+                return TimeSpan.Zero;
+            } else {
+                return diff;
+            }
         }
 
         public override string ToString() {
