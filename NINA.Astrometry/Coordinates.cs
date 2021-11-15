@@ -244,7 +244,7 @@ namespace NINA.Astrometry {
             var az = Angle.ByRadians(aob);
             var alt = Angle.ByDegree(90) - Angle.ByRadians(zob);
 
-            return new TopocentricCoordinates(az, alt, latitude, longitude);
+            return new TopocentricCoordinates(az, alt, latitude, longitude, DateTime);
         }
 
         /// <summary>
