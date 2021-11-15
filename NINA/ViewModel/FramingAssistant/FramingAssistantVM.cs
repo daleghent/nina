@@ -160,7 +160,7 @@ namespace NINA.ViewModel.FramingAssistant {
             ClearCacheCommand = new RelayCommand(ClearCache, (object o) => Cache != null);
             RefreshSkyMapAnnotationCommand = new RelayCommand((object o) => SkyMapAnnotator.UpdateSkyMap(), (object o) => SkyMapAnnotator.Initialized);
             MouseWheelCommand = new RelayCommand(MouseWheel);
-            GetRotationFromCameraCommand = new AsyncCommand<bool>(GetRotationFromCamera, (object o) => RectangleCalculated && cameraMediator.GetInfo().Connected);
+            GetRotationFromCameraCommand = new AsyncCommand<bool>(GetRotationFromCamera, (object o) => RectangleCalculated && cameraMediator.GetInfo().Connected && cameraMediator.IsFreeToCapture(this));
             CancelGetRotationFromCameraCommand = new RelayCommand(o => { try { getRotationTokenSource?.Cancel(); } catch (Exception) { } });
 
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
