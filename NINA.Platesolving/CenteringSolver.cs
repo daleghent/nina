@@ -52,9 +52,11 @@ namespace NINA.PlateSolving {
             if (parameter?.Threshold <= 0) { throw new ArgumentException(nameof(CenterSolveParameter.Threshold)); }
 
             var centered = false;
+            var maxSlewAttempts = 10;
             PlateSolveResult result;
             Separation offset = new Separation();
             do {
+                maxSlewAttempts--;
                 result = await CaptureSolver.Solve(seq, parameter, solveProgress, progress, ct);
 
                 if (result.Success == false) {
@@ -66,7 +68,7 @@ namespace NINA.PlateSolving {
 
                 var position = (telescopeMediator.GetCurrentPosition()).Transform(result.Coordinates.Epoch);
                 var positionWithOffset = position - offset;
-                Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameter.Coordinates}; Solved: {result.Coordinates}; Separation {result.Separation}");
+                Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameter.Coordinates}; Solved: {result.Coordinates}; Separation {result.Separation}; Threshold: {parameter.Threshold}");
 
                 solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
 
@@ -111,7 +113,11 @@ namespace NINA.PlateSolving {
                 } else {
                     centered = true;
                 }
-            } while (!centered);
+            } while (!centered && maxSlewAttempts > 0);
+            if (!centered && maxSlewAttempts <= 0) {
+                result.Success = false;
+                Logger.Error("Cancelling centering after 10 unsuccessful slew attempts");
+            }
             return result;
         }
     }
