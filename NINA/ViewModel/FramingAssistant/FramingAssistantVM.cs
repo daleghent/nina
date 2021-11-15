@@ -216,14 +216,17 @@ namespace NINA.ViewModel.FramingAssistant {
                     cameraMediator.RegisterCaptureBlock(this);
                     switch (o.ToString()) {
                         case "Center":
+                            Logger.Info($"Centering from framing assistant to {Rectangle.Coordinates}");
                             result = await Center(Rectangle.Coordinates, slewTokenSource.Token);
                             break;
 
                         case "Rotate":
+                            Logger.Info($"Centering and rotating from framing assistant to {Rectangle.Coordinates} and angle {Rectangle.TotalRotation}");
                             result = await CenterAndRotate(Rectangle.Coordinates, Rectangle.TotalRotation, slewTokenSource.Token);
                             break;
 
                         default:
+                            Logger.Info($"Slewing from framing assistant to {Rectangle.Coordinates}");
                             result = await SlewToCoordinates(Rectangle.Coordinates, slewTokenSource.Token);
                             break;
                     }
