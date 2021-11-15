@@ -956,6 +956,28 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
+        public string SendCommandString(string command, bool raw = true) {
+            if (Telescope?.Connected == true) {
+                return Telescope.SendCommandString(command, raw);
+            } else {
+                return null;
+            }
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            if (Telescope?.Connected == true) {
+                return Telescope.SendCommandBool(command, raw);
+            } else {
+                return false;
+            }
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (Telescope?.Connected == true) {
+                Telescope.SendCommandBlind(command, raw);
+            }
+        }
+
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 
         public IAsyncCommand ChooseTelescopeCommand { get; private set; }

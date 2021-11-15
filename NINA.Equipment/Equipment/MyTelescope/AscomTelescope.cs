@@ -880,9 +880,27 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             return result;
         }
 
-        public void SendCommandString(string command) {
+        public string SendCommandString(string command, bool raw = true) {
             if (Connected) {
-                device.CommandString(command, true);
+                return device.CommandString(command, raw);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
+                return null;
+            }
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            if (Connected) {
+                return device.CommandBool(command, raw);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
+                return false;
+            }
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (Connected) {
+                device.CommandBlind(command, raw);
             } else {
                 Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
             }
