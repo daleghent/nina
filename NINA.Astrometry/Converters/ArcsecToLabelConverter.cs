@@ -27,7 +27,7 @@ namespace NINA.Astrometry.Converters {
             }
             var arcsecs = (double)value;
             if (arcsecs > 3600) {
-                return AstroUtil.ArcsecToDegree(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "??";
+                return AstroUtil.ArcsecToDegree(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "°";
             } else if (arcsecs > 60) {
                 return AstroUtil.ArcsecToArcmin(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "'";
             } else {
