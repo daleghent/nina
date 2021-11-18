@@ -24,10 +24,10 @@ namespace NINA.Core.Utility.Http {
     public class HttpUploadFile : HttpRequest<string> {
         public string ContentType { get; }
         public NameValueCollection NameValueCollection { get; }
-        public Stream File { get; }
+        public FileStream File { get; }
         public string ParamName { get; }
 
-        public HttpUploadFile(string url, Stream file, string paramName, string contentType, NameValueCollection nvc) : base(url) {
+        public HttpUploadFile(string url, FileStream file, string paramName, string contentType, NameValueCollection nvc) : base(url) {
             this.File = file;
             this.ParamName = paramName;
             this.ContentType = contentType;
@@ -58,7 +58,7 @@ namespace NINA.Core.Utility.Http {
             rs.Write(boundarybytes, 0, boundarybytes.Length);
 
             string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
-            string header = string.Format(headerTemplate, ParamName, File, ContentType);
+            string header = string.Format(headerTemplate, ParamName, File.Name, ContentType);
             byte[] headerbytes = System.Text.Encoding.UTF8.GetBytes(header);
             rs.Write(headerbytes, 0, headerbytes.Length);
 

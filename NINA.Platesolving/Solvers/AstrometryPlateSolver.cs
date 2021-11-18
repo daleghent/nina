@@ -36,6 +36,7 @@ namespace NINA.PlateSolving.Solvers {
         private const string SUBMISSIONURL = "/api/submissions/{0}";
         private const string JOBSTATUSURL = "/api/jobs/{0}";
         private const string JOBINFOURL = "/api/jobs/{0}/info/";
+        private const string JOBCALIBRATIONURL = "/api/jobs/{0}/calibration/";
         private const string ANNOTATEDIMAGEURL = "/annotated_display/{0}";
 
         private string _apiurl;
@@ -73,19 +74,18 @@ namespace NINA.PlateSolving.Solvers {
         }
 
         private async Task<JObject> Authenticate(CancellationToken canceltoken) {
-            string response = string.Empty;
             string json = "{\"apikey\":\"" + _apikey + "\"}";
             json = HttpRequest.EncodeUrl(json);
             string body = "request-json=" + json;
             var request = new HttpPostRequest(_apiurl + AUTHURL, body, "application/x-www-form-urlencoded");
-            response = await request.Request(canceltoken);
+            var response = await request.Request(canceltoken);
             return JObject.Parse(response);
         }
 
-        private async Task<JObject> SubmitImageStream(Stream ms, string session, CancellationToken canceltoken) {
+        private async Task<JObject> SubmitImageStream(FileStream ms, string session, CancellationToken canceltoken) {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("request-json", "{\"publicly_visible\": \"n\", \"allow_modifications\": \"d\", \"session\": \"" + session + "\", \"allow_commercial_use\": \"d\"}");
-            var request = new HttpUploadFile(_apiurl + UPLOADURL, ms, "file", "image/jpeg", nvc);
+            var request = new HttpUploadFile(_apiurl + UPLOADURL, ms, "file", "application/octet-stream", nvc);
             string response = await request.Request(canceltoken);
             return JObject.Parse(response);
         }
@@ -104,6 +104,12 @@ namespace NINA.PlateSolving.Solvers {
 
         private async Task<JObject> GetJobInfo(string jobid, CancellationToken canceltoken) {
             var request = new HttpGetRequest(_apiurl + JOBINFOURL, jobid);
+            string response = await request.Request(canceltoken);
+            return JObject.Parse(response);
+        }
+
+        private async Task<JObject> GetJobCalibration(string jobid, CancellationToken canceltoken) {
+            var request = new HttpGetRequest(_apiurl + JOBCALIBRATIONURL, jobid);
             string response = await request.Request(canceltoken);
             return JObject.Parse(response);
         }
@@ -175,7 +181,7 @@ namespace NINA.PlateSolving.Solvers {
             };
         }
 
-        private async Task<JobResult> GetJobResult(string jobId, CancellationToken cancelToken) {
+        private async Task<Calibration> GetJobResult(string jobId, CancellationToken cancelToken) {
             while (true) {
                 cancelToken.ThrowIfCancellationRequested();
                 JObject ojobstatus = await GetJobStatus(jobId, cancelToken);
@@ -190,10 +196,10 @@ namespace NINA.PlateSolving.Solvers {
                 await Task.Delay(1000);
             };
 
-            JObject job = await GetJobInfo(jobId, cancelToken);
+            JObject job = await GetJobCalibration(jobId, cancelToken);
             Logger.Info($"Plate Solving: Astrometry.net: Job {jobId} successfully retrieved.");
 
-            return job.ToObject<JobResult>();
+            return job.ToObject<Calibration>();
         }
 
         protected override async Task<PlateSolveResult> SolveAsyncImpl(
@@ -212,16 +218,16 @@ namespace NINA.PlateSolving.Solvers {
                 var jobId = await SubmitImageJob(progress, source, session, cancelToken);
 
                 progress.Report(new ApplicationStatus() { Status = $"Getting result for Astrometry.net job {jobId}..." });
-                JobResult jobinfo = await GetJobResult(jobId, cancelToken);
+                Calibration jobinfo = await GetJobResult(jobId, cancelToken);
 
-                result.Orientation = jobinfo.calibration.orientation;
+                result.Orientation = jobinfo.orientation;
                 /* The orientation is mirrored on the x-axis */
-                result.Flipped = jobinfo.calibration.parity < 0;
+                result.Flipped = jobinfo.parity < 0;
                 result.Orientation = 180 - result.Orientation + 360;
 
-                result.Pixscale = jobinfo.calibration.pixscale;
-                result.Coordinates = new Astrometry.Coordinates(jobinfo.calibration.ra, jobinfo.calibration.dec, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Degrees);
-                result.Radius = jobinfo.calibration.radius;
+                result.Pixscale = jobinfo.pixscale;
+                result.Coordinates = new Astrometry.Coordinates(jobinfo.ra, jobinfo.dec, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Degrees);
+                result.Radius = jobinfo.radius;
             } catch (OperationCanceledException) {
                 result.Success = false;
             } catch (Exception ex) {
