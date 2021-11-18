@@ -2702,7 +2702,7 @@
     <value>赤经</value>
   </data>
   <data name="LblRotation" xml:space="preserve">
-    <value>旋转</value>
+    <value>旋转角度</value>
   </data>
   <data name="LblRotationRequired" xml:space="preserve">
     <value>需要旋转相机</value>
@@ -5816,7 +5816,7 @@ The mirror lockup option must be enabled in the camera as well.
 Refer to your camera's manual for the location of this setting</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
-    <value>{0} has been disconnected from the computer. Check its USB connection and power source</value>
+    <value>{0} 已与计算机断开连接。请检查其USB连接和电源</value>
   </data>
   <data name="LblCanonSdkError" xml:space="preserve">
     <value>The Canon SDK has experienced an internal error. Unreliable camera operation might result</value>
@@ -5927,8 +5927,8 @@ Refer to your camera's manual for the location of this setting</value>
     <value>取消测定旋转角度</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>拍摄一张图像并解析，以检测相机旋转角度。
+若解析成功，旋转角度将设置为该值。</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>保存图像失败</value>

@@ -2333,7 +2333,7 @@ Přeskočit.</value>
     <value>Velikost Historie PHD2 (zobrazování)</value>
   </data>
   <data name="LblPHD2Path" xml:space="preserve">
-    <value>PHD2 path</value>
+    <value>Cesta k PHD2</value>
   </data>
   <data name="LblPhd2PathNotFound" xml:space="preserve">
     <value>Nelze spustit PHD2. Cestu nelze najít</value>
@@ -3684,7 +3684,7 @@ Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout 
     <value>Nelze otevřít sériový port {0}: {1}</value>
   </data>
   <data name="LblPointingTolerance" xml:space="preserve">
-    <value>Pointing Tolerance</value>
+    <value>Tolerance Mimo Cíl</value>
   </data>
   <data name="LblAutoFocusAfterFlip" xml:space="preserve">
     <value>AutoOstření po překlopení Poledníku</value>
