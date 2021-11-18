@@ -18,9 +18,22 @@
     xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/ProfileService.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/SVGDictionary.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Brushes.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="150" />
@@ -375,7 +388,10 @@
                     <TextBlock Margin="5,0,0,0" Text="{Binding TrendlineFitting.RightTrend.RSquared, StringFormat=\{0:0.00\}}" />
                 </StackPanel>
             </UniformGrid>
-            <UniformGrid VerticalAlignment="Center" Columns="2" Visibility="{Binding AutoFocusDuration, Converter={StaticResource TimeSpanZeroToVisibilityConverter}}">
+            <UniformGrid
+                VerticalAlignment="Center"
+                Columns="2"
+                Visibility="{Binding AutoFocusDuration, Converter={StaticResource TimeSpanZeroToVisibilityConverter}}">
                 <TextBlock Text="{ns:Loc LblAutoFocusDuration}" />
                 <TextBlock Margin="5,0,0,0" Text="{Binding AutoFocusDuration, Converter={StaticResource TimeSpanToStringConverter}}" />
             </UniformGrid>
