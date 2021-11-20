@@ -213,7 +213,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
 
             var calculatedTargetDomeCoordinates = GetSynchronizedDomeCoordinates(telescopeInfo);
-            return SyncToDomeAzimuth(calculatedTargetDomeCoordinates, domeFollowerTaskCTS.Token);
+            return SyncToDomeAzimuth(calculatedTargetDomeCoordinates, CancellationToken.None);
         }
 
         public Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken) {
