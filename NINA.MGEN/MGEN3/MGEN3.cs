@@ -294,7 +294,7 @@ namespace NINA.MGEN3 {
                 logger.Debug($"Calibration is raX {calibration.rax}, raY {calibration.ray}, decX {calibration.decx}, decY {calibration.decy}");
 
                 var status = CalibrationStatus.NotStarted;
-                if (calibration.rax != 0 || calibration.ray != 0 || calibration.decx != 0 || calibration.decy != 0) {
+                if (calibration.rax > 0.0000001F || calibration.ray > 0.0000001F) {
                     status = CalibrationStatus.Done;
                 }
 
@@ -362,6 +362,7 @@ namespace NINA.MGEN3 {
                 if (err != MG3SDK.MG3_OK) {
                     logger.Error($"Clearing calibration failed with return code {err}");
                 }
+
                 ValidateReturnCode(this.sdk.StartCalibration());
 
                 await WaitForFunction(ct);
