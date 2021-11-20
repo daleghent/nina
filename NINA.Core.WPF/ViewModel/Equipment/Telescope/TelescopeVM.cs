@@ -852,11 +852,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     var position = GetCurrentPosition();
                     Logger.Info($"Slewing from {position} to {coords}");
 
+                    var domeSyncTask = Task.CompletedTask;
+                    if (this.domeMediator.IsFollowingScope) {
+                        var targetSideOfPier = Astrometry.MeridianFlip.ExpectedPierSide(coords, Angle.ByHours(this.TelescopeInfo.SiderealTime));
+                        domeSyncTask = this.domeMediator.SyncToScopeCoordinates(coords, targetSideOfPier, token);
+                    }
+
                     await Telescope.SlewToCoordinates(coords, token);
                     BroadcastTelescopeInfo();
                     await Task.WhenAll(
                         CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Loc.Instance["LblSettle"]),
-                        this.domeMediator.WaitForDomeSynchronization(token));
+                        domeSyncTask);
                     return true;
                 } else {
                     Logger.Warning("Telescope is not connected to slew");

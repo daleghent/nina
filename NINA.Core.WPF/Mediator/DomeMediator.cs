@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
+using NINA.Core.Enum;
 using NINA.Equipment.Equipment.MyDome;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
@@ -21,6 +23,7 @@ using System.Threading.Tasks;
 namespace NINA.WPF.Base.Mediator {
 
     public class DomeMediator : DeviceMediator<IDomeVM, IDomeConsumer, DomeInfo>, IDomeMediator {
+        public bool IsFollowingScope => handler.FollowEnabled;
 
         public Task<bool> OpenShutter(CancellationToken cancellationToken) {
             return handler.OpenShutter(cancellationToken);
@@ -48,6 +51,10 @@ namespace NINA.WPF.Base.Mediator {
 
         public Task<bool> SlewToAzimuth(double degrees, CancellationToken cancellationToken) {
             return handler.SlewToAzimuth(degrees, cancellationToken);
+        }
+
+        public Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken) {
+            return handler.SyncToScopeCoordinates(coordinates, sideOfPier, cancellationToken);
         }
     }
 }

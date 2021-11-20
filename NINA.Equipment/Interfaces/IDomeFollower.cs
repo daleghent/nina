@@ -17,6 +17,7 @@ using NINA.Astrometry;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Enum;
 
 namespace NINA.Equipment.Interfaces {
 
@@ -35,5 +36,7 @@ namespace NINA.Equipment.Interfaces {
         TopocentricCoordinates GetSynchronizedDomeCoordinates(TelescopeInfo telescopeInfo);
 
         bool IsDomeWithinTolerance(Angle currentDomeAzimuth, TopocentricCoordinates targetDomeCoordinates);
+
+        Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken);
     }
 }

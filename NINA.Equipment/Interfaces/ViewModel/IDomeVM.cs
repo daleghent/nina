@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
+using NINA.Core.Enum;
 using NINA.Equipment.Equipment.MyDome;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IDomeVM : IDeviceVM<DomeInfo>, IDockableVM {
+        bool FollowEnabled { get; }
 
         Task<bool> OpenShutter(CancellationToken cancellationToken);
 
@@ -35,5 +38,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> EnableFollowing(CancellationToken cancellationToken);
 
         Task<bool> DisableFollowing(CancellationToken cancellationToken);
+
+        Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken);
     }
 }

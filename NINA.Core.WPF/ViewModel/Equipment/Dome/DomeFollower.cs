@@ -183,37 +183,47 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
         }
 
-        public Task<bool> TriggerTelescopeSync() {
+        private bool CanSyncDome() {
             if (!domeInfo.Connected || !telescopeInfo.Connected) {
-                return Task.FromResult(false);
+                return false;
             }
 
             var isLastSyncStillRotating = domeRotationTask?.IsCompleted == false;
             if (isLastSyncStillRotating) {
-                return Task.FromResult(false);
+                return false;
             }
 
             if (domeInfo.Slewing) {
                 Logger.Trace("Cannot synchronize with telescope while dome is slewing");
-                return Task.FromResult(false);
+                return false;
             }
 
             // If TargetCoordinates is not null then NINA initiated the slew and we know the target coordinates
             if (telescopeInfo.Slewing && telescopeInfo.TargetCoordinates == null && !profileService.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew) {
                 Logger.Info("Will not synchronize telescope while it is slewing since SynchronizeDuringMountSlew is disabled");
+                return false;
+            }
+            return true;
+        }
+
+        public Task<bool> TriggerTelescopeSync() {
+            if (!CanSyncDome()) {
+                Logger.Warning("Cannot sync dome at this time");
                 return Task.FromResult(false);
             }
 
             var calculatedTargetDomeCoordinates = GetSynchronizedDomeCoordinates(telescopeInfo);
-            var currentAzimuth = Angle.ByDegree(domeInfo.Azimuth);
-            if (!IsDomeWithinTolerance(currentAzimuth, calculatedTargetDomeCoordinates)) {
-                Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={calculatedTargetDomeCoordinates.Azimuth}, Target altitude={calculatedTargetDomeCoordinates.Altitude}");
-                IsSynchronized = false;
-                domeRotationCTS = new CancellationTokenSource();
-                domeRotationTask = this.domeMediator.SlewToAzimuth(calculatedTargetDomeCoordinates.Azimuth.Degree, domeRotationCTS.Token);
-                return domeRotationTask;
+            return SyncToDomeAzimuth(calculatedTargetDomeCoordinates, domeFollowerTaskCTS.Token);
+        }
+
+        public Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken) {
+            if (!CanSyncDome()) {
+                Logger.Warning("Cannot sync dome at this time");
+                return Task.FromResult(false);
             }
-            return Task.FromResult(true);
+
+            var calculatedTargetDomeCoordinates = GetSynchronizedDomeCoordinates(coordinates, sideOfPier);
+            return SyncToDomeAzimuth(calculatedTargetDomeCoordinates, cancellationToken);
         }
 
         public bool IsDomeWithinTolerance(Angle currentDomeAzimuth, TopocentricCoordinates targetDomeCoordinates) {
@@ -223,12 +233,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public TopocentricCoordinates GetSynchronizedDomeCoordinates(TelescopeInfo telescopeInfo) {
             var targetCoordinates = telescopeInfo.TargetCoordinates ?? telescopeInfo.Coordinates;
-            PierSide targetSideOfPier;
+            PierSide targetSideOfPier = PierSide.pierUnknown;
             if (this.profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
                 targetSideOfPier = telescopeInfo.TargetSideOfPier ?? telescopeInfo.SideOfPier;
-            } else {
+            }
+            if (targetSideOfPier == PierSide.pierUnknown) {
                 targetSideOfPier = MeridianFlip.ExpectedPierSide(targetCoordinates, Angle.ByHours(telescopeInfo.SiderealTime));
             }
+            Logger.Trace($"Using {targetCoordinates} on {targetSideOfPier} side of pier for dome calculations");
+            return GetSynchronizedDomeCoordinates(targetCoordinates, targetSideOfPier);
+        }
+
+        private TopocentricCoordinates GetSynchronizedDomeCoordinates(Coordinates targetCoordinates, PierSide targetSideOfPier) {
             var targetDomeCoordinates = domeSynchronization.TargetDomeCoordinates(
                 scopeCoordinates: targetCoordinates,
                 localSiderealTime: telescopeInfo.SiderealTime,
@@ -236,6 +252,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 siteLongitude: Angle.ByDegree(telescopeInfo.SiteLongitude),
                 sideOfPier: targetSideOfPier);
             return targetDomeCoordinates;
+        }
+
+        private Task<bool> SyncToDomeAzimuth(TopocentricCoordinates calculatedTargetDomeCoordinates, CancellationToken cancellationToken) {
+            var currentAzimuth = Angle.ByDegree(domeInfo.Azimuth);
+            if (!IsDomeWithinTolerance(currentAzimuth, calculatedTargetDomeCoordinates)) {
+                Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={calculatedTargetDomeCoordinates.Azimuth}, Target altitude={calculatedTargetDomeCoordinates.Altitude}");
+                IsSynchronized = false;
+                domeRotationCTS = new CancellationTokenSource();
+                domeRotationTask = this.domeMediator.SlewToAzimuth(calculatedTargetDomeCoordinates.Azimuth.Degree, domeRotationCTS.Token);
+                return domeRotationTask;
+            }
+            return Task.FromResult(true);
         }
 
         private bool isSynchronized = false;

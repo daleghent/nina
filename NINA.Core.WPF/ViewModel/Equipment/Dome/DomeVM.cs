@@ -35,6 +35,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
 using System.Linq;
+using NINA.Core.Enum;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
@@ -622,6 +623,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     }
                 }
             }
+        }
+
+        public async Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken) {
+            return await this.domeFollower.SyncToScopeCoordinates(coordinates, sideOfPier, cancellationToken);
         }
 
         private readonly IDeviceUpdateTimer updateTimer;

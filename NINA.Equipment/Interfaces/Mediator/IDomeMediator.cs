@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
+using NINA.Core.Enum;
 using NINA.Equipment.Equipment.MyDome;
 using NINA.Equipment.Interfaces.ViewModel;
 using System.Threading;
@@ -21,7 +23,11 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
     public interface IDomeMediator : IDeviceMediator<IDomeVM, IDomeConsumer, DomeInfo> {
 
+        bool IsFollowingScope { get; }
+
         Task WaitForDomeSynchronization(CancellationToken cancellationToken);
+
+        Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken);
 
         Task<bool> OpenShutter(CancellationToken cancellationToken);
 
