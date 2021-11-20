@@ -137,9 +137,12 @@ namespace NINA.Equipment.Equipment.MyDome {
                         await Task.Run(async () => {
                             device?.SlewToAzimuth(azimuth);
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                            ct.ThrowIfCancellationRequested();
+
                             while (device != null && device.Slewing && !ct.IsCancellationRequested) {
                                 await Task.Delay(TimeSpan.FromSeconds(1), ct);
                             }
+                            ct.ThrowIfCancellationRequested();
                         }, ct);
                     }
                 } else {
@@ -201,12 +204,21 @@ namespace NINA.Equipment.Equipment.MyDome {
                             await CloseShutter(ct);
                         }
 
-                        await Task.Run(() => device?.OpenShutter(), ct);
+                        if (ShutterStatus == ShutterState.ShutterOpening) {
+                            Logger.Info($"Dome shutter already opening, so not sending another OpenShutter request");
+                        } else {
+                            Logger.Info($"Sending an OpenShutter request, since it is currently {ShutterStatus}");
+                            await Task.Run(() => device?.OpenShutter(), ct);
+                            ct.ThrowIfCancellationRequested();
+                        }
+
                         // Give the dome controller 2 seconds to react to the shutter open request, since OpenShutter can be an asynchronous operation
                         await Task.Delay(TimeSpan.FromSeconds(2), ct);
                         while (device != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         };
+                        ct.ThrowIfCancellationRequested();
+
                         if (device != null && ShutterStatus == ShutterState.ShutterClosed) {
                             Logger.Error("ShutterStatus is still reported as closed after calling OpenShutter.");
                             Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillClosed"]);
@@ -230,13 +242,21 @@ namespace NINA.Equipment.Equipment.MyDome {
                     }
 
                     using (ct.Register(() => device?.AbortSlew())) {
-                        await Task.Run(() => device?.CloseShutter(), ct);
+                        if (ShutterStatus == ShutterState.ShutterClosing) {
+                            Logger.Info($"Dome shutter already closing, so not sending another CloseShutter request");
+                        } else {
+                            Logger.Info($"Sending a CloseShutter request, since it is currently {ShutterStatus}");
+                            await Task.Run(() => device?.CloseShutter(), ct);
+                            ct.ThrowIfCancellationRequested();
+                        }
 
                         // Give the dome controller 2 seconds to react to the shutter close request, since CloseShutter can be an asynchronous operation
                         await Task.Delay(TimeSpan.FromSeconds(2), ct);
                         while (device != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         };
+                        ct.ThrowIfCancellationRequested();
+
                         if (device != null && ShutterStatus == ShutterState.ShutterOpen) {
                             Logger.Error("ShutterStatus is still reported as open after calling CloseShutter.");
                             Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillOpen"]);
@@ -255,20 +275,32 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task FindHome(CancellationToken ct) {
             if (Connected) {
                 if (CanFindHome) {
-                    // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure FindHome works
-                    device?.AbortSlew();
-                    await Task.Delay(1000, ct);
+                    if (device?.AtHome == true) {
+                        Logger.Info("Dome already AtHome. Not submitting a FindHome request");
+                        return;
+                    }
 
-                    using (ct.Register(() => device.AbortSlew())) {
+                    // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure FindHome works
+                    if (device?.Slewing == true) {
+                        device?.AbortSlew();
+                        await Task.Delay(1000, ct);
+                    }
+
+                    using (ct.Register(() => device?.AbortSlew())) {
                         await Task.Run(() => device.FindHome(), ct);
+                        ct.ThrowIfCancellationRequested();
 
                         // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
                         await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        ct.ThrowIfCancellationRequested();
+
                         while (device != null && device.Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
+                        ct.ThrowIfCancellationRequested();
                         // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
                         await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        ct.ThrowIfCancellationRequested();
                     }
                 } else {
                     Logger.Warning("Dome cannot find home");
@@ -284,18 +316,36 @@ namespace NINA.Equipment.Equipment.MyDome {
             if (Connected) {
                 if (CanPark) {
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure Park works
-                    device?.AbortSlew();
-                    await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                    if (device?.Slewing == true) {
+                        Logger.Info("Dome shutter or rotator slewing when a park was requested. Aborting all movement");
 
+                        device?.AbortSlew();
+                        await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                    }
+
+                    ct.ThrowIfCancellationRequested();
                     using (ct.Register(() => device?.AbortSlew())) {
-                        await Task.Run(() => device?.Park(), ct);
+                        if (AtPark) {
+                            Logger.Info("Dome already AtPark. Not sending a Park command");
+                        } else {
+                            await Task.Run(() => device?.Park(), ct);
+                            ct.ThrowIfCancellationRequested();
+                        }
+
                         if (CanSetShutter) {
-                            await Task.Run(() => device?.CloseShutter(), ct);
+                            if (ShutterStatus == ShutterState.ShutterClosed || ShutterStatus == ShutterState.ShutterClosing) {
+                                Logger.Info($"Not closing dome shutter, since it is already {ShutterStatus}");
+                            } else {
+                                Logger.Info($"Closing shutter, since it is currently {ShutterStatus}");
+                                await Task.Run(() => device?.CloseShutter(), ct);
+                                ct.ThrowIfCancellationRequested();
+                            }
                         }
                         await Task.Delay(TimeSpan.FromSeconds(2), ct);
                         while (device != null && device.Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
+                        ct.ThrowIfCancellationRequested();
                     }
                 } else {
                     Logger.Warning("Dome cannot find park");
