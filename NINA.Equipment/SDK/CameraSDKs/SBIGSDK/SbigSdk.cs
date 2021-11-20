@@ -128,11 +128,17 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                         var linkResult = UnivDrvCommand<SBIG.EstablishLinkParams, SBIG.EstablishLinkResults>(SBIG.Cmd.CC_ESTABLISH_LINK, new SBIG.EstablishLinkParams());
                         CcdCameraInfo? cameraInfo = null;
                         CcdCameraInfo? trackingCameraInfo = null;
+                        CcdCameraInfo? externalTrackingCameraInfo = null;
                         if (linkResult.cameraType != SBIG.CameraType.NoCamera) {
                             cameraInfo = GetCameraInfoAlreadyActive(SBIG.CCD.Imaging);
                             try {
                                 trackingCameraInfo = GetCameraInfoAlreadyActive(SBIG.CCD.Tracking);
                             } catch (Exception) { }
+                            if (trackingCameraInfo?.SupportsExternalTracker == true) {
+                                try {
+                                    externalTrackingCameraInfo = GetCameraInfoAlreadyActive(SBIG.CCD.ExternalTrackingInStxOrStl);
+                                } catch (Exception) { }
+                            }
                         }
 
                         var filterWheelInfo = GetFilterWheelInfoAlreadyActive();
@@ -142,7 +148,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                                 CameraType = linkResult.cameraType,
                                 FilterWheelInfo = filterWheelInfo,
                                 CameraInfo = cameraInfo,
-                                TrackingCameraInfo = trackingCameraInfo
+                                TrackingCameraInfo = trackingCameraInfo,
+                                ExternalTrackingCameraInfo = externalTrackingCameraInfo
                             },
                             handle = driver.Handle,
                             refCount = 1

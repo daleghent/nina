@@ -23,6 +23,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public SBIG.CameraType CameraType;
         public CcdCameraInfo? CameraInfo;
         public CcdCameraInfo? TrackingCameraInfo;
+        public CcdCameraInfo? ExternalTrackingCameraInfo;
         public FilterWheelInfo? FilterWheelInfo;
     }
 

@@ -57,6 +57,7 @@ namespace NINA.Profile {
             binAverageEnabled = false;
             trackingCameraASCOMServerEnabled = false;
             trackingCameraASCOMServerPipeName = "NINA.ASCOM.Camera.SBIG.Tracker";
+            sbigUseExternalCcdTracker = false;
         }
 
         private string id;
@@ -565,6 +566,19 @@ namespace NINA.Profile {
             set {
                 if (fileCameraAlwaysListen != value) {
                     fileCameraAlwaysListen = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool sbigUseExternalCcdTracker;
+
+        [DataMember]
+        public bool SBIGUseExternalCcdTracker {
+            get => sbigUseExternalCcdTracker;
+            set {
+                if (sbigUseExternalCcdTracker != value) {
+                    sbigUseExternalCcdTracker = value;
                     RaisePropertyChanged();
                 }
             }

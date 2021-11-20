@@ -13468,6 +13468,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use External Tracking CCD.
+        /// </summary>
+        internal static string LblSBIGUseExternalTrackingCCD {
+            get {
+                return ResourceManager.GetString("LblSBIGUseExternalTrackingCCD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect..
+        /// </summary>
+        internal static string LblSBIGUseExternalTrackingCCDChanged {
+            get {
+                return ResourceManager.GetString("LblSBIGUseExternalTrackingCCDChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scope settle time after flip.
         /// </summary>
         internal static string LblScopeSettleTimeAfterFlip {

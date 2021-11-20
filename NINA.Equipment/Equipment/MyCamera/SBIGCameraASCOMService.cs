@@ -108,10 +108,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override async Task<Empty> StartExposure(
             StartExposureRequest request,
             ServerCallContext context) {
+            if (this.camera.SubSampleX > 0 || this.camera.SubSampleY > 0 || this.camera.SubSampleHeight < (this.camera.CameraYSize / this.camera.BinY) || this.camera.SubSampleWidth < (this.camera.CameraXSize / this.camera.BinX)) {
+                this.camera.EnableSubSample = true;
+            } else {
+                this.camera.EnableSubSample = false;
+            }
+
             var captureParams = new CaptureSequence() {
                 ExposureTime = request.Duration,
                 ImageType = request.Light ? ImageTypes.LIGHT : ImageTypes.DARK
             };
+
             this.latestExposureDuration = request.Duration;
             this.latestExposureStart = DateTime.Now;
             this.exposeAndDownloadCts?.Cancel();
@@ -556,7 +563,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if (!this.camera.CanSubSample) {
                 throw new PropertyNotImplementedException("Camera does not support sub-sampling");
             }
-            this.camera.SubSampleWidth = request.Value;
+            this.camera.SubSampleX = request.Value;
             return new Empty();
         }
 
@@ -572,7 +579,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if (!this.camera.CanSubSample) {
                 throw new PropertyNotImplementedException("Camera does not support sub-sampling");
             }
-            this.camera.SubSampleHeight = request.Value;
+            this.camera.SubSampleY = request.Value;
             return new Empty();
         }
 

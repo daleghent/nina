@@ -86,55 +86,77 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public Task<bool> Connect(CancellationToken ct) {
+        public async Task<bool> Connect(CancellationToken ct) {
             if (Connected) {
-                return Task.FromResult(true);
+                return true;
             }
 
-            return Task.Run(async () => {
-                Logger.Info($"SBIGCCD: Attempting to connect {this.queriedCameraInfo.DeviceId}");
-                try {
-                    ConnectedDevice = sdk.OpenDevice(this.queriedCameraInfo.DeviceId);
-                    if (ConnectedDevice.CameraType == SBIG.CameraType.NoCamera) {
-                        throw new InvalidOperationException($"SBIGCCD: Cannot connect {this.queriedCameraInfo.DeviceId} since it is not a camera");
-                    }
-
-                    var cameraInfo = this.exposureCcd == SBIG.CCD.Imaging ? ConnectedDevice.CameraInfo : ConnectedDevice.TrackingCameraInfo;
-                    if (cameraInfo.HasValue) {
-                        SetCameraProperties(cameraInfo.Value);
-                    }
-
-                    if (exposureCcd == SBIG.CCD.Imaging) {
-                        HasTrackingCcd = ConnectedDevice.TrackingCameraInfo.HasValue;
-                        if (HasTrackingCcd) {
-                            _trackingCamera?.Disconnect();
-                            _trackingCamera = new SBIGCamera(this.sdk, SBIG.CCD.Tracking, this.queriedCameraInfo, this.profileService, this.exposureDataFactory);
-                            if (TrackingCcdAscomServerEnabled) {
-                                await TurnOnTrackingASCOMServer(ct);
-                            }
-                        } else {
-                            Logger.Debug($"SBIGCCD: {this.queriedCameraInfo.DeviceId} does not have a tracking camera");
-                        }
-                    }
-
-                    Connected = true;
-                    if (CanSetTemperature) {
-                        CoolerOn = false;
-                    }
-
-                    Logger.Info($"SBIGCCD: Successfully connected {this.queriedCameraInfo.DeviceId}");
-                    return true;
-                } catch (Exception e) {
-                    Logger.Error($"SBIGCCD: Failed to connect {this.queriedCameraInfo.DeviceId}", e);
-                    Notification.ShowError($"Failed to connect {this.queriedCameraInfo.DeviceId}, {e.Message}");
-                    if (connectedDevice.HasValue) {
-                        sdk.CloseDevice(connectedDevice.Value.DeviceId);
-                        connectedDevice = null;
-                    }
-                    Connected = false;
-                    return false;
+            Logger.Info($"SBIGCCD: Attempting to connect {this.queriedCameraInfo.DeviceId}");
+            try {
+                ConnectedDevice = sdk.OpenDevice(this.queriedCameraInfo.DeviceId);
+                if (ConnectedDevice.CameraType == SBIG.CameraType.NoCamera) {
+                    throw new InvalidOperationException($"SBIGCCD: Cannot connect {this.queriedCameraInfo.DeviceId} since it is not a camera");
                 }
-            }, ct);
+
+                CcdCameraInfo? cameraInfo = null;
+                if (this.exposureCcd == SBIG.CCD.Imaging) {
+                    cameraInfo = ConnectedDevice.CameraInfo;
+                } else if (this.exposureCcd == SBIG.CCD.Tracking) {
+                    cameraInfo = ConnectedDevice.TrackingCameraInfo;
+                } else if (this.exposureCcd == SBIG.CCD.ExternalTrackingInStxOrStl) {
+                    cameraInfo = ConnectedDevice.ExternalTrackingCameraInfo;
+                }
+                if (cameraInfo.HasValue) {
+                    SetCameraProperties(cameraInfo.Value);
+                }
+
+                if (exposureCcd == SBIG.CCD.Imaging) {
+                    HasTrackingCcd = ConnectedDevice.TrackingCameraInfo.HasValue || ConnectedDevice.ExternalTrackingCameraInfo.HasValue;
+                    if (HasTrackingCcd) {
+                        _trackingCamera?.Disconnect();
+                        SBIG.CCD trackingCcd;
+                        if (!ConnectedDevice.TrackingCameraInfo.HasValue) {
+                            Logger.Info("SBIG: Only external tracker detected. Using that");
+                            HasDualTracking = false;
+                            trackingCcd = SBIG.CCD.ExternalTrackingInStxOrStl;
+                        } else if (!ConnectedDevice.ExternalTrackingCameraInfo.HasValue) {
+                            Logger.Info("SBIG: Only internal tracker detected. Using that");
+
+                            HasDualTracking = false;
+                            trackingCcd = SBIG.CCD.Tracking;
+                        } else {
+                            Logger.Info($"SBIG: Two trackers detected. UseExternalTrackingCcd={UseExternalTrackingCcd}");
+
+                            HasDualTracking = true;
+                            trackingCcd = UseExternalTrackingCcd ? SBIG.CCD.ExternalTrackingInStxOrStl : SBIG.CCD.Tracking;
+                        }
+
+                        _trackingCamera = new SBIGCamera(this.sdk, trackingCcd, this.queriedCameraInfo, this.profileService, this.exposureDataFactory);
+                        if (TrackingCcdAscomServerEnabled) {
+                            await TurnOnTrackingASCOMServer(ct);
+                        }
+                    } else {
+                        Logger.Debug($"SBIGCCD: {this.queriedCameraInfo.DeviceId} does not have a tracking camera");
+                    }
+                }
+
+                Connected = true;
+                if (CanSetTemperature) {
+                    CoolerOn = false;
+                }
+
+                Logger.Info($"SBIGCCD: Successfully connected {this.queriedCameraInfo.DeviceId}");
+                return true;
+            } catch (Exception e) {
+                Logger.Error($"SBIGCCD: Failed to connect {this.queriedCameraInfo.DeviceId}", e);
+                Notification.ShowError($"Failed to connect {this.queriedCameraInfo.DeviceId}, {e.Message}");
+                if (connectedDevice.HasValue) {
+                    sdk.CloseDevice(connectedDevice.Value.DeviceId);
+                    connectedDevice = null;
+                }
+                Connected = false;
+                return false;
+            }
         }
 
         private SDK.CameraSDKs.SBIGSDK.DeviceInfo ConnectedDevice {
@@ -644,6 +666,31 @@ namespace NINA.Equipment.Equipment.MyCamera {
             private set {
                 if (this._hasTrackingCcd != value) {
                     this._hasTrackingCcd = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool _hasDualTracking = false;
+        public bool HasDualTracking {
+            get => _hasDualTracking;
+            private set {
+                if (this._hasDualTracking != value) {
+                    this._hasDualTracking = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool UseExternalTrackingCcd {
+            get => profileService.ActiveProfile.CameraSettings.SBIGUseExternalCcdTracker;
+            set {
+                if (profileService.ActiveProfile.CameraSettings.SBIGUseExternalCcdTracker != value) {
+                    if (_trackingCamera != null) {
+                        Notification.ShowInformation(Loc.Instance["LblSBIGUseExternalTrackingCCDChanged"]);
+                    }
+
+                    profileService.ActiveProfile.CameraSettings.SBIGUseExternalCcdTracker = value;
                     RaisePropertyChanged();
                 }
             }

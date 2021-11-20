@@ -628,6 +628,17 @@
                                             </TextBox.Text>
                                         </TextBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDualTracking, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblSBIGUseExternalTrackingCCD}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding UseExternalTrackingCcd}">
+                                        </CheckBox>
+                                    </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
 
