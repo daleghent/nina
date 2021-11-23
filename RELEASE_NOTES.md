@@ -12,6 +12,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 
 ## Change of setting locations
 
+- Options page tab location is moved to the left instead of the top to be similar to main tabs
 - Sequencer end options have been moved into the simple sequencer tab
 - Meridian Flip settings show no longer an enabled flag, but can be enabled in the simple sequencer or added as a trigger into the advanced sequencer instead
 - Autofocus options have been moved into a separate tab
