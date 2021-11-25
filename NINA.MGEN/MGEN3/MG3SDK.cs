@@ -148,7 +148,12 @@ namespace NINA.MGEN3 {
 
         public int StartCalibration() {
             lock (lockobj) {
-                return MG3lib_Function_Calibration(handle);
+                var cal = new MGEN3_Func_Cal() {
+                    tries_max = 20,
+                    retry_rate = 2
+                };
+                cal.strSize = (uint)(System.Runtime.InteropServices.Marshal.SizeOf(cal));
+                return MG3lib_Function_Calibration(handle, ref cal);
             }
         }
 
@@ -388,7 +393,7 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3cmd_Function_Calibrate", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_Function_Calibration(IntPtr handle);
+        private static extern int MG3lib_Function_Calibration(IntPtr handle, ref MGEN3_Func_Cal calibration);
 
         /// <summary>
         /// starts AutoGuiding if possible
@@ -510,6 +515,13 @@ namespace NINA.MGEN3 {
             public float ray;
             public float decx;
             public float decy;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MGEN3_Func_Cal {
+            public uint strSize;
+            public int tries_max;
+            public float retry_rate;
         }
 
         #endregion "MGEN3_Structs"

@@ -160,7 +160,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                             starDetail.PositionY > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
                             starDetail.PositionY < MGen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
                             starDetail.Pixels < 60) {
-                            Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
+                            Logger.Info($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                             starSearchSuccess = await MGen.SetNewGuidingPosition(starDetail);
                             Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess}");
                             needsCalibration = true;
@@ -168,7 +168,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                             await MGen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
                             break;
                         } else {
-                            Logger.Debug($"MGEN - Got Star Detail but skipping star because too close to edge or too big - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
+                            Logger.Info($"MGEN - Got Star Detail but skipping star because too close to edge or too big - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                         }
                     }
                     if (!starSearchSuccess) {
@@ -330,9 +330,15 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 }
                 var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
                 if (calibrated) {
-                    Logger.Debug("MGEN - Starting Guiding");
+                    Logger.Info("MGEN - Starting Guiding");
                     await MGen.StartGuiding(ct);
+                    if (!await MGen.IsGuidingActive(ct)) {
+                        Logger.Error("MGEN - Failed to start guiding");
+                        return false;
+                    }
                     await WaitForSettling(DitherSettlingTime, progress, ct);
+                } else {
+                    return false;
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -352,13 +358,27 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         Logger.Debug("MGEN - Stopping guiding to start new calibration");
                         await MGen.StopGuiding();
                     }
-                    Logger.Debug("MGEN - Starting Calibraiton");
+                    Logger.Info("MGEN - Starting Calibration");
+                    if (MGen is MGEN3.MGEN3 mg3) {
+                        Logger.Info("MGEN - Clearing Calibration data");
+                        await mg3.ClearCalibration(ct);
+                    }
+
                     _ = await MGen.StartCalibration(ct);
-                    do {
-                        await Task.Delay(TimeSpan.FromSeconds(1), ct);
+
+                    if (MGen is MGEN3.MGEN3) {
                         calibrationStatus = await MGen.QueryCalibration(ct);
-                        State = calibrationStatus.CalibrationStatus.ToString();
-                    } while (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) && !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error));
+                        if (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done)) {
+                            Logger.Error("Calibration was not successful");
+                            return false;
+                        }
+                    } else {
+                        do {
+                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                            calibrationStatus = await MGen.QueryCalibration(ct);
+                            State = calibrationStatus.CalibrationStatus.ToString();
+                        } while (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) && !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error));
+                    }
 
                     if (calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
                         Logger.Error(calibrationStatus.Error);
@@ -369,7 +389,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         return true;
                     }
                 }
-                return false;
+                return calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done);
             }
         }
 

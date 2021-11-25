@@ -294,7 +294,7 @@ namespace NINA.MGEN3 {
                 logger.Debug($"Calibration is raX {calibration.rax}, raY {calibration.ray}, decX {calibration.decx}, decY {calibration.decy}");
 
                 var status = CalibrationStatus.NotStarted;
-                if (calibration.rax > 0.0000001F || calibration.ray > 0.0000001F) {
+                if (calibration.rax > 0.0000001F || calibration.ray > 0.0000001F || calibration.rax < -0.0000001F || calibration.ray < -0.0000001F) {
                     status = CalibrationStatus.Done;
                 }
 
@@ -356,14 +356,21 @@ namespace NINA.MGEN3 {
             });
         }
 
-        public Task<bool> StartCalibration(CancellationToken ct = default) {
+        public Task<bool> ClearCalibration(CancellationToken ct = default) {
             return Task.Run(async () => {
                 var err = this.sdk.ClearCalibration();
                 if (err != MG3SDK.MG3_OK) {
                     logger.Error($"Clearing calibration failed with return code {err}");
+                    return false;
                 }
+                return true;
+            });
+        }
 
+        public Task<bool> StartCalibration(CancellationToken ct = default) {
+            return Task.Run(async () => {
                 ValidateReturnCode(this.sdk.StartCalibration());
+                await Task.Delay(2000, ct);
 
                 await WaitForFunction(ct);
 
