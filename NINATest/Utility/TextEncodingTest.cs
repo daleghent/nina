@@ -12,6 +12,32 @@ namespace NINATest.Utility {
     public class TextEncodingTest {
 
         [Test]
+        public void UnicodeToAsciiNullTest() {
+            // Arrange
+            string unicode = null;
+            string ascii = "";
+
+            // Act
+            string result = TextEncoding.UnicodeToAscii(unicode);
+
+            // Assert
+            Assert.AreEqual(ascii, result);
+        }
+
+        [Test]
+        public void UnicodeToAsciiEmptyTest() {
+            // Arrange
+            string unicode = "";
+            string ascii = "";
+
+            // Act
+            string result = TextEncoding.UnicodeToAscii(unicode);
+
+            // Assert
+            Assert.AreEqual(ascii, result);
+        }
+
+        [Test]
         public void UnicodeToAsciiTest() {
             // Arrange
             string unicode = "TĤis is a ștring with unicódè characterȿ.";
@@ -22,6 +48,32 @@ namespace NINATest.Utility {
 
             // Assert
             Assert.AreEqual(ascii, result);
+        }
+
+        [Test]
+        public void GreekToLatinAbbreviationNullTest() {
+            // Arrange
+            string hasGreek = null;
+            string inLatin = "";
+
+            // Act
+            string result = TextEncoding.GreekToLatinAbbreviation(hasGreek);
+
+            // Assert
+            Assert.AreEqual(inLatin, result);
+        }
+
+        [Test]
+        public void GreekToLatinAbbreviationEmptyTest() {
+            // Arrange
+            string hasGreek = "";
+            string inLatin = "";
+
+            // Act
+            string result = TextEncoding.GreekToLatinAbbreviation(hasGreek);
+
+            // Assert
+            Assert.AreEqual(inLatin, result);
         }
 
         [Test]

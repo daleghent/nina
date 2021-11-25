@@ -21,6 +21,7 @@ namespace NINA.Core.Utility {
     public static class TextEncoding {
 
         public static string UnicodeToAscii(string input) {
+            if (string.IsNullOrWhiteSpace(input)) { return ""; }
             Encoding ascii = Encoding.ASCII;
             Encoding unicode = Encoding.Unicode;
 
@@ -33,10 +34,11 @@ namespace NINA.Core.Utility {
         }
 
         public static string GreekToLatinAbbreviation(string input) {
+            if (string.IsNullOrWhiteSpace(input)) { return ""; }
+
             foreach (DictionaryEntry greekchar in GreekToAbbreviationMap) {
                 input = input.Replace(greekchar.Key.ToString(), greekchar.Value.ToString());
             }
-
             return input;
         }
 
