@@ -183,7 +183,7 @@ namespace NINA.Plugin {
             using (var algorithm = GetAlgorithm(manifest)) {
                 using (var stream = File.OpenRead(tempFile)) {
                     var fileChecksum = BitConverter.ToString(algorithm.ComputeHash(stream)).Replace("-", string.Empty);
-                    return fileChecksum == manifest.Installer.Checksum;
+                    return fileChecksum.ToLower() == manifest.Installer.Checksum.ToLower();
                 }
             }
         }
