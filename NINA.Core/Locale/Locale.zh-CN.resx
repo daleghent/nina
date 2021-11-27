@@ -1597,7 +1597,7 @@
     <value>回差 向内/向外</value>
   </data>
   <data name="LblFocuserBacklashTooltip" xml:space="preserve">
-    <value>在电调每一步 向内/向外 方向的回差</value>
+    <value>向内/向外 方向的电调回差，单位为电调步数</value>
   </data>
   <data name="LblFocuserConnected" xml:space="preserve">
     <value>电调连接</value>
@@ -3727,19 +3727,19 @@
     <value>回差补偿方法</value>
   </data>
   <data name="LblFocuserBacklashMethodTooltip" xml:space="preserve">
-    <value>以下信息是回差补偿方法使用的。
+    <value>这个选项控制回差补偿的方法。
 
 绝对值： 
-  当用户改变调焦器运动方向时，此数值（步数）将被添加到对焦器运动的方向中。
-  向内方向回差：当调焦器从向外移动切换至向内移动时，将会增加“向内方向回差”数值（步数）。
-  向外方向回差：当调焦器从向内移动切换至向外移动时，将会增加“向外方向回差”此数值（步数）。
+   当电调改变运动方向后，将多移动一定步数。
+   向内回差：当电调从向外移动切换至向内移动时，多移动的步数。
+   向外回差：当电调从向内移动切换至向外移动时，多移动的步数。
   
-超出值：
-  此方法将在达到目标后继续移动一个很大的步数，然后将调焦器移动到最初请求（合焦）的位置。
-  对于这种回差补偿方法，调焦器的最后一次移动总是处于相同的方向(不论是向内移动还是向外移动)
-  对于向内/向外方向的回差，必须设置两者之一！ 设置向内方向时，该步数将适用于每次内向移动，因此最终移动总是向外移动，向外方向亦然。
+超调：
+   此方法将在电调达到目标后继续移动一个很大的步数，然后移回目标位置。
+   对于这种回差补偿方法，调焦器的最后一次移动总是与之前一系列移动在相同的方向(不论是向内移动还是向外移动)
+   对于 回差 向内/向外，必须设置两者之一！ 设置 向内 时，该步数将用于内向移动，因此最终移动总是向外，向外 亦然。
 
-只有当断开调焦器时才能更改回差补偿方法！</value>
+只有电调断开时才能更改回差补偿方法！</value>
   </data>
   <data name="LblOvershoot" xml:space="preserve">
     <value>超出值</value>
@@ -4718,7 +4718,7 @@
 还有一些触发器适用于当前指令集和集合中的每个子集。</value>
   </data>
   <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
-    <value>从序列中删除当前指令集及其所有项目</value>
+    <value>从序列中删除当前指令集及其所有条目</value>
   </data>
   <data name="Lbl_SequenceContainer_MoveDown_Tooltip" xml:space="preserve">
     <value>将指令集和全部内容下移一个位置。
@@ -5236,10 +5236,10 @@
     <value>正在等待目标超出地平线。目标高度 {0}° / 地平线高度 {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
-    <value>目标超出地平线即停止目前指令集的循环条件</value>
+    <value>目标超出地平线一定高度时循环</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>当高度超出地平线时循环</value>
+    <value>超出地平线时循环</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>目标永远不会在地平线上</value>
