@@ -48,7 +48,7 @@ namespace NINA.Core.Utility.Extensions {
         }
     }
 
-    internal static class WPFExtensionMethods {
+    public static class WPFExtensionMethods {
 
         private static double GetScalingFactor(Window w) {
             Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
