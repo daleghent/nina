@@ -37,7 +37,7 @@ namespace NINA.Sequencer.Behaviors {
             var fbrush = FindResource("NotificationErrorTextBrush") as SolidColorBrush;
             LeftOfElement = leftOfElement;
             textToWrite = new FormattedText(text, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Bold, FontStretches.Normal, new FontFamily("Arial"))
+                new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Bold, FontStretches.Normal, new FontFamily("Microsoft YaHei UI"))
                 , 14, fbrush, 1);
             string iconToWriteText = null;
             switch (dropTargetEnum) {
@@ -47,7 +47,7 @@ namespace NINA.Sequencer.Behaviors {
                 default: iconToWriteText = ""; break;
             }
             iconToWrite = new FormattedText(iconToWriteText, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Bold, FontStretches.Expanded, new FontFamily("Arial"))
+                new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Bold, FontStretches.Expanded, new FontFamily("Microsoft YaHei UI"))
                 , 24, fbrush, 1);
             AdornerWidth = width + textToWrite.Width + TextSpacing * 4 + iconToWrite.Width + HighlightWidth;
             AdornerHeight = textToWrite.Height + 10;
