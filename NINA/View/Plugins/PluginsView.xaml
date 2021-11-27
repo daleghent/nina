@@ -343,6 +343,13 @@
                                         </Grid>
                                     </Grid>
 
+                                    <GroupBox Header="{ns:Loc LblOptions}">
+                                        <ContentControl
+                                            Margin="0,5,0,0"
+                                            Content="{Binding}"
+                                            ContentTemplateSelector="{StaticResource TemplateSelector}" />
+                                    </GroupBox>
+
                                     <GroupBox
                                         HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Stretch"
@@ -359,13 +366,6 @@
                                             Markdown="{Binding Descriptions.LongDescription}"
                                             MarkdownStyle="{StaticResource MarkdownStyle}"
                                             VerticalScrollBarVisibility="Disabled" />
-                                    </GroupBox>
-
-                                    <GroupBox Header="{ns:Loc LblOptions}">
-                                        <ContentControl
-                                            Margin="0,5,0,0"
-                                            Content="{Binding}"
-                                            ContentTemplateSelector="{StaticResource TemplateSelector}" />
                                     </GroupBox>
                                 </StackPanel>
                             </ScrollViewer>
