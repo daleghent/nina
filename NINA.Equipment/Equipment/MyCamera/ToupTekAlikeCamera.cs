@@ -662,6 +662,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         throw new Exception($"{Category} - This camera is not capable to be triggered by software and is not supported");
                     }
 
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_FRAME_DEQUE_LENGTH, 2)) {
+                        throw new Exception($"{Category} - Could not set deque length");
+                    }
+
                     if (!sdk.put_Option(ToupTekAlikeOption.OPTION_TRIGGER, 1)) {
                         throw new Exception($"{Category} - Could not set Trigger manual mode");
                     }
@@ -774,14 +778,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void OnEventCallback(ToupTekAlikeEvent nEvent) {
             Logger.Trace($"{Category} - OnEventCallback {nEvent}");
             switch (nEvent) {
-                case ToupTekAlikeEvent.EVENT_IMAGE: // Live View Image
+                // We should get an EVENT_IMAGE every time that the camera tells us an image is ready
+                case ToupTekAlikeEvent.EVENT_IMAGE:
                     var id = imageReadyTCS?.Task?.Id ?? -1;
-                    Logger.Trace("{Category} - Setting DownloadExposure Result on Task {id}");
-                    var success = imageReadyTCS?.TrySetResult(true);
-                    Logger.Trace($"{Category} - DownloadExposure Result on Task {id} set successfully: {success}");
+                    if (id != -1) {
+                        Logger.Trace("{Category} - Setting DownloadExposure Result on Task {id}");
+                        var success = imageReadyTCS?.TrySetResult(true);
+                        Logger.Trace($"{Category} - DownloadExposure Result on Task {id} set successfully: {success}");
+                    } else {
+                        Logger.Trace($"{Category} - unexpected EVENT_IMAGE returned by camera, likely buggy vendor SDK");
+                        // retrieve the data and ignore it -- workaround for 269C
+                        PullImage();
+                    }
                     break;
 
-                case ToupTekAlikeEvent.EVENT_STILLIMAGE: // Still Image
+                // This should never crop up - it's only for still images from live view
+                case ToupTekAlikeEvent.EVENT_STILLIMAGE:
                     Logger.Warning($"{Category} - Still image event received, but not expected to get one!");
                     imageReadyTCS?.TrySetResult(true);
                     break;
