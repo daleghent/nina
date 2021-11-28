@@ -66,7 +66,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(0, 14)]
         [TestCase(359, 14.6)]
         [TestCase(100, 46.6666666666)]
-        [TestCase(200, 25.470588235294)]
+        [TestCase(200, 20.833333333333336)]
         public void PartialAzimuth_InterpolationRetrievedCorrectly(double azimuth, double expectedAltitude) {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "partial.hrz");
 
