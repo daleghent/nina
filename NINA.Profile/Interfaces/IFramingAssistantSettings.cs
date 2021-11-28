@@ -20,6 +20,7 @@ namespace NINA.Profile.Interfaces {
         int CameraHeight { get; set; }
         int CameraWidth { get; set; }
         double FieldOfView { get; set; }
+        double Opacity { get; set; }
         SkySurveySource LastSelectedImageSource { get; set; }
     }
 }

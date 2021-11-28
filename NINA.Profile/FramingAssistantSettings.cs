@@ -33,6 +33,7 @@ namespace NINA.Profile {
             cameraWidth = 4500;
             fieldOfView = 3;
             lastSelectedImageSource = SkySurveySource.HIPS2FITS;
+            Opacity = 0.2;
         }
 
         private SkySurveySource lastSelectedImageSource;
@@ -88,6 +89,21 @@ namespace NINA.Profile {
             set {
                 if (fieldOfView != value) {
                     fieldOfView = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double opacity;
+
+        [DataMember]
+        public double Opacity {
+            get {
+                return opacity;
+            }
+            set {
+                if (opacity != value) {
+                    opacity = value;
                     RaisePropertyChanged();
                 }
             }

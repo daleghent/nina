@@ -90,7 +90,6 @@ namespace NINA.ViewModel.FramingAssistant {
             this.domeMediator = domeMediator;
             this.domeFollower = domeFollower;
             this.imageDataFactory = imageDataFactory;
-            Opacity = 0.2;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
 
@@ -419,12 +418,10 @@ namespace NINA.ViewModel.FramingAssistant {
             InitializeCache();
         }
 
-        private double opacity;
-
         public double Opacity {
-            get => opacity;
+            get => profileService.ActiveProfile.FramingAssistantSettings.Opacity;
             set {
-                opacity = value;
+                profileService.ActiveProfile.FramingAssistantSettings.Opacity = value;
                 RaisePropertyChanged();
             }
         }
