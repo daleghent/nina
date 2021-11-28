@@ -51,7 +51,7 @@ namespace NINA.Core.Model {
             while ((line = sr.ReadLine()?.Trim()) != null) {
                 // Lines starting with # are comments
                 if (!line.StartsWith("#") && !string.IsNullOrEmpty(line)) {
-                    var columns = line.Split(' ');
+                    var columns = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
                     if (columns.Length == 2) {
                         if (double.TryParse(columns[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var azimuth)) {
                             if (double.TryParse(columns[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var altitude)) {
