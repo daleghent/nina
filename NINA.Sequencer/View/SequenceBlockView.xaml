@@ -42,6 +42,11 @@
             <behaviors:DragOverBehavior DragAboveSize="25" DragBelowSize="25" />
         </i:Interaction.Behaviors>
         <Border MinHeight="25">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseRightButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ShowMenuCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Grid x:Name="StackPanel">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
