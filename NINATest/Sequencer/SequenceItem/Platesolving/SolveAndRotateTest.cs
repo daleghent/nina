@@ -191,7 +191,8 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             plateSolverFactoryMock.Setup(x => x.GetCaptureSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(captureSolver.Object);
 
             sut.Rotation = 100;
-            await sut.Execute(default, default);
+            var cts = new CancellationTokenSource();
+            await sut.Execute(default, cts.Token);
 
             service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
@@ -200,7 +201,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             guiderMediatorMock.Verify(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
             rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == 100)), Times.Once);
-            rotatorMediatorMock.Verify(x => x.MoveRelative(It.IsAny<float>()), Times.Never);
+            rotatorMediatorMock.Verify(x => x.MoveRelative(It.IsAny<float>(), It.IsAny<CancellationToken>()), Times.Never);
 
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -236,7 +237,8 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             plateSolverFactoryMock.Setup(x => x.GetCaptureSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(captureSolver.Object);
 
             sut.Rotation = second;
-            await sut.Execute(default, default);
+            var cts = new CancellationTokenSource();
+            await sut.Execute(default, cts.Token);
 
             service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
@@ -246,7 +248,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == first)), Times.Once);
             rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == second)), Times.Once);
-            rotatorMediatorMock.Verify(x => x.MoveRelative(It.Is<float>(r => r == movement)), Times.Once);
+            rotatorMediatorMock.Verify(x => x.MoveRelative(It.Is<float>(r => r == movement), cts.Token), Times.Once);
 
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }

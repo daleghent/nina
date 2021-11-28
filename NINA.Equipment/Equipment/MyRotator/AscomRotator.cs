@@ -97,7 +97,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
             Logger.Debug($"ASCOM - Mechanical Position is {MechanicalPosition}° - Sync Position to Sky Angle {skyAngle}° using offset {offset}");
         }
 
-        public void Move(float angle) {
+        public async Task<bool> Move(float angle, CancellationToken ct) {
             if (Connected) {
                 if (angle >= 360) {
                     angle = AstroUtil.EuclidianModulus(angle, 360);
@@ -107,21 +107,31 @@ namespace NINA.Equipment.Equipment.MyRotator {
                 }
 
                 Logger.Debug($"ASCOM - Move relative by {angle}° - Mechanical Position reported by rotator {MechanicalPosition}° and offset {offset}");
-                device?.Move(angle);
+                await Task.Run(() => {
+                    using (ct.Register(() => device?.Halt())) {
+                        device?.Move(angle);
+                    }
+                    ct.ThrowIfCancellationRequested();
+                }, ct);
+
+                return true;
             }
+            return false;
         }
 
-        public void MoveAbsoluteMechanical(float targetPosition) {
+        public async Task<bool> MoveAbsoluteMechanical(float targetPosition, CancellationToken ct) {
             if (Connected) {
                 var movement = targetPosition - MechanicalPosition;
-                Move(movement);
+                return await Move(movement, ct);
             }
+            return false;
         }
 
-        public void MoveAbsolute(float targetPosition) {
+        public async Task<bool> MoveAbsolute(float targetPosition, CancellationToken ct) {
             if (Connected) {
-                Move(targetPosition - Position);
+                return await Move(targetPosition - Position, ct);
             }
+            return false;
         }
 
         protected override Task PreConnect() {

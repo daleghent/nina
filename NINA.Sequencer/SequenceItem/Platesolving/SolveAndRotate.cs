@@ -100,11 +100,13 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var service = windowServiceFactory.Create();
             service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+
+            bool stoppedGuiding = false;
             try {
                 var orientation = 0.0f;
                 float rotationDistance = float.MaxValue;
 
-                var stoppedGuiding = await guiderMediator.StopGuiding(token);
+                stoppedGuiding = await guiderMediator.StopGuiding(token);
 
                 var targetRotation = (float)Rotation;
 
@@ -142,14 +144,22 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
                     if (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                         Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");
-                        await rotatorMediator.MoveRelative(rotationDistance);
+                        await rotatorMediator.MoveRelative(rotationDistance, token);
+                        token.ThrowIfCancellationRequested();
                     }
                 };
-
-                if (stoppedGuiding) {
-                    await guiderMediator.StartGuiding(false, progress, token);
-                }
             } finally {
+                if (stoppedGuiding) {
+                    try {
+                        var restartedGuiding = await guiderMediator.StartGuiding(false, progress, token);
+                        if (!restartedGuiding) {
+                            Logger.Error("Failed to resume guiding after CenterAndRotate");
+                        }
+                    } catch (Exception e) {
+                        Logger.Error("Failed to resume guiding after CenterAndRotate", e);
+                    }
+                }
+
                 service.DelayedClose(TimeSpan.FromSeconds(10));
             }
         }

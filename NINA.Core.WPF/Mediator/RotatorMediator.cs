@@ -15,6 +15,7 @@
 using NINA.Equipment.Equipment.MyRotator;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.WPF.Base.Mediator {
@@ -25,16 +26,16 @@ namespace NINA.WPF.Base.Mediator {
             handler.Sync(skyAngle);
         }
 
-        public Task<float> MoveMechanical(float position) {
-            return handler.MoveMechanical(position);
+        public Task<float> MoveMechanical(float position, CancellationToken ct) {
+            return handler.MoveMechanical(position, ct);
         }
 
-        public Task<float> Move(float position) {
-            return handler.Move(position);
+        public Task<float> Move(float position, CancellationToken ct) {
+            return handler.Move(position, ct);
         }
 
-        public Task<float> MoveRelative(float position) {
-            return handler.MoveRelative(position);
+        public Task<float> MoveRelative(float position, CancellationToken ct) {
+            return handler.MoveRelative(position, ct);
         }
 
         public float GetTargetPosition(float position) {

@@ -74,7 +74,7 @@ namespace NINA.Sequencer.SequenceItem.Rotator {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return rotatorMediator.MoveMechanical(MechanicalPosition);
+            return rotatorMediator.MoveMechanical(MechanicalPosition, token);
         }
 
         public bool Validate() {

@@ -68,13 +68,13 @@ namespace NINATest.Rotator {
             mockRotator.SetupGet(x => x.MechanicalPosition).Returns(() => mechanicalPosition);
             mockRotator.SetupGet(x => x.IsMoving).Returns(false);
             mockRotator.SetupGet(x => x.Position).Returns(() => mechanicalPosition + offset);
-            mockRotator.Setup(x => x.Move(It.IsAny<float>())).Callback<float>(requestedPosition => {
+            mockRotator.Setup(x => x.Move(It.IsAny<float>(), It.IsAny<CancellationToken>())).Callback<float, CancellationToken>((requestedPosition, ct) => {
                 mechanicalPosition = AstroUtil.EuclidianModulus(mechanicalPosition + requestedPosition + 360, 360);
             });
-            mockRotator.Setup(x => x.MoveAbsolute(It.IsAny<float>())).Callback<float>(requestedPosition => {
+            mockRotator.Setup(x => x.MoveAbsolute(It.IsAny<float>(), It.IsAny<CancellationToken>())).Callback<float, CancellationToken>((requestedPosition, ct) => {
                 mechanicalPosition = AstroUtil.EuclidianModulus(requestedPosition - offset + 360, 360);
             });
-            mockRotator.Setup(x => x.MoveAbsoluteMechanical(It.IsAny<float>())).Callback<float>(requestedPosition => {
+            mockRotator.Setup(x => x.MoveAbsoluteMechanical(It.IsAny<float>(), It.IsAny<CancellationToken>())).Callback<float, CancellationToken>((requestedPosition, ct) => {
                 mechanicalPosition = AstroUtil.EuclidianModulus(requestedPosition, 360);
             });
 
@@ -93,7 +93,7 @@ namespace NINATest.Rotator {
         public async Task Test_MovePosition_NotSynced_Throws() {
             var sut = await CreateSUT();
 
-            Assert.ThrowsAsync<Exception>(async () => await sut.Move(1.0f), message: "Rotator not synced!");
+            Assert.ThrowsAsync<Exception>(async () => await sut.Move(1.0f, CancellationToken.None), message: "Rotator not synced!");
         }
 
         [Test]
@@ -115,9 +115,10 @@ namespace NINATest.Rotator {
             mechanicalPosition = 10.0f;
             offset = 5.0f;
 
-            var result = await sut.MoveMechanical(requestedPosition, TimeSpan.Zero);
+            var cts = new CancellationTokenSource();
+            var result = await sut.MoveMechanical(requestedPosition, TimeSpan.Zero, cts.Token);
             Assert.AreEqual(expectedPosition, result);
-            mockRotator.Verify(x => x.MoveAbsoluteMechanical(expectedPosition), Times.Once);
+            mockRotator.Verify(x => x.MoveAbsoluteMechanical(expectedPosition, It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -132,9 +133,10 @@ namespace NINATest.Rotator {
             mechanicalPosition = 10.0f;
             offset = 5.0f;
 
-            var result = await sut.MoveRelative(requestedAmount, TimeSpan.Zero);
+            var cts = new CancellationTokenSource();
+            var result = await sut.MoveRelative(requestedAmount, TimeSpan.Zero, cts.Token);
             Assert.AreEqual(expectedPosition, result);
-            mockRotator.Verify(x => x.MoveAbsoluteMechanical(expectedPosition), Times.Once);
+            mockRotator.Verify(x => x.MoveAbsoluteMechanical(expectedPosition, It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]

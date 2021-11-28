@@ -56,8 +56,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
             RefreshRotatorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(rotator?.Connected == true));
-            MoveCommand = new AsyncCommand<float>(() => Move(TargetPosition), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
-            MoveMechanicalCommand = new AsyncCommand<float>(() => MoveMechanical(TargetPosition), (p) => RotatorInfo.Connected);
+            MoveCommand = new AsyncCommand<float>(() => Move(TargetPosition, CancellationToken.None), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
+            MoveMechanicalCommand = new AsyncCommand<float>(() => MoveMechanical(TargetPosition, CancellationToken.None), (p) => RotatorInfo.Connected);
             HaltCommand = new RelayCommand(Halt, (p) => RotatorInfo.Connected);
             ReverseCommand = new RelayCommand(Reverse, (p) => RotatorInfo.Connected);
 
@@ -116,7 +116,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             }
         }
 
-        public async Task<float> Move(float requestedPosition) {
+        public async Task<float> Move(float requestedPosition, CancellationToken ct) {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
@@ -138,12 +138,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     );
 
                     Logger.Debug($"Move rotator to {adjustedTargetPosition}°");
-
-                    rotator.MoveAbsolute(adjustedTargetPosition);
-                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.Position - adjustedTargetPosition) < 359))) {
-                        _moveCts.Token.ThrowIfCancellationRequested();
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {adjustedTargetPosition}");
+                    var anyCTS = CancellationTokenSource.CreateLinkedTokenSource(_moveCts.Token, ct);
+                    using (anyCTS.Token.Register(() => rotator?.Halt())) {
+                        await rotator.MoveAbsolute(adjustedTargetPosition, anyCTS.Token);
+                        while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.Position - adjustedTargetPosition) < 359))) {
+                            anyCTS.Token.ThrowIfCancellationRequested();
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {adjustedTargetPosition}");
+                        }
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
                     pos = adjustedTargetPosition;
@@ -161,11 +163,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             return pos;
         }
 
-        public async Task<float> MoveMechanical(float requestedPosition) {
-            return await MoveMechanical(requestedPosition, TimeSpan.FromSeconds(1));
+        public async Task<float> MoveMechanical(float requestedPosition, CancellationToken ct) {
+            return await MoveMechanical(requestedPosition, TimeSpan.FromSeconds(1), ct);
         }
 
-        public async Task<float> MoveMechanical(float requestedPosition, TimeSpan waitTime) {
+        public async Task<float> MoveMechanical(float requestedPosition, TimeSpan waitTime, CancellationToken ct) {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
@@ -187,11 +189,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     );
 
                     Logger.Debug($"Move rotator mechanical to {adjustedTargetPosition}°");
-                    rotator.MoveAbsoluteMechanical(adjustedTargetPosition);
-                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) < 359))) {
-                        _moveCts.Token.ThrowIfCancellationRequested();
-                        await Task.Delay(waitTime);
-                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {adjustedTargetPosition}");
+                    var anyCTS = CancellationTokenSource.CreateLinkedTokenSource(_moveCts.Token, ct);
+                    using (anyCTS.Token.Register(() => rotator?.Halt())) {
+                        await rotator.MoveAbsoluteMechanical(adjustedTargetPosition, anyCTS.Token);
+                        while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) < 359))) {
+                            anyCTS.Token.ThrowIfCancellationRequested();
+                            await Task.Delay(waitTime);
+                            Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {adjustedTargetPosition}");
+                        }
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
                     pos = adjustedTargetPosition;
@@ -209,13 +214,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             return pos;
         }
 
-        public async Task<float> MoveRelative(float offset) {
-            return await MoveRelative(offset, TimeSpan.FromSeconds(1));
+        public async Task<float> MoveRelative(float offset, CancellationToken ct) {
+            return await MoveRelative(offset, TimeSpan.FromSeconds(1), ct);
         }
 
-        public async Task<float> MoveRelative(float offset, TimeSpan waitTime) {
+        public async Task<float> MoveRelative(float offset, TimeSpan waitTime, CancellationToken ct) {
             if (rotator?.Connected == true) {
-                return await MoveMechanical(rotator.MechanicalPosition + offset, waitTime);
+                return await MoveMechanical(rotator.MechanicalPosition + offset, waitTime, ct);
             }
             return -1;
         }

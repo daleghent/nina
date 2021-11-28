@@ -161,7 +161,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
             Synced = true;
         }
 
-        public void Move(float position) {
+        public async Task<bool> Move(float position, CancellationToken ct) {
             IsMoving = true;
 
             TargetPosition = Position + position;
@@ -173,23 +173,32 @@ namespace NINA.Equipment.Equipment.MyRotator {
                 TargetPosition = TargetPosition + 360;
             }
 
-            var task = WindowService.ShowDialog(this, Loc.Instance["LblRotationRequired"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
-            task.Wait();
+            // Reference: https://devblogs.microsoft.com/premier-developer/the-danger-of-taskcompletionsourcet-class/
+            var window = WindowService.ShowDialog(this, Loc.Instance["LblRotationRequired"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
+            var cancelTaskSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            using (ct.Register(() => cancelTaskSource.SetCanceled())) {
+                await Task.WhenAny(cancelTaskSource.Task, window.Task);
+            }
 
+            if (ct.IsCancellationRequested) {
+                _ = WindowService.Close();
+                ct.ThrowIfCancellationRequested();
+            }
             Position = AstroUtil.EuclidianModulus(TargetPosition, 360);
 
             IsMoving = false;
+            return true;
         }
 
-        public void MoveAbsolute(float position) {
-            Move(position - Position);
+        public async Task<bool> MoveAbsolute(float position, CancellationToken ct) {
+            return await Move(position - Position, ct);
         }
 
         public void SetupDialog() {
         }
 
-        public void MoveAbsoluteMechanical(float position) {
-            MoveAbsolute(position);
+        public async Task<bool> MoveAbsoluteMechanical(float position, CancellationToken ct) {
+            return await MoveAbsolute(position, ct);
         }
     }
 }

@@ -12,6 +12,9 @@
 
 #endregion "copyright"
 
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace NINA.Equipment.Interfaces {
 
     public interface IRotator : IDevice {
@@ -27,11 +30,11 @@ namespace NINA.Equipment.Interfaces {
 
         void Sync(float skyAngle);
 
-        void Move(float position);
+        Task<bool> Move(float position, CancellationToken ct);
 
-        void MoveAbsolute(float position);
+        Task<bool> MoveAbsolute(float position, CancellationToken ct);
 
-        void MoveAbsoluteMechanical(float position);
+        Task<bool> MoveAbsoluteMechanical(float position, CancellationToken ct);
 
         void Halt();
     }

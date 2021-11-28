@@ -85,9 +85,11 @@ namespace NINATest.Sequencer.SequenceItem.Rotator {
 
             var sut = new MoveRotatorMechanical(rotatorMediatorMock.Object);
             sut.MechanicalPosition = position;
-            await sut.Execute(default, default);
 
-            rotatorMediatorMock.Verify(x => x.MoveMechanical(It.Is<float>(p => p == position)), Times.Once);
+            var cts = new CancellationTokenSource();
+            await sut.Execute(default, cts.Token);
+
+            rotatorMediatorMock.Verify(x => x.MoveMechanical(It.Is<float>(p => p == position), cts.Token), Times.Once);
         }
 
         [Test]

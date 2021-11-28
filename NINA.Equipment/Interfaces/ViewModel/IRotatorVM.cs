@@ -14,6 +14,7 @@
 
 using NINA.Equipment.Equipment.MyRotator;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Interfaces.ViewModel {
@@ -22,15 +23,15 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         void Sync(float skyAngle);
 
-        Task<float> MoveMechanical(float position);
+        Task<float> MoveMechanical(float position, CancellationToken ct);
 
-        Task<float> MoveMechanical(float position, TimeSpan waitTime);
+        Task<float> MoveMechanical(float position, TimeSpan waitTime, CancellationToken ct);
 
-        Task<float> Move(float position);
+        Task<float> Move(float position, CancellationToken ct);
 
-        Task<float> MoveRelative(float position);
+        Task<float> MoveRelative(float position, CancellationToken ct);
 
-        Task<float> MoveRelative(float position, TimeSpan waitTime);
+        Task<float> MoveRelative(float position, TimeSpan waitTime, CancellationToken ct);
 
         float GetTargetPosition(float position);
 
