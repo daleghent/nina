@@ -30,7 +30,7 @@
         <Grid Margin="5,0,5,0" IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <StackPanel IsEnabled="{Binding CameraInfo.Connected}" Orientation="Vertical">
 
-                <StackPanel IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}" Orientation="Vertical">
+                <StackPanel Orientation="Vertical">
                     <Border
                         MinHeight="30"
                         BorderBrush="{StaticResource BorderBrush}"
