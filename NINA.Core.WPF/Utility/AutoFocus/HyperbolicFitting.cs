@@ -79,16 +79,16 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         public HyperbolicFitting Calculate(ICollection<ScatterErrorPoint> points) {
             double error1, oldError, pRange, aRange, bRange, highestHfr, lowestHfr, highestPosition, lowestPosition, a, b, p, a1, b1, p1, a0, b0, p0;
             double lowestError = double.MaxValue; //scaled RMS (square root of the mean square) of the HFD errors after curve fitting
-            int n = points.Count();
 
             var nonZeroPoints = points.Where((dp) => dp.Y >= 0.1);
             if (nonZeroPoints.Count() == 0) {
                 // No non zero points in curve. No fit can be calculated.
                 return this;
             }
+            int n = nonZeroPoints.Count();
 
             ScatterErrorPoint lowestPoint = nonZeroPoints.Aggregate((l, r) => l.Y < r.Y ? l : r); // Get lowest non-zero datapoint
-            ScatterErrorPoint highestPoint = points.Aggregate((l, r) => l.Y > r.Y ? l : r); // Get highest datapoint
+            ScatterErrorPoint highestPoint = nonZeroPoints.Aggregate((l, r) => l.Y > r.Y ? l : r); // Get highest datapoint
             highestPosition = highestPoint.X;
             highestHfr = highestPoint.Y;
             lowestPosition = lowestPoint.X;
@@ -132,7 +132,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
                     while (a1 <= a0 + aRange) { //a loop
                         b1 = b0 - bRange; // Start value
                         while (b1 <= b0 + bRange) { //b loop
-                            error1 = ScaledErrorHyperbola(points, p1, a1, b1);
+                            error1 = ScaledErrorHyperbola(nonZeroPoints, p1, a1, b1);
                             if (error1 < lowestError) { //Better position found
                                 oldError = lowestError;
                                 lowestError = error1;
@@ -155,9 +155,9 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             Fitting = (x) => a * MathHelper.HCos(MathHelper.HArcsin((p - x) / b));
             Minimum = new DataPoint((int)Math.Round(p), a);
 
-            var inputs = points.Select((dp) => dp.X).ToArray();
-            var outputs = points.Select((dp) => dp.Y).ToArray();
-            //var weights = points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray();
+            var inputs = nonZeroPoints.Select((dp) => dp.X).ToArray();
+            var outputs = nonZeroPoints.Select((dp) => dp.Y).ToArray();
+            //var weights = nonZeroPoints.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray();
             var transformed = new double[inputs.Length];
             var rSquared = new RSquaredLoss(n, outputs);
             //rSquared.Weights = weights;
@@ -169,7 +169,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             return this;
         }
 
-        private double ScaledErrorHyperbola(ICollection<ScatterErrorPoint> points, double perfectFocusPosition, double a, double b) {
+        private double ScaledErrorHyperbola(IEnumerable<ScatterErrorPoint> points, double perfectFocusPosition, double a, double b) {
             return Math.Sqrt(points.Sum((dp) => Math.Pow((HyperbolicFittingHfrCalc(dp.X, perfectFocusPosition, a, b) - dp.Y) / dp.ErrorY, 2)));
         }
 
