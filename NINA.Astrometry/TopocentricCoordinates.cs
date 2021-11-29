@@ -30,13 +30,19 @@ namespace NINA.Astrometry {
         public Angle Altitude { get; set; }
         public Angle Latitude { get; private set; }
         public Angle Longitude { get; private set; }
+        public double Elevation { get; private set; }
         public AltitudeSite AltitudeSite => Azimuth.Degree >= 0 && Azimuth.Degree < 180 ? AltitudeSite.EAST : AltitudeSite.WEST;
-        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude, ICustomDateTime dateTime) {
+        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude, double elevation, ICustomDateTime dateTime) {
             this.DateTime = dateTime;
             this.Azimuth = azimuth;
             this.Altitude = altitude;
             this.Latitude = latitude;
             this.Longitude = longitude;
+            this.Elevation = elevation;
+        }
+
+        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude, ICustomDateTime dateTime)
+            : this(azimuth, altitude, latitude, longitude, 0.0d, dateTime) {
         }
 
         public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude) 
@@ -48,6 +54,20 @@ namespace NINA.Astrometry {
         }
 
         public Coordinates Transform(Epoch epoch, DatabaseInteraction db = null) {
+            return Transform(epoch, 0.0d, 0.0d, 0.0d, 0.0d, db);
+        }
+
+        /// <summary>
+        /// Transforms observed coordinates to ICRS astrometric coordinates while applying refraction correction
+        /// </summary>
+        /// <param name="epoch">Epoch of resulting astrometric coordinates</param>
+        /// <param name="pressurehPa">Pressure in hecto pascals (hPa) at the observer (not at sea level)</param>
+        /// <param name="tempCelcius">Ambient temperature in Celcius</param>
+        /// <param name="relativeHumidity">Relative humidity at the ambient temperature</param>
+        /// <param name="wavelength">Wavelength of light in micrometers. 0.54 is approximately the center of a typical luminance bandpass and would be a reasonable default value to use</param>
+        /// <param name="db">NINA database</param>
+        /// <returns>Celestial coordinates</returns>
+        public Coordinates Transform(Epoch epoch, double pressurehPa, double tempCelcius, double relativeHumidity, double wavelength, DatabaseInteraction db = null) {
             var now = DateTime.Now;
             var jdUTC = AstroUtil.GetJulianDate(now);
 
@@ -56,7 +76,7 @@ namespace NINA.Astrometry {
 
             var raRad = 0d;
             var decRad = 0d;
-            SOFA.TopocentricToCelestial("A", Azimuth.Radians, zenithDistance, jdUTC, 0d, deltaUT, Longitude.Radians, Latitude.Radians, 0d, 0d, 0d, 0d, 0d, 0d, 0d, ref raRad, ref decRad);
+            SOFA.TopocentricToCelestial("A", Azimuth.Radians, zenithDistance, jdUTC, 0d, deltaUT, Longitude.Radians, Latitude.Radians, Elevation, 0d, 0d, pressurehPa, tempCelcius, relativeHumidity, wavelength, ref raRad, ref decRad);
             var ra = Angle.ByRadians(raRad);
             var dec = Angle.ByRadians(decRad);
 

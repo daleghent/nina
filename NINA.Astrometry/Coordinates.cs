@@ -232,6 +232,10 @@ namespace NINA.Astrometry {
         }
 
         public TopocentricCoordinates Transform(Angle latitude, Angle longitude, double elevation) {
+            return this.Transform(latitude, longitude, elevation, 0.0d, 0.0d, 0.0d, 0.0d);
+        }
+
+        public TopocentricCoordinates Transform(Angle latitude, Angle longitude, double elevation, double pressurehPa, double tempCelcius, double relativeHumidity, double wavelength) {
             var transform = this.Transform(Epoch.J2000);
 
             var now = DateTime.Now;
@@ -239,12 +243,12 @@ namespace NINA.Astrometry {
 
             var deltaUT = AstroUtil.DeltaUT(now);
             double aob = 0d, zob = 0d, hob = 0d, dob = 0d, rob = 0d, eo = 0d;
-            SOFA.CelestialToTopocentric(transform.raAngle.Radians, transform.decAngle.Radians, 0d, 0d, 0d, 0d, jdUTC, 0d, deltaUT, longitude.Radians, latitude.Radians, elevation, 0d, 0d, 0d, 0d, 0d, 0d, ref aob, ref zob, ref hob, ref dob, ref rob, ref eo);
+            SOFA.CelestialToTopocentric(transform.raAngle.Radians, transform.decAngle.Radians, 0d, 0d, 0d, 0d, jdUTC, 0d, deltaUT, longitude.Radians, latitude.Radians, elevation, 0d, 0d, pressurehPa, tempCelcius, relativeHumidity, wavelength, ref aob, ref zob, ref hob, ref dob, ref rob, ref eo);
 
             var az = Angle.ByRadians(aob);
             var alt = Angle.ByDegree(90) - Angle.ByRadians(zob);
 
-            return new TopocentricCoordinates(az, alt, latitude, longitude, DateTime);
+            return new TopocentricCoordinates(az, alt, latitude, longitude, elevation, DateTime);
         }
 
         /// <summary>
