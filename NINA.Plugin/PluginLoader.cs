@@ -85,7 +85,8 @@ namespace NINA.Plugin {
                               IMeridianFlipVMFactory meridianFlipVMFactory,
                               IAutoFocusVMFactory autoFocusVMFactory,
                               IImageControlVM imageControlVM,
-                              IImageStatisticsVM imageStatisticsVM) {
+                              IImageStatisticsVM imageStatisticsVM,
+                              IDomeSynchronization domeSynchronization) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -118,6 +119,7 @@ namespace NINA.Plugin {
             this.autoFocusVMFactory = autoFocusVMFactory;
             this.imageControlVM = imageControlVM;
             this.imageStatisticsVM = imageStatisticsVM;
+            this.domeSynchronization = domeSynchronization;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -421,6 +423,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(meridianFlipVMFactory);
             container.ComposeExportedValue(imageControlVM);
             container.ComposeExportedValue(imageStatisticsVM);
+            container.ComposeExportedValue(domeSynchronization);
 
             return container;
         }
@@ -469,6 +472,7 @@ namespace NINA.Plugin {
         private readonly IMeridianFlipVMFactory meridianFlipVMFactory;
         private readonly IImageControlVM imageControlVM;
         private readonly IImageStatisticsVM imageStatisticsVM;
+        private readonly IDomeSynchronization domeSynchronization;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
             return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);
