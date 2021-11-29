@@ -4925,7 +4925,7 @@
     <value>时间间隔</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
-    <value>在一段指定时间内循环指令。当时间结束时，该组内的其余指令将会被跳过。</value>
+    <value>循环一段指定时间。当时间结束时，该组内的其余指令将会被跳过。</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>循环一段时间</value>
@@ -5227,7 +5227,7 @@
     <value>从 Planetarium 获取位置</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
-    <value>等待目标高度高于地平线。如果使用了自定义地平线，则使用该高度而不是0</value>
+    <value>等待目标升到地平线上方。如果使用了自定义地平线，则使用该高度而不是0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
     <value>等待到超出地平线</value>
@@ -5236,13 +5236,13 @@
     <value>正在等待目标超出地平线。目标高度 {0}° / 地平线高度 {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
-    <value>目标超出地平线一定高度时循环</value>
+    <value>目标在地平线上方时循环。如果使用了自定义地平线，则使用该高度而不是0</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
     <value>超出地平线时循环</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
-    <value>目标永远不会在地平线上</value>
+    <value>目标永远不会升到地平线上</value>
   </data>
   <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
     <value>移动旋转器到机械位置 {0}</value>
@@ -5771,6 +5771,12 @@
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
+    <value>Use External Tracking CCD</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
+    <value>External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect.</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0}不再被Microsoft和N.I.N.A.项目支持。在不被支持的Windows系统版本上运行N.I.N.A.将会导致程序故障或崩溃。N.I.N.A.当前的系统需求已列在在线文档中。</value>

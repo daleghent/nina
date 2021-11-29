@@ -5773,6 +5773,12 @@ O comportamento padrão é continuar em caso de erros. No entanto, para algumas 
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
   </data>
+  <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
+    <value>Use External Tracking CCD</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
+    <value>External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect.</value>
+  </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
   </data>

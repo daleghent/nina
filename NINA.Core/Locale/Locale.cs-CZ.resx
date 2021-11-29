@@ -439,8 +439,8 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chybu azimutu</va
     <value>Černý výřez</value>
   </data>
   <data name="LblBlindSolveAttemptForFraming" xml:space="preserve">
-    <value>Na snímek je třeba aplikovat řešení.
-Mají se použít následující referenční souřadnice?
+    <value>Na snímek je třeba aplikovat astrometrii.
+Mají se použít referenční souřadnice?
 RA: {0}
 Pro: {1}</value>
   </data>
@@ -1421,7 +1421,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Počet Flats</value>
   </data>
   <data name="LblFlatDevice" xml:space="preserve">
-    <value>FlatBox</value>
+    <value>Flat Box</value>
   </data>
   <data name="LblFlatDeviceBrightness" xml:space="preserve">
     <value>Jas</value>
@@ -1442,10 +1442,10 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Zavřít</value>
   </data>
   <data name="LblFlatDeviceConnected" xml:space="preserve">
-    <value>FlatBox připojen.</value>
+    <value>Flat Box připojen.</value>
   </data>
   <data name="LblFlatDeviceConnectedButCoverNotOpen" xml:space="preserve">
-    <value>FlatBox je připojen, ale kryt není otevřen.</value>
+    <value>Flat Box je připojen, ale kryt není otevřen.</value>
   </data>
   <data name="LblFlatDeviceCover" xml:space="preserve">
     <value>Kryt</value>
@@ -1454,22 +1454,22 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Nyní</value>
   </data>
   <data name="LblFlatDeviceDisconnectQuestion" xml:space="preserve">
-    <value>Odpojit FlatBox?</value>
+    <value>Odpojit Flat Box?</value>
   </data>
   <data name="LblFlatDeviceFlatPanelSettings" xml:space="preserve">
-    <value>Nastavení FlatBoxu</value>
+    <value>Nastavení Flat Boxu</value>
   </data>
   <data name="LblFlatDeviceInvalidResponse" xml:space="preserve">
-    <value>Neplatná odpověď z FlatBoxu.</value>
+    <value>Neplatná odpověď z Flat Boxu.</value>
   </data>
   <data name="LblFlatDeviceLight" xml:space="preserve">
-    <value>FlatBox světlo</value>
+    <value>Flat Box světlo</value>
   </data>
   <data name="LblFlatDeviceNeitherOpenNorClosed" xml:space="preserve">
     <value>Ani otevřené, ani zavřené</value>
   </data>
   <data name="LblFlatDeviceNoDevice" xml:space="preserve">
-    <value>Žádný FlatBox</value>
+    <value>Žádný Flat Box</value>
   </data>
   <data name="LblFlatDeviceOpen" xml:space="preserve">
     <value>Otevřít</value>
@@ -1538,7 +1538,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Flat je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo minimální expoziční čas</value>
   </data>
   <data name="LblFlatWizard" xml:space="preserve">
-    <value>Průvodce Flat</value>
+    <value>Flat</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
     <value>Průvodcem Flat Snímáním</value>
@@ -1604,7 +1604,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Aktuální poloha zaostření</value>
   </data>
   <data name="LblFocuserSettleTime" xml:space="preserve">
-    <value>Čas Stabilizace Zaostření</value>
+    <value>Stabilizace Zaostření</value>
   </data>
   <data name="LblFocuserSettleTimeTooltip" xml:space="preserve">
     <value>Pokud zaostření způsobí posun obrazu, zde nastavte čas stabilizace v sekundách.</value>
@@ -2004,7 +2004,7 @@ Přeskočit.</value>
     <value>Minimální Výška</value>
   </data>
   <data name="LblMinimumSettleTime" xml:space="preserve">
-    <value>Minimální Čas Stabilizace</value>
+    <value>Minimální Stabilizace</value>
   </data>
   <data name="LblMinutes" xml:space="preserve">
     <value>Minuty</value>
@@ -2690,7 +2690,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Obnovit Pointaci</value>
   </data>
   <data name="LblResumeSettleTime" xml:space="preserve">
-    <value>Čas Stabilizace po obnovení</value>
+    <value>Stabilizace po obnovení</value>
   </data>
   <data name="LblResumeTracking" xml:space="preserve">
     <value>Obnovit Sledování</value>
@@ -2862,10 +2862,10 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Nastavte Toleranci Pixelů</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
-    <value>Čas stabilizace po přejezdu</value>
+    <value>Stabilizace po přejezdu</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Časový limit Stabilizace</value>
+    <value>Limit Stabilizace</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Zahájit nový Pokus o Pointaci</value>
@@ -4205,7 +4205,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Aktualizujte MetaGuide alespoň na {0}</value>
   </data>
   <data name="LblMetaGuideDitherSettleTime" xml:space="preserve">
-    <value>Čas stabilizace ditheringu</value>
+    <value>Stabilizace ditheringu</value>
   </data>
   <data name="LblMetaGuideDitherSettleTimeTooltip" xml:space="preserve">
     <value>Čas, čekání v sekundách, na dokončení ditheringu</value>
@@ -4385,7 +4385,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Přejezd, vycentruje a otočí</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Přejezd k cíli a vycentruje dalekohled pomocí astrometrie pro dané souřadnice</value>
+    <value>Přejezd k cíli, vystředí dalekohled pomocí astrometrie pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>Přejezd a Vycentrovat</value>
@@ -5359,7 +5359,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Průvodce po 5 pokusech nenašel správnou úroveň jasu. Zkuste změnit velikost kroku nebo toleranci.</value>
   </data>
   <data name="LblFlatDeviceSettleTime" xml:space="preserve">
-    <value>Čas Stabilizace</value>
+    <value>Stabilizace</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
     <value>Inicializace Sekvenceru...</value>
@@ -5752,7 +5752,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Zeměpisnou šířku {0} a {1} délku montáže nelze upravit!</value>
   </data>
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
-    <value>Čas stabilizace ditheringu</value>
+    <value>Stabilizace ditheringu</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
     <value>Selhalo spuštění sledování CCD ASCOM serveru. {0}</value>
@@ -5774,6 +5774,12 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>Ovladač ASCOM, který čte z tohoto serveru, by měl mít nakonfigurován stejný název kanálu</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
+    <value>Použít Externí Monitorovací CCD</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
+    <value>Nastavení externího monitorování CCD změněno. Odpojte a připojte kameru, aby se změny projevil.</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>Aplikace {0} již není podporována společností Microsoft a projektem N.I.N.A.V důsledku používání může dojít k chybným funkcím nebo haváriím N.I.N.A. nepodporované verze systému Windows jsou uvedeny v online  N.I.N.A dokumentaci.</value>

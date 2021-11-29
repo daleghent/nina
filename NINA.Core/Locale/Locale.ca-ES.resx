@@ -5771,6 +5771,12 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>El controlador ASCOM que llegeix des d’aquest servidor hauria de tenir el mateix nom del tub configurat</value>
   </data>
+  <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
+    <value>Utilitzeu CCD de seguiment extern</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
+    <value>S'ha canviat la configuració del CCD de seguiment extern. Desconnecteu i torneu a connectar la càmera perquè tingui efecte.</value>
+  </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} ja no és compatible amb Microsoft i el projecte N.I.N.A. Trobareu un mal funcionament o errors de l’aplicació com a conseqüència de l’ús de N.I.N.A. en una versió de Windows no compatible. Els requisits actuals del sistema de N.I.N.A. apareixen a la documentació en línia.</value>
   </data>

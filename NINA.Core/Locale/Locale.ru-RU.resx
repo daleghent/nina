@@ -5773,6 +5773,12 @@ Dec: {1}</value>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>Драйвер ASCOM, который читает с этого сервера, должен иметь одно и то же имя канала</value>
   </data>
+  <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
+    <value>Use External Tracking CCD</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
+    <value>External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect.</value>
+  </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} больше не поддерживается Microsoft и проектом N.I.N.A. Вы будете сталкиваться с неисправностями приложения или сбоями в результате использования N.I.N.A. на неподдерживаемой версии Windows. Текущие системные требования N.I.N.A. указаны в онлайн документации.</value>
   </data>

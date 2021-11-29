@@ -5752,6 +5752,12 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>このサーバーから読み込むASCOMドライバのパイプ名は、設定したパイプ名と同じでなければなりません。</value>
   </data>
+  <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
+    <value>外部の追尾CCDを使用</value>
+  </data>
+  <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
+    <value>外部の追尾CCDの設定が変更されました。カメラの接続を解除して再接続すると、変更が有効になります。</value>
+  </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} はMicrosoftとN.I.N.A.プロジェクトでサポートされなくなりました。サポートされていないバージョンの WindowsでN.I.N.A.を使用すると、アプリケーションの誤動作やクラッシュが発生します。現在のN.I.N.A.のシステム要件は、オンラインの説明書に記載されています。</value>
   </data>
