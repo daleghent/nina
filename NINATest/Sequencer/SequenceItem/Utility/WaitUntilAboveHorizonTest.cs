@@ -127,7 +127,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         public async Task CustomHorizon_TargetIsAboveHorizon_ItemExecuted() {
             var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
             using (var sr = new StringReader(horizonDefinition)) {
-                var horizon = CustomHorizon.FromReader(sr);
+                var horizon = CustomHorizon.FromReader_Standard(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
 
@@ -147,7 +147,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         public async Task CustomHorizon_TargetStartsBelowHorizon_RisesAboveHorizon_ItemExecuted() {
             var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
             using (var sr = new StringReader(horizonDefinition)) {
-                var horizon = CustomHorizon.FromReader(sr);
+                var horizon = CustomHorizon.FromReader_Standard(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
 

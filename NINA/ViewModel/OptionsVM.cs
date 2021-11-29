@@ -139,7 +139,7 @@ namespace NINA.ViewModel {
         }
 
         private void OpenHorizonFilePathDiag(object obj) {
-            var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz;*.txt");
+            var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz;*.txt|MountWizzard4 Horizon File|*.hpts");
             if (dialog.ShowDialog() == true) {
                 HorizonFilePath = dialog.FileName;
             }

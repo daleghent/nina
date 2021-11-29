@@ -82,7 +82,7 @@ namespace NINATest.Sequencer.Conditions {
         public void CustomHorizon_AboveHorizon_CheckTrue() {
             var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
             using (var sr = new StringReader(horizonDefinition)) {
-                var horizon = CustomHorizon.FromReader(sr);
+                var horizon = CustomHorizon.FromReader_Standard(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
 
@@ -100,7 +100,7 @@ namespace NINATest.Sequencer.Conditions {
         public void CustomHorizon_AboveHorizon_CheckFalse() {
             var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
             using (var sr = new StringReader(horizonDefinition)) {
-                var horizon = CustomHorizon.FromReader(sr);
+                var horizon = CustomHorizon.FromReader_Standard(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
 
@@ -120,7 +120,7 @@ namespace NINATest.Sequencer.Conditions {
         public void CustomHorizon_AboveHorizon_WithOffset_CheckFalse(int offset, bool expected) {
             var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
             using (var sr = new StringReader(horizonDefinition)) {
-                var horizon = CustomHorizon.FromReader(sr);
+                var horizon = CustomHorizon.FromReader_Standard(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
 

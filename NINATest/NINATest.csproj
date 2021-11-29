@@ -446,6 +446,9 @@
     <None Include="AstrometryTest\HorizonData\incomplete.hrz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="AstrometryTest\HorizonData\mw4.hpts">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="AstrometryTest\HorizonData\partial.hrz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

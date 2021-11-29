@@ -225,7 +225,7 @@ namespace NINA.Profile {
 
             try {
                 if (!string.IsNullOrWhiteSpace(horizonFilePath)) {
-                    ActiveProfile.AstrometrySettings.Horizon = CustomHorizon.FromFile(horizonFilePath);
+                    ActiveProfile.AstrometrySettings.Horizon = CustomHorizon.FromFilePath(horizonFilePath);
                 } else {
                     ActiveProfile.AstrometrySettings.HorizonFilePath = string.Empty;
                     ActiveProfile.AstrometrySettings.Horizon = null;

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Model;
+using NINA.Core.Utility;
 using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
@@ -32,9 +33,11 @@ namespace NINA.Profile {
         public void OnDeserialized(StreamingContext context) {
             try {
                 if (!string.IsNullOrWhiteSpace(HorizonFilePath)) {
-                    Horizon = CustomHorizon.FromFile(HorizonFilePath);
+                    Horizon = CustomHorizon.FromFilePath(HorizonFilePath);
                 }
-            } catch (Exception) {
+            } catch (Exception e) {
+                Logger.Error($"Failed to parse custom horizon file {HorizonFilePath}", e);
+                HorizonFilePath = "";
             }
         }
 

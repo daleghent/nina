@@ -14,12 +14,7 @@
 
 using NUnit.Framework;
 using FluentAssertions;
-using NINA.Astrometry;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using NINA.Core.Model;
 
@@ -31,14 +26,14 @@ namespace NINATest.AstrometryTest {
         [Test]
         public void Testbasdf() {
             var testFile = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "full360.hrz");
-            var customHorizon = CustomHorizon.FromFile(testFile);
+            var customHorizon = CustomHorizon.FromFilePath(testFile);
         }
 
         [Test]
         public void CompleteAzimuth_MinMaxAltitudeRetrievedCorrectly() {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "full360.hrz");
 
-            var sut = CustomHorizon.FromFile(data);
+            var sut = CustomHorizon.FromFilePath(data);
 
             sut.GetMaxAltitude().Should().Be(70.9);
             sut.GetMinAltitude().Should().Be(7.6);
@@ -57,7 +52,7 @@ namespace NINATest.AstrometryTest {
         public void CompleteAzimuth_AbsoluteValuesRetrievedCorrectly(double azimuth, double expectedAltitude) {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "full360.hrz");
 
-            var sut = CustomHorizon.FromFile(data);
+            var sut = CustomHorizon.FromFilePath(data);
 
             sut.GetAltitude(azimuth).Should().Be(expectedAltitude);
         }
@@ -70,7 +65,7 @@ namespace NINATest.AstrometryTest {
         public void PartialAzimuth_InterpolationRetrievedCorrectly(double azimuth, double expectedAltitude) {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "partial.hrz");
 
-            var sut = CustomHorizon.FromFile(data);
+            var sut = CustomHorizon.FromFilePath(data);
 
             sut.GetAltitude(azimuth).Should().BeApproximately(expectedAltitude, 0.0000001);
         }
@@ -83,7 +78,7 @@ namespace NINATest.AstrometryTest {
         public void IncompleteAzimuth_InterpolationRetrievedCorrectly(double azimuth, double expectedAltitude) {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "incomplete.hrz");
 
-            var sut = CustomHorizon.FromFile(data);
+            var sut = CustomHorizon.FromFilePath(data);
 
             sut.GetAltitude(azimuth).Should().BeApproximately(expectedAltitude, 0.0000001);
         }
@@ -92,7 +87,7 @@ namespace NINATest.AstrometryTest {
         public void FileNotFound_FileNotFoundExceptionThrown() {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "invalid.abc");
 
-            Action act = () => CustomHorizon.FromFile(data);
+            Action act = () => CustomHorizon.FromFilePath(data);
 
             act.Should().Throw<FileNotFoundException>();
         }
@@ -101,9 +96,22 @@ namespace NINATest.AstrometryTest {
         public void FileNotFound_ArgumentExceptionThrown() {
             var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "empty.hrz");
 
-            Action act = () => CustomHorizon.FromFile(data);
+            Action act = () => CustomHorizon.FromFilePath(data);
 
             act.Should().Throw<ArgumentException>().WithMessage("Horizon file does not contain enough entries or is invalid");
+        }
+
+        [Test]
+        [TestCase(0, 2.8767)]
+        [TestCase(0.567, 2.0548)]
+        [TestCase(111.685, 16.0274)]
+        [TestCase(299.9055, 2.4658)]
+        [TestCase(360.0, 2.8767)]
+        public void MW4_Format_ParsedCorrectly(double azimuth, double expectedAltitude) {
+            var data = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "mw4.hpts");
+
+            var sut = CustomHorizon.FromFilePath(data);
+            sut.GetAltitude(azimuth).Should().BeApproximately(expectedAltitude, 0.001);
         }
     }
 }

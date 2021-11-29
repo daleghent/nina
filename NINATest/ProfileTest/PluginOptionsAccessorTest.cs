@@ -51,7 +51,6 @@ namespace NINATest.ProfileTest {
         public void SetValueInt_UpdatesValue() {
             var sut = GetSUT();
 
-            var defaultValue = 11;
             string valueName = "name";
             int setValue = 13;
             pluginSettings.SetValue(pluginGuid, valueName, setValue);
