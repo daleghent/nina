@@ -442,7 +442,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chybu azimutu</va
     <value>Na snímek je třeba aplikovat astrometrii.
 Mají se použít referenční souřadnice?
 RA: {0}
-Pro: {1}</value>
+Dec: {1}</value>
   </data>
   <data name="LblBlindSolver" xml:space="preserve">
     <value>Řešení Naslepo</value>

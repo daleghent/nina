@@ -3494,7 +3494,7 @@
     <value>使用 SharpCap 传感器分析</value>
   </data>
   <data name="LblUseSideOfPier" xml:space="preserve">
-    <value>使用赤道仪方位</value>
+    <value>从设备获取镜筒偏向</value>
   </data>
   <data name="LblUseSnapPort" xml:space="preserve">
     <value>使用赤道仪快门线</value>
@@ -4031,7 +4031,7 @@
     <value>望远镜已经停放，在指向之前可能需要解除停放</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
-    <value>赤道仪方位</value>
+    <value>镜筒偏向</value>
   </data>
   <data name="LblCameraTimeoutOption" xml:space="preserve">
     <value>相机超时</value>
@@ -5813,13 +5813,13 @@
     <value>切换</value>
   </data>
   <data name="LblMirrorLockupDelay" xml:space="preserve">
-    <value>Mirror lockup delay</value>
+    <value>反光镜升起锁定延迟</value>
   </data>
   <data name="LblMirrorLockupDelayTooltip" xml:space="preserve">
-    <value>The desired length of time between when the mirror is locked up and when the exposure starts.
-A delay of 0 seconds deactivates this option.
-The mirror lockup option must be enabled in the camera as well.
-Refer to your camera's manual for the location of this setting</value>
+    <value>设定从反光镜升起到曝光开始之间的间隔时间。
+设置为0秒的间隔时间将禁用此选项。
+在相机中需启用反光镜预升选项。
+请参阅您的相机手册以了解此选项的位置。</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
     <value>{0} 已与计算机断开连接。请检查其USB连接和电源</value>
