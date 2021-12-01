@@ -22,6 +22,7 @@
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:survey="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:wpfbase="clr-namespace:NINA.WPF.Base.View;assembly=NINA.WPF.Base"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="UC"
     d:DesignHeight="300"
@@ -485,9 +486,9 @@
                                 HorizontalAlignment="Stretch"
                                 ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
                                 ButtonText="{ns:Loc LblDetermineRotationFromCamera}"
-                                CancelToolTip="{ns:Loc LblDetermineRotationFromCameraCancel}"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding CancelGetRotationFromCameraCommand}"
+                                CancelToolTip="{ns:Loc LblDetermineRotationFromCameraCancel}"
                                 Command="{Binding GetRotationFromCameraCommand}"
                                 ToolTip="{ns:Loc LblDetermineRotationFromCameraTooltip}" />
                         </Grid>
@@ -655,17 +656,17 @@
             VerticalAlignment="Stretch" />
 
         <Grid Grid.Column="2">
-            <local:ImageView
+            <wpfbase:ImageView
                 Image="{Binding ImageParameter.Image, IsAsync=True}"
                 RectangleFontSize="{Binding FontSize}"
                 RectangleOpacity="{Binding Opacity}"
                 ScrollEnabled="{Binding SkyMapAnnotator.DynamicFoV, Converter={StaticResource InverseBooleanConverter}}">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SizeChanged" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=PART_ScrollViewerBinding}">
+                    <i:EventTrigger EventName="SizeChanged" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=wpfbase:ImageView, Mode=FindAncestor}, Path=PART_ScrollViewerBinding}">
                         <i:InvokeCommandAction Command="{Binding ScrollViewerSizeChangedCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <local:ImageView.ButtonHeaderContent>
+                <wpfbase:ImageView.ButtonHeaderContent>
                     <StackPanel Margin="0,0,2,0" Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOpacity}" />
                         <ninactrl:StepperControl
@@ -831,8 +832,8 @@
                             </ToggleButton.Style>
                         </ToggleButton>
                     </StackPanel>
-                </local:ImageView.ButtonHeaderContent>
-                <local:ImageView.ImageAreaContent>
+                </wpfbase:ImageView.ButtonHeaderContent>
+                <wpfbase:ImageView.ImageAreaContent>
                     <Canvas Width="{Binding ImageParameter.Image.PixelWidth}" Height="{Binding ImageParameter.Image.PixelHeight}">
                         <local:SkyMapOverlayView />
                         <Grid>
@@ -856,13 +857,13 @@
                                                     Stroke="{StaticResource SecondaryBrush}"
                                                     StrokeThickness="5">
                                                     <Rectangle.Fill>
-                                                        <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=RectangleOpacity}" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
+                                                        <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource AncestorType=wpfbase:ImageView, Mode=FindAncestor}, Path=RectangleOpacity}" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
                                                     </Rectangle.Fill>
                                                 </Rectangle>
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=RectangleFontSize}"
+                                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType=wpfbase:ImageView, Mode=FindAncestor}, Path=RectangleFontSize}"
                                                     FontStretch="ExtraExpanded"
                                                     Text="{Binding Id}"
                                                     Visibility="{Binding Id, Converter={StaticResource ZeroToVisibilityConverter}}" />
@@ -935,8 +936,8 @@
                             </Grid>
                         </Grid>
                     </Canvas>
-                </local:ImageView.ImageAreaContent>
-            </local:ImageView>
+                </wpfbase:ImageView.ImageAreaContent>
+            </wpfbase:ImageView>
             <StackPanel
                 Margin="5,0,0,20"
                 HorizontalAlignment="Left"

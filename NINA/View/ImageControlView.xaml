@@ -17,6 +17,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:wpfbase="clr-namespace:NINA.WPF.Base.View;assembly=NINA.WPF.Base"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -55,12 +56,12 @@
             </Grid>
         </Popup>
 
-        <local:ImageView
+        <wpfbase:ImageView
             Image="{Binding Image}"
             RightMouseButtonDownCommand="{Binding PixelPeepStartCommand}"
             RightMouseButtonMoveCommand="{Binding PixelPeepMoveCommand}"
             RightMouseButtonUpCommand="{Binding PixelPeepEndCommand}">
-            <local:ImageView.ButtonHeaderContent>
+            <wpfbase:ImageView.ButtonHeaderContent>
                 <StackPanel Orientation="Horizontal">
                     <Button
                         Width="35"
@@ -246,8 +247,8 @@
                         </ToggleButton.Style>
                     </ToggleButton>
                 </StackPanel>
-            </local:ImageView.ButtonHeaderContent>
-            <local:ImageView.ImageAreaContent>
+            </wpfbase:ImageView.ButtonHeaderContent>
+            <wpfbase:ImageView.ImageAreaContent>
                 <StackPanel>
                     <StackPanel.Resources>
                         <s:Int32 x:Key="zero">0</s:Int32>
@@ -337,7 +338,7 @@
                         </Border>
                     </Grid>
                 </StackPanel>
-            </local:ImageView.ImageAreaContent>
-        </local:ImageView>
+            </wpfbase:ImageView.ImageAreaContent>
+        </wpfbase:ImageView>
     </Grid>
 </UserControl>

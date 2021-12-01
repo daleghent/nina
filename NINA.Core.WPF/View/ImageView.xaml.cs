@@ -19,7 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace NINA.View {
+namespace NINA.WPF.Base.View {
 
     /// <summary>
     /// Interaction logic for ImageView.xaml
