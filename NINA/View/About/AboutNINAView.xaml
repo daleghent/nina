@@ -35,14 +35,6 @@
                 FontWeight="Bold"
                 Text="N.I.N.A. - Nighttime Imaging 'N' Astronomy - the astrophotography suite designed for all DSO imagers." />
 
-            <StackPanel
-                Grid.Row="1"
-                Margin="5,0,0,0"
-                Orientation="Horizontal">
-                <TextBlock FontSize="16" Text="Version" />
-                <TextBlock FontSize="16" Text="{Binding Version}" />
-            </StackPanel>
-
             <Grid
                 Grid.Row="2"
                 Margin="25,30,0,0"
@@ -57,13 +49,26 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <TextBlock
+                    Margin="0,0,0,5"
+                    FontSize="14"
+                    Text="Version" />
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="5,0,0,5"
+                    FontSize="14"
+                    Text="{Binding Source={x:Static coreuti:CoreUtil.Version}, Mode=OneWay}" />
+
+                <TextBlock
+                    Grid.Row="1"
                     Margin="0,0,0,0"
                     FontSize="14"
                     Text="{ns:Loc LblHomepage}" />
                 <TextBlock
+                    Grid.Row="1"
                     Grid.Column="1"
                     Margin="5,0,0,0"
                     FontSize="14">
@@ -71,12 +76,12 @@
                 </TextBlock>
 
                 <TextBlock
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Margin="0,5,0,0"
                     FontSize="14"
                     Text="{ns:Loc LblDocumentation}" />
                 <TextBlock
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="1"
                     Margin="5,5,0,0"
                     FontSize="14">
@@ -86,12 +91,12 @@
                 </TextBlock>
 
                 <TextBlock
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Margin="0,5,0,0"
                     FontSize="14"
                     Text="Discord" />
                 <TextBlock
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Grid.Column="1"
                     Margin="5,5,0,0"
                     FontSize="14">
@@ -99,12 +104,12 @@
                 </TextBlock>
 
                 <TextBlock
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Margin="0,5,0,0"
                     FontSize="14"
                     Text="{ns:Loc LblRepository}" />
                 <TextBlock
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="1"
                     Margin="5,5,0,0"
                     FontSize="14">
@@ -112,12 +117,12 @@
                 </TextBlock>
 
                 <TextBlock
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Margin="0,5,0,0"
                     FontSize="14"
                     Text="{ns:Loc LblChangelog}" />
                 <TextBlock
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Margin="5,5,0,0"
                     FontSize="14">
