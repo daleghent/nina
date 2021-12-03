@@ -59,7 +59,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         protected Coordinates lastFlipCoordiantes;
 
         [ImportingConstructor]
-        public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, 
+        public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator, IMeridianFlipVMFactory meridianFlipVMFactory) : base() {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
@@ -253,7 +253,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));
                         if (telescopeInfo.SideOfPier == targetSideOfPier) {
-                            Logger.Info($"Meridian Flip - There is still time remaining, and the telescope reports expected pier side {telescopeInfo.SideOfPier}. Automated Flip is not necessary.");
+                            Logger.Info($"Meridian Flip - There is still time remaining - max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}, next instruction {nextItem} - and the telescope reports expected pier side {telescopeInfo.SideOfPier}. Automated Flip is not necessary.");
                             return false;
                         } else {
                             // When pier side doesn't match the target, but remaining time indicating that a flip happened, the flip seems to have not happened yet and must be done immediately
@@ -284,7 +284,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         }
                         return true;
                     } else {
-                        Logger.Info($"Meridian Flip - (Side of Pier usage is disabled) There is still time remaining. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}.");
+                        Logger.Info($"Meridian Flip - (Side of Pier usage is disabled) There is still time remaining. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}, next instruction {nextItem}");
                         return false;
                     }
                 }
