@@ -34,6 +34,7 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ICommand CancelLoadImageCommand { get; }
         ICommand CancelLoadImageFromFileCommand { get; }
         ICommand ClearCacheCommand { get; }
+        ICommand CoordsFromScopeCommand { get; set; }
         ICommand CoordsFromPlanetariumCommand { get; set; }
         int DecDegrees { get; set; }
         int DecMinutes { get; set; }

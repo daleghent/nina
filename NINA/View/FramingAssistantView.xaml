@@ -162,6 +162,27 @@
                                             Stretch="Uniform" />
                                     </Grid>
                                 </Button>
+                                <Button
+                                    Width="25"
+                                    Height="25"
+                                    Margin="1,0,4,0"
+                                    HorizontalAlignment="Right"
+                                    HorizontalContentAlignment="Right"
+                                    Command="{Binding CoordsFromScopeCommand}"
+                                    DockPanel.Dock="Right">
+                                    <Button.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="False">
+                                            <TextBlock Text="{ns:Loc LblScopeCoordinatesTooltip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                    <Grid>
+                                        <Path
+                                            Margin="5"
+                                            Data="{StaticResource TelescopeSVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                </Button>
                             </DockPanel>
                         </GroupBox.Header>
                         <StackPanel Orientation="Vertical">

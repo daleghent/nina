@@ -13486,6 +13486,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get coordinates from the current scope position.
+        /// </summary>
+        internal static string LblScopeCoordinatesTooltip {
+            get {
+                return ResourceManager.GetString("LblScopeCoordinatesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scope settle time after flip.
         /// </summary>
         internal static string LblScopeSettleTimeAfterFlip {
