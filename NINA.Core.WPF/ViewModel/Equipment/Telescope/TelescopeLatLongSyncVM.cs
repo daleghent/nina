@@ -23,21 +23,27 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         public TelescopeLatLongSyncVM(
                 double nINALatitude,
                 double nINALongitude,
+                double nINAElevation,
                 double telescopeLatitude,
-                double telescopeLongitude) {
+                double telescopeLongitude,
+                double telescopeElevation) {
             SyncTelescopeCommand = new RelayCommand(SyncTelescope);
             SyncNINACommand = new RelayCommand(SyncNINA);
             SyncNoneCommand = new RelayCommand(SyncNone);
             this.NINALatitude = nINALatitude;
             this.NINALongitude = nINALongitude;
+            this.NINAElevation = nINAElevation;
             this.TelescopeLatitude = telescopeLatitude;
             this.TelescopeLongitude = telescopeLongitude;
+            this.TelescopeElevation = telescopeElevation;
         }
 
         public double NINALatitude { get; private set; }
         public double NINALongitude { get; private set; }
+        public double NINAElevation { get; private set; }
         public double TelescopeLatitude { get; private set; }
         public double TelescopeLongitude { get; private set; }
+        public double TelescopeElevation { get; private set; }
 
         public LatLongSyncMode Mode { get; set; }
 

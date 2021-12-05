@@ -240,7 +240,7 @@
                             SelectedItem="{Binding AutoUpdateSource}" />
                     </StackPanel>
 
-                    <Grid Margin="0,2,0,0">
+                    <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition />
@@ -788,7 +788,7 @@
                         <TextBlock
                             Width="150"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblLatitude}" />
+                            Text="{ns:Loc LblSiteLatitude}" />
                         <ninactrl:UnitTextBox
                             MinWidth="120"
                             HorizontalAlignment="Stretch"
@@ -796,7 +796,7 @@
                             VerticalContentAlignment="Center"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Latitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Latitude" StringFormat="{}{0:0.000}" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:LatitudeRule />
                                     </Binding.ValidationRules>
@@ -805,7 +805,7 @@
                         </ninactrl:UnitTextBox>
                         <Button
                             Width="40"
-                            Height="25"
+                            Height="21"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Right"
                             Command="{Binding SiteFromGPSCommand}">
@@ -820,7 +820,7 @@
                         </Button>
                         <Button
                             Width="40"
-                            Height="25"
+                            Height="21"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Right"
                             Command="{Binding SiteFromPlanetariumCommand}">
@@ -838,7 +838,7 @@
                         <TextBlock
                             Width="150"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblLongitude}" />
+                            Text="{ns:Loc LblSiteLongitude}" />
                         <ninactrl:UnitTextBox
                             MinWidth="120"
                             HorizontalAlignment="Stretch"
@@ -846,7 +846,7 @@
                             VerticalContentAlignment="Center"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Longitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Longitude" StringFormat="{}{0:0.000}" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:LongitudeRule />
                                     </Binding.ValidationRules>
@@ -854,8 +854,32 @@
                             </ninactrl:UnitTextBox.Text>
                         </ninactrl:UnitTextBox>
                     </StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblSiteElevation}" />
+                        <ninactrl:UnitTextBox
+                            MinWidth="120"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Unit="m">
+                            <ninactrl:UnitTextBox.Text>
+                                <Binding Path="Elevation" StringFormat="{}{0:0.0}" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:DoubleRangeRule>
+                                            <rules:DoubleRangeRule.ValidRange>
+                                                <rules:DoubleRangeChecker Maximum="10000.0" Minimum="-1000.0" />
+                                            </rules:DoubleRangeRule.ValidRange>
+                                        </rules:DoubleRangeRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
+                    </StackPanel>
 
-                    <Grid Margin="0,2,0,0">
+                    <Grid Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150" />
                             <ColumnDefinition />
@@ -880,7 +904,7 @@
                         <Button
                             Grid.Column="2"
                             Width="20"
-                            Height="20"
+                            Height="21"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"

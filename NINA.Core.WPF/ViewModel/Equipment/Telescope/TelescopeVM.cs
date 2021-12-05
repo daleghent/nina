@@ -40,6 +40,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
     public class TelescopeVM : DockableVM, ITelescopeVM {
         private static double LAT_LONG_TOLERANCE = 0.001;
+        private static double SITE_ELEVATION_TOLERANCE = 10;
 
         public TelescopeVM(
             IProfileService profileService,
@@ -408,27 +409,35 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             }
 
                             if (Math.Abs(Telescope.SiteLatitude - profileService.ActiveProfile.AstrometrySettings.Latitude) > LAT_LONG_TOLERANCE
-                                || Math.Abs(Telescope.SiteLongitude - profileService.ActiveProfile.AstrometrySettings.Longitude) > LAT_LONG_TOLERANCE) {
+                                || Math.Abs(Telescope.SiteLongitude - profileService.ActiveProfile.AstrometrySettings.Longitude) > LAT_LONG_TOLERANCE
+                                || Math.Abs(Telescope.SiteElevation - profileService.ActiveProfile.AstrometrySettings.Elevation) >= SITE_ELEVATION_TOLERANCE) {
                                 var syncVM = new TelescopeLatLongSyncVM(
                                     profileService.ActiveProfile.AstrometrySettings.Latitude,
                                     profileService.ActiveProfile.AstrometrySettings.Longitude,
+                                    profileService.ActiveProfile.AstrometrySettings.Elevation,
                                     Telescope.SiteLatitude,
-                                    Telescope.SiteLongitude
+                                    Telescope.SiteLongitude,
+                                    Telescope.SiteElevation
                                 );
                                 await WindowService.ShowDialog(syncVM, Loc.Instance["LblSyncLatLong"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
 
                                 if (syncVM.Mode == LatLongSyncMode.NINA) {
-                                    Logger.Info($"Importing coordinates from mount into N.I.N.A. - mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude} -> N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude} ");
+                                    Logger.Info($"Importing coordinates from mount into N.I.N.A. - Mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude}, elevation {Telescope.SiteElevation} -> N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude}, elevation {profileService.ActiveProfile.AstrometrySettings.Elevation}");
                                     profileService.ChangeLatitude(Telescope.SiteLatitude);
                                     profileService.ChangeLongitude(Telescope.SiteLongitude);
+                                    profileService.ChangeElevation(Telescope.SiteElevation);
                                 } else if (syncVM.Mode == LatLongSyncMode.TELESCOPE) {
-                                    Logger.Info($"Importing coordinates from N.I.N.A. into mount - N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude} -> mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude}");
+                                    Logger.Info($"Importing coordinates from N.I.N.A. into Mount - N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude}, elevation {profileService.ActiveProfile.AstrometrySettings.Elevation} -> Mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude}, elevation {Telescope.SiteElevation}");
                                     var targetLatitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
                                     var targetLongitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
+                                    var targetElevation = profileService.ActiveProfile.AstrometrySettings.Elevation;
                                     Telescope.SiteLatitude = targetLatitude;
                                     Telescope.SiteLongitude = targetLongitude;
+                                    Telescope.SiteElevation = targetElevation;
 
-                                    if (Math.Abs(Telescope.SiteLatitude - targetLatitude) > LAT_LONG_TOLERANCE || Math.Abs(Telescope.SiteLongitude - targetLongitude) > LAT_LONG_TOLERANCE) {
+                                    if (Math.Abs(Telescope.SiteLatitude - targetLatitude) > LAT_LONG_TOLERANCE
+                                        || Math.Abs(Telescope.SiteLongitude - targetLongitude) > LAT_LONG_TOLERANCE
+                                        || Math.Abs(Telescope.SiteElevation - targetElevation) > SITE_ELEVATION_TOLERANCE) {
                                         Notification.ShowError(string.Format(Loc.Instance["LblUnableToSetMountLatLong"], Math.Round(targetLatitude, 3), Math.Round(targetLongitude, 3)));
                                     }
                                 }

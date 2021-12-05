@@ -40,7 +40,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
         private System.Timers.Timer fixTimer;
         private NmeaParser.SerialPortDevice currentDevice;
         private TaskCompletionSource<bool> gotGPSFix;
-        public double[] Coords = new double[2];
+        public double[] Coords = new double[3];
 
         public NMEAGps(int gpsId, IProfileService profileService) {
             this.profileService = profileService;
@@ -118,18 +118,21 @@ namespace NINA.Equipment.Equipment.MyGPS {
         /// </summary>
         private void Device_MessageReceived(object sender, NmeaParser.NmeaMessageReceivedEventArgs args) {
             var message = args.Message;
-            if (message is NmeaParser.Messages.Rmc) {
-                Coords[0] = ((NmeaParser.Messages.Rmc)message).Longitude;
-                Coords[1] = ((NmeaParser.Messages.Rmc)message).Latitude;
-            } else if (args.Message is NmeaParser.Messages.Gga) {
+
+            if (args.Message is NmeaParser.Messages.Gga) {
                 Coords[0] = ((NmeaParser.Messages.Gga)message).Longitude;
                 Coords[1] = ((NmeaParser.Messages.Gga)message).Latitude;
+                Coords[2] = ((NmeaParser.Messages.Gga)message).Altitude;
+            } else if (args.Message is NmeaParser.Messages.Rmc) {
+                Coords[0] = ((NmeaParser.Messages.Rmc)message).Longitude;
+                Coords[1] = ((NmeaParser.Messages.Rmc)message).Latitude;
             } else if (args.Message is NmeaParser.Messages.Gll) {
                 Coords[0] = ((NmeaParser.Messages.Gll)message).Longitude;
                 Coords[1] = ((NmeaParser.Messages.Gll)message).Latitude;
             } else return;
 
-            if (Double.IsNaN(Coords[0]) || Double.IsNaN(Coords[1])) return; // no fix yet
+            if (double.IsNaN(Coords[0]) || double.IsNaN(Coords[1]) || double.IsNaN(Coords[2])) return; // no fix yet
+
             try {
                 currentDevice.MessageReceived -= Device_MessageReceived; // unsubscribe to avoid multiple messages
                 fixTimer.Enabled = false;
@@ -156,7 +159,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
                 await device.OpenAsync();
                 Notification.ShowSuccess(Loc.Instance["LblGPSConnected"] + " " + portName);
                 return await gotGPSFix.Task;
-            } catch (System.Exception ex) {
+            } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["LblGPSConnectFail"] + " " + portName);
                 return false;

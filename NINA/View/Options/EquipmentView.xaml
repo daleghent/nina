@@ -434,6 +434,7 @@
                 DataContext="{Binding TelescopeSettings}"
                 Header="{ns:Loc LblTelescope}">
                 <StackPanel Orientation="Vertical">
+
                     <UniformGrid Columns="2">
                         <UniformGrid
                             Margin="0,5,0,0"
@@ -451,8 +452,9 @@
                                 MaxLength="48"
                                 Text="{Binding Name}" />
                         </UniformGrid>
+
                         <UniformGrid
-                            Margin="5,5,0,0"
+                            Margin="10,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -464,13 +466,13 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox HorizontalAlignment="Left" IsChecked="{Binding NoSync}">
-
                                 <CheckBox.ToolTip>
                                     <TextBlock Text="{ns:Loc LblNoSyncTooltip}" />
                                 </CheckBox.ToolTip>
                             </CheckBox>
                         </UniformGrid>
                     </UniformGrid>
+
                     <UniformGrid Columns="2">
                         <UniformGrid
                             Margin="0,5,0,0"
@@ -497,6 +499,7 @@
                             </ninactrl:UnitTextBox>
                         </UniformGrid>
                     </UniformGrid>
+
                     <UniformGrid Columns="2">
                         <UniformGrid
                             Margin="0,5,0,0"
@@ -524,6 +527,7 @@
                             </TextBox>
                         </UniformGrid>
                     </UniformGrid>
+
                     <UniformGrid Columns="2">
                         <UniformGrid
                             Margin="0,5,0,0"
@@ -552,12 +556,15 @@
                     </UniformGrid>
                 </StackPanel>
             </GroupBox>
+
             <GroupBox
                 Grid.Row="2"
                 DataContext="{Binding WeatherDataSettings}"
                 Header="{ns:Loc LblWeather}">
+
                 <StackPanel Orientation="Vertical">
                     <UniformGrid Columns="2">
+
                         <UniformGrid
                             Margin="0,5,0,0"
                             VerticalAlignment="Center"
@@ -569,15 +576,17 @@
                                 Text="{ns:Loc LblOpenWeatherMapAPIKey}" />
                             <DockPanel>
                                 <TextBox
-                                    MinWidth="36"
-                                    HorizontalAlignment="Stretch"
+                                    MinWidth="190"
+                                    MaxWidth="190"
                                     DockPanel.Dock="Left"
                                     Text="{Binding OpenWeatherMapAPIKey}" />
                                 <TextBlock
                                     Grid.Column="2"
+                                    Margin="2,0,0,0"
                                     Width="Auto"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
+                                    FontWeight="Bold"
                                     Text="">
                                     <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://home.openweathermap.org/api_keys">
                                         <Run Text="?" />
@@ -586,9 +595,10 @@
                             </DockPanel>
                         </UniformGrid>
                     </UniformGrid>
+
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -598,15 +608,17 @@
                                 Text="{ns:Loc LblTheWeatherCompanyAPIKey}" />
                             <DockPanel>
                                 <TextBox
-                                    MinWidth="36"
-                                    HorizontalAlignment="Stretch"
+                                    MinWidth="190"
+                                    MaxWidth="190"
                                     DockPanel.Dock="Left"
                                     Text="{Binding TheWeatherCompanyAPIKey}" />
                                 <TextBlock
                                     Grid.Column="2"
+                                    Margin="2,0,0,0"
                                     Width="Auto"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
+                                    FontWeight="Bold"
                                     Text="">
                                     <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://weather.service-now.com/apicustomer">
                                         <Run Text="?" />
@@ -617,7 +629,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -627,15 +639,17 @@
                                 Text="{ns:Loc LblWeatherUndergroundAPIKey}" />
                             <DockPanel>
                                 <TextBox
-                                    MinWidth="36"
-                                    HorizontalAlignment="Stretch"
+                                    MinWidth="190"
+                                    MaxWidth="190"
                                     DockPanel.Dock="Left"
                                     Text="{Binding WeatherUndergroundAPIKey}" />
                                 <TextBlock
                                     Grid.Column="2"
+                                    Margin="2,0,0,0"
                                     Width="Auto"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
+                                    FontWeight="Bold"
                                     Text="">
                                     <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://www.wunderground.com/member/api-keys">
                                         <Run Text="?" />
@@ -646,7 +660,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -656,15 +670,17 @@
                                 Text="{ns:Loc LblWeatherUndergroundStationID}" />
                             <DockPanel>
                                 <TextBox
-                                    MinWidth="36"
-                                    HorizontalAlignment="Stretch"
+                                    MinWidth="190"
+                                    MaxWidth="190"
                                     DockPanel.Dock="Left"
                                     Text="{Binding WeatherUndergroundStation}" />
                                 <TextBlock
                                     Grid.Column="2"
+                                    Margin="2,0,0,0"
                                     Width="Auto"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
+                                    FontWeight="Bold"
                                     Text="">
                                     <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://www.wunderground.com/member/api-keys">
                                         <Run Text="?" />
@@ -675,6 +691,7 @@
                     </UniformGrid>
                 </StackPanel>
             </GroupBox>
+
             <GroupBox
                 Grid.Row="2"
                 Grid.Column="1"
@@ -767,6 +784,7 @@
                                 </TextBox.Style>
                             </TextBox>
                         </StackPanel>
+
                         <StackPanel
                             Grid.Row="0"
                             Grid.Column="1"
@@ -851,6 +869,7 @@
                                 </TextBox.Style>
                             </TextBox>
                         </StackPanel>
+
                         <StackPanel
                             Grid.Row="1"
                             Grid.Column="0"

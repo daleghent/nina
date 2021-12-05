@@ -62,7 +62,7 @@ namespace NINA.Equipment.Interfaces {
         TrackingMode TrackingMode { get; set; }
         double SiteLatitude { get; set; }
         double SiteLongitude { get; set; }
-        double SiteElevation { get; }
+        double SiteElevation { get; set; }
         bool AtHome { get; }
         bool CanFindHome { get; }
         bool AtPark { get; }

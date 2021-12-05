@@ -37,6 +37,8 @@ namespace NINA.Profile.Interfaces {
 
         void ChangeLongitude(double longitude);
 
+        void ChangeElevation(double elevation);
+
         void ChangeHorizon(string horizonFilePath);
 
         /// <summary>

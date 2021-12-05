@@ -42,6 +42,7 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         double Latitude { get; set; }
         LogLevelEnum LogLevel { get; set; }
         double Longitude { get; set; }
+        double Elevation { get; set; }
         ICommand OpenASPSFileDiagCommand { get; }
         ICommand OpenASTAPFileDiagCommand { get; }
         ICommand OpenCygwinFileDiagCommand { get; }

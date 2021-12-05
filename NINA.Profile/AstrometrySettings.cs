@@ -44,6 +44,7 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             latitude = 0;
             longitude = 0;
+            elevation = 0;
             horizonFilePath = string.Empty;
         }
 
@@ -72,6 +73,19 @@ namespace NINA.Profile {
             set {
                 if (longitude != value) {
                     longitude = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double elevation;
+
+        [DataMember]
+        public double Elevation {
+            get => elevation;
+            set {
+                if (elevation != value) {
+                    elevation = value;
                     RaisePropertyChanged();
                 }
             }

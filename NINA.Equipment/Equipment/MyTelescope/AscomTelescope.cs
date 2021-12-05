@@ -361,9 +361,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public double SiteElevation {
-            get {
-                return GetProperty(nameof(Telescope.SiteElevation), -1d);
-            }
+            get => GetProperty(nameof(Telescope.SiteElevation), 0d);
             set {
                 SetProperty(nameof(Telescope.SiteElevation), value);
             }

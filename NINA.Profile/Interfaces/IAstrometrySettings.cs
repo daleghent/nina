@@ -19,6 +19,8 @@ namespace NINA.Profile.Interfaces {
     public interface IAstrometrySettings : ISettings {
         double Latitude { get; set; }
         double Longitude { get; set; }
+        double Elevation { get; set; }
+
         string HorizonFilePath { get; set; }
         CustomHorizon Horizon { get; set; }
     }

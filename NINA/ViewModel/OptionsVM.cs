@@ -124,6 +124,7 @@ namespace NINA.ViewModel {
             profileService.LocationChanged += (object sender, EventArgs e) => {
                 RaisePropertyChanged(nameof(Latitude));
                 RaisePropertyChanged(nameof(Longitude));
+                RaisePropertyChanged(nameof(Elevation));
             };
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
@@ -204,7 +205,8 @@ namespace NINA.ViewModel {
                 if (loc != null) {
                     Latitude = loc.Latitude;
                     Longitude = loc.Longitude;
-                    Notification.ShowSuccess(String.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
+                    Elevation = loc.Elevation;
+                    Notification.ShowSuccess(string.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
                 }
             } catch (PlanetariumFailedToConnect ex) {
                 Logger.Error($"Unable to connect to {s.Name}: {ex}");
@@ -681,9 +683,7 @@ namespace NINA.ViewModel {
         }
 
         public double Latitude {
-            get {
-                return profileService.ActiveProfile.AstrometrySettings.Latitude;
-            }
+            get => profileService.ActiveProfile.AstrometrySettings.Latitude;
             set {
                 profileService.ChangeLatitude(value);
                 RaisePropertyChanged();
@@ -691,11 +691,17 @@ namespace NINA.ViewModel {
         }
 
         public double Longitude {
-            get {
-                return profileService.ActiveProfile.AstrometrySettings.Longitude;
-            }
+            get => profileService.ActiveProfile.AstrometrySettings.Longitude;
             set {
                 profileService.ChangeLongitude(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        public double Elevation {
+            get => profileService.ActiveProfile.AstrometrySettings.Elevation;
+            set {
+                profileService.ChangeElevation(value);
                 RaisePropertyChanged();
             }
         }

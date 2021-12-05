@@ -220,6 +220,11 @@ namespace NINA.Profile {
             LocationChanged?.Invoke(this, null);
         }
 
+        public void ChangeElevation(double elevation) {
+            ActiveProfile.AstrometrySettings.Elevation = elevation;
+            LocationChanged?.Invoke(this, null);
+        }
+
         public void ChangeHorizon(string horizonFilePath) {
             ActiveProfile.AstrometrySettings.HorizonFilePath = horizonFilePath;
 

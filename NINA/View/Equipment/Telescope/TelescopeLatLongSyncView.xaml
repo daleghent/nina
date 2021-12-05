@@ -25,31 +25,61 @@
             <RowDefinition />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <TextBlock Margin="5" Text="{ns:Loc LblSyncLatLongText}" />
+        <TextBlock Margin="5" Text="{ns:Loc LblSyncLatLongText}" FontSize="16" />
 
         <GroupBox Grid.Row="1" Header="{ns:Loc LblTelescope}">
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{ns:Loc LblLatitude}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeLatitude}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{ns:Loc LblLongitude}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeLongitude}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{ns:Loc LblLatitude}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TelescopeLatitude, Converter={StaticResource DegreesToDMSConverter}}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="{Binding TelescopeLatitude, StringFormat=({0:0.000 °})}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{ns:Loc LblLongitude}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TelescopeLongitude, Converter={StaticResource DegreesToDMSConverter}}" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding TelescopeLongitude, StringFormat=({0:0.000 °})}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{ns:Loc LblElevation}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding TelescopeElevation, StringFormat={}{0:0.0 m}}" />
+                </Grid>
             </StackPanel>
         </GroupBox>
 
         <GroupBox Grid.Row="2" Header="{ns:Loc LblNINA}">
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{ns:Loc LblLatitude}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding NINALatitude}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{ns:Loc LblLongitude}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding NINALongitude}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{ns:Loc LblLatitude}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NINALatitude, Converter={StaticResource DegreesToDMSConverter}}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="{Binding NINALatitude, StringFormat=({0:0.000 °})}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{ns:Loc LblLongitude}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding NINALongitude, Converter={StaticResource DegreesToDMSConverter}}" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding NINALongitude, StringFormat=({0:0.000 °})}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{ns:Loc LblElevation}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding NINAElevation, StringFormat={}{0:0.0 m}}" />
+                </Grid>
             </StackPanel>
         </GroupBox>
 
@@ -82,7 +112,7 @@
                 <TextBlock
                     Margin="5"
                     Foreground="{StaticResource ButtonForegroundBrush}"
-                    Text="{ns:Loc LblNo}" />
+                    Text="{ns:Loc LblNoSync}" />
             </Button>
         </UniformGrid>
     </Grid>
