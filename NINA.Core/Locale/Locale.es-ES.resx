@@ -3088,11 +3088,12 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>El servicio de PHD2 Sincronizado ha fallado, reiniciando este servicio de guiado sincronizado de PHD2</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Sincronizar Latitud/Longitud</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>La Latitud y Longitud del Telescopio es diferente a los valores de NINA.
-¿Quiere sincronizar los valores?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Objetivo</value>
@@ -5771,10 +5772,10 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>El controlador ASCOM que lee desde este servidor debe tener configurado el mismo nombre de canalización (pipa name)</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
-    <value>Use External Tracking CCD</value>
+    <value>Usar CCD de seguimiento externo</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
-    <value>External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect.</value>
+    <value>Modificada la configuración de la CCD de seguimiento externo. Desconecta y vuelve a conectar la cámara para que tenga efecto.</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} ya no cuenta con soporte de Microsoft ni del proyecto N.I.N.A. Encontrará mal funcionamiento o errores en la aplicación como resultado del uso de N.I.N.A. en una versión de windows desfasada. Los actuales requisitos mínimos de N.I.N.A. están disponibles en la documentación online.</value>
@@ -5935,6 +5936,12 @@ Consulta el manual de la cámara para ver la localización de este ajuste</value
 Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
-    <value>Failed to save image</value>
+    <value>Error al guardar imagen</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

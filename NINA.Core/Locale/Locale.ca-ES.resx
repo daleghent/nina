@@ -3090,11 +3090,12 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
     <value>El servei PHD2 sincronitzat ha fallat i es torna a reiniciar aquest guiatge sincronitzat de PHD2 com a servei</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Sincronitzar Latitud/Longitud</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>La latitud i longitud del telescopi difereixen dels valors de NINA.
-Els valors s'han de sincronitzar?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Objectiu</value>
@@ -5937,5 +5938,11 @@ Un cop resolt amb èxit, s'establirà la rotació per enquadrar.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>No s'ha pogut desar la imatge</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

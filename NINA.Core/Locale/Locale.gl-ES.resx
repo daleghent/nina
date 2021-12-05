@@ -3097,11 +3097,12 @@ Antes de continuar, confirma que o sistema está actualmente enfocado ou está m
     <value>O Servizo Sincronizado PHD2 fallou, reiniciando o Guiador Sincronizado PHD2 como Servizo</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Sincronizar Latitude/Lonxitude</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>A Latitude e a Lonxitude do telescopio difire das de NINA.
-Deben resincronizarse os valores?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Obxectivo</value>
@@ -5947,5 +5948,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

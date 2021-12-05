@@ -3089,11 +3089,12 @@
     <value>同步 PHD2 服务崩溃，将以此同步数据重启 PHD2 导星服务</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>同步经纬度</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>望远镜的纬度和经度不同于NINA的数值。
-数值需要同步吗？</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>目标</value>
@@ -4382,7 +4383,7 @@
     <value>指向，居中并旋转</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>通过解析，将望远镜居中到目标的坐标</value>
+    <value>通过解析，将望远镜居中到目标坐标</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>指向并居中</value>
@@ -4544,13 +4545,13 @@
     <value>曝光 # 次后</value>
   </data>
   <data name="LblDragOver_BottomText" xml:space="preserve">
-    <value>在下方插入器材</value>
+    <value>在下方插入指令</value>
   </data>
   <data name="LblDragOver_CenterText" xml:space="preserve">
-    <value>在此处添加器材</value>
+    <value>在此处添加指令</value>
   </data>
   <data name="LblDragOver_TopText" xml:space="preserve">
-    <value>在上方插入器材</value>
+    <value>在上方插入指令</value>
   </data>
   <data name="LblDragOver_AddCondition" xml:space="preserve">
     <value>加入循环条件</value>
@@ -5938,5 +5939,11 @@
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>保存图像失败</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

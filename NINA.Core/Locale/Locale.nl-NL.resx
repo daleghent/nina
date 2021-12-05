@@ -3086,11 +3086,12 @@ U kunt hetzelfde profiel niet twee keer verbinden, kies een ander NINA profiel.
     <value>Gesynchroniseerde PHD2 service gecrasht, start deze PHD2 guider opnieuw op als service</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchroniseer breedtegraad/lengtegraad</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>De breedtegraad en lengtegraad van de telescoop verschillen van de waarden van NINA.
-Moeten de waarden worden gesynchroniseerd?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Target</value>
@@ -5934,5 +5935,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

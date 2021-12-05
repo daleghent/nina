@@ -3091,11 +3091,12 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Služba synchronizace PHD2 zastavena, ovladač PHD2 se restartuje jako služba</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronizace Zeměpisné šířky a délky</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Zeměpisná Šířka a Délka dalekohledu se liší od hodnot NINA.
-Synchronizovat hodnoty?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Cíl</value>
@@ -5941,5 +5942,11 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Obrázek se nepodařilo uložit</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

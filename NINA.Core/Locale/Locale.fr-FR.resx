@@ -3095,11 +3095,12 @@ Ce modèle sera utilisé au démarrage pour initialiser la séquence au lieu de 
     <value>Le service PHD2 synchronisé est tombé en panne, redémarrage en cour du service.</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchroniser Latitude / Longitude</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>La latitude et la longitude du télescope diffèrent des valeurs de NINA.
-Les valeurs doivent-elles être synchronisées?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Cible</value>
@@ -5943,5 +5944,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

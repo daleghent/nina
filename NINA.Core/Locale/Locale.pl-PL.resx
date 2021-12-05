@@ -3088,11 +3088,12 @@ Zanim przejdziesz dalej, upewnij się, że Twój fokuser znajduje się w najleps
     <value>Synchronized PHD2 Service crashed, restarting this Synchronized PHD2 Guider as Service</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronizuj Szerokość/Długość geograficzna</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Szerokość i długość geograficzna Teleskopu różnią się od wartości  z NINA.
-Czy wartości powinny być zsynchronizowane?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Target</value>
@@ -5938,5 +5939,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

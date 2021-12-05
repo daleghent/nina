@@ -3087,10 +3087,12 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>Senkronize PHD2 servisi çöktü. Senkronize PHD2 takipçi servis olarak başlatılıyor</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Enlem/Boylam senkronize et</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Teleskopun enlem ve boylamı NINA'nınkiden farklı. Senkronize edilsin mi?</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Hedef</value>
@@ -5933,5 +5935,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

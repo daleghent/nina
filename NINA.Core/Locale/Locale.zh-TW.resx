@@ -3096,11 +3096,12 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>同步 PHD2 服務崩潰，將以此同步資料重啟 PHD2 導星服務</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>同步經緯度</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>望遠鏡的緯度和經度不同於NINA的數值。
-數值需要同步嗎？</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Target</value>
@@ -5946,5 +5947,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>

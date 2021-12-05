@@ -3086,11 +3086,12 @@
     <value>Η συγχρονισμένη Υπηρεσία PHD2 σταμάτησε να λειτουργεί, γίνεται επανεκκίνηση του Οδηγητή PHD2 σαν Υπηρεσία</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Συγχρονισμός Γεωγραφικού Πλάτους/Γεωγραφικού Μήκους</value>
+    <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Το Γεωγραφικό Πλάτος και Μήκος διαφέρουν από τις τιμές του ΝΙΝΑ.
-Θέλετε να γίνει συγχρονισμός των τιμών;</value>
+    <value>The telescope's site settings differ from NINA's.
+
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Στόχος</value>
@@ -5936,5 +5937,11 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Failed to save image</value>
+  </data>
+  <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
+    <value>Get coordinates from the current scope position</value>
+  </data>
+  <data name="LblElevation" xml:space="preserve">
+    <value>Elevation</value>
   </data>
 </root>
