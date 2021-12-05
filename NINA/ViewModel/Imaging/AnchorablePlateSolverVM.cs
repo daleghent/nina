@@ -342,20 +342,25 @@ namespace NINA.ViewModel.Imaging {
                         Coordinates = telescopeMediator.GetCurrentPosition()
                     };
                     var result = await solver.Solve(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
+                    if (result.Success) {
+                        if (telescopeInfo.Connected) {
+                            var position = parameter.Coordinates.Transform(result.Coordinates.Epoch);
+                            result.Separation = result.DetermineSeparation(position);
+                        }
 
-                    if (telescopeInfo.Connected) {
-                        var position = parameter.Coordinates.Transform(result.Coordinates.Epoch);
-                        result.Separation = result.DetermineSeparation(position);
-                    }
-
-                    if (!profileService.ActiveProfile.TelescopeSettings.NoSync && Sync) {
-                        await telescopeMediator.Sync(result.Coordinates);
+                        if (!profileService.ActiveProfile.TelescopeSettings.NoSync && Sync) {
+                            await telescopeMediator.Sync(result.Coordinates);
+                        }
+                    } else {
+                        Notification.ShowError(Loc.Instance["LblPlatesolveFailed"]);
+                        return false;
                     }
                 }
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
+                return false;
             }
 
             return true;
