@@ -7296,6 +7296,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sync slew dome when scope slews.
+        /// </summary>
+        internal static string LblDomeSyncSlewWhenMountSlew {
+            get {
+                return ResourceManager.GetString("LblDomeSyncSlewWhenMountSlew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slews the dome to synchronize it with the telescope position when it slews. This setting doesn&apos;t maintain the dome synchronization as the scope tracks..
+        /// </summary>
+        internal static string LblDomeSyncSlewWhenMountSlewTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeSyncSlewWhenMountSlewTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Synchronization Timeout.
         /// </summary>
         internal static string LblDomeSyncTimeout {

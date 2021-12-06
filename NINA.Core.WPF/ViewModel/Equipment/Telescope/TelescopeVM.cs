@@ -862,9 +862,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     Logger.Info($"Slewing from {position} to {coords}");
 
                     var domeSyncTask = Task.CompletedTask;
-                    if (this.domeMediator.IsFollowingScope) {
+                    if (this.domeMediator.IsFollowingScope || this.profileService.ActiveProfile.DomeSettings.SyncSlewDomeWhenMountSlews) {
                         var targetSideOfPier = Astrometry.MeridianFlip.ExpectedPierSide(coords, Angle.ByHours(this.TelescopeInfo.SiderealTime));
-                        domeSyncTask = this.domeMediator.SyncToScopeCoordinates(coords, targetSideOfPier, token);
+                        domeSyncTask = Task.Run(async () => {
+                            try {
+                                return await this.domeMediator.SyncToScopeCoordinates(coords, targetSideOfPier, token);
+                            } catch (Exception e) {
+                                Logger.Error("Failed to sync dome when issuing a scope slew. Continuing with the scope slew", e);
+                                return false;
+                            }
+                        }, token);
                     }
 
                     await Telescope.SlewToCoordinates(coords, token);

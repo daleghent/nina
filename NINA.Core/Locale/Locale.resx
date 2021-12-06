@@ -4102,6 +4102,12 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
   </data>
+  <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
+    <value>Sync slew dome when scope slews</value>
+  </data>
+  <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
+    <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Find home before parking</value>
   </data>

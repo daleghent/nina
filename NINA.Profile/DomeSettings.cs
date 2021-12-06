@@ -39,6 +39,8 @@ namespace NINA.Profile {
             FindHomeBeforePark = false;
             DomeSyncTimeoutSeconds = 120;
             SettleTimeSeconds = 1;
+            SyncSlewDomeWhenMountSlews = true;
+            SynchronizeDuringMountSlew = false;
         }
 
         private string id = string.Empty;
@@ -201,6 +203,21 @@ namespace NINA.Profile {
             set {
                 if (synchronizeDuringMountSlew != value) {
                     synchronizeDuringMountSlew = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool syncSlewDomeWhenMountSlews = true;
+
+        [DataMember]
+        public bool SyncSlewDomeWhenMountSlews {
+            get {
+                return syncSlewDomeWhenMountSlews;
+            }
+            set {
+                if (syncSlewDomeWhenMountSlews != value) {
+                    syncSlewDomeWhenMountSlews = value;
                     RaisePropertyChanged();
                 }
             }

@@ -28,6 +28,7 @@ namespace NINA.Profile.Interfaces {
         bool FindHomeBeforePark { get; set; }
         int DomeSyncTimeoutSeconds { get; set; }
         bool SynchronizeDuringMountSlew { get; set; }
+        bool SyncSlewDomeWhenMountSlews { get; set; }
         double RotateDegrees { get; set; }
         bool CloseOnUnsafe { get; set; }
         MountTypeEnum MountType { get; set; }
