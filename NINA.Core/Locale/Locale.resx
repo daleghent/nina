@@ -4860,6 +4860,12 @@ If the position above it is an instruction set that is not currently expanded, i
   <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
     <value>Park Dome</value>
   </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
+    <value>Rotates the dome to the home position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
+    <value>Find Dome Home</value>
+  </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
   </data>
@@ -4883,6 +4889,12 @@ If the position above it is an instruction set that is not currently expanded, i
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Enable Dome Sync</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
+    <value>Disables background dome synchronization with the telescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
+    <value>Disable Dome Sync</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>Synchronizes the Dome to the current telescope position</value>

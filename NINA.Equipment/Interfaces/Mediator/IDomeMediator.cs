@@ -39,6 +39,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Task<bool> Park(CancellationToken cancellationToken);
 
+        Task<bool> FindHome(CancellationToken cancellationToken);
+
         Task<bool> SlewToAzimuth(double degrees, CancellationToken cancellationToken);
     }
 }

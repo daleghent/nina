@@ -29,6 +29,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         Task<bool> Park(CancellationToken cancellationToken);
 
+        Task<bool> FindHome(CancellationToken cancellationToken);
+
         Task<bool> SlewToAzimuth(double degrees, CancellationToken cancellationToken);
 
         double TargetAzimuthDegrees { get; }

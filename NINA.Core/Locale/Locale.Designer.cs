@@ -951,6 +951,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disables background dome synchronization with the telescope.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Dome Sync.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ensures the dome remains synchronized with the telescope.
         /// </summary>
         internal static string Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description {
@@ -965,6 +983,24 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotates the dome to the home position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_FindHome_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_FindHome_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Dome Home.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_FindHome_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_FindHome_Name", resourceCulture);
             }
         }
         

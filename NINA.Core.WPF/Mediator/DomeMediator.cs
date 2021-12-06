@@ -45,6 +45,10 @@ namespace NINA.WPF.Base.Mediator {
             return handler.Park(cancellationToken);
         }
 
+        public Task<bool> FindHome(CancellationToken cancellationToken) {
+            return handler.FindHome(cancellationToken);
+        }
+
         public Task<bool> DisableFollowing(CancellationToken cancellationToken) {
             return handler.DisableFollowing(cancellationToken);
         }

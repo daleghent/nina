@@ -82,7 +82,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             ManualSlewCommand = new AsyncCommand<bool>(() => ManualSlew(TargetAzimuthDegrees));
             RotateCWCommand = new AsyncCommand<bool>(() => RotateRelative(RotateDegrees));
             RotateCCWCommand = new AsyncCommand<bool>(() => RotateRelative(-RotateDegrees));
-            FindHomeCommand = new AsyncCommand<bool>(FindHome);
+            FindHomeCommand = new AsyncCommand<bool>((o) => FindHome(o, CancellationToken.None));
             SyncCommand = new RelayCommand(SyncAzimuth);
 
             this.updateTimer = deviceUpdateTimerFactory.Create(
@@ -502,10 +502,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
         }
 
-        private async Task<bool> FindHome(object obj) {
+        public Task<bool> FindHome(CancellationToken ct) {
+            return FindHome(null, ct);
+        }
+
+        private async Task<bool> FindHome(object obj, CancellationToken ct) {
             Logger.Info("Finding dome home position");
-            await DisableFollowing(CancellationToken.None);
-            await Dome?.FindHome(CancellationToken.None);
+            await DisableFollowing(ct);
+            ct.ThrowIfCancellationRequested();
+
+            await Dome?.FindHome(ct);
+            ct.ThrowIfCancellationRequested();
+
             Logger.Info("Dome home find complete");
             return true;
         }
