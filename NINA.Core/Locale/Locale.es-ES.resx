@@ -3088,12 +3088,12 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>El servicio de PHD2 Sincronizado ha fallado, reiniciando este servicio de guiado sincronizado de PHD2</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronize site settings</value>
+    <value>Sincronizar los parámetros del sitio</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
+    <value>La configuración del sitio del telescopio difiere de la de NINA.
 
-Should the settings be synchronized?</value>
+¿Debe sincronizarse la configuración?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Objetivo</value>
@@ -5939,9 +5939,9 @@ Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
     <value>Error al guardar imagen</value>
   </data>
   <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
-    <value>Get coordinates from the current scope position</value>
+    <value>¿Obtener las coordenadas a partir de la posición actual del telescopio?</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>Altitud</value>
   </data>
 </root>

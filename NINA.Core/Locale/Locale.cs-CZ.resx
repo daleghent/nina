@@ -986,7 +986,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Adresář Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Počet Dark Flats</value>
+    <value>Počet Dark Flatů</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.V. Přejezd</value>
@@ -1052,7 +1052,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Deklinace</value>
   </data>
   <data name="LblDecPixError" xml:space="preserve">
-    <value>Chyba v Dec Pix</value>
+    <value>Chyba Dec pixelu</value>
   </data>
   <data name="LblDefaultAutoFocusExposureTime" xml:space="preserve">
     <value>Výchozí Čas Expozice AutoOstření</value>
@@ -1418,7 +1418,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Vypočítaný Průměr Cílového Histogramu</value>
   </data>
   <data name="LblFlatCount" xml:space="preserve">
-    <value>Počet Flats</value>
+    <value>Počet Flatů</value>
   </data>
   <data name="LblFlatDevice" xml:space="preserve">
     <value>Flat Box</value>
@@ -1508,16 +1508,16 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Střední Tolerance</value>
   </data>
   <data name="LblFlatMaxExposureTime" xml:space="preserve">
-    <value>Max. Expozice Flat</value>
+    <value>Flat Max. Expozice</value>
   </data>
   <data name="LblFlatMinExposureTime" xml:space="preserve">
-    <value>Min. Expozice Flat</value>
+    <value>Flat Min. Expozice</value>
   </data>
   <data name="LblFlatSequenceCancelled" xml:space="preserve">
     <value>Sekvence Flat Zrušena. Čas expozice nebylo možné určit</value>
   </data>
   <data name="LblFlatStepSize" xml:space="preserve">
-    <value>Velikost Kroku Flat</value>
+    <value>Flat Velikost Kroku</value>
   </data>
   <data name="LblFlatUserCurrentExposureCalculation" xml:space="preserve">
     <value>Výpočet Aktuální Expozice</value>
@@ -2001,7 +2001,7 @@ Přeskočit.</value>
     <value>Minimální Čas Expozice</value>
   </data>
   <data name="LblMinimumAltitude" xml:space="preserve">
-    <value>Minimální Výška</value>
+    <value>Minimální Nadmořský Výška</value>
   </data>
   <data name="LblMinimumSettleTime" xml:space="preserve">
     <value>Minimální Stabilizace</value>
@@ -2396,7 +2396,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Měřítko Pixelu</value>
   </data>
   <data name="LblPixelScaleTooltip" xml:space="preserve">
-    <value>Měřítko pixelů v obloukových sekundách na pixel</value>
+    <value>Měřítko pixelů v úhlových sekundách na pixel</value>
   </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Velikost Pixelu</value>
@@ -2582,7 +2582,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Srážkoměr</value>
   </data>
   <data name="LblRAPixError" xml:space="preserve">
-    <value>RA Pix chyba</value>
+    <value>Chyba RA pixelu</value>
   </data>
   <data name="LblRate" xml:space="preserve">
     <value>Míra</value>
@@ -2850,7 +2850,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Nastaven jako Park</value>
   </data>
   <data name="LblSetParkToolTip" xml:space="preserve">
-    <value>Nastavte aktuální polohu jako parkovací pozici</value>
+    <value>Nastaví aktuální polohu jako parkovací pozici</value>
   </data>
   <data name="LblSettings" xml:space="preserve">
     <value>Nastavení</value>
@@ -3091,12 +3091,12 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Služba synchronizace PHD2 zastavena, ovladač PHD2 se restartuje jako služba</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronize site settings</value>
+    <value>Synchronizovat nastavení místa</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
+    <value>Nastavení místa dalekohledu se liší od nastavení NINA.
 
-Should the settings be synchronized?</value>
+Chcete synchronizovat nastavení?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Cíl</value>
@@ -3201,7 +3201,7 @@ Should the settings be synchronized?</value>
     <value>TheSkyX</value>
   </data>
   <data name="LblThrough" xml:space="preserve">
-    <value>Přes</value>
+    <value>Do</value>
   </data>
   <data name="LblTiff" xml:space="preserve">
     <value>TIFF</value>
@@ -3882,7 +3882,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Otočit kopuli na azimut cíle</value>
   </data>
   <data name="LblDomeParkTooltip" xml:space="preserve">
-    <value>Otočit kopuli do polohy zaparkovat definovanou ovladačem a zavřít štěrbinu</value>
+    <value>Otočí kopulí do polohy zaparkovat definovanou ovladačem a zavřít štěrbinu</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
     <value>Dynamický Jas</value>
@@ -4293,7 +4293,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Sekvence Objektů Hlubokého Vesmíru</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
-    <value>Všechny pokyny v této instrukční sadě jsou spuštěny paralelně. Tato instrukční sada nevyhodnotí žádné podmínky ani aktivační události, dokud nebudou dokončeny všechny pokyny.</value>
+    <value>Všechny pokyny v této instrukční sadě jsou spuštěny paralelně. Tato instrukční sada nevyhodnotí žádné podmínky ani spouštěče události, dokud nebudou dokončeny všechny pokyny.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
     <value>Paralelní Instrukční Sada</value>
@@ -4716,10 +4716,10 @@ Instrukce je jedna instrukce nebo sada pokynů, které budou provedeny, pokud js
 Pokyny, které nejsou platné (označené červeným vykřičníkem v kroužku), budou přeskočeny.</value>
   </data>
   <data name="Lbl_SequenceContainer_AddTrigger_Tooltip" xml:space="preserve">
-    <value>Přidejte aktivační událost do instrukční sady.
-Aktivační události jsou instrukce, které jsou spouštěné pouze v případě, že jsou splněny zadané parametry pro jejich spuštění. 
-Parametry aktivační události budou aktualizovány a vyhodnoceny po dokončení instrukce.
-Kromě toho jsou aktivační události platné pro aktuální instrukční sadu a každou dílčí sadu uvnitř sady.</value>
+    <value>Přidejte spouštěč událost do instrukční sady.
+Spouštěče události jsou instrukce, které jsou spouštěné pouze v případě, že jsou splněny zadané parametry pro jejich spuštění. 
+Parametry spouštěče události budou aktualizovány a vyhodnoceny po dokončení instrukce.
+Kromě toho jsou spouštěče události platné pro aktuální instrukční sadu a každou dílčí sadu uvnitř sady.</value>
   </data>
   <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
     <value>Odebere aktuální instrukční sadu a všechny její položky ze sekvence.</value>
@@ -5944,9 +5944,9 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
     <value>Obrázek se nepodařilo uložit</value>
   </data>
   <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
-    <value>Get coordinates from the current scope position</value>
+    <value>Získat souřadnice z aktuální pozice dalekohledu</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>Nadmořská výška</value>
   </data>
 </root>
