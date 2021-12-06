@@ -366,7 +366,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             HasABG = 1
         }
 
-        public enum TemperatureRegulation : short
+        public enum TemperatureRegulation : ushort
         {
             Off = 0,
             On,

@@ -143,6 +143,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 Connected = true;
                 if (CanSetTemperature) {
                     CoolerOn = false;
+                    var tempStatus = sdk.QueryTemperatureStatus(ConnectedDevice.DeviceId);
+                    TemperatureSetPoint = this.exposureCcd == SBIG.CCD.Imaging ? tempStatus.ccdSetpoint : tempStatus.trackingCCDSetpoint;
                 }
 
                 Logger.Info($"SBIGCCD: Successfully connected {this.queriedCameraInfo.DeviceId}");
@@ -195,7 +197,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private void SetCameraProperties(CcdCameraInfo cameraInfo) {
             Description = $"{queriedCameraInfo.Name} on {queriedCameraInfo.DeviceId}, Firmware Version={cameraInfo.FirmwareVersion}";
-            SensorName = cameraInfo.CameraType.ToString();
+            SensorName = cameraInfo.Name;
             HasShutter = cameraInfo.HasMechanicalShutter;
             if (cameraInfo.CcdType == CcdType.MONO) {
                 SensorType = SensorType.Monochrome;
@@ -527,6 +529,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return double.NaN;
                 }
 
+                // NOTE: The SBIG SDK doesn't correctly report the current set point, so we just return the last set point used
+                // We also initialize set point on connection to whatever the driver reports, which is often zero
+                /*
                 if (CoolerOn) {
                     var tempStatus = sdk.QueryTemperatureStatus(ConnectedDevice.DeviceId);
                     var ccdSetPoint = this.exposureCcd == SBIG.CCD.Imaging ? tempStatus.ccdSetpoint : tempStatus.trackingCCDSetpoint;
@@ -534,7 +539,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         _temperatureSetPoint = ccdSetPoint;
                         RaisePropertyChanged();
                     }
-                }
+                }*/
                 return _temperatureSetPoint;
             }
             set {
