@@ -5973,10 +5973,10 @@ Once successfully solved, the rotation will be set for framing.</value>
     <value>Elevation</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
-    <value>Use device threads</value>
+    <value>Device threads for ASCOM</value>
   </data>
   <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
-    <value>This is an experimental setting that may improve UI responsiveness and reduce the change of UI hangs. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
   </data>
   <data name="LblDefault" xml:space="preserve">
     <value>Default</value>

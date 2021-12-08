@@ -11752,7 +11752,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use device threads.
+        ///   Looks up a localized string similar to Device threads for ASCOM.
         /// </summary>
         internal static string LblPerDeviceThreadingEnabled {
             get {
@@ -11761,7 +11761,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is an experimental setting that may improve UI responsiveness and reduce the change of UI hangs. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we&apos;re considering enabling this for everyone..
+        ///   Looks up a localized string similar to This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we&apos;re considering enabling this for everyone..
         /// </summary>
         internal static string LblPerDeviceThreadingEnabledTooltip {
             get {
