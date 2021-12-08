@@ -996,8 +996,8 @@
     <value>Robert Vice 极轴漂移法</value>
   </data>
   <data name="LblDARVSlewButtonTooltip" xml:space="preserve">
-    <value>将进行一次曝光，望远镜在此期间缓慢移动
-若图上线条没有重合，表明极轴校准仍有误差</value>
+    <value>将进行一次曝光，望远镜在此期间向一边缓慢移动并返回
+若星点产生的线条没有重合，表明极轴校准仍有误差</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
     <value>指定极轴漂移法程序的持续时间。望远镜将用一半时间在赤经轴上沿一个方向移动，剩余时间反向移动。如果没有极轴校准误差，星点轨迹将显示为一条直线。否则将会是 V 字形。要测量方位角误差，镜筒要指向中天附近，测量高度角误差则是向东或向西。</value>
@@ -3830,7 +3830,7 @@
     <value>更新日志</value>
   </data>
   <data name="LblDocumentation" xml:space="preserve">
-    <value>文件</value>
+    <value>文档</value>
   </data>
   <data name="LblHomepage" xml:space="preserve">
     <value>主页</value>
@@ -4088,7 +4088,7 @@
     <value>序列结束时停放圆顶</value>
   </data>
   <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
-    <value>允许在望远镜快速转向时同步</value>
+    <value>允许手动移动望远镜时同步</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>当圆顶跟随启用时，NINA会经常检查圆顶是否需要旋转以与望远镜对齐。当使用外部应用程序，如虚拟天文馆或手柄等移动望远镜时，等待直到望远镜停止移动后再旋转圆顶可能会有帮助。</value>
@@ -4997,7 +4997,7 @@
     <value>服务器已启用</value>
   </data>
   <data name="LblServerEnabledTooltip" xml:space="preserve">
-    <value>在59590端口上托管一个服务，使用与 SGP 相同的 API 以便与现有程序交互。 如果服务未启动，你可能需要更新一些防火墙设置(参见NINA文档)。</value>
+    <value>在59590端口上托管一个服务，使用与 SGP 相同的 API 以便与现有程序交互。 如果服务启动失败，你可能需要更新一些防火墙设置(参见NINA文档)。</value>
   </data>
   <data name="LblServerFailed" xml:space="preserve">
     <value>服务器启动失败。请检查NINA文档。 {0}</value>
