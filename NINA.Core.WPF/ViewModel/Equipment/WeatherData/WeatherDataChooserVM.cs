@@ -25,18 +25,21 @@ using NINA.Equipment.Equipment;
 namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
     public class WeatherDataChooserVM : DeviceChooserVM {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public WeatherDataChooserVM(IProfileService profileService) : base(profileService) {
+        public WeatherDataChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblWeatherNoSource"]));
 
                 try {
-                    foreach (IWeatherData obsdev in ASCOMInteraction.GetWeatherDataSources(profileService)) {
+                    foreach (IWeatherData obsdev in ascomInteraction.GetWeatherDataSources()) {
                         devices.Add(obsdev);
                     }
                 } catch (Exception ex) {

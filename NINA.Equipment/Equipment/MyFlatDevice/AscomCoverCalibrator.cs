@@ -28,8 +28,10 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class AscomCoverCalibrator : AscomDevice<CoverCalibrator>, IFlatDevice, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomCoverCalibrator(string id, string name) : base(id, name) {
+        public AscomCoverCalibrator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         private int lastBrightness = 0;
@@ -149,7 +151,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         protected override CoverCalibrator GetInstance(string id) {
-            return new CoverCalibrator(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.FlatDevice, () => new CoverCalibrator(id));
         }
     }
 }

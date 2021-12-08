@@ -27,18 +27,21 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
     public class FocuserFactory : IDeviceFactory {
         private readonly IProfileService profileService;
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public FocuserFactory(IProfileService profileService) {
+        public FocuserFactory(IProfileService profileService, IDeviceDispatcher deviceDispatcher) {
             this.profileService = profileService;
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public IList<IDevice> GetDevices() {
+            var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
             var result = new List<IDevice> {
                 new DummyDevice(Loc.Instance["LblNoFocuser"]),
                 new UltimatePowerboxV2(profileService)
             };
             try {
-                result.AddRange(ASCOMInteraction.GetFocusers(profileService));
+                result.AddRange(ascomInteraction.GetFocusers());
             } catch (Exception ex) {
                 Logger.Error(ex);
             }

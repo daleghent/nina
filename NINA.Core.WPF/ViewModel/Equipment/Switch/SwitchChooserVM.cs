@@ -30,20 +30,23 @@ using NINA.Equipment.Equipment;
 namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
     public class SwitchChooserVM : DeviceChooserVM {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public SwitchChooserVM(IProfileService profileService) : base(profileService) {
+        public SwitchChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
                 {
+                    var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                     var devices = new List<IDevice>();
 
                     devices.Add(new DummyDevice(Loc.Instance["LblNoSwitch"]));
 
                     /* ASCOM */
                     try {
-                        foreach (ISwitchHub ascomSwitch in ASCOMInteraction.GetSwitches(profileService)) {
+                        foreach (ISwitchHub ascomSwitch in ascomInteraction.GetSwitches()) {
                             devices.Add(ascomSwitch);
                         }
                     } catch (Exception ex) {

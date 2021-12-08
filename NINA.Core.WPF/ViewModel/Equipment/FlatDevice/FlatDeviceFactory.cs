@@ -27,17 +27,20 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
     public class FlatDeviceFactory : IDeviceFactory {
         private readonly IProfileService profileService;
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public FlatDeviceFactory(IProfileService profileService) {
+        public FlatDeviceFactory(IProfileService profileService, IDeviceDispatcher deviceDispatcher) {
             this.profileService = profileService;
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public IList<IDevice> GetDevices() {
+            var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
             var devices = new List<IDevice>();
             devices.Add(new DummyDevice(Loc.Instance["LblFlatDeviceNoDevice"]));
 
             try {
-                foreach (IFlatDevice flatDevice in ASCOMInteraction.GetCoverCalibrators(profileService)) {
+                foreach (IFlatDevice flatDevice in ascomInteraction.GetCoverCalibrators()) {
                     devices.Add(flatDevice);
                 }
             } catch (Exception ex) {

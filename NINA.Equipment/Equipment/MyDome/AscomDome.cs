@@ -80,8 +80,10 @@ namespace NINA.Equipment.Equipment.MyDome {
     }
 
     internal class AscomDome : AscomDevice<Dome>, IDome, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomDome(string domeId, string domeName) : base(domeId, domeName) {
+        public AscomDome(string domeId, string domeName, IDeviceDispatcher deviceDispatcher) : base(domeId, domeName) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public bool DriverCanFollow => GetProperty(nameof(Dome.CanSlave), false);
@@ -391,7 +393,7 @@ namespace NINA.Equipment.Equipment.MyDome {
         }
 
         protected override Dome GetInstance(string id) {
-            return new Dome(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.Dome, () => new Dome(id));
         }
     }
 }

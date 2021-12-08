@@ -5972,6 +5972,12 @@ Once successfully solved, the rotation will be set for framing.</value>
   <data name="LblElevation" xml:space="preserve">
     <value>Elevation</value>
   </data>
+  <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
+    <value>Use device threads</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
+    <value>This is an experimental setting that may improve UI responsiveness and reduce the change of UI hangs. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+  </data>
   <data name="LblDefault" xml:space="preserve">
     <value>Default</value>
   </data>

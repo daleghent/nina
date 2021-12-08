@@ -14,6 +14,7 @@
 
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Utility;
 using NINA.Profile.Interfaces;
 using System.Collections.Generic;
 

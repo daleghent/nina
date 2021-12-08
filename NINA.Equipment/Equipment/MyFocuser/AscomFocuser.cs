@@ -26,8 +26,10 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MyFocuser {
 
     internal class AscomFocuser : AscomDevice<Focuser>, IFocuser, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomFocuser(string focuser, string name) : base(focuser, name) {
+        public AscomFocuser(string focuser, string name, IDeviceDispatcher deviceDispatcher) : base(focuser, name) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public Focuser Device => device;
@@ -182,7 +184,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
         }
 
         protected override Focuser GetInstance(string id) {
-            return new Focuser(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.Focuser, () => new Focuser(id));
         }
     }
 }

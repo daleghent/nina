@@ -24,8 +24,10 @@ using NINA.Equipment.Interfaces;
 namespace NINA.Equipment.Equipment.MyRotator {
 
     internal class AscomRotator : AscomDevice<Rotator>, IRotator, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomRotator(string id, string name) : base(id, name) {
+        public AscomRotator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public bool CanReverse {
@@ -141,7 +143,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
         }
 
         protected override Rotator GetInstance(string id) {
-            return new Rotator(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.Rotator, () => new Rotator(id));
         }
     }
 }

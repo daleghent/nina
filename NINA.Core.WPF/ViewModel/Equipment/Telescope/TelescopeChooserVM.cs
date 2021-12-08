@@ -25,18 +25,21 @@ using NINA.Equipment.Equipment;
 namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
     public class TelescopeChooserVM : DeviceChooserVM {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public TelescopeChooserVM(IProfileService profileService) : base(profileService) {
+        public TelescopeChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoTelescope"]));
 
                 try {
-                    foreach (ITelescope telescope in ASCOMInteraction.GetTelescopes(profileService)) {
+                    foreach (ITelescope telescope in ascomInteraction.GetTelescopes()) {
                         devices.Add(telescope);
                     }
                 } catch (Exception ex) {

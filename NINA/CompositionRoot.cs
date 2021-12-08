@@ -1,5 +1,6 @@
 ﻿using NINA.Core.Interfaces;
 using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Interfaces;
 using NINA.Profile.Interfaces;
@@ -103,6 +104,10 @@ namespace NINA {
                 Debug.Print($"Time to create GlobalObjects {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
+                var deviceDispatcher = _kernel.Get<IDeviceDispatcher>();
+                Debug.Print($"Time to create DeviceDispatcher {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
                 var mainWindowVM = new MainWindowVM {
                     AppVM = appvm,
                     ImageSaveController = imageSaveController,
@@ -121,7 +126,8 @@ namespace NINA {
 
                     ImageHistoryVM = imageHistoryVM,
                     PluginsVM = pluginsVM,
-                    GlobalObjects = globalObjects
+                    GlobalObjects = globalObjects,
+                    DeviceDispatcher = deviceDispatcher
                 };
                 Debug.Print($"Time to create MainWindowVM {sw.Elapsed}");
 

@@ -46,12 +46,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             IProfileService profileService,
             ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator,
-            IDomeMediator domeMediator) : base(profileService) {
+            IDomeMediator domeMediator, 
+            IDeviceDispatcher deviceDispatcher) : base(profileService) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             this.domeMediator = domeMediator;
+            this.deviceDispatcher = deviceDispatcher;
             Title = Loc.Instance["LblTelescope"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
@@ -61,9 +63,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             });
             _ = Rescan();
 
-            ChooseTelescopeCommand = new AsyncCommand<bool>(() => ChooseTelescope());
+            ChooseTelescopeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope));
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectTelescope());
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectTelescope));
             ParkCommand = new AsyncCommand<bool>(() => {
                 InitCancelSlewTelescope();
                 return ParkTelescope(progress, _cancelSlewTelescopeSource.Token);
@@ -355,7 +357,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         public TelescopeChooserVM TelescopeChooserVM {
             get {
                 if (_telescopeChooserVM == null) {
-                    _telescopeChooserVM = new TelescopeChooserVM(profileService);
+                    _telescopeChooserVM = new TelescopeChooserVM(profileService, deviceDispatcher);
                 }
                 return _telescopeChooserVM;
             }
@@ -393,6 +395,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 _cancelChooseTelescopeSource = new CancellationTokenSource();
                 if (telescope != null) {
                     try {
+                        var currentThread = System.Threading.Thread.CurrentThread;
+
                         var connected = await telescope?.Connect(_cancelChooseTelescopeSource.Token);
                         _cancelChooseTelescopeSource.Token.ThrowIfCancellationRequested();
                         if (connected) {
@@ -799,6 +803,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private IDomeMediator domeMediator;
+        private IDeviceDispatcher deviceDispatcher;
         private IProgress<ApplicationStatus> progress;
 
         public double TargetRightAscencionSeconds {

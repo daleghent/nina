@@ -24,18 +24,21 @@ using NINA.Equipment.Equipment;
 namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
     public class DomeChooserVM : DeviceChooserVM {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public DomeChooserVM(IProfileService profileService) : base(profileService) {
+        public DomeChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblDomeNoSource"]));
 
                 try {
-                    foreach (IDome dome in ASCOMInteraction.GetDomes(profileService)) {
+                    foreach (IDome dome in ascomInteraction.GetDomes()) {
                         devices.Add(dome);
                     }
                 } catch (Exception ex) {

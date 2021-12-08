@@ -25,8 +25,10 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MyWeatherData {
 
     internal class AscomObservingConditions : AscomDevice<ObservingConditions>, IWeatherData, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomObservingConditions(string weatherDataId, string weatherDataName) : base(weatherDataId, weatherDataName) {
+        public AscomObservingConditions(string weatherDataId, string weatherDataName, IDeviceDispatcher deviceDispatcher) : base(weatherDataId, weatherDataName) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public double AveragePeriod {
@@ -116,7 +118,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         protected override string ConnectionLostMessage => Loc.Instance["LblWeatherConnectionLost"];
 
         protected override ObservingConditions GetInstance(string id) {
-            return new ObservingConditions(id); ;
+            return deviceDispatcher.Invoke(DeviceDispatcherType.WeatherData, () => new ObservingConditions(id));
         }
     }
 }

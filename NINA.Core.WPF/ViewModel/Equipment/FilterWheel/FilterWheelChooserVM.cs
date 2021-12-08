@@ -32,13 +32,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelChooserVM : DeviceChooserVM {
         private readonly ISbigSdk sbigSdk;
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public FilterWheelChooserVM(ISbigSdk sbigSdk, IProfileService profileService) : base(profileService) {
+        public FilterWheelChooserVM(ISbigSdk sbigSdk, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
             this.sbigSdk = sbigSdk;
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoFilterwheel"]));
@@ -143,7 +146,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                  * ASCOM devices
                  */
                 try {
-                    foreach (IFilterWheel fw in ASCOMInteraction.GetFilterWheels(profileService)) {
+                    foreach (IFilterWheel fw in ascomInteraction.GetFilterWheels()) {
                         devices.Add(fw);
                     }
                 } catch (Exception ex) {

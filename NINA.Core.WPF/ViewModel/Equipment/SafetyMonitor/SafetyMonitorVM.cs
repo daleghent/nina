@@ -41,15 +41,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
         private ISafetyMonitor safetyMonitor;
         private DeviceUpdateTimer updateTimer;
         private CancellationTokenSource connectCts;
+        private IDeviceDispatcher deviceDispatcher;
         private readonly SemaphoreSlim ss = new SemaphoreSlim(1, 1);
 
-        public SafetyMonitorVM(IProfileService profileService, ISafetyMonitorMediator safetyMonitorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public SafetyMonitorVM(IProfileService profileService, ISafetyMonitorMediator safetyMonitorMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceDispatcher deviceDispatcher) : base(profileService) {
             Title = Loc.Instance["LblSafetyMonitor"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ShieldSVG"];
 
             this.safetyMonitorMediator = safetyMonitorMediator;
             this.safetyMonitorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            this.deviceDispatcher = deviceDispatcher;
             _ = Rescan();
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
@@ -80,7 +82,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
         public SafetyMonitorChooserVM SafetyMonitorChooserVM {
             get {
                 if (safetyMonitorChooserVM == null) {
-                    safetyMonitorChooserVM = new SafetyMonitorChooserVM(profileService);
+                    safetyMonitorChooserVM = new SafetyMonitorChooserVM(profileService, deviceDispatcher);
                 }
                 return safetyMonitorChooserVM;
             }

@@ -29,18 +29,21 @@ using NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator;
 namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
     public class SafetyMonitorChooserVM : DeviceChooserVM {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public SafetyMonitorChooserVM(IProfileService profileService) : base(profileService) {
+        public SafetyMonitorChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoSafetyMonitor"]));
 
                 try {
-                    foreach (ISafetyMonitor safetyMonitor in ASCOMInteraction.GetSafetyMonitors(profileService)) {
+                    foreach (ISafetyMonitor safetyMonitor in ascomInteraction.GetSafetyMonitors()) {
                         devices.Add(safetyMonitor);
                     }
                 } catch (Exception ex) {

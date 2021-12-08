@@ -1,4 +1,5 @@
-﻿using NINA.Equipment.Interfaces.ViewModel;
+﻿using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Interfaces;
 using NINA.Utility;
 using NINA.ViewModel.Interfaces;
@@ -24,5 +25,6 @@ namespace NINA.ViewModel {
         public IImageHistoryVM ImageHistoryVM { get; set; }
         public IPluginsVM PluginsVM { get; set; }
         public GlobalObjects GlobalObjects { get; set; }
+        public IDeviceDispatcher DeviceDispatcher { get; set; }
     }
 }

@@ -11752,6 +11752,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use device threads.
+        /// </summary>
+        internal static string LblPerDeviceThreadingEnabled {
+            get {
+                return ResourceManager.GetString("LblPerDeviceThreadingEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is an experimental setting that may improve UI responsiveness and reduce the change of UI hangs. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we&apos;re considering enabling this for everyone..
+        /// </summary>
+        internal static string LblPerDeviceThreadingEnabledTooltip {
+            get {
+                return ResourceManager.GetString("LblPerDeviceThreadingEnabledTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 - Calibrating.
         /// </summary>
         internal static string LblPHD2Calibrating {

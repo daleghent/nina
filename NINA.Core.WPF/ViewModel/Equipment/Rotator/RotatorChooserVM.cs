@@ -25,18 +25,21 @@ using NINA.Equipment.Interfaces;
 namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
     public class RotatorChooserVM : DeviceChooserVM {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public RotatorChooserVM(IProfileService profileService) : base(profileService) {
+        public RotatorChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoRotator"]));
 
                 try {
-                    foreach (IRotator rotator in ASCOMInteraction.GetRotators(profileService)) {
+                    foreach (IRotator rotator in ascomInteraction.GetRotators()) {
                         devices.Add(rotator);
                     }
                 } catch (Exception ex) {

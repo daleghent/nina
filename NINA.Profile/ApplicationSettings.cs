@@ -59,6 +59,7 @@ namespace NINA.Profile {
             skySurveyCacheDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
             SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
             SelectedPluggableBehaviorsLookup = ImmutableDictionary<string, string>.Empty;
+            PerDeviceThreadingEnabled = false;
         }
 
         [DataMember]
@@ -141,6 +142,21 @@ namespace NINA.Profile {
             set {
                 if (skySurveyCacheDirectory != value) {
                     skySurveyCacheDirectory = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool perDeviceThreadingEnabled;
+
+        [DataMember]
+        public bool PerDeviceThreadingEnabled {
+            get {
+                return perDeviceThreadingEnabled;
+            }
+            set {
+                if (perDeviceThreadingEnabled != value) {
+                    perDeviceThreadingEnabled = value;
                     RaisePropertyChanged();
                 }
             }

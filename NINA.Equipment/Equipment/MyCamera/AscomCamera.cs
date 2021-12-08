@@ -39,10 +39,12 @@ using NINA.Core.Enum;
 namespace NINA.Equipment.Equipment.MyCamera {
 
     internal class AscomCamera : AscomDevice<Camera>, ICamera, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory) : base(cameraId, name) {
+        public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory, IDeviceDispatcher deviceDispatcher) : base(cameraId, name) {
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         private IProfileService profileService;
@@ -973,7 +975,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         protected override Camera GetInstance(string id) {
-            return new Camera(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.Camera, () => new Camera(id));
         }
 
         public bool LiveViewEnabled { get => false; set => throw new System.NotImplementedException(); }

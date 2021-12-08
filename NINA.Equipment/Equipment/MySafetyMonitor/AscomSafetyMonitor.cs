@@ -28,8 +28,10 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
     internal class AscomSafetyMonitor : AscomDevice<SafetyMonitor>, ISafetyMonitor {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomSafetyMonitor(string id, string name) : base(id, name) {
+        public AscomSafetyMonitor(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public bool IsSafe {
@@ -41,7 +43,7 @@ namespace NINA.Equipment.Equipment.MySafetyMonitor {
         protected override string ConnectionLostMessage => Loc.Instance["LblSafetyMonitorConnectionLost"];
 
         protected override SafetyMonitor GetInstance(string id) {
-            return new SafetyMonitor(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.SafetyMonitor, () => new SafetyMonitor(id));
         }
     }
 }

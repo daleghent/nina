@@ -40,18 +40,22 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private readonly ISbigSdk sbigSdk;
         private readonly IExposureDataFactory exposureDataFactory;
         private readonly IImageDataFactory imageDataFactory;
+        private readonly IDeviceDispatcher deviceDispatcher;
 
         public CameraChooserVM(
-            IProfileService profileService, ITelescopeMediator telescopeMediator, ISbigSdk sbigSdk, IExposureDataFactory exposureDataFactory, IImageDataFactory imageDataFactory
+            IProfileService profileService, ITelescopeMediator telescopeMediator, ISbigSdk sbigSdk, IExposureDataFactory exposureDataFactory, IImageDataFactory imageDataFactory, IDeviceDispatcher deviceDispatcher
             ) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.sbigSdk = sbigSdk;
             this.exposureDataFactory = exposureDataFactory;
             this.imageDataFactory = imageDataFactory;
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public override void GetEquipment() {
             lock (lockObj) {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
+
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoCamera"]));
@@ -205,7 +209,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* ASCOM */
                 try {
-                    foreach (ICamera cam in ASCOMInteraction.GetCameras(profileService, exposureDataFactory)) {
+                    foreach (ICamera cam in ascomInteraction.GetCameras(exposureDataFactory)) {
                         devices.Add(cam);
                     }
                 } catch (Exception ex) {

@@ -179,6 +179,7 @@
     <Compile Include="Converter\TrackingModeConverter.cs" />
     <Compile Include="Converter\TrackingRateConverter.cs" />
     <Compile Include="Equipment\AscomDevice.cs" />
+    <Compile Include="Equipment\DeviceDispatcher.cs" />
     <Compile Include="Equipment\DeviceInfo.cs" />
     <Compile Include="Equipment\DummyDevice.cs" />
     <Compile Include="Equipment\GuideStepsHistory.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Equipment\MyCamera\ToupTekAlike\MallinCamSDKWrapper.cs" />
     <Compile Include="Equipment\MyFilterWheel\SBIGFilterWheel.cs" />
     <Compile Include="Exceptions\CameraExposureFailedException.cs" />
+    <Compile Include="Interfaces\IDeviceDispatcher.cs" />
     <Compile Include="SDK\CameraSDKs\MallinCamSDK\mallincam.cs" />
     <Compile Include="SDK\CameraSDKs\SBIGSDK\SBIGFilterWheelProvider.cs" />
     <Compile Include="Equipment\MyCamera\SVBonyCamera.cs" />

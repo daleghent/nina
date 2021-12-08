@@ -28,8 +28,10 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
     internal class AscomSwitchHub : AscomDevice<Switch>, ISwitchHub, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomSwitchHub(string id, string name) : base(id, name) {
+        public AscomSwitchHub(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name) {
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public ICollection<ISwitch> Switches { get; private set; } = new AsyncObservableCollection<ISwitch>();
@@ -76,7 +78,7 @@ namespace NINA.Equipment.Equipment.MySwitch.Ascom {
         }
 
         protected override Switch GetInstance(string id) {
-            return new Switch(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.Switch, () => new Switch(id));
         }
     }
 }

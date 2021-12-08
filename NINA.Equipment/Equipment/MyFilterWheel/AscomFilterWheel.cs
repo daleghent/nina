@@ -29,9 +29,11 @@ using System.Windows.Threading;
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     internal class AscomFilterWheel : AscomDevice<FilterWheel>, IFilterWheel, IDisposable {
+        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService) : base(filterWheelId, name) {
+        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(filterWheelId, name) {
             this.profileService = profileService;
+            this.deviceDispatcher = deviceDispatcher;
         }
 
         public int[] FocusOffsets {
@@ -97,7 +99,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         protected override FilterWheel GetInstance(string id) {
-            return new FilterWheel(id);
+            return deviceDispatcher.Invoke(DeviceDispatcherType.FilterWheel, () => new FilterWheel(id));
         }
     }
 }

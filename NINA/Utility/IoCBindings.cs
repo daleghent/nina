@@ -69,6 +69,7 @@ using NINA.Image.Interfaces;
 using NINA.Image.ImageData;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces;
+using NINA.Equipment.Equipment;
 
 namespace NINA.Utility {
 
@@ -90,6 +91,7 @@ namespace NINA.Utility {
                     Bind<IProfileService>().ToMethod(f => _profileService);
                     Bind<IProfile>().ToMethod(f => f.Kernel.Get<ProfileService>().ActiveProfile);
 
+                    Bind<IDeviceDispatcher>().To<DeviceDispatcher>().InSingletonScope();
                     Bind<IApplicationVM>().To<ApplicationVM>().InSingletonScope();
                     Bind<ICameraVM>().To<CameraVM>().InSingletonScope();
                     Bind<IImagingVM>().To<ImagingVM>().InSingletonScope();
