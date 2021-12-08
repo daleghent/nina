@@ -128,7 +128,7 @@ namespace NINA.Profile {
                         .ForEach(Profiles.Add);
 
                     if (!Profiles.Any() && !loadSpecificProfile) {
-                        AddDefaultProfile();
+                        AddDefaultProfile(Loc.Instance["LblDefault"]);
                     }
 
                     var selectedProfile =
@@ -143,8 +143,8 @@ namespace NINA.Profile {
                         return false;
                     }
 
-                    Logger.Debug("All Profiles are in use. Creating a new default profile");
-                    var defaultProfile = AddDefaultProfile();
+                    Logger.Debug("All Profiles are in use. Creating a new profile with defaults");
+                    var defaultProfile = AddDefaultProfile($"{Loc.Instance["LblDefault"]}-{DateTime.Now:s}");
                     SelectProfile(defaultProfile);
                     return true;
                 }
@@ -254,7 +254,7 @@ namespace NINA.Profile {
         public AsyncObservableCollection<ProfileMeta> Profiles { get; set; }
 
         public void Add() {
-            AddDefaultProfile();
+            AddDefaultProfile($"{Loc.Instance["LblDefault"]}-{DateTime.Now:s}");
         }
 
         public bool Clone(ProfileMeta profileInfo) {
@@ -347,13 +347,13 @@ namespace NINA.Profile {
             }
         }
 
-        private ProfileMeta AddDefaultProfile() {
+        private ProfileMeta AddDefaultProfile(string name) {
             lock (lockobj) {
                 if (profileFileWatcher != null) {
                     profileFileWatcher.EnableRaisingEvents = false;
                 }
 
-                using (var p = new Profile("Default")) {
+                using (var p = new Profile(name)) {
                     p.Save();
 
                     var info = new ProfileMeta() { Id = p.Id, Name = p.Name, Location = p.Location };

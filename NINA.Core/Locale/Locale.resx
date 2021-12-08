@@ -5972,4 +5972,7 @@ Once successfully solved, the rotation will be set for framing.</value>
   <data name="LblElevation" xml:space="preserve">
     <value>Elevation</value>
   </data>
+  <data name="LblDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
 </root>

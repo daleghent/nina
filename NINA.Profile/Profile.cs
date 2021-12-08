@@ -21,6 +21,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using NINA.Core.Model.Equipment;
 using System.Text;
+using NINA.Core.Locale;
 
 namespace NINA.Profile {
 
@@ -190,7 +191,7 @@ namespace NINA.Profile {
         [DataMember]
         public DateTime LastUsed { get; set; } = DateTime.MinValue;
 
-        private string name = "Default";
+        private string name = Loc.Instance["LblDefault"];
 
         [DataMember]
         public string Name {

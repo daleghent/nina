@@ -6107,6 +6107,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        internal static string LblDefault {
+            get {
+                return ResourceManager.GetString("LblDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Auto Focus Exposure Time.
         /// </summary>
         internal static string LblDefaultAutoFocusExposureTime {
