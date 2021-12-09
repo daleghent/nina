@@ -80,9 +80,9 @@ namespace NINA.ViewModel {
             }
         }
 
-        public string FocalLength {
+        public double FocalLength {
             get {
-                return ActiveProfile.TelescopeSettings.FocalLength.ToString(CultureInfo.InvariantCulture);
+                return ActiveProfile.TelescopeSettings.FocalLength;
             }
         }
 

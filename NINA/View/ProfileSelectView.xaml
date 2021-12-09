@@ -82,7 +82,7 @@
         <TextBlock
             Grid.Row="5"
             Grid.Column="1"
-            Text="{Binding FocalLength}" />
+            Text="{Binding FocalLength, Converter={StaticResource NaNToDoubleDashConverter}}" />
         <CheckBox
             Grid.Row="6"
             Grid.Column="0"
