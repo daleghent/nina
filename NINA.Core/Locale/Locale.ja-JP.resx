@@ -3080,12 +3080,12 @@
     <value>同期していたPHD2サービスがクラッシュしました。サービスの一環として同期したPHD2ガイダーを再開します。</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronize site settings</value>
+    <value>観測値の設定を同期</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
+    <value>望遠鏡の観測値の設定は、NINAとは異なります。
 
-Should the settings be synchronized?</value>
+設定を同期しますか?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>目標</value>
@@ -5925,6 +5925,6 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Get coordinates from the current scope position</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>標高</value>
   </data>
 </root>

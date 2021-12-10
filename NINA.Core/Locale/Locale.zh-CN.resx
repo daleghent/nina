@@ -5943,6 +5943,6 @@
     <value>从望远镜获取坐标</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>海拔</value>
   </data>
 </root>
