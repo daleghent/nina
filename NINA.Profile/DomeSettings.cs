@@ -39,7 +39,7 @@ namespace NINA.Profile {
             FindHomeBeforePark = false;
             DomeSyncTimeoutSeconds = 120;
             SettleTimeSeconds = 1;
-            SyncSlewDomeWhenMountSlews = true;
+            SyncSlewDomeWhenMountSlews = false;
             SynchronizeDuringMountSlew = false;
         }
 
@@ -208,7 +208,7 @@ namespace NINA.Profile {
             }
         }
 
-        private bool syncSlewDomeWhenMountSlews = true;
+        private bool syncSlewDomeWhenMountSlews = false;
 
         [DataMember]
         public bool SyncSlewDomeWhenMountSlews {
