@@ -57,9 +57,11 @@ Also attach your log file of that session (if applicable), which can be found in
 1. Fork the repository
 2. **Sync LFS files into the fork**
 ```
-git lfs fetch --all <nina root origin>
-git lfs push --all <your fork origin>
-git lfs pull
+git clone -n <your fork of the repo>    <--- NOTE: the -n flag for "don't checkout the branch"
+git remote add upstream https://bitbucket.org/Isbeorn/nina.git
+git lfs fetch upstream --all
+git lfs push origin --all
+git checkout <desired branch>
 ```
 3. Add your changes
 4. Check that unit tests are passing
