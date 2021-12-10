@@ -13,25 +13,19 @@
 #endregion "copyright"
 
 using ASCOM;
+using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
-using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
-    public class AscomCoverCalibrator : AscomDevice<CoverCalibrator>, IFlatDevice, IDisposable {
-        private readonly IDeviceDispatcher deviceDispatcher;
-
-        public AscomCoverCalibrator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name) {
-            this.deviceDispatcher = deviceDispatcher;
+    public class AscomCoverCalibrator : AscomDevice<ICoverCalibratorV1, CoverCalibrator>, IFlatDevice, IDisposable {
+        public AscomCoverCalibrator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.FlatDevice) {
         }
 
         private int lastBrightness = 0;
@@ -151,7 +145,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         protected override CoverCalibrator GetInstance(string id) {
-            return deviceDispatcher.Invoke(DeviceDispatcherType.FlatDevice, () => new CoverCalibrator(id));
+            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new CoverCalibrator(id));
         }
     }
 }

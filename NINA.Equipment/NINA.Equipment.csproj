@@ -180,6 +180,7 @@
     <Compile Include="Converter\TrackingRateConverter.cs" />
     <Compile Include="Equipment\AscomDevice.cs" />
     <Compile Include="Equipment\DeviceDispatcher.cs" />
+    <Compile Include="Equipment\DeviceDispatchInterceptor.cs" />
     <Compile Include="Equipment\DeviceInfo.cs" />
     <Compile Include="Equipment\DummyDevice.cs" />
     <Compile Include="Equipment\GuideStepsHistory.cs" />

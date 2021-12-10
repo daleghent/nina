@@ -32,5 +32,6 @@ namespace NINA.Equipment.Interfaces {
     public interface IDeviceDispatcher : IDisposable {
         Dispatcher GetDispatcher(DeviceDispatcherType type);
         TResult Invoke<TResult>(DeviceDispatcherType deviceType, Func<TResult> callback);
+        void Invoke(DeviceDispatcherType deviceType, Action callback);
     }
 }

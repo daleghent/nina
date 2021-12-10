@@ -89,6 +89,15 @@ namespace NINA.Equipment.Equipment {
             }
         }
 
+        public void Invoke(DeviceDispatcherType deviceType, Action callback) {
+            if (this.profileService.ActiveProfile.ApplicationSettings.PerDeviceThreadingEnabled) {
+                var dispatcher = GetDispatcher(deviceType);
+                dispatcher.Invoke(callback);
+            } else {
+                callback();
+            }
+        }
+
         public void Dispose() {
             lock (dispatcherMapLock) {
                 if (disposed) {

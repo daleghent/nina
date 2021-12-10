@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using ASCOM;
 using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
 using NINA.Core.Utility;
@@ -30,19 +29,16 @@ using TelescopeAxes = NINA.Core.Enum.TelescopeAxes;
 using GuideDirections = NINA.Core.Enum.GuideDirections;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
-using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
-    internal class AscomTelescope : AscomDevice<Telescope>, ITelescope, IDisposable {
+    internal class AscomTelescope : AscomDevice<ITelescopeV3, Telescope>, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
         private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
-        private readonly IDeviceDispatcher deviceDispatcher;
         private static double TRACKING_RATE_EPSILON = 0.000001;
 
-        public AscomTelescope(string telescopeId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(telescopeId, name) {
+        public AscomTelescope(string telescopeId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(telescopeId, name, deviceDispatcher, DeviceDispatcherType.Telescope) {
             this.profileService = profileService;
-            this.deviceDispatcher = deviceDispatcher;
         }
 
         private IProfileService profileService;
@@ -1090,7 +1086,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         protected override Telescope GetInstance(string id) {
-            return deviceDispatcher.Invoke(DeviceDispatcherType.Telescope, () => new Telescope(id));
+            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Telescope(id));
         }
     }
 }

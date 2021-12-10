@@ -12,28 +12,23 @@
 
 #endregion "copyright"
 
+using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
-using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
 using System.Collections;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
-    internal class AscomFilterWheel : AscomDevice<FilterWheel>, IFilterWheel, IDisposable {
-        private readonly IDeviceDispatcher deviceDispatcher;
-
-        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(filterWheelId, name) {
+    internal class AscomFilterWheel : AscomDevice<IFilterWheelV2, FilterWheel>, IFilterWheel, IDisposable {
+        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(filterWheelId, name, deviceDispatcher, DeviceDispatcherType.FilterWheel) {
             this.profileService = profileService;
-            this.deviceDispatcher = deviceDispatcher;
         }
 
         public int[] FocusOffsets {
@@ -99,7 +94,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         protected override FilterWheel GetInstance(string id) {
-            return deviceDispatcher.Invoke(DeviceDispatcherType.FilterWheel, () => new FilterWheel(id));
+            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new FilterWheel(id));
         }
     }
 }
