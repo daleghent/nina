@@ -490,7 +490,7 @@
                                 VerticalContentAlignment="Center"
                                 Unit="mm">
                                 <ninactrl:UnitTextBox.Text>
-                                    <Binding Path="FocalLength" UpdateSourceTrigger="LostFocus">
+                                    <Binding Path="FocalLength" UpdateSourceTrigger="LostFocus" Converter="{StaticResource NaNToDoubleDashConverter}">
                                         <Binding.ValidationRules>
                                             <rules:GreaterThanZeroRule />
                                         </Binding.ValidationRules>
