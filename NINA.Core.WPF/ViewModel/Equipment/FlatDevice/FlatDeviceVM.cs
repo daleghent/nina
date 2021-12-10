@@ -63,15 +63,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             Title = Loc.Instance["LblFlatDevice"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
 
-            ConnectCommand = new AsyncCommand<bool>(Connect);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             CancelConnectCommand = new RelayCommand(CancelConnectFlatDevice);
-            DisconnectCommand = new AsyncCommand<bool>(DisconnectFlatDeviceDialog);
-            OpenCoverCommand = new AsyncCommand<bool>(() => OpenCover(CancellationToken.None));
-            CloseCoverCommand = new AsyncCommand<bool>(() => CloseCover(CancellationToken.None));
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFlatDeviceDialog));
+            OpenCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => OpenCover(CancellationToken.None)));
+            CloseCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => CloseCover(CancellationToken.None)));
             RefreshFlatDeviceListCommand =
                 new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(flatDevice?.Connected == true));
-            SetBrightnessCommand = new AsyncCommand<bool>(o => SetBrightness(o, CancellationToken.None));
-            ToggleLightCommand = new AsyncCommand<bool>(o => ToggleLight(o, CancellationToken.None));
+            SetBrightnessCommand = new AsyncCommand<bool>(o => Task.Run(() => SetBrightness(o, CancellationToken.None)));
+            ToggleLightCommand = new AsyncCommand<bool>(o => Task.Run(() => ToggleLight(o, CancellationToken.None)));
             AddGainCommand = new RelayCommand(AddGain);
             AddBinningCommand = new RelayCommand(AddBinning);
             DeleteGainCommand = new RelayCommand(DeleteGainDialog);

@@ -66,22 +66,22 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             ChooseTelescopeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope));
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectTelescope));
-            ParkCommand = new AsyncCommand<bool>(() => {
+            ParkCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
                 return ParkTelescope(progress, _cancelSlewTelescopeSource.Token);
-            });
+            }));
 
-            UnparkCommand = new AsyncCommand<bool>(() => {
+            UnparkCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
                 return UnparkTelescope(progress, _cancelSlewTelescopeSource.Token);
-            });
-            SetParkPositionCommand = new AsyncCommand<bool>(SetParkPosition);
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(SlewToCoordinatesInternal);
-            RefreshTelescopeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Telescope?.Connected == true));
-            FindHomeCommand = new AsyncCommand<bool>(() => {
+            }));
+            SetParkPositionCommand = new AsyncCommand<bool>(() => Task.Run(SetParkPosition));
+            SlewToCoordinatesCommand = new AsyncCommand<bool>((p) => Task.Run(() => SlewToCoordinatesInternal(p)));
+            RefreshTelescopeListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !(Telescope?.Connected == true));
+            FindHomeCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
                 return FindHome(progress, _cancelSlewTelescopeSource.Token);
-            });
+            }));
 
             MoveCommand = new RelayCommand(Move);
             StopMoveCommand = new RelayCommand(StopMove);

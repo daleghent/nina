@@ -55,21 +55,21 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             this.cameraMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
 
-            ChooseCameraCommand = new AsyncCommand<bool>(ChooseCamera);
+            ChooseCameraCommand = new AsyncCommand<bool>(() => Task.Run(ChooseCamera));
             CancelConnectCameraCommand = new RelayCommand(CancelConnectCamera);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             CoolCamCommand = new AsyncCommand<bool>(() => {
                 _cancelChangeTemperatureCts?.Dispose();
                 _cancelChangeTemperatureCts = new CancellationTokenSource();
-                return CoolCamera(TargetTemp, TimeSpan.FromMinutes(CoolingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token);
+                return Task.Run(() => CoolCamera(TargetTemp, TimeSpan.FromMinutes(CoolingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token));
             }, (object o) => !TempChangeRunning);
             WarmCamCommand = new AsyncCommand<bool>(() => {
                 _cancelChangeTemperatureCts?.Dispose();
                 _cancelChangeTemperatureCts = new CancellationTokenSource();
-                return WarmCamera(TimeSpan.FromMinutes(WarmingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token);
+                return Task.Run(() => WarmCamera(TimeSpan.FromMinutes(WarmingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token));
             }, (object o) => !TempChangeRunning);
             CancelCoolCamCommand = new RelayCommand(CancelCoolCamera);
-            RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Cam?.Connected == true));
+            RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !(Cam?.Connected == true));
 
             TempChangeRunning = false;
             CoolerPowerHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);

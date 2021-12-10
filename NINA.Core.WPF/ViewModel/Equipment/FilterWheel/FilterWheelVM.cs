@@ -31,7 +31,6 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
-using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
@@ -56,14 +55,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             this.guiderMediator = guiderMediator;
             this.applicationStatusMediator = applicationStatusMediator;
 
-            ChooseFWCommand = new AsyncCommand<bool>(() => ChooseFW());
+            ChooseFWCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFW));
             CancelChooseFWCommand = new RelayCommand(CancelChooseFW);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectFW());
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFW));
             RefreshFWListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(FW?.Connected == true));
             ChangeFilterCommand = new AsyncCommand<bool>(async () => {
                 _changeFilterCancellationSource?.Dispose();
                 _changeFilterCancellationSource = new CancellationTokenSource();
-                await ChangeFilter(TargetFilter, _changeFilterCancellationSource.Token, new Progress<ApplicationStatus>(x => { x.Source = this.Title; applicationStatusMediator.StatusUpdate(x); }));
+                await Task.Run(() => ChangeFilter(TargetFilter, _changeFilterCancellationSource.Token, new Progress<ApplicationStatus>(x => { x.Source = this.Title; applicationStatusMediator.StatusUpdate(x); })));
                 return true;
             }, (object o) => FilterWheelInfo.Connected && !FilterWheelInfo.IsMoving);
 

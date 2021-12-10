@@ -51,7 +51,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
             this.applicationStatusMediator = applicationStatusMediator;
 
-            ConnectGuiderCommand = new AsyncCommand<bool>(Connect);
+            ConnectGuiderCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             CancelConnectGuiderCommand = new RelayCommand(CancelConnectGuider);
             RefreshGuiderListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Guider?.Connected == true));
             DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => Guider?.Connected == true);

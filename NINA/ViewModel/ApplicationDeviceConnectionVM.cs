@@ -63,67 +63,67 @@ namespace NINA.ViewModel {
                     return await Task<bool>.Run(async () => {
                         try {
                             Logger.Debug("Connecting to camera");
-                            await cameraMediator.Connect();
+                            await Task.Run(cameraMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Filter Wheel");
-                            await filterWheelMediator.Connect();
+                            await Task.Run(filterWheelMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Telescope");
-                            await telescopeMediator.Connect();
+                            await Task.Run(telescopeMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Focuser");
-                            await focuserMediator.Connect();
+                            await Task.Run(focuserMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Rotator");
-                            await rotatorMediator.Connect();
+                            await Task.Run(rotatorMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Guider");
-                            await guiderMediator.Connect();
+                            await Task.Run(guiderMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Flat Device");
-                            await flatDeviceMediator.Connect();
+                            await Task.Run(flatDeviceMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Weather Data");
-                            await weatherDataMediator.Connect();
+                            await Task.Run(weatherDataMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Switch");
-                            await switchMediator.Connect();
+                            await Task.Run(switchMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Dome");
-                            await domeMediator.Connect();
+                            await Task.Run(domeMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
                         try {
                             Logger.Debug("Connecting to Safety Monitor");
-                            await safetyMonitorMediator.Connect();
+                            await Task.Run(safetyMonitorMediator.Connect);
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }

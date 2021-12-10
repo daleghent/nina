@@ -48,8 +48,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             this.switchMediator = switchMediator;
             this.switchMediator.RegisterHandler(this);
 
-            ConnectCommand = new AsyncCommand<bool>(Connect);
-            DisconnectCommand = new AsyncCommand<bool>(async () => { await Disconnect(); return true; });
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
+            DisconnectCommand = new AsyncCommand<bool>(async () => { await Task.Run(Disconnect); return true; });
             CancelConnectCommand = new RelayCommand((object o) => CancelConnect());
             RefreshDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(SwitchHub?.Connected == true));
 
@@ -59,7 +59,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                  profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval
              );
 
-            SetSwitchValueCommand = new AsyncCommand<bool>(SetSwitchValue);
+            SetSwitchValueCommand = new AsyncCommand<bool>((p) => Task.Run(() => SetSwitchValue(p)));
             ToggleBooleanSwitchValueCommand = new AsyncCommand<bool>(async o => {
                 if (o is IWritableSwitch ws) {
                     ws.TargetValue = ws.Value == 0 ? 1 : 0;

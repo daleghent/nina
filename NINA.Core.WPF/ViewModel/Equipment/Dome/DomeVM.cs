@@ -70,19 +70,19 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 this.applicationStatusMediator.StatusUpdate(p);
             });
 
-            ChooseDomeCommand = new AsyncCommand<bool>(() => ChooseDome());
+            ChooseDomeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseDome));
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             RefreshDomeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Dome?.Connected == true));
-            StopCommand = new AsyncCommand<bool>(StopAll);
-            OpenShutterCommand = new AsyncCommand<bool>(OpenShutterVM);
-            CloseShutterCommand = new AsyncCommand<bool>(CloseShutterVM);
+            StopCommand = new AsyncCommand<bool>((o) => Task.Run(() => StopAll(o)));
+            OpenShutterCommand = new AsyncCommand<bool>(() => Task.Run(OpenShutterVM));
+            CloseShutterCommand = new AsyncCommand<bool>(() => Task.Run(CloseShutterVM));
             SetParkPositionCommand = new RelayCommand(SetParkPosition);
-            ParkCommand = new AsyncCommand<bool>(ParkVM);
-            ManualSlewCommand = new AsyncCommand<bool>(() => ManualSlew(TargetAzimuthDegrees));
-            RotateCWCommand = new AsyncCommand<bool>(() => RotateRelative(RotateDegrees));
-            RotateCCWCommand = new AsyncCommand<bool>(() => RotateRelative(-RotateDegrees));
-            FindHomeCommand = new AsyncCommand<bool>((o) => FindHome(o, CancellationToken.None));
+            ParkCommand = new AsyncCommand<bool>(() => Task.Run(ParkVM));
+            ManualSlewCommand = new AsyncCommand<bool>(() => Task.Run(() => ManualSlew(TargetAzimuthDegrees)));
+            RotateCWCommand = new AsyncCommand<bool>(() => Task.Run(() => RotateRelative(RotateDegrees)));
+            RotateCCWCommand = new AsyncCommand<bool>(() => Task.Run(() => RotateRelative(-RotateDegrees)));
+            FindHomeCommand = new AsyncCommand<bool>((o) => Task.Run(() => FindHome(o, CancellationToken.None)));
             SyncCommand = new RelayCommand(SyncAzimuth);
 
             this.updateTimer = deviceUpdateTimerFactory.Create(

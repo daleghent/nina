@@ -54,9 +54,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
             this.deviceDispatcher = deviceDispatcher;
             _ = Rescan();
 
-            ConnectCommand = new AsyncCommand<bool>(() => Connect());
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             CancelConnectCommand = new RelayCommand(CancelConnect);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             RefreshMonitorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(safetyMonitor?.Connected == true));
 
             updateTimer = new DeviceUpdateTimer(

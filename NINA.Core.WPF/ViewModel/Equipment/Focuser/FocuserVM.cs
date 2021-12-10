@@ -53,15 +53,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             FocuserChooserVM = focuserChooserVm;
             _ = Rescan();
 
-            ChooseFocuserCommand = new AsyncCommand<bool>(() => ChooseFocuser());
+            ChooseFocuserCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFocuser));
             CancelChooseFocuserCommand = new RelayCommand(CancelChooseFocuser);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
+            DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             RefreshFocuserListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Focuser?.Connected == true));
-            MoveFocuserInSmallCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / -2d)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
-            MoveFocuserInLargeCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * -5), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
-            MoveFocuserOutSmallCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / 2d)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
-            MoveFocuserOutLargeCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * 5), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
-            MoveFocuserCommand = new AsyncCommand<int>(() => MoveFocuserInternal(TargetPosition), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
+            MoveFocuserInSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / -2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
+            MoveFocuserInLargeCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * -5)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
+            MoveFocuserOutSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / 2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
+            MoveFocuserOutLargeCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * 5)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
+            MoveFocuserCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserInternal(TargetPosition)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             HaltFocuserCommand = new RelayCommand((object o) => moveCts?.Cancel());
             ToggleTempCompCommand = new RelayCommand(ToggleTempComp);
 

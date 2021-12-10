@@ -258,7 +258,9 @@ namespace NINA.Equipment.Equipment {
 
                 if (!propertyGETMemory.TryGetValue(propertyName, out var memory)) {
                     memory = new PropertyMemory(type.GetProperty(propertyName));
-                    propertyGETMemory[propertyName] = memory;
+                    lock (propertyGETMemory) {
+                        propertyGETMemory[propertyName] = memory;
+                    }
                 }
 
                 for (int i = 0; i < retries; i++) {
@@ -315,7 +317,9 @@ namespace NINA.Equipment.Equipment {
 
                 if (!propertySETMemory.TryGetValue(propertyName, out var memory)) {
                     memory = new PropertyMemory(type.GetProperty(propertyName));
-                    propertySETMemory[propertyName] = memory;
+                    lock (propertySETMemory) {
+                        propertySETMemory[propertyName] = memory;
+                    }
                 }
 
                 try {

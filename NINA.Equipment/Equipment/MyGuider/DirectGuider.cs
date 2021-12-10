@@ -168,21 +168,16 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public string DriverVersion => "1.0";
 
-        public async Task<bool> Connect(CancellationToken token) {
+        public Task<bool> Connect(CancellationToken token) {
             Connected = false;
             if (telescopeInfo.Connected) {
                 Connected = true;
             } else {
-                var telescopeConnect = await telescopeMediator.Connect();
-                if (telescopeConnect) {
-                    Connected = true;
-                } else {
-                    Notification.ShowWarning(Loc.Instance["LblDirectGuiderConnectionFail"]);
-                    Connected = false;
-                }
+                Notification.ShowWarning(Loc.Instance["LblDirectGuiderConnectionFail"]);
+                Connected = false;
             }
 
-            return Connected;
+            return Task.FromResult(Connected);
         }
 
         public Task<bool> AutoSelectGuideStar() {
