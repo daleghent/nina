@@ -30,8 +30,8 @@ namespace NINA.Equipment.Equipment {
     /// <summary>
     /// The unified class that handles the shared properties of all ASCOM devices like Connection, Generic Info and Setup
     /// </summary>
-    public abstract class AscomDevice<I, T> : BaseINPC, IDevice 
-        where T : AscomDriver, I 
+    public abstract class AscomDevice<I, T> : BaseINPC, IDevice
+        where T : AscomDriver, I
         where I : class {
 
         public AscomDevice(string id, string name, IDeviceDispatcher deviceDispatcher, DeviceDispatcherType deviceDispatcherType) {
@@ -202,9 +202,9 @@ namespace NINA.Equipment.Equipment {
             if (HasSetupDialog) {
                 try {
                     bool dispose = false;
-                    if (device == null) {
+                    if (baseDevice == null) {
                         Logger.Trace($"{Name} - Creating instance for {Id}");
-                        device = GetInstance(Id);
+                        baseDevice = GetInstance(Id);
                         dispose = true;
                     }
                     Logger.Trace($"{Name} - Creating Setup Dialog for {Id}");
