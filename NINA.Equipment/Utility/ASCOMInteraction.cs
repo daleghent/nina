@@ -36,6 +36,7 @@ namespace NINA.Equipment.Utility {
     public class ASCOMInteraction {
         private readonly IProfileService profileService;
         private readonly IDeviceDispatcher deviceDispatcher;
+
         public ASCOMInteraction(IDeviceDispatcher deviceDispatcher, IProfileService profileService) {
             this.deviceDispatcher = deviceDispatcher;
             this.profileService = profileService;
@@ -197,7 +198,7 @@ namespace NINA.Equipment.Utility {
 
         public static Version GetPlatformVersion() {
             using (var util = new ASCOM.Utilities.Util()) {
-                return new Version(util.MajorVersion, util.MinorVersion);
+                return new Version(util.MajorVersion, util.MinorVersion, util.ServicePack, util.BuildNumber);
             }
         }
 

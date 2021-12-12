@@ -66,7 +66,8 @@ namespace NINA.ViewModel {
             try {
                 var version = ASCOMInteraction.GetPlatformVersion();
                 Logger.Info($"ASCOM Platform {version} installed");
-                if ((version.Major < 6) || (version.Major == 6 && version.Minor < 5)) {
+                if ((version.Major < 6) || (version.Major == 6 && version.Minor < 5) || (version.Major == 6 && version.Minor == 5 && version.Build < 1) || (version.Major == 6 && version.Minor == 5 && version.Build == 1 && version.Revision < 3234)) {
+                    Logger.Error($"Outdated ASCOM Platform detected. Current: {version} - Minimum Required: 6.5.1.3234");
                     Notification.ShowWarning(Loc.Instance["LblASCOMPlatformOutdated"]);
                 }
             } catch (Exception) {
