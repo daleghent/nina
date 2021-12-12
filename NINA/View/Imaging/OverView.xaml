@@ -20,145 +20,189 @@
     xmlns:util="clr-namespace:NINA.Utility.AvalonDock"
     xmlns:view="clr-namespace:NINA.View"
     xmlns:vm="clr-namespace:NINA.ViewModel"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <dock:BoolToVisibilityConverter x:Key="btvc" />
-        <util:PaneTemplateSelector x:Key="TemplateSelector">
-            <util:PaneTemplateSelector.CameraTemplate>
-                <DataTemplate>
-                    <view:AnchorableCameraView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.CameraTemplate>
+        <ResourceDictionary>
+            <dock:BoolToVisibilityConverter x:Key="btvc" />
+            <util:PaneTemplateSelector x:Key="TemplateSelector">
+                <util:PaneTemplateSelector.CameraTemplate>
+                    <DataTemplate>
+                        <view:AnchorableCameraView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.CameraTemplate>
 
-            <util:PaneTemplateSelector.TelescopeTemplate>
-                <DataTemplate>
-                    <view:AnchorableTelescopeView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.TelescopeTemplate>
+                <util:PaneTemplateSelector.TelescopeTemplate>
+                    <DataTemplate>
+                        <view:AnchorableTelescopeView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.TelescopeTemplate>
 
-            <util:PaneTemplateSelector.DomeTemplate>
-                <DataTemplate>
-                    <view:AnchorableDomeView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.DomeTemplate>
+                <util:PaneTemplateSelector.DomeTemplate>
+                    <DataTemplate>
+                        <view:AnchorableDomeView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.DomeTemplate>
 
-            <util:PaneTemplateSelector.ImageControlTemplate>
-                <DataTemplate>
-                    <view:ImageControlView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.ImageControlTemplate>
+                <util:PaneTemplateSelector.ImageControlTemplate>
+                    <DataTemplate>
+                        <view:ImageControlView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.ImageControlTemplate>
 
-            <util:PaneTemplateSelector.ThumbnailTemplate>
-                <DataTemplate>
-                    <view:ThumbnailListView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.ThumbnailTemplate>
+                <util:PaneTemplateSelector.ThumbnailTemplate>
+                    <DataTemplate>
+                        <view:ThumbnailListView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.ThumbnailTemplate>
 
-            <util:PaneTemplateSelector.FocusTargetsTemplate>
-                <DataTemplate>
-                    <view:AnchorableFocusTargetsView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.FocusTargetsTemplate>
+                <util:PaneTemplateSelector.FocusTargetsTemplate>
+                    <DataTemplate>
+                        <view:AnchorableFocusTargetsView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.FocusTargetsTemplate>
 
-            <util:PaneTemplateSelector.PlatesolveTemplate>
-                <DataTemplate>
-                    <view:AnchorablePlateSolveView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.PlatesolveTemplate>
+                <util:PaneTemplateSelector.PlatesolveTemplate>
+                    <DataTemplate>
+                        <view:AnchorablePlateSolveView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.PlatesolveTemplate>
 
-            <util:PaneTemplateSelector.PolarAlignmentTemplate>
-                <DataTemplate>
-                    <view:AnchorablePolarAlignmentView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.PolarAlignmentTemplate>
+                <util:PaneTemplateSelector.PolarAlignmentTemplate>
+                    <DataTemplate>
+                        <view:AnchorablePolarAlignmentView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.PolarAlignmentTemplate>
 
-            <util:PaneTemplateSelector.GuiderTemplate>
-                <DataTemplate>
-                    <view:AnchorableGuiderView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.GuiderTemplate>
+                <util:PaneTemplateSelector.GuiderTemplate>
+                    <DataTemplate>
+                        <view:AnchorableGuiderView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.GuiderTemplate>
 
-            <util:PaneTemplateSelector.FilterWheelTemplate>
-                <DataTemplate>
-                    <view:AnchorableFilterWheelView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.FilterWheelTemplate>
+                <util:PaneTemplateSelector.FilterWheelTemplate>
+                    <DataTemplate>
+                        <view:AnchorableFilterWheelView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.FilterWheelTemplate>
 
-            <util:PaneTemplateSelector.ImagingTemplate>
-                <DataTemplate>
-                    <view:AnchorableCameraControlView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.ImagingTemplate>
+                <util:PaneTemplateSelector.ImagingTemplate>
+                    <DataTemplate>
+                        <view:AnchorableCameraControlView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.ImagingTemplate>
 
-            <util:PaneTemplateSelector.ImageHistoryTemplate>
-                <DataTemplate>
-                    <view:AnchorableImageHistoryView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.ImageHistoryTemplate>
+                <util:PaneTemplateSelector.ImageHistoryTemplate>
+                    <DataTemplate>
+                        <view:AnchorableImageHistoryView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.ImageHistoryTemplate>
 
-            <util:PaneTemplateSelector.ImageStatisticsTemplate>
-                <DataTemplate>
-                    <view:AnchorableImageStatisticsView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.ImageStatisticsTemplate>
+                <util:PaneTemplateSelector.ImageStatisticsTemplate>
+                    <DataTemplate>
+                        <view:AnchorableImageStatisticsView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.ImageStatisticsTemplate>
 
-            <util:PaneTemplateSelector.SequenceTemplate>
-                <DataTemplate>
-                    <view:AnchorableSequenceNavigationView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.SequenceTemplate>
+                <util:PaneTemplateSelector.SequenceTemplate>
+                    <DataTemplate>
+                        <view:AnchorableSequenceNavigationView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.SequenceTemplate>
 
-            <util:PaneTemplateSelector.RotatorTemplate>
-                <DataTemplate>
-                    <view:AnchorableRotatorView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.RotatorTemplate>
+                <util:PaneTemplateSelector.RotatorTemplate>
+                    <DataTemplate>
+                        <view:AnchorableRotatorView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.RotatorTemplate>
 
-            <util:PaneTemplateSelector.SafetyMonitorTemplate>
-                <DataTemplate>
-                    <view:AnchorableSafetyMonitorView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.SafetyMonitorTemplate>
+                <util:PaneTemplateSelector.SafetyMonitorTemplate>
+                    <DataTemplate>
+                        <view:AnchorableSafetyMonitorView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.SafetyMonitorTemplate>
 
-            <util:PaneTemplateSelector.WeatherDataTemplate>
-                <DataTemplate>
-                    <view:AnchorableWeatherDataView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.WeatherDataTemplate>
+                <util:PaneTemplateSelector.WeatherDataTemplate>
+                    <DataTemplate>
+                        <view:AnchorableWeatherDataView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.WeatherDataTemplate>
 
-            <util:PaneTemplateSelector.FocuserTemplate>
-                <DataTemplate>
-                    <view:AnchorableFocuserView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.FocuserTemplate>
+                <util:PaneTemplateSelector.FocuserTemplate>
+                    <DataTemplate>
+                        <view:AnchorableFocuserView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.FocuserTemplate>
 
-            <util:PaneTemplateSelector.AutoFocusTemplate>
-                <DataTemplate>
-                    <view:AnchorableAutoFocusView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.AutoFocusTemplate>
+                <util:PaneTemplateSelector.AutoFocusTemplate>
+                    <DataTemplate>
+                        <view:AnchorableAutoFocusView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.AutoFocusTemplate>
 
-            <util:PaneTemplateSelector.SwitchTemplate>
-                <DataTemplate>
-                    <view:AnchorableSwitchHubView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.SwitchTemplate>
+                <util:PaneTemplateSelector.SwitchTemplate>
+                    <DataTemplate>
+                        <view:AnchorableSwitchHubView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.SwitchTemplate>
 
-            <util:PaneTemplateSelector.FlatDeviceTemplate>
-                <DataTemplate>
-                    <view:AnchorableFlatDeviceView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.FlatDeviceTemplate>
+                <util:PaneTemplateSelector.FlatDeviceTemplate>
+                    <DataTemplate>
+                        <view:AnchorableFlatDeviceView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.FlatDeviceTemplate>
 
-            <util:PaneTemplateSelector.ExposureCalculatorTemplate>
-                <DataTemplate>
-                    <view:AnchorableExposureTimeRecommendationView />
-                </DataTemplate>
-            </util:PaneTemplateSelector.ExposureCalculatorTemplate>
-        </util:PaneTemplateSelector>
+                <util:PaneTemplateSelector.ExposureCalculatorTemplate>
+                    <DataTemplate>
+                        <view:AnchorableExposureTimeRecommendationView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.ExposureCalculatorTemplate>
+            </util:PaneTemplateSelector>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  This section is added to help prevent application crashes when RDP is used and the app is rerendered  -->
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/ProfileService.xaml" />
+
+                <!--  SVG Files  -->
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/SVGDictionary.xaml" />
+
+                <!--  Static Resources  -->
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Brushes.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
+
+                <!--  UI Styles  -->
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Button.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Path.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBlock.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TabControl.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/CheckBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/DataGrid.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ListView.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/GroupBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/RepeatButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ToggleButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Slider.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Expander.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ScrollViewer.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ComboBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/GridSplitter.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ProgressBar.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Tooltip.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/CancellableButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/DatePicker.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/StepperControl.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ToggleSwitch.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ContextMenu.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/SplitButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/Window.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/AvalonDock.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/Oxyplot.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/Markdown.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid Visibility="{Binding LoadAvalonDockLayoutCommand.Execution.IsCompleted, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
