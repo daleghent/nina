@@ -209,9 +209,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* ASCOM */
                 try {
-                    foreach (ICamera cam in ascomInteraction.GetCameras(exposureDataFactory)) {
+                    var ascomCameras = ascomInteraction.GetCameras(exposureDataFactory);
+                    foreach (ICamera cam in ascomCameras) {
                         devices.Add(cam);
                     }
+                    Logger.Info($"Found {ascomCameras?.Count} ASCOM Cameras");
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
