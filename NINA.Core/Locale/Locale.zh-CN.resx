@@ -3770,10 +3770,10 @@
     <value>添加增益</value>
   </data>
   <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
-    <value>您确定要删除的所有合并像素设置？</value>
+    <value>你确定要删除这些设置，合并像素: </value>
   </data>
   <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
-    <value>您确定要删除所有增益设置？</value>
+    <value>你确定要删除这些设置，增益: </value>
   </data>
   <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
     <value>删除合并像素</value>
