@@ -12,18 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Core.Utility;
-using NINA.Core.Utility.Http;
-using NINA.Core.Utility.Notification;
-using NINA.Profile.Interfaces;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
+using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
+using System;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyWeatherData {
 
@@ -107,7 +107,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             }
         }
 
-        private double _cloudCover;
+        private double _cloudCover = double.NaN;
 
         public double CloudCover {
             get => _cloudCover;
@@ -293,7 +293,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             public object Uv { get; set; }
 
             [JsonProperty("winddir")]
-            public double Winddir { get; set; }
+            public double Winddir { get; set; } = double.NaN;
 
             [JsonProperty("humidity")]
             public long Humidity { get; set; }
@@ -320,19 +320,19 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             public int WindChill { get; set; }
 
             [JsonProperty("windSpeed")]
-            public int WindSpeed { get; set; }
+            public double WindSpeed { get; set; } = double.NaN;
 
             [JsonProperty("windGust")]
             public int WindGust { get; set; }
 
             [JsonProperty("pressure")]
-            public double Pressure { get; set; }
+            public double Pressure { get; set; } = double.NaN;
 
             [JsonProperty("precipRate")]
-            public double PrecipRate { get; set; }
+            public double PrecipRate { get; set; } = double.NaN;
 
             [JsonProperty("precipTotal")]
-            public double PrecipTotal { get; set; }
+            public double PrecipTotal { get; set; } = double.NaN;
 
             [JsonProperty("elev")]
             public int Elev { get; set; }
@@ -349,6 +349,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             DateParseHandling = DateParseHandling.None,
+            NullValueHandling = NullValueHandling.Ignore,
             Converters =
             {
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
