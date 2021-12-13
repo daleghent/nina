@@ -29,10 +29,11 @@ using TelescopeAxes = NINA.Core.Enum.TelescopeAxes;
 using GuideDirections = NINA.Core.Enum.GuideDirections;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.ASCOMFacades;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
-    internal class AscomTelescope : AscomDevice<ITelescopeV3, Telescope>, ITelescope, IDisposable {
+    internal class AscomTelescope : AscomDevice<Telescope, ITelescopeFacade, TelescopeFacadeProxy>, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
         private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
         private static double TRACKING_RATE_EPSILON = 0.000001;

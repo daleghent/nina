@@ -17,6 +17,7 @@ using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
@@ -26,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
-    internal class AscomFilterWheel : AscomDevice<IFilterWheelV2, FilterWheel>, IFilterWheel, IDisposable {
+    internal class AscomFilterWheel : AscomDevice<FilterWheel, IFilterWheelFacade, FilterWheelFacadeProxy>, IFilterWheel, IDisposable {
         public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(filterWheelId, name, deviceDispatcher, DeviceDispatcherType.FilterWheel) {
             this.profileService = profileService;
         }

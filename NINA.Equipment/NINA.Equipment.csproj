@@ -179,6 +179,11 @@
     <Compile Include="Converter\TrackingModeConverter.cs" />
     <Compile Include="Converter\TrackingRateConverter.cs" />
     <Compile Include="Equipment\AscomDevice.cs" />
+    <Compile Include="Equipment\AscomDeviceFacades.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AscomDeviceFacades.tt</DependentUpon>
+    </Compile>
     <Compile Include="Equipment\DeviceDispatcher.cs" />
     <Compile Include="Equipment\DeviceDispatchInterceptor.cs" />
     <Compile Include="Equipment\DeviceInfo.cs" />
@@ -461,7 +466,15 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Equipment\AscomDeviceFacades.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AscomDeviceFacades.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -35,10 +35,11 @@ using NINA.Image.Interfaces;
 using NINA.Image.ImageData;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Enum;
+using NINA.Equipment.ASCOMFacades;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
-    internal class AscomCamera : AscomDevice<ICameraV3, Camera>, ICamera, IDisposable {
+    internal class AscomCamera : AscomDevice<Camera, ICameraFacade, CameraFacadeProxy>, ICamera, IDisposable {
         public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory, IDeviceDispatcher deviceDispatcher) : base(cameraId, name, deviceDispatcher, DeviceDispatcherType.Camera) {
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;

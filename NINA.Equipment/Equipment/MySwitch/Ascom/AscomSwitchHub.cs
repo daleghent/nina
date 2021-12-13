@@ -16,6 +16,7 @@ using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
-    internal class AscomSwitchHub : AscomDevice<ISwitchV2, Switch>, ISwitchHub, IDisposable {
+    internal class AscomSwitchHub : AscomDevice<Switch, ISwitchFacade, SwitchFacadeProxy>, ISwitchHub, IDisposable {
         public AscomSwitchHub(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.Switch) {
         }
 

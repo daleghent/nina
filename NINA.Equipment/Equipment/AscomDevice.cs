@@ -17,6 +17,7 @@ using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,10 @@ namespace NINA.Equipment.Equipment {
     /// <summary>
     /// The unified class that handles the shared properties of all ASCOM devices like Connection, Generic Info and Setup
     /// </summary>
-    public abstract class AscomDevice<I, T> : BaseINPC, IDevice
-        where T : AscomDriver, I
-        where I : class {
+    public abstract class AscomDevice<DeviceT, ProxyI, ProxyT> : BaseINPC, IDevice
+        where DeviceT : AscomDriver
+        where ProxyI : class, IAscomDeviceFacade<DeviceT>
+        where ProxyT : class, ProxyI, new() {
 
         public AscomDevice(string id, string name, IDeviceDispatcher deviceDispatcher, DeviceDispatcherType deviceDispatcherType) {
             Id = id;
@@ -43,8 +45,7 @@ namespace NINA.Equipment.Equipment {
 
         protected IDeviceDispatcher DeviceDispatcher { get; private set; }
         protected DeviceDispatcherType DeviceDispatcherType { get; private set; }
-        private AscomDriver baseDevice;
-        protected I device;
+        protected ProxyI device;
         public string Category { get; } = "ASCOM";
         protected abstract string ConnectionLostMessage { get; }
 
@@ -63,7 +64,7 @@ namespace NINA.Equipment.Equipment {
         public string Description {
             get {
                 try {
-                    return DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice?.Description) ?? string.Empty;
+                    return device?.Description ?? string.Empty;
                 } catch (Exception) { }
                 return string.Empty;
             }
@@ -72,7 +73,7 @@ namespace NINA.Equipment.Equipment {
         public string DriverInfo {
             get {
                 try {
-                    return DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice?.DriverInfo) ?? string.Empty;
+                    return device?.DriverInfo ?? string.Empty;
                 } catch (Exception) { }
                 return string.Empty;
             }
@@ -81,7 +82,7 @@ namespace NINA.Equipment.Equipment {
         public string DriverVersion {
             get {
                 try {
-                    return DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice?.DriverVersion) ?? string.Empty;
+                    return device?.DriverVersion ?? string.Empty;
                 } catch (Exception) { }
                 return string.Empty;
             }
@@ -106,13 +107,13 @@ namespace NINA.Equipment.Equipment {
 
                         try {
                             bool expected;
-                            val = DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice?.Connected) ?? false;
+                            val = device?.Connected ?? false;
                             expected = connected;
                             if (expected != val) {
                                 Logger.Error($"{Name} should be connected but reports to be disconnected. Trying to reconnect...");
                                 try {
                                     Connected = true;
-                                    if (!DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice.Connected)) {
+                                    if (!device.Connected) {
                                         throw new NotConnectedException();
                                     }
                                     val = true;
@@ -136,7 +137,7 @@ namespace NINA.Equipment.Equipment {
                 lock (lockObj) {
                     if (device != null) {
                         Logger.Debug($"SET {Name} Connected to {value}");
-                        DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice.Connected = value);
+                        device.Connected = value;
                         connected = value;
                     }
                 }
@@ -179,8 +180,8 @@ namespace NINA.Equipment.Equipment {
 
                     Logger.Trace($"{Name} - Creating instance for {Id}");
                     var concreteDevice = GetInstance(Id);
-                    baseDevice = concreteDevice;
-                    device = DeviceDispatchInterceptor<I>.Wrap(concreteDevice, DeviceDispatcher, DeviceDispatcherType);
+                    var proxy = new ProxyT() { Proxied = concreteDevice };
+                    device = DeviceDispatchInterceptor<ProxyI>.Wrap(proxy, DeviceDispatcher, DeviceDispatcherType);
 
                     Connected = true;
                     if (Connected) {
@@ -196,22 +197,24 @@ namespace NINA.Equipment.Equipment {
             });
         }
 
-        protected abstract T GetInstance(string id);
+        protected abstract DeviceT GetInstance(string id);
 
         public void SetupDialog() {
             if (HasSetupDialog) {
                 try {
                     bool dispose = false;
-                    if (baseDevice == null) {
+                    if (device == null) {
                         Logger.Trace($"{Name} - Creating instance for {Id}");
-                        baseDevice = GetInstance(Id);
+                        var concreteDevice = GetInstance(Id);
+                        var proxy = new ProxyT() { Proxied = concreteDevice };
+                        device = DeviceDispatchInterceptor<ProxyI>.Wrap(proxy, DeviceDispatcher, DeviceDispatcherType);
                         dispose = true;
                     }
                     Logger.Trace($"{Name} - Creating Setup Dialog for {Id}");
-                    DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice.SetupDialog());
+                    device.SetupDialog();
                     if (dispose) {
-                        DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice.Dispose());
-                        baseDevice = null;
+                        device.Dispose();
+                        device = null;
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
@@ -240,8 +243,8 @@ namespace NINA.Equipment.Equipment {
 
         public void Dispose() {
             Logger.Trace($"{Name} - Disposing device");
-            DeviceDispatcher.Invoke(DeviceDispatcherType, () => baseDevice?.Dispose());
-            baseDevice = null;
+            device?.Dispose();
+            device = null;
         }
 
         protected Dictionary<string, PropertyMemory> propertyGETMemory = new Dictionary<string, PropertyMemory>();
@@ -383,7 +386,7 @@ namespace NINA.Equipment.Equipment {
             public bool IsImplemented { get; set; }
             public object LastValue { get; set; }
 
-            public object GetValue(I device) {
+            public object GetValue(ProxyI device) {
                 var value = info.GetValue(device);
 
                 LastValue = value;
@@ -391,7 +394,7 @@ namespace NINA.Equipment.Equipment {
                 return value;
             }
 
-            public void SetValue(I device, object value) {
+            public void SetValue(ProxyI device, object value) {
                 info.SetValue(device, value);
             }
         }

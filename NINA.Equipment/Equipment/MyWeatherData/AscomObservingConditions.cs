@@ -15,12 +15,13 @@
 using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 
 namespace NINA.Equipment.Equipment.MyWeatherData {
 
-    internal class AscomObservingConditions : AscomDevice<IObservingConditions, ObservingConditions>, IWeatherData, IDisposable {
+    internal class AscomObservingConditions : AscomDevice<ObservingConditions, IObservingConditionsFacade, ObservingConditionsFacadeProxy>, IWeatherData, IDisposable {
         public AscomObservingConditions(string weatherDataId, string weatherDataName, IDeviceDispatcher deviceDispatcher) : base(weatherDataId, weatherDataName, deviceDispatcher, DeviceDispatcherType.WeatherData) {
         }
 

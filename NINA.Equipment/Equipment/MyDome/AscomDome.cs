@@ -17,6 +17,7 @@ using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
@@ -79,7 +80,7 @@ namespace NINA.Equipment.Equipment.MyDome {
         }
     }
 
-    internal class AscomDome : AscomDevice<ASCOM.DeviceInterface.IDomeV2, Dome>, IDome, IDisposable {
+    internal class AscomDome : AscomDevice<Dome, IDomeFacade, DomeFacadeProxy>, IDome, IDisposable {
         public AscomDome(string domeId, string domeName, IDeviceDispatcher deviceDispatcher) : base(domeId, domeName, deviceDispatcher, DeviceDispatcherType.Dome) {
         }
 

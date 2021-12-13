@@ -14,11 +14,12 @@
 
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 
 namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
-    internal class AscomSafetyMonitor : AscomDevice<ASCOM.DeviceInterface.ISafetyMonitor, SafetyMonitor>, ISafetyMonitor {
+    internal class AscomSafetyMonitor : AscomDevice<SafetyMonitor, ISafetyMonitorFacade, SafetyMonitorFacadeProxy>, ISafetyMonitor {
         public AscomSafetyMonitor(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.SafetyMonitor) {
         }
 

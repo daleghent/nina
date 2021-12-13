@@ -13,10 +13,10 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
-    public class AscomCoverCalibrator : AscomDevice<ICoverCalibratorV1, CoverCalibrator>, IFlatDevice, IDisposable {
+    public class AscomCoverCalibrator : AscomDevice<CoverCalibrator, ICoverCalibratorFacade, CoverCalibratorFacadeProxy>, IFlatDevice, IDisposable {
         public AscomCoverCalibrator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.FlatDevice) {
         }
 
