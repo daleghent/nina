@@ -86,6 +86,10 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
+        public bool SupportsOnOff {
+            get => true;
+        }
+
         public bool LightOn {
             get {
                 if (!Connected) return false;

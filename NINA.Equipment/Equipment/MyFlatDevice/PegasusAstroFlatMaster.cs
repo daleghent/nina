@@ -198,5 +198,9 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         public bool SupportsOpenClose => false;
+
+        public bool SupportsOnOff {
+            get => true;
+        }
     }
 }

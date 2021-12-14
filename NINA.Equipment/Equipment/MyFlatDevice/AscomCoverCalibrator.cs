@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class AscomCoverCalibrator : AscomDevice<CoverCalibrator, ICoverCalibratorFacade, CoverCalibratorFacadeProxy>, IFlatDevice, IDisposable {
+
         public AscomCoverCalibrator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.FlatDevice) {
         }
 
@@ -63,16 +64,18 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         public int MinBrightness { get; private set; }
 
         public bool LightOn {
-            get => device.Brightness > 0;
+            get => SupportsOnOff ? GetProperty<int>(nameof(Brightness), 0) > 0 : false;
             set {
                 try {
-                    if (value) {
-                        Logger.Debug("Switching cover calibrator on");
-                        // switch the light on with the last saved value, if any
-                        device.CalibratorOn((lastBrightness != 0) ? lastBrightness : MaxBrightness);
-                    } else {
-                        Logger.Debug("Switching cover calibrator off");
-                        device.CalibratorOff();
+                    if (SupportsOnOff) {
+                        if (value) {
+                            Logger.Debug("Switching cover calibrator on");
+                            // switch the light on with the last saved value, if any
+                            device.CalibratorOn((lastBrightness != 0) ? lastBrightness : MaxBrightness);
+                        } else {
+                            Logger.Debug("Switching cover calibrator off");
+                            device.CalibratorOff();
+                        }
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
@@ -81,12 +84,14 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         public int Brightness {
-            get => device.Brightness;
+            get => SupportsOnOff ? GetProperty<int>(nameof(Brightness), 0) : 0;
             set {
                 try {
-                    Logger.Debug($"Setting cover calibrator brightness to {value}");
-                    device.CalibratorOn(value);
-                    lastBrightness = value; // save brightness for next time the user toggles the light on
+                    if (SupportsOnOff) {
+                        Logger.Debug($"Setting cover calibrator brightness to {value}");
+                        device.CalibratorOn(value);
+                        lastBrightness = value; // save brightness for next time the user toggles the light on
+                    }
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
@@ -97,19 +102,21 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOpenClose => device.CoverState != ASCOM.DeviceInterface.CoverStatus.NotPresent;
 
+        public bool SupportsOnOff => device.CalibratorState != ASCOM.DeviceInterface.CalibratorStatus.NotPresent;
+
         protected override string ConnectionLostMessage => Loc.Instance["LblFlatDeviceConnectionLost"];
 
         private void Initialize() {
             if (device.CalibratorState == ASCOM.DeviceInterface.CalibratorStatus.NotPresent) {
-                MinBrightness = 1;
-                MaxBrightness = 1;
+                MinBrightness = 0;
+                MaxBrightness = 0;
             } else {
                 try {
                     MinBrightness = 0;
                     MaxBrightness = device.MaxBrightness;
                 } catch (PropertyNotImplementedException) {
-                    MinBrightness = 1;
-                    MaxBrightness = 1;
+                    MinBrightness = 0;
+                    MaxBrightness = 0;
                 }
             }
         }

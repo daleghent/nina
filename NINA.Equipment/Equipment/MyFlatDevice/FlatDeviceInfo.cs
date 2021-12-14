@@ -73,5 +73,15 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             get => _maxBrightness;
             set { _maxBrightness = value; RaisePropertyChanged(); }
         }
+
+        private bool _supportsOnOff;
+
+        public bool SupportsOnOff {
+            get => _supportsOnOff;
+            set {
+                _supportsOnOff = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

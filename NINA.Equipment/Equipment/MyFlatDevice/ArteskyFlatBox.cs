@@ -237,6 +237,10 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOpenClose => false;
 
+        public bool SupportsOnOff {
+            get => true;
+        }
+
         public void SetupDialog() {
             WindowService.ShowDialog(this, "Artesky Flat Box Setup", System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }

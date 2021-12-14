@@ -35,6 +35,8 @@ namespace NINA.Equipment.Interfaces {
         string PortName { get; set; }
 
         bool SupportsOpenClose { get; }
+
+        bool SupportsOnOff { get; }
     }
 
     public enum CoverState { Unknown, NeitherOpenNorClosed, Closed, Open };

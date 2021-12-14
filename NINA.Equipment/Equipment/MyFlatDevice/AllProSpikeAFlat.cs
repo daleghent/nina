@@ -97,6 +97,10 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             get => false;
         }
 
+        public bool SupportsOnOff {
+            get => true;
+        }
+
         public bool HasSetupDialog {
             get => false;
         }

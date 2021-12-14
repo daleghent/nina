@@ -124,7 +124,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     IsChecked="{Binding FlatDeviceInfo.LightOn}"
-                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
+                                    IsEnabled="False"
                                     Style="{StaticResource CheckmarkCheckbox}" />
                                 <Button
                                     Grid.Column="1"
