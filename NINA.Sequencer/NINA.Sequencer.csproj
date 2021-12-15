@@ -212,8 +212,12 @@
     <Compile Include="SequenceItem\Camera\SetReadoutMode.cs" />
     <Compile Include="SequenceItem\Camera\WarmCamera.cs" />
     <Compile Include="SequenceItem\Dome\CloseDomeShutter.cs" />
+    <Compile Include="SequenceItem\Dome\DataTemplates.xaml.cs">
+      <DependentUpon>DataTemplates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SequenceItem\Dome\DisableDomeSynchronization.cs" />
     <Compile Include="SequenceItem\Dome\FindHomeDome.cs" />
+    <Compile Include="SequenceItem\Dome\SlewDomeAzimuth.cs" />
     <Compile Include="SequenceItem\Dome\SynchronizeDome.cs" />
     <Compile Include="SequenceItem\Dome\EnableDomeSynchronization.cs" />
     <Compile Include="SequenceItem\Dome\OpenDomeShutter.cs" />
@@ -383,6 +387,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SequenceItem\Camera\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Dome\DataTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1041,6 +1041,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slews the dome to an absolute azimuth position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_SetDomeAzimuth_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_SetDomeAzimuth_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slew Dome Azimuth.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_SetDomeAzimuth_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_SetDomeAzimuth_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Synchronizes the Dome to the current telescope position.
         /// </summary>
         internal static string Lbl_SequenceItem_Dome_SynchronizeDome_Description {

@@ -4872,6 +4872,12 @@ If the position above it is an instruction set that is not currently expanded, i
   <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
     <value>Find Dome Home</value>
   </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
+    <value>Slews the dome to an absolute azimuth position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
+    <value>Slew Dome Azimuth</value>
+  </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
   </data>
