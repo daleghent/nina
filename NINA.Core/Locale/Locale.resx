@@ -5990,4 +5990,7 @@ Once successfully solved, the rotation will be set for framing.</value>
   <data name="LblDefault" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
+    <value>Flat device cannot control brightness!</value>
+  </data>
 </root>

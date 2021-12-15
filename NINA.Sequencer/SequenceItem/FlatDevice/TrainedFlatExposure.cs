@@ -238,6 +238,16 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 openItem.Skip();
             }
 
+            var toggleLight = GetToggleLightOnItem();
+            if (!toggleLight.Validate()) {
+                toggleLight.Skip();
+                GetSetBrightnessItem().Skip();
+            }
+            var toggleLightOff = GetToggleLightOffItem();
+            if (!toggleLightOff.Validate()) {
+                toggleLightOff.Skip();
+            }
+
             return base.Execute(progress, token);
         }
 

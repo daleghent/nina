@@ -8192,6 +8192,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flat device cannot control brightness!.
+        /// </summary>
+        internal static string LblFlatDeviceCannotControlBrightness {
+            get {
+                return ResourceManager.GetString("LblFlatDeviceCannotControlBrightness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose serial port.
         /// </summary>
         internal static string LblFlatDeviceChooseSerialPort {

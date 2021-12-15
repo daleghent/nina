@@ -80,6 +80,10 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var info = flatDeviceMediator.GetInfo();
             if (!info.Connected) {
                 i.Add(Loc.Instance["LblFlatDeviceNotConnected"]);
+            } else {
+                if (!info.SupportsOnOff) {
+                    i.Add(Loc.Instance["LblFlatDeviceCannotControlBrightness"]);
+                }
             }
             Issues = i;
             return i.Count == 0;

@@ -58,7 +58,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
 
         [Test]
         public void Validate_NoIssues() {
-            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true });
+            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true, SupportsOnOff = true });
 
             var sut = new SetBrightness(fdMediatorMock.Object);
             var valid = sut.Validate();
@@ -69,10 +69,11 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
         }
 
         [Test]
-        [TestCase(false, false, 1)]
-        [TestCase(false, true, 1)]
-        public void Validate_NotConnected_OneIssue(bool isConnected, bool canClose, int count) {
-            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = isConnected, SupportsOpenClose = canClose });
+        [TestCase(false, false, true, 1)]
+        [TestCase(false, true, true, 1)]
+        [TestCase(true, true, false, 1)]
+        public void Validate_NotConnected_OneIssue(bool isConnected, bool canClose, bool canOnOff, int count) {
+            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = isConnected, SupportsOpenClose = canClose, SupportsOnOff = canOnOff });
 
             var sut = new SetBrightness(fdMediatorMock.Object);
             var valid = sut.Validate();
@@ -96,8 +97,9 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
         [Test]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public async Task Execute_HasIssues_LogicNotCalled(bool isConnected, bool canClose) {
-            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = isConnected, SupportsOpenClose = canClose });
+        [TestCase(true, false)]
+        public async Task Execute_HasIssues_LogicNotCalled(bool isConnected, bool canOnOff) {
+            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = isConnected, SupportsOnOff = canOnOff });
 
             var sut = new SetBrightness(fdMediatorMock.Object);
             await sut.Run(default, default);
