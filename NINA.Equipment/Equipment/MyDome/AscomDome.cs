@@ -136,7 +136,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                     using (ct.Register(async () => await StopSlewing())) {
                         await Task.Run(async () => {
                             device?.SlewToAzimuth(azimuth);
-                            await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                            await Task.Delay(TimeSpan.FromSeconds(3), ct);
                             ct.ThrowIfCancellationRequested();
 
                             while (device != null && device.Slewing && !ct.IsCancellationRequested) {
@@ -212,8 +212,8 @@ namespace NINA.Equipment.Equipment.MyDome {
                             ct.ThrowIfCancellationRequested();
                         }
 
-                        // Give the dome controller 2 seconds to react to the shutter open request, since OpenShutter can be an asynchronous operation
-                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        // Give the dome controller 3 seconds to react to the shutter open request, since OpenShutter can be an asynchronous operation
+                        await Task.Delay(TimeSpan.FromSeconds(3), ct);
                         while (device != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         };
@@ -250,8 +250,8 @@ namespace NINA.Equipment.Equipment.MyDome {
                             ct.ThrowIfCancellationRequested();
                         }
 
-                        // Give the dome controller 2 seconds to react to the shutter close request, since CloseShutter can be an asynchronous operation
-                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        // Give the dome controller 3 seconds to react to the shutter close request, since CloseShutter can be an asynchronous operation
+                        await Task.Delay(TimeSpan.FromSeconds(3), ct);
                         while (device != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         };
@@ -291,7 +291,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                         ct.ThrowIfCancellationRequested();
 
                         // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
-                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        await Task.Delay(TimeSpan.FromSeconds(3), ct);
                         ct.ThrowIfCancellationRequested();
 
                         while (device != null && device.Slewing && !ct.IsCancellationRequested) {
@@ -341,7 +341,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                                 ct.ThrowIfCancellationRequested();
                             }
                         }
-                        await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                        await Task.Delay(TimeSpan.FromSeconds(3), ct);
                         while (device != null && device.Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
