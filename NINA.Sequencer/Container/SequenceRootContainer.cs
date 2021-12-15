@@ -123,6 +123,7 @@ namespace NINA.Sequencer.Container {
                 if (sequenceTitle != value) {
                     sequenceTitle = value;
                     RaisePropertyChanged();
+                    Name = value;
                 }
             }
         }
