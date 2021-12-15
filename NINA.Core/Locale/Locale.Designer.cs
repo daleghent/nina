@@ -10699,6 +10699,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to move focuser.
+        /// </summary>
+        internal static string LblMoveFocuserFailed {
+            get {
+                return ResourceManager.GetString("LblMoveFocuserFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moves focuser to the specified target position.
         /// </summary>
         internal static string LblMoveFocuserTooltip {

@@ -105,6 +105,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
         }
 
+        private static TimeSpan SameFocuserPositionTimeout = TimeSpan.FromSeconds(10);
         private async Task MoveInternalAbsolute(int position, CancellationToken ct, int waitInMs = 1000) {
             if (Connected) {
                 var reEnableTempComp = TempComp;
@@ -112,11 +113,24 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                     TempComp = false;
                 }
 
+                var lastPosition = int.MinValue;
+                int samePositionCount = 0;
                 while (position != device.Position && !ct.IsCancellationRequested) {
                     device.Move(position);
                     while (IsMoving && !ct.IsCancellationRequested) {
                         await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
+
+                    if (lastPosition == device.Position) {
+                        ++samePositionCount;
+                        var samePositionTime = TimeSpan.FromMilliseconds(waitInMs * samePositionCount);
+                        if (samePositionTime >= SameFocuserPositionTimeout) {
+                            throw new Exception($"Focuser stuck at position {lastPosition} beyond {SameFocuserPositionTimeout} timeout");
+                        }
+                    } else {
+                        samePositionCount = 0;
+                    }
+                    lastPosition = device.Position;
                 }
 
                 if (reEnableTempComp) {

@@ -219,6 +219,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                     }
                 } catch (OperationCanceledException) {
                     Logger.Info("Focuser move cancelled");
+                } catch (Exception e) {
+                    Logger.Error("Focuser move failed", e);
+                    Notification.ShowError(Loc.Instance["LblMoveFocuserFailed"]);
+                    throw e;
                 } finally {
                     if (tempComp) {
                         ToggleTempComp(tempComp);
