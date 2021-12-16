@@ -73,29 +73,31 @@ namespace NINA.ViewModel {
         }
 
         public async Task<bool> CheckUpdate() {
-            if (NetworkInterface.GetIsNetworkAvailable() == false) {
-                Logger.Info("Network is not available. Skipping version check.");
-                return false;
-            }
-
-            checkCts?.Dispose();
-            checkCts = new CancellationTokenSource();
-            try {
-                versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
-                if (versionInfo?.IsNewer() == true) {
-                    UpdateAvailable = true;
-                    var projectVersion = new ProjectVersion(versionInfo.Version);
-                    UpdateAvailableText = string.Format(Loc.Instance["LblNewUpdateAvailable"], projectVersion);
-                    Changelog = await GetChangelog(versionInfo, checkCts.Token);
-                } else {
+            return await Task.Run(async () => {
+                if (NetworkInterface.GetIsNetworkAvailable() == false) {
+                    Logger.Info("Network is not available. Skipping version check.");
                     return false;
                 }
-            } catch (OperationCanceledException) {
-            } catch (Exception ex) {
-                versionInfo = null;
-                Logger.Error(ex);
-            }
-            return true;
+
+                checkCts?.Dispose();
+                checkCts = new CancellationTokenSource();
+                try {
+                    versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
+                    if (versionInfo?.IsNewer() == true) {
+                        UpdateAvailable = true;
+                        var projectVersion = new ProjectVersion(versionInfo.Version);
+                        UpdateAvailableText = string.Format(Loc.Instance["LblNewUpdateAvailable"], projectVersion);
+                        Changelog = await GetChangelog(versionInfo, checkCts.Token);
+                    } else {
+                        return false;
+                    }
+                } catch (OperationCanceledException) {
+                } catch (Exception ex) {
+                    versionInfo = null;
+                    Logger.Error(ex);
+                }
+                return true;
+            });
         }
 
         private bool ValidateChecksum(VersionInfo versionInfo, string file) {
