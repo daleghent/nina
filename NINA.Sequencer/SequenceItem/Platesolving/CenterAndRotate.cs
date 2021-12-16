@@ -159,7 +159,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                         }
                     }
 
-                    if (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
+                    if (AstroUtil.EuclidianModulus(rotationDistance, 360) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                         Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");
                         await rotatorMediator.MoveRelative(rotationDistance, token);
                         token.ThrowIfCancellationRequested();
