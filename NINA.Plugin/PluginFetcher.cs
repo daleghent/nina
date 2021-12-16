@@ -35,28 +35,30 @@ namespace NINA.Plugin {
         }
 
         public async Task<IList<PluginManifest>> RequestAll(IPluginVersion minimumApplicationVersion, IProgress<ApplicationStatus> progress, CancellationToken ct) {
-            List<PluginManifest> plugins = new List<PluginManifest>();
-            try {
-                var req = new HttpGetRequest(repositoryURL + "/plugins/manifest", true);
-                Logger.Info($"Fetching plugin manifests from {req.Url}");
-                var res = await req.Request(ct);
-                if (!string.IsNullOrEmpty(res)) {
-                    var arr = JArray.Parse(res);
-                    foreach (var item in arr) {
-                        var plugin = await ValidateAndParseManifest(item);
-                        if (plugin != null) {
-                            if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)) {
-                                plugins.Add(plugin);
+            return await Task.Run(async () => {
+                List<PluginManifest> plugins = new List<PluginManifest>();
+                try {
+                    var req = new HttpGetRequest(repositoryURL + "/plugins/manifest", true);
+                    Logger.Info($"Fetching plugin manifests from {req.Url}");
+                    var res = await req.Request(ct);
+                    if (!string.IsNullOrEmpty(res)) {
+                        var arr = JArray.Parse(res);
+                        foreach (var item in arr) {
+                            var plugin = await ValidateAndParseManifest(item);
+                            if (plugin != null) {
+                                if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)) {
+                                    plugins.Add(plugin);
+                                }
                             }
                         }
                     }
+                    Logger.Info($"Found {plugins.Count} valid plugins at {req.Url}");
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    throw;
                 }
-                Logger.Info($"Found {plugins.Count} valid plugins at {req.Url}");
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                throw;
-            }
-            return plugins;
+                return plugins;
+            });
         }
 
         private async Task<PluginManifest> ValidateAndParseManifest(JToken item) {
