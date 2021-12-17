@@ -132,13 +132,23 @@ namespace NINA.Sequencer {
         }
 
         private async void SequenceTargetsFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
-            await LoadTargets();
+            try {
+                sequenceTargetsFolderWatcher.EnableRaisingEvents = false;
+                await LoadTargets();
+            } finally {
+                sequenceTargetsFolderWatcher.EnableRaisingEvents = true;
+            }
         }
 
         private async void SequenceSettings_SequencerTargetsFolderChanged(object sender, System.EventArgs e) {
             if ((e as PropertyChangedEventArgs)?.PropertyName == nameof(profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder)) {
                 sequenceTargetsFolderWatcher.Path = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
-                await LoadTargets();
+                try {
+                    sequenceTargetsFolderWatcher.EnableRaisingEvents = false;
+                    await LoadTargets();
+                } finally {
+                    sequenceTargetsFolderWatcher.EnableRaisingEvents = true;
+                }
             }
         }
 
@@ -146,7 +156,12 @@ namespace NINA.Sequencer {
             activeSequenceSettings.PropertyChanged -= SequenceSettings_SequencerTargetsFolderChanged;
             activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
             activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
-            await LoadTargets();
+            try {
+                sequenceTargetsFolderWatcher.EnableRaisingEvents = false;
+                await LoadTargets();
+            } finally {
+                sequenceTargetsFolderWatcher.EnableRaisingEvents = true;
+            }
         }
 
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {

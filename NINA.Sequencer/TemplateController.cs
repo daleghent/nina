@@ -116,13 +116,23 @@ namespace NINA.Sequencer {
         }
 
         private async void SequenceTemplateFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
-            await LoadUserTemplates();
+            try {
+                sequenceTemplateFolderWatcher.EnableRaisingEvents = false;
+                await LoadUserTemplates();
+            } finally {
+                sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
+            }
         }
 
         private async void SequenceSettings_SequencerTemplatesFolderChanged(object sender, System.EventArgs e) {
             if ((e as PropertyChangedEventArgs)?.PropertyName == nameof(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder)) {
                 sequenceTemplateFolderWatcher.Path = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
-                await LoadUserTemplates();
+                try {
+                    sequenceTemplateFolderWatcher.EnableRaisingEvents = false;
+                    await LoadUserTemplates();
+                } finally {
+                    sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
+                }
             }
         }
 
@@ -130,7 +140,12 @@ namespace NINA.Sequencer {
             activeSequenceSettings.PropertyChanged -= SequenceSettings_SequencerTemplatesFolderChanged;
             activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
             activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
-            await LoadUserTemplates();
+            try {
+                sequenceTemplateFolderWatcher.EnableRaisingEvents = false;
+                await LoadUserTemplates();
+            } finally {
+                sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
+            }
         }
 
         private Task LoadUserTemplates() {
