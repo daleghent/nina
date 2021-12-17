@@ -58,7 +58,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             ChooseFWCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFW));
             CancelChooseFWCommand = new RelayCommand(CancelChooseFW);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFW));
-            RefreshFWListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(FW?.Connected == true));
+            RefreshFWListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FilterWheelInfo.Connected);
             ChangeFilterCommand = new AsyncCommand<bool>(async () => {
                 _changeFilterCancellationSource?.Dispose();
                 _changeFilterCancellationSource = new CancellationTokenSource();

@@ -69,7 +69,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             OpenCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => OpenCover(CancellationToken.None)));
             CloseCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => CloseCover(CancellationToken.None)));
             RefreshFlatDeviceListCommand =
-                new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(flatDevice?.Connected == true));
+                new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FlatDeviceInfo.Connected);
             SetBrightnessCommand = new AsyncCommand<bool>(o => Task.Run(() => SetBrightness(o, CancellationToken.None)));
             ToggleLightCommand = new AsyncCommand<bool>(o => Task.Run(() => ToggleLight(o, CancellationToken.None)));
             AddGainCommand = new RelayCommand(AddGain);

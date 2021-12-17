@@ -49,7 +49,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
             ChooseWeatherDataCommand = new AsyncCommand<bool>(() => Task.Run(ChooseWeatherData));
             CancelChooseWeatherDataCommand = new RelayCommand(CancelChooseWeatherData);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshWeatherDataListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(WeatherData?.Connected == true));
+            RefreshWeatherDataListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !WeatherDataInfo.Connected);
 
             updateTimer = new DeviceUpdateTimer(
                 GetWeatherDataValues,

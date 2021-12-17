@@ -69,7 +69,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 return Task.Run(() => WarmCamera(TimeSpan.FromMinutes(WarmingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token));
             }, (object o) => !TempChangeRunning);
             CancelCoolCamCommand = new RelayCommand(CancelCoolCamera);
-            RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !(Cam?.Connected == true));
+            RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !CameraInfo.Connected);
 
             TempChangeRunning = false;
             CoolerPowerHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);
