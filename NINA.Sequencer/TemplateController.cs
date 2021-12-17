@@ -32,6 +32,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Locale;
+using System.Threading.Tasks;
 
 namespace NINA.Sequencer {
 
@@ -97,81 +98,83 @@ namespace NINA.Sequencer {
             templatesMenuView = new CollectionViewSource { Source = Templates };
             TemplatesMenuView.SortDescriptions.Add(new SortDescription("Container.Name", ListSortDirection.Ascending));
 
-            LoadUserTemplates();
+            LoadUserTemplates().ContinueWith(t => {
+                sequenceTemplateFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder, "*" + TemplateFileExtension);
+                sequenceTemplateFolderWatcher.Changed += SequenceTemplateFolderWatcher_Changed;
+                sequenceTemplateFolderWatcher.Deleted += SequenceTemplateFolderWatcher_Changed;
+                sequenceTemplateFolderWatcher.IncludeSubdirectories = true;
+                sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
 
-            sequenceTemplateFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder, "*" + TemplateFileExtension);
-            sequenceTemplateFolderWatcher.Changed += SequenceTemplateFolderWatcher_Changed;
-            sequenceTemplateFolderWatcher.Deleted += SequenceTemplateFolderWatcher_Changed;
-            sequenceTemplateFolderWatcher.IncludeSubdirectories = true;
-            sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
-
-            profileService.ProfileChanged += ProfileService_ProfileChanged;
-            activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
-            activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
+                profileService.ProfileChanged += ProfileService_ProfileChanged;
+                activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
+                activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
+            });
         }
 
         private bool ApplyViewFilter(object obj) {
             return (obj as TemplatedSequenceContainer).Container.Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private void SequenceTemplateFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
-            LoadUserTemplates();
+        private async void SequenceTemplateFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
+            await LoadUserTemplates();
         }
 
-        private void SequenceSettings_SequencerTemplatesFolderChanged(object sender, System.EventArgs e) {
+        private async void SequenceSettings_SequencerTemplatesFolderChanged(object sender, System.EventArgs e) {
             if ((e as PropertyChangedEventArgs)?.PropertyName == nameof(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder)) {
                 sequenceTemplateFolderWatcher.Path = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
-                LoadUserTemplates();
+                await LoadUserTemplates();
             }
         }
 
-        private void ProfileService_ProfileChanged(object sender, System.EventArgs e) {
+        private async void ProfileService_ProfileChanged(object sender, System.EventArgs e) {
             activeSequenceSettings.PropertyChanged -= SequenceSettings_SequencerTemplatesFolderChanged;
             activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
             activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
-            LoadUserTemplates();
+            await LoadUserTemplates();
         }
 
-        private void LoadUserTemplates() {
-            try {
-                userTemplatePath = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
-                var rootParts = userTemplatePath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+        private Task LoadUserTemplates() {
+            return Task.Run(async () => {
+                try {
+                    userTemplatePath = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
+                    var rootParts = userTemplatePath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
 
-                if (!Directory.Exists(userTemplatePath)) {
-                    Directory.CreateDirectory(userTemplatePath);
-                }
-
-                foreach (var template in Templates.Where(t => t.Group != DefaultTemplatesGroup).ToList()) {
-                    Application.Current.Dispatcher.Invoke(() => Templates.Remove(template));
-                }
-
-                foreach (var file in Directory.GetFiles(userTemplatePath, "*" + TemplateFileExtension, SearchOption.AllDirectories)) {
-                    try {
-                        var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
-                        if (container is ISequenceRootContainer) continue;
-                        var template = new TemplatedSequenceContainer(profileService, UserTemplatesGroup, container);
-                        var fileInfo = new FileInfo(file);
-                        container.Name = fileInfo.Name.Replace(TemplateFileExtension, "");
-                        var parts = fileInfo.Directory.FullName.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
-                        template.SubGroups = parts.Except(rootParts).ToArray();
-                        Templates.Add(template);
-                    } catch (Exception ex) {
-                        Logger.Error("Invalid template JSON", ex);
+                    if (!Directory.Exists(userTemplatePath)) {
+                        Directory.CreateDirectory(userTemplatePath);
                     }
-                }
 
-                Application.Current.Dispatcher.Invoke(() => {
-                    try {
-                        TemplatesView.Refresh();
-                        TemplatesMenuView.Refresh();
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
+                    foreach (var template in Templates.Where(t => t.Group != DefaultTemplatesGroup).ToList()) {
+                        await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => Templates.Remove(template)));
                     }
-                });
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_LoadUserTemplatesFailed"]);
-            }
+
+                    foreach (var file in Directory.GetFiles(userTemplatePath, "*" + TemplateFileExtension, SearchOption.AllDirectories)) {
+                        try {
+                            var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
+                            if (container is ISequenceRootContainer) continue;
+                            var template = new TemplatedSequenceContainer(profileService, UserTemplatesGroup, container);
+                            var fileInfo = new FileInfo(file);
+                            container.Name = fileInfo.Name.Replace(TemplateFileExtension, "");
+                            var parts = fileInfo.Directory.FullName.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+                            template.SubGroups = parts.Except(rootParts).ToArray();
+                            Templates.Add(template);
+                        } catch (Exception ex) {
+                            Logger.Error("Invalid template JSON", ex);
+                        }
+                    }
+
+                    await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => {
+                        try {
+                            TemplatesView.Refresh();
+                            TemplatesMenuView.Refresh();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                    }));
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_LoadUserTemplatesFailed"]);
+                }
+            });
         }
 
         public void AddNewUserTemplate(ISequenceContainer sequenceContainer) {

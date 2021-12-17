@@ -75,7 +75,18 @@ namespace NINA.Sequencer {
             targetsMenuView = new CollectionViewSource { Source = Targets };
             TargetsMenuView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Name), ListSortDirection.Ascending));
 
-            LoadTargets();
+            LoadTargets().ContinueWith(t => {
+                sequenceTargetsFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder, "*" + TargetsFileExtension);
+
+                sequenceTargetsFolderWatcher.Changed += SequenceTargetsFolderWatcher_Changed;
+                sequenceTargetsFolderWatcher.Deleted += SequenceTargetsFolderWatcher_Changed;
+                sequenceTargetsFolderWatcher.IncludeSubdirectories = true;
+                sequenceTargetsFolderWatcher.EnableRaisingEvents = true;
+
+                profileService.ProfileChanged += ProfileService_ProfileChanged;
+                activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
+                activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
+            });
 
             ToggleSortCommand = new RelayCommand(x => {
                 if (SortByRelevance) {
@@ -86,18 +97,6 @@ namespace NINA.Sequencer {
                     TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Name), ListSortDirection.Ascending));
                 }
             });
-
-            sequenceTargetsFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder, "*" + TargetsFileExtension);
-
-            sequenceTargetsFolderWatcher.Created += SequenceTargetsFolderWatcher_Changed;
-            sequenceTargetsFolderWatcher.Changed += SequenceTargetsFolderWatcher_Changed;
-            sequenceTargetsFolderWatcher.Deleted += SequenceTargetsFolderWatcher_Changed;
-            sequenceTargetsFolderWatcher.IncludeSubdirectories = true;
-            sequenceTargetsFolderWatcher.EnableRaisingEvents = true;
-
-            profileService.ProfileChanged += ProfileService_ProfileChanged;
-            activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
-            activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
         }
 
         private bool sortByRelevance;
@@ -132,22 +131,22 @@ namespace NINA.Sequencer {
             return (obj as TargetSequenceContainer).Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private void SequenceTargetsFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
-            LoadTargets();
+        private async void SequenceTargetsFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
+            await LoadTargets();
         }
 
-        private void SequenceSettings_SequencerTargetsFolderChanged(object sender, System.EventArgs e) {
+        private async void SequenceSettings_SequencerTargetsFolderChanged(object sender, System.EventArgs e) {
             if ((e as PropertyChangedEventArgs)?.PropertyName == nameof(profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder)) {
                 sequenceTargetsFolderWatcher.Path = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
-                LoadTargets();
+                await LoadTargets();
             }
         }
 
-        private void ProfileService_ProfileChanged(object sender, System.EventArgs e) {
+        private async void ProfileService_ProfileChanged(object sender, System.EventArgs e) {
             activeSequenceSettings.PropertyChanged -= SequenceSettings_SequencerTargetsFolderChanged;
             activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
             activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
-            LoadTargets();
+            await LoadTargets();
         }
 
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {
@@ -165,52 +164,54 @@ namespace NINA.Sequencer {
             }
         }
 
-        private void LoadTargets() {
-            try {
-                targetPath = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
-                var rootParts = targetPath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+        private Task LoadTargets() {
+            return Task.Run(async () => {
+                try {
+                    targetPath = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
+                    var rootParts = targetPath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
 
-                if (!Directory.Exists(targetPath)) {
-                    Directory.CreateDirectory(targetPath);
-                }
-
-                foreach (var target in Targets.ToList()) {
-                    Application.Current.Dispatcher.Invoke(() => Targets.Remove(target));
-                }
-
-                foreach (var file in Directory.GetFiles(targetPath, "*" + TargetsFileExtension, SearchOption.AllDirectories)) {
-                    try {
-                        var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
-
-                        var dsoContainer = container as IDeepSkyObjectContainer;
-                        if (dsoContainer != null) {
-                            var target = new TargetSequenceContainer(profileService, dsoContainer);
-                            var fileInfo = new FileInfo(file);
-                            container.Name = fileInfo.Name.Replace(TargetsFileExtension, "");
-                            var parts = fileInfo.Directory.FullName.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
-                            target.SubGroups = parts.Except(rootParts).ToArray();
-
-                            Targets.Add(target);
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error($"Invalid target JSON {file}", ex);
+                    if (!Directory.Exists(targetPath)) {
+                        Directory.CreateDirectory(targetPath);
                     }
+
+                    foreach (var target in Targets.ToList()) {
+                        await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => Targets.Remove(target)));
+                    }
+
+                    foreach (var file in Directory.GetFiles(targetPath, "*" + TargetsFileExtension, SearchOption.AllDirectories)) {
+                        try {
+                            var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
+
+                            var dsoContainer = container as IDeepSkyObjectContainer;
+                            if (dsoContainer != null) {
+                                var target = new TargetSequenceContainer(profileService, dsoContainer);
+                                var fileInfo = new FileInfo(file);
+                                container.Name = fileInfo.Name.Replace(TargetsFileExtension, "");
+                                var parts = fileInfo.Directory.FullName.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+                                target.SubGroups = parts.Except(rootParts).ToArray();
+
+                                Targets.Add(target);
+                            }
+                        } catch (Exception ex) {
+                            Logger.Error($"Invalid target JSON {file}", ex);
+                        }
+                    }
+                    await RefreshFilters();
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_LoadUserTargetFailed"]);
                 }
-                RefreshFilters();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_LoadUserTargetFailed"]);
-            }
+            });
         }
 
-        private void RefreshFilters() {
-            Application.Current.Dispatcher.Invoke(() => {
+        private async Task RefreshFilters() {
+            await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => {
                 try {
                     TargetsView.Refresh(); TargetsMenuView.Refresh();
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
-            });
+            }));
         }
 
         public void DeleteTarget(TargetSequenceContainer targetSequenceContainer) {
