@@ -73,7 +73,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             ChooseDomeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseDome));
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshDomeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Dome?.Connected == true));
+            RefreshDomeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !DomeInfo.Connected);
             StopCommand = new AsyncCommand<bool>((o) => Task.Run(() => StopAll(o)));
             OpenShutterCommand = new AsyncCommand<bool>(() => Task.Run(OpenShutterVM));
             CloseShutterCommand = new AsyncCommand<bool>(() => Task.Run(CloseShutterVM));

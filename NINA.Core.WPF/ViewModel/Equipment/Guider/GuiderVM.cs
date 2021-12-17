@@ -53,8 +53,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
             ConnectGuiderCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             CancelConnectGuiderCommand = new RelayCommand(CancelConnectGuider);
-            RefreshGuiderListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Guider?.Connected == true));
-            DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => Guider?.Connected == true);
+            RefreshGuiderListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !GuiderInfo.Connected);
+            DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => GuiderInfo.Connected);
             ClearGraphCommand = new RelayCommand((object o) => ResetGraphValues());
 
             GuideStepsHistory = new GuideStepsHistory(HistorySize, GuiderScale, GuiderMaxY);

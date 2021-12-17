@@ -55,7 +55,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshRotatorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(rotator?.Connected == true));
+            RefreshRotatorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !RotatorInfo.Connected);
             MoveCommand = new AsyncCommand<float>(() => Task.Run(() => Move(TargetPosition, CancellationToken.None)), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
             MoveMechanicalCommand = new AsyncCommand<float>(() => Task.Run(() => MoveMechanical(TargetPosition, CancellationToken.None)), (p) => RotatorInfo.Connected);
             HaltCommand = new RelayCommand(Halt, (p) => RotatorInfo.Connected);

@@ -56,7 +56,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             ChooseFocuserCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFocuser));
             CancelChooseFocuserCommand = new RelayCommand(CancelChooseFocuser);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshFocuserListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Focuser?.Connected == true));
+            RefreshFocuserListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FocuserInfo.Connected);
             MoveFocuserInSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / -2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserInLargeCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * -5)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserOutSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / 2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);

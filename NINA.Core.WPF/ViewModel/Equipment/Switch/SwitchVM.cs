@@ -51,7 +51,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             DisconnectCommand = new AsyncCommand<bool>(async () => { await Task.Run(Disconnect); return true; });
             CancelConnectCommand = new RelayCommand((object o) => CancelConnect());
-            RefreshDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(SwitchHub?.Connected == true));
+            RefreshDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !SwitchInfo.Connected);
 
             updateTimer = new DeviceUpdateTimer(
                  GetSwitchValues,
