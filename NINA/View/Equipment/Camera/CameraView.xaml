@@ -595,7 +595,7 @@
 
                             <DataTemplate x:Key="LegacySbig">
                                 <StackPanel Orientation="Vertical">
-                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                         <TextBlock
                                             MinWidth="100"
                                             VerticalAlignment="Center"
@@ -611,7 +611,7 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
-                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                         <TextBlock
                                             MinWidth="100"
                                             VerticalAlignment="Center"
@@ -628,7 +628,7 @@
                                             </TextBox.Text>
                                         </TextBox>
                                     </DockPanel>
-                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDualTracking, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDualTracking, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                         <TextBlock
                                             MinWidth="100"
                                             VerticalAlignment="Center"
@@ -638,6 +638,16 @@
                                             HorizontalAlignment="Right"
                                             IsChecked="{Binding UseExternalTrackingCcd}">
                                         </CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding TrackingCcdAscomServerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblTrackingASCOMServerLoggingEnabled}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding TrackingCcdAscomServerLoggingEnabled}" />
                                     </DockPanel>
                                 </StackPanel>
                             </DataTemplate>

@@ -57,6 +57,7 @@ namespace NINA.Profile.Interfaces {
         bool? BinAverageEnabled { get; set; }
         bool? TrackingCameraASCOMServerEnabled { get; set; }
         string TrackingCameraASCOMServerPipeName { get; set; }
+        bool? TrackingCameraASCOMServerLoggingEnabled { get; set; }
         bool SBIGUseExternalCcdTracker { get; set; }
     }
 }

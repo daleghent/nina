@@ -3,6 +3,7 @@ using Castle.DynamicProxy;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using NINA.Core.API.ASCOM.Camera;
+using NINA.Core.Utility;
 using NINA.Equipment.Model;
 using NINA.Image.Interfaces;
 using System;
@@ -81,6 +82,77 @@ namespace NINA.Equipment.Equipment.MyCamera {
             using (var sw = new StringWriter()) {
                 jsonSerializer.Serialize(sw, e);
                 return sw.ToString();
+            }
+        }
+    }
+
+    class SBIGServerLoggingProxy<T> : IAsyncInterceptor where T : class {
+        private static readonly ProxyGenerator proxyGenerator = new ProxyGenerator();
+
+        private readonly SBIGCamera camera;
+        public SBIGServerLoggingProxy(SBIGCamera camera) {
+            this.camera = camera;
+        }
+
+        public static T Wrap(T wrapped, SBIGCamera camera) {
+            if (typeof(T).IsInterface) {
+                return proxyGenerator.CreateInterfaceProxyWithTarget(wrapped, new SBIGServerLoggingProxy<T>(camera));
+            } else {
+                return proxyGenerator.CreateClassProxyWithTarget(wrapped, new SBIGServerLoggingProxy<T>(camera));
+            }
+        }
+
+        public void InterceptAsynchronous(IInvocation invocation) {
+            if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                Logger.Debug($"SBIG: ASCOM Server method {invocation.Method.Name} started");
+            }
+
+            invocation.Proceed();
+            Task result = (Task)invocation.ReturnValue;
+            if (result.IsFaulted) {
+                if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                    Logger.Error($"SBIG: ASCOM Server method {invocation.Method.Name} failed", result.Exception);
+                }
+            } else {
+                if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                    Logger.Debug($"SBIG: ASCOM Server method {invocation.Method.Name} completed");
+                }
+            }
+        }
+
+        public void InterceptAsynchronous<TResult>(IInvocation invocation) {
+            if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                Logger.Debug($"SBIG: ASCOM Server method {invocation.Method.Name} started");
+            }
+
+            invocation.Proceed();
+            Task<TResult> result = (Task<TResult>)invocation.ReturnValue;
+            if (result.IsFaulted) {
+                if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                    Logger.Error($"SBIG: ASCOM Server method {invocation.Method.Name} failed", result.Exception);
+                }
+            } else {
+                if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                    Logger.Debug($"SBIG: ASCOM Server method {invocation.Method.Name} completed");
+                }
+            }
+        }
+
+        public void InterceptSynchronous(IInvocation invocation) {
+            if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                Logger.Debug($"SBIG: ASCOM Server method {invocation.Method.Name} started");
+            }
+
+            try {
+                invocation.Proceed();
+                if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                    Logger.Debug($"SBIG: ASCOM Server method {invocation.Method.Name} completed");
+                }
+            } catch (Exception e) {
+                if (camera.TrackingCcdAscomServerLoggingEnabled) {
+                    Logger.Error($"SBIG: ASCOM Server method {invocation.Method.Name} failed", e);
+                }
+                throw;
             }
         }
     }
@@ -360,13 +432,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override async Task<GetImageArrayReply> ImageArray_get(
             Empty request,
             ServerCallContext context) {
-            var imageReady = this.exposeAndDownloadTask?.Status == TaskStatus.RanToCompletion;
+            var exposeTask = this.exposeAndDownloadTask;
+            var imageReady = exposeTask?.Status == TaskStatus.RanToCompletion;
             if (!imageReady) {
                 // ASCOM specifies this exception when no image is available
                 throw new ASCOM.InvalidOperationException("No exposure is ready yet");
             }
 
-            var downloadedData = this.exposeAndDownloadTask.Result;
+            var downloadedData = exposeTask.Result;
+            if (downloadedData == null) {
+                throw new ASCOM.DriverException("Expose and download operation failed");
+            }
             var numPixels = downloadedData.Properties.Height * downloadedData.Properties.Width;
             var imageData = new byte[numPixels * 2];
             Buffer.BlockCopy(downloadedData.Data.FlatArray, 0, imageData, 0, numPixels * 2);

@@ -16069,6 +16069,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tracking CCD ASCOM Server Logging.
+        /// </summary>
+        internal static string LblTrackingASCOMServerLoggingEnabled {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerLoggingEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server Pipe Name.
         /// </summary>
         internal static string LblTrackingASCOMServerPipeName {
