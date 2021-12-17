@@ -202,6 +202,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
         }
 
         private void ReportFileWatcher_Created(object sender, FileSystemEventArgs e) {
+            Logger.Debug($"New AutoFocus chart created at {e.FullPath}");
             var item = new Chart(Path.GetFileName(e.FullPath), e.FullPath);
 
             lock (lockobj) {
@@ -216,8 +217,9 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             lock (lockobj) {
                 var toRemove = ChartList.FirstOrDefault(x => x.FilePath == e.FullPath);
                 if (toRemove != null) {
+                    Logger.Debug($"New AutoFocus chart deleted from {e.FullPath}");
                     ChartList.Remove(toRemove);
-                    if (SelectedChart == null) {
+                    if (SelectedChart == null || object.ReferenceEquals(SelectedChart, toRemove)) {
                         SelectedChart = ChartList.FirstOrDefault();
                         _ = LoadChart();
                     }
@@ -269,6 +271,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                             AutoFocusVM.AutoFocusDuration = report.Duration;
                         }
 
+                        Logger.Debug("Finished loading latest AutoFocus chart");
                         return true;
                     }
                 } catch (Exception ex) {

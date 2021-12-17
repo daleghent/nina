@@ -40,6 +40,8 @@ namespace NINATest.Autofocus {
 
             var report = AutoFocusReport.GenerateReport(
                 profileServiceMock.Object,
+                "",
+                "",
                 new List<ScatterErrorPoint>(),
                 0,
                 0,
@@ -133,8 +135,12 @@ namespace NINATest.Autofocus {
             var quadraticFitting = new QuadraticFitting();
             quadraticFitting.Calculate(points);
 
+            var autoFocuserName = "AF";
+            var starDetectorName = "SD";
             var report = AutoFocusReport.GenerateReport(
                 profileServiceMock.Object,
+                autoFocuserName,
+                starDetectorName,
                 new List<ScatterErrorPoint>(),
                 0,
                 0,
@@ -162,6 +168,8 @@ namespace NINATest.Autofocus {
             report.Fittings.Quadratic.Should().NotBeNull();
             report.Fittings.Quadratic.Should().Be("y = 1.01515151515152 * x^2 + -10.1848484848485 * x + 27.5");
             report.Duration.Should().Be(TimeSpan.FromSeconds(5));
+            report.AutoFocuserName.Should().Be(autoFocuserName);
+            report.StarDetectorName.Should().Be(starDetectorName);
         }
     }
 }

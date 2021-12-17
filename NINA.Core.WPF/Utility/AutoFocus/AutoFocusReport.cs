@@ -14,6 +14,7 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
+using NINA.Image.ImageAnalysis;
 using NINA.Profile.Interfaces;
 using OxyPlot;
 using OxyPlot.Series;
@@ -30,6 +31,12 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
 
         [JsonProperty]
         public string Filter { get; set; }
+
+        [JsonProperty]
+        public string AutoFocuserName { get; set; }
+
+        [JsonProperty]
+        public string StarDetectorName { get; set; }
 
         [JsonProperty]
         public DateTime Timestamp { get; set; }
@@ -89,7 +96,43 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             double temperature,
             string filter,
             TimeSpan duration) {
+            return GenerateReport(
+                profileService,
+                "Unknown",
+                "Unknown",
+                FocusPoints,
+                initialFocusPosition,
+                initialHFR,
+                focusPoint,
+                lastFocusPoint,
+                trendlineFitting,
+                quadraticFitting,
+                hyperbolicFitting,
+                gaussianFitting,
+                temperature,
+                filter,
+                duration);
+        }
+
+        public static AutoFocusReport GenerateReport(
+            IProfileService profileService,
+            string autoFocuserName,
+            string starDetectorName,
+            ICollection<ScatterErrorPoint> FocusPoints,
+            double initialFocusPosition,
+            double initialHFR,
+            DataPoint focusPoint,
+            ReportAutoFocusPoint lastFocusPoint,
+            TrendlineFitting trendlineFitting,
+            QuadraticFitting quadraticFitting,
+            HyperbolicFitting hyperbolicFitting,
+            GaussianFitting gaussianFitting,
+            double temperature,
+            string filter,
+            TimeSpan duration) {
             var report = new AutoFocusReport() {
+                AutoFocuserName = autoFocuserName,
+                StarDetectorName = starDetectorName,
                 Filter = filter,
                 Timestamp = DateTime.Now,
                 Temperature = temperature,

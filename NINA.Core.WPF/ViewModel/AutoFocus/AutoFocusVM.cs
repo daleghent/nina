@@ -336,10 +336,12 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         /// </summary>
         /// <param name="initialFocusPosition"></param>
         /// <param name="initialHFR"></param>
-        private AutoFocusReport GenerateReport(double initialFocusPosition, double initialHFR, string filter, TimeSpan duration) {
+        private AutoFocusReport GenerateReport(double initialFocusPosition, double initialHFR, string filter, TimeSpan duration, IStarDetection starDetector) {
             try {
                 var report = AutoFocusReport.GenerateReport(
                     profileService,
+                    "NINA",
+                    starDetector.Name,
                     FocusPoints,
                     initialFocusPosition,
                     initialHFR,
@@ -683,7 +685,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                         var duration = stopWatch.Elapsed;
                         AutoFocusDuration = duration;
 
-                        report = GenerateReport(initialFocusPosition, initialHFR, autofocusFilter?.Name ?? string.Empty, duration);
+                        var starDetection = starDetectionSelector.GetBehavior();
+                        report = GenerateReport(initialFocusPosition, initialHFR, autofocusFilter?.Name ?? string.Empty, duration, starDetection);
 
                         if (!goodAutoFocus) {
                             if (numberOfAttempts < profileService.ActiveProfile.FocuserSettings.AutoFocusTotalNumberOfAttempts) {
@@ -711,6 +714,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     completed = true;
                     AutoFocusInfo info = new AutoFocusInfo(report.Temperature, report.CalculatedFocusPoint.Position, report.Filter, report.Timestamp);
                     focuserMediator.BroadcastSuccessfulAutoFocusRun(info);
+                    Logger.Info("AutoFocus completed");
                 } catch (OperationCanceledException) {
                     Logger.Warning("AutoFocus cancelled");
                 } catch (Exception ex) {
@@ -744,11 +748,13 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                     if (guidingStopped) {
                         var startGuidingTask = this.guiderMediator.StartGuiding(false, progress, default);
-                        var completedTask = await Task.WhenAny(Task.Delay(60000), startGuidingTask);
+                        var completedTask = await Task.WhenAny(Task.Delay(TimeSpan.FromMinutes(1)), startGuidingTask);
                         if (startGuidingTask != completedTask) {
                             Notification.ShowWarning(Loc.Instance["LblStartGuidingFailed"]);
+                            Logger.Warning("Failed to restart guiding after AutoFocus");
                         }
                     }
+                    Logger.Debug("AutoFocus cleanup complete");
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
                 }
                 return report;
