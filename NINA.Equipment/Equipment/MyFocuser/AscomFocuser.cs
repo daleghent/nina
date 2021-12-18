@@ -115,6 +115,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
 
                 var lastPosition = int.MinValue;
                 int samePositionCount = 0;
+                var lastMovementTime = DateTime.Now;
                 while (position != device.Position && !ct.IsCancellationRequested) {
                     device.Move(position);
                     while (IsMoving && !ct.IsCancellationRequested) {
@@ -123,12 +124,16 @@ namespace NINA.Equipment.Equipment.MyFocuser {
 
                     if (lastPosition == device.Position) {
                         ++samePositionCount;
-                        var samePositionTime = TimeSpan.FromMilliseconds(waitInMs * samePositionCount);
+                        var samePositionTime = DateTime.Now - lastMovementTime;
                         if (samePositionTime >= SameFocuserPositionTimeout) {
                             throw new Exception($"Focuser stuck at position {lastPosition} beyond {SameFocuserPositionTimeout} timeout");
                         }
+
+                        // Make sure we wait in between Move requests when no progress is being made
+                        // to avoid spamming the driver and spiking the CPU
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(1), ct);
                     } else {
-                        samePositionCount = 0;
+                        lastMovementTime = DateTime.Now;
                     }
                     lastPosition = device.Position;
                 }
