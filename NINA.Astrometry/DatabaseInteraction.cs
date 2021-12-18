@@ -262,12 +262,16 @@ namespace NINA.Astrometry {
                             query = query.Where(x => x.constellation == searchParams.Constellation);
                         }
 
-                        if (searchParams.RightAscension.From != null) {
+                        if (searchParams.RightAscension.From != null && (searchParams.RightAscension.Thru == null || searchParams.RightAscension.Thru > searchParams.RightAscension.From)) {
                             query = query.Where(x => x.ra >= searchParams.RightAscension.From);
                         }
 
-                        if (searchParams.RightAscension.Thru != null) {
+                        if (searchParams.RightAscension.Thru != null && (searchParams.RightAscension.From == null || searchParams.RightAscension.Thru > searchParams.RightAscension.From)) {
                             query = query.Where(x => x.ra <= searchParams.RightAscension.Thru);
+                        }
+
+                        if (searchParams.RightAscension.From != null && searchParams.RightAscension.Thru != null && searchParams.RightAscension.Thru < searchParams.RightAscension.From) {
+                            query = query.Where(x => x.ra >= searchParams.RightAscension.From || x.ra <= searchParams.RightAscension.Thru);
                         }
 
                         if (searchParams.Declination.From != null) {
