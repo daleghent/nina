@@ -81,21 +81,20 @@ namespace NINA.Equipment.Equipment {
         }
 
         public TResult Invoke<TResult>(DeviceDispatcherType deviceType, Func<TResult> callback) {
-            if (this.profileService.ActiveProfile.ApplicationSettings.PerDeviceThreadingEnabled) {
-                var dispatcher = GetDispatcher(deviceType);
-                return dispatcher.Invoke(callback);
-            } else {
-                return callback();
-            }
+            return callback();
         }
 
         public void Invoke(DeviceDispatcherType deviceType, Action callback) {
+            // Functionality is neutered for now, until this can be sent to an AppDomain instead
+            /*
             if (this.profileService.ActiveProfile.ApplicationSettings.PerDeviceThreadingEnabled) {
                 var dispatcher = GetDispatcher(deviceType);
                 dispatcher.Invoke(callback);
             } else {
                 callback();
             }
+            */
+            callback();
         }
 
         public void Dispose() {

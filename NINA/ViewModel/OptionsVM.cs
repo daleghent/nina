@@ -739,16 +739,6 @@ namespace NINA.ViewModel {
             }
         }
 
-        public bool PerDeviceThreadingEnabled {
-            get => profileService.ActiveProfile.ApplicationSettings.PerDeviceThreadingEnabled;
-            set {
-                if (profileService.ActiveProfile.ApplicationSettings.PerDeviceThreadingEnabled != value) {
-                    profileService.ActiveProfile.ApplicationSettings.PerDeviceThreadingEnabled = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public LogLevelEnum LogLevel {
             get {
                 return profileService.ActiveProfile.ApplicationSettings.LogLevel;

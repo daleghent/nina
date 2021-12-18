@@ -26,7 +26,6 @@ namespace NINA.Profile.Interfaces {
         LogLevelEnum LogLevel { get; set; }
         string SkyAtlasImageRepository { get; set; }
         string SkySurveyCacheDirectory { get; set; }
-        bool PerDeviceThreadingEnabled { get; set; }
         AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors { get; set; }
         IReadOnlyDictionary<string, string> SelectedPluggableBehaviorsLookup { get; }
     }
