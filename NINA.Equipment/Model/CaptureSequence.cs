@@ -260,16 +260,5 @@ namespace NINA.Equipment.Model {
                 RaisePropertyChanged();
             }
         }
-
-        private CaptureSequence nextSequence;
-
-        [XmlIgnore]
-        public CaptureSequence NextSequence {
-            get => nextSequence;
-            set {
-                nextSequence = value;
-                RaisePropertyChanged();
-            }
-        }
     }
 }

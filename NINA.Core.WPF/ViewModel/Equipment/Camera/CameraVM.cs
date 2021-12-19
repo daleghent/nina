@@ -701,7 +701,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 CameraInfo.IsExposing = true;
                 CameraInfo.ExposureEndTime = DateTime.Now.AddSeconds(sequence.ExposureTime);
-                CameraInfo.NextExposureLength = sequence.NextSequence?.ExposureTime ?? -1;
                 BroadcastCameraInfo();
 
                 if (sequence.ExposureTime < ExposureMin) {

@@ -408,18 +408,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private double nextExposureLength = -1;
-
-        public double NextExposureLength {
-            get => nextExposureLength;
-            set {
-                if (nextExposureLength != value) {
-                    nextExposureLength = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         private double lastDownloadTime = -1;
 
         public double LastDownloadTime {
