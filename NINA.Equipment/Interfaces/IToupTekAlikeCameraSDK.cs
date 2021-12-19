@@ -42,6 +42,8 @@ namespace NINA.Equipment.Interfaces {
 
         void get_Size(out int width, out int height);
 
+        bool put_ROI(uint x, uint y, uint width, uint height);
+
         void get_ExpoAGainRange(out ushort min, out ushort max, out ushort def);
 
         bool put_ExpoAGain(ushort value);

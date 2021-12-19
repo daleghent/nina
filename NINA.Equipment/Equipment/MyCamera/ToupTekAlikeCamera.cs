@@ -27,6 +27,7 @@ using NINA.Core.Model.Equipment;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
+using System.Drawing;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -319,10 +320,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool CanSubSample {
             get {
-                /*
-                 Currently ToupTek Cameras are fixed to certain subsample resolutions, which is incompatible to NINA's approach
-                 */
-                return false;
+                return true;
             }
         }
 
@@ -826,6 +824,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             var width = CameraXSize / binning;
             var height = CameraYSize / binning;
 
+            if (roiInfo.HasValue) {
+                width = roiInfo.Value.Width / binning;
+                height = roiInfo.Value.Height / binning;
+            }
+
             var size = width * height;
             var data = new ushort[size];
 
@@ -913,10 +916,38 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        private Rectangle GetROI() {
+            var x = SubSampleX;
+            x -= x % 2;
+            var y = SubSampleY;
+            y -= y % 2;
+            var width = Math.Max(SubSampleWidth, 16);
+            width -= width % 2;
+            var height = Math.Max(SubSampleHeight, 16);
+            height -= height % 2;
+            return new Rectangle(x, y, width, height);
+        }
+
+        private Rectangle? roiInfo;
+
         public void StartExposure(CaptureSequence sequence) {
             imageReadyTCS?.TrySetCanceled();
             imageReadyTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             Logger.Trace($"{Category} - created new downloadExposure Task with Id {imageReadyTCS.Task.Id}");
+
+            if (EnableSubSample) {
+                var rect = GetROI();
+                roiInfo = rect;
+                if (!sdk.put_ROI((uint)rect.X, (uint)rect.Y, (uint)rect.Width, (uint)rect.Height)) {
+                    throw new Exception($"{Category} - Failed to set ROI to {rect.X}x{rect.Y}x{rect.Width}x{rect.Height}");
+                }
+            } else {
+                roiInfo = null;
+                // 0,0,0,0 resets the ROI to original size
+                if (!sdk.put_ROI(0, 0, 0, 0)) {
+                    throw new Exception($"{Category} - Failed to reset ROI");
+                }
+            }
 
             SetExposureTime(sequence.ExposureTime);
 

@@ -157,6 +157,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - ASCOM get and set methods use a unified logic to ensure same behavior for all devices
 - *FLI*: Background flush is now disabled prior to readout to prevent a hung readout
 - *MGEN2* now supports unattended guide star selection and calibration, and automatic meridian flips
+- Altair, MallinCam, Omegon, RisingCam and ToupTek subsampling is now available
 
 ## Application Improvements
 ### General

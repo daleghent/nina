@@ -114,6 +114,10 @@ namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
             return result;
         }
 
+        public bool put_ROI(uint x, uint y, uint width, uint height) {
+            return sdk.put_Roi(x, y, width, height);
+        }
+
         public bool put_AutoExpoEnable(bool v) {
             return sdk.put_AutoExpoEnable(v);
         }

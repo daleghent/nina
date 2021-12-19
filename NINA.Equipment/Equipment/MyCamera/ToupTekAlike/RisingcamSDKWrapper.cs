@@ -27,8 +27,7 @@ namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
             return (Nncam.eOPTION)Enum.Parse(typeof(ToupTekAlikeOption), option.ToString());
         }
 
-        public static
-            ToupTekAlikeEvent ToEvent(this Nncam.eEVENT info) {
+        public static ToupTekAlikeEvent ToEvent(this Nncam.eEVENT info) {
             return (ToupTekAlikeEvent)Enum.Parse(typeof(Nncam.eEVENT), info.ToString());
         }
 
@@ -126,6 +125,10 @@ namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
             var result = sdk.PullImageV2(data, bitDepth, out toupcampInfo);
             info = toupcampInfo.ToFrameInfo();
             return result;
+        }
+
+        public bool put_ROI(uint x, uint y, uint width, uint height) {
+            return sdk.put_Roi(x, y, width, height);
         }
 
         public bool put_AutoExpoEnable(bool v) {
