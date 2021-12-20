@@ -2540,6 +2540,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Above Horizon.
+        /// </summary>
+        internal static string LblAboveHorizon {
+            get {
+                return ResourceManager.GetString("LblAboveHorizon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Absolute.
         /// </summary>
         internal static string LblAbsolute {

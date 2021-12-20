@@ -214,13 +214,26 @@ namespace NINA.ViewModel {
 
                     /* Check if Altitude Filter is not default */
                     if (!(SelectedAltitudeTimeFrom == DateTime.MinValue && SelectedAltitudeTimeThrough == DateTime.MaxValue && SelectedMinimumAltitudeDegrees == 0)) {
-                        var filteredList = result.Where((x) => {
-                            return x.Altitudes.Where((y) => {
-                                return (y.X > DateTimeAxis.ToDouble(SelectedAltitudeTimeFrom) && y.X < DateTimeAxis.ToDouble(SelectedAltitudeTimeThrough));
-                            }).All((z) => {
-                                return z.Y > SelectedMinimumAltitudeDegrees;
-                            });
-                        });
+                        Func<DeepSkyObject, bool> filterFunction;
+
+                        if (SelectedMinimumAltitudeDegrees == ALTITUDEABOVEHORIZONFILTER) {
+                            filterFunction = (x) => {
+                                return x.Altitudes.Where((y) => {
+                                    return (y.X > DateTimeAxis.ToDouble(SelectedAltitudeTimeFrom) && y.X < DateTimeAxis.ToDouble(SelectedAltitudeTimeThrough));
+                                }).All((z) => {
+                                    return z.Y > (x.Horizon.Count > 0 ? x.Horizon.First(h => h.X == z.X).Y : 0);
+                                });
+                            };
+                        } else {
+                            filterFunction = (x) => {
+                                return x.Altitudes.Where((y) => {
+                                    return (y.X > DateTimeAxis.ToDouble(SelectedAltitudeTimeFrom) && y.X < DateTimeAxis.ToDouble(SelectedAltitudeTimeThrough));
+                                }).All((z) => {
+                                    return z.Y > SelectedMinimumAltitudeDegrees;
+                                });
+                            };
+                        }
+                        var filteredList = result.Where(filterFunction);
 
                         var count = filteredList.Count();
                         /* Apply Altitude Filter */
@@ -245,6 +258,8 @@ namespace NINA.ViewModel {
             InitializeElevationFilters();
         }
 
+        private const double ALTITUDEABOVEHORIZONFILTER = 999;
+
         private void InitializeElevationFilters() {
             AltitudeTimesFrom = new AsyncObservableCollection<DateTime>();
             AltitudeTimesThrough = new AsyncObservableCollection<DateTime>();
@@ -264,6 +279,7 @@ namespace NINA.ViewModel {
             for (int i = 0; i <= 90; i += 10) {
                 MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(i, i + "°"));
             }
+            MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(ALTITUDEABOVEHORIZONFILTER, Loc.Instance["LblAboveHorizon"]));
         }
 
         private void InitializeSizeFilters() {
