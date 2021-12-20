@@ -152,6 +152,7 @@ namespace NINA.Astrometry {
         private static double DeltaUTToday = 0.0;
         private static double DeltaUTYesterday = 0.0;
         private static double DeltaUTTomorrow = 0.0;
+        private static DateTime DeltaUTReference;
 
         /// <summary>
         /// Retrieve UT1 - UTC approximation to adjust DeltaT
@@ -160,6 +161,14 @@ namespace NINA.Astrometry {
         /// <returns>UT1 - UTC in seconds</returns>
         /// <remarks>https://www.iers.org/IERS/EN/DataProducts/EarthOrientationData/eop.html</remarks>
         public static double DeltaUT(DateTime date, DatabaseInteraction db = null) {
+            if (DeltaUTReference != DateTime.UtcNow.Date) {
+                // Clear the cache when a app is open longer than a day
+                DeltaUTReference = DateTime.UtcNow.Date;
+                DeltaUTYesterday = 0d;
+                DeltaUTToday = 0d;
+                DeltaUTTomorrow = 0d;
+            }
+
             var utcDate = date.ToUniversalTime();
 
             if (utcDate.Date == DateTime.UtcNow.Date) {
