@@ -151,6 +151,7 @@ namespace NINA.Astrometry {
 
         private static double DeltaUTToday = 0.0;
         private static double DeltaUTYesterday = 0.0;
+        private static double DeltaUTTomorrow = 0.0;
 
         /// <summary>
         /// Retrieve UT1 - UTC approximation to adjust DeltaT
@@ -159,7 +160,9 @@ namespace NINA.Astrometry {
         /// <returns>UT1 - UTC in seconds</returns>
         /// <remarks>https://www.iers.org/IERS/EN/DataProducts/EarthOrientationData/eop.html</remarks>
         public static double DeltaUT(DateTime date, DatabaseInteraction db = null) {
-            if (date.Date == DateTime.UtcNow.Date) {
+            var utcDate = date.ToUniversalTime();
+
+            if (utcDate.Date == DateTime.UtcNow.Date) {
                 if (DeltaUTToday != 0) {
                     return DeltaUTToday;
                 }
@@ -171,7 +174,11 @@ namespace NINA.Astrometry {
                 }
             }
 
-            var utcDate = date.ToUniversalTime();
+            if (date.Date == DateTime.UtcNow.Date + TimeSpan.FromDays(1)) {
+                if (DeltaUTTomorrow != 0) {
+                    return DeltaUTTomorrow;
+                }
+            }
 
             db = db ?? new DatabaseInteraction();
             var deltaUT = 0d;
@@ -181,12 +188,16 @@ namespace NINA.Astrometry {
                 Logger.Error(ex);
             }
 
-            if (date.Date == DateTime.UtcNow.Date) {
+            if (utcDate.Date == DateTime.UtcNow.Date) {
                 DeltaUTToday = deltaUT;
             }
 
-            if (date.Date == DateTime.UtcNow.Date - TimeSpan.FromDays(1)) {
+            if (utcDate.Date == DateTime.UtcNow.Date - TimeSpan.FromDays(1)) {
                 DeltaUTYesterday = deltaUT;
+            }
+
+            if (utcDate.Date == DateTime.UtcNow.Date + TimeSpan.FromDays(1)) {
+                DeltaUTTomorrow = deltaUT;
             }
 
             return deltaUT;
