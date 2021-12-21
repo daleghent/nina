@@ -4092,6 +4092,12 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>Cuando es seguimiento de la cúpula está activado, NINA comprobará frecuentemente si necesita ser girada para alinearse con el telescopio. Cuando una aplicación externa, como un planetario o un mando manual, mueve el telescopio puede ser útil esperar hasta que el telescopio deje de girar para rotar la cúpula.</value>
   </data>
+  <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
+    <value>Sincronizar el giro de la cúpula cuando el telescopio se desplace</value>
+  </data>
+  <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
+    <value>Gira la cúpula para sincronizarla con la posición del telescopio cuando este se desplaza. Este ajuste no mantiene la sincronización de la cúpula mientras el telescopio hace el seguimiento.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Encontrar posición inicial antes de aparcar</value>
   </data>
@@ -4850,6 +4856,18 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
   <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
     <value>Aparcar la cúpula</value>
   </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
+    <value>Gira la cúpula a la posición de aparcado</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
+    <value>Buscar la posición de aparcado de la cúpula</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
+    <value>Gira la cúpula a una posición absoluta de azimut</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
+    <value>Gira la cúpula e azimut</value>
+  </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Instrucciones en paralelo de Inicio de Secuencia</value>
   </data>
@@ -4873,6 +4891,12 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Habilitar sincronización de la cúpula</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
+    <value>Desactiva la sincronización de la cúpula en segundo plano con el telescopio</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
+    <value>Desactiva la sincronización de la cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>Sincroniza la cúpula con la actual posición del telescopio</value>
@@ -5765,6 +5789,9 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
     <value>Ejecuta un servidor en segundo plano para controlar la cámara de seguimiento desde otras aplicaciones</value>
   </data>
+  <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
+    <value>Seguimiento de la actualización del servidor CCD ASCOM</value>
+  </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>Nombre del servidor de canalización (Server Pepe)</value>
   </data>
@@ -5804,6 +5831,9 @@ Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle 
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Error al reanudar el autoguiado después de que un cambio de filtro causara un desplazamiento en el enfocador</value>
+  </data>
+  <data name="LblMoveFocuserFailed" xml:space="preserve">
+    <value>Imposible mover el enfocador</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>¡Detectada instrucción desconocida! Por favor, vuelva a comprobar su secuencia e inspeccione qué instrucciones pueden no ser válidas. Valide, además, que todo está actualizado.</value>
@@ -5943,5 +5973,20 @@ Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
     <value>Altitud</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
+    <value>Procesos de dispositivos ASCOM</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
+    <value>Este es un ajuste experimental que puede mejorar la capacidad de respuesta de la interfaz de usuario y reducir la posibilidad de que se cuelgue la interfaz de usuario cuando se conecta a los controladores ASCOM. Esta configuración debe estar habilitada antes de conectar loa dispositivos para que tenga un efecto. Por favor comparte tu experiencia con los colaboradores de Discord si lo usas, ya que estamos considerando habilitar esto para todos.</value>
+  </data>
+  <data name="LblDefault" xml:space="preserve">
+    <value>Por defecto</value>
+  </data>
+  <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
+    <value>¡El dispositivo de flats no puede controlar la luminosidad!</value>
+  </data>
+  <data name="LblAboveHorizon" xml:space="preserve">
+    <value>Sobre el horizonte</value>
   </data>
 </root>

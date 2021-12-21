@@ -4094,6 +4094,12 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
   </data>
+  <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
+    <value>Sync slew dome when scope slews</value>
+  </data>
+  <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
+    <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Find home before parking</value>
   </data>
@@ -4852,6 +4858,18 @@ If the position above it is an instruction set that is not currently expanded, i
   <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
     <value>Park Dome</value>
   </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
+    <value>Rotates the dome to the home position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
+    <value>Find Dome Home</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
+    <value>Slews the dome to an absolute azimuth position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
+    <value>Slew Dome Azimuth</value>
+  </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
   </data>
@@ -4875,6 +4893,12 @@ If the position above it is an instruction set that is not currently expanded, i
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Enable Dome Sync</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
+    <value>Disables background dome synchronization with the telescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
+    <value>Disable Dome Sync</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>Synchronizes the Dome to the current telescope position</value>
@@ -5767,6 +5791,9 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
     <value>Runs a server in the background to control the built-in tracking camera from other applications</value>
   </data>
+  <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
+    <value>Tracking CCD ASCOM Server Logging</value>
+  </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>Server Pipe Name</value>
   </data>
@@ -5806,6 +5833,9 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
+  <data name="LblMoveFocuserFailed" xml:space="preserve">
+    <value>Failed to move focuser</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
@@ -5945,5 +5975,20 @@ Once successfully solved, the rotation will be set for framing.</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
     <value>Elevation</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
+    <value>Device threads for ASCOM</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
+    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+  </data>
+  <data name="LblDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
+    <value>Flat device cannot control brightness!</value>
+  </data>
+  <data name="LblAboveHorizon" xml:space="preserve">
+    <value>Above Horizon</value>
   </data>
 </root>

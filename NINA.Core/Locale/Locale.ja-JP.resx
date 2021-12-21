@@ -4081,6 +4081,12 @@
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>ドーム追従機能が有効になっている場合にNINAは、ドームを回転させて望遠鏡に合わせる必要があるかどうかを頻繁に確認します。 プラネタリウムやハンドコントローラーなどの外部アプリケーションで望遠鏡を動かしているときは、望遠鏡の動作が停止するまで待ってから、ドームを回転させる方が良いでしょう。</value>
   </data>
+  <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
+    <value>Sync slew dome when scope slews</value>
+  </data>
+  <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
+    <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>パークする前にホームポジションを見つける</value>
   </data>
@@ -4839,6 +4845,18 @@
   <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
     <value>ドームをパークさせる</value>
   </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
+    <value>Rotates the dome to the home position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
+    <value>Find Dome Home</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
+    <value>Slews the dome to an absolute azimuth position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
+    <value>Slew Dome Azimuth</value>
+  </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>シーケンス命令の並列実行開始</value>
   </data>
@@ -4862,6 +4880,12 @@
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>ドーム同期を有効化</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
+    <value>Disables background dome synchronization with the telescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
+    <value>Disable Dome Sync</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>ドームを現在の望遠鏡の位置に同期します</value>
@@ -5748,6 +5772,9 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
     <value>バックグラウンドでサーバーを実行し、他のアプリケーションから内蔵の追尾カメラを制御します。</value>
   </data>
+  <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
+    <value>Tracking CCD ASCOM Server Logging</value>
+  </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>サーバーのパイプ名</value>
   </data>
@@ -5787,6 +5814,9 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
     <value>フィルターの変更によってフォーカサーが動いたために、ガイドの再開に失敗しました</value>
+  </data>
+  <data name="LblMoveFocuserFailed" xml:space="preserve">
+    <value>Failed to move focuser</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>不明な命令が検出されました！シーケンスをもう一度チェックして、どの命令が無効になったかを調べてください。その上で、すべてが最新であることを確認してください。</value>
@@ -5926,5 +5956,20 @@ Refer to your camera's manual for the location of this setting</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
     <value>標高</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
+    <value>Device threads for ASCOM</value>
+  </data>
+  <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
+    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+  </data>
+  <data name="LblDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
+    <value>Flat device cannot control brightness!</value>
+  </data>
+  <data name="LblAboveHorizon" xml:space="preserve">
+    <value>地平線上</value>
   </data>
 </root>
