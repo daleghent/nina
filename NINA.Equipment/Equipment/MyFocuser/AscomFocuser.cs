@@ -105,7 +105,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
         }
 
-        private static TimeSpan SameFocuserPositionTimeout = TimeSpan.FromSeconds(10);
+        private static TimeSpan SameFocuserPositionTimeout = TimeSpan.FromMinutes(1);
         private async Task MoveInternalAbsolute(int position, CancellationToken ct, int waitInMs = 1000) {
             if (Connected) {
                 var reEnableTempComp = TempComp;
