@@ -255,6 +255,7 @@
     <Compile Include="Utility\AutoFocus\Trendline.cs" />
     <Compile Include="Utility\AutoFocus\TrendlineFitting.cs" />
     <Compile Include="Utility\SharedResourceDictionary.cs" />
+    <Compile Include="ViewModel\AutoFocus\Chart.cs" />
     <Compile Include="ViewModel\BuiltInAutoFocusVMFactory.cs" />
     <Compile Include="ViewModel\AutoFocus\AutoFocusVM.cs" />
     <Compile Include="ViewModel\AutoFocus\FocusPointComparer.cs" />
@@ -293,7 +294,6 @@
     <Compile Include="ViewModel\Equipment\Telescope\TelescopeVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
-    <Compile Include="ViewModel\Imaging\AutoFocusToolVM.cs" />
     <Compile Include="Interfaces\ViewModel\IAutoFocusToolVM.cs" />
     <Compile Include="ViewModel\MeridianFlipVM.cs" />
     <Compile Include="ViewModel\MeridianFlipVMFactory.cs" />

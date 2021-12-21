@@ -339,6 +339,7 @@
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
     <Compile Include="ViewModel\ImageControlVM.cs" />
     <Compile Include="Interfaces\IPluginsVM.cs" />
+    <Compile Include="ViewModel\Imaging\AutoFocusToolVM.cs" />
     <Compile Include="ViewModel\Plugins\ExtendedPluginManifest.cs" />
     <Compile Include="ViewModel\Plugins\PluginInstallerDescriptionTemplateSelector.cs" />
     <Compile Include="ViewModel\Plugins\PluginState.cs" />

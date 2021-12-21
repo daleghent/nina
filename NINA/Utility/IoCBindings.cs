@@ -57,7 +57,6 @@ using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
 using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NINA.WPF.Base.ViewModel.Equipment.Guider;
 using NINA.WPF.Base.ViewModel.Equipment.Rotator;
-using NINA.WPF.Base.ViewModel.Imaging;
 using NINA.Plugin.Interfaces;
 using NINA.Interfaces;
 using NINA.ViewModel.Plugins;
@@ -70,6 +69,7 @@ using NINA.Image.ImageData;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces;
 using NINA.Equipment.Equipment;
+using NINA.Imaging.ViewModel.Imaging;
 
 namespace NINA.Utility {
 

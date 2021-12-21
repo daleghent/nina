@@ -14,6 +14,7 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
+using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.Model.Equipment;
@@ -27,6 +28,7 @@ using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
+using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.ViewModel.AutoFocus;
 using OxyPlot;
 using OxyPlot.Series;
@@ -37,16 +39,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static NINA.WPF.Base.ViewModel.Imaging.AutoFocusToolVM;
 
-namespace NINA.WPF.Base.ViewModel.Imaging {
+namespace NINA.Imaging.ViewModel.Imaging {
 
     public class AutoFocusToolVM : DockableVM, ICameraConsumer, IFocuserConsumer, IAutoFocusToolVM {
         private CancellationTokenSource _autoFocusCancelToken;
-        private AsyncObservableCollection<Chart> _chartList;
+        private AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart> _chartList;
         private bool _chartListSelectable;
-        private Chart _selectedChart;
+        private WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart _selectedChart;
         private ApplicationStatus _status;
         private readonly IApplicationStatusMediator applicationStatusMediator;
+        private readonly IPluggableBehaviorSelector<IAutoFocusVMFactory> autoFocusVMFactorySelector;
         private CameraInfo cameraInfo;
         private readonly ICameraMediator cameraMediator;
         private readonly IFilterWheelMediator filterWheelMediator;
@@ -60,7 +64,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
                 IApplicationStatusMediator applicationStatusMediator,
-                BuiltInAutoFocusVMFactory autoFocusVMFactory
+                IPluggableBehaviorSelector<IAutoFocusVMFactory> autoFocusVMFactorySelector
         ) : base(profileService) {
             Title = Loc.Instance["LblAutoFocus"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["AutoFocusSVG"];
@@ -75,13 +79,17 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
 
             this.applicationStatusMediator = applicationStatusMediator;
 
-            this.AutoFocusVM = autoFocusVMFactory.Create();
+            this.autoFocusVMFactorySelector = autoFocusVMFactorySelector;
+            // NOTE: pluggable behavior manager has not been initialized yet, so this will always return the built-in AF factory,
+            // until the first AF run happens. LoadChart depends on this to not be null though. We should move this out to a separate object.
+            // I think you said this already
+            this.AutoFocusVM = autoFocusVMFactorySelector.SelectedBehavior.Create();
 
-            ChartList = new AsyncObservableCollection<Chart>();
+            ChartList = new AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>();
             ChartListSelectable = true;
 
             reportFileWatcher = new FileSystemWatcher() {
-                Path = AutoFocus.AutoFocusVM.ReportDirectory,
+                Path = WPF.Base.ViewModel.AutoFocus.AutoFocusVM.ReportDirectory,
                 NotifyFilter = NotifyFilters.FileName,
                 Filter = "*.json",
                 EnableRaisingEvents = true,
@@ -100,6 +108,11 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                             cameraMediator.RegisterCaptureBlock(this);
                             ChartListSelectable = false;
                             try {
+                                var vm = autoFocusVMFactorySelector.SelectedBehavior.Create();
+                                if (vm.GetType() != AutoFocusVM?.GetType()) {
+                                    AutoFocusVM = vm;
+                                    RaisePropertyChanged(nameof(AutoFocusVM));
+                                }
                                 return await AutoFocusVM.StartAutoFocus(CommandInitialization(), _autoFocusCancelToken.Token, new Progress<ApplicationStatus>(p => Status = p));
                             } finally {
                                 cameraMediator.ReleaseCaptureBlock(this);
@@ -113,11 +126,11 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             SelectionChangedCommand = new AsyncCommand<bool>(LoadChart);
         }
 
-        public IAutoFocusVM AutoFocusVM { get; }
+        public IAutoFocusVM AutoFocusVM { get; private set; }
 
         public ICommand CancelAutoFocusCommand { get; private set; }
 
-        public AsyncObservableCollection<Chart> ChartList {
+        public AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart> ChartList {
             get {
                 return _chartList;
             }
@@ -144,7 +157,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             }
         }
 
-        public Chart SelectedChart {
+        public WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart SelectedChart {
             get => _selectedChart;
             set {
                 _selectedChart = value;
@@ -187,15 +200,15 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
         private object lockobj = new object();
 
         private void InitializeChartList() {
-            var files = Directory.GetFiles(Path.Combine(AutoFocus.AutoFocusVM.ReportDirectory));
-            var l = new SortedSet<Chart>(new ChartComparer());
+            var files = Directory.GetFiles(Path.Combine(WPF.Base.ViewModel.AutoFocus.AutoFocusVM.ReportDirectory));
+            var l = new SortedSet<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>(new WPF.Base.ViewModel.Imaging.AutoFocusToolVM.ChartComparer());
 
             foreach (string file in files) {
-                var item = new Chart(Path.GetFileName(file), file);
+                var item = new WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart(Path.GetFileName(file), file);
                 l.Add(item);
             }
             lock (lockobj) {
-                ChartList = new AsyncObservableCollection<Chart>(l);
+                ChartList = new AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>(l);
                 SelectedChart = ChartList.FirstOrDefault();
             }
             _ = LoadChart();
@@ -203,7 +216,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
 
         private void ReportFileWatcher_Created(object sender, FileSystemEventArgs e) {
             Logger.Debug($"New AutoFocus chart created at {e.FullPath}");
-            var item = new Chart(Path.GetFileName(e.FullPath), e.FullPath);
+            var item = new WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart(Path.GetFileName(e.FullPath), e.FullPath);
 
             lock (lockobj) {
                 ChartList.Insert(0, item);
@@ -224,13 +237,6 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                         _ = LoadChart();
                     }
                 }
-            }
-        }
-
-        public class ChartComparer : IComparer<Chart> {
-
-            public int Compare(Chart x, Chart y) {
-                return string.Compare(x.FilePath, y.FilePath) * -1;
             }
         }
 
@@ -295,17 +301,6 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
 
         public void UpdateUserFocused(FocuserInfo info) {
             ;
-        }
-
-        public class Chart {
-
-            public Chart(string name, string filePath) {
-                this.Name = name;
-                this.FilePath = filePath;
-            }
-
-            public string FilePath { get; set; }
-            public string Name { get; set; }
         }
     }
 }

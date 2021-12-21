@@ -19,7 +19,7 @@ using NINA.Equipment.Equipment.MyFilterWheel;
 using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
-using NINA.WPF.Base.ViewModel.Imaging;
+using NINA.WPF.Base.ViewModel.AutoFocus;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -28,9 +28,9 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
     public interface IAutoFocusToolVM : IDockableVM {
         IAutoFocusVM AutoFocusVM { get; }
         ICommand CancelAutoFocusCommand { get; }
-        AsyncObservableCollection<AutoFocusToolVM.Chart> ChartList { get; set; }
+        AsyncObservableCollection<Base.ViewModel.Imaging.AutoFocusToolVM.Chart> ChartList { get; set; }
         bool ChartListSelectable { get; set; }
-        AutoFocusToolVM.Chart SelectedChart { get; set; }
+        Base.ViewModel.Imaging.AutoFocusToolVM.Chart SelectedChart { get; set; }
         IAsyncCommand StartAutoFocusCommand { get; }
         ApplicationStatus Status { get; set; }
 

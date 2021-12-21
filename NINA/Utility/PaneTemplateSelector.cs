@@ -29,8 +29,7 @@ using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Sequencer;
 using System.Windows;
 using System.Windows.Controls;
-using NINA.WPF.Base.ViewModel.AutoFocus;
-using NINA.WPF.Base.ViewModel.Imaging;
+using NINA.Imaging.ViewModel.Imaging;
 
 namespace NINA.Utility.AvalonDock {
 

@@ -45,7 +45,6 @@ using System.Linq;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
-using NINA.WPF.Base.ViewModel.Imaging;
 using NINA.Plugin.Interfaces;
 using System.Diagnostics;
 using System.Threading;
