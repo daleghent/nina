@@ -141,7 +141,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     var anyCTS = CancellationTokenSource.CreateLinkedTokenSource(_moveCts.Token, ct);
                     using (anyCTS.Token.Register(() => rotator?.Halt())) {
                         await rotator.MoveAbsolute(adjustedTargetPosition, anyCTS.Token);
-                        while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.Position - adjustedTargetPosition) < 359))) {
+                        while (rotator.IsMoving || !Angle.ByDegree(rotator.Position).Equals(Angle.ByDegree(adjustedTargetPosition), Angle.ByDegree(1.0d))) {
                             anyCTS.Token.ThrowIfCancellationRequested();
                             await Task.Delay(TimeSpan.FromSeconds(1));
                             Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {adjustedTargetPosition}");
@@ -192,7 +192,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     var anyCTS = CancellationTokenSource.CreateLinkedTokenSource(_moveCts.Token, ct);
                     using (anyCTS.Token.Register(() => rotator?.Halt())) {
                         await rotator.MoveAbsoluteMechanical(adjustedTargetPosition, anyCTS.Token);
-                        while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) < 359))) {
+                        while (rotator.IsMoving || !Angle.ByDegree(rotator.MechanicalPosition).Equals(Angle.ByDegree(adjustedTargetPosition), Angle.ByDegree(1.0d))) {
                             anyCTS.Token.ThrowIfCancellationRequested();
                             await Task.Delay(waitTime);
                             Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {adjustedTargetPosition}");
