@@ -4864,10 +4864,10 @@
     <value>圆顶回零位</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
-    <value>Slews the dome to an absolute azimuth position</value>
+    <value>将圆顶旋转到指定方位角</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Slew Dome Azimuth</value>
+    <value>转到方位角</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>并行顺序启动指令</value>
@@ -5834,7 +5834,7 @@
     <value>在切换滤镜后调焦器移动，无法恢复导星</value>
   </data>
   <data name="LblMoveFocuserFailed" xml:space="preserve">
-    <value>Failed to move focuser</value>
+    <value>移动电调失败</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>检测到未知的指令！请重新检查您序列中有哪些指令是无效的。此外请确保一切（软硬件驱动等）为最新版本。</value>
@@ -5976,13 +5976,13 @@
     <value>海拔</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
-    <value>Device threads for ASCOM</value>
+    <value>ASCOM 设备专用线程</value>
   </data>
   <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
-    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+    <value>这是一个实验性的设置，可能会提高UI的响应速度，并降低连接到 ASCOM 设备时 UI 停止响应的机率。必须在连接设备前启用此设置才有效果。 如果您使用此功能，请在 Discord 上分享反馈，我们正考虑为所有人启用此功能。</value>
   </data>
   <data name="LblDefault" xml:space="preserve">
-    <value>Default</value>
+    <value>默认</value>
   </data>
   <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
     <value>Flat device cannot control brightness!</value>
