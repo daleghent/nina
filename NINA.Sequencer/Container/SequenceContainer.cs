@@ -69,17 +69,11 @@ namespace NINA.Sequencer.Container {
         [JsonProperty]
         public IList<ISequenceCondition> Conditions { get; protected set; } = new ObservableCollection<ISequenceCondition>();
 
-        public virtual ICommand DropIntoCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
-            DropInSequenceItem(o as DropIntoParameters);
-        });
+        public virtual ICommand DropIntoCommand => new GalaSoft.MvvmLight.Command.RelayCommand<DropIntoParameters>(DropInSequenceItem);
 
-        public ICommand DropIntoConditionsCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
-            DropInSequenceCondition(o as DropIntoParameters);
-        });
+        public ICommand DropIntoConditionsCommand => new GalaSoft.MvvmLight.Command.RelayCommand<DropIntoParameters>(DropInSequenceCondition);
 
-        public ICommand DropIntoTriggersCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
-            DropInSequenceTrigger(o as DropIntoParameters);
-        });
+        public ICommand DropIntoTriggersCommand => new GalaSoft.MvvmLight.Command.RelayCommand<DropIntoParameters>(DropInSequenceTrigger);
 
         [JsonProperty]
         public virtual bool IsExpanded {

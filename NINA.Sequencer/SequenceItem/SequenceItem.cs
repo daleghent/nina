@@ -52,10 +52,10 @@ namespace NINA.Sequencer.SequenceItem {
         public ICommand AddCloneToParentCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => { AddCloneToParent(); ShowMenu = false; });
         public string Category { get; set; }
         public string Description { get; set; }
-        public virtual ICommand DetachCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => Detach());
+        public virtual ICommand DetachCommand => new GalaSoft.MvvmLight.Command.RelayCommand(Detach);
         public GeometryGroup Icon { get; set; }
-        public ICommand MoveDownCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => MoveDown());
-        public ICommand MoveUpCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => MoveUp());
+        public ICommand MoveDownCommand => new GalaSoft.MvvmLight.Command.RelayCommand(MoveDown);
+        public ICommand MoveUpCommand => new GalaSoft.MvvmLight.Command.RelayCommand(MoveUp);
 
         public string Name {
             get => name;

@@ -30,6 +30,8 @@ using NINA.ViewModel.Sequencer;
 using System.Windows;
 using System.Windows.Controls;
 using NINA.Imaging.ViewModel.Imaging;
+using System;
+using NINA.Core.Utility;
 
 namespace NINA.Utility.AvalonDock {
 
@@ -79,6 +81,8 @@ namespace NINA.Utility.AvalonDock {
         public DataTemplate ExposureCalculatorTemplate { get; set; }
 
         public DataTemplate DomeTemplate { get; set; }
+
+        public DataTemplate FailedToLoadTemplate { get; set; }
 
         public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container) {
             switch (item) {
@@ -149,8 +153,14 @@ namespace NINA.Utility.AvalonDock {
                     return SafetyMonitorTemplate;
 
                 default:
-                    if (item != null && Application.Current.Resources.Contains(item.GetType().FullName + "_Dockable")) {
-                        return (DataTemplate)Application.Current.Resources[item.GetType().FullName + "_Dockable"];
+                    var templateKey = item.GetType().FullName + "_Dockable";
+                    if (item != null && Application.Current.Resources.Contains(templateKey)) {
+                        try {
+                            return (DataTemplate)Application.Current.Resources[templateKey];
+                        } catch (Exception ex) {
+                            Logger.Error($"Datatemplate {templateKey} failed to load", ex);
+                            return FailedToLoadTemplate;
+                        }
                     } else {
                         return base.SelectTemplate(item, container);
                     }

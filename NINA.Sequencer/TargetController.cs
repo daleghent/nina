@@ -88,15 +88,17 @@ namespace NINA.Sequencer {
                 activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
             });
 
-            ToggleSortCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(x => {
-                if (SortByRelevance) {
-                    TargetsView.SortDescriptions.RemoveAt(0);
-                    TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Weight), ListSortDirection.Ascending));
-                } else if (SortByName) {
-                    TargetsView.SortDescriptions.RemoveAt(0);
-                    TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Name), ListSortDirection.Ascending));
-                }
-            });
+            ToggleSortCommand = new GalaSoft.MvvmLight.Command.RelayCommand(ToggleSort);
+        }
+
+        private void ToggleSort() {
+            if (SortByRelevance) {
+                TargetsView.SortDescriptions.RemoveAt(0);
+                TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Weight), ListSortDirection.Ascending));
+            } else if (SortByName) {
+                TargetsView.SortDescriptions.RemoveAt(0);
+                TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Name), ListSortDirection.Ascending));
+            }
         }
 
         private bool sortByRelevance;

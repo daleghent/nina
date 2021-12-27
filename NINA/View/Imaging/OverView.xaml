@@ -160,6 +160,16 @@
                         <view:AnchorableExposureTimeRecommendationView />
                     </DataTemplate>
                 </util:PaneTemplateSelector.ExposureCalculatorTemplate>
+
+                <util:PaneTemplateSelector.FailedToLoadTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="Failed to load panel" />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.FailedToLoadTemplate>
             </util:PaneTemplateSelector>
             <ResourceDictionary.MergedDictionaries>
                 <!--  This section is added to help prevent application crashes when RDP is used and the app is rerendered  -->

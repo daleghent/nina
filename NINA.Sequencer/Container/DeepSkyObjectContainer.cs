@@ -67,12 +67,20 @@ namespace NINA.Sequencer.Container {
             this.planetariumFactory = planetariumFactory;
             Task.Run(() => NighttimeData = nighttimeCalculator.Calculate());
             Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon);
-            CoordsToFramingCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => Task.Run(CoordsToFraming));
-            CoordsFromPlanetariumCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => Task.Run(CoordsFromPlanetarium));
+            CoordsToFramingCommand = new GalaSoft.MvvmLight.Command.RelayCommand(SendCoordinatesToFraming);
+            CoordsFromPlanetariumCommand = new GalaSoft.MvvmLight.Command.RelayCommand(GetCoordsFromPlanetarium);
             DropTargetCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(DropTarget);
 
             WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.LocationChanged), ProfileService_LocationChanged);
             WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.HorizonChanged), ProfileService_HorizonChanged);
+        }
+
+        private void SendCoordinatesToFraming() {
+            _ = CoordsToFraming();
+        }
+
+        private void GetCoordsFromPlanetarium() {
+            _ = CoordsFromPlanetarium();
         }
 
         private void ProfileService_HorizonChanged(object sender, EventArgs e) {

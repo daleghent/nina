@@ -85,30 +85,36 @@ namespace NINA.ViewModel.Sequencer {
             AddTemplateCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(AddTemplate);
             AddTargetToControllerCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(AddTargetToController);
             LoadSequenceCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(LoadSequence);
-            SwitchToOverviewCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
+            SwitchToOverviewCommand = new GalaSoft.MvvmLight.Command.RelayCommand(sequenceMediator.SwitchToOverview, IsSimpleSequencerEnabled);
 
-            DetachCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
-                var source = (o as DropIntoParameters)?.Source;
-                source?.Detach();
-                if (source != null) {
-                    if (source is TemplatedSequenceContainer) {
-                        var result = MyMessageBox.Show(string.Format(Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Text"], (source as TemplatedSequenceContainer).Container.Name),
-                            Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
-                        if (result == System.Windows.MessageBoxResult.OK) {
-                            TemplateController.DeleteUserTemplate(source as TemplatedSequenceContainer);
-                        }
-                    }
-                    if (source is TargetSequenceContainer) {
-                        var result = MyMessageBox.Show(string.Format(Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text"], (source as TargetSequenceContainer).Name),
-                            Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
-                        if (result == System.Windows.MessageBoxResult.Yes) {
-                            TargetController.DeleteTarget(source as TargetSequenceContainer);
-                        }
-                    }
-                }
-            });
+            DetachCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(Detach);
             SkipCurrentItemCommand = new AsyncCommand<bool>(SkipCurrentItem);
             SkipToEndOfSequenceCommand = new AsyncCommand<bool>(SkipToEndOfSequence);
+        }
+
+        private bool IsSimpleSequencerEnabled() {
+            return !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer;
+        }
+
+        private void Detach(object o) {
+            var source = (o as DropIntoParameters)?.Source;
+            source?.Detach();
+            if (source != null) {
+                if (source is TemplatedSequenceContainer) {
+                    var result = MyMessageBox.Show(string.Format(Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Text"], (source as TemplatedSequenceContainer).Container.Name),
+                        Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+                    if (result == System.Windows.MessageBoxResult.OK) {
+                        TemplateController.DeleteUserTemplate(source as TemplatedSequenceContainer);
+                    }
+                }
+                if (source is TargetSequenceContainer) {
+                    var result = MyMessageBox.Show(string.Format(Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text"], (source as TargetSequenceContainer).Name),
+                        Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
+                    if (result == System.Windows.MessageBoxResult.Yes) {
+                        TargetController.DeleteTarget(source as TargetSequenceContainer);
+                    }
+                }
+            }
         }
 
         public Task Initialize() {
