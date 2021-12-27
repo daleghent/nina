@@ -71,6 +71,12 @@ namespace NINA.Core.Utility {
             }
         }
 
+        public static string UserAgent {
+            get {
+                return $"{Title} v{Version} {(DllLoader.IsX86() ? "(x86)" : "(x64)")}";
+            }
+        }
+
         public static string GetUniqueFilePath(string fullPath) {
             int count = 1;
 

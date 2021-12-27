@@ -40,6 +40,7 @@ namespace NINA.Core.Utility.Http {
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
             HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(Url);
+            wr.UserAgent = CoreUtil.UserAgent;
             wr.ContentType = "multipart/form-data; boundary=" + boundary;
             wr.Method = "POST";
             wr.Timeout = (int)TimeSpan.FromSeconds(300).TotalMilliseconds;

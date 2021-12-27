@@ -101,7 +101,7 @@ namespace NINA.Astrometry {
 
         private string QueryOnlineData() {
             var webClient = new WebClient();
-            webClient.Headers.Add("User-Agent", "N.I.N.A. Data Import");
+            webClient.Headers.Add("User-Agent", CoreUtil.UserAgent);
             webClient.Headers.Add("Accept", "*/*");
             webClient.Headers.Add("Cache-Control", "no-cache");
             webClient.Headers.Add("Host", "datacenter.iers.org");

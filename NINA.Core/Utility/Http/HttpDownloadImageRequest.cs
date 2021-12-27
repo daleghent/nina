@@ -41,6 +41,7 @@ namespace NINA.Core.Utility.Http {
             using (var client = new WebClient()) {
                 using (ct.Register(() => client.CancelAsync(), useSynchronizationContext: false)) {
                     try {
+                        client.Headers.Add("User-Agent", CoreUtil.UserAgent);
                         client.DownloadProgressChanged += (s, e) => {
                             progress?.Report(e.ProgressPercentage);
                         };

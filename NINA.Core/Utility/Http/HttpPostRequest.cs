@@ -40,6 +40,7 @@ namespace NINA.Core.Utility.Http {
                     request = (HttpWebRequest)WebRequest.Create(Url);
                     request.ContentType = ContentType;
                     request.Method = "POST";
+                    request.UserAgent = CoreUtil.UserAgent;
 
                     using (var streamWriter = new StreamWriter(request.GetRequestStream())) {
                         streamWriter.Write(Body);

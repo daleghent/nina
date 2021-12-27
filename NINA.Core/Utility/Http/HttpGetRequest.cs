@@ -51,6 +51,7 @@ namespace NINA.Core.Utility.Http {
             using (ct.Register(() => request.Abort(), useSynchronizationContext: false)) {
                 try {
                     request = (HttpWebRequest)WebRequest.Create(formattedUrl);
+                    request.UserAgent = CoreUtil.UserAgent;
                     HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
                     request.CachePolicy = noCachePolicy;
 

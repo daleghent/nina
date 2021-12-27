@@ -78,6 +78,7 @@ namespace NINA.Plugin {
                 try {
                     using (WebClient client = new WebClient()) {
                         using (ct.Register(() => client.CancelAsync(), useSynchronizationContext: false)) {
+                            client.Headers.Add("User-Agent", CoreUtil.UserAgent);
                             Logger.Info($"Downloading plugin from {manifest.Installer.URL}");
                             var data = await client.DownloadDataTaskAsync(manifest.Installer.URL);
 

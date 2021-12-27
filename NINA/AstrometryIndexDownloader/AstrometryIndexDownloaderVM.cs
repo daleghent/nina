@@ -117,6 +117,7 @@ namespace NINA.AstrometryIndexDownloader {
             var success = false;
             using (var client = new WebClient()) {
                 try {
+                    client.Headers.Add("User-Agent", CoreUtil.UserAgent);
                     await client.DownloadFileTaskAsync(url, _destinationfolder + file.Name);
                     success = true;
                 } catch (WebException ex) {
