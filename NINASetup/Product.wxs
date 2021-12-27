@@ -459,9 +459,6 @@
 			<Component Win64="$(var.Win64)" Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C">
 				<File Id="Fastenshtein.dll" Name="Fastenshtein.dll" Source="$(var.NINA_TargetDir)Fastenshtein.dll" />
 			</Component>
-			<Component Win64="$(var.Win64)" Id="Microsoft.Expression.Interactions.dll" Guid="910f12b3-7310-493b-8ccd-0332a42f3a7c">
-				<File Id="Microsoft.Expression.Interactions.dll" Name="Microsoft.Expression.Interactions.dll" Source="$(var.NINA_TargetDir)Microsoft.Expression.Interactions.dll" />
-			</Component>
 			<Component Win64="$(var.Win64)" Id="Microsoft.Threading.Tasks.dll" Guid="a09131a8-9914-48ec-b5c8-42f9813e4998">
 				<File Id="Microsoft.Threading.Tasks.dll" Name="Microsoft.Threading.Tasks.dll" Source="$(var.NINA_TargetDir)Microsoft.Threading.Tasks.dll" />
 			</Component>
