@@ -19,7 +19,7 @@
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
     <DataTemplate DataType="{x:Type local:Annotation}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <TextBox Text="{Binding Text, Mode=TwoWay}" />
             </view:SequenceBlockView.SequenceItemContent>
@@ -31,7 +31,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:MessageBox}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:WaitForTimeSpan}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelay}" />
@@ -86,7 +86,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:WaitForTime}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
 
@@ -183,7 +183,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:ExternalScript}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -221,7 +221,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:WaitForAltitude}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -366,7 +366,7 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:WaitForMoonAltitude}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -414,7 +414,7 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:WaitForSunAltitude}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -448,7 +448,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:WaitUntilAboveHorizon}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
 

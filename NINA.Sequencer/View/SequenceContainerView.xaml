@@ -16,7 +16,7 @@
     xmlns:converter="clr-namespace:NINA.View.Sequencer.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dragdrop="clr-namespace:NINA.Sequencer.DragDrop"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View.Sequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
@@ -46,20 +46,21 @@
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Expander.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Button.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.Sequencer;component/Resources/Styles/ProgressStyle.xaml" />
+                <wpfutil:SharedResourceDictionary>
+                    <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
+                    <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
+                </wpfutil:SharedResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentPresenter x:Name="Content" Content="{Binding}">
         <ContentPresenter.Resources>
-            <utility:BindingProxy x:Key="Context" Data="{Binding}" />
             <utility:BindingProxy x:Key="ViewModel" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SequenceView}}, Path=DataContext}" />
             <CollectionViewSource x:Key="GroupedItems" Source="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Items}">
                 <CollectionViewSource.GroupDescriptions>
                     <PropertyGroupDescription PropertyName="Category" />
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
-            <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
-            <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
 
             <Border
                 x:Key="MenuHeader"
@@ -104,10 +105,9 @@
                                 ItemsSource="{Binding Items}">
                                 <MenuItem.ItemContainerStyle>
                                     <Style TargetType="MenuItem">
+                                        <EventSetter Event="Click" Handler="MenuItemInstruction_Click" />
                                         <Setter Property="Header" Value="{StaticResource MenuHeader}" />
                                         <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
-                                        <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
-                                        <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                     </Style>
                                 </MenuItem.ItemContainerStyle>
                             </MenuItem>
@@ -275,7 +275,7 @@
                     IsHitTestVisible="True"
                     Style="{StaticResource SequenceContainerExpander}">
                     <i:Interaction.Behaviors>
-                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="{Binding DropIntoCommand}" />
+                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropIntoCommand" />
                         <behaviors:DragOverBehavior
                             AllowDragCenter="False"
                             DragAboveSize="25"
@@ -320,6 +320,7 @@
                                 HorizontalAlignment="Stretch"
                                 Background="{StaticResource SecondaryBackgroundBrush}">
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
                                     <Button
                                         x:Name="TargetContainerButton"
                                         Width="25"
@@ -327,8 +328,7 @@
                                         Margin="25,0,0,0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Command="{Binding Path=Data.AddTargetToControllerCommand, Source={StaticResource ViewModel}}"
-                                        CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}">
+                                        Click="TargetContainerButton_Click">
                                         <Grid>
                                             <Path
                                                 Margin="5"
@@ -360,8 +360,7 @@
                                         Margin="25,0,0,0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Command="{Binding Path=Data.AddTemplateCommand, Source={StaticResource ViewModel}}"
-                                        CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}"
+                                        Click="TemplateContainerButton_Click"
                                         Style="{StaticResource SecondaryBackgroundButton}">
                                         <Grid>
                                             <Path
@@ -532,7 +531,7 @@
                                                     Visibility="{Binding Converter={StaticResource StrategyEvaluatesConditionsAndTriggersToVisibilityConverter}}">
                                                     <i:Interaction.Behaviors>
                                                         <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddTrigger}" DragOverDisplayAnchor="Right" />
-                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Trigger.SequenceTrigger" OnDropCommand="{Binding Source={StaticResource Context}, Path=Data.DropIntoTriggersCommand}" />
+                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Trigger.SequenceTrigger" OnDropCommand="DropIntoTriggersCommand" />
                                                     </i:Interaction.Behaviors>
                                                     <GroupBox.Header>
                                                         <Grid>
@@ -551,6 +550,7 @@
                                                                     Stretch="Uniform" />
                                                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTriggers}" />
                                                             </StackPanel>
+
                                                             <Button
                                                                 x:Name="AddTriggerButton"
                                                                 Grid.Column="1"
@@ -587,10 +587,9 @@
                                                                                 <ContextMenu ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Triggers}">
                                                                                     <ContextMenu.ItemContainerStyle>
                                                                                         <Style TargetType="MenuItem">
+                                                                                            <EventSetter Event="Click" Handler="MenuItemTrigger_Click" />
                                                                                             <Setter Property="Header" Value="{StaticResource MenuHeader}" />
                                                                                             <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
-                                                                                            <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoTriggersCommand}" />
-                                                                                            <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                                                                         </Style>
                                                                                     </ContextMenu.ItemContainerStyle>
                                                                                 </ContextMenu>
@@ -609,7 +608,7 @@
                                                         <ItemsControl.Resources>
                                                             <ResourceDictionary>
                                                                 <DataTemplate DataType="{x:Type seqTrig:SequenceTrigger}">
-                                                                    <local:SequenceBlockView DataContext="{Binding}" />
+                                                                    <local:SequenceBlockView />
                                                                 </DataTemplate>
                                                             </ResourceDictionary>
                                                         </ItemsControl.Resources>
@@ -647,6 +646,7 @@
                                                                     Stretch="Uniform" />
                                                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc Lbl_SequenceContainer_Conditions_Header}" />
                                                             </StackPanel>
+
                                                             <Button
                                                                 x:Name="AddConditionButton"
                                                                 Grid.Column="1"
@@ -683,10 +683,9 @@
                                                                                 <ContextMenu ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Conditions}">
                                                                                     <ContextMenu.ItemContainerStyle>
                                                                                         <Style TargetType="MenuItem">
+                                                                                            <EventSetter Event="Click" Handler="MenuItemCondition_Click" />
                                                                                             <Setter Property="Header" Value="{StaticResource MenuHeader}" />
                                                                                             <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
-                                                                                            <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoConditionsCommand}" />
-                                                                                            <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                                                                         </Style>
                                                                                     </ContextMenu.ItemContainerStyle>
                                                                                 </ContextMenu>
@@ -699,7 +698,7 @@
                                                     </GroupBox.Header>
                                                     <i:Interaction.Behaviors>
                                                         <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddCondition}" DragOverDisplayAnchor="Right" />
-                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Conditions.SequenceCondition" OnDropCommand="{Binding Source={StaticResource Context}, Path=Data.DropIntoConditionsCommand}" />
+                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Conditions.SequenceCondition" OnDropCommand="DropIntoConditionsCommand" />
                                                     </i:Interaction.Behaviors>
                                                     <ItemsControl
                                                         Margin="0,0,0,0"
@@ -709,7 +708,7 @@
                                                         <ItemsControl.Resources>
                                                             <ResourceDictionary>
                                                                 <DataTemplate DataType="{x:Type seqCond:SequenceCondition}">
-                                                                    <local:SequenceBlockView DataContext="{Binding}" />
+                                                                    <local:SequenceBlockView />
                                                                 </DataTemplate>
                                                             </ResourceDictionary>
                                                         </ItemsControl.Resources>
@@ -746,6 +745,7 @@
                                                     Stretch="Uniform" />
                                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblInstructions}" />
                                             </StackPanel>
+
                                             <Button
                                                 x:Name="AddButton"
                                                 Grid.Column="1"
@@ -794,10 +794,9 @@
                                                                         </MenuItem.Header>
                                                                         <MenuItem.ItemContainerStyle>
                                                                             <Style TargetType="MenuItem">
+                                                                                <EventSetter Event="Click" Handler="MenuItemTemplate_Click" />
                                                                                 <Setter Property="Header" Value="{StaticResource TemplateMenuHeader}" />
                                                                                 <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
-                                                                                <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
-                                                                                <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                                                             </Style>
                                                                         </MenuItem.ItemContainerStyle>
                                                                     </MenuItem>
@@ -805,12 +804,14 @@
                                                                         <MenuItem.Header>
                                                                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargets}" />
                                                                         </MenuItem.Header>
+                                                                        <MenuItem.GroupStyle>
+                                                                            <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
+                                                                        </MenuItem.GroupStyle>
                                                                         <MenuItem.ItemContainerStyle>
                                                                             <Style TargetType="MenuItem">
+                                                                                <EventSetter Event="Click" Handler="MenuItemTarget_Click" />
                                                                                 <Setter Property="Header" Value="{StaticResource MenuHeader}" />
                                                                                 <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
-                                                                                <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
-                                                                                <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                                                             </Style>
                                                                         </MenuItem.ItemContainerStyle>
                                                                     </MenuItem>
@@ -826,7 +827,7 @@
                                         <ItemsControl.Resources>
                                             <ResourceDictionary>
                                                 <DataTemplate DataType="{x:Type seqItem:SequenceItem}">
-                                                    <local:SequenceBlockView DataContext="{Binding}" />
+                                                    <local:SequenceBlockView />
                                                 </DataTemplate>
                                             </ResourceDictionary>
                                         </ItemsControl.Resources>

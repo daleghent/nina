@@ -191,7 +191,7 @@
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
                         Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanSubSample, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                        <view:SubSampleView DataContext="{Binding}" />
+                        <view:SubSampleView />
                     </Border>
 
                     <ninactrl:CancellableButton

@@ -12,7 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:NINA.Sequencer.Behaviors;assembly=NINA.Sequencer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View.Sequencer.AdvancedSequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
@@ -149,7 +149,7 @@
             Background="{StaticResource TertiaryBackgroundBrush}">
             <i:Interaction.Behaviors>
                 <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl_Sequencer_DeleteItem}" DragOverDisplayAnchor="Left" />
-                <behaviors:DropIntoBehavior OnDropCommand="{Binding DetachCommand}" />
+                <behaviors:DropIntoBehavior OnDropCommand="DetachCommand" />
             </i:Interaction.Behaviors>
             <Border.Triggers>
                 <EventTrigger RoutedEvent="MouseEnter">

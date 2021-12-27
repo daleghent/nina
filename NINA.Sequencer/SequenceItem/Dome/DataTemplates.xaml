@@ -27,7 +27,7 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SlewDomeAzimuth}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeAzimuth}" />

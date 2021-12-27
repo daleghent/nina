@@ -52,6 +52,8 @@ using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Sequencer.SequenceItem.Imaging;
+using NINA.Sequencer.Trigger.Autofocus;
 
 namespace NINA.ViewModel.Sequencer {
 
@@ -77,15 +79,15 @@ namespace NINA.ViewModel.Sequencer {
             SequencerFactory = factory;
 
             StartSequenceCommand = new AsyncCommand<bool>(StartSequence, (object o) => cameraMediator.IsFreeToCapture(this));
-            CancelSequenceCommand = new RelayCommand(CancelSequence);
-            SaveAsSequenceCommand = new RelayCommand(SaveAsSequence);
-            SaveSequenceCommand = new RelayCommand(SaveSequence);
-            AddTemplateCommand = new RelayCommand(AddTemplate);
-            AddTargetToControllerCommand = new RelayCommand(AddTargetToController);
-            LoadSequenceCommand = new RelayCommand(LoadSequence);
-            SwitchToOverviewCommand = new RelayCommand((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
+            CancelSequenceCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(CancelSequence);
+            SaveAsSequenceCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(SaveAsSequence);
+            SaveSequenceCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(SaveSequence);
+            AddTemplateCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(AddTemplate);
+            AddTargetToControllerCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(AddTargetToController);
+            LoadSequenceCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(LoadSequence);
+            SwitchToOverviewCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
 
-            DetachCommand = new RelayCommand((o) => {
+            DetachCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
                 var source = (o as DropIntoParameters)?.Source;
                 source?.Detach();
                 if (source != null) {
@@ -122,6 +124,7 @@ namespace NINA.ViewModel.Sequencer {
                     rootContainer.Add(SequencerFactory.GetContainer<TargetAreaContainer>());
                     rootContainer.Add(SequencerFactory.GetContainer<EndAreaContainer>());
                     rootContainer.ClearHasChanged();
+
                     Sequencer = new NINA.Sequencer.Sequencer(
                         rootContainer
                     );

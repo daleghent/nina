@@ -232,7 +232,7 @@
                     <Border
                         Margin="0,5,0,0"
                         BorderThickness="0"
-                        DataContext="{Binding}"
+
                         Visibility="{Binding DoMeridianFlip, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <UniformGrid
                             VerticalAlignment="Center"
@@ -246,7 +246,7 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 HorizontalAlignment="Left"
-                                DataContext="{Binding}"
+
                                 Orientation="Vertical"
                                 Visibility="{Binding EarliestFlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
                                 <TextBlock

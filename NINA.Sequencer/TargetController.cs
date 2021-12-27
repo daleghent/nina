@@ -88,7 +88,7 @@ namespace NINA.Sequencer {
                 activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
             });
 
-            ToggleSortCommand = new RelayCommand(x => {
+            ToggleSortCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(x => {
                 if (SortByRelevance) {
                     TargetsView.SortDescriptions.RemoveAt(0);
                     TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Weight), ListSortDirection.Ascending));

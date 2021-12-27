@@ -933,8 +933,7 @@
 
                         <local:CameraCoolingChartsView
                             Grid.Row="1"
-                            Margin="5"
-                            DataContext="{Binding}" />
+                            Margin="5" />
                     </Grid>
                 </GroupBox>
             </Grid>

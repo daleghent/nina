@@ -40,7 +40,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public System.Windows.Input.ICommand OpenDialogCommand { get; private set; }
 
         public ExternalScript() {
-            OpenDialogCommand = new RelayCommand((object o) => {
+            OpenDialogCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>((object o) => {
                 Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
                 dialog.Title = Loc.Instance["Lbl_SequenceItem_Utility_ExternalScript_Name"];
                 dialog.FileName = "";

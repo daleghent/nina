@@ -50,9 +50,6 @@
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" />
-        <local:SequenceSidebar
-            Grid.Column="2"
-            Margin="2.5,0,0,0"
-            DataContext="{Binding}" />
+        <local:SequenceSidebar Grid.Column="2" Margin="2.5,0,0,0" />
     </Grid>
 </UserControl>

@@ -23,7 +23,7 @@
     xmlns:view="clr-namespace:NINA.View.Sequencer">
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.MeridianFlip.MeridianFlipTrigger_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel
                     HorizontalAlignment="Right"
@@ -48,7 +48,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type mf:MeridianFlipTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemProgressContent>
                 <StackPanel
                     HorizontalAlignment="Right"
@@ -73,7 +73,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterHFRIncreaseTrigger_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -98,7 +98,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type af:AutofocusAfterHFRIncreaseTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize}" />
@@ -164,7 +164,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterFilterChange_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -178,7 +178,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type af:AutofocusAfterFilterChange}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -192,7 +192,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterTemperatureChangeTrigger_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelta}" />
@@ -209,7 +209,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type af:AutofocusAfterTemperatureChangeTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAmount}" />
@@ -239,7 +239,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterTimeTrigger_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblElapsed}" />
@@ -256,7 +256,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type af:AutofocusAfterTimeTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAmount}" />
@@ -286,7 +286,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterExposures_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
@@ -302,7 +302,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type af:AutofocusAfterExposures}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAfterExposures}" />
@@ -329,7 +329,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Guider.DitherAfterExposures_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
@@ -345,7 +345,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type g:DitherAfterExposures}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAfterExposures}" />
@@ -372,7 +372,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Dome.SynchronizeDomeTrigger_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{Binding CurrentAzimuth, StringFormat={}{0:0.00}}" />
@@ -385,7 +385,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type d:SynchronizeDomeTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -409,11 +409,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type g:RestoreGuiding}">
-        <view:SequenceBlockView DataContext="{Binding}" />
+        <view:SequenceBlockView />
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Platesolving.CenterAfterDriftTrigger_Mini">
-        <mini:MiniTrigger DataContext="{Binding}">
+        <mini:MiniTrigger>
             <mini:MiniTrigger.TriggerProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDistance}" />
@@ -429,7 +429,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type p:CenterAfterDriftTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
@@ -505,6 +505,6 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:SequenceTrigger}">
-        <view:SequenceBlockView DataContext="{Binding}" />
+        <view:SequenceBlockView />
     </DataTemplate>
 </ResourceDictionary>

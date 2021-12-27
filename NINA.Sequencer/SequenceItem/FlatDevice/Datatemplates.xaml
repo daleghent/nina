@@ -28,7 +28,7 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SetBrightness}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceBrightness}" />
@@ -42,7 +42,7 @@
         </view:SequenceBlockView>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:ToggleLight}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding OnOff}" />
@@ -84,7 +84,7 @@
     </DataTemplate>
 
     <ControlTemplate x:Key="TrainedFlatExposureTemplate">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <WrapPanel Orientation="Horizontal">
                     <WrapPanel DataContext="{Binding Items[4]}" Orientation="Horizontal">

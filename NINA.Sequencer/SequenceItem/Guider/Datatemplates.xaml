@@ -15,7 +15,7 @@
     xmlns:view="clr-namespace:NINA.View.Sequencer">
 
     <DataTemplate DataType="{x:Type local:StartGuiding}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblForceGuidingCalibration}" />

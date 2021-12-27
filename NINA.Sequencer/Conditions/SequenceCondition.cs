@@ -59,7 +59,7 @@ namespace NINA.Sequencer.Conditions {
         [JsonProperty]
         public ISequenceContainer Parent { get; set; }
 
-        public ICommand ResetProgressCommand => new RelayCommand((o) => { ResetProgress(); ShowMenu = false; });
+        public ICommand ResetProgressCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => { ResetProgress(); ShowMenu = false; });
 
         private bool showMenu;
 
@@ -83,7 +83,7 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
+        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu);
 
         public virtual void AfterParentChanged() {
         }
@@ -147,7 +147,7 @@ namespace NINA.Sequencer.Conditions {
         public virtual void Teardown() {
         }
 
-        public ICommand DetachCommand => new RelayCommand((o) => Detach());
+        public ICommand DetachCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => Detach());
 
         public ICommand MoveUpCommand => null;
 

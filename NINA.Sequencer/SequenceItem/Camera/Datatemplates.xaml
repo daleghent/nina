@@ -27,7 +27,7 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:CoolCamera}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTemperature}" />
@@ -57,7 +57,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:WarmCamera}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
@@ -74,7 +74,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:DewHeater}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding OnOff}" />
@@ -84,7 +84,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:SetReadoutMode}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal" ToolTip="{ns:Loc LblReadoutModeTooltip}">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblReadoutMode}" />

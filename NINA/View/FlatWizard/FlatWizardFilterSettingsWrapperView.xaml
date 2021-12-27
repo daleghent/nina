@@ -33,7 +33,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel DataContext="{Binding}" Orientation="Vertical">
+    <StackPanel  Orientation="Vertical">
 
         <StackPanel.Resources>
             <DataTemplate x:Key="DynamicExposure">
@@ -329,7 +329,7 @@
             </DataTemplate>
         </StackPanel.Resources>
 
-        <ContentControl Content="{Binding}" DataContext="{Binding}">
+        <ContentControl Content="{Binding}">
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <Style.Triggers>

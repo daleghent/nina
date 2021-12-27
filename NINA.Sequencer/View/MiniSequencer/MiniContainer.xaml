@@ -49,10 +49,10 @@
                     </DataTemplate>
 
                     <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
-                        <local:MiniContainer DataContext="{Binding}" />
+                        <local:MiniContainer />
                     </DataTemplate>
                     <DataTemplate x:Key="DeepSkyObjectContainerTemplate" DataType="{x:Type cont:DeepSkyObjectContainer}">
-                        <local:MiniContainer DataContext="{Binding}" />
+                        <local:MiniContainer />
                     </DataTemplate>
                     <local:MiniSequencerDataTemplateSelector
                         x:Key="TemplateSelector"
@@ -65,7 +65,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid DataContext="{Binding}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition />

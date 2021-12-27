@@ -13,7 +13,7 @@
     xmlns:alt="clr-namespace:NINA.WPF.Base.View;assembly=NINA.WPF.Base"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
@@ -604,7 +604,7 @@
                         Header="{ns:Loc LblAltitude}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <alt:AltitudeChart DataContext="{Binding}" NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                                <alt:AltitudeChart  NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

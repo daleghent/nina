@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
@@ -371,12 +371,14 @@ namespace NINA.Sequencer.Behaviors {
             //if (!(AssociatedObject.DataContext is IDroppable) && !(AssociatedObject is DragDropAdorner)) throw new ArgumentException("DragDropBehavior needs to be attached to an IDroppable");
             //Debug.WriteLine("++ DragDropBehavior attached to " + AssociatedObject.GetHashCode());
 
-            AssociatedObject.MouseLeftButtonDown += AssociatedObject_MouseDown;
-            AssociatedObject.MouseLeftButtonUp += AssociatedObject_MouseUp;
-            AssociatedObject.MouseLeave += AssociatedObject_MouseLeave;
-            layoutParent.MouseMove += AssociatedObject_MouseMove;
-            AssociatedObject.MouseEnter += AssociatedObject_MouseEnter;
-            AssociatedObject.MouseWheel += AssociatedObject_MouseWheel;
+            if (AssociatedObject != null) {
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonDown), AssociatedObject_MouseDown);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonUp), AssociatedObject_MouseUp);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeave), AssociatedObject_MouseLeave);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(layoutParent, nameof(layoutParent.MouseMove), AssociatedObject_MouseMove);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseEnter), AssociatedObject_MouseEnter);
+                WeakEventManager<FrameworkElement, MouseWheelEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseWheel), AssociatedObject_MouseWheel);
+            }
             base.OnAttached();
         }
 
@@ -401,12 +403,12 @@ namespace NINA.Sequencer.Behaviors {
             //Debug.WriteLine("-- DragDropBehavior detached from " + AssociatedObject?.GetHashCode());
 
             if (AssociatedObject != null) {
-                AssociatedObject.MouseLeftButtonDown -= AssociatedObject_MouseDown;
-                AssociatedObject.MouseLeftButtonUp -= AssociatedObject_MouseUp;
-                layoutParent.MouseMove -= AssociatedObject_MouseMove;
-                AssociatedObject.MouseWheel -= AssociatedObject_MouseWheel;
-                AssociatedObject.MouseLeave -= AssociatedObject_MouseLeave;
-                AssociatedObject.MouseEnter -= AssociatedObject_MouseEnter;
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonDown), AssociatedObject_MouseDown);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonUp), AssociatedObject_MouseUp);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeave), AssociatedObject_MouseLeave);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(layoutParent, nameof(layoutParent.MouseMove), AssociatedObject_MouseMove);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseEnter), AssociatedObject_MouseEnter);
+                WeakEventManager<FrameworkElement, MouseWheelEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseWheel), AssociatedObject_MouseWheel);
             }
             base.OnDetaching();
         }

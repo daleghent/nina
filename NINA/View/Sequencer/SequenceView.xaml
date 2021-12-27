@@ -297,8 +297,7 @@
             </Grid.Resources>
             <ContentPresenter
                 Content="{Binding ActiveSequencerVM}"
-                ContentTemplateSelector="{StaticResource ContentSelector}"
-                DataContext="{Binding}" />
+                ContentTemplateSelector="{StaticResource ContentSelector}" />
         </Grid>
     </Grid>
 </UserControl>

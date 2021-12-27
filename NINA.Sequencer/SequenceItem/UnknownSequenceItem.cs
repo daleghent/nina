@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.SequenceItem {
 
-    internal class UnknownSequenceItem : SequenceItem, IValidatable {
+    public class UnknownSequenceItem : SequenceItem, IValidatable {
 
         public new string Name {
             get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";

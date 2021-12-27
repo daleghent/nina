@@ -69,15 +69,15 @@ namespace NINA.Sequencer.Container {
         [JsonProperty]
         public IList<ISequenceCondition> Conditions { get; protected set; } = new ObservableCollection<ISequenceCondition>();
 
-        public virtual ICommand DropIntoCommand => new RelayCommand((o) => {
+        public virtual ICommand DropIntoCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
             DropInSequenceItem(o as DropIntoParameters);
         });
 
-        public ICommand DropIntoConditionsCommand => new RelayCommand((o) => {
+        public ICommand DropIntoConditionsCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
             DropInSequenceCondition(o as DropIntoParameters);
         });
 
-        public ICommand DropIntoTriggersCommand => new RelayCommand((o) => {
+        public ICommand DropIntoTriggersCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
             DropInSequenceTrigger(o as DropIntoParameters);
         });
 
@@ -99,7 +99,7 @@ namespace NINA.Sequencer.Container {
         [JsonProperty]
         public IList<ISequenceItem> Items { get; protected set; } = new ObservableCollection<ISequenceItem>();
 
-        public override ICommand ResetProgressCommand => new RelayCommand(
+        public override ICommand ResetProgressCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>(
             (o) => {
                 ResetAll();
                 base.ResetProgressCommand.Execute(o);

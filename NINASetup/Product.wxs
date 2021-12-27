@@ -376,6 +376,7 @@
 					<Directory Id="sv" Name="sv" />
 					<Directory Id="zh_Hans" Name="zh-Hans" />
 					<Directory Id="zh_Hant" Name="zh-Hant" />
+					<Directory Id="Equipment" Name="Equipment" />
 				</Directory>
 			</Directory>
 			<Directory Id="ProgramMenuFolder">
@@ -490,9 +491,6 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="System.Data.SQLite.Linq.dll" Guid="8c51b841-3f92-4f6e-a221-fd92f4bae9d7">
 				<File Id="System.Data.SQLite.Linq.dll" Name="System.Data.SQLite.Linq.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.Linq.dll" />
-			</Component>
-			<Component Win64="$(var.Win64)" Id="System.Windows.Interactivity.dll" Guid="4ec34246-3c17-4858-96cc-fdfb840ea7ef">
-				<File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.NINA_TargetDir)System.Windows.Interactivity.dll" />
 			</Component>
 			<Component Win64="$(var.Win64)" Id="ToastNotifications.Messages.dll" Guid="74b98fb4-f2a9-44d8-8c8b-988b83bf09d4">
 				<File Id="ToastNotifications.Messages.dll" Name="ToastNotifications.Messages.dll" Source="$(var.NINA_TargetDir)ToastNotifications.Messages.dll" />
@@ -679,6 +677,9 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="Serilog.Sinks.Console.dll" Guid="b25c2486-9400-4207-aa84-6cab40ef31c2">
 				<File Id="Serilog.Sinks.Console.dll" Name="Serilog.Sinks.Console.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.Console.dll" />
+			</Component>
+			<Component Win64="$(var.Win64)" Id="Microsoft.Xaml.Behaviors.dll" Guid="69093258-81a8-4474-bdb7-d69732bfc56e">
+				<File Id="Microsoft.Xaml.Behaviors.dll" Name="Microsoft.Xaml.Behaviors.dll" Source="$(var.NINA_TargetDir)Microsoft.Xaml.Behaviors.dll" />
 			</Component>
 			<Component Id="NINA.Astrometry.pdb" Guid="4f23f02d-3dc9-4d2a-b3fb-6aa07fc34319">
 				<File Id="NINA.Astrometry.pdb" Name="NINA.Astrometry.pdb" Source="$(var.NINA_TargetDir)NINA.Astrometry.pdb" />

@@ -18,7 +18,7 @@
     xmlns:view="clr-namespace:NINA.View.Sequencer">
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.TimeSpanCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -35,7 +35,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TimeSpanCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -117,7 +117,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.TimeCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -134,7 +134,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TimeCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox
@@ -241,7 +241,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.LoopCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -260,7 +260,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:LoopCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBox
@@ -289,7 +289,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.LoopWhileUnsafe_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
@@ -306,7 +306,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.SafetyMonitorCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
@@ -322,7 +322,7 @@
         </mini:MiniCondition>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:LoopWhileUnsafe}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <Grid />
             </view:SequenceBlockView.SequenceItemContent>
@@ -341,7 +341,7 @@
         </view:SequenceBlockView>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SafetyMonitorCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <Grid />
             </view:SequenceBlockView.SequenceItemContent>
@@ -361,7 +361,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.AltitudeCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -382,7 +382,7 @@
         </mini:MiniCondition>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:AltitudeCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -524,7 +524,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.MoonAltitudeCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -551,7 +551,7 @@
         </mini:MiniCondition>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:MoonAltitudeCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -605,7 +605,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.MoonIlluminationCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -632,7 +632,7 @@
         </mini:MiniCondition>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:MoonIlluminationCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -686,7 +686,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.SunAltitudeCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -713,7 +713,7 @@
         </mini:MiniCondition>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SunAltitudeCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -767,7 +767,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NINA.Sequencer.Conditions.AboveHorizonCondition_Mini">
-        <mini:MiniCondition DataContext="{Binding}">
+        <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
@@ -788,7 +788,7 @@
         </mini:MiniCondition>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:AboveHorizonCondition}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOffset}" />

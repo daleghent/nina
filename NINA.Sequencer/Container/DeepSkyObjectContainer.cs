@@ -34,6 +34,7 @@ using NINA.Core.Locale;
 using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using System.Windows;
 
 namespace NINA.Sequencer.Container {
 
@@ -66,17 +67,20 @@ namespace NINA.Sequencer.Container {
             this.planetariumFactory = planetariumFactory;
             Task.Run(() => NighttimeData = nighttimeCalculator.Calculate());
             Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon);
-            CoordsToFramingCommand = new AsyncCommand<bool>(() => Task.Run(CoordsToFraming));
-            CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
-            DropTargetCommand = new RelayCommand(DropTarget);
+            CoordsToFramingCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => Task.Run(CoordsToFraming));
+            CoordsFromPlanetariumCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => Task.Run(CoordsFromPlanetarium));
+            DropTargetCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(DropTarget);
 
-            profileService.LocationChanged += (object sender, EventArgs e) => {
-                Target?.SetPosition(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
-            };
+            WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.LocationChanged), ProfileService_LocationChanged);
+            WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.HorizonChanged), ProfileService_HorizonChanged);
+        }
 
-            profileService.HorizonChanged += (object sender, EventArgs e) => {
-                Target?.DeepSkyObject?.SetCustomHorizon(profileService.ActiveProfile.AstrometrySettings.Horizon);
-            };
+        private void ProfileService_HorizonChanged(object sender, EventArgs e) {
+            Target?.DeepSkyObject?.SetCustomHorizon(profileService.ActiveProfile.AstrometrySettings.Horizon);
+        }
+
+        private void ProfileService_LocationChanged(object sender, EventArgs e) {
+            Target?.SetPosition(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
         }
 
         private void DropTarget(object obj) {
@@ -106,11 +110,11 @@ namespace NINA.Sequencer.Container {
             get => target;
             set {
                 if (Target != null) {
-                    Target.CoordinatesChanged -= Target_OnCoordinatesChanged;
+                    WeakEventManager<InputTarget, EventArgs>.RemoveHandler(Target, nameof(Target.CoordinatesChanged), Target_OnCoordinatesChanged);
                 }
                 target = value;
                 if (Target != null) {
-                    Target.CoordinatesChanged += Target_OnCoordinatesChanged;
+                    WeakEventManager<InputTarget, EventArgs>.AddHandler(Target, nameof(Target.CoordinatesChanged), Target_OnCoordinatesChanged);
                 }
                 RaisePropertyChanged();
             }

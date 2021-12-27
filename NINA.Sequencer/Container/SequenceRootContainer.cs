@@ -49,7 +49,7 @@ namespace NINA.Sequencer.Container {
         public SequenceRootContainer() : base(new SequentialStrategy()) {
         }
 
-        public override ICommand ResetProgressCommand => new RelayCommand(
+        public override ICommand ResetProgressCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>(
             (o) => {
                 if (MyMessageBox.Show(Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt"], Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
                     base.ResetProgressCommand.Execute(o);
@@ -57,7 +57,7 @@ namespace NINA.Sequencer.Container {
             }
         );
 
-        public override ICommand DetachCommand => new RelayCommand(
+        public override ICommand DetachCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>(
             (o) => {
                 if (MyMessageBox.Show(Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt"], Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ClearCaption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
                     foreach (var trigger in GetTriggersSnapshot()) {
@@ -67,6 +67,7 @@ namespace NINA.Sequencer.Container {
                     ClearContainer(Items[0] as ISequenceContainer);
                     ClearContainer(Items[1] as ISequenceContainer);
                     ClearContainer(Items[2] as ISequenceContainer);
+                    GC.Collect(2);
                 }
             }
         );
@@ -100,7 +101,7 @@ namespace NINA.Sequencer.Container {
             }
         }
 
-        public override ICommand DropIntoCommand => new RelayCommand((o) => {
+        public override ICommand DropIntoCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => {
             (Items[1] as TargetAreaContainer).DropIntoCommand.Execute(o);
         });
 

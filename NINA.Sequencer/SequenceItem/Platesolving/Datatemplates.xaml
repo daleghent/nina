@@ -16,7 +16,7 @@
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
     <DataTemplate DataType="{x:Type local:Center}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel
                     DataContext="{Binding Coordinates}"
@@ -115,7 +115,7 @@
         </view:SequenceBlockView>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:CenterAndRotate}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding Inherited, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                     <StackPanel DataContext="{Binding Coordinates}" Orientation="Horizontal">
@@ -240,7 +240,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:SolveAndRotate}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock

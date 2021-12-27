@@ -13,7 +13,7 @@
     xmlns:alt="clr-namespace:NINA.WPF.Base.View;assembly=NINA.WPF.Base"
     xmlns:behaviors="clr-namespace:NINA.Sequencer.Behaviors"
     xmlns:converter="clr-namespace:NINA.View.Sequencer.Converter"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.Sequencer.Container"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
@@ -128,7 +128,7 @@
                         </DockPanel>
                         <i:Interaction.Behaviors>
                             <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                            <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.TargetSequenceContainer" OnDropCommand="{Binding DropTargetCommand}" />
+                            <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropTargetCommand" />
                         </i:Interaction.Behaviors>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -145,7 +145,7 @@
     </Style>
 
     <DataTemplate DataType="{x:Type local:ParallelContainer}">
-        <view:SequenceContainerView DataContext="{Binding}">
+        <view:SequenceContainerView>
             <view:SequenceContainerView.SequenceContainerContent>
                 <TextBlock
                     Margin="5,5,0,0"
@@ -157,13 +157,10 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:DeepSkyObjectContainer}">
-        <view:SequenceContainerView DataContext="{Binding}">
+        <view:SequenceContainerView>
             <view:SequenceContainerView.SequenceContainerContent>
                 <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,2">
                     <ninactrl:DetachingExpander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
-                        <ninactrl:DetachingExpander.Resources>
-                            <util:BindingProxy x:Key="DataContext" Data="{Binding}" />
-                        </ninactrl:DetachingExpander.Resources>
                         <ninactrl:DetachingExpander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Border MinHeight="25">
@@ -463,7 +460,7 @@
         </view:SequenceContainerView>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SequenceContainer}">
-        <view:SequenceContainerView DataContext="{Binding}" />
+        <view:SequenceContainerView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TargetAreaContainer}">
@@ -510,7 +507,7 @@
 
                 <i:Interaction.Behaviors>
                     <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="{Binding DropIntoCommand}" />
+                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropIntoCommand" />
                 </i:Interaction.Behaviors>
             </Grid>
         </Border>
@@ -528,7 +525,7 @@
                 Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
             <i:Interaction.Behaviors>
                 <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="{Binding DropIntoCommand}" />
+                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
             </i:Interaction.Behaviors>
         </Grid>
     </DataTemplate>
@@ -544,12 +541,12 @@
                 Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
             <i:Interaction.Behaviors>
                 <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="{Binding DropIntoCommand}" />
+                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
             </i:Interaction.Behaviors>
         </Grid>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:UnknownSequenceContainer}">
-        <view:SequenceBlockView DataContext="{Binding}" />
+        <view:SequenceBlockView />
     </DataTemplate>
 </ResourceDictionary>

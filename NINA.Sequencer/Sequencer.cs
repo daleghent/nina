@@ -40,6 +40,7 @@ using NINA.Sequencer.Serialization;
 using NINA.Sequencer.Validations;
 using NINA.Core.MyMessageBox;
 using NINA.Core.Locale;
+using NINA.Sequencer.SequenceItem;
 
 namespace NINA.Sequencer {
 

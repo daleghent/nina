@@ -18,12 +18,16 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Media;
 
 namespace NINA.Sequencer.Behaviors {
 
     public class DragOverBehavior : Behavior<FrameworkElement> {
+
+        public DragOverBehavior() {
+        }
+
         public static readonly DependencyProperty DragBelowSizeProperty = DependencyProperty.Register(nameof(DragBelowSize), typeof(double), typeof(DragOverBehavior), new PropertyMetadata(0d));
         public static readonly DependencyProperty AllowDragCenterProperty = DependencyProperty.Register(nameof(AllowDragCenter), typeof(bool), typeof(DragOverBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty DragAboveSizeProperty = DependencyProperty.Register(nameof(DragAboveSize), typeof(double), typeof(DragOverBehavior), new PropertyMetadata(0d));
@@ -248,9 +252,9 @@ namespace NINA.Sequencer.Behaviors {
 
         protected override void OnAttached() {
             base.OnAttached();
-            AssociatedObject.MouseMove += MouseInObject;
-            AssociatedObject.MouseEnter += MouseInObject;
-            AssociatedObject.MouseLeave += MouseLeftObject;
+            WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseMove), MouseInObject);
+            WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseEnter), MouseInObject);
+            WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeave), MouseLeftObject);
             dragOverAdorner = null;
         }
 
@@ -258,9 +262,9 @@ namespace NINA.Sequencer.Behaviors {
             base.OnDetaching();
 
             if (AssociatedObject != null) {
-                AssociatedObject.MouseMove -= MouseInObject;
-                AssociatedObject.MouseEnter -= MouseInObject;
-                AssociatedObject.MouseLeave -= MouseLeftObject;
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseMove), MouseInObject);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseEnter), MouseInObject);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeave), MouseLeftObject);
             }
         }
 
@@ -279,8 +283,16 @@ namespace NINA.Sequencer.Behaviors {
                     var behaviors = Interaction.GetBehaviors(AssociatedObject);
                     var dropIntoBehavior = behaviors.FirstOrDefault(ex => ex is DropIntoBehavior) as DropIntoBehavior;
                     var parent = AssociatedObject as DependencyObject;
-                    while (dropIntoBehavior == null && parent != null) {
+
+                    //prevent infinite loop
+                    var iterations = 0;
+                    var maxIterations = 100;
+                    while (dropIntoBehavior == null && parent != null && iterations < maxIterations) {
+                        iterations++;
                         parent = VisualTreeHelper.GetParent(parent);
+                        if (parent == null) {
+                            break;//the command could not be found
+                        }
                         behaviors = Interaction.GetBehaviors(parent);
                         dropIntoBehavior = behaviors.FirstOrDefault(ex => ex is DropIntoBehavior) as DropIntoBehavior;
                     }

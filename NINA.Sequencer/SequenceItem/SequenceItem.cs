@@ -49,13 +49,13 @@ namespace NINA.Sequencer.SequenceItem {
         private string name;
         private bool showMenu;
         private SequenceEntityStatus status = SequenceEntityStatus.CREATED;
-        public ICommand AddCloneToParentCommand => new RelayCommand((o) => { AddCloneToParent(); ShowMenu = false; });
+        public ICommand AddCloneToParentCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => { AddCloneToParent(); ShowMenu = false; });
         public string Category { get; set; }
         public string Description { get; set; }
-        public virtual ICommand DetachCommand => new RelayCommand((o) => Detach());
+        public virtual ICommand DetachCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => Detach());
         public GeometryGroup Icon { get; set; }
-        public ICommand MoveDownCommand => new RelayCommand((o) => MoveDown());
-        public ICommand MoveUpCommand => new RelayCommand((o) => MoveUp());
+        public ICommand MoveDownCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => MoveDown());
+        public ICommand MoveUpCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => MoveUp());
 
         public string Name {
             get => name;
@@ -92,7 +92,7 @@ namespace NINA.Sequencer.SequenceItem {
             }
         }
 
-        public virtual ICommand ResetProgressCommand => new RelayCommand((o) => { ResetProgressCascaded(); ShowMenu = false; });
+        public virtual ICommand ResetProgressCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => { ResetProgressCascaded(); ShowMenu = false; });
 
         public bool ShowMenu {
             get => showMenu;
@@ -102,7 +102,7 @@ namespace NINA.Sequencer.SequenceItem {
             }
         }
 
-        public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
+        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu);
 
         public SequenceEntityStatus Status {
             get => status;

@@ -70,13 +70,13 @@
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.Resources>
                 <DataTemplate x:Key="Eagle">
-                    <switch:Eagle DataContext="{Binding}" />
+                    <switch:Eagle />
                 </DataTemplate>
                 <DataTemplate x:Key="Generic">
                     <switch:Generic />
                 </DataTemplate>
                 <DataTemplate x:Key="UltimatePowerBoxV2">
-                    <switch:PegasusAstroUltimatePowerboxV2 DataContext="{Binding}" />
+                    <switch:PegasusAstroUltimatePowerboxV2 />
                 </DataTemplate>
                 <switch:SwitchHubTemplateSelector
                     x:Key="ContentSelector"

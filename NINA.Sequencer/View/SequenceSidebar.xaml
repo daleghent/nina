@@ -14,7 +14,7 @@
     xmlns:behaviors="clr-namespace:NINA.Sequencer.Behaviors"
     xmlns:cont="clr-namespace:NINA.Sequencer.Container"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View.Sequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
@@ -156,8 +156,7 @@
                                     <Border
                                         MinHeight="30"
                                         HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent"
-                                        DataContext="{Binding}">
+                                        BorderBrush="Transparent">
                                         <Grid
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Stretch"
@@ -212,8 +211,7 @@
                                     <Border
                                         MinHeight="30"
                                         HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent"
-                                        DataContext="{Binding}">
+                                        BorderBrush="Transparent">
                                         <Grid
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Stretch"
@@ -277,8 +275,7 @@
                                     <Border
                                         MinHeight="30"
                                         HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent"
-                                        DataContext="{Binding}">
+                                        BorderBrush="Transparent">
                                         <Grid
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Stretch"
@@ -342,8 +339,7 @@
                                     <Border
                                         MinHeight="30"
                                         HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent"
-                                        DataContext="{Binding}">
+                                        BorderBrush="Transparent">
                                         <Grid
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Stretch"
@@ -523,7 +519,7 @@
                                                 Template="{StaticResource DownExpander}">
                                                 <ninactrl:DetachingExpander.Resources>
                                                     <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
-                                                        <Grid DataContext="{Binding}">
+                                                        <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition />
                                                                 <RowDefinition />
@@ -554,7 +550,7 @@
                                                         </Grid>
                                                     </DataTemplate>
                                                     <DataTemplate x:Key="DeepSkyObjectContainerTemplate" DataType="{x:Type cont:DeepSkyObjectContainer}">
-                                                        <Grid DataContext="{Binding}">
+                                                        <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition />
                                                                 <RowDefinition />
@@ -584,7 +580,7 @@
                                                         </Grid>
                                                     </DataTemplate>
                                                     <DataTemplate x:Key="SequenceItemTemplate" DataType="{x:Type sequenceItem:SequenceItem}">
-                                                        <Grid DataContext="{Binding}">
+                                                        <Grid>
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="20" />
                                                                 <ColumnDefinition />
@@ -681,7 +677,7 @@
                     </ScrollViewer>
                     <i:Interaction.Behaviors>
                         <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddTemplate}" DragOverDisplayAnchor="Left" />
-                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.SequenceContainer" OnDropCommand="{Binding AddTemplateCommand}" />
+                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.SequenceContainer" OnDropCommand="AddTemplateCommand" />
                     </i:Interaction.Behaviors>
                 </Grid>
             </util:DeferredContent.Content>
@@ -895,7 +891,7 @@
                     </ScrollViewer>
                     <i:Interaction.Behaviors>
                         <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl_Sequencer_TargetSidebar_DragOver_AddTarget}" DragOverDisplayAnchor="Left" />
-                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.IDeepSkyObjectContainer" OnDropCommand="{Binding AddTargetToControllerCommand}" />
+                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.IDeepSkyObjectContainer" OnDropCommand="AddTargetToControllerCommand" />
                     </i:Interaction.Behaviors>
                 </Grid>
             </util:DeferredContent.Content>

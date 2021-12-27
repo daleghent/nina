@@ -74,7 +74,7 @@ namespace NINA.Sequencer.Trigger {
             }
         }
 
-        public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
+        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu);
 
         [JsonProperty]
         public ISequenceContainer Parent { get; set; }
@@ -166,7 +166,7 @@ namespace NINA.Sequencer.Trigger {
         public virtual void Teardown() {
         }
 
-        public ICommand DetachCommand => new RelayCommand((o) => Detach());
+        public ICommand DetachCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => Detach());
 
         public ICommand MoveUpCommand => null;
 

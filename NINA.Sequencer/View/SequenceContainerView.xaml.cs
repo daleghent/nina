@@ -13,6 +13,13 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Utility;
+using NINA.Sequencer;
+using NINA.Sequencer.Conditions;
+using NINA.Sequencer.Container;
+using NINA.Sequencer.DragDrop;
+using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Trigger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +64,100 @@ namespace NINA.View.Sequencer {
         public bool ShowDetails {
             get { return (bool)GetValue(ShowDetailsProperty); }
             set { SetValue(ShowDetailsProperty, value); }
+        }
+
+        private void MenuItemTarget_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is TargetSequenceContainer target) {
+                    if (this.DataContext is SequenceContainer container) {
+                        var p = new DropIntoParameters(target as IDroppable);
+                        p.Position = DropTargetEnum.Center;
+                        container.DropIntoCommand.Execute(p);
+                    }
+                }
+            }
+        }
+
+        private void MenuItemTemplate_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is TemplatedSequenceContainer template) {
+                    if (this.DataContext is SequenceContainer container) {
+                        var p = new DropIntoParameters(template as IDroppable);
+                        p.Position = DropTargetEnum.Center;
+                        container.DropIntoCommand.Execute(p);
+                    }
+                }
+            }
+        }
+
+        private void MenuItemInstruction_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is ISequenceItem item) {
+                    if (this.DataContext is SequenceContainer container) {
+                        var p = new DropIntoParameters(item as IDroppable);
+                        p.Position = DropTargetEnum.Center;
+                        container.DropIntoCommand.Execute(p);
+                    }
+                }
+            }
+        }
+
+        private void MenuItemTrigger_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is ISequenceTrigger item) {
+                    if (this.DataContext is SequenceContainer container) {
+                        var p = new DropIntoParameters(item as IDroppable);
+                        p.Position = DropTargetEnum.Center;
+                        container.DropIntoTriggersCommand.Execute(p);
+                    }
+                }
+            }
+        }
+
+        private void MenuItemCondition_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is ISequenceCondition item) {
+                    if (this.DataContext is SequenceContainer container) {
+                        var p = new DropIntoParameters(item as IDroppable);
+                        p.Position = DropTargetEnum.Center;
+                        container.DropIntoConditionsCommand.Execute(p);
+                    }
+                }
+            }
+        }
+
+        private void TemplateContainerButton_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is ISequenceContainer container) {
+                    if (Content.Resources["ViewModel"] is BindingProxy proxy) {
+                        var prop = proxy.Data.GetType().GetProperty("AddTemplateCommand");
+
+                        var value = prop.GetValue(proxy.Data) as ICommand;
+                        if (value != null) {
+                            var p = new DropIntoParameters(container as IDroppable);
+                            p.Position = DropTargetEnum.Center;
+                            value.Execute(p);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void TargetContainerButton_Click(object sender, RoutedEventArgs e) {
+            if (sender is Control ctrl) {
+                if (ctrl.DataContext is IDeepSkyObjectContainer container) {
+                    if (Content.Resources["ViewModel"] is BindingProxy proxy) {
+                        var prop = proxy.Data.GetType().GetProperty("AddTargetToControllerCommand");
+
+                        var value = prop.GetValue(proxy.Data) as ICommand;
+                        if (value != null) {
+                            var p = new DropIntoParameters(container as IDroppable);
+                            p.Position = DropTargetEnum.Center;
+                            value.Execute(p);
+                        }
+                    }
+                }
+            }
         }
     }
 }

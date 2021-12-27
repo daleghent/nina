@@ -20,12 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 
 namespace NINA.Sequencer.Behaviors {
 
     public class DropIntoBehavior : Behavior<UIElement> {
-        public static readonly DependencyProperty OnDropCommandProperty = DependencyProperty.Register(nameof(OnDropCommand), typeof(ICommand), typeof(DropIntoBehavior));
+        public static readonly DependencyProperty OnDropCommandProperty = DependencyProperty.Register(nameof(OnDropCommand), typeof(string), typeof(DropIntoBehavior));
 
         public static readonly DependencyProperty AllowedDragDropTypesProperty = DependencyProperty.Register(nameof(AllowedDragDropTypesString),
             typeof(string), typeof(DropIntoBehavior));
@@ -57,9 +57,9 @@ namespace NINA.Sequencer.Behaviors {
             }
         }
 
-        public ICommand OnDropCommand {
+        public string OnDropCommand {
             get {
-                return (ICommand)GetValue(OnDropCommandProperty);
+                return (string)GetValue(OnDropCommandProperty);
             }
 
             set {
@@ -90,7 +90,18 @@ namespace NINA.Sequencer.Behaviors {
             if (Keyboard.IsKeyDown(Key.LeftAlt)) {
                 parameter.Duplicate = true;
             }
-            OnDropCommand?.Execute(parameter);
+
+            if (AssociatedObject is FrameworkElement drop) {
+                if (drop.DataContext != null) {
+                    var prop = drop.DataContext.GetType().GetProperty(OnDropCommand);
+                    if (prop != null) {
+                        var value = prop.GetValue(drop.DataContext) as ICommand;
+                        if (value != null) {
+                            value.Execute(parameter);
+                        }
+                    }
+                }
+            }
         }
     }
 }

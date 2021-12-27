@@ -617,7 +617,7 @@ namespace NINA.ViewModel {
         }
 
         private void CalculateETA() {
-            if (Targets.Items.Count > 0) {
+            if (Targets?.Items.Count > 0) {
                 TimeSpan time = new TimeSpan();
                 foreach (var item in Targets.Items) {
                     var target = item as SimpleDSOContainer;

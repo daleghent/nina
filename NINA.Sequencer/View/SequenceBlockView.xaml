@@ -14,7 +14,8 @@
     xmlns:converters="clr-namespace:NINA.Core.Utility.Converters;assembly=NINA.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:NINA.View.Sequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:sequtil="clr-namespace:NINA.Sequencer.Utility"
@@ -79,8 +80,7 @@
                     MinHeight="30"
                     Padding="0,0,5,0"
                     VerticalAlignment="Stretch"
-                    BorderBrush="Transparent"
-                    DataContext="{Binding}">
+                    BorderBrush="Transparent">
                     <Grid
                         Margin="5,0,0,0"
                         HorizontalAlignment="Stretch"
@@ -224,7 +224,9 @@
                                     <DataTrigger Binding="{Binding ElementName=PART_ErrorBehavior, Path=SelectedIndex}" Value="1">
                                         <Setter Property="Content">
                                             <Setter.Value>
+
                                                 <!--  Skip current instruction set  -->
+
                                                 <StackPanel Orientation="Horizontal">
                                                     <Path
                                                         Width="25"
@@ -249,7 +251,9 @@
                                     <DataTrigger Binding="{Binding ElementName=PART_ErrorBehavior, Path=SelectedIndex}" Value="2">
                                         <Setter Property="Content">
                                             <Setter.Value>
+
                                                 <!--  Abort Sequence  -->
+
                                                 <StackPanel Orientation="Horizontal">
                                                     <Path
                                                         Width="25"
@@ -274,7 +278,9 @@
                                     <DataTrigger Binding="{Binding ElementName=PART_ErrorBehavior, Path=SelectedIndex}" Value="3">
                                         <Setter Property="Content">
                                             <Setter.Value>
+
                                                 <!--  Skip to end of sequence instructions  -->
+
                                                 <StackPanel Orientation="Horizontal">
                                                     <Path
                                                         Width="25"
@@ -309,7 +315,9 @@
                     VerticalAlignment="Center"
                     Content="{Binding}"
                     Style="{StaticResource ProgressPresenter}" />
+
                 <Button
+                    x:Name="DetachButton"
                     Grid.Column="5"
                     Width="25"
                     Height="25"
@@ -489,6 +497,7 @@
                 </Button>
 
                 <Button
+                    x:Name="AddCloneToParentButton"
                     Width="25"
                     Height="25"
                     Margin="25,0,0,0"
@@ -500,6 +509,7 @@
                             <Binding Path="AddCloneToParentCommand" />
                         </PriorityBinding>
                     </Button.Command>
+
                     <Button.Visibility>
                         <PriorityBinding>
                             <Binding
@@ -523,6 +533,7 @@
                 </Button>
 
                 <Button
+                    x:Name="MoveUpButton"
                     Width="25"
                     Height="25"
                     Margin="25,0,0,0"
@@ -546,6 +557,7 @@
                 </Button>
 
                 <Button
+                    x:Name="MoveDownButton"
                     Width="25"
                     Height="25"
                     Margin="10,0,0,0"

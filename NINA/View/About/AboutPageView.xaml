@@ -30,7 +30,7 @@
                     Text="{ns:Loc LblAboutNINA}" />
             </TabItem.Header>
             <TabItem.Content>
-                <local:AboutNINAView DataContext="{Binding}" />
+                <local:AboutNINAView />
             </TabItem.Content>
         </TabItem>
         <TabItem>

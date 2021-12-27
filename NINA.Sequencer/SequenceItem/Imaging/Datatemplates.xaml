@@ -225,7 +225,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TakeExposure}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <ContentPresenter Content="{StaticResource TakeExposureDetails}" />
             </view:SequenceBlockView.SequenceItemContent>
@@ -260,7 +260,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TakeManyExposures}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <WrapPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="#" />
@@ -324,7 +324,7 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SmartExposure}">
-        <view:SequenceBlockView DataContext="{Binding}">
+        <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
 
                 <WrapPanel Orientation="Horizontal">

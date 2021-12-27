@@ -42,7 +42,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:GeneralView DataContext="{Binding}" />
+                <local:GeneralView />
             </TabItem.Content>
         </TabItem>
         <TabItem>
@@ -68,7 +68,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:EquipmentView DataContext="{Binding}" />
+                <local:EquipmentView />
             </TabItem.Content>
         </TabItem>
         <TabItem>
@@ -94,7 +94,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:AutoFocusView DataContext="{Binding}" />
+                <local:AutoFocusView />
             </TabItem.Content>
         </TabItem>
         <TabItem>
@@ -120,7 +120,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:DomeView DataContext="{Binding}" />
+                <local:DomeView />
             </TabItem.Content>
         </TabItem>
         <TabItem>
@@ -146,7 +146,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:ImagingView DataContext="{Binding}" />
+                <local:ImagingView />
             </TabItem.Content>
         </TabItem>
         <TabItem>
@@ -172,7 +172,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:PlateSolverView DataContext="{Binding}" />
+                <local:PlateSolverView />
             </TabItem.Content>
         </TabItem>
     </TabControl>
