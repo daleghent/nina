@@ -11032,6 +11032,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Plugins Installed.
+        /// </summary>
+        internal static string LblNoPluginsInstalled {
+            get {
+                return ResourceManager.GetString("LblNoPluginsInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
         internal static string LblNormal {

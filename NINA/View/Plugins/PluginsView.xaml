@@ -101,7 +101,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="20"
                                     FontStyle="Italic"
-                                    Text="{ns:Loc LblNoPluginsFound}" />
+                                    Text="{ns:Loc LblNoPluginsInstalled}" />
                             </StackPanel>
                         </Grid>
 
