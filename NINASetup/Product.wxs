@@ -90,6 +90,7 @@
 			<ComponentGroupRef Id="External_x64_Nikon_Type0027_files" />
 			<ComponentGroupRef Id="External_x64_Nikon_Type0028_files" />
 			<ComponentGroupRef Id="External_x64_Nikon_Type0029_files" />
+			<ComponentGroupRef Id="External_x64_Nikon_Type0030_files" />
 			<ComponentGroupRef Id="External_x64_SQLite_files" />
 			<ComponentGroupRef Id="External_x64_Altair_files" />
 			<ComponentGroupRef Id="External_x64_ToupTek_files" />
@@ -260,6 +261,7 @@
 								<Directory Id="External_x64_Nikon_Type0027" Name="Type0027" />
 								<Directory Id="External_x64_Nikon_Type0028" Name="Type0028" />
 								<Directory Id="External_x64_Nikon_Type0029" Name="Type0029" />
+								<Directory Id="External_x64_Nikon_Type0030" Name="Type0030" />
 							</Directory>
 							<Directory Id="External_x64_SQLite" Name="SQLite" />
 							<Directory Id="External_x64_Altair" Name="Altair" />
@@ -1349,6 +1351,17 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0029_Type0029.md3" Guid="1A954DCD-33E8-4670-9843-E4378EE58C1C">
 				<File Id="External_x64_Nikon_Type0029_Type0029.md3" Name="Type0029.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0029\Type0029.md3" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="External_x64_Nikon_Type0030_files" Directory="External_x64_Nikon_Type0030">
+			<Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0030_NkdPTP.dll" Guid="BF6F1E20-83D2-4812-8486-E41AC306A059">
+				<File Id="External_x64_Nikon_Type0030_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0030\NkdPTP.dll" />
+			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0030_Type0030.md3" Guid="24695B36-B6EE-4DE6-BCBE-F5A6E05AF813">
+				<File Id="External_x64_Nikon_Type0030_Type0030.md3" Name="Type0030.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0030\Type0030.md3" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
