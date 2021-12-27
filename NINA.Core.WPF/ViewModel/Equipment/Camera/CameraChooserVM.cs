@@ -243,10 +243,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 }
 
                 /* NIKON */
-                try {
-                    devices.Add(new NikonCamera(profileService, telescopeMediator, exposureDataFactory));
-                } catch (Exception ex) {
-                    Logger.Error(ex);
+                if (!DllLoader.IsX86()) {
+                    try {
+                        devices.Add(new NikonCamera(profileService, telescopeMediator, exposureDataFactory));
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
                 }
 
                 devices.Add(new FileCamera(profileService, telescopeMediator, imageDataFactory, exposureDataFactory));

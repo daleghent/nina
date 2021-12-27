@@ -1545,35 +1545,6 @@
     <Folder Include="External\x64\Nikon\Type0029\" />
     <Folder Include="External\x86\Altair\" />
     <Folder Include="External\x86\Canon\" />
-    <Folder Include="External\x86\Nikon\Type0001\" />
-    <Folder Include="External\x86\Nikon\Type0002\" />
-    <Folder Include="External\x86\Nikon\Type0003\" />
-    <Folder Include="External\x86\Nikon\Type0004\" />
-    <Folder Include="External\x86\Nikon\Type0005\" />
-    <Folder Include="External\x86\Nikon\Type0006\" />
-    <Folder Include="External\x86\Nikon\Type0007\" />
-    <Folder Include="External\x86\Nikon\Type0008\" />
-    <Folder Include="External\x86\Nikon\Type0009\" />
-    <Folder Include="External\x86\Nikon\Type0010\" />
-    <Folder Include="External\x86\Nikon\Type0011\" />
-    <Folder Include="External\x86\Nikon\Type0012\" />
-    <Folder Include="External\x86\Nikon\Type0013\" />
-    <Folder Include="External\x86\Nikon\Type0014\" />
-    <Folder Include="External\x86\Nikon\Type0015\" />
-    <Folder Include="External\x86\Nikon\Type0016\" />
-    <Folder Include="External\x86\Nikon\Type0017\" />
-    <Folder Include="External\x86\Nikon\Type0018\" />
-    <Folder Include="External\x86\Nikon\Type0019\" />
-    <Folder Include="External\x86\Nikon\Type0020\" />
-    <Folder Include="External\x86\Nikon\Type0021\" />
-    <Folder Include="External\x86\Nikon\Type0022\" />
-    <Folder Include="External\x86\Nikon\Type0023\" />
-    <Folder Include="External\x86\Nikon\Type0024\" />
-    <Folder Include="External\x86\Nikon\Type0025\" />
-    <Folder Include="External\x86\Nikon\Type0026\" />
-    <Folder Include="External\x86\Nikon\Type0027\" />
-    <Folder Include="External\x86\Nikon\Type0028\" />
-    <Folder Include="External\x86\Nikon\Type0029\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

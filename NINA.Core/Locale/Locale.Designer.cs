@@ -10879,6 +10879,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not supported - Nikon no longer distributes SDK binaries for x86 applications.
+        /// </summary>
+        internal static string LblNikonX86Deprecated {
+            get {
+                return ResourceManager.GetString("LblNikonX86Deprecated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N.I.N.A..
         /// </summary>
         internal static string LblNINA {

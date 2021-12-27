@@ -51,7 +51,11 @@ namespace NINA.ViewModel {
             }
 
             try {
-                NikonSDKVersion = DllLoader.DllVersion(Path.Combine("Nikon", "Type0001", "NkdPTP.dll")).ProductVersion;
+                if (DllLoader.IsX86()) {
+                    NikonSDKVersion = Loc.Instance["LblNikonX86Deprecated"];
+                } else {
+                    NikonSDKVersion = DllLoader.DllVersion(Path.Combine("Nikon", "Type0001", "NkdPTP.dll")).ProductVersion;
+                }
             } catch (Exception) {
                 NikonSDKVersion = Loc.Instance["LblNotInstalled"];
             }
