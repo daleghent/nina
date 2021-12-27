@@ -678,6 +678,9 @@
 			<Component Win64="$(var.Win64)" Id="Microsoft.Xaml.Behaviors.dll" Guid="69093258-81a8-4474-bdb7-d69732bfc56e">
 				<File Id="Microsoft.Xaml.Behaviors.dll" Name="Microsoft.Xaml.Behaviors.dll" Source="$(var.NINA_TargetDir)Microsoft.Xaml.Behaviors.dll" />
 			</Component>
+			<Component Win64="$(var.Win64)" Id="CommonServiceLocator.dll" Guid="F0BCDD40-D086-4C77-8F0A-C8B7E1B90C71">
+				<File Id="CommonServiceLocator.dll" Name="CommonServiceLocator.dll" Source="$(var.NINA_TargetDir)CommonServiceLocator.dll" />
+			</Component>
 			<Component Id="NINA.Astrometry.pdb" Guid="4f23f02d-3dc9-4d2a-b3fb-6aa07fc34319">
 				<File Id="NINA.Astrometry.pdb" Name="NINA.Astrometry.pdb" Source="$(var.NINA_TargetDir)NINA.Astrometry.pdb" />
 			</Component>
