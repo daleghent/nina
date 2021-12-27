@@ -602,17 +602,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// <param name="deviceId">The connected device to operate on</param>
         /// <param name="ccd">The CCD to use for the exposure</param>
         public void DisableTemperatureRegulation(SBIG.DeviceType deviceId, SBIG.CCD ccd) {
-            lock (driverLock) {
-                using (var driver = EnsureActiveDriver(deviceId)) {
-                    var connectedDevice = GetConnectedDevice(deviceId);
-                    var serialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
-                    var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
-                        state = SBIG.TemperatureRegulation.Off
-                    };
-                    UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
-                    this.queryTemperatureStatusCache.Remove(serialNumber);
-                }
-            }
+            SetTemperatureRegulationState(deviceId, ccd, SBIG.TemperatureRegulation.Off);
         }
 
         /// <summary>
@@ -717,6 +707,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                 var connectedDevice = GetConnectedDevice(deviceId);
                 var exposureParams = ccd == SBIG.CCD.Imaging ? connectedDevice.latestStartExposureParams : connectedDevice.latestStartTrackingExposureParams;
                 using (var driver = EnsureActiveDriver(deviceId)) {
+                    var tempStatus = QueryTemperatureStatus(deviceId);
+                    bool coolingEnabled = tempStatus.coolingEnabled > 0;
+                    if (coolingEnabled) {
+                        SetTemperatureRegulationState(deviceId, ccd, SBIG.TemperatureRegulation.Freeze);
+                    }
+
                     var readoutParams = new SBIG.StartReadoutParams() {
                         ccd = ccd,
                         readoutMode = exposureParams.readoutMode,
@@ -753,6 +749,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                             UnivDrvCommand(SBIG.Cmd.CC_END_READOUT, readoutParams);
                         } catch (Exception e) {
                             Logger.Error($"SBIGSDK: Failed to end readout for {deviceId} {ccd}", e);
+                        }
+
+                        try {
+                            if (coolingEnabled) {
+                                SetTemperatureRegulationState(deviceId, ccd, SBIG.TemperatureRegulation.Unfreeze);
+                            }
+                        } catch (Exception e) {
+                            Logger.Error($"SBIGSDK: Failed to unfreeze TEC {deviceId} {ccd}", e);
                         }
                     }
 
@@ -792,6 +796,20 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                         Position = queryStatusResult.cfwPosition,
                         Status = queryStatusResult.cfwStatus
                     };
+                }
+            }
+        }
+
+        private void SetTemperatureRegulationState(SBIG.DeviceType deviceId, SBIG.CCD ccd, SBIG.TemperatureRegulation state) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    var connectedDevice = GetConnectedDevice(deviceId);
+                    var serialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
+                    var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
+                        state = state
+                    };
+                    UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
+                    this.queryTemperatureStatusCache.Remove(serialNumber);
                 }
             }
         }
