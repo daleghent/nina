@@ -73,7 +73,7 @@ namespace NINA.Core.Utility {
 
         public static string UserAgent {
             get {
-                return $"{Title} v{Version} {(DllLoader.IsX86() ? "(x86)" : "(x64)")}";
+                return $"N.I.N.A./{Version} ({Environment.OSVersion}; {(Environment.Is64BitOperatingSystem ? "Win64" : "Win32")}; {(Environment.Is64BitProcess ? "x64" : "x86")})";
             }
         }
 
