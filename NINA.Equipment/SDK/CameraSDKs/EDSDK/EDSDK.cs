@@ -1,14 +1,3 @@
-#region "copyright"
-/*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
-
-    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
-
-    This Source Code Form is subject to the terms of the Mozilla Public
-    License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
-#endregion "copyright"
 using System;
 using System.Runtime.InteropServices;
 
@@ -73,21 +62,19 @@ namespace EDSDKLib {
         public const uint PropID_Unknown = 0x0000ffff;
 
         public const uint PropID_ProductName = 0x00000002;
+        public const uint PropID_BodyIDEx = 0x00000015;
         public const uint PropID_OwnerName = 0x00000004;
         public const uint PropID_MakerName = 0x00000005;
         public const uint PropID_DateTime = 0x00000006;
         public const uint PropID_FirmwareVersion = 0x00000007;
         public const uint PropID_BatteryLevel = 0x00000008;
+        public const uint PropID_CFn = 0x00000009;
         public const uint PropID_SaveTo = 0x0000000b;
         public const uint kEdsPropID_CurrentStorage = 0x0000000c;
         public const uint kEdsPropID_CurrentFolder = 0x0000000d;
 
         public const uint PropID_BatteryQuality = 0x00000010;
 
-        public const uint PropID_BodyIDEx = 0x00000015;
-        public const uint PropID_HDDirectoryStructure = 0x00000020;
-
-        public const uint PropID_TempStatus = 0x01000415;
         /*----------------------------------
          Image Properties
         ----------------------------------*/
@@ -182,11 +169,14 @@ namespace EDSDKLib {
         public const uint PropID_LensBarrelStatus = 0x00000605;
 
 
+        public const uint PropID_TempStatus = 0x01000415;
         public const uint PropID_Evf_RollingPitching = 0x01000544;
         public const uint PropID_FixedMovie = 0x01000422;
         public const uint PropID_MovieParam = 0x01000423;
+        public const uint PropID_Aspect = 0x01000431;
 
         public const uint PropID_Evf_ClickWBCoeffs = 0x01000506;
+        public const uint PropID_Evf_VisibleRect = 0x01000546;
         public const uint PropID_ManualWhiteBalanceData = 0x01000204;
 
         public const uint PropID_MirrorUpSetting = 0x01000438;
@@ -197,6 +187,14 @@ namespace EDSDKLib {
         public const uint PropID_SummerTimeSetting = 0x01000018;
 
         public const uint PropID_AutoPowerOffSetting = 0x0100045e;
+
+        public const uint PropID_StillMovieDivideSetting = 0x01000470;
+        public const uint PropID_CardExtension = 0x01000471;
+        public const uint PropID_MovieCardExtension = 0x01000472;
+        public const uint PropID_StillCurrentMedia = 0x01000473;
+        public const uint PropID_MovieCurrentMedia = 0x01000474;
+
+
 
         #endregion
 
@@ -216,9 +214,8 @@ namespace EDSDKLib {
         public const uint CameraCommand_MovieSelectSwOFF = 0x00000108;
 
         public const uint CameraCommand_PressShutterButton = 0x00000004;
-        public const uint CameraCommand_RequestRollPitchLevel = 0x00000109;
-        public const uint CameraCommand_DrivePowerZoom = 0x0000010d;
         public const uint CameraCommand_SetRemoteShootingMode = 0x0000010f;
+        public const uint CameraCommand_RequestRollPitchLevel = 0x00000109;
 
         public enum EdsEvfAf : uint {
             CameraCommand_EvfAf_OFF = 0,
@@ -383,34 +380,43 @@ namespace EDSDKLib {
         public const uint EvfDepthOfFieldPreview_OFF = 0x00000000;
         public const uint EvfDepthOfFieldPreview_ON = 0x00000001;
 
-
         /*-----------------------------------------------------------------------------
-         Image Format 
-        -----------------------------------------------------------------------------*/
-
+		 Image Format 
+		-----------------------------------------------------------------------------*/
+        // Format -------------------------------
         public const int ImageFormat_Unknown = 0x00000000;
         public const int ImageFormat_Jpeg = 0x00000001;
         public const int ImageFormat_CRW = 0x00000002;
         public const int ImageFormat_RAW = 0x00000004;
 
         public const int ImageFormat_CR2 = 0x00000006;
+        public const int ImageFormat_CR2_Jpeg = 0x00000007;
+        public const int ImageFormat_HEIF = 0x00000008;
 
-
+        // Size ---------------------------------
         public const int ImageSize_Large = 0;
         public const int ImageSize_Middle = 1;
         public const int ImageSize_Small = 2;
         public const int ImageSize_Middle1 = 5;
         public const int ImageSize_Middle2 = 6;
+        public const int ImageSize_Small1 = 14;
+        public const int ImageSize_Small2 = 15;
+        public const int ImageSize_Small3 = 16;
         public const int ImageSize_Unknown = -1;
 
+        // Quality ------------------------------
+        public const int ImageQuality_Normal = 2;
+        public const int ImageQuality_Fine = 3;
+        public const int ImageQuality_Lossless = 4;
+        public const int ImageQuality_SuperFine = 5;
+        public const int ImageQuality_Unknown = -1;
 
-
+        // CompressQuality ----------------------
         public const int CompressQuality_Normal = 2;
         public const int CompressQuality_Fine = 3;
         public const int CompressQuality_Lossless = 4;
         public const int CompressQuality_SuperFine = 5;
         public const int CompressQuality_Unknown = -1;
-
 
         /*-----------------------------------------------------------------------------
          Battery level
@@ -474,64 +480,65 @@ namespace EDSDKLib {
         /*-----------------------------------------------------------------------------
          AE Mode
         -----------------------------------------------------------------------------*/
-        public const uint AEMode_Program = 0;
-        public const uint AEMode_Tv = 1;
-        public const uint AEMode_Av = 2;
-        public const uint AEMode_Mamual = 3;
-        public const uint AEMode_Bulb = 4;
-        public const uint AEMode_A_DEP = 5;
-        public const uint AEMode_DEP = 6;
-        public const uint AEMode_Custom = 7;
-        public const uint AEMode_Lock = 8;
-        public const uint AEMode_Green = 9;
-        public const uint AEMode_NigntPortrait = 10;
-        public const uint AEMode_Sports = 11;
-        public const uint AEMode_Portrait = 12;
-        public const uint AEMode_Landscape = 13;
-        public const uint AEMode_Closeup = 14;
-        public const uint AEMode_FlashOff = 15;
-        public const uint AEMode_CreativeAuto = 19;
-        public const uint AEMode_Movie = 20;
-        public const uint AEMode_PhotoInMovie = 21;
-        public const uint AEMode_SceneIntelligentAuto = 22;
-        public const uint AEMode_SCN = 25;
-        public const uint AEMode_HandheldNightScenes = 23;
-        public const uint AEMode_Hdr_BacklightControl = 24;
-        public const uint AEMode_Children = 26;
-        public const uint AEMode_Food = 27;
-        public const uint AEMode_CandlelightPortraits = 28;
-        public const uint AEMode_CreativeFilter = 29;
-        public const uint AEMode_RoughMonoChrome = 30;
-        public const uint AEMode_SoftFocus = 31;
-        public const uint AEMode_ToyCamera = 32;
-        public const uint AEMode_Fisheye = 33;
-        public const uint AEMode_WaterColor = 34;
-        public const uint AEMode_Miniature = 35;
-        public const uint AEMode_Hdr_Standard = 36;
-        public const uint AEMode_Hdr_Vivid = 37;
-        public const uint AEMode_Hdr_Bold = 38;
-        public const uint AEMode_Hdr_Embossed = 39;
-        public const uint AEMode_Movie_Fantasy = 40;
-        public const uint AEMode_Movie_Old = 41;
-        public const uint AEMode_Movie_Memory = 42;
-        public const uint AEMode_Movie_DirectMono = 43;
-        public const uint AEMode_Movie_Mini = 44;
-        public const uint AEMode_Panning = 45;
-        public const uint AEMode_GroupPhoto = 46;
+        public const uint AEMode_Program = 0x00;
+        public const uint AEMode_Tv = 0x01;
+        public const uint AEMode_Av = 0x02;
+        public const uint AEMode_Mamual = 0x03;
+        public const uint AEMode_Bulb = 0x04;
+        public const uint AEMode_A_DEP = 0x05;
+        public const uint AEMode_DEP = 0x06;
+        public const uint AEMode_Custom = 0x07;
+        public const uint AEMode_Lock = 0x08;
+        public const uint AEMode_Green = 0x09;
+        public const uint AEMode_NigntPortrait = 0x0A;
+        public const uint AEMode_Sports = 0x0B;
+        public const uint AEMode_Portrait = 0x0C;
+        public const uint AEMode_Landscape = 0x0D;
+        public const uint AEMode_Closeup = 0x0E;
+        public const uint AEMode_FlashOff = 0x0F;
+        public const uint AEMode_CreativeAuto = 0x13;
+        public const uint AEMode_Movie = 0x14;
+        public const uint AEMode_PhotoInMovie = 0x15;
+        public const uint AEMode_SceneIntelligentAuto = 0x16;
+        public const uint AEMode_SCN = 0x19;
+        public const uint AEMode_HandheldNightScenes = 0x17;
+        public const uint AEMode_Hdr_BacklightControl = 0x18;
+        public const uint AEMode_Children = 0x1A;
+        public const uint AEMode_Food = 0x1B;
+        public const uint AEMode_CandlelightPortraits = 0x1C;
+        public const uint AEMode_CreativeFilter = 0x1D;
+        public const uint AEMode_RoughMonoChrome = 0x1E;
+        public const uint AEMode_SoftFocus = 0x1F;
+        public const uint AEMode_ToyCamera = 0x20;
+        public const uint AEMode_Fisheye = 0x21;
+        public const uint AEMode_WaterColor = 0x22;
+        public const uint AEMode_Miniature = 0x23;
+        public const uint AEMode_Hdr_Standard = 0x24;
+        public const uint AEMode_Hdr_Vivid = 0x25;
+        public const uint AEMode_Hdr_Bold = 0x26;
+        public const uint AEMode_Hdr_Embossed = 0x27;
+        public const uint AEMode_Movie_Fantasy = 0x28;
+        public const uint AEMode_Movie_Old = 0x29;
+        public const uint AEMode_Movie_Memory = 0x2A;
+        public const uint AEMode_Movie_DirectMono = 0x2B;
+        public const uint AEMode_Movie_Mini = 0x2C;
+        public const uint AEMode_Panning = 0x2D;
+        public const uint AEMode_GroupPhoto = 0x2E;
 
-        public const uint AEMode_SelfPortrait = 50;
-        public const uint AEMode_PlusMovieAuto = 51;
-        public const uint AEMode_SmoothSkin = 52;
-        public const uint AEMode_Panorama = 53;
-        public const uint AEMode_Silent = 54;
-        public const uint AEMode_Flexible = 55;
-        public const uint AEMode_OilPainting = 56;
-        public const uint AEMode_Fireworks = 57;
-        public const uint AEMode_StarPortrait = 58;
-        public const uint AEMode_StarNightscape = 59;
-        public const uint AEMode_StarTrails = 60;
-        public const uint AEMode_StarTimelapseMovie = 61;
-        public const uint AEMode_BackgroundBlur = 62;
+        public const uint AEMode_SelfPortrait = 0x32;
+        public const uint AEMode_PlusMovieAuto = 0x33;
+        public const uint AEMode_SmoothSkin = 0x34;
+        public const uint AEMode_Panorama = 0x35;
+        public const uint AEMode_Silent = 0x36;
+        public const uint AEMode_Flexible = 0x37;
+        public const uint AEMode_OilPainting = 0x38;
+        public const uint AEMode_Fireworks = 0x39;
+        public const uint AEMode_StarPortrait = 0x3A;
+        public const uint AEMode_StarNightscape = 0x3B;
+        public const uint AEMode_StarTrails = 0x3C;
+        public const uint AEMode_StarTimelapseMovie = 0x3D;
+        public const uint AEMode_BackgroundBlur = 0x3E;
+        public const uint AEMode_VideoBlog = 0x3F;
         public const uint AEMode_Unknown = 0xffffffff;
 
         /*-----------------------------------------------------------------------------
@@ -547,8 +554,9 @@ namespace EDSDKLib {
         /*-----------------------------------------------------------------------------
 		 EVF Output Device [Flag]
 		-----------------------------------------------------------------------------*/
-        public const uint EvfOutputDevice_TFT = 1;
-        public const uint EvfOutputDevice_PC = 2;
+        public const uint EvfOutputDevice_TFT = 0x01;
+        public const uint EvfOutputDevice_PC = 0x02;
+        public const uint EvfOutputDevice_PC_Small = 0x08;
 
 
         /*-----------------------------------------------------------------------------
@@ -615,9 +623,12 @@ namespace EDSDKLib {
         public enum ImageQuality : uint {
             /* Jpeg Only */
             EdsImageQuality_LJ = 0x0010ff0f,    /* Jpeg Large */
+            EdsImageQuality_MJ = 0x0110ff0f,   /* Jpeg Middle */
             EdsImageQuality_M1J = 0x0510ff0f,   /* Jpeg Middle1 */
             EdsImageQuality_M2J = 0x0610ff0f,   /* Jpeg Middle2 */
             EdsImageQuality_SJ = 0x0210ff0f,    /* Jpeg Small */
+            EdsImageQuality_S1J = 0x0e10ff0f,    /* Jpeg Small1 */
+            EdsImageQuality_S2J = 0x0f10ff0f,    /* Jpeg Small2 */
             EdsImageQuality_LJF = 0x0013ff0f,   /* Jpeg Large Fine */
             EdsImageQuality_LJN = 0x0012ff0f,   /* Jpeg Large Normal */
             EdsImageQuality_MJF = 0x0113ff0f,   /* Jpeg Middle Fine */
@@ -643,9 +654,12 @@ namespace EDSDKLib {
             EdsImageQuality_LRS3JF = 0x00641013,    /* RAW + Jpeg Small3 */
 
             EdsImageQuality_LRLJ = 0x00640010,  /* RAW + Jpeg Large */
+            EdsImageQuality_LRMJ = 0x00640110,  /* RAW + Jpeg Middle */
             EdsImageQuality_LRM1J = 0x00640510, /* RAW + Jpeg Middle1 */
             EdsImageQuality_LRM2J = 0x00640610, /* RAW + Jpeg Middle2 */
             EdsImageQuality_LRSJ = 0x00640210,  /* RAW + Jpeg Small */
+            EdsImageQuality_LRS1J = 0x00640e10,  /* RAW + Jpeg Small1 */
+            EdsImageQuality_LRS2J = 0x00640f10,	/* RAW + Jpeg Small2 */
 
             /* MRAW(SRAW1) + Jpeg */
             EdsImageQuality_MR = 0x0164ff0f,    /* MRAW(SRAW1) */
@@ -700,10 +714,13 @@ namespace EDSDKLib {
             EdsImageQuality_CRSJN = 0x00630212, /* CRAW + Jpeg Small Normal */
             EdsImageQuality_CRS1JN = 0x00630E12,    /* CRAW + Jpeg Small1 Normal */
 
-            EdsImageQuality_CRLJ = 0x00630010,  /* CRAW + Jpeg Large */
+            EdsImageQuality_CRLJ = 0x00630010, /* CRAW + Jpeg Large */
+            EdsImageQuality_CRMJ = 0x00630110, /* CRAW + Jpeg Middle */
             EdsImageQuality_CRM1J = 0x00630510, /* CRAW + Jpeg Middle1 */
             EdsImageQuality_CRM2J = 0x00630610, /* CRAW + Jpeg Middle2 */
-            EdsImageQuality_CRSJ = 0x00630210,  /* CRAW + Jpeg Small */
+            EdsImageQuality_CRSJ = 0x00630210, /* CRAW + Jpeg Small */
+            EdsImageQuality_CRS1J = 0x00630e10, /* CRAW + Jpeg Small1 */
+            EdsImageQuality_CRS2J = 0x00630f10,	/* CRAW + Jpeg Small2 */
 
             /* HEIF */
             EdsImageQuality_HEIFL = 0x0080ff0f, /* HEIF Large */
@@ -908,10 +925,6 @@ namespace EDSDKLib {
         public const uint StateEvent_InternalError = 0x00000306;
 
         public const uint StateEvent_AfResult = 0x00000309;
-
-        public const uint StateEvent_BulbExposureTime = 0x00000310;
-
-        public const uint StateEvent_PowerZoomInfoChanged = 0x00000311;
 
         #endregion
 
@@ -2106,6 +2119,25 @@ namespace EDSDKLib {
         [DllImport("EDSDK.dll")]
         public extern static uint EdsSetCameraStateEventHandler(IntPtr inCameraRef, uint inEvnet,
              EdsStateEventHandler inStateEventHandler, IntPtr inContext);
+
+        /*-----------------------------------------------------------------------------
+        //
+        //  Function:  EdsSetFramePoint
+        //  Description:
+        //      Specifies the camera's focus and zoom frame position in the LiveView state.
+        //  
+        //  Parameters:
+        //      In:    inCameraRef - Designate the camera object. 
+        //             inFramePoint - Specifies the position coordinates of the zoom and AF 
+        //                 frames of a LiveView image.
+        //             inLockAfFrame - Whether to lock the movement of the frame until the AF-related 
+        //                 camera operation is executed.
+        //      out:   None
+        //
+        //  Returns:   Any of the sdk errors.
+        ------------------------------------------------------------------------------*/
+        [DllImport("EDSDK.dll")]
+        public extern static uint EdsSetFramePoint(IntPtr inCameraRef, EdsSize inFramePoint, bool inLockAfFrame);
 
         /*-----------------------------------------------------------------------------
 		//
