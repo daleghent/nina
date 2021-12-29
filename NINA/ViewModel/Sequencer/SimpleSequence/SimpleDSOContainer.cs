@@ -532,7 +532,16 @@ namespace NINA.Sequencer.Container {
                 startup.Add(wait);
             }
 
-            var firstInstruction = Items.FirstOrDefault(x => (x as SimpleExposure).Enabled);
+            // Find the first valid instruction to determine which filter is currently relevant
+            var firstInstruction = Items.FirstOrDefault(x => {
+                if (x is SimpleExposure exp) {
+                    var loop = exp.GetLoopCondition() as LoopCondition;
+                    if (exp.Enabled && exp.Status == SequenceEntityStatus.CREATED && loop != null && loop.CompletedIterations < loop.Iterations) {
+                        return true;
+                    }
+                }
+                return false;
+            });
             if (firstInstruction != null) {
                 startup.Add((ISequenceItem)(firstInstruction as SimpleExposure).GetSwitchFilter().Clone());
             }
