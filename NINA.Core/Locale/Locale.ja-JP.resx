@@ -5972,4 +5972,10 @@ Refer to your camera's manual for the location of this setting</value>
   <data name="LblAboveHorizon" xml:space="preserve">
     <value>地平線上</value>
   </data>
+  <data name="LblNikonX86Deprecated" xml:space="preserve">
+    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+  </data>
+  <data name="LblNoPluginsInstalled" xml:space="preserve">
+    <value>No Plugins Installed</value>
+  </data>
 </root>

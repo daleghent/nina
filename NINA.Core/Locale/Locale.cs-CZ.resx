@@ -509,7 +509,7 @@ Zisk: {2}
 Filtr: {3}</value>
   </data>
   <data name="LblCameraHighPower" xml:space="preserve">
-    <value>Chladicí systém kamery běží na {0}% nemusí být schopen kompenzovat kolísání teploty okolí</value>
+    <value>Chlazení kamery běží na {0}% nemusí být schopen kompenzovat kolísání teploty okolí</value>
   </data>
   <data name="LblCameraNotAtTargetTemp" xml:space="preserve">
     <value>Kamera je na {0} °C, ale cílová teplota je {1} °C</value>
@@ -940,14 +940,14 @@ Zavřít sekvenci a vše ztratit?</value>
     <value>Metoda Detekce Kontrastu</value>
   </data>
   <data name="LblCoolCamBtnTooltip" xml:space="preserve">
-    <value>Zapne chlazení kamery na nastavenou teplotu. Čas trvání je volitelné. Většina ovladačů již automaticky reguluje chladicí systém a postupně snižuje teplotu.
+    <value>Zapne chlazení kamery na nastavenou teplotu. Čas trvání je volitelné. Většina ovladačů již automaticky reguluje chlazení a postupně snižuje teplotu.
 V případě, že je nutné provádět chlazení déle, lze určit čas trvání a aplikace se pokusí pomalu dosáhnout teploty na základě definované doby.</value>
   </data>
   <data name="LblCoolerOn" xml:space="preserve">
     <value>Chlazení</value>
   </data>
   <data name="LblCoolerPower" xml:space="preserve">
-    <value>Výkon Chladiče</value>
+    <value>Výkon Chlazení</value>
   </data>
   <data name="LblCooling" xml:space="preserve">
     <value>Chlazení</value>
@@ -2928,10 +2928,10 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Teplota Vzduchu</value>
   </data>
   <data name="LblSlew" xml:space="preserve">
-    <value>Přejet</value>
+    <value>Přejezd</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Přejede a Vycentruje</value>
+    <value>Přejezd a Vycentrovat</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Čas Přejezdu</value>
@@ -3377,7 +3377,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>
         Jsou-li povoleny, barevné kanály budou roztaženy samostatně, což pomůže skrýt
         pozadí oblohy a zlepšení automatického zaostřování a  astrometrii, zejména se světlem znečištěných 
-         oblastech. Doba zpracování je však delší.
+        oblastech. Doba zpracování je však delší.
     </value>
   </data>
   <data name="LblUnpark" xml:space="preserve">
@@ -3709,7 +3709,7 @@ Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout 
     <value>Montáž používá rovníkový souřadný systém s neznámým připojením. Použít {0}. Nastavte ovladač připojení se správnou epochou.</value>
   </data>
   <data name="LblUnsupportedEpoch" xml:space="preserve">
-    <value>Montáž používá nepodporovaný rovníkový souřadný systém {0}.</value>
+    <value>Montáž používá nepodporovaný rovníkový souřadnicový systém {0}.</value>
   </data>
   <data name="LblUnsupportedCfaPattern" xml:space="preserve">
     <value>Nepodporovaný standard CFA/Bayer: {0}</value>
@@ -3789,7 +3789,7 @@ Metodu lze změnit pouze při odpojeném motoru ostření!</value>
     <value>Kamera nemůže dosáhnout zadané cílové teploty!</value>
   </data>
   <data name="LblWaitingToTurnCoolerOff" xml:space="preserve">
-    <value>Kamera čeká na vypnutí chladiče</value>
+    <value>Kamera čeká na vypnutí chlazení</value>
   </data>
   <data name="LblWarmCamBtnTooltip" xml:space="preserve">
     <value>Zahřeje kameru na okolní teplotu a vypne chladič.
@@ -4389,13 +4389,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Přejezd k cíli, vycentruje cíl a otočí dalekohled za pomocí astrometrie a rotátoru pro dané souřadnice a rotaci</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Přejede, vycentruje a otočí</value>
+    <value>Přejezd, vycentruje a otočí</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
     <value>Přejezd k cíli, vystředí dalekohled pomocí astrometrie pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Přejet a Vycentrovat</value>
+    <value>Přejezd a Vycentrovat</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkuje dalekohled do parkovací polohy</value>
@@ -5771,7 +5771,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Cíl rotátoru byl upraven na {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
-    <value>Průvodce snímkování {0} selhalo</value>
+    <value>Snímkování {0} selhalo</value>
   </data>
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
     <value>Zeměpisnou šířku {0} a {1} délku montáže nelze upravit!</value>
@@ -5835,7 +5835,7 @@ Nejlepší je použít jej ve spojení s jinou podmínkou smyčky, aby nedošlo 
     <value>Opakovat, dokud není bezpečno</value>
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
-    <value>Obnovení pointace selhalo po změně filtru, která způsobila pohyb ostření</value>
+    <value>Obnovení pointace selhalo po změně filtru, které způsobilo pohyb ostření</value>
   </data>
   <data name="LblMoveFocuserFailed" xml:space="preserve">
     <value>Nepodařilo se přesunout ostření</value>
@@ -5993,5 +5993,11 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
   </data>
   <data name="LblAboveHorizon" xml:space="preserve">
     <value>Nad Horizontem</value>
+  </data>
+  <data name="LblNikonX86Deprecated" xml:space="preserve">
+    <value>Není podporováno - Nikon již nedistribuuje SDK binární soubory pro x86 aplikace</value>
+  </data>
+  <data name="LblNoPluginsInstalled" xml:space="preserve">
+    <value>Žádné Nainstalované Pluginy</value>
   </data>
 </root>

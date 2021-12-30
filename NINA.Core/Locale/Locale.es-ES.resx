@@ -5989,4 +5989,10 @@ Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
   <data name="LblAboveHorizon" xml:space="preserve">
     <value>Sobre el horizonte</value>
   </data>
+  <data name="LblNikonX86Deprecated" xml:space="preserve">
+    <value>No soportado: Nikon ya no distribuye SDK binarios para aplicaciones x86</value>
+  </data>
+  <data name="LblNoPluginsInstalled" xml:space="preserve">
+    <value>No hay plugins instalados</value>
+  </data>
 </root>

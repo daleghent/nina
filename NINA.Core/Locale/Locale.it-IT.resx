@@ -5997,4 +5997,10 @@ Once successfully solved, the rotation will be set for framing.</value>
   <data name="LblAboveHorizon" xml:space="preserve">
     <value>Above Horizon</value>
   </data>
+  <data name="LblNikonX86Deprecated" xml:space="preserve">
+    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+  </data>
+  <data name="LblNoPluginsInstalled" xml:space="preserve">
+    <value>No Plugins Installed</value>
+  </data>
 </root>
