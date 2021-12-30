@@ -55,7 +55,6 @@ namespace NINA.ViewModel {
 
         public OptionsVM(IProfileService profileService,
                          IFilterWheelMediator filterWheelMediator,
-                         IExposureCalculatorVM exposureCalculatorVM,
                          IAllDeviceConsumer deviceConsumer,
                          IVersionCheckVM versionCheckVM,
                          ProjectVersion projectVersion,
@@ -69,7 +68,6 @@ namespace NINA.ViewModel {
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
 
-            this.exposureCalculatorVM = exposureCalculatorVM;
             DeviceConsumer = deviceConsumer;
             this.versionCheckVM = versionCheckVM;
             this.projectVersion = projectVersion;
@@ -82,7 +80,6 @@ namespace NINA.ViewModel {
             DockManagerVM = dockManagerVM;
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
-            OpenSharpCapSensorAnalysisFolderDiagCommand = new RelayCommand(OpenSharpCapSensorAnalysisFolderDiag);
             OpenSequenceTemplateDiagCommand = new RelayCommand(OpenSequenceTemplateDiag);
             OpenStartupSequenceTemplateDiagCommand = new RelayCommand(OpenStartupSequenceTemplateDiag);
             OpenTargetsFolderDiagCommand = new RelayCommand(OpenTargetsFolderDiag);
@@ -341,19 +338,6 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void OpenSharpCapSensorAnalysisFolderDiag(object o) {
-            using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
-                diag.SelectedPath = ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder;
-                System.Windows.Forms.DialogResult result = diag.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder = diag.SelectedPath + "\\";
-                    //var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-                    var sensorAnalysisData = exposureCalculatorVM.LoadSensorAnalysisData(ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder);
-                    Notification.ShowInformation(String.Format(Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
-                }
-            }
-        }
-
         public IDockManagerVM DockManagerVM { get; }
 
         private void OpenSequenceTemplateDiag(object o) {
@@ -482,7 +466,6 @@ namespace NINA.ViewModel {
         public ICommand OpenASTAPFileDiagCommand { get; private set; }
 
         public ICommand OpenImageFileDiagCommand { get; private set; }
-        public ICommand OpenSharpCapSensorAnalysisFolderDiagCommand { get; private set; }
         public ICommand SensorAnalysisFolderChangedCommand { get; private set; }
 
         public ICommand OpenSequenceTemplateDiagCommand { get; private set; }
@@ -764,7 +747,6 @@ namespace NINA.ViewModel {
 
         private ProfileMeta _selectedProfile;
         private IFilterWheelMediator filterWheelMediator;
-        private readonly IExposureCalculatorVM exposureCalculatorVM;
         private readonly IVersionCheckVM versionCheckVM;
         private readonly ProjectVersion projectVersion;
         private readonly IPlanetariumFactory planetariumFactory;

@@ -45,7 +45,6 @@ namespace NINA.Profile.Interfaces {
         ISwitchSettings SwitchSettings { get; set; }
         ITelescopeSettings TelescopeSettings { get; set; }
         IWeatherDataSettings WeatherDataSettings { get; set; }
-        IExposureCalculatorSettings ExposureCalculatorSettings { get; set; }
         ISnapShotControlSettings SnapShotControlSettings { get; set; }
         ISafetyMonitorSettings SafetyMonitorSettings { get; set; }
         IPluginSettings PluginSettings { get; set; }

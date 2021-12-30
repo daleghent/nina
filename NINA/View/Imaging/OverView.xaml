@@ -155,12 +155,6 @@
                     </DataTemplate>
                 </util:PaneTemplateSelector.FlatDeviceTemplate>
 
-                <util:PaneTemplateSelector.ExposureCalculatorTemplate>
-                    <DataTemplate>
-                        <view:AnchorableExposureTimeRecommendationView />
-                    </DataTemplate>
-                </util:PaneTemplateSelector.ExposureCalculatorTemplate>
-
                 <util:PaneTemplateSelector.FailedToLoadTemplate>
                     <DataTemplate>
                         <TextBlock

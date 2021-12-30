@@ -186,7 +186,6 @@
     <Compile Include="Interfaces\ViewModel\IDeepSkyObjectSearchVM.cs" />
     <Compile Include="Interfaces\ViewModel\IDockManagerVM.cs" />
     <Compile Include="Interfaces\ViewModel\IEquipmentVM.cs" />
-    <Compile Include="Interfaces\ViewModel\IExposureCalculatorVM.cs" />
     <Compile Include="Interfaces\ViewModel\IFlatWizardUserPromptVM.cs" />
     <Compile Include="Interfaces\ViewModel\IFlatWizardVM.cs" />
     <Compile Include="Interfaces\ViewModel\IFocusTargetsVM.cs" />

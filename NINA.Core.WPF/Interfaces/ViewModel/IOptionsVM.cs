@@ -51,7 +51,6 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ICommand OpenPS2FileDiagCommand { get; }
         ICommand OpenSequenceFolderDiagCommand { get; }
         ICommand OpenSequenceTemplateDiagCommand { get; }
-        ICommand OpenSharpCapSensorAnalysisFolderDiagCommand { get; }
         ICommand OpenSkyAtlasImageRepositoryDiagCommand { get; }
         ICommand OpenSkySurveyCacheDirectoryDiagCommand { get; }
         ICommand OpenWebRequestCommand { get; }

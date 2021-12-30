@@ -380,7 +380,6 @@
     <Compile Include="ViewModel\ImageGeometryProvider.cs" />
     <Compile Include="ViewModel\ImageSaveController.cs" />
     <Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
-    <Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
     <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
     <Compile Include="ViewModel\Sequencer\Sequence2\Sequence2VM.cs" />
     <Compile Include="CompositionRoot.cs" />
@@ -500,9 +499,6 @@
     </Compile>
     <Compile Include="View\Imaging\AnchorableAutoFocusView.xaml.cs">
       <DependentUpon>AnchorableAutoFocusView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\AnchorableExposureCalculatorView.xaml.cs">
-      <DependentUpon>AnchorableExposureCalculatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Imaging\AnchorableFlatDeviceView.xaml.cs">
       <DependentUpon>AnchorableFlatDeviceView.xaml</DependentUpon>
@@ -858,10 +854,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Imaging\AnchorableAutoFocusView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\AnchorableExposureCalculatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

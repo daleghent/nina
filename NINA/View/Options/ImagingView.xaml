@@ -534,42 +534,6 @@
                                 SelectedItem="{Binding DataContext.PluggableAutoFocusVMFactory.SelectedBehavior, ElementName=UC}"
                                 SelectedValuePath="Name" />
                         </StackPanel>
-                        <Grid Margin="0,5,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblSharpCapSensorAnalysisPath}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblSharpCapSensorAnalysisPathTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <TextBox
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Text="{Binding SharpCapSensorAnalysisFolder}" />
-                            <Button
-                                Grid.Column="2"
-                                Width="20"
-                                Height="20"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Command="{Binding DataContext.OpenSharpCapSensorAnalysisFolderDiagCommand, ElementName=UC}">
-                                <Path
-                                    Margin="2,10,2,0"
-                                    Data="{StaticResource DotsSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                                <Button.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblSharpCapSensorAnalysisPathTooltip}" />
-                                </Button.ToolTip>
-                            </Button>
-                        </Grid>
                         <Border
                             Margin="0,10,0,0"
                             BorderBrush="{StaticResource BorderBrush}"

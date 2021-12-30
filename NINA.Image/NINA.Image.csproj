@@ -178,7 +178,6 @@
     <Compile Include="ImageAnalysis\IStarAnnotator.cs" />
     <Compile Include="ImageAnalysis\IStarDetection.cs" />
     <Compile Include="ImageAnalysis\NoBlurCannyEdgeDetector.cs" />
-    <Compile Include="ImageAnalysis\SharpCapSensorAnalysisReader.cs" />
     <Compile Include="ImageAnalysis\StarAnnotator.cs" />
     <Compile Include="ImageAnalysis\StarDetection.cs" />
     <Compile Include="ImageData\AllImageStatistics.cs" />
