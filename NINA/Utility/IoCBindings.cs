@@ -102,7 +102,6 @@ namespace NINA.Utility {
                     Bind<IOptionsVM>().To<OptionsVM>().InSingletonScope();
                     Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
                     Bind<IGuiderVM>().To<GuiderVM>().InSingletonScope();
-                    Bind<IExposureCalculatorVM>().To<ExposureCalculatorVM>().InSingletonScope();
                     Bind<IPolarAlignmentVM>().To<PolarAlignmentVM>().InSingletonScope();
                     Bind<ISkyAtlasVM>().To<SkyAtlasVM>().InSingletonScope();
                     Bind<IFramingAssistantVM>().To<FramingAssistantVM>().InSingletonScope();
@@ -176,7 +175,6 @@ namespace NINA.Utility {
                     Bind<IPlanetariumFactory>().To<PlanetariumFactory>().InSingletonScope();
                     Bind<IAllDeviceConsumer>().To<AllDeviceConsumer>().InSingletonScope();
 
-                    Bind<ISharpCapSensorAnalysisReader>().To<DefaultSharpCapSensorAnalysisReader>();
                     Bind<IApplicationResourceDictionary>().To<ApplicationResourceDictionary>();
                     Bind<INighttimeCalculator>().To<NighttimeCalculator>().InSingletonScope();
                     Bind<IDeepSkyObjectSearchVM>().To<DeepSkyObjectSearchVM>();

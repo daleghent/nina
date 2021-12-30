@@ -103,7 +103,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
             bool stoppedGuiding = false;
             try {
-                var orientation = 0.0f;
                 float rotationDistance = float.MaxValue;
 
                 stoppedGuiding = await guiderMediator.StopGuiding(token);
@@ -111,13 +110,13 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 var targetRotation = (float)Rotation;
 
                 /* Loop until the rotation is within tolerances*/
-                while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
+                while (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance))) {
                     var solveResult = await Solve(progress, token);
                     if (!solveResult.Success) {
                         throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                     }
 
-                    orientation = (float)solveResult.Orientation;
+                    var orientation = (float)solveResult.Orientation;
                     rotatorMediator.Sync(orientation);
 
                     var prevTargetRotation = targetRotation;
@@ -142,7 +141,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                         }
                     }
 
-                    if (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
+                    if (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance))) {
                         Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");
                         await rotatorMediator.MoveRelative(rotationDistance, token);
                         token.ThrowIfCancellationRequested();

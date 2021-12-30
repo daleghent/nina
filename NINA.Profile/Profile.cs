@@ -49,7 +49,6 @@ namespace NINA.Profile {
     [KnownType(typeof(FlatWizardSettings))]
     [KnownType(typeof(PlanetariumSettings))]
     [KnownType(typeof(SwitchSettings))]
-    [KnownType(typeof(ExposureCalculatorSettings))]
     [KnownType(typeof(SnapShotControlSettings))]
     [KnownType(typeof(SafetyMonitorSettings))]
     [KnownType(typeof(PluginSettings))]
@@ -118,7 +117,6 @@ namespace NINA.Profile {
             SwitchSettings = new SwitchSettings();
             TelescopeSettings = new TelescopeSettings();
             WeatherDataSettings = new WeatherDataSettings();
-            ExposureCalculatorSettings = new ExposureCalculatorSettings();
             SnapShotControlSettings = new SnapShotControlSettings();
             SafetyMonitorSettings = new SafetyMonitorSettings();
             PluginSettings = new PluginSettings();
@@ -150,7 +148,6 @@ namespace NINA.Profile {
             SwitchSettings.PropertyChanged += SettingsChanged;
             TelescopeSettings.PropertyChanged += SettingsChanged;
             WeatherDataSettings.PropertyChanged += SettingsChanged;
-            ExposureCalculatorSettings.PropertyChanged += SettingsChanged;
             SnapShotControlSettings.PropertyChanged += SettingsChanged;
             SafetyMonitorSettings.PropertyChanged += SettingsChanged;
             PluginSettings.PropertyChanged += SettingsChanged;
@@ -278,9 +275,6 @@ namespace NINA.Profile {
 
         [DataMember]
         public IPlanetariumSettings PlanetariumSettings { get; set; }
-
-        [DataMember]
-        public IExposureCalculatorSettings ExposureCalculatorSettings { get; set; }
 
         [DataMember]
         public ISnapShotControlSettings SnapShotControlSettings { get; set; }

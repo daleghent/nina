@@ -42,10 +42,6 @@ namespace NINA.Profile {
             noiseReduction = NoiseReductionEnum.None;
             detectStars = false;
             autoStretch = true;
-            var scFolder = Environment.ExpandEnvironmentVariables(@"%APPDATA%\SharpCap\SensorCharacteristics\");
-            if (Directory.Exists(scFolder)) {
-                sharpCapSensorAnalysisFolder = scFolder;
-            }
         }
 
         private double autoStretchFactor;

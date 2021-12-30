@@ -70,7 +70,6 @@
     <Compile Include="CameraSettings.cs" />
     <Compile Include="ColorSchemaSettings.cs" />
     <Compile Include="DomeSettings.cs" />
-    <Compile Include="ExposureCalculatorSettings.cs" />
     <Compile Include="FilterWheelSettings.cs" />
     <Compile Include="FlatDeviceSettings.cs" />
     <Compile Include="FlatWizardSettings.cs" />
@@ -84,7 +83,6 @@
     <Compile Include="Interfaces\ICameraSettings.cs" />
     <Compile Include="Interfaces\IColorSchemaSettings.cs" />
     <Compile Include="Interfaces\IDomeSettings.cs" />
-    <Compile Include="Interfaces\IExposureCalculatorSettings.cs" />
     <Compile Include="Interfaces\IFilterWheelSettings.cs" />
     <Compile Include="Interfaces\IFlatDeviceSettings.cs" />
     <Compile Include="Interfaces\IFlatWizardSettings.cs" />

@@ -78,7 +78,6 @@ namespace NINA.Utility.AvalonDock {
 
         public DataTemplate SwitchTemplate { get; set; }
         public DataTemplate FlatDeviceTemplate { get; set; }
-        public DataTemplate ExposureCalculatorTemplate { get; set; }
 
         public DataTemplate DomeTemplate { get; set; }
 
@@ -142,9 +141,6 @@ namespace NINA.Utility.AvalonDock {
 
                 case FlatDeviceVM _:
                     return FlatDeviceTemplate;
-
-                case ExposureCalculatorVM _:
-                    return ExposureCalculatorTemplate;
 
                 case DomeVM _:
                     return DomeTemplate;

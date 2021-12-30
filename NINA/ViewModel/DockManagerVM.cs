@@ -70,7 +70,6 @@ namespace NINA.ViewModel {
                              IGuiderVM guiderVM,
                              IFocusTargetsVM focusTargetsVM,
                              IAutoFocusToolVM autoFocusToolVM,
-                             IExposureCalculatorVM exposureCalculatorVM,
                              IImageHistoryVM imageHistoryVM,
                              IImageControlVM imageControlVM,
                              IImageStatisticsVM imageStatisticsVM,
@@ -105,7 +104,6 @@ namespace NINA.ViewModel {
             initAnchorables.Add(polarAlignmentVM);
             initAnchorables.Add(autoFocusToolVM);
             initAnchorables.Add(focusTargetsVM);
-            initAnchorables.Add(exposureCalculatorVM);
             initAnchorables.Add(flatDeviceVM);
             initAnchorables.Add(safetyMonitorVM);
 
@@ -131,7 +129,6 @@ namespace NINA.ViewModel {
             initAnchorableTools.Add(polarAlignmentVM);
             initAnchorableTools.Add(autoFocusToolVM);
             initAnchorableTools.Add(focusTargetsVM);
-            initAnchorableTools.Add(exposureCalculatorVM);
 
             ClosingCommand = new RelayCommand(ClosingApplication);
 
