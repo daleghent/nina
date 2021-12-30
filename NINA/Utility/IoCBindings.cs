@@ -102,7 +102,6 @@ namespace NINA.Utility {
                     Bind<IOptionsVM>().To<OptionsVM>().InSingletonScope();
                     Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
                     Bind<IGuiderVM>().To<GuiderVM>().InSingletonScope();
-                    Bind<IPolarAlignmentVM>().To<PolarAlignmentVM>().InSingletonScope();
                     Bind<ISkyAtlasVM>().To<SkyAtlasVM>().InSingletonScope();
                     Bind<IFramingAssistantVM>().To<FramingAssistantVM>().InSingletonScope();
                     Bind<IFocusTargetsVM>().To<FocusTargetsVM>().InSingletonScope();

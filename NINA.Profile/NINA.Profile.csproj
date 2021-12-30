@@ -94,7 +94,6 @@
     <Compile Include="Interfaces\IMeridianFlipSettings.cs" />
     <Compile Include="Interfaces\IPlanetariumSettings.cs" />
     <Compile Include="Interfaces\IPlateSolveSettings.cs" />
-    <Compile Include="Interfaces\IPolarAlignmentSettings.cs" />
     <Compile Include="Interfaces\IProfile.cs" />
     <Compile Include="Interfaces\IProfileService.cs" />
     <Compile Include="Interfaces\IRotatorSettings.cs" />
@@ -113,7 +112,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PluginSettingsTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="PolarAlignmentSettings.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="ProfileInfo.cs" />
     <Compile Include="ProfileService.cs" />

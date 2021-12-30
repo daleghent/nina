@@ -38,7 +38,6 @@ namespace NINA.Profile.Interfaces {
         IMeridianFlipSettings MeridianFlipSettings { get; set; }
         IPlanetariumSettings PlanetariumSettings { get; set; }
         IPlateSolveSettings PlateSolveSettings { get; set; }
-        IPolarAlignmentSettings PolarAlignmentSettings { get; set; }
         IRotatorSettings RotatorSettings { get; set; }
         IFlatDeviceSettings FlatDeviceSettings { get; set; }
         ISequenceSettings SequenceSettings { get; set; }

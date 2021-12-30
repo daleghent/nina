@@ -71,12 +71,6 @@
                     </DataTemplate>
                 </util:PaneTemplateSelector.PlatesolveTemplate>
 
-                <util:PaneTemplateSelector.PolarAlignmentTemplate>
-                    <DataTemplate>
-                        <view:AnchorablePolarAlignmentView />
-                    </DataTemplate>
-                </util:PaneTemplateSelector.PolarAlignmentTemplate>
-
                 <util:PaneTemplateSelector.GuiderTemplate>
                     <DataTemplate>
                         <view:AnchorableGuiderView />

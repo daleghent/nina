@@ -40,7 +40,6 @@ namespace NINA.Profile {
     [KnownType(typeof(ImageSettings))]
     [KnownType(typeof(MeridianFlipSettings))]
     [KnownType(typeof(PlateSolveSettings))]
-    [KnownType(typeof(PolarAlignmentSettings))]
     [KnownType(typeof(RotatorSettings))]
     [KnownType(typeof(FlatDeviceSettings))]
     [KnownType(typeof(SequenceSettings))]
@@ -110,7 +109,6 @@ namespace NINA.Profile {
             MeridianFlipSettings = new MeridianFlipSettings();
             PlanetariumSettings = new PlanetariumSettings();
             PlateSolveSettings = new PlateSolveSettings();
-            PolarAlignmentSettings = new PolarAlignmentSettings();
             RotatorSettings = new RotatorSettings();
             FlatDeviceSettings = new FlatDeviceSettings();
             SequenceSettings = new SequenceSettings();
@@ -141,7 +139,6 @@ namespace NINA.Profile {
             MeridianFlipSettings.PropertyChanged += SettingsChanged;
             PlanetariumSettings.PropertyChanged += SettingsChanged;
             PlateSolveSettings.PropertyChanged += SettingsChanged;
-            PolarAlignmentSettings.PropertyChanged += SettingsChanged;
             RotatorSettings.PropertyChanged += SettingsChanged;
             FlatDeviceSettings.PropertyChanged += SettingsChanged;
             SequenceSettings.PropertyChanged += SettingsChanged;
@@ -248,9 +245,6 @@ namespace NINA.Profile {
 
         [DataMember]
         public IPlateSolveSettings PlateSolveSettings { get; set; }
-
-        [DataMember]
-        public IPolarAlignmentSettings PolarAlignmentSettings { get; set; }
 
         [DataMember]
         public IRotatorSettings RotatorSettings { get; set; }

@@ -48,8 +48,6 @@ namespace NINA.Utility.AvalonDock {
 
         public DataTemplate PlatesolveTemplate { get; set; }
 
-        public DataTemplate PolarAlignmentTemplate { get; set; }
-
         public DataTemplate GuiderTemplate { get; set; }
 
         public DataTemplate FilterWheelTemplate { get; set; }
@@ -84,6 +82,7 @@ namespace NINA.Utility.AvalonDock {
         public DataTemplate FailedToLoadTemplate { get; set; }
 
         public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container) {
+            if (item == null) { return FailedToLoadTemplate; }
             switch (item) {
                 case CameraVM _:
                     return CameraTemplate;
@@ -93,9 +92,6 @@ namespace NINA.Utility.AvalonDock {
 
                 case AnchorablePlateSolverVM _:
                     return PlatesolveTemplate;
-
-                case PolarAlignmentVM _:
-                    return PolarAlignmentTemplate;
 
                 case GuiderVM _:
                     return GuiderTemplate;

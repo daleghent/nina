@@ -64,7 +64,6 @@ namespace NINA.ViewModel {
                              IWeatherDataVM weatherDataVM,
                              IDomeVM domeVM,
                              IAnchorableSnapshotVM snapshotVM,
-                             IPolarAlignmentVM polarAlignmentVM,
                              IAnchorablePlateSolverVM plateSolverVM,
                              ITelescopeVM telescopeVM,
                              IGuiderVM guiderVM,
@@ -101,7 +100,6 @@ namespace NINA.ViewModel {
             initAnchorables.Add(snapshotVM);
             initAnchorables.Add(thumbnailVM);
             initAnchorables.Add(plateSolverVM);
-            initAnchorables.Add(polarAlignmentVM);
             initAnchorables.Add(autoFocusToolVM);
             initAnchorables.Add(focusTargetsVM);
             initAnchorables.Add(flatDeviceVM);
@@ -126,7 +124,6 @@ namespace NINA.ViewModel {
             initAnchorableTools.Add(snapshotVM);
             initAnchorableTools.Add(thumbnailVM);
             initAnchorableTools.Add(plateSolverVM);
-            initAnchorableTools.Add(polarAlignmentVM);
             initAnchorableTools.Add(autoFocusToolVM);
             initAnchorableTools.Add(focusTargetsVM);
 
@@ -184,9 +181,10 @@ namespace NINA.ViewModel {
 
                     var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                     serializer.LayoutSerializationCallback += (s, args) => {
-                        var d = (DockableVM)args.Content;
-                        d.IsVisible = true;
-                        args.Content = d;
+                        if (args.Content is DockableVM d) {
+                            d.IsVisible = true;
+                            args.Content = d;
+                        }
                     };
 
                     LoadDefaultLayout(serializer);

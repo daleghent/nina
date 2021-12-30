@@ -195,7 +195,6 @@
     <Compile Include="Interfaces\ViewModel\IImageStatisticsVM.cs" />
     <Compile Include="Interfaces\ViewModel\IMeridianFlipVM.cs" />
     <Compile Include="Interfaces\ViewModel\IOptionsVM.cs" />
-    <Compile Include="Interfaces\ViewModel\IPolarAlignmentVM.cs" />
     <Compile Include="Interfaces\ViewModel\ISkyAtlasVM.cs" />
     <Compile Include="Interfaces\ViewModel\ISkyMapAnnotator.cs" />
     <Compile Include="Interfaces\ViewModel\IThumbnailVM.cs" />
