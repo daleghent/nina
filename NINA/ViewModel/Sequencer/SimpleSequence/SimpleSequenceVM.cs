@@ -398,7 +398,6 @@ namespace NINA.ViewModel {
                                     } else {
                                         template.Target.Rotation = 0;
                                     }
-                                    template.Target.Rotation = 0;
                                     this.Targets.Add(template);
                                 }
                             }
