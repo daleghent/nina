@@ -62,7 +62,7 @@ namespace NINA.Astrometry {
 
         public static DateTime GetReferenceDate(DateTime reference) {
             DateTime d = reference;
-            if (d.Hour > 12) {
+            if (d.Hour > 12 || (d.Hour == 12 && d.Minute > 0)) {
                 d = new DateTime(d.Year, d.Month, d.Day, 12, 0, 0, reference.Kind);
             } else {
                 var tmp = d.AddDays(-1);
