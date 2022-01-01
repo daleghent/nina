@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -106,9 +106,9 @@ namespace NINA.Equipment.Equipment.MyDome {
 
             var domeAltitudeRadians = Math.Atan2(Math.Abs(intersection.Z), Math.Abs(intersection.X));
             return new TopocentricCoordinates(
-                azimuth: Angle.ByRadians(domeAzimuthRadians), 
+                azimuth: Angle.ByRadians(domeAzimuthRadians),
                 altitude: Angle.ByRadians(domeAltitudeRadians),
-                latitude: siteLatitude, 
+                latitude: siteLatitude,
                 longitude: siteLongitude);
         }
 

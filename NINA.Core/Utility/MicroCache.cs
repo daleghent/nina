@@ -1,4 +1,18 @@
-﻿using NINA.Core.Interfaces.Utility;
+﻿#region "copyright"
+
+/*
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+#endregion "copyright"
+
+using NINA.Core.Interfaces.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +24,7 @@ using System.Threading.Tasks;
 namespace NINA.Core.Utility {
 
     public class DefaultMicroCacheFactory : IMicroCacheFactory {
+
         public IMicroCache<T> Create<T>() {
             return Create<T>(MemoryCache.Default);
         }
@@ -23,13 +38,16 @@ namespace NINA.Core.Utility {
      * Cache with a configurable expiration policy, which ensures a get function is evaluated only once even when there are multiple concurrent readers.
      * Adapted from StackOverflow: https://stackoverflow.com/questions/32414054/cache-object-with-objectcache-in-net-with-expiry-time
      */
+
     public class MicroCache<T> : IMicroCache<T> {
+
         public MicroCache(ObjectCache objectCache) {
             if (objectCache == null)
                 throw new ArgumentNullException("objectCache");
 
             this.cache = objectCache;
         }
+
         private readonly ObjectCache cache;
         private ReaderWriterLockSlim synclock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 
@@ -87,7 +105,6 @@ namespace NINA.Core.Utility {
                 synclock.ExitWriteLock();
             }
         }
-
 
         private bool TryGetValue(string key, out LazyLock<T> value) {
             value = (LazyLock<T>)this.cache.Get(key);

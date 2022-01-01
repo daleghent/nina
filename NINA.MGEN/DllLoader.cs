@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -22,7 +22,7 @@ namespace NINA.MGEN {
     public static class DllLoader {
 
         [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
-        private extern static IntPtr LoadLibrary(string librayName);
+        private static extern IntPtr LoadLibrary(string librayName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

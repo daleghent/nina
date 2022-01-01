@@ -1,4 +1,18 @@
-﻿using ASCOM;
+﻿#region "copyright"
+
+/*
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+#endregion "copyright"
+
+using ASCOM;
 using Castle.DynamicProxy;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
@@ -15,11 +29,12 @@ using static NINA.Equipment.Model.CaptureSequence;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
-    class GrpcErrorPropagatingProxy<T> : IAsyncInterceptor where T: class {
+    internal class GrpcErrorPropagatingProxy<T> : IAsyncInterceptor where T : class {
         private static readonly ProxyGenerator proxyGenerator = new ProxyGenerator();
         private static readonly Newtonsoft.Json.JsonSerializer jsonSerializer = Newtonsoft.Json.JsonSerializer.Create();
 
-        public GrpcErrorPropagatingProxy() { }
+        public GrpcErrorPropagatingProxy() {
+        }
 
         public static T Wrap(T wrapped) {
             if (typeof(T).IsInterface) {
@@ -86,10 +101,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
     }
 
-    class SBIGServerLoggingProxy<T> : IAsyncInterceptor where T : class {
+    internal class SBIGServerLoggingProxy<T> : IAsyncInterceptor where T : class {
         private static readonly ProxyGenerator proxyGenerator = new ProxyGenerator();
 
         private readonly SBIGCamera camera;
+
         public SBIGServerLoggingProxy(SBIGCamera camera) {
             this.camera = camera;
         }
@@ -236,7 +252,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public override async Task<Empty> BinX_set(
-            SetShortPropertyRequest request, 
+            SetShortPropertyRequest request,
             ServerCallContext context) {
             this.camera.BinX = checked((short)request.Value);
             return new Empty();
@@ -249,7 +265,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public override async Task<Empty> BinY_set(
-            SetShortPropertyRequest request, 
+            SetShortPropertyRequest request,
             ServerCallContext context) {
             this.camera.BinY = checked((short)request.Value);
             return new Empty();
@@ -672,32 +688,32 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public override async Task<GetBoolPropertyReply> CanFastReadout_get(
-            Empty request, 
+            Empty request,
             ServerCallContext context) {
             return new GetBoolPropertyReply() { Value = false };
         }
 
         public override async Task<GetDoublePropertyReply> ExposureMin_get(
-            Empty request, 
+            Empty request,
             ServerCallContext context) {
             return new GetDoublePropertyReply() { Value = this.camera.ExposureMin };
         }
 
         public override async Task<GetDoublePropertyReply> ExposureMax_get(
-            Empty request, 
+            Empty request,
             ServerCallContext context) {
             return new GetDoublePropertyReply() { Value = this.camera.ExposureMax };
         }
 
         public override async Task<GetDoublePropertyReply> ExposureResolution_get(
-            Empty request, 
+            Empty request,
             ServerCallContext context) {
             // TODO: Perhaps this should be on the ICamera?
             return new GetDoublePropertyReply() { Value = 0.01d };
         }
 
         public override async Task<Empty> Offset_set(
-            SetIntPropertyRequest request, 
+            SetIntPropertyRequest request,
             ServerCallContext context) {
             this.camera.Offset = request.Value;
             return new Empty();

@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -23,9 +23,9 @@ using System.Threading.Tasks;
 namespace NINA.Plugin {
 
     public static class Constants {
-        public readonly static string CoreExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Plugins");
-        public readonly static string UserExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
-        public readonly static string StagingFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginStaging");
-        public readonly static string DeletionFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginDeletion");
+        public static readonly string CoreExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Plugins");
+        public static readonly string UserExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
+        public static readonly string StagingFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginStaging");
+        public static readonly string DeletionFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginDeletion");
     }
 }

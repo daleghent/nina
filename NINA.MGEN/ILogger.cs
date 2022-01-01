@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -37,26 +37,26 @@ namespace NINA.MGEN {
             string customMsg,
             Exception ex,
             [CallerMemberName] string memberName = "",
-            [CallerFilePath]string sourceFilePath = "");
+            [CallerFilePath] string sourceFilePath = "");
 
         void Error(
             string message,
-            [CallerMemberName]string memberName = "",
-            [CallerFilePath]string sourceFilePath = "");
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "");
 
         void Info(
             string message,
             [CallerMemberName] string memberName = "",
-            [CallerFilePath]string sourceFilePath = "");
+            [CallerFilePath] string sourceFilePath = "");
 
         void Trace(
             string message,
-            [CallerMemberName]string memberName = "",
+            [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "");
 
         void Warning(
             string message,
-            [CallerMemberName]string memberName = "",
-            [CallerFilePath]string sourceFilePath = "");
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "");
     }
 }

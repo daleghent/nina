@@ -1,9 +1,25 @@
-﻿using Accord.Imaging.Filters;
+﻿#region "copyright"
+
+/*
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+#endregion "copyright"
+
+using Accord.Imaging.Filters;
 using System;
 using System.Drawing;
 
 namespace NINA.Image.ImageAnalysis {
+
     public static class DetectionUtility {
+
         public static Rectangle GetCropRectangle(Bitmap image, double cropRatio) {
             int xcoord = (int)Math.Floor((image.Width - image.Width * cropRatio) / 2d);
             int ycoord = (int)Math.Floor((image.Height - image.Height * cropRatio) / 2d);
@@ -52,9 +68,9 @@ namespace NINA.Image.ImageAnalysis {
                 var outsideCropRatio = outerCropRatio >= 1.0 ? innerCropRatio : outerCropRatio;
                 var startFactor = (1.0 - outsideCropRatio) / 2.0;
                 outsideCropRect = new Rectangle(
-                    (int)Math.Floor(imageSize.Width * startFactor), 
-                    (int)Math.Floor(imageSize.Height * startFactor), 
-                    (int)(imageSize.Width * outsideCropRatio), 
+                    (int)Math.Floor(imageSize.Width * startFactor),
+                    (int)Math.Floor(imageSize.Height * startFactor),
+                    (int)(imageSize.Width * outsideCropRatio),
                     (int)(imageSize.Height * outsideCropRatio));
             }
 

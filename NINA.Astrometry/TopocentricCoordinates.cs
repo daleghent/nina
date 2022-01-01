@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -32,6 +32,7 @@ namespace NINA.Astrometry {
         public Angle Longitude { get; private set; }
         public double Elevation { get; private set; }
         public AltitudeSite AltitudeSite => Azimuth.Degree >= 0 && Azimuth.Degree < 180 ? AltitudeSite.EAST : AltitudeSite.WEST;
+
         public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude, double elevation, ICustomDateTime dateTime) {
             this.DateTime = dateTime;
             this.Azimuth = azimuth;
@@ -45,7 +46,7 @@ namespace NINA.Astrometry {
             : this(azimuth, altitude, latitude, longitude, 0.0d, dateTime) {
         }
 
-        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude) 
+        public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude)
             : this(azimuth, altitude, latitude, longitude, SystemDateTime) {
         }
 

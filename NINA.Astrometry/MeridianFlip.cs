@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -70,8 +70,8 @@ namespace NINA.Astrometry {
                         // Thus, the next meridian flip won't be for another 12 hours
                         timeToMeridianFlip += TimeSpan.FromHours(12.0);
                     }
-                    if (timeToMeridianFlip < TimeSpan.FromHours(1) 
-                        && timeToMeridian > (TimeSpan.FromHours(12) - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian)) 
+                    if (timeToMeridianFlip < TimeSpan.FromHours(1)
+                        && timeToMeridian > (TimeSpan.FromHours(12) - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian))
                         && expectedPierSide == currentSideOfPier) {
                         // The telescope did travers the meridian recently, but the flip is soon
                         // The side of pier is already what it should be

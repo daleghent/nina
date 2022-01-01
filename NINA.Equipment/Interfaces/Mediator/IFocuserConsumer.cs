@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -25,6 +25,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
             Filter = filter;
             Timestamp = timestamp;
         }
+
         public string Filter { get; set; }
 
         public DateTime Timestamp { get; set; }
@@ -39,6 +40,5 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void UpdateEndAutoFocusRun(AutoFocusInfo info);
 
         void UpdateUserFocused(FocuserInfo info);
-
     }
 }

@@ -1,28 +1,16 @@
-﻿// Source copied from http://eliotg.github.io/SbigSharp/
-// Changes from the source are highlighted by "// CHANGE: " comments
+﻿#region "copyright"
+
 /*
-MIT License
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
-Copyright (c) 2019 Eliot
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
+
+#endregion "copyright"
 
 using NINA.Core.Utility;
 using System;
@@ -33,17 +21,19 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
-{
-    public static class SBIG
-    {
+namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp {
+
+    public static class SBIG {
+
         static SBIG() {
             Logger.Trace($"SBIGSDK: Loading SBIG SDK dll");
             DllLoader.LoadDll(Path.Combine("SBIG", DLLNAME));
         }
 
         //
+
         #region Constants
+
         //
         private const string DLLNAME = "SBIGUDrv.dll";
 
@@ -52,11 +42,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         #endregion
 
         //
+
         #region Enums
+
         //
 
-        public enum Cmd : ushort
-        {
+        public enum Cmd : ushort {
             /*
                 General Use Commands
             */
@@ -160,8 +151,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             CC_LAST_COMMAND
         } // enum Cmd
 
-        public enum Error : ushort
-        {
+        public enum Error : ushort {
             /* 0 - 10 */
             CE_NO_ERROR = 0,
             CE_CAMERA_NOT_FOUND = 1,
@@ -215,8 +205,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             CE_NEXT_ERROR
         } // enum Error
 
-        public enum DeviceType : ushort
-        {
+        public enum DeviceType : ushort {
             LPT1 = 1,
             LPT2 = 2,
             LPT3 = 3,
@@ -231,15 +220,13 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             USB8 = 0x7F09
         }
 
-        public enum CCD : ushort
-        {
+        public enum CCD : ushort {
             Imaging = 0,
             Tracking = 1,
             ExternalTrackingInStxOrStl = 2
         }
 
-        public enum CcdInfoRequest : ushort
-        {
+        public enum CcdInfoRequest : ushort {
             ImagingCcdStandard = 0,
             TrackingCcdStandard,
             CameraInfoExtended,
@@ -249,16 +236,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             CcdCameraExtended
         }
 
-        public enum AbgState : ushort
-        {
+        public enum AbgState : ushort {
             Off = 0,
             Low,
             Med,
             High
         }
 
-        public enum ShutterState : ushort
-        {
+        public enum ShutterState : ushort {
             Unchanged = 0,
             Open,
             Close,
@@ -267,8 +252,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             CloseStlExternal
         }
 
-        public enum CameraType : ushort
-        {
+        public enum CameraType : ushort {
             ST_7 = 4,
             ST_8,
             ST_5C,
@@ -290,63 +274,57 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             NoCamera = 0xFFFF
         }
 
-        public enum LedState : ushort
-        {
+        public enum LedState : ushort {
             Off = 0,
             On,
             BlinkLow,
             BlinkHigh
         }
 
-        public enum DriverControlParam : ushort
-        { 
-	        DCP_USB_FIFO_ENABLE, 
-	        DCP_CALL_JOURNAL_ENABLE,
-	        DCP_IVTOH_RATIO, 
-	        DCP_USB_FIFO_SIZE, 
-	        DCP_USB_DRIVER, 
-	        DCP_KAI_RELGAIN,
-	        DCP_USB_PIXEL_DL_ENABLE, 
-	        DCP_HIGH_THROUGHPUT, 
-	        DCP_VDD_OPTIMIZED,
-	        DCP_AUTO_AD_GAIN, 
-	        DCP_NO_HCLKS_FOR_INTEGRATION, 
-	        DCP_TDI_MODE_ENABLE, 
-	        DCP_VERT_FLUSH_CONTROL_ENABLE, 
-	        DCP_ETHERNET_PIPELINE_ENABLE, 
-	        DCP_FAST_LINK, 
-	        DCP_OVERSCAN_ROWSCOLS, 
-	        DCP_PIXEL_PIPELINE_ENABLE, 
-	        DCP_COLUMN_REPAIR_ENABLE,
-	        DCP_WARM_PIXEL_REPAIR_ENABLE, 
-	        DCP_WARM_PIXEL_REPAIR_COUNT, 
-	        DCP_LAST 
+        public enum DriverControlParam : ushort {
+            DCP_USB_FIFO_ENABLE,
+            DCP_CALL_JOURNAL_ENABLE,
+            DCP_IVTOH_RATIO,
+            DCP_USB_FIFO_SIZE,
+            DCP_USB_DRIVER,
+            DCP_KAI_RELGAIN,
+            DCP_USB_PIXEL_DL_ENABLE,
+            DCP_HIGH_THROUGHPUT,
+            DCP_VDD_OPTIMIZED,
+            DCP_AUTO_AD_GAIN,
+            DCP_NO_HCLKS_FOR_INTEGRATION,
+            DCP_TDI_MODE_ENABLE,
+            DCP_VERT_FLUSH_CONTROL_ENABLE,
+            DCP_ETHERNET_PIPELINE_ENABLE,
+            DCP_FAST_LINK,
+            DCP_OVERSCAN_ROWSCOLS,
+            DCP_PIXEL_PIPELINE_ENABLE,
+            DCP_COLUMN_REPAIR_ENABLE,
+            DCP_WARM_PIXEL_REPAIR_ENABLE,
+            DCP_WARM_PIXEL_REPAIR_COUNT,
+            DCP_LAST
         }
 
-        public enum TempStatusRequest : ushort
-        {
+        public enum TempStatusRequest : ushort {
             TEMP_STATUS_STANDARD,
             TEMP_STATUS_ADVANCED,
             TEMP_STATUS_ADVANCED2
         }
 
-        public enum A2dSize : ushort
-        {
+        public enum A2dSize : ushort {
             Unknown = 0,
             TwelveBits = 1,
             SixteenBits = 2
         }
 
-        public enum FilterType : ushort
-        {
+        public enum FilterType : ushort {
             Unknown = 0,
             External = 1,
             TwoPosition = 2,
             FivePosition = 3
         }
 
-        public enum ReadoutMode : ushort
-        {
+        public enum ReadoutMode : ushort {
             NoBinning = 0,
             Bin2x2 = 1,
             Bin3x3 = 2,
@@ -360,14 +338,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             BinNxN = 10, // N specified in high byte, STF-8300 only
         }
 
-        public enum AntiBloomingGatePresence : ushort
-        {
+        public enum AntiBloomingGatePresence : ushort {
             NoABG = 0,
             HasABG = 1
         }
 
-        public enum TemperatureRegulation : ushort
-        {
+        public enum TemperatureRegulation : ushort {
             Off = 0,
             On,
             Override,
@@ -453,28 +429,27 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             CFWG_CAL_DATA,          /*!< Calibration data	*/
             CFWG_DATA_REGISTERS		/*!< Data registers		*/
         }
-        
+
         #endregion Enums
 
         //
+
         #region Types
+
         //
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class EstablishLinkParams
-        {
+        public class EstablishLinkParams {
             public ushort sbigUseOnly;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class EstablishLinkResults
-        {
+        public class EstablishLinkResults {
             public CameraType cameraType;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class StartExposureParams2
-        {
+        public class StartExposureParams2 {
             public CCD ccd;
             public uint exposureTime;  //  integration time in hundredths of a second in the least significant 24 bits
             public AbgState abgState;
@@ -487,27 +462,25 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class EndExposureParams
-        {
+        public class EndExposureParams {
             public CCD ccd;
 
-            public EndExposureParams() : this(CCD.Imaging) { }
-            public EndExposureParams(CCD ccd)
-            {
+            public EndExposureParams() : this(CCD.Imaging) {
+            }
+
+            public EndExposureParams(CCD ccd) {
                 this.ccd = ccd;
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class ReadoutLineParams
-        {
+        public class ReadoutLineParams {
             public CCD ccd;
             public ushort readoutMode;
             public ushort pixelStart;
             public ushort pixelLength;
 
-            public static ushort MakeNBinMode(ReadoutMode rlp, ushort n)
-            {
+            public static ushort MakeNBinMode(ReadoutMode rlp, ushort n) {
                 // put the high byte in place, but only if it's one of those binning modes
                 if (ReadoutMode.BinNx1 == rlp || ReadoutMode.BinNx2 == rlp || ReadoutMode.BinNx3 == rlp || ReadoutMode.BinNxN == rlp)
                     return (ushort)(((ushort)rlp) | (n << 8));
@@ -517,30 +490,28 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class QueryTemperatureStatusParams
-        {
-	        public TempStatusRequest request;
+        public class QueryTemperatureStatusParams {
+            public TempStatusRequest request;
 
-            public QueryTemperatureStatusParams() : this(TempStatusRequest.TEMP_STATUS_STANDARD) { }
-            public QueryTemperatureStatusParams(TempStatusRequest tsr)
-            {
+            public QueryTemperatureStatusParams() : this(TempStatusRequest.TEMP_STATUS_STANDARD) {
+            }
+
+            public QueryTemperatureStatusParams(TempStatusRequest tsr) {
                 request = tsr;
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class QueryTemperatureStatusResults
-        {
-	        public ushort enabled;
-	        public ushort ccdSetpoint;
-	        public ushort power;
-	        public ushort ccdThermistor;
-	        public ushort ambientThermistor;
+        public class QueryTemperatureStatusResults {
+            public ushort enabled;
+            public ushort ccdSetpoint;
+            public ushort power;
+            public ushort ccdThermistor;
+            public ushort ambientThermistor;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class QueryTemperatureStatusResults2
-        {
+        public class QueryTemperatureStatusResults2 {
             public ushort coolingEnabled;
             public ushort fanEnabled;
             public double ccdSetpoint;
@@ -561,8 +532,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// controls the thermoelectric cooler, using old school A2D units (see docs)
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class SetTemperatureRegulationParams
-        {
+        public class SetTemperatureRegulationParams {
             public TemperatureRegulation state;
             public ushort ccdSetpointA2dUnits;
         }
@@ -571,88 +541,77 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// controls the thermoelectric cooler in nice, simple degrees C
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class SetTemperatureRegulationParams2
-        {
+        public class SetTemperatureRegulationParams2 {
             public TemperatureRegulation state;
             public double ccdSetpointCelcius;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class QueryCommandStatusParams
-        {
+        public class QueryCommandStatusParams {
             public Cmd command;
 
-            public QueryCommandStatusParams() : this(Cmd.CC_NULL) { }
-            public QueryCommandStatusParams(Cmd cmd)
-            {
+            public QueryCommandStatusParams() : this(Cmd.CC_NULL) {
+            }
+
+            public QueryCommandStatusParams(Cmd cmd) {
                 command = cmd;
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class QueryCommandStatusResults
-        {
+        public class QueryCommandStatusResults {
             public Error status;
 
-            public QueryCommandStatusResults() : this(Error.CE_NO_ERROR) { }
-            public QueryCommandStatusResults(Error e)
-            {
+            public QueryCommandStatusResults() : this(Error.CE_NO_ERROR) {
+            }
+
+            public QueryCommandStatusResults(Error e) {
                 status = e;
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class MiscellaneousControlParams
-        {
+        public class MiscellaneousControlParams {
             public ushort fanEnable;
             public ShutterState shutterCommand;
             public LedState ledState;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class OpenDeviceParams
-        {
+        public class OpenDeviceParams {
             public DeviceType deviceType;       /* LPT, Ethernet, etc */
             public ushort lptBaseAddress;       /* DEV_LPTN: Windows 9x Only, Win NT uses deviceSelect */
             public uint ipAddress;			    /* DEV_ETH:  Ethernet address, the most significant byte specifying the first part of the address */
 
-            public OpenDeviceParams()
-            {
-                deviceType = (DeviceType) 0;    // illegal value to make things fail fast if unintialized
+            public OpenDeviceParams() {
+                deviceType = (DeviceType)0;    // illegal value to make things fail fast if unintialized
                 ipAddress = 0;
                 lptBaseAddress = 0;             // either it's irrelvant or the OS will handle it
             }
 
-            public OpenDeviceParams(string s) : this()
-            {
-                try
-                {
+            public OpenDeviceParams(string s) : this() {
+                try {
                     // first, try to parse as an IP address
                     IPAddress ip = IPAddress.Parse(s);
                     byte[] b = ip.GetAddressBytes();
                     this.ipAddress = (((uint)b[0]) << 24) | (((uint)b[1]) << 16) | (((uint)b[2]) << 8) | ((uint)b[3]);
                     deviceType = DeviceType.Ethernet;
-                }
-                catch (FormatException)
-                {
+                } catch (FormatException) {
                     // if it's not an IP, it should be a string value of the enum
                     if (!Enum.TryParse<DeviceType>(s, true, out deviceType))
                         throw new ArgumentException("must pass either an IP address or valid DeviceType enum string");
-
                 }
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class SetDriverControlParams
-        {
+        public class SetDriverControlParams {
             public DriverControlParam controlParameter;
             public int controlValue;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public struct StartReadoutParams
-        {
+        public struct StartReadoutParams {
             public CCD ccd;
             public ushort readoutMode;
             public ushort top;
@@ -661,42 +620,38 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             public ushort width;
         }
 
-
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public struct UsbInfo
-        {
+        public struct UsbInfo {
             public ushort cameraFound;
             public bool CameraFound { get { return 0 != cameraFound; } }
             public CameraType cameraType;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst=64)]
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
             public string name;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst=10)]
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 10)]
             public string serialNumber;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class QueryUsbResults
-        {
+        public class QueryUsbResults {
             public ushort camerasFound;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst=8)]
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
             public UsbInfo[] dev;
         }
 
-
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class GetCcdInfoParams
-        {
+        public class GetCcdInfoParams {
             public CcdInfoRequest req;
 
-            public GetCcdInfoParams(CcdInfoRequest req)
-            {
+            public GetCcdInfoParams(CcdInfoRequest req) {
                 this.req = req;
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public struct ReadoutInfo
-        {
+        public struct ReadoutInfo {
             public ushort mode;
             public ushort width;
             public ushort height;
@@ -704,6 +659,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
 
             // CHANGE: These are ulong in SbigSharp, but ulong represents 64-bits in .NET compared to 32-bits for unsigned long in C
             public uint pixelWidth;   // pixel width in microns in the form XXXXXX.XX
+
             public uint pixelHeight;  // pixel height in microns in the form XXXXXX.XX
         }
 
@@ -711,13 +667,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// Result structure for CC_GET_CCD_INFO request types 0 and 1
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class GetCcdInfoResults01
-        {
+        public class GetCcdInfoResults01 {
             public ushort firmwareVersion; // 0x1234 = v12.34
             public CameraType cameraType;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
             public string name;
+
             public ushort readoutModeCount;
+
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
             public ReadoutInfo[] readoutInfo;
         }
@@ -726,12 +684,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// Result structure for CC_GET_CCD_INFO request type 2
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class GetCcdInfoResults2
-        {
+        public class GetCcdInfoResults2 {
             public ushort badColumns;
+
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
             public ushort[] columns;
+
             public AntiBloomingGatePresence imagingABG; // 0 = no ABG, 1 = Anti-Blooming Gate protection
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 10)]
             public string serialNumber;
         }
@@ -740,8 +700,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// Result structure for CC_GET_CCD_INFO request type 3
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class GetCcdInfoResults3
-        {
+        public class GetCcdInfoResults3 {
             public A2dSize a2dSize;
             public FilterType filterType;
         }
@@ -750,8 +709,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// Result structure for CC_GET_CCD_INFO request type 4 and 5
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class GetCcdInfoResults45
-        {
+        public class GetCcdInfoResults45 {
             public ushort capabilitiesBits;
             public ushort dumpExtra;
         }
@@ -760,8 +718,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// Result structure for CC_GET_CCD_INFO request type 6
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class GetCcdInfoResults6
-        {
+        public class GetCcdInfoResults6 {
             public uint cameraBits;
             public uint ccdBits;
             public uint extraBits;
@@ -771,8 +728,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// Input structure for CC_ACTIVATE_RELAY command to control telescope mount
         /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
-        public class ActivateRelayParams
-        {
+        public class ActivateRelayParams {
             public ushort tXPlus;
             public ushort tXMinus;
             public ushort tYPlus;
@@ -815,30 +771,27 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <summary>
         /// gets thrown whenever an SBIG operation doesn't return success (CE_NO_ERROR)
         /// </summary>
-        public class FailedOperation : Exception
-        {
+        public class FailedOperation : Exception {
             public Error errorcode;
 
-            public FailedOperation(Error errorcode)
-            {
+            public FailedOperation(Error errorcode) {
                 this.errorcode = errorcode;
             }
 
-            public override string Message
-            {
-                get
-                {
+            public override string Message {
+                get {
                     return errorcode.ToString();
                 }
             }
         } // class FailedOperation
-        
+
         #endregion Types
 
+        //
+
+        #region Methods
 
         //
-        #region Methods
-        // 
 
         /// <summary>
         /// Direct pass-through to SBIG Universal Driver
@@ -878,13 +831,11 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <param name="Parameters">inputs to the operation, null if none</param>
         /// <param name="Results">Pointer to the output buffer.</param>
         /// <exception cref="FailedOperation">throws a FailedOperation exception if command doesn't return CE_NO_ERROR</exception>
-        public static void UnivDrvCommand(Cmd Command, object Parameters)
-        {
+        public static void UnivDrvCommand(Cmd Command, object Parameters) {
             // marshall the input structure, if it exists
             GCHandle ParamGch = NullGch;
             IntPtr ParamPtr = IntPtr.Zero;
-            if (null != Parameters)
-            {
+            if (null != Parameters) {
                 ParamGch = GCHandle.Alloc(Parameters, GCHandleType.Pinned);
                 ParamPtr = ParamGch.AddrOfPinnedObject();
             }
@@ -908,13 +859,11 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <param name="Parameters">inputs to the operation, null if none</param>
         /// <param name="Results">array or structure to write command output DIRECTLY into (no marshalling occurs)</param>
         /// <exception cref="FailedOperation">throws a FailedOperation exception if command doesn't return CE_NO_ERROR</exception>
-        public static void UnivDrvCommand(Cmd Command, object Parameters, object Results)
-        {
+        public static void UnivDrvCommand(Cmd Command, object Parameters, object Results) {
             // marshall the input structure, if it exists
             GCHandle ParamGch = NullGch;
             IntPtr ParamPtr = IntPtr.Zero;
-            if (null != Parameters)
-            {
+            if (null != Parameters) {
                 ParamGch = GCHandle.Alloc(Parameters, GCHandleType.Pinned);
                 ParamPtr = ParamGch.AddrOfPinnedObject();
             }
@@ -941,12 +890,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <param name="Command">the command to be executed</param>
         /// <param name="Parameters">inputs to the operation, null if none</param>
         /// <exception cref="FailedOperation">throws a FailedOperation exception if command doesn't return CE_NO_ERROR</exception>
-        public static void UnivDrvCommandMarshal(Cmd Command, object Parameters)
-        {
+        public static void UnivDrvCommandMarshal(Cmd Command, object Parameters) {
             // marshall the input structure, if it exists
             IntPtr ParamPtr = IntPtr.Zero;
-            if (null != Parameters)
-            {
+            if (null != Parameters) {
                 ParamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(Parameters));
                 Marshal.StructureToPtr(Parameters, ParamPtr, false);
             }
@@ -970,13 +917,11 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <param name="Parameters">inputs to the operation, null if none</param>
         /// <returns>object with command output written DIRECTLY into it (no marshalling occurs)</returns>
         /// <exception cref="FailedOperation">throws a FailedOperation exception if command doesn't return CE_NO_ERROR</exception>
-        public static T UnivDrvCommand<T>(Cmd Command, object Parameters) where T : new()
-        {
+        public static T UnivDrvCommand<T>(Cmd Command, object Parameters) where T : new() {
             // marshall the input structure, if it exists
             GCHandle ParamGch = NullGch;
             IntPtr ParamPtr = IntPtr.Zero;
-            if (null != Parameters)
-            {
+            if (null != Parameters) {
                 ParamGch = GCHandle.Alloc(Parameters, GCHandleType.Pinned);
                 ParamPtr = ParamGch.AddrOfPinnedObject();
             }
@@ -1008,12 +953,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <param name="Parameters">inputs to the operation, null if none</param>
         /// <returns>object with command output MARSHALLED into it (types are translated as necessary)</returns>
         /// <exception cref="FailedOperation">throws a FailedOperation exception if command doesn't return CE_NO_ERROR</exception>
-        public static T UnivDrvCommandMarshal<T>(Cmd Command, object Parameters)
-        {
+        public static T UnivDrvCommandMarshal<T>(Cmd Command, object Parameters) {
             // marshall the input structure, if it exists
             IntPtr ParamPtr = IntPtr.Zero;
-            if (null != Parameters)
-            {
+            if (null != Parameters) {
                 ParamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(Parameters));
                 Marshal.StructureToPtr(Parameters, ParamPtr, false);
             }
@@ -1045,13 +988,11 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <param name="Command"></param>
         /// <param name="Parameters"></param>
         /// <param name="Results"></param>
-        public static void UnivDrvCommand_OutComplex(Cmd Command, object Parameters, object Results)
-        {
+        public static void UnivDrvCommand_OutComplex(Cmd Command, object Parameters, object Results) {
             // marshall the input structure, if it exists
             GCHandle ParamGch = NullGch;
             IntPtr ParamPtr = IntPtr.Zero;
-            if (null != Parameters)
-            {
+            if (null != Parameters) {
                 ParamGch = GCHandle.Alloc(Parameters, GCHandleType.Pinned);
                 ParamPtr = ParamGch.AddrOfPinnedObject();
             }
@@ -1076,7 +1017,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
                 ParamGch.Free();
         }
 
-
         //
         // Exposure helpers
         //
@@ -1084,8 +1024,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         /// <summary>
         /// Waits for any exposure in progress to complete, ends it, and reads it out into a 2D ushort array
         /// </summary>
-        public static ushort[,] WaitEndAndReadoutExposure(StartExposureParams2 sep)
-        {
+        public static ushort[,] WaitEndAndReadoutExposure(StartExposureParams2 sep) {
             // wait for the exposure to be done
             QueryCommandStatusParams qcsp = new QueryCommandStatusParams(Cmd.CC_START_EXPOSURE);
             QueryCommandStatusResults qcsr = new QueryCommandStatusResults(Error.CE_NO_ERROR);
@@ -1195,10 +1134,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         //    // strip off the leading dot, if it's there
         //    if (ext.StartsWith("."))
         //        ext = ext.Substring(1);
-            
+
         //    // pick the format based on it matching the strings used in the ImageFormat enum
         //    ImageFormat format = (ImageFormat) Enum.Parse(typeof(ImageFormat), ext);
-            
+
         //    // do the heaving lifting
         //    throw new Exception("Not yet imnplemented, probably never will be, and probably shouldn't be");
         //    //WaitEndAndReadExposureAsBitmap(sep).Save(filename, format);
@@ -1208,13 +1147,11 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         // Shortcut commands
         //
 
-        public static CameraType EstablishLink()
-        {
+        public static CameraType EstablishLink() {
             EstablishLinkParams elp = new EstablishLinkParams();
             return UnivDrvCommand<EstablishLinkResults>(Cmd.CC_ESTABLISH_LINK, elp).cameraType;
         }
 
         #endregion Methods
-        
     } // class
 } // namespace

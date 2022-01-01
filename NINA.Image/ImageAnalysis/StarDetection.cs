@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -96,7 +96,7 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         private BlobCounter _blobCounter;
-        
+
         public class Star {
             public double radius;
             public double HFR;
@@ -237,9 +237,9 @@ namespace NINA.Image.ImageAnalysis {
 
         private bool InROI(Bitmap _bitmapToAnalyze, StarDetectionParams p, Blob blob) {
             return DetectionUtility.InROI(
-                new Size(width: _bitmapToAnalyze.Width, height: _bitmapToAnalyze.Height), 
-                blob: blob.Rectangle, 
-                outerCropRatio: p.OuterCropRatio, 
+                new Size(width: _bitmapToAnalyze.Width, height: _bitmapToAnalyze.Height),
+                blob: blob.Rectangle,
+                outerCropRatio: p.OuterCropRatio,
                 innerCropRatio: p.InnerCropRatio);
         }
 
@@ -338,7 +338,7 @@ namespace NINA.Image.ImageAnalysis {
             if (starlist.Count() == 0) {
                 return new List<DetectedStar>();
             }
-            
+
             //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
             if (starlist.Count > 0) {
                 double avg = sumRadius / (double)starlist.Count();
@@ -370,7 +370,7 @@ namespace NINA.Image.ImageAnalysis {
                     p.MatchStarPositions.ForEach(pos => topStars.Add(starlist.Aggregate((min, next) => min.Position.DistanceTo(pos) < next.Position.DistanceTo(pos) ? min : next)));
                     return topStars.Select(s => s.ToDetectedStar()).ToList(); ;
                 }
-            }            
+            }
             return starlist.Select(s => s.ToDetectedStar()).ToList();
         }
 

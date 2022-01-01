@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -17,7 +17,8 @@ using Castle.DynamicProxy;
 using NINA.Equipment.Interfaces;
 
 namespace NINA.Equipment.Equipment {
-    public class DeviceDispatchInterceptor<T> : IAsyncInterceptor where T: class {
+
+    public class DeviceDispatchInterceptor<T> : IAsyncInterceptor where T : class {
         private static readonly ProxyGenerator proxyGenerator = new ProxyGenerator();
         private readonly IDeviceDispatcher deviceDispatcher;
         private readonly DeviceDispatcherType deviceDispatcherType;
