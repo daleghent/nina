@@ -5973,9 +5973,9 @@ Refer to your camera's manual for the location of this setting</value>
     <value>地平線上</value>
   </data>
   <data name="LblNikonX86Deprecated" xml:space="preserve">
-    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+    <value>サポートされていません - Nikonはx86アプリケーション用のSDKバイナリーコードを配布しなくなりました</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
-    <value>No Plugins Installed</value>
+    <value>プラグインがインストールされていません</value>
   </data>
 </root>

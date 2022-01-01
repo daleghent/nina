@@ -215,7 +215,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba nadmořské
     <value>Anotovat Obraz</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
-    <value>Je-li zaškrtnuto je použita detekce hvězd pro obrázek, obrázek bude označen nalezenými hvězdami a jejich příslušnou hodnotou HFR</value>
+    <value>Pokud je toto zaškrtnuto a je zapnutá funkce detekce hvězd, hvězdy detekované na snímku budou opatřeny poznámkami a zobrazí se jejich hodnoty HFR</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
     <value>API Klíč</value>
@@ -317,10 +317,9 @@ Má se aplikace pokusit zotavit z chyby? (Může vést k neočekávanému chová
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
     <value>Pokud je nastavena na hodnotu menší než jedna, detekce hvězd během automatického zaostřování bude používat pouze
-vystředěný dílčí snímek celého snímače (je-li podporován kamerou). Pokud není podporováno
-kamerou budou hvězdy v blízkosti okraje během detekce hvězd ignorovány. Při použití v kombinaci
-s poměrem vnějšího oříznutí nižším než 1, obdélníkový výřez obrazu (mezi vnitřním obdélníkem a
-vnější obdélník) se bude používat pro automatické zaostřování.</value>
+vystředěný dílčí snímek celého snímače (je-li podporován kamerou). Pokud není podporováno kamerou budou hvězdy 
+v blízkosti okraje během detekce hvězd ignorovány. Při použití v kombinaci s poměrem vnějšího oříznutí nižším než 1,
+obdélníkový výřez obrazu (mezi vnitřním obdélníkem a vnější obdélník) se bude používat pro automatické zaostřování.</value>
   </data>
   <data name="LblAutoFocusMethod" xml:space="preserve">
     <value>Metoda AutoOstření</value>
@@ -342,7 +341,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Počet Pokusů AutoOstření</value>
   </data>
   <data name="LblAutoFocusNumberOfAttemptsTooltip" xml:space="preserve">
-    <value>Pokud automatické ostření selže, protože HFR je horší než původní zaostření, určuje, kolik pokusů má automatické ostření provést, než bude úspěšné. Jinak bude obnovena původní poloha zaostření.</value>
+    <value>Pokud automatické ostření selže, protože HFR je horší než původní zaostření, určí, kolik pokusů má automatické ostření provést, než bude úspěšné. Jinak bude obnovena původní poloha zaostření.</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPoint" xml:space="preserve">
     <value>AutoOstření Počet Snímků na Bod</value>
@@ -1007,7 +1006,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Datum ve formátu RRRR-MM-DD</value>
   </data>
   <data name="LblDateFormatDescription2" xml:space="preserve">
-    <value>Datum posunuto zpět o 12 hodin ve formátu RRRR-MM-DD</value>
+    <value>Datum posunut zpět o 12 hodin ve formátu RRRR-MM-DD</value>
   </data>
   <data name="LblDateTimeFormatDescription" xml:space="preserve">
     <value>Datum ve formátu RRRR-MM-DD_HH-mm-ss</value>
@@ -1286,7 +1285,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Povolit bitové měřítko</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Uložte 10/12/14 bitové obrázky se škálováním na 16 bitů. (Platí pouze pro kamery Altair, Omegon, SVBony, RisingCam a ToupTek při použití nativního ovladače)</value>
+    <value>10/12/14 bit obraz je rozšířen na 16 bitů a uložen. (Pouze pro kamery Altair, Omegon, SVBony, RisingCam, ToupTek, s nativními ovladači)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Povoleno</value>
@@ -1634,7 +1633,7 @@ Vypočtené HFR: {2}
     <value>Snímek &amp; Ostřit</value>
   </data>
   <data name="LblFrameNrDescription" xml:space="preserve">
-    <value># Snímek s formátem ####</value>
+    <value># Snímek ve formátu####</value>
   </data>
   <data name="LblFraming" xml:space="preserve">
     <value>Snímkování</value>
@@ -1743,7 +1742,7 @@ Přeskočit.</value>
     <value>Rozlišení Histogramu</value>
   </data>
   <data name="LblHistogramResolutionTooltip" xml:space="preserve">
-    <value>Určuje počet datových bodů, které se mají použít pro histogram</value>
+    <value>Určí počet datových bodů, které se mají použít pro histogram</value>
   </data>
   <data name="LblHistory" xml:space="preserve">
     <value>Historie</value>
@@ -1857,7 +1856,7 @@ Přeskočit.</value>
     <value>Rozložení</value>
   </data>
   <data name="LblLblBlackClippingTooltip" xml:space="preserve">
-    <value>Faktor potlačení černé v jednotkách sigma od střední hodnoty</value>
+    <value>Černý ořezový faktor (n sigma střední hodnoty)</value>
   </data>
   <data name="LblLoadImage" xml:space="preserve">
     <value>Načíst Obrázek</value>
@@ -1902,7 +1901,7 @@ Přeskočit.</value>
     <value>Zeměpisná délka</value>
   </data>
   <data name="LblLoop" xml:space="preserve">
-    <value>Smyčka</value>
+    <value>Cyklus</value>
   </data>
   <data name="LblMAD" xml:space="preserve">
     <value>MAD</value>
@@ -2116,7 +2115,7 @@ Přeskočit.</value>
     <value>Bez Synch</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do dalekohledu. To by mělo být použito v případě, že existuje dobrý naváděcí model, který by se neměl měnit.</value>
+    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do montáže. To by mělo být použito v případě, že existuje vynikající montáž, a neměli byste provádět žádné změny.</value>
   </data>
   <data name="LblNoTelescope" xml:space="preserve">
     <value>Žádný Dalekohled</value>
@@ -2591,7 +2590,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Raw konvertor</value>
   </data>
   <data name="LblRawConverterTooltip" xml:space="preserve">
-    <value>Určuje, který nástroj má být použit pro převod souborů DSLR raw</value>
+    <value>Určí, který nástroj má být použit pro převod souborů DSLR raw</value>
   </data>
   <data name="LblReadNoise" xml:space="preserve">
     <value>Čtecí šum v e</value>
@@ -2726,7 +2725,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Uložit Sekvenci jako nový soubor</value>
   </data>
   <data name="LblSaveAsSequenceToolTip" xml:space="preserve">
-    <value>Uložit Sekvenci jako nový soubor xml</value>
+    <value>Uloží Sekvenci jako nový soubor xml</value>
   </data>
   <data name="LblSaveBacklashQuestion" xml:space="preserve">
     <value>Uložit Měření Zpětné Vůle Zaostření?</value>
@@ -2813,7 +2812,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Režim Sekvence</value>
   </data>
   <data name="LblSequenceModeRotate" xml:space="preserve">
-    <value>Smyčka</value>
+    <value>Cyklus</value>
   </data>
   <data name="LblSequenceModeStandard" xml:space="preserve">
     <value>Jeden po druhém</value>
@@ -2835,7 +2834,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Nastavit jako sekvenční cíl</value>
   </data>
   <data name="LblSetAutoFocusFilter" xml:space="preserve">
-    <value>Nastavit jako filtr automatického zaostření</value>
+    <value>Nastavit jako filtr AutoOstření</value>
   </data>
   <data name="LblSetAutoFocusFilterTooltip" xml:space="preserve">
     <value>Pokud je nastaveno, AutoOstření bude vždy používat vybraný filtr pomocí offsetu filtrového kola</value>
@@ -2976,7 +2975,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Citlivost Hvězd</value>
   </data>
   <data name="LblStarSensitivityTooltip" xml:space="preserve">
-    <value>Určuje citlivost algoritmu detekce hvězd. Vyšší nastavení může mylně detekovat šum a může trvat déle</value>
+    <value>Určí citlivost algoritmu detekce hvězd. Vyšší nastavení může mylně detekovat šum a může trvat déle</value>
   </data>
   <data name="LblStartAutoFocus" xml:space="preserve">
     <value>Spustí AutoOstření</value>
@@ -3234,10 +3233,10 @@ Chcete synchronizovat nastavení?</value>
     <value>Nástroje</value>
   </data>
   <data name="LblTooltipAddSequence" xml:space="preserve">
-    <value>Přidat nový řádek do seznamu sekvencí</value>
+    <value>Přidá nový řádek do seznamu sekvencí</value>
   </data>
   <data name="LblTooltipAddTarget" xml:space="preserve">
-    <value>Přidat nový prázdný řetězec</value>
+    <value>Přidá nový prázdný řetězec</value>
   </data>
   <data name="LblTooltipAutoStretch" xml:space="preserve">
     <value>Přepne automatické Autorozpětí obrazu (pouze náhled)</value>
@@ -3262,7 +3261,7 @@ Přetáhněte obdélník na hvězdu s bahtinovskými čarami. NINA provede vyhod
     <value>Živý Náhled</value>
   </data>
   <data name="LblTooltipLoop" xml:space="preserve">
-    <value>Povolí/zakáže expozice smyčky</value>
+    <value>Povolí/zakáže cyklus expozice</value>
   </data>
   <data name="LblTooltipPromoteSequenceRow" xml:space="preserve">
     <value>Posune řádek na začátek seznamu sekvencí</value>
@@ -3290,10 +3289,10 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Spustí Expozici</value>
   </data>
   <data name="LblTooltipTargetLoadSet" xml:space="preserve">
-    <value>Načte sadu cílů ze souboru</value>
+    <value>Načte cíle ze souboru</value>
   </data>
   <data name="LblTooltipTargetSaveSet" xml:space="preserve">
-    <value>Uloží aktuální cílů jako sadu</value>
+    <value>Uloží aktuální cíl jako sadu</value>
   </data>
   <data name="LblTotalNo" xml:space="preserve">
     <value>Celkem #</value>
@@ -3667,7 +3666,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
   </data>
   <data name="LblBayerPatternTooltip" xml:space="preserve">
     <value>Matice Bayer, která se má použít pro klíčové slovo BAYERPAT v záhlaví obrázku FITS nebo XISF pro obrázky generované barevnými senzory.
-Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout ovladač fotoaparátu. Neplatí pro zrcadlovky.</value>
+Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout ovladač kamery. Neplatí pro zrcadlovky.</value>
   </data>
   <data name="LblCurrent" xml:space="preserve">
     <value>Aktuální</value>
@@ -3731,17 +3730,17 @@ Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout 
     <value>Metoda Kompenzace Zpětné Vůle</value>
   </data>
   <data name="LblFocuserBacklashMethodTooltip" xml:space="preserve">
-    <value>V metodě kompenzace zpětné vůle se používají následující informace.
+    <value>Použité metody kompenzace zpětné vůle.
 
-Absolutní:
-   Když motor ostření změní směr, bude k pohybu motoru ostření přidána absolutní hodnota.
-   Směr dovnitř: Když se motor zaostření změní z vnějšího pohybu na vnitřní, bude přidána hodnota „směrem dovnitř“
-   Směr ven: když se motor zaostření změní z vnitřního pohybu na vnější, bude přidána hodnota „směrem ven"
-  
+Absolutní: 
+Když motor ostření změní směr, bude k pohybu motoru ostření přidána absolutní hodnota.
+Směr dovnitř: Když se motor zaostření změní z vnějšího pohybu na vnitřní, bude přidána hodnota „směrem dovnitř“
+Směr ven: když se motor zaostření změní z vnitřního pohybu na vnější, bude přidána hodnota „směrem ven"
+
 Překročení:
-    Tato metoda bude kompenzovat vůli přetažením cílové pozice o velké množství a následným vrácením zaostřovacího motoru do požadované výchozí polohy.
-   U této kompenzace bude poslední pohyb zaostřovacího motoru vždy ve stejném směru (ať už dovnitř nebo ven)
-   Pro směr dovnitř / ven musí být vybrán pouze JEDEN z těchto dvou! Při nastavování směru dovnitř bude hodnota aplikována na každý pohyb dovnitř, takže konečný pohyb bude vždy ven. U kompenzace ven bude vše opačné.
+Tato metoda bude kompenzovat vůli přetažením cílové pozice o velké množství a následným vrácením zaostřovacího motoru do požadované výchozí polohy.
+U této kompenzace bude poslední pohyb ostření vždy ve stejném směru (ať už dovnitř nebo ven)
+Pro směr dovnitř / ven musí být vybrán pouze JEDEN z těchto dvou! Při nastavování směru dovnitř bude hodnota aplikována na každý pohyb dovnitř, takže konečný pohyb bude vždy ven. U kompenzace ven bude vše opačné.
 
 Metodu lze změnit pouze při odpojeném motoru ostření!</value>
   </data>
@@ -4002,10 +4001,10 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Výchozí Offset</value>
   </data>
   <data name="LblDefaultGainTooltip" xml:space="preserve">
-    <value>Tato hodnota určuje výchozí zisk, který by měl být použit vždy, když nebyl explicitně nastaven žádný zisk</value>
+    <value>Tato hodnota určí výchozí zisk, který by měl být použit vždy, když nebyl explicitně nastaven žádný zisk</value>
   </data>
   <data name="LblDefaultOffsetTooltip" xml:space="preserve">
-    <value>Tato hodnota určuje výchozí offset, který by měl být použit vždy, když nebyl explicitně nastaven žádný offset</value>
+    <value>Tato hodnota určí výchozí offset, který by měl být použit vždy, když nebyl explicitně nastaven žádný offset</value>
   </data>
   <data name="LbLUsbLimitDescription" xml:space="preserve">
     <value>Nastavení rychlosti USB kamery-omezení provozu</value>
@@ -4041,7 +4040,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Časový limit Kamery</value>
   </data>
   <data name="LblCameraTimeoutTooltip" xml:space="preserve">
-    <value>Čas po exponování kamery, dokud není obraz považován za ztracený. Když je expozice kamery dokončena + sekundy a stále neobdrží informaci o obrazu, expozice bude zrušena.</value>
+    <value>Prodleva po expozičním čase, kdy má být snímek považován za ztracený. Pokud kamera po uplynutí Expozičního času + Časový limit expozice, neodešle připravený snímek, bude zrušen.</value>
   </data>
   <data name="LblCalibrationState" xml:space="preserve">
     <value>Stav Kalibrace</value>
@@ -4203,7 +4202,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Zpráva</value>
   </data>
   <data name="LblLoopUntil" xml:space="preserve">
-    <value>Smyčka do</value>
+    <value>Cyklus do</value>
   </data>
   <data name="LblTriggers" xml:space="preserve">
     <value>Spouštěč</value>
@@ -4281,16 +4280,16 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>HFR Trend</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
-    <value>Podmínka smyčky sekvence kontejneru pro zadaný počet smyček</value>
+    <value>Podmínka cyklu sekvence kontejneru pro zadaný počet cyklů</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
-    <value>Smyčka Pro Opakování</value>
+    <value>Cyklus Pro Opakování</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
     <value>Podmínka, která se opakuje, dokud není dosaženo zadaného času, poté zastaví aktuální sadu pokynů</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
-    <value>Smyčka v Trvání</value>
+    <value>Cyklus v Trvání</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
     <value>Funguje jako sekvenční instrukční sada, ale uvnitř lze zadat objekt hluboké oblohy, který v případě potřeby automaticky naplní všechny instrukce uvnitř souřadnicemi a otočením.</value>
@@ -4563,7 +4562,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>VLOŽIT INSTRUKCE VÝŠE</value>
   </data>
   <data name="LblDragOver_AddCondition" xml:space="preserve">
-    <value>PŘIDAT PODMÍNKU SMYČKY</value>
+    <value>PŘIDAT PODMÍNKU CYKLU</value>
   </data>
   <data name="LblDragOver_AddTemplate" xml:space="preserve">
     <value>VYTVOŘIT NOVOU ŠABLONU</value>
@@ -4626,7 +4625,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Plugin</value>
   </data>
   <data name="LblBuildSequenceTooltip" xml:space="preserve">
-    <value>Vytvoří sekvenci pro plánovanou sadu cílů</value>
+    <value>Vytvoří sekvenci pro více plánovaných cílů</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
     <value>Provede expozice v uvedeném množství, času, zisku a offsetu. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
@@ -4681,7 +4680,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
 Sem přidejte sekvence objektů deep sky nebo přidejte cíle prostřednictvím Atlasu oblohy nebo Průvodce Snímkování</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
-    <value>Podmínky Smyčky</value>
+    <value>Podmínky Cyklu</value>
   </data>
   <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
     <value>Konec</value>
@@ -4711,10 +4710,10 @@ Sem přidejte sekvence objektů deep sky nebo přidejte cíle prostřednictvím 
     <value>Instrukční sada</value>
   </data>
   <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
-    <value>Přidá podmínku smyčky do instrukční sady.
-Instrukční sada bude provedena a opakována, pokud je do kontejneru přidána jedna nebo více podmínek, pokud jsou tyto podmínky smyčky pravdivé.
-Jakmile jedna z podmínek smyčky již není pravdivá, bude provedení zbývajících pokynů uvnitř sady přeskočeno.
-Kromě toho platí podmínky smyčky pro aktuální instrukční sadu a každou podskupinou uvnitř sady. </value>
+    <value>Přidá podmínku cyklu do instrukční sady.
+Instrukční sada bude provedena a opakována, pokud je do kontejneru přidána jedna nebo více podmínek, pokud jsou tyto podmínky cyklu pravdivé.
+Jakmile jedna z podmínek cyklu již není pravdivá, bude provedení zbývajících pokynů uvnitř sady přeskočeno.
+Kromě toho platí podmínky cyklu pro aktuální instrukční sadu a každou podskupinou uvnitř sady. </value>
   </data>
   <data name="Lbl_SequenceContainer_AddInstruction_Tooltip" xml:space="preserve">
     <value>Přidá instrukce do instrukční sady.
@@ -4811,7 +4810,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Kamera</value>
   </data>
   <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
-    <value>Stav Smyčky</value>
+    <value>Stav Cyklu</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
     <value>* Instruktážní sada *</value>
@@ -4844,7 +4843,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Podmínka, která se opakuje, dokud se stanovený cíl nedostane pod danou výšku, a poté zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Smyčka, Dokud Nadmořská výška Neklesne Pod</value>
+    <value>Cyklus, Dokud Nadmořská výška Neklesne Pod</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kopule</value>
@@ -4932,10 +4931,10 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
     <value>Podmínka, která ověří, že je Bezpečnost připojena a provádí definované pokyny, pokud jsou podmínky bezpečné. Pokud zařízení hlásí, že již není bezpečno, aktuální sada pokynů se zastaví.
-Použijte ve spojení s jinou podmínkou smyčky, kdy bezpečnost hlásí bezpečné podmínky, abyste neskončili v nekonečné smyčce.</value>
+Použijte ve spojení s jinou podmínkou cyklu, kdy bezpečnost hlásí bezpečné podmínky, abyste neskončili v nekonečném cyklu.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Smyčka v bezpečí</value>
+    <value>Cyklus v bezpečí</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Uloží aktuální instrukční sadu a veškerý obsah jako šablonu pro opětovné použití</value>
@@ -4953,10 +4952,10 @@ Použijte ve spojení s jinou podmínkou smyčky, kdy bezpečnost hlásí bezpe�
     <value>Zadaný Čas</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
-    <value>Smyčka sady pokynů po zadaný čas. Po uplynutí daného času budou zbývající pokyny uvnitř sady přeskočeny.</value>
+    <value>Cyklus sady pokynů po zadaný čas. Po uplynutí daného času budou zbývající pokyny uvnitř sady přeskočeny.</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
-    <value>Smyčka po Zadaný Čas</value>
+    <value>Cyklus po Zadaný Čas</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>Zařízení Flat odpojeno!</value>
@@ -5100,10 +5099,10 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Id Stanice Weather Underground</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
-    <value>Přesunout vybraný řádek dolů</value>
+    <value>Přesune vybraný řádek dolů</value>
   </data>
   <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
-    <value>Přesunout vybranou řádek nahoru</value>
+    <value>Přesune vybranou řádek nahoru</value>
   </data>
   <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
     <value>Při přidávání nové šablony došlo k chybě. Další podrobnosti naleznete v protokolech.</value>
@@ -5121,7 +5120,7 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Při odstraňování cíle došlo k chybě. Další podrobnosti naleznete v protokolech.</value>
   </data>
   <data name="Lbl_SequenceTargetController_LoadUserTargetFailed" xml:space="preserve">
-    <value>Při načítání seznamu cílů došlo k chybě. Další podrobnosti naleznete v protokolech.</value>
+    <value>Při načítání seznamu cíle došlo k chybě. Další podrobnosti naleznete v protokolech.</value>
   </data>
   <data name="LblSequenceTemplateFolder" xml:space="preserve">
     <value>Složka Sekvenční Šablony</value>
@@ -5145,13 +5144,13 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Výběr Profilu při Spuštění</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
-    <value>Ukončí smyčku, pokud nadmořská výška Měsíce odpovídá zadaným parametrům.</value>
+    <value>Ukončí cyklus, pokud nadmořská výška Měsíce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
     <value>Nadmořská výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
-    <value>Ukončí smyčku, pokud nadmořská výška Slunce odpovídá zadaným parametrům.</value>
+    <value>Ukončí cyklus, pokud nadmořská výška Slunce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
     <value>Nadmořská výška Slunce</value>
@@ -5193,7 +5192,7 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Čekám kvůli nadmořské výšce Slunce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
-    <value>Ukončí smyčku, když úroveň osvětlení Měsíce odpovídá zadaným parametrům.</value>
+    <value>Ukončí cyklus, když úroveň osvětlení Měsíce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
     <value>Osvětlení Měsíce</value>
@@ -5267,7 +5266,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Podmínka, která se opakuje, dokud je cíl nad horizontem, poté se zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Smyčka, Dokud je Nadmořská výška nad Horizontem</value>
+    <value>Cyklus, Dokud je Nadmořská výška nad Horizontem</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Cíl nikdy nebude nad obzorem</value>
@@ -5690,7 +5689,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Cílová Konfigurace</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Přepne do režimu plánování jednoduché sady cílů</value>
+    <value>Přepne do režimu plánování pro jednoduché cílové sady</value>
   </data>
   <data name="LblByName" xml:space="preserve">
     <value>Podle Názvu</value>
@@ -5829,7 +5828,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
     <value>Stav, který kontroluje, zda připojený Bezpečnostní Monitor není bezpečný, a opakuje sadu instrukcí tak dlouho, dokud bezpečnostní monitor hlásí, že není bezpečný. Pokud je zařízení shledáno jako bezpečné, aktuální instrukční sada se zastaví.
-Nejlepší je použít jej ve spojení s jinou podmínkou smyčky, aby nedošlo ke konci v nekonečné smyčce, když bezpečnostní monitor zůstane nebezpečný.</value>
+Nejlepší je použít jej ve spojení s jinou podmínkou cyklu, aby nedošlo ke konci v nekonečný cyklus, když bezpečnostní monitor zůstane nebezpečný.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Opakovat, dokud není bezpečno</value>

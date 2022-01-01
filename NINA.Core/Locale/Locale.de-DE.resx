@@ -1655,7 +1655,7 @@ Berechneter HFR: {2}
     <value>Von</value>
   </data>
   <data name="LblFullWellCapacity" xml:space="preserve">
-    <value>Volle Brunnentiefe</value>
+    <value>Full-Well Kapazität in e</value>
   </data>
   <data name="LblGain" xml:space="preserve">
     <value>Gain</value>
