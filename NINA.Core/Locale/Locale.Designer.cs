@@ -12541,6 +12541,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update All.
+        /// </summary>
+        internal static string LblPluginUpdateAll {
+            get {
+                return ResourceManager.GetString("LblPluginUpdateAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel Update.
+        /// </summary>
+        internal static string LblPluginUpdateAllCancel {
+            get {
+                return ResourceManager.GetString("LblPluginUpdateAllCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates all plugins where an update is available to the latest version.
+        /// </summary>
+        internal static string LblPluginUpdateAllTooltip {
+            get {
+                return ResourceManager.GetString("LblPluginUpdateAllTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pointing Tolerance.
         /// </summary>
         internal static string LblPointingTolerance {

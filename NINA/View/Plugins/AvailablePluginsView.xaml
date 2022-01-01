@@ -221,16 +221,27 @@
                             </ListView>
                         </Grid>
                     </GroupBox>
-                    <ninactrl:AsyncProcessButton
-                        Grid.Row="1"
-                        Height="25"
-                        Margin="5,0,5,5"
-                        ButtonText="{ns:Loc LblPluginCheckForUpdates}"
-                        CancelButtonImage="{StaticResource CancelSVG}"
-                        CancelCommand="{Binding CancelFetchPluginsCommand}"
-                        CancelToolTip="{ns:Loc LblPluginCheckForUpdatesCancel}"
-                        Command="{Binding FetchPluginsCommand}"
-                        ToolTip="{ns:Loc LblPluginCheckForUpdatesTooltip}" />
+                    <StackPanel Grid.Row="1" Orientation="Vertical">
+                        <ninactrl:AsyncProcessButton
+                            Height="25"
+                            Margin="5,0,5,5"
+                            ButtonText="{ns:Loc LblPluginCheckForUpdates}"
+                            CancelButtonImage="{StaticResource CancelSVG}"
+                            CancelCommand="{Binding CancelFetchPluginsCommand}"
+                            CancelToolTip="{ns:Loc LblPluginCheckForUpdatesCancel}"
+                            Command="{Binding FetchPluginsCommand}"
+                            ToolTip="{ns:Loc LblPluginCheckForUpdatesTooltip}" />
+                        <ninactrl:AsyncProcessButton
+                            Height="25"
+                            Margin="5,0,5,5"
+                            ButtonText="{ns:Loc LblPluginUpdateAll}"
+                            CancelButtonImage="{StaticResource CancelSVG}"
+                            CancelCommand="{Binding CancelInstallPluginCommand}"
+                            CancelToolTip="{ns:Loc LblPluginUpdateAllCancel}"
+                            Command="{Binding UpdateAllPluginsCommand}"
+                            ToolTip="{ns:Loc LblPluginUpdateAllTooltip}"
+                            Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}" />
+                    </StackPanel>
                 </Grid>
             </Border>
             <Grid
