@@ -2921,7 +2921,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>SkyServer Sky Survey</value>
   </data>
   <data name="LblSkySurveyCacheDirectory" xml:space="preserve">
-    <value>Adresář Mezi paměti</value>
+    <value>Sky Survey Cache Directory</value>
   </data>
   <data name="LblSkyTemperature" xml:space="preserve">
     <value>Teplota Vzduchu</value>
@@ -5998,5 +5998,22 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
     <value>Žádné Nainstalované Pluginy</value>
+  </data>
+  <data name="LblPluginUpdateAll" xml:space="preserve">
+    <value>Vše Aktualizovat</value>
+  </data>
+  <data name="LblPluginUpdateAllCancel" xml:space="preserve">
+    <value>Zrušit Aktualizaci</value>
+  </data>
+  <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
+    <value>Aktualizuje všechny pluginy, u kterých je k dispozici nejnovější verze</value>
+  </data>
+  <data name="LblMeridianFlipRetry" xml:space="preserve">
+    <value>Failed to slew for meridian flip. 
+Another attempt will be made in {0} seconds.
+Attempt {1}/{2}.</value>
+  </data>
+  <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
+    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
   </data>
 </root>

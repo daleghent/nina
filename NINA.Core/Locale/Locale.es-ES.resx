@@ -5995,4 +5995,21 @@ Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
     <value>No hay plugins instalados</value>
   </data>
+  <data name="LblPluginUpdateAll" xml:space="preserve">
+    <value>Actualizar todo</value>
+  </data>
+  <data name="LblPluginUpdateAllCancel" xml:space="preserve">
+    <value>Cancelar actualización</value>
+  </data>
+  <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
+    <value>Actualiza todos los plugins que tengan disponible una actualización a la última versión</value>
+  </data>
+  <data name="LblMeridianFlipRetry" xml:space="preserve">
+    <value>Failed to slew for meridian flip. 
+Another attempt will be made in {0} seconds.
+Attempt {1}/{2}.</value>
+  </data>
+  <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
+    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+  </data>
 </root>

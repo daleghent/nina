@@ -5993,4 +5993,21 @@ Once successfully solved, the rotation will be set for framing.</value>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
     <value>No Plugins Installed</value>
   </data>
+  <data name="LblPluginUpdateAll" xml:space="preserve">
+    <value>Update All</value>
+  </data>
+  <data name="LblPluginUpdateAllCancel" xml:space="preserve">
+    <value>Cancel Update</value>
+  </data>
+  <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
+    <value>Updates all plugins where an update is available to the latest version</value>
+  </data>
+  <data name="LblMeridianFlipRetry" xml:space="preserve">
+    <value>Failed to slew for meridian flip. 
+Another attempt will be made in {0} seconds.
+Attempt {1}/{2}.</value>
+  </data>
+  <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
+    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+  </data>
 </root>
