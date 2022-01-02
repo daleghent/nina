@@ -513,20 +513,23 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     if (!success) {
                         if (retries++ >= MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS) {
                             Logger.Error("Failed to slew for Meridian Flip, even after retrying");
+                            Notification.ShowError(Loc.Instance["LblMeridianFlipRetryFailed"]);
                             break;
                         } else {
                             var jsnowCoordinates = targetCoordinates.Transform(Epoch.JNOW);
                             var topocentricCoordinates = jsnowCoordinates.Transform(latitude: Angle.ByDegree(SiteLatitude), longitude: Angle.ByDegree(SiteLongitude));
-                            Logger.Error($"Failed to slew for Meridian Flip. Retry {retries} of {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS} times with a {MERIDIAN_FLIP_SLEW_RETRY_WAIT} wait between each.  " +
-                                $"SideOfPier: {SideOfPier}, RA: {jsnowCoordinates.RAString}, DEC: {jsnowCoordinates.DecString}, Azimuth: {topocentricCoordinates.Azimuth}");
-                            await Task.Delay(MERIDIAN_FLIP_SLEW_RETRY_WAIT);
+                            Logger.Warning($"Failed to slew for Meridian Flip. Retry {retries} of {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS} times with a {MERIDIAN_FLIP_SLEW_RETRY_WAIT} wait between each.  " +
+                                $"SideOfPier: {SideOfPier}, RA: {jsnowCoordinates.RAString}, Dec: {jsnowCoordinates.DecString}, Azimuth: {topocentricCoordinates.Azimuth}");
+
+                            Notification.ShowWarning(string.Format(Loc.Instance["LblMeridianFlipRetry"], MERIDIAN_FLIP_SLEW_RETRY_WAIT.TotalSeconds, retries, MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS));
+                            await Task.Delay(MERIDIAN_FLIP_SLEW_RETRY_WAIT, token);
                         }
                     }
                 } while (!success);
 
                 if (success && retries > 0) {
                     Logger.Info("Successfully slewed for Meridian Flip after retrying");
-                    Notification.ShowWarning(String.Format(Loc.Instance["LblMeridianFlipWaitLonger"], retries));
+                    Notification.ShowWarning(string.Format(Loc.Instance["LblMeridianFlipWaitLonger"], retries));
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
