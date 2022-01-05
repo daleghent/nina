@@ -14,16 +14,29 @@ using FluentAssertions;
 using System;
 using System.IO;
 using NINA.Core.Model;
+using System.Reflection;
 
 namespace NINATest.AstrometryTest {
 
     [TestFixture]
     public class CustomHorizonTest {
 
-        [Test]
-        public void Testbasdf() {
-            var testFile = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", "full360.hrz");
+        [Test]        
+        [TestCase("commas.hrz", 17)]
+        [TestCase("full360.hrz", 361)]
+        [TestCase("incomplete.hrz", 5)]
+        [TestCase("mw4.hpts", 19)]
+        [TestCase("partial.hrz", 17)]
+        [TestCase("tabs.hrz", 17)]
+        [TestCase("mixed.hrz", 17)]
+        public void TestFiles_WorkCorrectly_And_Have_All_Entries_Parsed(string file, int expectedEntries) {
+            var testFile = Path.Combine(TestContext.CurrentContext.TestDirectory, "AstrometryTest", "HorizonData", file);
             var customHorizon = CustomHorizon.FromFilePath(testFile);
+
+            customHorizon.Should().NotBeNull();
+            ((double[])typeof(CustomHorizon).GetField("azimuths", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(customHorizon)).Length.Should().Be(expectedEntries);
+            ((double[])typeof(CustomHorizon).GetField("altitudes", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(customHorizon)).Length.Should().Be(expectedEntries);
+
         }
 
         [Test]
