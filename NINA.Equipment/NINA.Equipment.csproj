@@ -204,6 +204,13 @@
     <Compile Include="Equipment\MyCamera\SBIGCameraASCOMService.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlike\MallinCamSDKWrapper.cs" />
     <Compile Include="Equipment\MyFilterWheel\SBIGFilterWheel.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\Eagle12VPower.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\Eagle4.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\EagleInputPower.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\EagleSwitch.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\EagleUSBSwitch.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\EagleVariablePower.cs" />
+    <Compile Include="Equipment\MySwitch\Eagle4\EagleWritableSwitch.cs" />
     <Compile Include="Exceptions\CameraExposureFailedException.cs" />
     <Compile Include="Interfaces\IDeviceDispatcher.cs" />
     <Compile Include="SDK\CameraSDKs\MallinCamSDK\mallincam.cs" />

@@ -167,6 +167,7 @@
 			<ComponentGroupRef Id="zh_Hans_files" />
 			<ComponentGroupRef Id="zh_Hant_files" />
 			<ComponentGroupRef Id="de_files" />
+			<ComponentGroupRef Id="nb_NO_files" />
 		</Feature>
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
@@ -319,6 +320,7 @@
 					<Directory Id="zh_Hans" Name="zh-Hans" />
 					<Directory Id="zh_Hant" Name="zh-Hant" />
 					<Directory Id="Equipment" Name="Equipment" />
+					<Directory Id="nb_NO" Name="nb-NO" />
 				</Directory>
 			</Directory>
 			<Directory Id="ProgramMenuFolder">
@@ -873,6 +875,13 @@
 		<ComponentGroup Id="External_JPLEPH_files" Directory="External">
 			<Component Win64="$(var.Win64)" Id="JPLEPH" Guid="3D939C40-47D8-4BF2-8C93-5324FAD7CD08">
 				<File Id="JPLEPH" Name="JPLEPH" Source="$(var.NINA_TargetDir)External\JPLEPH" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="nb_NO_files" Directory="nb_NO">
+			<Component Id="nb_NO_NINA.Core.resources.dll" Guid="e33c2979-532d-4337-ac3b-9d16573d3e07">
+				<File Id="nb_NO_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)nb-NO\NINA.Core.resources.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
