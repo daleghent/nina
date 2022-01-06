@@ -26,6 +26,7 @@ using NINA.Equipment.Equipment.MySwitch.Eagle;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
 using NINA.Equipment.Equipment;
+using NINA.Equipment.Equipment.MySwitch.Eagle4;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
@@ -55,6 +56,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
                     /* PrimaLuceLab EAGLE */
                     devices.Add(new Eagle(profileService));
+                    devices.Add(new Eagle4(profileService));
 
                     /* Pegasus Astro Ultimate Powerbox V2 */
                     devices.Add(new UltimatePowerBoxV2(profileService));
