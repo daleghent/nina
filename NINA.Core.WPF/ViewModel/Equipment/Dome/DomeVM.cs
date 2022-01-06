@@ -623,7 +623,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                             closeShutterTask = Task.Run(async () => {
                                 Logger.Warning("Closing dome shutter due to unsafe conditions");
                                 Notification.ShowWarning(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
-                                await StopAll(null);
                                 return CloseShutter(CancellationToken.None);
                             });
                         }
