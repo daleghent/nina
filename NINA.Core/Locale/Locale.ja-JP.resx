@@ -5979,20 +5979,20 @@ Refer to your camera's manual for the location of this setting</value>
     <value>プラグインがインストールされていません</value>
   </data>
   <data name="LblPluginUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>すべて更新</value>
   </data>
   <data name="LblPluginUpdateAllCancel" xml:space="preserve">
-    <value>Cancel Update</value>
+    <value>更新を中止</value>
   </data>
   <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
-    <value>Updates all plugins where an update is available to the latest version</value>
+    <value>最新バージョンへのアップデートが可能な、すべてのプラグインを更新します</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>子午線反転の導入に失敗しました。 
+ {0} 秒後にもう一度試行します。
+試行 {1}/{2}。</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>最大回数の試行後、子午線反転の導入に失敗しました。中止します。</value>
   </data>
 </root>

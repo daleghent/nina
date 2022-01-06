@@ -5994,16 +5994,16 @@
     <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
-    <value>No Plugins Installed</value>
+    <value>未安装插件</value>
   </data>
   <data name="LblPluginUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>更新全部</value>
   </data>
   <data name="LblPluginUpdateAllCancel" xml:space="preserve">
-    <value>Cancel Update</value>
+    <value>取消更新</value>
   </data>
   <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
-    <value>Updates all plugins where an update is available to the latest version</value>
+    <value>更新所有插件到最新版本</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
     <value>Failed to slew for meridian flip. 

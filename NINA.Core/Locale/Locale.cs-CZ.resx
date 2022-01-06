@@ -2921,7 +2921,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>SkyServer Sky Survey</value>
   </data>
   <data name="LblSkySurveyCacheDirectory" xml:space="preserve">
-    <value>Sky Survey Cache Directory</value>
+    <value>Adresář Mezipaměti</value>
   </data>
   <data name="LblSkyTemperature" xml:space="preserve">
     <value>Teplota Vzduchu</value>
@@ -4813,7 +4813,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Stav Cyklu</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
-    <value>* Instruktážní sada *</value>
+    <value>* Instrukční sada *</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
     <value>Filtrové Kolo</value>
@@ -6009,11 +6009,11 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
     <value>Aktualizuje všechny pluginy, u kterých je k dispozici nejnovější verze</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>Selhal přejezd po překlopení poledníku. 
+Další pokus bude proveden za {0} sekund.
+Pokus {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>Po maximálním počtu pokusů selhal přejezd po překlopení poledníku. Přerušení.</value>
   </data>
 </root>

@@ -172,10 +172,10 @@
     <value>Alnitak Flat Panel</value>
   </data>
   <data name="LblAltairCameraSetup" xml:space="preserve">
-    <value>Altair Camera Setup</value>
+    <value>Altair kameraoppsett</value>
   </data>
   <data name="LblAlternativeUIColorSchema" xml:space="preserve">
-    <value>Alternative UI Color Schema</value>
+    <value>Alternativt fargeskjema</value>
   </data>
   <data name="LblAltitude" xml:space="preserve">
     <value>Elevasjon</value>
@@ -202,19 +202,19 @@
     <value>Vis stjernetegn-grenser</value>
   </data>
   <data name="LblAnnotateConstellations" xml:space="preserve">
-    <value>Display and annotate Constellations</value>
+    <value>Vis og antegn stjernebilder</value>
   </data>
   <data name="LblAnnotateDSO" xml:space="preserve">
-    <value>Annotate Deep Sky Objects</value>
+    <value>Antegn himmelobjekter</value>
   </data>
   <data name="LblAnnotateGrid" xml:space="preserve">
     <value>Vis rutenett</value>
   </data>
   <data name="LblAnnotateImage" xml:space="preserve">
-    <value>Annotate Image</value>
+    <value>Antegn bilde</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
-    <value>If checked and a star detection for an image is applied, the image will be annotated with the found stars and their respective HFR value</value>
+    <value>Hvis valgt og stjernedeteksjon på et bilde er slått på, så vil bildet antegnes med de detekterte stjernene og deres HFR-verdier</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
     <value>API-nøkkel</value>
@@ -223,23 +223,23 @@
     <value>Tilsynelatende magnitude</value>
   </data>
   <data name="LblApparentSize" xml:space="preserve">
-    <value>Apparent Size</value>
+    <value>Tilsynelatende størrelse</value>
   </data>
   <data name="LblApplicationInBreakMode" xml:space="preserve">
     <value>Programmet har støtt på et uventet avbrudd og må mest sannsynlig avslutte. Feilen er logget i "%localappdata%\NINA\Logs".
 Skal programmet forsøke å hente seg inn igjen etter feilen? (Kan føre til uforutsett oppførsel)</value>
   </data>
   <data name="LblApplicationStartDateDescription" xml:space="preserve">
-    <value>Application start date with format YYYY-MM-DD</value>
+    <value>Startdato for applikasjonen på format ÅÅÅÅ-MM-DD</value>
   </data>
   <data name="LblArcmin" xml:space="preserve">
-    <value>arcmin</value>
+    <value>buemin</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>Maks buemin</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
-    <value>arcsec</value>
+    <value>buesek</value>
   </data>
   <data name="LblAscending" xml:space="preserve">
     <value>Stigende</value>
@@ -248,7 +248,7 @@ Skal programmet forsøke å hente seg inn igjen etter feilen? (Kan føre til ufo
     <value>Feil under henting av bildedata fra kameraet!</value>
   </data>
   <data name="LblASIOnly16BitMono" xml:space="preserve">
-    <value>Only 16 bit Monochrome sensors currently supported</value>
+    <value>Kun 16-bit monokrome sensorer er støttet</value>
   </data>
   <data name="LblASPS" xml:space="preserve">
     <value>All Sky Plate Solver</value>
@@ -476,7 +476,7 @@ Dec: {1}</value>
     <value>Calculate Bias</value>
   </data>
   <data name="LblCalculatedExposureTime" xml:space="preserve">
-    <value>Calculated Exposure Time</value>
+    <value>Beregnet eksponeringstid</value>
   </data>
   <data name="LblCam" xml:space="preserve">
     <value>Cam</value>
@@ -494,7 +494,7 @@ Dec: {1}</value>
     <value>Kamera tilkoblet</value>
   </data>
   <data name="LblCameraConnectionLost" xml:space="preserve">
-    <value>Kameratilkobling avbrutt! Koble til kameraet!</value>
+    <value>Kameratilkobling avbrutt! Koble til kameraet på nytt!</value>
   </data>
   <data name="LblCameraCoolerNotEnabled" xml:space="preserve">
     <value>Kameraet har kjøler, men den er ikke aktivert</value>
@@ -523,10 +523,10 @@ i stand til å kompensere for endringer i omgivelsestemperatur</value>
     <value>Tilstand</value>
   </data>
   <data name="LblCameraXSize" xml:space="preserve">
-    <value>Camera X Size</value>
+    <value>X-størrelse</value>
   </data>
   <data name="LblCameraYSize" xml:space="preserve">
-    <value>Camera Y Size</value>
+    <value>Y-Størrelse</value>
   </data>
   <data name="LblCamInfo" xml:space="preserve">
     <value>Kamerainformasjon</value>
@@ -1008,13 +1008,13 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Dato med format ÅÅÅÅ-MM-DD</value>
   </data>
   <data name="LblDateFormatDescription2" xml:space="preserve">
-    <value>Date shifted back by 12 hours with format YYYY-MM-DD</value>
+    <value>Dato flyttet tilbake 12 timer med format ÅÅÅÅ-MM-DD</value>
   </data>
   <data name="LblDateTimeFormatDescription" xml:space="preserve">
-    <value>Date with format YYYY-MM-DD_HH-mm-ss</value>
+    <value>Dato med format ÅÅÅÅ-MM-DD_TT-mm-ss</value>
   </data>
   <data name="LblDawn" xml:space="preserve">
-    <value>Dawn</value>
+    <value>Demring</value>
   </data>
   <data name="LblDays" xml:space="preserve">
     <value>Dager</value>
@@ -1089,10 +1089,10 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Device polling interval</value>
   </data>
   <data name="LblDewHeater" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Duggvarmer</value>
   </data>
   <data name="LblDewHeaterShort" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Duggvarmer</value>
   </data>
   <data name="LblDewpoint" xml:space="preserve">
     <value>Duggpunkt</value>
@@ -1119,13 +1119,13 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Declination guide rate in arcseconds per second</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Direct Guider could not connect to Telescope</value>
+    <value>Direct Guider kunne ikke koble til teleskop</value>
   </data>
   <data name="LblDirectGuiderTelescopeDisconnect" xml:space="preserve">
     <value>Telescope has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
-    <value>Directory to save image to not found!</value>
+    <value>Mappe for lagring av bilde ble ikke funnet!</value>
   </data>
   <data name="LblDirectoryNotWritable" xml:space="preserve">
     <value>Directory to save image to does not have write permissions!</value>
@@ -1134,7 +1134,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Deaktivert</value>
   </data>
   <data name="LblDisableAFGuiding" xml:space="preserve">
-    <value>AF Disable Guiding</value>
+    <value>Deaktiver guiding under autofokusering</value>
   </data>
   <data name="LblDisableAFGuidingTooltip" xml:space="preserve">
     <value>Deaktiver guiding i løpet av autofokusering</value>
@@ -1167,10 +1167,10 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Dither RA Only</value>
   </data>
   <data name="LblDome" xml:space="preserve">
-    <value>Dome</value>
+    <value>Kuppel</value>
   </data>
   <data name="LblDomeASCOMConnectFailed" xml:space="preserve">
-    <value>Unable to connect to ASCOM Dome driver:</value>
+    <value>Kan ikke koble til ASCOM kuppel-driver:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
     <value>Driver can follow</value>
@@ -1179,28 +1179,28 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Shutter status</value>
   </data>
   <data name="LblDomeCanSetShutter" xml:space="preserve">
-    <value>Can set shutter</value>
+    <value>Kan åpne/lukke</value>
   </data>
   <data name="LblDomeCanSetPark" xml:space="preserve">
-    <value>Can set park</value>
+    <value>Kan sette parkeringsposisjon</value>
   </data>
   <data name="LblDomeCanSetAzimuth" xml:space="preserve">
-    <value>Can set azimuth</value>
+    <value>Kan sette asimutvinkel</value>
   </data>
   <data name="LblDomeCanSyncAzimuth" xml:space="preserve">
-    <value>Can sync azimuth</value>
+    <value>Kan synkronisere asimutvinkel</value>
   </data>
   <data name="LblDomeCanPark" xml:space="preserve">
-    <value>Can park</value>
+    <value>Kan parkere</value>
   </data>
   <data name="LblDomeCanFindHome" xml:space="preserve">
-    <value>Can find home</value>
+    <value>Kan finne hjemposisjon</value>
   </data>
   <data name="LblDomeAtPark" xml:space="preserve">
-    <value>At park</value>
+    <value>I parkeringsposisjon</value>
   </data>
   <data name="LblDomeAtHome" xml:space="preserve">
-    <value>At home</value>
+    <value>I hjemposisjon</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
     <value>Driver following telescope</value>
@@ -1215,31 +1215,31 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>No Dome Source</value>
   </data>
   <data name="LblDomeCannotSlew" xml:space="preserve">
-    <value>Dome cannot slew</value>
+    <value>Kuppel kan ikke beveges</value>
   </data>
   <data name="LblDomeCannotFindHome" xml:space="preserve">
-    <value>Dome cannot find home</value>
+    <value>Kuppel kan ikke finne hjemposisjon</value>
   </data>
   <data name="LblDomeCannotPark" xml:space="preserve">
-    <value>Dome cannot park</value>
+    <value>Kuppel kan ikke parkere</value>
   </data>
   <data name="LblDomeCannotSetPark" xml:space="preserve">
-    <value>Dome cannot set park position</value>
+    <value>Kuppel kan ikke sette parkeringsposisjon</value>
   </data>
   <data name="LblDomeCannotSetShutter" xml:space="preserve">
-    <value>Dome cannot set shutter</value>
+    <value>Kuppel kan ikke åpnes/lukkes</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>Kuppel kan ikke sette asimutvinkel</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
-    <value>Dome cannot sync azimuth</value>
+    <value>Kuppel kan ikke synkronisere asimutvinkel</value>
   </data>
   <data name="LblDomeConnected" xml:space="preserve">
-    <value>Dome connected</value>
+    <value>Kuppel koblet til</value>
   </data>
   <data name="LblDomeConnectionLost" xml:space="preserve">
-    <value>Dome connection lost.</value>
+    <value>Kuppeltilkobling avbrutt.</value>
   </data>
   <data name="LblDomeDisconnect" xml:space="preserve">
     <value>Disconnect dome?</value>
@@ -1257,25 +1257,25 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Download Image from the NASA skysurvey for the given coordinates</value>
   </data>
   <data name="LblDownloading" xml:space="preserve">
-    <value>Downloading</value>
+    <value>Laster ned</value>
   </data>
   <data name="LblDownloadMoreIndexFiles" xml:space="preserve">
-    <value>Download more index files</value>
+    <value>Last ned flere indeksfiler</value>
   </data>
   <data name="LblDownSampleFactor" xml:space="preserve">
     <value>Downsample factor</value>
   </data>
   <data name="LblDriverInfo" xml:space="preserve">
-    <value>Driver Info</value>
+    <value>Driverinformasjon</value>
   </data>
   <data name="LblDriverVersion" xml:space="preserve">
-    <value>Driver Version</value>
+    <value>Driverversjon</value>
   </data>
   <data name="LblDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Varighet</value>
   </data>
   <data name="LblDusk" xml:space="preserve">
-    <value>Dusk</value>
+    <value>Skumring</value>
   </data>
   <data name="LblEast" xml:space="preserve">
     <value>Øst</value>
@@ -1293,7 +1293,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Aktivert</value>
   </data>
   <data name="LblEndOfSequenceCloseFlatDeviceCover" xml:space="preserve">
-    <value>Closing flat device cover</value>
+    <value>Lukker flatpanel-deksel</value>
   </data>
   <data name="LblEndOfSequenceDecision" xml:space="preserve">
     <value>Run end of sequence options?</value>
@@ -1311,7 +1311,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Epoch</value>
   </data>
   <data name="LblEquipment" xml:space="preserve">
-    <value>Equipment</value>
+    <value>Utstyr</value>
   </data>
   <data name="LblError" xml:space="preserve">
     <value>Error</value>
@@ -1407,7 +1407,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Filterhjul tilkoblet</value>
   </data>
   <data name="LblFilterwheelConnectionLost" xml:space="preserve">
-    <value>Filterhjul-tilkobling mistet! Koble til filterhjul på nytt!</value>
+    <value>Filterhjul-tilkobling mistet! Koble til filterhjulet på nytt!</value>
   </data>
   <data name="LblFits" xml:space="preserve">
     <value>FITS</value>
@@ -1419,7 +1419,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Beregnet histogram-gjennomsnitt for mål</value>
   </data>
   <data name="LblFlatCount" xml:space="preserve">
-    <value>Flats to take</value>
+    <value>Antall flatbilder</value>
   </data>
   <data name="LblFlatDevice" xml:space="preserve">
     <value>Flatpanel</value>
@@ -1431,7 +1431,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Velg serieport</value>
   </data>
   <data name="LblFlatDeviceClearValues" xml:space="preserve">
-    <value>Clear Values</value>
+    <value>Tøm verdier</value>
   </data>
   <data name="LblFlatDeviceClose" xml:space="preserve">
     <value>Lukk</value>
@@ -1647,7 +1647,7 @@ Calculated HFR: {2}
     <value>FreeImage</value>
   </data>
   <data name="LblFrom" xml:space="preserve">
-    <value>From</value>
+    <value>Fra</value>
   </data>
   <data name="LblFullWellCapacity" xml:space="preserve">
     <value>Full Well Capacity in e</value>
@@ -1683,7 +1683,7 @@ Calculated HFR: {2}
     <value>Guider</value>
   </data>
   <data name="LblGuiderConnected" xml:space="preserve">
-    <value>Guider Connected</value>
+    <value>Guider tilkoblet</value>
   </data>
   <data name="LblGuiderDitherButNotConnected" xml:space="preserve">
     <value>Guider Dither is enabled, but application is not connected to Guider</value>
@@ -1698,10 +1698,10 @@ Calculated HFR: {2}
     <value>Guider resume failed</value>
   </data>
   <data name="LblGuiderSettings" xml:space="preserve">
-    <value>Guider Settings</value>
+    <value>Guider-instillinger</value>
   </data>
   <data name="LblGuiderStatus" xml:space="preserve">
-    <value>Guider Status</value>
+    <value>Guider-status</value>
   </data>
   <data name="LblGuidingRMSArcSecDescription" xml:space="preserve">
     <value>Root mean square error of guiding during exposure in arc seconds</value>
@@ -1746,7 +1746,7 @@ Calculated HFR: {2}
     <value>Specifies the number of data points that should be used for the histogram</value>
   </data>
   <data name="LblHistory" xml:space="preserve">
-    <value>History</value>
+    <value>Historikk</value>
   </data>
   <data name="LblHNSKY" xml:space="preserve">
     <value>HNSKY</value>
@@ -1773,28 +1773,28 @@ Calculated HFR: {2}
     <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
-    <value>Illumination</value>
+    <value>Belysning</value>
   </data>
   <data name="LblImage" xml:space="preserve">
-    <value>Image</value>
+    <value>Bilde</value>
   </data>
   <data name="LblImageArea" xml:space="preserve">
-    <value>Image Area</value>
+    <value>Bildeområde</value>
   </data>
   <data name="LblImageFileError" xml:space="preserve">
-    <value>Image file error</value>
+    <value>Bildefil-feil</value>
   </data>
   <data name="LblImageFilePath" xml:space="preserve">
-    <value>Image File Path</value>
+    <value>Mappe for bilder</value>
   </data>
   <data name="LblImageFilePattern" xml:space="preserve">
-    <value>Image File Pattern</value>
+    <value>Mønster for bildefilnavn</value>
   </data>
   <data name="LblImageHistory" xml:space="preserve">
-    <value>Image History</value>
+    <value>Bildehistorikk</value>
   </data>
   <data name="LblImageOptions" xml:space="preserve">
-    <value>Image Options</value>
+    <value>Bildevalg</value>
   </data>
   <data name="LblImageSource" xml:space="preserve">
     <value>Image source</value>
@@ -1803,13 +1803,13 @@ Calculated HFR: {2}
     <value>Light, Flat, Dark, Bias, Snapshot</value>
   </data>
   <data name="LblImaging" xml:space="preserve">
-    <value>Imaging</value>
+    <value>Fotografering</value>
   </data>
   <data name="LblImportFromFilterWheel" xml:space="preserve">
-    <value>Import Filters from Filterwheel</value>
+    <value>Importer filtre fra filterhjul</value>
   </data>
   <data name="LblIndexFile" xml:space="preserve">
-    <value>Index File</value>
+    <value>Indeksfil</value>
   </data>
   <data name="LblInfo" xml:space="preserve">
     <value>Info</value>
@@ -1914,10 +1914,10 @@ Calculated HFR: {2}
     <value>Manual Control</value>
   </data>
   <data name="LblManualCoordinates" xml:space="preserve">
-    <value>Manual Coordinates (J2000)</value>
+    <value>Manuelle koordinater (J2000)</value>
   </data>
   <data name="LblManualFilterWheel" xml:space="preserve">
-    <value>Manual Filterwheel</value>
+    <value>Manuelt filterhjul</value>
   </data>
   <data name="LblManualFilterWheelDescription" xml:space="preserve">
     <value>Mirrors the filters that are set up inside the options. When a filter change is requested a notification will pop up to manually change the filter.</value>
@@ -1977,10 +1977,10 @@ Calculated HFR: {2}
     <value>Forskyv meridian</value>
   </data>
   <data name="LblPHD2Setup" xml:space="preserve">
-    <value>PHD2 Setup</value>
+    <value>PHD2-oppsett</value>
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
-    <value>MetaGuide Setup</value>
+    <value>MetaGuide-oppsett</value>
   </data>
   <data name="LblMetaGuideIP" xml:space="preserve">
     <value>MetaGuide IP</value>
@@ -2037,13 +2037,13 @@ Calculated HFR: {2}
     <value>Native</value>
   </data>
   <data name="LblNauticalDawn" xml:space="preserve">
-    <value>Nautical Dawn</value>
+    <value>Nautisk demring</value>
   </data>
   <data name="LblNauticalDusk" xml:space="preserve">
-    <value>Nautical Dusk</value>
+    <value>Nautisk skumring</value>
   </data>
   <data name="LblNewPosition" xml:space="preserve">
-    <value>New Position</value>
+    <value>Ny posisjon</value>
     <comment>Newly Calulated Autofocus Position</comment>
   </data>
   <data name="LblNewUpdateAvailable" xml:space="preserve">
@@ -2261,10 +2261,10 @@ Calculated HFR: {2}
     <value>Open Manual</value>
   </data>
   <data name="LblOpenWeatherMapAPIKey" xml:space="preserve">
-    <value>OpenWeatherMap API Key</value>
+    <value>OpenWeatherMap API-nøkkel</value>
   </data>
   <data name="LblOpenWeatherMapClientDescription" xml:space="preserve">
-    <value>Uses OpenWeatherMap's Current Weather API. Weather data is refreshed every 10 minutes.</value>
+    <value>Bruker OpenWeatherMap sitt vær-API. Værdata blir oppdatert hvert 10. minutt.</value>
   </data>
   <data name="LblOpenWeatherMapClientInfo" xml:space="preserve">
     <value>NINA internal OpenWeatherMap API client</value>
@@ -2273,7 +2273,7 @@ Calculated HFR: {2}
     <value>Options</value>
   </data>
   <data name="LblOrderBy" xml:space="preserve">
-    <value>Order by</value>
+    <value>Sorter etter</value>
   </data>
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientation</value>
@@ -2285,16 +2285,16 @@ Calculated HFR: {2}
     <value>Panel</value>
   </data>
   <data name="LblParabolic" xml:space="preserve">
-    <value>Parabolic</value>
+    <value>Parabolsk</value>
   </data>
   <data name="LblPark" xml:space="preserve">
-    <value>Park</value>
+    <value>Parker</value>
   </data>
   <data name="LblParkEnabledButTelescopeCannotPark" xml:space="preserve">
-    <value>Telescope is set to park at sequence end, yet it is unable to do so</value>
+    <value>Teleskopet er satt til å parkere ved sekvensslutt, men er ikke i stand til å parkere</value>
   </data>
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
-    <value>Telescope is set to park at sequence end, yet it is not connected</value>
+    <value>Teleskopet er satt til å parkere ved sekvensslutt, men er ikke koblet til</value>
   </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Passer meridian</value>
@@ -2318,31 +2318,31 @@ Calculated HFR: {2}
     <value>%</value>
   </data>
   <data name="LblPHD2DecRMS" xml:space="preserve">
-    <value>Dec: {0}({1}")</value>
+    <value>Dek: {0}({1}")</value>
   </data>
   <data name="LblPhd2FailedEquipmentConnection" xml:space="preserve">
-    <value>PHD2 wasn't able to connect to the equipment</value>
+    <value>PHD2 kunne ikke koble til utstyret</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2 kunne ikke tilby profiler</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
-    <value>PHD2 History Size</value>
+    <value>PHD2 historikk-lengde</value>
   </data>
   <data name="LblPHD2MinimalHistorySize" xml:space="preserve">
-    <value>PHD2 History Size (Imaging)</value>
+    <value>PHD2 historikk-lengde (under fotografering)</value>
   </data>
   <data name="LblPHD2Path" xml:space="preserve">
-    <value>PHD2 path</value>
+    <value>PHD2 kjørbar fil</value>
   </data>
   <data name="LblPhd2PathNotFound" xml:space="preserve">
-    <value>Could not start PHD2. Path not found</value>
+    <value>Kunne ikke starte PHD2. Sti ble ikke funnet</value>
   </data>
   <data name="LblPHD2RARMS" xml:space="preserve">
     <value>RA: {0} ({1}")</value>
   </data>
   <data name="LblPhd2ServerConnectionLost" xml:space="preserve">
-    <value>PHD2 Server Connection lost!</value>
+    <value>Mistet tilkobling til PHD2!</value>
   </data>
   <data name="LblPHD2ServerPort" xml:space="preserve">
     <value>PHD2 Server Port</value>
@@ -2687,7 +2687,7 @@ Calculated HFR: {2}
     <value>Resume Autoguider</value>
   </data>
   <data name="LblResumeGuiding" xml:space="preserve">
-    <value>Resume Guiding</value>
+    <value>Fortsett guiding</value>
   </data>
   <data name="LblResumeSettleTime" xml:space="preserve">
     <value>Settle Time after resume</value>
@@ -2696,10 +2696,10 @@ Calculated HFR: {2}
     <value>Resume Tracking</value>
   </data>
   <data name="LblResuming" xml:space="preserve">
-    <value>Resuming</value>
+    <value>Fortsetter</value>
   </data>
   <data name="LblRightAscension" xml:space="preserve">
-    <value>Right Ascension</value>
+    <value>Rektascensjon</value>
   </data>
   <data name="LblRotation" xml:space="preserve">
     <value>Rotation</value>
@@ -2777,10 +2777,10 @@ Calculated HFR: {2}
     <value>Sensor Analysis is irregular, and may not produce accurate results. Consider re-running it.</value>
   </data>
   <data name="LblSensorName" xml:space="preserve">
-    <value>Sensor Name</value>
+    <value>Sensornavn</value>
   </data>
   <data name="LblSensorType" xml:space="preserve">
-    <value>Sensor Type</value>
+    <value>Sensortype</value>
   </data>
   <data name="LblSequence" xml:space="preserve">
     <value>Sekvens</value>
@@ -2901,7 +2901,7 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Lengdegrad</value>
   </data>
   <data name="LblSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Størrelse</value>
   </data>
   <data name="LblSkyAtlas" xml:space="preserve">
     <value>Himmelkatalog</value>
