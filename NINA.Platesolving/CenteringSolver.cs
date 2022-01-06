@@ -64,29 +64,32 @@ namespace NINA.PlateSolving {
                     break;
                 }
 
-                result.Separation = result.DetermineSeparation(parameter.Coordinates);
+                // All coordinates need to be in the same epoch as the scope for offsets to correctly be calculated
+                var position = telescopeMediator.GetCurrentPosition();
+                var resultCoordinates = result.Coordinates.Transform(position.Epoch);
+                var parameterCoordinates = parameter.Coordinates.Transform(position.Epoch);
+                result.Separation = parameterCoordinates - resultCoordinates;
 
-                var position = (telescopeMediator.GetCurrentPosition()).Transform(result.Coordinates.Epoch);
                 var positionWithOffset = position - offset;
-                Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameter.Coordinates}; Solved: {result.Coordinates}; Separation {result.Separation}; Threshold: {parameter.Threshold}");
+                Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameterCoordinates}; Solved: {resultCoordinates}; Separation {result.Separation}; Threshold: {parameter.Threshold}");
 
                 solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
 
                 if (Math.Abs(result.Separation.Distance.ArcMinutes) > parameter.Threshold) {
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
-                    if (parameter.NoSync || !await telescopeMediator.Sync(result.Coordinates)) {
+                    if (parameter.NoSync || !await telescopeMediator.Sync(resultCoordinates)) {
                         var oldOffset = offset;
-                        offset = result.DetermineSeparation(position);
+                        offset = position - resultCoordinates;
 
-                        Logger.Info($"Sync {(parameter.NoSync ? "disabled" : "failed")} - calculating offset instead to compensate.  Original: {positionWithOffset}; Original Offset {oldOffset}; Solved: {result.Coordinates}; New Offset: {offset}");
+                        Logger.Info($"Sync {(parameter.NoSync ? "disabled" : "failed")} - calculating offset instead to compensate.  Original: {positionWithOffset}; Original Offset {oldOffset}; Solved: {resultCoordinates}; New Offset: {offset}");
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
                     } else {
-                        var positionAfterSync = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
+                        var positionAfterSync = telescopeMediator.GetCurrentPosition();
 
-                        var syncDistance = result.DetermineSeparation(positionAfterSync);
+                        var syncDistance = positionAfterSync - resultCoordinates;
                         if (Math.Abs(syncDistance.Distance.ArcMinutes) > parameter.Threshold) {
                             offset = syncDistance;
-                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Position after sync: {positionAfterSync}; Solved: {result.Coordinates}; New Offset: {offset}");
+                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Position after sync: {positionAfterSync}; Solved: {resultCoordinates}; New Offset: {offset}");
                         } else {
                             // Sync worked - reset offset
                             Logger.Debug($"Synced sucessfully. Position after sync: {positionAfterSync}");
@@ -94,11 +97,11 @@ namespace NINA.PlateSolving {
                         }
                     }
 
-                    var scopePosition = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
-                    Logger.Info($"Slewing to target after sync. Current Position: {scopePosition}; Target coordinates: {parameter.Coordinates}; Offset {offset}");
+                    var scopePosition = telescopeMediator.GetCurrentPosition();
+                    Logger.Info($"Slewing to target after sync. Current Position: {scopePosition}; Target coordinates: {parameterCoordinates}; Offset {offset}");
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
-                    await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset, ct);
+                    await telescopeMediator.SlewToCoordinatesAsync(parameterCoordinates + offset, ct);
                     var domeInfo = domeMediator.GetInfo();
                     if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
                         progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });

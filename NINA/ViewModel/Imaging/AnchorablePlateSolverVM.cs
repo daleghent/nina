@@ -341,12 +341,14 @@ namespace NINA.ViewModel.Imaging {
                     var result = await solver.Solve(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
                     if (result.Success) {
                         if (telescopeInfo.Connected) {
-                            var position = parameter.Coordinates.Transform(result.Coordinates.Epoch);
-                            result.Separation = result.DetermineSeparation(position);
-                        }
+                            var epoch = telescopeInfo.EquatorialSystem;
+                            var resultCoordinates = result.Coordinates.Transform(epoch);
+                            var position = parameter.Coordinates.Transform(epoch);
+                            result.Separation = position - resultCoordinates;
 
-                        if (!profileService.ActiveProfile.TelescopeSettings.NoSync && Sync) {
-                            await telescopeMediator.Sync(result.Coordinates);
+                            if (!profileService.ActiveProfile.TelescopeSettings.NoSync && Sync) {
+                                await telescopeMediator.Sync(resultCoordinates);
+                            }
                         }
                     } else {
                         Notification.ShowError(Loc.Instance["LblPlatesolveFailed"]);
