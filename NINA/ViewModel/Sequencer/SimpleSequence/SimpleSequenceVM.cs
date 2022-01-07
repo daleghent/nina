@@ -109,6 +109,8 @@ namespace NINA.ViewModel {
             StartSequenceCommand = new AsyncCommand<bool>(StartSequence, (object o) => cameraMediator.IsFreeToCapture(this));
             CancelSequenceCommand = new RelayCommand(CancelSequence);
             SwitchToOverviewCommand = new RelayCommand((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
+            MoveLeftCommand = new RelayCommand(MoveLeft);
+            MoveRightCommand = new RelayCommand(MoveRight);
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
                 foreach (var item in this.Targets.Items) {
@@ -118,6 +120,20 @@ namespace NINA.ViewModel {
                     target.Target.DeepSkyObject = dso;
                 }
             };
+        }
+
+        private void MoveLeft(object obj) {
+            if(obj is ISimpleDSOContainer container) {
+                container.MoveUp();
+                SelectedTarget = container;
+            }
+        }
+
+        private void MoveRight(object obj) {
+            if (obj is ISimpleDSOContainer container) {
+                container.MoveDown();
+                SelectedTarget = container;
+            }
         }
 
         public Task Initialize() {
@@ -947,6 +963,8 @@ namespace NINA.ViewModel {
         public ICommand LoadTargetSetCommand { get; private set; }
         public ICommand ImportTargetsCommand { get; private set; }
         public ICommand SwitchToOverviewCommand { get; private set; }
+        public ICommand MoveLeftCommand { get; private set; }
+        public ICommand MoveRightCommand { get; private set; }
 
         public void Dispose() {
             this.cameraMediator.RemoveConsumer(this);

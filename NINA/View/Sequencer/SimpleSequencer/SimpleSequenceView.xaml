@@ -199,7 +199,8 @@
                         <Button
                             Grid.Column="1"
                             Width="35"
-                            Command="{Binding SelectedTarget.MoveUpCommand}">
+                            Command="{Binding MoveLeftCommand}"
+                            CommandParameter="{Binding SelectedTarget}">
                             <Button.ToolTip>
                                 <ToolTip ToolTipService.ShowOnDisabled="True">
                                     <TextBlock Text="{ns:Loc LblTooltipPromoteTarget}" />
@@ -214,7 +215,8 @@
                         <Button
                             Grid.Column="2"
                             Width="35"
-                            Command="{Binding SelectedTarget.MoveDownCommand}">
+                            Command="{Binding MoveRightCommand}"
+                            CommandParameter="{Binding SelectedTarget}">
                             <Button.ToolTip>
                                 <ToolTip ToolTipService.ShowOnDisabled="True">
                                     <TextBlock Text="{ns:Loc LblTooltipDemoteTarget}" />
