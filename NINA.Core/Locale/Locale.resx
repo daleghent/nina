@@ -5532,6 +5532,9 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblSequenceTitle" xml:space="preserve">
     <value>Current sequence title</value>
   </data>
+  <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
+    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
   </data>
