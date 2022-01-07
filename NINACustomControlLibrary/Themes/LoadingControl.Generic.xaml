@@ -15,10 +15,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LoadingControl}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="Storyboard">
+                        <Storyboard x:Key="Storyboard" Timeline.DesiredFrameRate="15">
                             <DoubleAnimation
                                 RepeatBehavior="Forever"
-                                Timeline.DesiredFrameRate="20"
                                 Storyboard.TargetName="PART_Grid"
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                 From="0"

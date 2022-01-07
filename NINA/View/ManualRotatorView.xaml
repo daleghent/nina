@@ -71,13 +71,13 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
             <Grid.Resources>
-                <Storyboard x:Key="LineTargetAngleStoryboard">
+                <Storyboard x:Key="LineTargetAngleStoryboard" Timeline.DesiredFrameRate="15">
                     <DoubleAnimation
                         Storyboard.TargetProperty="(Line.RenderTransform).(RotateTransform.Angle)"
                         To="{Binding TargetPosition}"
                         Duration="0:0:1" />
                 </Storyboard>
-                <Storyboard x:Key="ArcTargetAngleStoryboard">
+                <Storyboard x:Key="ArcTargetAngleStoryboard" Timeline.DesiredFrameRate="15">
                     <DoubleAnimation
                         Storyboard.TargetProperty="(ninactrl:Arc.EndAngle)"
                         To="{Binding TargetPosition}"
