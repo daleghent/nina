@@ -346,6 +346,23 @@
                         TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                         TicklineColor="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
                     <oxy:LinearAxis
+                        Key="LeftAutofocus"
+                        AxislineColor="Transparent"
+                        EndPosition="1"
+                        IsPanEnabled="True"
+                        IsZoomEnabled="False"
+                        MajorGridlineColor="Transparent"
+                        Maximum="1"
+                        MaximumPadding="0.1"
+                        Minimum="0"
+                        MinimumPadding="0.1"
+                        MinorGridlineColor="Transparent"
+                        Position="Left"
+                        StartPosition="0"
+                        TextColor="Transparent"
+                        TicklineColor="Transparent"
+                        Visibility="Collapsed" />
+                    <oxy:LinearAxis
                         IsPanEnabled="False"
                         IsZoomEnabled="False"
                         MaximumPadding="0.1"
@@ -373,6 +390,7 @@
                         MarkerSize="5"
                         MarkerType="Triangle"
                         TrackerKey="AutoFocus"
+                        YAxisKey="LeftAutofocus"
                         Color="Transparent" />
                     <oxy:LineSeries
                         Title="{Binding ImageHistoryRightSelected}"
