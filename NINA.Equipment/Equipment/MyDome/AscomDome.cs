@@ -222,7 +222,7 @@ namespace NINA.Equipment.Equipment.MyDome {
 
                         if (device != null && ShutterStatus == ShutterState.ShutterClosed) {
                             Logger.Error("ShutterStatus is still reported as closed after calling OpenShutter.");
-                            Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillClosed"]);
+                            Notification.ShowWarning(Loc.Instance["LblDomeShutterDidNotRespond"]);
                         }
                     }
                 } else {
@@ -260,7 +260,7 @@ namespace NINA.Equipment.Equipment.MyDome {
 
                         if (device != null && ShutterStatus == ShutterState.ShutterOpen) {
                             Logger.Error("ShutterStatus is still reported as open after calling CloseShutter.");
-                            Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillOpen"]);
+                            Notification.ShowWarning(Loc.Instance["LblDomeShutterDidNotRespond"]);
                         }
                     }
                 } else {

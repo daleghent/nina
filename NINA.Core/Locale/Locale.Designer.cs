@@ -7206,6 +7206,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor..
+        /// </summary>
+        internal static string LblDomeShutterDidNotRespond {
+            get {
+                return ResourceManager.GetString("LblDomeShutterDidNotRespond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Shutter.
         /// </summary>
         internal static string LblDomeShutterOpen {
