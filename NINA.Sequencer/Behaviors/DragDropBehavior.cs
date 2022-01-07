@@ -146,7 +146,6 @@ namespace NINA.Sequencer.Behaviors {
 
         private void AssociatedObject_MouseMove(object sender, MouseEventArgs e) {
             if (!IsClone) return;
-            mouseEnterDate = DateTime.Now;
             var pos = e.GetPosition(layoutParent);
             movingTransform.X = (pos.X - mouseInElement.X);
             movingTransform.Y = (pos.Y - mouseInElement.Y);
@@ -167,41 +166,6 @@ namespace NINA.Sequencer.Behaviors {
             HandleLeaveObject();
 
             HandleDrop(e);
-
-            // mouse event should not be further propagated
-            e.Handled = true;
-            e.MouseDevice.OverrideCursor = null;
-
-            // detach behavior from clone and move to original object
-            Detach();
-            Attach(originalObject);
-            IsClone = false;
-
-            // reattach previously removed behaviors
-            AttachPreviouslyUnwantedBehaviors();
-        }
-
-        private DateTime mouseEnterDate = DateTime.Now;
-
-        private void AssociatedObject_MouseEnter(object sender, MouseEventArgs e) {
-            mouseEnterDate = DateTime.Now;
-        }
-
-        private async void AssociatedObject_MouseLeave(object sender, MouseEventArgs e) {
-            if (!IsClone) return;
-
-            // give it half a second to possibly recover
-            await Task.Delay(TimeSpan.FromSeconds(0.5));
-            if ((DateTime.Now - mouseEnterDate).TotalSeconds < 0.5) return;
-
-            // remove the draggable clone itself again
-            layoutParent.Children.Remove(dragDropAdorner);
-
-            // restore previous effect
-            OriginalParentedObject.Effect = previousEffect;
-
-            // send mouse leave event to previously dragged over object
-            HandleLeaveObject();
 
             // mouse event should not be further propagated
             e.Handled = true;
@@ -283,8 +247,8 @@ namespace NINA.Sequencer.Behaviors {
             }
         }
 
-        private Task HandleDragOver(MouseEventArgs e) {
-            if ((DateTime.Now - lastUpdate).TotalSeconds < 0.01) return Task.CompletedTask;
+        private void HandleDragOver(MouseEventArgs e) {
+            if ((DateTime.Now - lastUpdate).TotalSeconds < 0.05) { return; }
             lastUpdate = DateTime.Now;
             // get mouse position and find the first item below myself
             mouseOverEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0);
@@ -298,7 +262,7 @@ namespace NINA.Sequencer.Behaviors {
             // if we find nothing, send a leave to the previous item
             if (draggedOverElement == null) {
                 HandleLeaveObject();
-                return Task.CompletedTask;
+                return;
             }
 
             //Debug.WriteLine("!> Sending mouse event to " + draggedOverElement.GetHashCode() +
@@ -317,7 +281,7 @@ namespace NINA.Sequencer.Behaviors {
                 mouseOverEventArgs.RoutedEvent = UIElement.MouseMoveEvent;
                 currentMouseOverElement.RaiseEvent(mouseOverEventArgs);
                 //Debug.WriteLine("~~ Moving in element " + currentMouseOverElement.GetHashCode());
-                return Task.CompletedTask;
+                return;
             }
 
             // we are in a new element
@@ -326,7 +290,7 @@ namespace NINA.Sequencer.Behaviors {
             mouseOverEventArgs.RoutedEvent = UIElement.MouseEnterEvent;
             currentMouseOverElement.RaiseEvent(mouseOverEventArgs);
             overBehaviorElement = true;
-            return Task.CompletedTask;
+            return;
         }
 
         private void HandleDrop(MouseEventArgs e) {
@@ -373,10 +337,8 @@ namespace NINA.Sequencer.Behaviors {
 
             if (AssociatedObject != null) {
                 WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonDown), AssociatedObject_MouseDown);
-                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonUp), AssociatedObject_MouseUp);
-                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeave), AssociatedObject_MouseLeave);
+                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonUp), AssociatedObject_MouseUp);                
                 WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(layoutParent, nameof(layoutParent.MouseMove), AssociatedObject_MouseMove);
-                WeakEventManager<FrameworkElement, MouseEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseEnter), AssociatedObject_MouseEnter);
                 WeakEventManager<FrameworkElement, MouseWheelEventArgs>.AddHandler(AssociatedObject, nameof(AssociatedObject.MouseWheel), AssociatedObject_MouseWheel);
             }
             base.OnAttached();
@@ -405,9 +367,7 @@ namespace NINA.Sequencer.Behaviors {
             if (AssociatedObject != null) {
                 WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonDown), AssociatedObject_MouseDown);
                 WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeftButtonUp), AssociatedObject_MouseUp);
-                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseLeave), AssociatedObject_MouseLeave);
                 WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(layoutParent, nameof(layoutParent.MouseMove), AssociatedObject_MouseMove);
-                WeakEventManager<FrameworkElement, MouseEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseEnter), AssociatedObject_MouseEnter);
                 WeakEventManager<FrameworkElement, MouseWheelEventArgs>.RemoveHandler(AssociatedObject, nameof(AssociatedObject.MouseWheel), AssociatedObject_MouseWheel);
             }
             base.OnDetaching();
