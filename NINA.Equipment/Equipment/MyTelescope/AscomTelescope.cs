@@ -855,7 +855,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
             double max = double.MinValue;
             double min = double.MaxValue;
-            IAxisRates r = device.AxisRates(ASCOM.DeviceInterface.TelescopeAxes.axisPrimary);
+            IAxisRates r = device.AxisRates(axis);
             IEnumerator e = r.GetEnumerator();
             foreach (IRate item in r) {
                 if (min > item.Minimum) {
