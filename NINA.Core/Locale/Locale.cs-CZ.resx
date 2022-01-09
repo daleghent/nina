@@ -206,7 +206,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba nadmořské
     <value>Zobrazí a anotuje Souhvězdí</value>
   </data>
   <data name="LblAnnotateDSO" xml:space="preserve">
-    <value>Anotovat DSO</value>
+    <value>Annotate Deep Sky Objects</value>
   </data>
   <data name="LblAnnotateGrid" xml:space="preserve">
     <value>Zobrazí Souřadnice</value>
@@ -523,10 +523,10 @@ Filtr: {3}</value>
     <value>Stav Kamery</value>
   </data>
   <data name="LblCameraXSize" xml:space="preserve">
-    <value>Velikost Kamery X</value>
+    <value>Velikost Senzoru X (pix)</value>
   </data>
   <data name="LblCameraYSize" xml:space="preserve">
-    <value>Velikost Kamery Y</value>
+    <value>Velikost Senzoru Y (pix)</value>
   </data>
   <data name="LblCamInfo" xml:space="preserve">
     <value>Informace o Kameře</value>
@@ -2133,7 +2133,7 @@ Přeskočit.</value>
     <value>Varovný text</value>
   </data>
   <data name="LblNow" xml:space="preserve">
-    <value>Teď</value>
+    <value>Now</value>
   </data>
   <data name="LblNrStars" xml:space="preserve">
     <value>#Hvězdy</value>
@@ -2888,7 +2888,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Hvězdný Čas</value>
   </data>
   <data name="LblSiteElevation" xml:space="preserve">
-    <value>Nadmořská výška Místa</value>
+    <value>Site Elevation</value>
   </data>
   <data name="LblSiteFromGPS" xml:space="preserve">
     <value>z GPS</value>
@@ -2978,7 +2978,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Určí citlivost algoritmu detekce hvězd. Vyšší nastavení může mylně detekovat šum a může trvat déle</value>
   </data>
   <data name="LblStartAutoFocus" xml:space="preserve">
-    <value>Spustí AutoOstření</value>
+    <value>Zahájit AutoOstření</value>
   </data>
   <data name="LblStartBacklashMeasurementConfirmation" xml:space="preserve">
     <value>Měření Zpětné vůle začne.
@@ -3003,7 +3003,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Měření Zpětné Vůle VEN Začíná</value>
   </data>
   <data name="LblStartSequenceAnyway" xml:space="preserve">
-    <value>Spustit Sekvenci?</value>
+    <value>Zahájit Sekvenci?</value>
   </data>
   <data name="LblState" xml:space="preserve">
     <value>Stav</value>
@@ -3279,14 +3279,14 @@ Přetáhněte obdélník na hvězdu s bahtinovskými čarami. NINA provede vyhod
     <value>Obnoví postup všech položek v pořadí</value>
   </data>
   <data name="LblTooltipStartSequence" xml:space="preserve">
-    <value>Spustí sekvenci</value>
+    <value>Zahájí sekvenci</value>
   </data>
   <data name="LblToolTipSubSample" xml:space="preserve">
     <value>Částečný Rámce
 Přesunout obdélník na část snímku, který chcete snímat, a aktivujte částečné snímky v zobrazovacím okně. Kamera stáhne pouze vybranou oblast.</value>
   </data>
   <data name="LblTooltipTakeExposure" xml:space="preserve">
-    <value>Spustí Expozici</value>
+    <value>Zahájí Expozici</value>
   </data>
   <data name="LblTooltipTargetLoadSet" xml:space="preserve">
     <value>Načte cíle ze souboru</value>
@@ -3358,7 +3358,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Nastavit ISO není možné</value>
   </data>
   <data name="LblUnableToStartExposure" xml:space="preserve">
-    <value>Nelze spustit expozici kamery</value>
+    <value>Nelze zahájit expozici kamery</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
     <value>Nelze synchronizovat. Dalekohled nepřipojen</value>
@@ -3977,7 +3977,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Časový limit vypršel při čekání na synchronizaci kopule</value>
   </data>
   <data name="LblStartSequence" xml:space="preserve">
-    <value>Spustit Sekvenci</value>
+    <value>Zahájit Sekvenci</value>
   </data>
   <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
     <value>Kamera nemá mechanickou závěrku, není připojen žádný automatický FlatBox a sekvence obsahuje pouze DARK/BIAS položky smíchané s LIGHT.</value>
@@ -4313,7 +4313,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Spustí automatické ostření</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
-    <value>Spustí AutoOstření</value>
+    <value>Spustit AutoOstření</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
     <value>Ochladí kameru na danou teplotu a dobu trvání</value>
@@ -4367,7 +4367,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Dither</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
-    <value>Spustí automatickou pointaci</value>
+    <value>Zahájit automatickou pointaci</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
     <value>Zahájit Pointaci</value>
@@ -4466,25 +4466,25 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Čeká na Čas</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Vycentruje Po Posunu</value>
+    <value>Vycentrovat Po Posunu</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který určí pro znovu vycentrování a astrometrii, zda se dalekohled vzdálil příliš daleko od cílových souřadnic</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
-    <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
+    <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo zahájení sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
     <value>AutoOstření Po Změně HFR</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
-    <value>Spouštěč, který spouští auto-ostření po změně teploty o danou částku ve stupních od posledního automatického spuštění nebo spuštění sekvence</value>
+    <value>Spouštěč, který spouští auto-ostření po změně teploty o danou částku ve stupních od posledního automatického spuštění nebo zahájení sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
     <value>AutoOstření Po Změně Teploty</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
-    <value>Spouštěč, který spouští automatické ostření po uplynutí nastaveného času od posledního provedení automatického ostření nebo spuštění sekvence</value>
+    <value>Spouštěč, který spouští automatické ostření po uplynutí nastaveného času od posledního provedení automatického ostření nebo zahájení sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
     <value>AutoOstření Po Čase</value>
@@ -4604,7 +4604,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Přidat Cíl do Sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
-    <value>Spustí Automatické zaostřování po zjištěné změně filtru</value>
+    <value>Zahájit Automatické zaostřování po zjištěné změně filtru</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
     <value>AutoOstření Po Změně Filtru</value>
@@ -4646,7 +4646,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Otevře kryt FlatBoxu</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
-    <value>Otevře kryt FlatBoxu</value>
+    <value>Otevřít kryt FlatBoxu</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
     <value>Nastaví jas flat zařízení na zadanou hodnotu</value>
@@ -4692,7 +4692,7 @@ Sem přidejte sekvence objektů deep sky nebo přidejte cíle prostřednictvím 
     <value>Cíle</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
-    <value>Šablona Spouštěcí Sekvence</value>
+    <value>Šablona Zahájení Sekvence</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
     <value>Po nastavení bude tato šablona předem načtena do sekvencéru.</value>
@@ -4864,25 +4864,25 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Otočte kopuli do výchozí polohy</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
-    <value>Najít výchozí polohu</value>
+    <value>Najít Výchozí Polohu</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
     <value>Orientuje kopule do absolutní azimutální polohy</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Posouvá kopuli v azimutu</value>
+    <value>Posouvá Kopuli v Azimutu</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Pokyny pro Paralelní Zahájení Sekvence</value>
   </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
-    <value>Otevřít kryt při spuštění sekvence</value>
+    <value>Otevřít kryt při zahájení sekvence</value>
   </data>
   <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
-    <value>Po spuštění sekvence otevřít štěrbinu</value>
+    <value>Po zahájení sekvence otevřít štěrbinu</value>
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
-    <value>Odparkovat kopuli a spustit sekvenci</value>
+    <value>Odparkovat kopuli a zahájit sekvenci</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Otevřít štěrbinu kopule</value>
@@ -4900,7 +4900,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Deaktivuje synchronizaci pozadí kopule s dalekohledem</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
-    <value>Zakáže synchronizaci kopule</value>
+    <value>Zakázat Synchronizaci Kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>Synchronizuje kopuli s aktuální pozicí dalekohledu</value>
@@ -5474,7 +5474,7 @@ Toto nastavení nebude mít žádný vliv na barevné senzory.
 To má význam pouze při použití ovladače kamery ASCOM!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Časový limit Spuštění Pointace</value>
+    <value>Časový limit Zahájení Pointace</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filtry</value>
@@ -5698,7 +5698,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Podle Důležitosti</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
-    <value>Složka Cíle Sekvencéru</value>
+    <value>Cílová Složka Sekvencéru</value>
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
     <value>Složka, ve které jsou uloženy sekvenční cíle pro pokročilý sekvencér</value>
@@ -5734,7 +5734,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Možnosti Ukončení Cíle</value>
   </data>
   <data name="LblTargetSetStartOptions" xml:space="preserve">
-    <value>Možnosti Spuštění Cíle</value>
+    <value>Možnosti Zahájení Cíle</value>
   </data>
   <data name="LblUnparkMount" xml:space="preserve">
     <value>Odparkovat Montáž</value>
@@ -5779,10 +5779,10 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Stabilizace ditheringu</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
-    <value>Selhalo spuštění sledování CCD ASCOM serveru. {0}</value>
+    <value>Selhalo zahájení sledování CCD ASCOM serveru. {0}</value>
   </data>
   <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
-    <value>Sledování CCD ASCOM serveru spuštěno</value>
+    <value>Sledování CCD ASCOM serveru zahájeno</value>
   </data>
   <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
     <value>Sledování CCD ASCOM serveru zastaveno</value>
@@ -5976,7 +5976,7 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
     <value>Získá souřadnice z aktuální pozice dalekohledu</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Nadmořská výška</value>
+    <value>Elevation</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
     <value>Vlákna zařízení pro ASCOM</value>
