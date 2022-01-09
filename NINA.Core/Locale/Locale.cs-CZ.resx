@@ -206,7 +206,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba nadmořské
     <value>Zobrazí a anotuje Souhvězdí</value>
   </data>
   <data name="LblAnnotateDSO" xml:space="preserve">
-    <value>Annotate Deep Sky Objects</value>
+    <value>Anotuje DSO</value>
   </data>
   <data name="LblAnnotateGrid" xml:space="preserve">
     <value>Zobrazí Souřadnice</value>
@@ -2133,7 +2133,7 @@ Přeskočit.</value>
     <value>Varovný text</value>
   </data>
   <data name="LblNow" xml:space="preserve">
-    <value>Now</value>
+    <value>Nyní</value>
   </data>
   <data name="LblNrStars" xml:space="preserve">
     <value>#Hvězdy</value>
@@ -2888,7 +2888,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Hvězdný Čas</value>
   </data>
   <data name="LblSiteElevation" xml:space="preserve">
-    <value>Site Elevation</value>
+    <value>Výška Místa</value>
   </data>
   <data name="LblSiteFromGPS" xml:space="preserve">
     <value>z GPS</value>
@@ -4070,7 +4070,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Po obnovení pointační hvězdy selhala obnova pointování</value>
   </data>
   <data name="LblSkyFlat" xml:space="preserve">
-    <value>Sky Flats</value>
+    <value>Flat z Oblohy</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Chyba synchronizace kopule. Již nesleduje dalekohled. {0}</value>
@@ -5976,7 +5976,7 @@ Po úspěšném vyřešení se nastaví úhel natočení snímku.</value>
     <value>Získá souřadnice z aktuální pozice dalekohledu</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>Výška</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
     <value>Vlákna zařízení pro ASCOM</value>
