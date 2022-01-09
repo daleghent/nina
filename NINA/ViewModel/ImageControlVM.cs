@@ -392,10 +392,12 @@ namespace NINA.ViewModel {
                     service.Show(plateSolveStatusVM, this.Title + " - " + plateSolveStatusVM.Title, ResizeMode.CanResize, WindowStyle.ToolWindow);
 
                     var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, _progress, _plateSolveToken.Token);
-                    var scopePosition = telescopeMediator.GetCurrentPosition();
-                    var resultCoordinates = result.Coordinates.Transform(scopePosition.Epoch);
+                    if(telescopeMediator.GetInfo().Connected) { 
+                        var scopePosition = telescopeMediator.GetCurrentPosition();
+                        var resultCoordinates = result.Coordinates.Transform(scopePosition.Epoch);
 
-                    result.Separation = scopePosition - resultCoordinates;
+                        result.Separation = scopePosition - resultCoordinates;
+                    }
                     plateSolveStatusVM.PlateSolveResult = result;
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
