@@ -86,8 +86,11 @@ namespace NINA.PlateSolving {
                     } else {
                         var positionAfterSync = telescopeMediator.GetCurrentPosition();
 
-                        var syncDistance = positionAfterSync - resultCoordinates;
-                        if (Math.Abs(syncDistance.Distance.ArcMinutes) > parameter.Threshold) {
+                        // If Sync affects the scope position by at least 1 arcsecond, then continue iterating without
+                        // using an offset
+                        var syncEffect = positionAfterSync - position;
+                        if (Math.Abs(syncEffect.Distance.ArcSeconds) < 1.0d) {
+                            var syncDistance = positionAfterSync - resultCoordinates;
                             offset = syncDistance;
                             Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Position after sync: {positionAfterSync}; Solved: {resultCoordinates}; New Offset: {offset}");
                         } else {
