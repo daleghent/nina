@@ -24,11 +24,13 @@ using NINA.Equipment.Model;
 using NINA.PlateSolving.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Utility.Notification;
+using NINA.Core.Model.Equipment;
 
 namespace NINA.PlateSolving {
 
     public class CenteringSolver : ICenteringSolver {
         private readonly ITelescopeMediator telescopeMediator;
+        private readonly IFilterWheelMediator filterWheelMediator;
         private readonly IDomeMediator domeMediator;
         private readonly IDomeFollower domeFollower;
 
@@ -42,6 +44,7 @@ namespace NINA.PlateSolving {
             this.telescopeMediator = telescopeMediator;
             this.domeMediator = domeMediator;
             this.domeFollower = domeFollower;
+            this.filterWheelMediator = filterWheelMediator;
             this.CaptureSolver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
         }
 
@@ -51,40 +54,47 @@ namespace NINA.PlateSolving {
             if (parameter?.Coordinates == null) { throw new ArgumentException(nameof(CenterSolveParameter.Coordinates)); }
             if (parameter?.Threshold <= 0) { throw new ArgumentException(nameof(CenterSolveParameter.Threshold)); }
 
-            var centered = false;
-            var maxSlewAttempts = 10;
-            PlateSolveResult result;
-            Separation offset = new Separation();
-            do {
-                maxSlewAttempts--;
-                result = await CaptureSolver.Solve(seq, parameter, solveProgress, progress, ct);
+            FilterInfo oldFilter = null;
+            if (seq.FilterType != null) {
+                oldFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
+                await filterWheelMediator.ChangeFilter(seq.FilterType, ct, progress);
+            }
 
-                if (result.Success == false) {
-                    //Solving failed. Give up.
-                    break;
-                }
+            try {
+                var centered = false;
+                var maxSlewAttempts = 10;
+                PlateSolveResult result;
+                Separation offset = new Separation();
+                do {
+                    maxSlewAttempts--;
+                    result = await CaptureSolver.Solve(seq, parameter, solveProgress, progress, ct);
 
-                // All coordinates need to be in the same epoch as the scope for offsets to correctly be calculated
-                var position = telescopeMediator.GetCurrentPosition();
-                var resultCoordinates = result.Coordinates.Transform(position.Epoch);
-                var parameterCoordinates = parameter.Coordinates.Transform(position.Epoch);
-                result.Separation = parameterCoordinates - resultCoordinates;
+                    if (result.Success == false) {
+                        //Solving failed. Give up.
+                        break;
+                    }
 
-                var positionWithOffset = position - offset;
-                Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameterCoordinates}; Solved: {resultCoordinates}; Separation {result.Separation}; Threshold: {parameter.Threshold}");
+                    // All coordinates need to be in the same epoch as the scope for offsets to correctly be calculated
+                    var position = telescopeMediator.GetCurrentPosition();
+                    var resultCoordinates = result.Coordinates.Transform(position.Epoch);
+                    var parameterCoordinates = parameter.Coordinates.Transform(position.Epoch);
+                    result.Separation = parameterCoordinates - resultCoordinates;
 
-                solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
+                    var positionWithOffset = position - offset;
+                    Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameterCoordinates}; Solved: {resultCoordinates}; Separation {result.Separation}; Threshold: {parameter.Threshold}");
 
-                if (Math.Abs(result.Separation.Distance.ArcMinutes) > parameter.Threshold) {
-                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
-                    if (parameter.NoSync || !await telescopeMediator.Sync(resultCoordinates)) {
-                        var oldOffset = offset;
-                        offset = position - resultCoordinates;
+                    solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
 
-                        Logger.Info($"Sync {(parameter.NoSync ? "disabled" : "failed")} - calculating offset instead to compensate.  Original: {positionWithOffset}; Original Offset {oldOffset}; Solved: {resultCoordinates}; New Offset: {offset}");
-                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
-                    } else {
-                        var positionAfterSync = telescopeMediator.GetCurrentPosition();
+                    if (Math.Abs(result.Separation.Distance.ArcMinutes) > parameter.Threshold) {
+                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
+                        if (parameter.NoSync || !await telescopeMediator.Sync(resultCoordinates)) {
+                            var oldOffset = offset;
+                            offset = position - resultCoordinates;
+
+                            Logger.Info($"Sync {(parameter.NoSync ? "disabled" : "failed")} - calculating offset instead to compensate.  Original: {positionWithOffset}; Original Offset {oldOffset}; Solved: {resultCoordinates}; New Offset: {offset}");
+                            progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
+                        } else {
+                            var positionAfterSync = telescopeMediator.GetCurrentPosition();
 
                         // If Sync affects the scope position by at least 1 arcsecond, then continue iterating without
                         // using an offset
@@ -100,31 +110,41 @@ namespace NINA.PlateSolving {
                         }
                     }
 
-                    var scopePosition = telescopeMediator.GetCurrentPosition();
-                    Logger.Info($"Slewing to target after sync. Current Position: {scopePosition}; Target coordinates: {parameterCoordinates}; Offset {offset}");
-                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
+                        var scopePosition = telescopeMediator.GetCurrentPosition();
+                        Logger.Info($"Slewing to target after sync. Current Position: {scopePosition}; Target coordinates: {parameterCoordinates}; Offset {offset}");
+                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
-                    await telescopeMediator.SlewToCoordinatesAsync(parameterCoordinates + offset, ct);
-                    var domeInfo = domeMediator.GetInfo();
-                    if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
-                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
-                        Logger.Info($"Centering Solver - Synchronize dome to scope since dome following is not enabled");
-                        if (!await domeFollower.TriggerTelescopeSync()) {
-                            Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringCentering"]);
-                            Logger.Warning("Centering Solver - Synchronize dome operation didn't complete successfully. Moving on");
+                        await telescopeMediator.SlewToCoordinatesAsync(parameterCoordinates + offset, ct);
+                        var domeInfo = domeMediator.GetInfo();
+                        if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
+                            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
+                            Logger.Info($"Centering Solver - Synchronize dome to scope since dome following is not enabled");
+                            if (!await domeFollower.TriggerTelescopeSync()) {
+                                Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringCentering"]);
+                                Logger.Warning("Centering Solver - Synchronize dome operation didn't complete successfully. Moving on");
+                            }
                         }
-                    }
 
-                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceRepeating"] });
-                } else {
-                    centered = true;
+                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceRepeating"] });
+                    } else {
+                        centered = true;
+                    }
+                } while (!centered && maxSlewAttempts > 0);
+                if (!centered && maxSlewAttempts <= 0) {
+                    result.Success = false;
+                    Logger.Error("Cancelling centering after 10 unsuccessful slew attempts");
                 }
-            } while (!centered && maxSlewAttempts > 0);
-            if (!centered && maxSlewAttempts <= 0) {
-                result.Success = false;
-                Logger.Error("Cancelling centering after 10 unsuccessful slew attempts");
+                return result;
+            } finally {
+                if (oldFilter != null) {
+                    Logger.Info($"Restoring filter to {oldFilter} after centering");
+
+                    // Set an absurdly high timeout, but at least make sure that this cannot go on forever. The existing token may have been cancelled already, so we need
+                    // to use a new one
+                    var timeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+                    await filterWheelMediator.ChangeFilter(oldFilter, timeoutCts.Token, progress);
+                }
             }
-            return result;
         }
     }
 }
