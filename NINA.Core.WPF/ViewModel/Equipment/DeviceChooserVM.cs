@@ -28,7 +28,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment {
         public DeviceChooserVM(IProfileService profileService) : base(profileService) {
             this.profileService = profileService;
             this.Devices = new List<IDevice>();
-            SetupDialogCommand = new AsyncCommand<bool>((o) => Task.Run(OpenSetupDialog));
+            SetupDialogCommand = new RelayCommand(OpenSetupDialog);
         }
 
         protected object lockObj = new object();
@@ -63,12 +63,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment {
 
         public ICommand SetupDialogCommand { get; private set; }
 
-        private bool OpenSetupDialog() {
+        private void OpenSetupDialog(object o) {
             if (SelectedDevice?.HasSetupDialog == true) {
                 SelectedDevice.SetupDialog();
-                return true;
             }
-            return false;
         }
 
         protected void DetermineSelectedDevice(IList<IDevice> d, string id) {
