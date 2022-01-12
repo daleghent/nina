@@ -30,26 +30,31 @@ namespace ZWOptical.ASISDK {
             ASI_TEMPERATURE,// return 10*temperature
             ASI_FLIP,
             ASI_AUTO_MAX_GAIN,
-            ASI_AUTO_MAX_EXP,//micro second
-            ASI_AUTO_TARGET_BRIGHTNESS,//target brightness
+            ASI_AUTO_MAX_EXP,
+            ASI_AUTO_TARGET_BRIGHTNESS,
             ASI_HARDWARE_BIN,
             ASI_HIGH_SPEED_MODE,
             ASI_COOLER_POWER_PERC,
             ASI_TARGET_TEMP,// not need *10
             ASI_COOLER_ON,
-            ASI_MONO_BIN,//lead to less grid at software bin mode for color camera
+            ASI_MONO_BIN,
             ASI_FAN_ON,
             ASI_PATTERN_ADJUST,
-            ASI_ANTI_DEW_HEATER
+            ASI_ANTI_DEW_HEATER,
+            ASI_HUMIDITY,
+            ASI_ENABLE_DDR
         }
 
+
         public enum ASI_IMG_TYPE {
+            //Supported image type
             ASI_IMG_RAW8 = 0,
             ASI_IMG_RGB24,
             ASI_IMG_RAW16,
             ASI_IMG_Y8,
             ASI_IMG_END = -1
         }
+
 
         public enum ASI_GUIDE_DIRECTION {
             ASI_GUIDE_NORTH = 0,
@@ -90,27 +95,22 @@ namespace ZWOptical.ASISDK {
             ASI_ERROR_VIDEO_MODE_ACTIVE,
             ASI_ERROR_EXPOSURE_IN_PROGRESS,
             ASI_ERROR_GENERAL_ERROR,//general error, eg: value is out of valid range
-            ASI_ERROR_INVALID_MODE,//the current mode is wrong
             ASI_ERROR_END
         };
-
         public enum ASI_BOOL {
             ASI_FALSE = 0,
             ASI_TRUE
         };
-
         public enum ASI_FLIP_STATUS {
             ASI_FLIP_NONE = 0,//: original
             ASI_FLIP_HORIZ,//: horizontal flip
             ASI_FLIP_VERT,// vertical flip
             ASI_FLIP_BOTH,//:both horizontal and vertical flip
+
         };
-
         public struct ASI_CAMERA_INFO {
-
             [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 64)]
             public byte[] name;// char[64]; //the name of the camera, you can display this to the UI
-
             public int CameraID; //this is used to control everything of the camera in other functions
             public int MaxHeight; //the max height of the camera
             public int MaxWidth;	//the max width of the camera
@@ -131,11 +131,9 @@ namespace ZWOptical.ASISDK {
             public ASI_BOOL IsUSB3Host;
             public ASI_BOOL IsUSB3Camera;
             public float ElecPerADU;
-            public int BitDepth;
-            public ASI_BOOL IsTriggerCam;
 
-            [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 16)]
-            public byte[] Unused;//[16];
+            [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 24)]
+            public byte[] Unused;//[20];
 
             public string Name {
                 get { return Encoding.ASCII.GetString(name).TrimEnd((Char)0); }
@@ -144,20 +142,16 @@ namespace ZWOptical.ASISDK {
 
         [StructLayout(LayoutKind.Sequential)]
         public struct ASI_CONTROL_CAPS {
-
             [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 64)]
             public byte[] name; //the name of the Control like Exposure, Gain etc..
-
             [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 128)]
             public byte[] description; //description of this control
-
             public int MaxValue;
             public int MinValue;
             public int DefaultValue;
             public ASI_BOOL IsAutoSupported; //support auto set 1, don't support 0
-            public ASI_BOOL IsWritable; //some control like temperature can only be read by some cameras
+            public ASI_BOOL IsWritable; //some control like temperature can only be read by some cameras 
             public ASI_CONTROL_TYPE ControlType;//this is used to get value and set value of the control
-
             [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 32)]
             public byte[] Unused;//[32];
 
@@ -170,11 +164,10 @@ namespace ZWOptical.ASISDK {
             }
         }
 
-        public struct ASI_ID {
 
+        public struct ASI_ID {
             [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 8)]
             public byte[] id;
-
             public string ID {
                 get { return Encoding.ASCII.GetString(id).TrimEnd((Char)0); }
             }
@@ -285,7 +278,6 @@ namespace ZWOptical.ASISDK {
                 case ASI_ERROR_CODE.ASI_ERROR_VIDEO_MODE_ACTIVE:
                 case ASI_ERROR_CODE.ASI_ERROR_EXPOSURE_IN_PROGRESS:
                 case ASI_ERROR_CODE.ASI_ERROR_GENERAL_ERROR:
-                case ASI_ERROR_CODE.ASI_ERROR_INVALID_MODE:
                 case ASI_ERROR_CODE.ASI_ERROR_END:
                     throw new ASICameraException(errorCode, callingMethod, parameters);
                 default:
