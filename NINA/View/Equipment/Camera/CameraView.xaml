@@ -684,7 +684,7 @@
                     </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
+                            <RowDefinition Height="2*" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Vertical">

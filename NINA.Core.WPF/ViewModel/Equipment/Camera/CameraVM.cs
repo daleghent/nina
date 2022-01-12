@@ -72,8 +72,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !CameraInfo.Connected);
 
             TempChangeRunning = false;
-            CoolerPowerHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);
-            CCDTemperatureHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);
+            CoolerHistory = new AsyncObservableLimitedSizedStack<CoolingPoint>(1000);
             ToggleDewHeaterOnCommand = new RelayCommand(ToggleDewHeaterOn);
 
             updateTimer = new DeviceUpdateTimer(
@@ -86,6 +85,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 await Rescan();
                 RaiseAllPropertiesChanged();  // Reload DefaultGain, and other default camera settings
             };
+        }
+
+        public class CoolingPoint {
+            public CoolingPoint(DateTime dateTime, double temperature, double coolerPower) {
+                DateTime = dateTime;
+                Temperature = temperature;
+                CoolerPower = coolerPower;
+            }
+
+            public DateTime DateTime { get; }
+            public double Temperature { get; }
+            public double CoolerPower { get; }
         }
 
         public async Task<IList<string>> Rescan() {
@@ -561,8 +572,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             CameraInfo.PixelSize = (double)(o ?? 0.0d);
 
             DateTime x = DateTime.Now;
-            CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.CoolerPower));
-            CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.Temperature));
+            CoolerHistory.Add(new CoolingPoint(x, CameraInfo.Temperature, CameraInfo.CoolerPower));
 
             BroadcastCameraInfo();
         }
@@ -914,8 +924,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             Cam.CoolerOn = onOff;
         }
 
-        public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CoolerPowerHistory { get; private set; }
-        public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CCDTemperatureHistory { get; private set; }
+        public AsyncObservableLimitedSizedStack<CoolingPoint> CoolerHistory { get; private set; }
         public IAsyncCommand CoolCamCommand { get; private set; }
         public IAsyncCommand WarmCamCommand { get; private set; }
         public ICommand ToggleDewHeaterOnCommand { get; private set; }
