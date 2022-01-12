@@ -190,6 +190,9 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Various layout improvements and redesign of controls
 - Flat Wizard page controls are streamlined with the rest of the application by replacing the sliders with steppers
 - When closing a dock panel in the imaging tab and reopening it again, the position is properly restored
+- Cooling charts in the camera equipment tab have been merged into one single chart with the history size increased from 100 to 1000
+- On web requests the user-agent header is now filled properly
+- An autofocus indicator in the HFR history will no longer change the Y-Axis scale
 
 ### Subsampling
 - The sub sample button above the image panel has been removed
