@@ -72,7 +72,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !CameraInfo.Connected);
 
             TempChangeRunning = false;
-            CoolerHistory = new AsyncObservableLimitedSizedStack<CoolingPoint>(1000);
+            CoolerHistory = new AsyncObservableLimitedSizedStack<CoolingPoint>(200);
             ToggleDewHeaterOnCommand = new RelayCommand(ToggleDewHeaterOn);
 
             updateTimer = new DeviceUpdateTimer(
