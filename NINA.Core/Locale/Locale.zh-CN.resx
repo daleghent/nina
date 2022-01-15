@@ -5985,13 +5985,13 @@
     <value>默认</value>
   </data>
   <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
-    <value>Flat device cannot control brightness!</value>
+    <value>平场板无法调节亮度！</value>
   </data>
   <data name="LblAboveHorizon" xml:space="preserve">
     <value>高于地平线</value>
   </data>
   <data name="LblNikonX86Deprecated" xml:space="preserve">
-    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+    <value>不支持 - Nikon 不再提供 x86 的 SDK 文件</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
     <value>未安装插件</value>

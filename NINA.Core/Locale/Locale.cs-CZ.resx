@@ -178,26 +178,26 @@
     <value>Alternativní Schéma Uživatelského Rozhraní</value>
   </data>
   <data name="LblAltitude" xml:space="preserve">
-    <value>Nadmořská výška</value>
+    <value>Výška</value>
   </data>
   <data name="LblAltitudeErrorMeasurement" xml:space="preserve">
-    <value>Chyba Měření Nadmořské výšky</value>
+    <value>Chyba Výšky</value>
   </data>
   <data name="LblAltitudeMeasurement" xml:space="preserve">
-    <value>Měření Nadmořské výšky</value>
+    <value>Měření Výšky</value>
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
-    <value>Změření Chyby Nadmořské výšky v následujících třech krocích.
+    <value>Změření Chyby Výšky v následujících třech krocích.
 1. Získat snímek a vypočítat souřadnice pomocí astrometrie z aktuální polohy
 2. Otočit dalekohled o 0,5 stupně kolem osy Ra
 3. Znovu podpořit snímek v této poloze a vypočítat souřadnice pomocí astrometrie
-Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba nadmořské výšky</value>
+Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba výšky</value>
   </data>
   <data name="LblAltitudeMeasurementDescription" xml:space="preserve">
     <value>Namiřte dalekohled na východ nebo na západ, blízko deklinace 0, nebo blízko obzoru.</value>
   </data>
   <data name="LblAltitudeMeasurementSide" xml:space="preserve">
-    <value>Měření Nadmořské výšky</value>
+    <value>Měření Výšky</value>
   </data>
   <data name="LblAnnotateConstellationBoundaries" xml:space="preserve">
     <value>Zobrazí Hranice Souhvězdí</value>
@@ -325,8 +325,8 @@ obdélníkový výřez obrazu (mezi vnitřním obdélníkem a vnější obdéln�
     <value>Metoda AutoOstření</value>
   </data>
   <data name="LblAutoFocusMethodTooltip" xml:space="preserve">
-    <value>Pokud je vybrána možnost Hvězda HFR, NINA rozpozná hvězdy v aktuálním FOV, vypočítá jejich HFR prostřednictvím několika zaostřovacích polí a určí minimální hodnotu HFR.
-Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu prostřednictvím více ohniskových bodů a najde nejvyšší kontrast. Tato metoda funguje také pro pozemské objekty i objekty sluneční soustavy, ale může být citlivá na šum obrazu.</value>
+    <value>Pokud je vybrána možnost Hvězda HFR, NINA rozpozná hvězdy v aktuálním FOV, vypočítá jejich HFR přes více bodů zaostření a najde minimální HFR.
+Detekce kontrastu používá techniku zpracování obrazu k odhadu kontrastu prostřednictvím více bodů zaostření a najde nejvyšší kontrast. Tato metoda funguje také pro pozemské objekty i objekty sluneční soustavy, ale může být citlivá na šum obrazu.</value>
   </data>
   <data name="LblAutoFocusNewWorseThanOriginal" xml:space="preserve">
     <value>Nový bod zaostření HFR {0} je výrazně horší než původní HFR {1}</value>
@@ -1970,7 +1970,7 @@ Přeskočit.</value>
     <value>Zahájeno překlopení poledníku</value>
   </data>
   <data name="LblMeridianIn" xml:space="preserve">
-    <value>Poledník v</value>
+    <value>Poledník za</value>
   </data>
   <data name="LblMeridianOffset" xml:space="preserve">
     <value>Předsazení poledníku</value>
@@ -2000,7 +2000,7 @@ Přeskočit.</value>
     <value>Minimální Čas Expozice</value>
   </data>
   <data name="LblMinimumAltitude" xml:space="preserve">
-    <value>Minimální Nadmořský Výška</value>
+    <value>Minimální Výška</value>
   </data>
   <data name="LblMinimumSettleTime" xml:space="preserve">
     <value>Minimální Stabilizace</value>
@@ -3733,12 +3733,12 @@ Výchozí nastavení Auto používá jakoukoli matici, kterou může poskytnout 
     <value>Použité metody kompenzace zpětné vůle.
 
 Absolutní: 
-Když motor ostření změní směr, bude k pohybu motoru ostření přidána absolutní hodnota.
-Směr dovnitř: Když se motor zaostření změní z vnějšího pohybu na vnitřní, bude přidána hodnota „směrem dovnitř“
-Směr ven: když se motor zaostření změní z vnitřního pohybu na vnější, bude přidána hodnota „směrem ven"
+Když motor ostření změní směr, přidá se k pohybu ostření absolutní hodnota.
+Směr dovnitř: při změně ostření z vnějšího pohybu na vnitřní, bude přidána hodnota „směrem dovnitř“
+Směr ven: při změně ostření z vnitřního pohybu na vnější, bude přidána hodnota „směrem ven"
 
 Překročení:
-Tato metoda bude kompenzovat vůli přetažením cílové pozice o velké množství a následným vrácením zaostřovacího motoru do požadované výchozí polohy.
+Tato metoda bude kompenzovat zpětnou vůli překročením cílové pozice o velké množství a následným vrácením ostřícího motoru do původní požadované polohy.
 U této kompenzace bude poslední pohyb ostření vždy ve stejném směru (ať už dovnitř nebo ven)
 Pro směr dovnitř / ven musí být vybrán pouze JEDEN z těchto dvou! Při nastavování směru dovnitř bude hodnota aplikována na každý pohyb dovnitř, takže konečný pohyb bude vždy ven. U kompenzace ven bude vše opačné.
 
@@ -3959,7 +3959,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Pozice Dalekohledu +Nahoru/-Dolů</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
-    <value>Změřte výškový rozdíl (v mm) od středu osy sestavy vzhledem k základně kopule. U montáže Alt/Az se měření provádí ze středu osy nadmořské výšky, u sestavy rovníku se provádí od místa, kde se protínají osy RA a DEC. Kladné číslo znamená, že střed osy je větší než základna kopule a záporné číslo znamená, že je menší.</value>
+    <value>Změřte výškový rozdíl (v mm) od středu osy sestavy vzhledem k základně kopule. U montáže Alt/Az se měření provádí ze středu osy výšky, u sestavy EQ se provádí od místa, kde se protínají osy RA a DEC. Kladné číslo znamená, že střed osy je vyšší než základna kopule a záporné číslo znamená, že je nižší.</value>
   </data>
   <data name="LblDomeSettings" xml:space="preserve">
     <value>Nastavení Kopule</value>
@@ -4448,10 +4448,10 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Okno Zprávy</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
-    <value>Čeká na dosaženo nadmořské výšky pro dané souřadnice</value>
+    <value>Čeká na dosaženo výšky pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
-    <value>Čeká na Nadmořskou výšku</value>
+    <value>Čekat na Výšku</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
     <value>Čeká na danou dobu v sekundách</value>
@@ -4619,7 +4619,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>AutoOstření Po # Expozicích</value>
   </data>
   <data name="LblUnreachableAltitude" xml:space="preserve">
-    <value>Nadmořské výšky nebude nikdy dosaženo</value>
+    <value>Výšky nebude nikdy dosaženo</value>
   </data>
   <data name="LblPlugin" xml:space="preserve">
     <value>Plugin</value>
@@ -4843,7 +4843,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Podmínka, která se opakuje, dokud se stanovený cíl nedostane pod danou výšku, a poté zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Cyklus, Dokud Nadmořská výška Neklesne Pod</value>
+    <value>Cyklus, Dokud Výška Neklesne Pod</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kopule</value>
@@ -5144,16 +5144,16 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Výběr Profilu při Spuštění</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
-    <value>Ukončí cyklus, pokud nadmořská výška Měsíce odpovídá zadaným parametrům.</value>
+    <value>Ukončí cyklus, pokud výška Měsíce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Nadmořská výška Měsíce</value>
+    <value>Výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
-    <value>Ukončí cyklus, pokud nadmořská výška Slunce odpovídá zadaným parametrům.</value>
+    <value>Ukončí cyklus, pokud výška Slunce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Nadmořská výška Slunce</value>
+    <value>Výška Slunce</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5174,22 +5174,22 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>&lt;</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description" xml:space="preserve">
-    <value>Čeká, až nadmořská výška Měsíce bude odpovídat zadaným parametrům</value>
+    <value>Čeká, až výška Měsíce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
-    <value>Čeká, až bude nadmořská výška Měsíce</value>
+    <value>Čeká, až bude Výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
-    <value>Čeká kvůli nadmořské výšce Měsíce ({0}° {1} {2}°)</value>
+    <value>Čeká kvůli výšce Měsíce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Description" xml:space="preserve">
-    <value>Čeká, až nadmořská výška Slunce bude odpovídat zadaným parametrům</value>
+    <value>Čeká, až výška Slunce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
-    <value>Čekám, až bude nadmořský výška Slunce</value>
+    <value>Čeká, až bude Výška Slunce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
-    <value>Čekám kvůli nadmořské výšce Slunce ({0}° {1} {2}°)</value>
+    <value>Čeká kvůli výšce Slunce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
     <value>Ukončí cyklus, když úroveň osvětlení Měsíce odpovídá zadaným parametrům.</value>
@@ -5245,7 +5245,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Vlastní Horizont</value>
   </data>
   <data name="LblCustomHorizonTooltip" xml:space="preserve">
-    <value>Načte soubor vlastního horizontu, který se použije k určení místního limitu horizontu a zobrazení limitu v grafu nadmořské výšky.</value>
+    <value>Načte soubor vlastního horizontu, který se použije k určení místního limitu horizontu a zobrazení limitu ve výškovém grafu.</value>
   </data>
   <data name="LblFailedToLoadCustomHorizon" xml:space="preserve">
     <value>Selhalo načtení vlastního horizontu</value>
@@ -5254,19 +5254,19 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Získat polohu z Programu Planetária</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
-    <value>Čeká, až bude cílová nadmořská výška nad obzorem. Pokud se používá vlastní horizont, používá se tato nadmořská výška namísto 0</value>
+    <value>Čeká, až bude cílová výška nad obzorem. Pokud se používá vlastní horizont, používá se tato výška namísto 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
     <value>Čeká, až bude nad horizontem</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
-    <value>Čekám, až bude cíl nad obzorem. Cílová Nadmořská výška {0}° / Výška Horizontu {1}°</value>
+    <value>Čekám, až bude cíl nad obzorem. Cílová Výška {0}° / Výška Horizontu {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
     <value>Podmínka, která se opakuje, dokud je cíl nad horizontem, poté se zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Cyklus, Dokud je Nadmořská výška nad Horizontem</value>
+    <value>Cyklus, Dokud je Výška nad Horizontem</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Cíl nikdy nebude nad obzorem</value>
@@ -5594,7 +5594,7 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Binning s průměrnou hodnotou pixelů</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>Ve výchozím nastavení je binning aditivní. Data mají stále stejný počet bitů jako fotoaparát, takže světlé pixely mohou být oříznuty. Střední režim tomuto ořezávání brání na úkor určitého dynamického rozsahu díky rozdělení na celá čísla.</value>
+    <value>Ve výchozím nastavení je binning aditivní. Data jsou stále stejně malá jako u fotoaparátu, takže světlé pixely lze oříznout. Průměrný režim zabraňuje tomuto oříznutí na úkor nějakého dynamického rozsahu kvůli celočíselnému dělení.</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
     <value>Přerušit a spustit pokyny ke konci sekvence</value>
@@ -5821,7 +5821,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Azimut</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
-    <value>Nadmořská výška</value>
+    <value>Výška</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
     <value>Chcete -li použít Spouštěč Synchronizace Kopule, deaktivujte sledování kopule</value>

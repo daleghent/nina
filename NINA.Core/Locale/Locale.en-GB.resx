@@ -4163,7 +4163,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Camera not connected</value>
   </data>
   <data name="LblFilterWheelNotConnected" xml:space="preserve">
-    <value>Filter wheel connected</value>
+    <value>Filter wheel not connected</value>
   </data>
   <data name="LblFocuserNotConnected" xml:space="preserve">
     <value>Focuser not connected</value>
