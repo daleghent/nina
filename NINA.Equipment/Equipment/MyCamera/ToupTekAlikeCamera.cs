@@ -366,7 +366,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public int OffsetMax {
             get {
-                return 31 * (1 << BitDepth - 8);
+                return 31 * (1 << nativeBitDepth - 8);
             }
         }
 
@@ -686,7 +686,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         }
                     }
 
-                    this.BitDepth = (int)bitDepth;
+                    this.nativeBitDepth = (int)bitDepth;
 
                     Connected = true;
                     RaiseAllPropertiesChanged();
@@ -832,7 +832,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             var size = width * height;
             var data = new ushort[size];
 
-            if (!sdk.PullImageV2(data, BitDepth, out var info)) {
+            if (!sdk.PullImageV2(data, nativeBitDepth, out var info)) {
                 Logger.Error($"{Category} - Failed to pull image");
                 return null;
             }
@@ -843,7 +843,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             var bitScaling = this.profileService.ActiveProfile.CameraSettings.BitScaling;
             if (bitScaling) {
-                var shift = 16 - BitDepth;
+                var shift = 16 - nativeBitDepth;
                 for (var i = 0; i < data.Length; i++) {
                     data[i] = (ushort)(data[i] << shift);
                 }
@@ -853,7 +853,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     input: data,
                     width: width,
                     height: height,
-                    bitDepth: bitScaling ? 16 : this.BitDepth,
+                    bitDepth: this.BitDepth,
                     isBayered: this.SensorType != SensorType.Monochrome,
                     metaData: new ImageMetaData());
 
@@ -957,15 +957,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private TaskCompletionSource<bool> imageReadyTCS;
-        private int bitDepth;
-
+        private int nativeBitDepth;
         public int BitDepth {
             get {
-                return bitDepth;
-            }
-            private set {
-                bitDepth = value;
-                RaisePropertyChanged();
+                return profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : nativeBitDepth;
             }
         }
 

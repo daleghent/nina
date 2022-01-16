@@ -180,7 +180,6 @@ namespace NINA.ViewModel.FlatWizard {
 
         private int GetBitDepth() {
             var bitDepth = cameraInfo?.BitDepth ?? (int)profileService.ActiveProfile.CameraSettings.BitDepth;
-            if (profileService.ActiveProfile.CameraSettings.BitScaling) bitDepth = 16;
 
             return bitDepth;
         }

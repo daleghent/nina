@@ -81,7 +81,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             CanSetTemperature = sdk.HasTemperatureControl();
         }
 
-        public int BitDepth { get => sdk.GetBitDepth(); }
+
+        public int BitDepth { get => profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : sdk.GetBitDepth(); }
 
         public SensorType SensorType { get; private set; }
 
@@ -324,7 +325,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             var bitScaling = this.profileService.ActiveProfile.CameraSettings.BitScaling;
             if (bitScaling) {
-                var shift = 16 - BitDepth;
+                var nativeBitDepth = sdk.GetBitDepth();
+                var shift = 16 - nativeBitDepth;
                 for (var i = 0; i < data.Length; i++) {
                     data[i] = (ushort)(data[i] << shift);
                 }
@@ -336,7 +338,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         input: data,
                         width: width,
                         height: height,
-                        bitDepth: bitScaling ? 16 : this.BitDepth,
+                        bitDepth: this.BitDepth,
                         isBayered: SensorType != SensorType.Monochrome,
                         metaData: new ImageMetaData());
         }
