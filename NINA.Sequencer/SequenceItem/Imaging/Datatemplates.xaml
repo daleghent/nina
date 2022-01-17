@@ -400,4 +400,48 @@
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Imaging.TakeSubframeExposure_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding ExposureTime}" />
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:TakeSubframeExposure}">
+        <view:SequenceBlockView>
+            <view:SequenceBlockView.SequenceItemContent>
+                <WrapPanel Orientation="Horizontal">
+                    <ContentPresenter Content="{StaticResource TakeExposureDetails}" />
+
+                    <TextBlock
+                        Margin="7.5,0,7.5,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="|" />
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblROI}">
+                        <TextBlock.ToolTip>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblROIPercentageTooltip}" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                    <ninactrl:UnitTextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding ROI, Converter={StaticResource PercentageConverter}}"
+                        TextAlignment="Right"
+                        Unit="%">
+                        <ninactrl:UnitTextBox.ToolTip>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblROIPercentageTooltip}" />
+                        </ninactrl:UnitTextBox.ToolTip>
+                    </ninactrl:UnitTextBox>
+                </WrapPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
 </ResourceDictionary>

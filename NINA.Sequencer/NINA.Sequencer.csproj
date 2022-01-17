@@ -257,6 +257,7 @@
     <Compile Include="SequenceItem\Imaging\SmartExposure.cs" />
     <Compile Include="SequenceItem\Imaging\TakeExposure.cs" />
     <Compile Include="SequenceItem\Imaging\TakeManyExposures.cs" />
+    <Compile Include="SequenceItem\Imaging\TakeSubframeExposure.cs" />
     <Compile Include="SequenceItem\Platesolving\Center.cs" />
     <Compile Include="SequenceItem\Platesolving\CenterAndRotate.cs" />
     <Compile Include="SequenceItem\Platesolving\Datatemplates.xaml.cs">

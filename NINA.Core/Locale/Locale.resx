@@ -6025,4 +6025,17 @@ Attempt {1}/{2}.</value>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
     <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
   </data>
+  <data name="LblROI" xml:space="preserve">
+    <value>ROI</value>
+    <comment>Region of interest used for sub frame.</comment>
+  </data>
+  <data name="LblROIPercentageTooltip" xml:space="preserve">
+    <value>Region of Interest expressed in percentage relative to the center</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
+    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
+    <value>Take Subframe Exposure</value>
+  </data>
 </root>

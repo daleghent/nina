@@ -359,6 +359,7 @@
     <Compile Include="Sequencer\SequenceItem\Guider\StopGuidingTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Imaging\TakeExposureTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Imaging\TakeManyExposuresTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Imaging\TakeSubframeExposureTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Platesolving\CenterAndRotateTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Platesolving\CenterTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Platesolving\SolveAndRotateTest.cs" />

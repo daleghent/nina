@@ -1452,6 +1452,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Takes an exposure for the given duration, gain and offset for the specified region of interest.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Subframe Exposure.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moves the instruction down by one position.
         ///If the position below it is an instruction set that is expanded, it will be moved inside the instruction set.
         ///If the position below it is an instruction set that is not currently expanded, it will be moved below the instruction set..
@@ -13349,6 +13367,24 @@ namespace NINA.Core.Locale {
         internal static string LblRms {
             get {
                 return ResourceManager.GetString("LblRms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROI.
+        /// </summary>
+        internal static string LblROI {
+            get {
+                return ResourceManager.GetString("LblROI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region of Interest expressed in percentage relative to the center.
+        /// </summary>
+        internal static string LblROIPercentageTooltip {
+            get {
+                return ResourceManager.GetString("LblROIPercentageTooltip", resourceCulture);
             }
         }
         

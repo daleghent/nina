@@ -10,13 +10,14 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 The Release Notes below will only mention the changes compared to the last released version.  
 To identify what has changed in between beta builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/release/2.0)
 
-## Change of setting locations
+## Change of existing settings and panels
 
 - Options page tab location is moved to the left instead of the top to be similar to main tabs
 - Sequencer end options have been moved into the simple sequencer tab
-- Meridian Flip settings show no longer an enabled flag, but can be enabled in the simple sequencer or added as a trigger into the advanced sequencer instead
+- Meridian Flip settings show no longer an enabled flag, but must be enabled in the simple sequencer screen or added as a trigger into the advanced sequencer instead
 - Autofocus options have been moved into a separate tab
 - PHD2 specific settings are now available in the equipment guider tab after connection
+- Optimal exposure calculator is removed from the core application, but available as a plugin
 
 ## Complete Sequencer Rework
 
