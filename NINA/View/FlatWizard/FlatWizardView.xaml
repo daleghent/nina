@@ -219,6 +219,9 @@
                             <Button
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Stretch"
+                                ToolTip="{Binding SlewToZenithTooltip}"
+                                ToolTipService.ShowOnDisabled="true"
+                                ToolTipService.IsEnabled="{Binding SlewToZenithTooltipEnabled}"
                                 Command="{Binding SlewToZenithCommand}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlewToZenith}" />
                             </Button>
@@ -295,7 +298,8 @@
                                         ResumeButtonImage="{StaticResource PlaySVG}"
                                         ResumeCommand="{Binding ResumeFlatExposureSequenceCommand}"
                                         ResumeToolTip="{ns:Loc LblResume}"
-                                        ToolTip="{ns:Loc LblTooltipStartSequence}" />
+                                        ToolTipService.ShowOnDisabled="true"
+                                        ToolTip="{Binding StartFlatExposureTooltip}" />
                                 </Grid>
                             </StackPanel>
                         </TabItem>
@@ -381,7 +385,8 @@
                                         ResumeButtonImage="{StaticResource PlaySVG}"
                                         ResumeCommand="{Binding ResumeFlatExposureSequenceCommand}"
                                         ResumeToolTip="{ns:Loc LblResume}"
-                                        ToolTip="{ns:Loc LblTooltipStartSequence}" />
+                                        ToolTipService.ShowOnDisabled="true"
+                                        ToolTip="{Binding StartFlatExposureMultiTooltip}" />
                                 </Grid>
                             </StackPanel>
                         </TabItem>

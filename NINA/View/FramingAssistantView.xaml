@@ -395,7 +395,10 @@
                                     MinValue="1"
                                     Value="{Binding VerticalPanels, Mode=TwoWay}" />
                             </UniformGrid>
-                            <UniformGrid Margin="0,0,0,6" Columns="2">
+                            <UniformGrid
+                                Margin="0,0,0,6"
+                                Columns="2"
+                                Visibility="{Binding IsMosaic, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOverlapPercentage}" />
                                 <ninactrl:UnitTextBox
                                     Margin="5,0,0,0"
@@ -416,7 +419,7 @@
                                         VerticalAlignment="Center"
                                         VerticalContentAlignment="Center"
                                         IsEnabled="{Binding RectangleCalculated}"
-                                        Text="{Binding Rectangle.TotalRotation}"
+                                        Text="{Binding RectangleTotalRotation}"
                                         Unit="°" />
                                     <Slider
                                         Grid.Column="1"
@@ -426,10 +429,100 @@
                                         Maximum="360"
                                         Minimum="0"
                                         TickFrequency="5"
-                                        Value="{Binding Rectangle.Rotation}" />
+                                        Value="{Binding RectangleRotation}" />
                                 </Grid>
                             </UniformGrid>
+                            <UniformGrid
+                                Margin="0,0,0,6"
+                                Columns="2"
+                                Visibility="{Binding IsMosaic, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPreserveAlignment}">
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="{ns:Loc LblPreserveAlignmentTooltip}" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                                <CheckBox
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalContentAlignment="Center"
+                                    IsChecked="{Binding PreserveAlignment, Mode=TwoWay}">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock Text="{ns:Loc LblPreserveAlignmentTooltip}" />
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                            </UniformGrid>
                         </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="{ns:Loc LblMosaicPanels}" Visibility="{Binding IsMosaic, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid>
+                            <!--  Helper grid to size the Listview columns  -->
+                            <Grid Margin="10,0,10,0" Visibility="Hidden">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid x:Name="col1" Grid.Column="0" />
+                                <Grid x:Name="col2" Grid.Column="1" />
+                                <Grid x:Name="col3" Grid.Column="2" />
+                                <Grid x:Name="col4" Grid.Column="3" />
+
+                            </Grid>
+                            <ListView ItemsSource="{Binding CameraRectangles}">
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="{Binding ElementName=col1, Path=ActualWidth}" Header="{ns:Loc LblPanel}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Id}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="{Binding ElementName=col2, Path=ActualWidth}" Header="{ns:Loc LblRA}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Coordinates.RAString}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="{Binding ElementName=col3, Path=ActualWidth}" Header="{ns:Loc LblDec}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Coordinates.DecString}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="{Binding ElementName=col4, Path=ActualWidth}" Header="{ns:Loc LblRotation}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding DSORotation, StringFormat=\{0:0.00\}°}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
                     </GroupBox>
 
                     <UniformGrid Columns="2">
@@ -660,6 +753,8 @@
                         </xceed:SplitButton>
                     </UniformGrid>
                 </StackPanel>
+
+
                 <Grid
                     Grid.Row="1"
                     Margin="5"
@@ -679,6 +774,7 @@
         <Grid Grid.Column="2">
             <wpfbase:ImageView
                 Image="{Binding ImageParameter.Image, IsAsync=True}"
+                ImageRotation="{Binding InverseRectangleRotation}"
                 RectangleFontSize="{Binding FontSize}"
                 RectangleOpacity="{Binding Opacity}"
                 ScrollEnabled="{Binding SkyMapAnnotator.DynamicFoV, Converter={StaticResource InverseBooleanConverter}}">
@@ -696,6 +792,46 @@
                             MinValue="0"
                             StepSize=".1"
                             Value="{Binding Opacity, Mode=TwoWay}" />
+
+                        <ToggleButton
+                            Width="35"
+                            Margin="5"
+                            IsChecked="{Binding RotateSky, Mode=TwoWay}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                    <TextBlock Text="{ns:Loc LblRotateSkyTooltip}" />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                            <ToggleButton.Style>
+                                <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="5"
+                                                        Data="{StaticResource RotatorSVG}"
+                                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="5"
+                                                        Data="{StaticResource RotatorSVG}"
+                                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+
                         <ToggleButton
                             Width="35"
                             Margin="5"
@@ -880,6 +1016,9 @@
                                                     <Rectangle.Fill>
                                                         <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource AncestorType=wpfbase:ImageView, Mode=FindAncestor}, Path=RectangleOpacity}" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
                                                     </Rectangle.Fill>
+                                                    <Rectangle.RenderTransform>
+                                                        <RotateTransform Angle="{Binding Rotation}" />
+                                                    </Rectangle.RenderTransform>
                                                 </Rectangle>
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
@@ -925,7 +1064,7 @@
                                     Fill="Transparent"
                                     RenderTransformOrigin="0.5,0.5"
                                     Stroke="{StaticResource ButtonForegroundBrush}"
-                                    StrokeThickness="5">
+                                    StrokeThickness="2">
                                     <Rectangle.RenderTransform>
                                         <RotateTransform Angle="{Binding Rectangle.Rotation}" />
                                     </Rectangle.RenderTransform>
@@ -939,6 +1078,21 @@
                                         </MultiBinding>
                                     </Rectangle.Margin>
                                 </Rectangle>
+                                <Border
+                                    Width="2.5"
+                                    Height="2.5"
+                                    Background="{StaticResource ButtonForegroundBrush}">
+                                    <Border.Margin>
+                                        <MultiBinding Converter="{StaticResource MultiMarginConverter}">
+
+                                            <Binding Path="Rectangle.X" />
+                                            <Binding Path="Rectangle.Y" />
+                                            <Binding Source="{StaticResource zero}" />
+                                            <Binding Source="{StaticResource zero}" />
+                                        </MultiBinding>
+                                    </Border.Margin>
+                                </Border>
+
                                 <Grid
                                     Width="{Binding Rectangle.Width}"
                                     Height="{Binding Rectangle.Height}"

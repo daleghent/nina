@@ -1,6 +1,7 @@
 #region "copyright"
+
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -8,13 +9,34 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
+
 #endregion "copyright"
-using NINA.Equipment.Equipment.MyCamera;
-using NINA.Equipment.Equipment.MyPlanetarium;
-using NINA.PlateSolving;
-using NINA.Utility;
+
 using NINA.Astrometry;
+using NINA.Astrometry.Interfaces;
+using NINA.Core.Enum;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Image.Interfaces;
+using NINA.PlateSolving;
 using NINA.Profile.Interfaces;
+using NINA.Sequencer.Container;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Sequencer.SequenceItem.Platesolving;
+using NINA.WPF.Base.Behaviors;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.SkySurvey;
+using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,33 +46,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using NINA.Sequencer.Container;
-using NINA.Sequencer.SequenceItem.Platesolving;
-using System.Linq;
-using System.Diagnostics;
-using NINA.Core.Enum;
-using NINA.Equipment.Interfaces.Mediator;
-using NINA.WPF.Base.Interfaces.Mediator;
-using NINA.Sequencer.Interfaces.Mediator;
-using NINA.Core.Model;
-using NINA.Core.Utility;
-using NINA.Core.Locale;
-using NINA.Core.Utility.Notification;
-using NINA.Core.MyMessageBox;
-using NINA.WPF.Base.Behaviors;
-using NINA.Equipment.Exceptions;
-using NINA.Astrometry.Interfaces;
-using NINA.Equipment.Interfaces;
-using NINA.WPF.Base.Interfaces.ViewModel;
-using NINA.WPF.Base.SkySurvey;
-using NINA.WPF.Base.ViewModel;
-using NINA.Core.Utility.WindowService;
-using NINA.Image.Interfaces;
-using NINA.Core.Model.Equipment;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -98,7 +97,7 @@ namespace NINA.ViewModel.FramingAssistant {
             CameraPixelSize = profileService.ActiveProfile.CameraSettings.PixelSize;
             FocalLength = profileService.ActiveProfile.TelescopeSettings.FocalLength;
 
-            Rectangle = new FramingRectangle(0) {
+            Rectangle = new FramingRectangle(0, 0, 0, 0, 0) {
                 Rotation = 0
             };
 
@@ -171,9 +170,12 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 var deepSkyObjects = new List<DeepSkyObject>();
                 foreach (var rect in CameraRectangles) {
-                    var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
-                    var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
-                    dso.Rotation = Rectangle.TotalRotation;
+                    var dso = new DeepSkyObject(rect.Name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
+
+                    double rotation = rect.DSORotation;
+
+                    dso.Rotation = AstroUtil.EuclidianModulus(rotation, 360);
+
                     dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
 
                     Logger.Info($"Adding target to simple sequencer: {dso.Name} - {dso.Coordinates}");
@@ -343,13 +345,16 @@ namespace NINA.ViewModel.FramingAssistant {
         private IList<IDeepSkyObjectContainer> GetDSOContainerListFromFraming(IDeepSkyObjectContainer template) {
             var l = new List<IDeepSkyObjectContainer>();
             var first = true;
+
             foreach (var rect in CameraRectangles) {
                 var container = (IDeepSkyObjectContainer)template.Clone();
-                var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
-                container.Name = name;
+                container.Name = rect.Name;
+
+                double rotation = rect.DSORotation;
+
                 container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
-                    TargetName = name,
-                    Rotation = Rectangle.TotalRotation,
+                    TargetName = rect.Name,
+                    Rotation = AstroUtil.EuclidianModulus(rotation, 360),
                     InputCoordinates = new InputCoordinates() {
                         Coordinates = rect.Coordinates
                     }
@@ -424,6 +429,62 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
+        private bool preserveAlignment;
+
+        // When enabled the rotation for the framing rectangle rotation will be adjusted for field curvature
+        public bool PreserveAlignment {
+            get => preserveAlignment;
+            set {
+                preserveAlignment = value;
+                RaisePropertyChanged();
+                DragMove(new DragResult() { Delta = new Vector() });
+            }
+        }
+
+        // Proxy Property to be able to recalculate rectangle on change
+        public double RectangleRotation {
+            get => Rectangle?.Rotation ?? 0;
+            set {
+                if (RectangleCalculated) {
+                    Rectangle.Rotation = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(RectangleTotalRotation));
+                    RaisePropertyChanged(nameof(InverseRectangleRotation));
+                    DragMove(new DragResult() { Delta = new Vector() });
+                }
+            }
+        }
+
+
+        // Flag that indicates if the sky background should be rotated instead of the rectangle
+        private bool rotateSky;
+        public bool RotateSky {
+            get => rotateSky;
+            set {
+                rotateSky = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(InverseRectangleRotation));
+            }
+        }
+
+        // Proxy Property for derotating the image according to the rectangle rotation
+        public double InverseRectangleRotation {
+            get => RotateSky ? (- Rectangle?.Rotation ?? 0) : 0;
+        }
+
+        // Proxy Property to be able to recalculate rectangle on change
+        public double RectangleTotalRotation {
+            get => Rectangle?.TotalRotation ?? 0;
+            set {
+                if (RectangleCalculated) {
+                    Rectangle.TotalRotation = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(RectangleRotation));
+                    DragMove(new DragResult() { Delta = new Vector() });
+                }
+            }
+        }
+
         private int fontSize;
 
         public int FontSize {
@@ -457,6 +518,8 @@ namespace NINA.ViewModel.FramingAssistant {
             private set {
                 _rectangleCalculated = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(RectangleRotation));
+                RaisePropertyChanged(nameof(RectangleTotalRotation));
             }
         }
 
@@ -764,6 +827,7 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 horizontalPanels = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsMosaic));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -777,8 +841,13 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 verticalPanels = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsMosaic));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
+        }
+
+        public bool IsMosaic {
+            get => VerticalPanels > 1 || HorizontalPanels > 1;
         }
 
         private double overlapPercentage = 0.2;
@@ -791,27 +860,6 @@ namespace NINA.ViewModel.FramingAssistant {
                 overlapPercentage = value;
                 RaisePropertyChanged();
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
-            }
-        }
-
-        private void RedrawRectangle() {
-            if (double.IsNaN(FocalLength)) {
-                return;
-            }
-
-            var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
-            var imageArcsecWidth = AstroUtil.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
-            var imageArcsecHeight = AstroUtil.ArcminToArcsec(ImageParameter.FoVHeight) / ImageParameter.Image.Height;
-
-            foreach (var rect in CameraRectangles) {
-                var rectCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d,
-                    rect.Y + Rectangle.Y + rect.Height / 2d);
-
-                var deltaX = rectCenter.X - center.X;
-                var deltaY = rectCenter.Y - center.Y;
-                rect.Coordinates =
-                    Rectangle.Coordinates.Shift(deltaX, deltaY, Rectangle.Rotation, imageArcsecWidth,
-                        imageArcsecHeight);
             }
         }
 
@@ -1051,13 +1099,12 @@ namespace NINA.ViewModel.FramingAssistant {
                 var y = parameter.OriginalHeight / 2d - height / 2d;
 
                 if (HorizontalPanels == 1 && VerticalPanels == 1) {
-                    CameraRectangles.Add(new FramingRectangle(parameter.Rotation) {
-                        Width = width,
-                        Height = height,
-                        X = 0,
-                        Y = 0,
-                        Rotation = previousRotation,
-                        Coordinates = centerCoordinates
+                    CameraRectangles.Add(new FramingRectangle(parameter.Rotation, 0, 0, width, height) {
+                        Name = DSO?.Name,
+                        Rotation = 0,
+                        Coordinates = centerCoordinates,
+                        DSORotation = AstroUtil.EuclidianModulus(previousRotation + parameter.Rotation, 360),
+                        OriginalCoordinates = centerCoordinates
                     });
                 } else {
                     var panelWidth = CameraWidth * conversion;
@@ -1073,8 +1120,12 @@ namespace NINA.ViewModel.FramingAssistant {
                     var center = new Point(x + width / 2d, y + height / 2d);
 
                     var id = 1;
-                    for (int i = 0; i < HorizontalPanels; i++) {
-                        for (int j = 0; j < VerticalPanels; j++) {
+
+                    for (int j = 0; j < VerticalPanels; j++) {
+                        for (int i = 0; i < HorizontalPanels; i++) {
+                            var panelId = id++;
+                            var name = panelId > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + panelId : DSO?.Name;
+
                             var panelX = i * panelWidth - i * panelOverlapWidth;
                             var panelY = j * panelHeight - j * panelOverlapHeight;
 
@@ -1083,36 +1134,41 @@ namespace NINA.ViewModel.FramingAssistant {
                             var panelDeltaX = panelCenter.X - center.X;
                             var panelDeltaY = panelCenter.Y - center.Y;
 
-                            var panelRotation = previousRotation;
-                            var panelCenterCoordinates = centerCoordinates.Shift(panelDeltaX, panelDeltaY, panelRotation, imageArcsecWidth, imageArcsecHeight);
-                            var rect = new FramingRectangle(parameter.Rotation) {
-                                Id = id++,
-                                Width = panelWidth,
-                                Height = panelHeight,
-                                X = panelX,
-                                Y = panelY,
+                            var referenceCenter = centerCoordinates.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, previousRotation, imageArcsecWidth, imageArcsecHeight);
+
+                            var panelCenterCoordinates = centerCoordinates.Shift(panelDeltaX, panelDeltaY, previousRotation, imageArcsecWidth, imageArcsecHeight);
+
+                            double positionAngle = 90;
+                            if (Math.Abs(centerCoordinates.RA - panelCenterCoordinates.RA) > 1E-13 || Math.Abs(centerCoordinates.Dec - panelCenterCoordinates.Dec) > 1E-13) {
+                                positionAngle = AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, panelCenterCoordinates.RADegrees, referenceCenter.Dec, panelCenterCoordinates.Dec) + previousRotation;
+                            }
+
+                            double panelRotation = -(90 - positionAngle);
+                            double dsoRotation = previousRotation + parameter.Rotation;
+                            if (PreserveAlignment) {
+                                panelRotation = 0;
+                                dsoRotation += (90 - positionAngle);
+                            }
+
+                            var rect = new FramingRectangle(parameter.Rotation, panelX, panelY, panelWidth, panelHeight) {
+                                Id = panelId,
+                                Name = name,
                                 Rotation = panelRotation,
-                                Coordinates = panelCenterCoordinates
+                                Coordinates = panelCenterCoordinates,
+                                DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360),
+                                OriginalCoordinates = panelCenterCoordinates
                             };
                             CameraRectangles.Add(rect);
                         }
                     }
                 }
 
-                Rectangle = new FramingRectangle(parameter.Rotation) {
-                    Width = width,
-                    Height = height,
-                    X = x,
-                    Y = y,
+                Rectangle = new FramingRectangle(parameter.Rotation, x, y, width, height) {
                     Rotation = previousRotation,
-                    Coordinates = centerCoordinates
+                    Coordinates = centerCoordinates,
+                    OriginalCoordinates = centerCoordinates
                 };
                 RectangleCalculated = Rectangle?.Coordinates != null;
-
-                Rectangle.PropertyChanged += (sender, eventArgs) => {
-                    RectangleCalculated = Rectangle?.Coordinates != null;
-                    RedrawRectangle();
-                };
 
                 FontSize = Math.Max(1, (int)((height / verticalPanels) * 0.1));
             }
@@ -1125,29 +1181,60 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private void DragMove(object obj) {
-            var delta = ((DragResult)obj).Delta;
-            if (FramingAssistantSource == SkySurveySource.SKYATLAS) {
-                delta = new Vector(-delta.X, -delta.Y);
+            if (RectangleCalculated) {
+                var delta = ((DragResult)obj).Delta;
+                if (FramingAssistantSource == SkySurveySource.SKYATLAS) {
+                    delta = new Vector(-delta.X, -delta.Y);
 
-                var newCenter = SkyMapAnnotator.ShiftViewport(delta);
-                DSO.Coordinates = newCenter;
-                ImageParameter.Coordinates = newCenter;
-                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+                    var newCenter = SkyMapAnnotator.ShiftViewport(delta);
+                    DSO.Coordinates = newCenter;
+                    ImageParameter.Coordinates = newCenter;
+                    CalculateRectangle(SkyMapAnnotator.ViewportFoV);
 
-                SkyMapAnnotator.UpdateSkyMap();
-            } else {
-                var imageArcsecWidth =
-                    AstroUtil.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
-                var imageArcsecHeight = AstroUtil.ArcminToArcsec(ImageParameter.FoVHeight) /
-                                        ImageParameter.Image.Height;
-                this.Rectangle.X += delta.X;
-                this.Rectangle.Y += delta.Y;
+                    SkyMapAnnotator.UpdateSkyMap();
+                } else {
+                    var imageArcsecWidth =
+                        AstroUtil.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
+                    var imageArcsecHeight = AstroUtil.ArcminToArcsec(ImageParameter.FoVHeight) /
+                                            ImageParameter.Image.Height;
+                    this.Rectangle.X += delta.X;
+                    this.Rectangle.Y += delta.Y;
 
-                Rectangle.Coordinates = Rectangle.Coordinates.Shift(delta.X, delta.Y, ImageParameter.Rotation,
-                    imageArcsecWidth, imageArcsecHeight);
-                foreach (var rect in CameraRectangles) {
-                    rect.Coordinates = rect.Coordinates.Shift(delta.X, delta.Y, ImageParameter.Rotation,
+                    var accumulatedDeltaX = this.Rectangle.X - this.Rectangle.OriginalX;
+                    var accumulatedDeltaY = this.Rectangle.Y - this.Rectangle.OriginalY;
+
+                    Rectangle.Coordinates = Rectangle.OriginalCoordinates.Shift(accumulatedDeltaX, accumulatedDeltaY, ImageParameter.Rotation,
                         imageArcsecWidth, imageArcsecHeight);
+                    DSO.Coordinates = Rectangle.Coordinates;
+
+                    var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
+
+                    foreach (var rect in CameraRectangles) {
+                        rect.Coordinates = rect.OriginalCoordinates.Shift(accumulatedDeltaX, accumulatedDeltaY, ImageParameter.Rotation,
+                            imageArcsecWidth, imageArcsecHeight);
+
+                        var panelCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d, rect.Y + Rectangle.Y + rect.Height / 2d);
+                        var panelDeltaX = panelCenter.X - center.X;
+                        var panelDeltaY = panelCenter.Y - center.Y;
+
+                        var referenceCenter = Rectangle.Coordinates.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, Rectangle.Rotation, imageArcsecWidth, imageArcsecHeight);
+
+                        var panelCenterCoordinates = Rectangle.Coordinates.Shift(panelDeltaX, panelDeltaY, Rectangle.Rotation, imageArcsecWidth, imageArcsecHeight);
+
+                        double positionAngle = 90;
+                        if (Math.Abs(Rectangle.Coordinates.RA - panelCenterCoordinates.RA) > 1E-13 || Math.Abs(Rectangle.Coordinates.Dec - panelCenterCoordinates.Dec) > 1E-13) {
+                            positionAngle = AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, panelCenterCoordinates.RADegrees, referenceCenter.Dec, panelCenterCoordinates.Dec) + Rectangle.Rotation;
+                        }
+
+                        double panelRotation = -(90 - positionAngle);
+                        double dsoRotation = Rectangle.TotalRotation;
+                        if (PreserveAlignment) {
+                            panelRotation = 0;
+                            dsoRotation += (90 - positionAngle);
+                        }
+                        rect.Rotation = panelRotation;
+                        rect.DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360);
+                    }
                 }
             }
         }

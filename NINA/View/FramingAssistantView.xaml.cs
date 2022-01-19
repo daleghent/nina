@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System.Windows;
 using System.Windows.Controls;
 
 namespace NINA.View {

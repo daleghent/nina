@@ -19,11 +19,15 @@ namespace NINA.Astrometry {
 
     public class FramingRectangle : ObservableRotatingRectangle {
 
-        public FramingRectangle(double rotationOffset) : base(rotationOffset) {
+        public FramingRectangle(double rotationOffset, double x, double y, double width, double height) : base(rotationOffset, x, y, width, height) {
+            
+            this.OriginalX = x;
+            this.OriginalY = y;
         }
 
-        public FramingRectangle(double x, double y, double width, double height) : base(x, y, width, height) {
-        }
+        public double OriginalX { get; }
+        public double OriginalY { get; }
+        public Coordinates OriginalCoordinates { get; set; }
 
         private int id;
 
@@ -37,6 +41,15 @@ namespace NINA.Astrometry {
             }
         }
 
+        private string name;
+        public string Name {
+            get => name;
+            set {
+                name = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private Coordinates coordinates;
 
         public Coordinates Coordinates {
@@ -45,6 +58,15 @@ namespace NINA.Astrometry {
             }
             set {
                 coordinates = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double dsoRotation;
+        public double DSORotation {
+            get => dsoRotation;
+            set {
+                dsoRotation = value;
                 RaisePropertyChanged();
             }
         }

@@ -177,7 +177,10 @@
                     </Setter>
                 </Style>
             </ScrollViewer.Style>
-            <Grid>
+            <Grid RenderTransformOrigin="0.5 0.5">
+                <Grid.RenderTransform>
+                    <RotateTransform Angle="{Binding ImageRotation, ElementName=PART_ImageView}" />
+                </Grid.RenderTransform>
                 <Path
                     Width="100"
                     Height="100"
