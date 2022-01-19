@@ -2906,7 +2906,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Atlas Hvězd</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Adresář obrázků Sky Atlas</value>
+    <value>Sky Atlas Image Directory</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>Mapa Hvězd (Offline Snímkování)</value>
@@ -4676,8 +4676,8 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Počáteční Oblast Sekvence</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
-    <value>Cílová Oblast Sekvence
-Sem přidejte sekvence objektů deep sky nebo přidejte cíle prostřednictvím Atlasu oblohy nebo Průvodce Snímkování</value>
+    <value>Sequence Target Area
+Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assistant</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Podmínky Cyklu</value>
