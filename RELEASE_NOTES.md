@@ -75,6 +75,12 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Replacing of the complete targets is removed, as this is not necessary. 
 - Possibility to manually enter target rotation 
 - A new multi action button replaces the slew button. This button can either "slew", "slew and center" or "slew, center and rotate" your current framing
+- Improved precision when dragging the rectangle around, especially for longer distances
+- Added a new option to preserve the alignment when being far away from celestial equator where panels won't be perfectly aligned to a rectangle anymore when having the same rotation
+- Visually show the misalignment when having the same rotation for each panel when being further away from the celestial equator
+- Added a new grid showing the mosaic panel coordinates and orientations
+- Added a center dot for the framing rectangle
+- A new toggle is available to toggle the sky background instead of the framing rectangle
 
 ## Imaging Tab - Sequence Panel
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore when using the advanced sequencer

@@ -10755,6 +10755,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mosaic Panels.
+        /// </summary>
+        internal static string LblMosaicPanels {
+            get {
+                return ResourceManager.GetString("LblMosaicPanels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The mount&apos;s clock differs from the computer&apos;s clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount&apos;s documentation regarding time configuration..
         /// </summary>
         internal static string LblMountTimeDifferenceTooLarge {
@@ -12714,6 +12723,26 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preserve alignment.
+        /// </summary>
+        internal static string LblPreserveAlignment {
+            get {
+                return ResourceManager.GetString("LblPreserveAlignment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
+        ///This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
+        ///.
+        /// </summary>
+        internal static string LblPreserveAlignmentTooltip {
+            get {
+                return ResourceManager.GetString("LblPreserveAlignmentTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pressure.
         /// </summary>
         internal static string LblPressure {
@@ -13385,6 +13414,15 @@ namespace NINA.Core.Locale {
         internal static string LblROIPercentageTooltip {
             get {
                 return ResourceManager.GetString("LblROIPercentageTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, the sky background will be rotated instead of the rectangle..
+        /// </summary>
+        internal static string LblRotateSkyTooltip {
+            get {
+                return ResourceManager.GetString("LblRotateSkyTooltip", resourceCulture);
             }
         }
         

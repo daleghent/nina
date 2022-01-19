@@ -108,6 +108,14 @@ namespace NINA.WPF.Base.View {
             set { SetValue(ImageProperty, value); }
         }
 
+        public double ImageRotation {
+            get { return (double)GetValue(ImageRotationProperty); }
+            set { SetValue(ImageRotationProperty, value); }
+        }
+
+        public static readonly DependencyProperty ImageRotationProperty =
+            DependencyProperty.Register(nameof(ImageRotation), typeof(double), typeof(ImageView), new PropertyMetadata(0d));
+
         public double RectangleOpacity {
             get { return (double)GetValue(OpacityProperty); }
             set { SetValue(OpacityProperty, value); }

@@ -742,6 +742,26 @@ namespace NINA.Astrometry {
             double y = -radiusProjection * Math.Sin(theta);
             return new Vector3D(x, y, z);
         }
+
+        /// <summary>
+        /// Calculates position angle between two coordinates
+        /// </summary>
+        /// <param name="a1">Right Ascension in degrees</param>
+        /// <param name="a2">Right Ascension in degrees</param>
+        /// <param name="d1">Declination in degrees</param>
+        /// <param name="d2">Declination in degrees</param>
+        /// <returns>Position Angle in degrees</returns>
+        public static double CalculatePositionAngle(double a1deg, double a2deg, double d1deg, double d2deg) {
+            var a1 = ToRadians(a1deg);
+            var a2 = ToRadians(a2deg);
+            var d1 = ToRadians(d1deg);
+            var d2 = ToRadians(d2deg);
+
+            var numerator = Math.Sin(a1 - a2);
+            var denominator = Math.Cos(d2) * Math.Tan(d1) - Math.Sin(d2) * Math.Cos(a1 - a2);
+            var result = AstroUtil.ToDegree(Math.Atan(numerator / denominator));
+            return result;
+        }
     }
 
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
