@@ -142,6 +142,8 @@ namespace NINA.ViewModel.FlatWizard {
             flatDeviceMediator.RemoveConsumer(this);
         }
 
+ 
+
         public AltitudeSite AltitudeSite {
             get => profileService.ActiveProfile.FlatWizardSettings.AltitudeSite;
             set {
@@ -225,6 +227,36 @@ namespace NINA.ViewModel.FlatWizard {
             set {
                 cameraConnected = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged("StartFlatExposureTooltip");
+                RaisePropertyChanged("StartFlatExposureMultiTooltip");
+            }
+        }
+
+        public string StartFlatExposureTooltip {
+            get {
+                if (!CameraConnected) return Loc.Instance["LblCameraNotConnected"];
+                if (!cameraMediator.IsFreeToCapture(this)) return Loc.Instance["LblCameraBusy"];
+                return Loc.Instance["LblStartSequence"];
+            }
+        }
+        public string StartFlatExposureMultiTooltip {
+            get {
+                if (!CameraConnected) return Loc.Instance["LblCameraNotConnected"];
+                if (!cameraMediator.IsFreeToCapture(this)) return Loc.Instance["LblCameraBusy"];
+                if (!filterWheelInfo.Connected) return Loc.Instance["LblFilterWheelNotConnected"];
+                return Loc.Instance["LblStartSequence"];
+            }
+        }
+
+        public string SlewToZenithTooltip {
+            get {
+                return !telescopeInfo.Connected ? "Telescope not connected" : "";
+            }
+        }
+
+        public bool SlewToZenithTooltipEnabled {
+            get {
+                return !telescopeInfo.Connected;
             }
         }
 
@@ -237,7 +269,7 @@ namespace NINA.ViewModel.FlatWizard {
                 RaisePropertyChanged();
             }
         }
-
+        
         public ObservableCollection<FilterInfo> FilterInfos => new ObservableCollection<FilterInfo>(Filters.Select(f => f.Filter).ToList());
 
         private ObservableCollection<FlatWizardFilterSettingsWrapper> filters;
@@ -1148,18 +1180,24 @@ namespace NINA.ViewModel.FlatWizard {
             foreach (var filter in Filters) {
                 filter.BitDepth = bitDepth;
             }
+            RaisePropertyChanged("StartFlatExposureTooltip");
+            RaisePropertyChanged("StartFlatExposureMultiTooltip");
         }
 
         private FilterWheelInfo filterWheelInfo;
 
         public void UpdateDeviceInfo(FilterWheelInfo deviceInfo) {
             filterWheelInfo = deviceInfo;
+            RaisePropertyChanged("StartFlatExposureTooltip");
+            RaisePropertyChanged("StartFlatExposureMultiTooltip");
         }
 
         private TelescopeInfo telescopeInfo;
 
         public void UpdateDeviceInfo(TelescopeInfo deviceInfo) {
             telescopeInfo = deviceInfo;
+            RaisePropertyChanged("SlewToZenithTooltip");
+            RaisePropertyChanged("SlewToZenithTooltipEnabled");
         }
 
         public void UpdateDeviceInfo(FlatDeviceInfo deviceInfo) {
