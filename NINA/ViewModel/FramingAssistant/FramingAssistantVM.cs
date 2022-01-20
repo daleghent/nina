@@ -289,7 +289,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     var result = await captureSolver.Solve(seq, parameter, default, _statusUpdate, getRotationTokenSource.Token);
 
                     if (result.Success) {
-                        this.Rectangle.TotalRotation = result.Orientation;
+                        RectangleTotalRotation = result.Orientation;
                         Logger.Info($"Camera rotation has been determined: {result.Orientation}°");
                         Notification.ShowInformation(string.Format(Loc.Instance["LblCameraRotationSolved"], Math.Round(result.Orientation, 2)));
                     } else {
@@ -565,10 +565,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 await Task.Delay(50);
             }
             await LoadImageCommand.ExecuteAsync(null);
-            Rectangle.Rotation = dso.Rotation;
-            RaisePropertyChanged(nameof(RectangleRotation));
-            RaisePropertyChanged(nameof(RectangleTotalRotation));
-            RaisePropertyChanged(nameof(InverseRectangleRotation));
+            RectangleRotation = dso.Rotation;
             return true;
         }
 
@@ -1277,7 +1274,7 @@ namespace NINA.ViewModel.FramingAssistant {
                         double rotationAngle = await s.GetRotationAngle();
 
                         if (!double.IsNaN(rotationAngle)) {
-                            Rectangle.Rotation = rotationAngle;
+                            RectangleRotation = rotationAngle;
                         }
                     }
                 }
