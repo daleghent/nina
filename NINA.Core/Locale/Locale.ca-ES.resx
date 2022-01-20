@@ -5523,6 +5523,9 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
   <data name="LblSequenceTitle" xml:space="preserve">
     <value>Títol de la seqüència actual</value>
   </data>
+  <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
+    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>S'ha produït un error en obrir l'obturador. L'estat de l'obturador encara s'informa com a tancat després d'iniciar l'operació d'obturador obert.</value>
   </data>
@@ -6012,5 +6015,32 @@ Attempt {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
     <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+  </data>
+  <data name="LblROI" xml:space="preserve">
+    <value>ROI</value>
+    <comment>Region of interest used for sub frame.</comment>
+  </data>
+  <data name="LblROIPercentageTooltip" xml:space="preserve">
+    <value>Region of Interest expressed in percentage relative to the center</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
+    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
+    <value>Take Subframe Exposure</value>
+  </data>
+  <data name="LblPreserveAlignment" xml:space="preserve">
+    <value>Preserve alignment</value>
+  </data>
+  <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
+    <value>Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
+This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
+</value>
+  </data>
+  <data name="LblMosaicPanels" xml:space="preserve">
+    <value>Mosaic Panels</value>
+  </data>
+  <data name="LblRotateSkyTooltip" xml:space="preserve">
+    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
   </data>
 </root>

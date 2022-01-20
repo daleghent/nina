@@ -5505,6 +5505,9 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   <data name="LblSequenceTitle" xml:space="preserve">
     <value>現在のシーケンスのタイトル</value>
   </data>
+  <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
+    <value>ドームは、リクエストを完了した後で、シャッターの移動や失敗を報告しませんでした。これは規格に適合しない危険な動作です。ドーム販売会社に連絡してください。</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>シャッターを開くことができませんでした。シャッターを開く操作を開始した後でも、閉じたままだと報告されています。</value>
   </data>
@@ -5994,5 +5997,31 @@ Refer to your camera's manual for the location of this setting</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
     <value>最大回数の試行後、子午線反転の導入に失敗しました。中止します。</value>
+  </data>
+  <data name="LblROI" xml:space="preserve">
+    <value>関心領域</value>
+    <comment>Region of interest used for sub frame.</comment>
+  </data>
+  <data name="LblROIPercentageTooltip" xml:space="preserve">
+    <value>中心部との相対的な割合で表される関心領域</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
+    <value>指定された関心領域を、所定の時間・ゲイン・オフセットで撮影します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
+    <value>サブフレーム撮影</value>
+  </data>
+  <data name="LblPreserveAlignment" xml:space="preserve">
+    <value>アライメントを保持</value>
+  </data>
+  <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
+    <value>このオプションを有効にすると、すべてのパネルは、一つの長方形のパネルに整列されます。しかし、個々のパネルはそれぞれ異なる角度で回転することになります。
+自動的なカメラ回転機能が利用可能か、モザイクパネルごとに手動でカメラを回転することが可能な場合は、このオプションを有効にしてください。</value>
+  </data>
+  <data name="LblMosaicPanels" xml:space="preserve">
+    <value>モザイクパネル</value>
+  </data>
+  <data name="LblRotateSkyTooltip" xml:space="preserve">
+    <value>有効にすると、長方形パネルではなく、空の背景の方が回転します。</value>
   </data>
 </root>

@@ -2749,7 +2749,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Uložit nastavení cíle</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Stabilizace dal. po překlopení poledníku</value>
+    <value>Stabilizace Dal. po Překlopení</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Hledat</value>
@@ -2906,7 +2906,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Atlas Hvězd</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Sky Atlas Image Directory</value>
+    <value>Adresář obrázků Atlasu Hvězd</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>Mapa Hvězd (Offline Snímkování)</value>
@@ -2927,10 +2927,10 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Teplota Vzduchu</value>
   </data>
   <data name="LblSlew" xml:space="preserve">
-    <value>Přejezd</value>
+    <value>Přejet</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Přejezd a Vycentrovat</value>
+    <value>Přejet a Vycentrovat</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Čas Přejezdu</value>
@@ -2942,10 +2942,10 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Rychlost Přejezdu (stup/sek)</value>
   </data>
   <data name="LblSlewToTarget" xml:space="preserve">
-    <value>Přejezd na cíl</value>
+    <value>Přejet na cíl</value>
   </data>
   <data name="LblSlewToZenith" xml:space="preserve">
-    <value>Přejezd na zenit</value>
+    <value>Přejet na zenit</value>
   </data>
   <data name="LblSlewWhenTargetCoordsUnset" xml:space="preserve">
     <value>Alespoň jeden cíl s aktivním pohybem, nemá definované souřadnice</value>
@@ -4385,16 +4385,16 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Provést Expozici</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Přejezd k cíli, vycentruje cíl a otočí dalekohled za pomocí astrometrie a rotátoru pro dané souřadnice a rotaci</value>
+    <value>Přejet k cíli, vycentruje cíl a otočí dalekohled za pomocí astrometrie a rotátoru pro dané souřadnice a rotaci</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Přejezd, vycentruje a otočí</value>
+    <value>Přejet, vycentrovat a otočit</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Přejezd k cíli, vystředí dalekohled pomocí astrometrie pro dané souřadnice</value>
+    <value>Přejet k cíli, vystředí dalekohled pomocí astrometrie pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Přejezd a Vycentrovat</value>
+    <value>Přejet a Vycentrovat</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkuje dalekohled do parkovací polohy</value>
@@ -4403,16 +4403,16 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Parkovat Dalekohled</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
-    <value>Přejezd dalekohledem na danou výšku a souřadnice azimutu</value>
+    <value>Přejet dalekohledem na danou výšku a souřadnice azimutu</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
-    <value>Přejezd Na Alt/Az</value>
+    <value>Přejet Na Alt/Az</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
     <value>Přejezd dalekohledem na souřadnice RA a Dec</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
-    <value>Přejezd Na Ra/Dec</value>
+    <value>Přejet Na Ra/Dec</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
     <value>Odparkuje dalekohled</value>
@@ -4676,8 +4676,8 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Počáteční Oblast Sekvence</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
-    <value>Sequence Target Area
-Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assistant</value>
+    <value>Cílová Oblast Sekvence
+Sem přidejte sekvence objektů DSO nebo přidejte cíle prostřednictvím Atlasu Hvězd nebo Průvodce Snímkování</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Podmínky Cyklu</value>
@@ -5296,7 +5296,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Fotka</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Přejezd, Vycentruje a Otočí</value>
+    <value>Přejet, Vycentrovat a Otočit</value>
   </data>
   <data name="LblFindHomeToolTip" xml:space="preserve">
     <value>Informovat dalekohled, aby zjistil výchozí pozici</value>
@@ -5525,6 +5525,9 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
     <value>Aktuální název sekvence</value>
+  </data>
+  <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
+    <value>Kopule po dokončení požadavku nehlásila pohyby nebo selhání štěrbiny. Jedná se o nebezpečnou operaci, která nesplňuje normy. Obraťte se na výrobce kopule.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Otevření štěrbiny selhalo. Stav štěrbiny je stále hlášen jako zavřená.</value>
@@ -5912,7 +5915,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Skenovat a Analyzovat Hvězdy</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Použít Detektor Hvězd V2</value>
+    <value>Use Star Detector V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
     <value>Označit Vše</value>
@@ -5921,7 +5924,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Ve výchozím nastavení je označeno 200 hvězd. Pokud je toto povoleno, jsou detekovány všechny hvězdy.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Detektor Hvězd</value>
+    <value>Star Detector</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
     <value>Anotace Hvězd</value>
@@ -6015,5 +6018,32 @@ Pokus {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
     <value>Po maximálním počtu pokusů selhal přejezd po překlopení poledníku. Přerušení.</value>
+  </data>
+  <data name="LblROI" xml:space="preserve">
+    <value>ROI</value>
+    <comment>Region of interest used for sub frame.</comment>
+  </data>
+  <data name="LblROIPercentageTooltip" xml:space="preserve">
+    <value>Oblast zájmu vyjádřená jako procento středu</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
+    <value>Provede expozici po daný čas, zisku a offsetu, pro zadanou oblast zájmu</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
+    <value>Expozice Dílčího Snímku</value>
+  </data>
+  <data name="LblPreserveAlignment" xml:space="preserve">
+    <value>Zachovat zarovnání</value>
+  </data>
+  <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
+    <value>Povolení této možnosti zajistí, že panely budou zarovnány do jednoho obdélníkového panelu, ale výsledkem budou různé úhly natočení pro každý panel. 
+Tato možnost by měla být povolena, pokud je k dispozici automatické otáčení kamery nebo když je možné ruční otáčení kamery pro každý panel mozaiky.
+</value>
+  </data>
+  <data name="LblMosaicPanels" xml:space="preserve">
+    <value>Mozaikové Panely</value>
+  </data>
+  <data name="LblRotateSkyTooltip" xml:space="preserve">
+    <value>Je-li povoleno, pozadí oblohy se otočí místo obdélníku.</value>
   </data>
 </root>
