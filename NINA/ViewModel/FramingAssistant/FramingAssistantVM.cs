@@ -566,6 +566,9 @@ namespace NINA.ViewModel.FramingAssistant {
             }
             await LoadImageCommand.ExecuteAsync(null);
             Rectangle.Rotation = dso.Rotation;
+            RaisePropertyChanged(nameof(RectangleRotation));
+            RaisePropertyChanged(nameof(RectangleTotalRotation));
+            RaisePropertyChanged(nameof(InverseRectangleRotation));
             return true;
         }
 
