@@ -145,7 +145,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             var target = ItemUtility.RetrieveContextCoordinates(context).Item1;
             if (target == null) {
                 target = telescopeMediator.GetCurrentPosition();
-                Logger.Warning("No target information available for flip. Taking current telescope coordinates instead");
+                Logger.Warning("No target information available for flip. Taking current telescope coordinates instead for the flip.");
+            }
+            if (target != null && target.RA == 0 && target.Dec == 0) {
+                target = telescopeMediator.GetCurrentPosition();
+                Logger.Warning("Target coordinates are all zero. Most likely not intended. Taking current telescope coordinates instead for the flip.");
             }
 
             var timeToFlip = CalculateMinimumTimeRemaining();
