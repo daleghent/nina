@@ -242,7 +242,7 @@
     <DataTemplate DataType="{x:Type local:SolveAndRotate}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding Inherited, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                     <TextBlock
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"

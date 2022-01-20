@@ -140,6 +140,32 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
         }
 
         [Test]
+        public void AfterParentChanged_NotInDSOSet_NoRotationAvailable() {
+            rotatorMediatorMock.Setup(x => x.GetInfo()).Returns(new RotatorInfo { Connected = false });
+
+            sut.AfterParentChanged();
+            sut.Inherited.Should().BeFalse();
+        }
+
+        [Test]
+        public void AfterParentChanged_InDSOSet_RotationAvailable() {
+            rotatorMediatorMock.Setup(x => x.GetInfo()).Returns(new RotatorInfo { Connected = false });
+
+            var mock = new Mock<IDeepSkyObjectContainer>();
+            var target = new InputTarget(Angle.Zero, Angle.Zero, default);
+            target.Rotation = 30;
+            mock.SetupGet(x => x.Target).Returns(target);
+            var dsoset = mock.Object;
+
+            sut.AttachNewParent(dsoset);
+
+            sut.AfterParentChanged();
+
+            sut.Inherited.Should().BeTrue();
+            sut.Rotation.Should().Be(30);
+        }
+
+        [Test]
         public async Task Execute_PlateSolveFailed_ThrowFailedException() {
             var service = new Mock<IWindowService>();
             var captureSolver = new Mock<ICaptureSolver>();

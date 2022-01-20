@@ -25,6 +25,7 @@ using NINA.Equipment.Model;
 using NINA.PlateSolving;
 using NINA.PlateSolving.Interfaces;
 using NINA.Profile.Interfaces;
+using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.WPF.Base.ViewModel;
 using System;
@@ -88,6 +89,17 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             return new SolveAndRotate(this) {
                 Rotation = Rotation
             };
+        }
+
+        private bool inherited;
+
+        [JsonProperty]
+        public bool Inherited {
+            get => inherited;
+            set {
+                inherited = value;
+                RaisePropertyChanged();
+            }
         }
 
         private IList<string> issues = new List<string>();
@@ -203,6 +215,17 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 1
             );
             return await solver.Solve(seq, parameter, PlateSolveStatusVM.Progress, progress, token);
+        }
+
+        public override void AfterParentChanged() {
+            var tuple = ItemUtility.RetrieveContextCoordinates(this.Parent);
+            if (tuple.Item1 != null) {
+                Rotation = tuple.Item2;
+                Inherited = true;
+            } else {
+                Inherited = false;
+            }
+            Validate();
         }
 
         public bool Validate() {
