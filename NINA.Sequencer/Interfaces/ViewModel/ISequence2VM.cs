@@ -17,10 +17,11 @@ using NINA.Core.Utility;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using NINA.Equipment.Interfaces.Mediator;
 
 namespace NINA.ViewModel.Sequencer {
 
-    public interface ISequence2VM {
+    public interface ISequence2VM : ICameraConsumer {
         IAsyncCommand StartSequenceCommand { get; }
         ICommand CancelSequenceCommand { get; }
         NINA.Sequencer.ISequencer Sequencer { get; }

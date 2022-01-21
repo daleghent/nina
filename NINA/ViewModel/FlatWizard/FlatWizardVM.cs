@@ -250,7 +250,7 @@ namespace NINA.ViewModel.FlatWizard {
 
         public string SlewToZenithTooltip {
             get {
-                return !telescopeInfo.Connected ? "Telescope not connected" : "";
+                return !telescopeInfo.Connected ? Loc.Instance["LblTelescopeNotConnected"] : "";
             }
         }
 

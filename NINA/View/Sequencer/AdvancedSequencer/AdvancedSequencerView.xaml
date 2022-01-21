@@ -283,12 +283,11 @@
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Button Command="{Binding StartSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <Button.ToolTip>
-                            <ToolTip ToolTipService.ShowOnDisabled="True">
-                                <TextBlock Text="{ns:Loc LblTooltipStartSequence}" />
-                            </ToolTip>
-                        </Button.ToolTip>
+                    <Button
+                        Command="{Binding StartSequenceCommand}"
+                        Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                        ToolTipService.ShowOnDisabled="true"
+                        ToolTip="{Binding StartSequenceTooltip}" >
                         <Grid>
                             <Path
                                 Width="40"

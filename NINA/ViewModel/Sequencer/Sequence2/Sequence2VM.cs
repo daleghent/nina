@@ -10,6 +10,7 @@
 */
 #endregion "copyright"
 using Accord.IO;
+using Newtonsoft.Json;
 using NINA.Core.Enum;
 using NINA.Equipment.Equipment.MyPlanetarium;
 using NINA.Profile.Interfaces;
@@ -51,6 +52,7 @@ using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Sequencer.SequenceItem.Imaging;
 using NINA.Sequencer.Trigger.Autofocus;
+using NINA.Equipment.Equipment.MyCamera;
 
 namespace NINA.ViewModel.Sequencer {
 
@@ -72,6 +74,7 @@ namespace NINA.ViewModel.Sequencer {
 
             this.sequenceMediator = sequenceMediator;
             this.cameraMediator = cameraMediator;
+            cameraMediator.RegisterConsumer(this);
 
             SequencerFactory = factory;
 
@@ -91,6 +94,10 @@ namespace NINA.ViewModel.Sequencer {
 
         private bool IsSimpleSequencerEnabled() {
             return !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer;
+        }
+
+        public void Dispose() {
+            cameraMediator.RemoveConsumer(this);
         }
 
         private void Detach(object o) {
@@ -397,6 +404,18 @@ namespace NINA.ViewModel.Sequencer {
             var d = new DropIntoParameters(container);
             d.Position = DropTargetEnum.Center;
             AddTargetToController(d);
+        }
+
+        [JsonProperty]
+        public string StartSequenceTooltip {
+            get {
+                if (cameraMediator.IsFreeToCapture(this)) return Loc.Instance["LblTooltipStartSequence"];
+                return Loc.Instance["LblCameraBusy"];
+            }
+        }
+
+        public void UpdateDeviceInfo(CameraInfo deviceInfo) {
+            RaisePropertyChanged("StartSequenceTooltip");
         }
 
         public ICommand AddTemplateCommand { get; private set; }
