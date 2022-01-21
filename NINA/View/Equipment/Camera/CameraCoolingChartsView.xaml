@@ -79,15 +79,15 @@
         <oxy:Plot.Series>
             <oxy:LineSeries
                 Title="{ns:Loc LblChipTemp}"
-                DataFieldX="DateTime"
-                DataFieldY="Temperature"
-                ItemsSource="{Binding CoolerHistory}"
+                DataFieldX="Key"
+                DataFieldY="Value"
+                ItemsSource="{Binding CCDTemperatureHistory}"
                 YAxisKey="Temperature" />
             <oxy:LineSeries
                 Title="{ns:Loc LblCoolerPower}"
-                DataFieldX="DateTime"
-                DataFieldY="CoolerPower"
-                ItemsSource="{Binding CoolerHistory}"
+                DataFieldX="Key"
+                DataFieldY="Value"
+                ItemsSource="{Binding CoolerPowerHistory}"
                 Visibility="{Binding Cam.CanSetTemperature, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}"
                 YAxisKey="CoolingPower" />
         </oxy:Plot.Series>
