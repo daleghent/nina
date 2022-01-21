@@ -20,11 +20,13 @@ using NINA.Core.Model;
 using NINA.Core.Model.Equipment;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment.MyFilterWheel;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IAnchorableSnapshotVM : IDockableVM {
         CameraInfo CameraInfo { get; set; }
+        FilterWheelInfo FilterWheelInfo { get; set; }
         ICommand CancelSnapCommand { get; }
         bool IsLooping { get; set; }
         bool LiveViewEnabled { get; set; }
@@ -45,5 +47,6 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         Task<bool> SnapImage(IProgress<ApplicationStatus> progress);
 
         void UpdateDeviceInfo(CameraInfo cameraStatus);
+        void UpdateDeviceInfo(FilterWheelInfo FilterWheelInfo);
     }
 }

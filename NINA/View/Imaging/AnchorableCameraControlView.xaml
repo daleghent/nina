@@ -17,7 +17,8 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
-    xmlns:view="clr-namespace:NINA.View"
+    xmlns:view="clr-namespace:NINA.View" 
+    xmlns:imaging="clr-namespace:NINA.ViewModel.Imaging" 
     x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -62,6 +63,7 @@
                                 Height="25"
                                 Margin="5,0,0,0"
                                 DisplayMemberPath="Name"
+                                IsEnabled="{Binding FilterWheelInfo.Connected, Mode=TwoWay}"
                                 SelectedItem="{Binding SnapFilter, Mode=TwoWay, Converter={StaticResource FilterWheelFilterConverter}}"
                                 SelectedValuePath="Name">
                                 <ComboBox.ItemsSource>

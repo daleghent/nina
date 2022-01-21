@@ -919,12 +919,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private Rectangle GetROI() {
             var x = SubSampleX;
             x -= x % 2;
-            var y = SubSampleY;
-            y -= y % 2;
             var width = Math.Max(SubSampleWidth, 16);
             width -= width % 2;
             var height = Math.Max(SubSampleHeight, 16);
             height -= height % 2;
+            var y = (CameraYSize / BinY) - (SubSampleY + height);
+            y -= y % 2;
             return new Rectangle(x, y, width, height);
         }
 

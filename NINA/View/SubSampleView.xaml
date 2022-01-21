@@ -119,8 +119,10 @@
                 <Viewbox>
                     <Canvas
                         Width="{Binding CameraInfo.XSize}"
-                        Height="{Binding CameraInfo.YSize}"
-                        Background="{StaticResource SecondaryBackgroundBrush}">
+                        Height="{Binding CameraInfo.YSize}">
+                        <Canvas.Background>
+                            <ImageBrush x:Name="fullImage" ImageSource="{Binding Image}"  Stretch="None"/>
+                        </Canvas.Background>
                         <Rectangle
                             Canvas.Left="{Binding SubSampleRectangle.X}"
                             Canvas.Top="{Binding SubSampleRectangle.Y}"

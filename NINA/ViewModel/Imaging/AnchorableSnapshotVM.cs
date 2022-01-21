@@ -35,10 +35,12 @@ using NINA.Astrometry;
 using NINA.WPF.Base.Behaviors;
 using System.ComponentModel;
 using NINA.Equipment.Exceptions;
+using System.Windows.Media.Imaging;
+using NINA.Equipment.Equipment.MyFilterWheel;
 
 namespace NINA.ViewModel.Imaging {
 
-    internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IAnchorableSnapshotVM {
+    internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IFilterWheelConsumer, IAnchorableSnapshotVM {
         private CancellationTokenSource _captureImageToken;
         private CancellationTokenSource _liveViewCts;
         private bool _liveViewEnabled;
@@ -49,11 +51,13 @@ namespace NINA.ViewModel.Imaging {
 
         private IApplicationStatusMediator applicationStatusMediator;
         private CameraInfo cameraInfo;
+        private FilterWheelInfo filterWheelInfo;
         private ICameraMediator cameraMediator;
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
         private IProgress<ApplicationStatus> progress;
         private IImageHistoryVM imageHistoryVM;
+        private IFilterWheelMediator filterWheelMediator;
 
         public AnchorableSnapshotVM(
                 IProfileService profileService,
@@ -61,7 +65,8 @@ namespace NINA.ViewModel.Imaging {
                 ICameraMediator cameraMediator,
                 IApplicationStatusMediator applicationStatusMediator,
                 IImageSaveMediator imageSaveMediator,
-                IImageHistoryVM imageHistoryVM) : base(profileService) {
+                IImageHistoryVM imageHistoryVM,
+                IFilterWheelMediator filterWheelMediator) : base(profileService) {
             Title = Loc.Instance["LblImaging"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ImagingSVG"];
             this.applicationStatusMediator = applicationStatusMediator;
@@ -70,6 +75,8 @@ namespace NINA.ViewModel.Imaging {
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
             this.imageHistoryVM = imageHistoryVM;
+            this.filterWheelMediator = filterWheelMediator;
+            this.filterWheelMediator.RegisterConsumer(this);
             progress = new Progress<ApplicationStatus>(p => Status = p);
             SnapCommand = new AsyncCommand<bool>(async () => {
                 cameraMediator.RegisterCaptureBlock(this);
@@ -112,6 +119,16 @@ namespace NINA.ViewModel.Imaging {
             }
             set {
                 cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public FilterWheelInfo FilterWheelInfo {
+            get {
+                return filterWheelInfo ?? DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
+            }
+            set {
+                filterWheelInfo = value;
                 RaisePropertyChanged();
             }
         }
@@ -349,8 +366,16 @@ namespace NINA.ViewModel.Imaging {
             LiveViewEnabled = false;
         }
 
-        public void Dispose() {
-            this.cameraMediator.RemoveConsumer(this);
+        private BitmapSource _image;
+
+        public BitmapSource Image {
+            get {
+                return _image;
+            }
+            set {
+                _image = value;
+                RaisePropertyChanged();
+            }
         }
 
         public async Task<bool> SnapImage(IProgress<ApplicationStatus> progress) {
@@ -373,6 +398,9 @@ namespace NINA.ViewModel.Imaging {
                     }
 
                     var imageData = await exposureData.ToImageData(progress, _captureImageToken.Token);
+
+                    if (!SnapSubSample)
+                        Image = imageData.RenderImage().Image;
 
                     if (prepareTask?.Status < TaskStatus.RanToCompletion) {
                         await prepareTask;
@@ -402,6 +430,10 @@ namespace NINA.ViewModel.Imaging {
             return true;
         }
 
+        public void UpdateDeviceInfo(FilterWheelInfo deviceInfo) {
+            FilterWheelInfo = deviceInfo;
+        }
+
         public void UpdateDeviceInfo(CameraInfo cameraStatus) {
             CameraInfo = cameraStatus;
             if (cameraInfo.Connected && SubSampleRectangle == null) {
@@ -410,6 +442,11 @@ namespace NINA.ViewModel.Imaging {
                 SnapSubSample = false;
                 SubSampleRectangle = null;
             }
+        }
+
+        public void Dispose() {
+            this.cameraMediator.RemoveConsumer(this);
+            this.filterWheelMediator.RemoveConsumer(this);
         }
     }
 }
