@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Sequencer.Interfaces;
+using NINA.Sequencer.SequenceItem;
 
 namespace NINA.Sequencer.Utility {
 
@@ -97,6 +98,27 @@ namespace NINA.Sequencer.Utility {
                 return true;
             }
             return false;
+        }
+
+
+
+        public static List<IDeepSkyObjectContainer> LookForTargetsDownwards(ISequenceContainer container) {
+            var objects = new List<IDeepSkyObjectContainer>();
+
+            var children = (IList<ISequenceItem>)container.GetItemsSnapshot();
+            if (children != null) {
+                foreach (var child in children) {
+                    if (child is IDeepSkyObjectContainer skyObjectContainer) {
+                        objects.Add(skyObjectContainer);
+                    } else if (child is ISequenceContainer childContainer) {
+                        var check = LookForTargetsDownwards(childContainer);
+                        if (check != null) {
+                            objects.AddRange(check);
+                        }
+                    }
+                }
+            }
+            return objects;
         }
     }
 }

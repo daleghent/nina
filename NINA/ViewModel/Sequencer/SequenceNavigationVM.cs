@@ -21,6 +21,7 @@ using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Sequencer.Utility;
 using NINA.Utility;
 using NINA.ViewModel.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
@@ -185,6 +186,14 @@ namespace NINA.ViewModel.Sequencer {
 
         public void AddTargetToTargetList(IDeepSkyObjectContainer container) {
             Sequence2VM.AddTargetToTargetList(container);
+        }
+
+        public IList<IDeepSkyObjectContainer> GetAllTargetsInSimpleSequence() {
+            return ItemUtility.LookForTargetsDownwards(SimpleSequenceVM.Sequencer.MainContainer);
+        }
+
+        public IList<IDeepSkyObjectContainer> GetAllTargetsInAdvancedSequence() {
+            return ItemUtility.LookForTargetsDownwards(Sequence2VM.Sequencer.MainContainer);
         }
     }
 }

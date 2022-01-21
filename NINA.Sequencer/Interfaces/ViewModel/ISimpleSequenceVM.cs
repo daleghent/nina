@@ -36,6 +36,7 @@ namespace NINA.ViewModel.Interfaces {
         ICommand BuildSequenceCommand { get; }
         ISimpleDSOContainer SelectedTarget { get; set; }
         IWindowServiceFactory WindowServiceFactory { get; set; }
+        NINA.Sequencer.ISequencer Sequencer { get; }
 
         Task Initialize();
 

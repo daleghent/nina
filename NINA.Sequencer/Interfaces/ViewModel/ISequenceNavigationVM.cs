@@ -46,5 +46,7 @@ namespace NINA.ViewModel.Sequencer {
         IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates();
 
         void AddTargetToTargetList(IDeepSkyObjectContainer container);
+        IList<IDeepSkyObjectContainer> GetAllTargetsInSimpleSequence();
+        IList<IDeepSkyObjectContainer> GetAllTargetsInAdvancedSequence();
     }
 }

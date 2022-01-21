@@ -16950,6 +16950,25 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Existing Target in Sequencer.
+        /// </summary>
+        internal static string LblUpdateExistingTargetInSequencer {
+            get {
+                return ResourceManager.GetString("LblUpdateExistingTargetInSequencer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
+        ///This button is not visible when in mosaic mode..
+        /// </summary>
+        internal static string LblUpdateExistingTargetInSequencerTooltip {
+            get {
+                return ResourceManager.GetString("LblUpdateExistingTargetInSequencerTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updating.
         /// </summary>
         internal static string LblUpdating {

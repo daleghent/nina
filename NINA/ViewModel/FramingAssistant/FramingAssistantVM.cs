@@ -42,6 +42,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -145,6 +146,19 @@ namespace NINA.ViewModel.FramingAssistant {
             });
         }
 
+        private bool sequencerActionsOpened;
+        public bool SequencerActionsOpened {
+            get => sequencerActionsOpened;
+            set {
+                sequencerActionsOpened = value;
+                if(sequencerActionsOpened) {
+                    GetDSOTemplatesCommand.Execute(null);
+                    GetExistingSequencerTargetsCommand.Execute(null);
+                }
+                RaisePropertyChanged();
+            }
+        }
+
         private void InitializeCommands() {
             LoadImageCommand = new AsyncCommand<bool>(async () => { return await LoadImage(); });
             CancelLoadImageFromFileCommand = new RelayCommand((object o) => { CancelLoadImage(); });
@@ -165,6 +179,38 @@ namespace NINA.ViewModel.FramingAssistant {
                 DSOTemplates = sequenceMediator.GetDeepSkyObjectContainerTemplates();
                 RaisePropertyChanged(nameof(DSOTemplates));
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
+
+            GetExistingSequencerTargetsCommand = new RelayCommand((object o) => {
+                var simpleTargets = sequenceMediator.GetAllTargetsInSimpleSequence();
+                var advancedTargets = sequenceMediator.GetAllTargetsInAdvancedSequence();
+
+                List<IDeepSkyObjectContainer> targets = new List<IDeepSkyObjectContainer>(simpleTargets);
+                targets.AddRange(advancedTargets);
+                ExistingTargets = targets;
+                RaisePropertyChanged(nameof(ExistingTargets));
+
+            }, (object o) => sequenceMediator.Initialized && RectangleCalculated && !IsMosaic);
+
+            UpdateExistingTargetInSequencerCommand = new RelayCommand((object o) => {
+                if(o is IDeepSkyObjectContainer container) {
+
+                    var rect = CameraRectangles.First();
+                    container.Name = rect.Name ?? string.Empty;
+
+                    double rotation = rect.DSORotation;
+
+                    container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
+                        TargetName = rect.Name ?? string.Empty,
+                        Rotation = AstroUtil.EuclidianModulus(rotation, 360),
+                        InputCoordinates = new InputCoordinates() {
+                            Coordinates = rect.Coordinates
+                        }
+                    };
+                }
+                ExistingTargets.Clear();
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
+            }, (object o) => sequenceMediator.Initialized && RectangleCalculated && CameraRectangles?.Count > 0 && ExistingTargets?.Count > 0); ;
+
             SetOldSequencerTargetCommand = new RelayCommand((object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
@@ -367,6 +413,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public IList<IDeepSkyObjectContainer> DSOTemplates { get; private set; }
+        public IList<IDeepSkyObjectContainer> ExistingTargets { get; private set; }
 
         private void InitializeCache() {
             try {
@@ -1319,6 +1366,8 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand SetSequencerTargetCommand { get; private set; }
         public ICommand AddTargetToTargetListCommand { get; private set; }
         public ICommand GetDSOTemplatesCommand { get; private set; }
+        public ICommand GetExistingSequencerTargetsCommand { get; private set; }
+        public ICommand UpdateExistingTargetInSequencerCommand { get; private set; }
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
         public ICommand CancelSlewToCoordinatesCommand { get; private set; }
         public IAsyncCommand RecenterCommand { get; private set; }

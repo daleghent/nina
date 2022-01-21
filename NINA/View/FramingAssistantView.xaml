@@ -609,7 +609,9 @@
                         <xceed:SplitButton
                             Height="25"
                             Margin="5,0,5,0"
-                            Command="{Binding GetDSOTemplatesCommand}">
+                            Command="{Binding GetDSOTemplatesCommand}"
+                            DropDownContentBackground="{StaticResource BackgroundBrush}"
+                            IsOpen="{Binding SequencerActionsOpened, Mode=TwoWay}">
                             <xceed:SplitButton.Style>
                                 <Style BasedOn="{StaticResource StandardSplitButton}" TargetType="{x:Type xceed:SplitButton}">
                                     <Style.Resources>
@@ -686,69 +688,138 @@
                                     TextWrapping="Wrap" />
                             </xceed:SplitButton.Content>
                             <xceed:SplitButton.DropDownContent>
-                                <Button HorizontalAlignment="Stretch" Command="{Binding GetDSOTemplatesCommand}">
-                                    <TextBlock
-                                        Padding="4"
-                                        VerticalAlignment="Center"
-                                        FontSize="12"
-                                        Foreground="{StaticResource PrimaryBrush}"
-                                        Text="{ns:Loc LblAddTargetToTargetList}"
-                                        TextWrapping="Wrap" />
-                                    <Button.ToolTip>
-                                        <ToolTip ToolTipService.ShowOnDisabled="False">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAddTargetToTargetListTooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                    <Button.Style>
-                                        <Style BasedOn="{StaticResource BackgroundButton}" TargetType="{x:Type Button}">
-                                            <Style.Resources>
-                                                <Border
-                                                    x:Key="MenuHeader"
-                                                    MinHeight="30"
-                                                    x:Shared="false"
-                                                    Background="Transparent">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
-                                                </Border>
-                                                <Path
-                                                    x:Key="MenuIcon"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5"
-                                                    x:Shared="false"
-                                                    Data="{Binding Icon}"
-                                                    Fill="{StaticResource PrimaryBrush}"
-                                                    Stretch="Uniform" />
-                                            </Style.Resources>
-                                            <Style.Triggers>
-                                                <EventTrigger RoutedEvent="Click">
-                                                    <EventTrigger.Actions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
-                                                                    <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
-                                                                </BooleanAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger.Actions>
-                                                </EventTrigger>
-                                            </Style.Triggers>
-                                            <Setter Property="ContextMenu">
-                                                <Setter.Value>
-                                                    <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
-                                                        <ContextMenu.ItemContainerStyle>
-                                                            <Style TargetType="MenuItem">
-                                                                <Setter Property="Header" Value="{StaticResource MenuHeader}" />
-                                                                <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
-                                                                <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.AddTargetToTargetListCommand}" />
-                                                                <Setter Property="CommandParameter" Value="{Binding}" />
-                                                            </Style>
-                                                        </ContextMenu.ItemContainerStyle>
-                                                    </ContextMenu>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <StackPanel Orientation="Vertical">
+                                    <Button HorizontalAlignment="Stretch">
+                                        <TextBlock
+                                            Padding="4"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="{StaticResource PrimaryBrush}"
+                                            Text="{ns:Loc LblAddTargetToTargetList}"
+                                            TextWrapping="Wrap" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAddTargetToTargetListTooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource BackgroundButton}" TargetType="{x:Type Button}">
+                                                <Style.Resources>
+                                                    <Border
+                                                        x:Key="MenuHeader"
+                                                        MinHeight="30"
+                                                        x:Shared="false"
+                                                        Background="Transparent">
+                                                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                                    </Border>
+                                                    <Path
+                                                        x:Key="MenuIcon"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5"
+                                                        x:Shared="false"
+                                                        Data="{Binding Icon}"
+                                                        Fill="{StaticResource PrimaryBrush}"
+                                                        Stretch="Uniform" />
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="Click">
+                                                        <EventTrigger.Actions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                                                    </BooleanAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger.Actions>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                                <Setter Property="ContextMenu">
+                                                    <Setter.Value>
+                                                        <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
+                                                            <ContextMenu.ItemContainerStyle>
+                                                                <Style TargetType="MenuItem">
+                                                                    <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                                    <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                                    <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.AddTargetToTargetListCommand}" />
+                                                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                </Style>
+                                                            </ContextMenu.ItemContainerStyle>
+                                                        </ContextMenu>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        IsEnabled="{Binding ExistingTargets, Converter={StaticResource CollectionContainsItemsToBooleanConverter}}"
+                                        Visibility="{Binding IsMosaic, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock
+                                            Padding="4"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="{StaticResource PrimaryBrush}"
+                                            Text="{ns:Loc LblUpdateExistingTargetInSequencer}"
+                                            TextWrapping="Wrap" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblUpdateExistingTargetInSequencerTooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource BackgroundButton}" TargetType="{x:Type Button}">
+                                                <Style.Resources>
+                                                    <Border
+                                                        x:Key="MenuHeader"
+                                                        MinHeight="30"
+                                                        x:Shared="false"
+                                                        Background="Transparent">
+                                                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                                    </Border>
+                                                    <Path
+                                                        x:Key="MenuIcon"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5"
+                                                        x:Shared="false"
+                                                        Data="{Binding Icon}"
+                                                        Fill="{StaticResource PrimaryBrush}"
+                                                        Stretch="Uniform" />
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="Click">
+                                                        <EventTrigger.Actions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                                                    </BooleanAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger.Actions>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                                <Setter Property="ContextMenu">
+                                                    <Setter.Value>
+                                                        <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.ExistingTargets}">
+                                                            <ContextMenu.ItemContainerStyle>
+                                                                <Style TargetType="MenuItem">
+                                                                    <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                                    <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                                    <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.UpdateExistingTargetInSequencerCommand}" />
+                                                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                </Style>
+                                                            </ContextMenu.ItemContainerStyle>
+                                                        </ContextMenu>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
                             </xceed:SplitButton.DropDownContent>
                         </xceed:SplitButton>
                     </UniformGrid>

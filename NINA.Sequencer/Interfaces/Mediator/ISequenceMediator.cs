@@ -38,5 +38,8 @@ namespace NINA.Sequencer.Interfaces.Mediator {
         void AddTargetToTargetList(IDeepSkyObjectContainer container);
 
         bool Initialized { get; }
+
+        IList<IDeepSkyObjectContainer> GetAllTargetsInAdvancedSequence();
+        IList<IDeepSkyObjectContainer> GetAllTargetsInSimpleSequence();
     }
 }
