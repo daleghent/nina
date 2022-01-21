@@ -5523,7 +5523,7 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>Título de la secuencia actual</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+    <value>La cúpula no informó de movimiento de ventana o fallo después de completar la solicitud. Este comportamiento es no conforme y peligroso. Por favor informa de ello al proveedor de tu cúpula.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>La apertura de la cúpula falló, el estado de apertura se notifica como cerrado tras iniciar la operación de su apertura.</value>
@@ -6020,26 +6020,26 @@ Attempt {1}/{2}.</value>
     <comment>Region of interest used for sub frame.</comment>
   </data>
   <data name="LblROIPercentageTooltip" xml:space="preserve">
-    <value>Region of Interest expressed in percentage relative to the center</value>
+    <value>Región de Interés expresada en porcentaje relativo al centro</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
-    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+    <value>Toma una imagen de la exposición, ganancia y compensación (offset) establecida de la región de interés especificada</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
-    <value>Take Subframe Exposure</value>
+    <value>Tomar exposición de submarco</value>
   </data>
   <data name="LblPreserveAlignment" xml:space="preserve">
-    <value>Preserve alignment</value>
+    <value>Conservar alineación</value>
   </data>
   <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
-    <value>Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
-This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
+    <value>Con esta opción habilitada se asegurará que los paneles se alinean a un único panel rectangular, pero el resultado tendrá diferentes ángulos de rotación para cada panel. 
+Esta opción debería activarse cuando etá disponible la rotación automática de la cámara o cuando la rotación manual de la cámara es posible para cada panel de mosaico.
 </value>
   </data>
   <data name="LblMosaicPanels" xml:space="preserve">
-    <value>Mosaic Panels</value>
+    <value>Paneles del mosaico</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
-    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
+    <value>Cuando está activado, rotará el fondo del espacio en lugar del rectángulo.</value>
   </data>
 </root>

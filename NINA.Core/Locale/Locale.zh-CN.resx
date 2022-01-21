@@ -6041,6 +6041,6 @@ This option should be enabled when automatic camera rotation is available or whe
     <value>Mosaic Panels</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
-    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
+    <value>启用后，将旋转天空背景而不是构图矩形框。</value>
   </data>
 </root>

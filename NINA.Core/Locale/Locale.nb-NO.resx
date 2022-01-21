@@ -395,11 +395,10 @@ uten stjerner, som f. eks. planeter, men kan være følsom for støy.</value>
     <value>Asimutmåling</value>
   </data>
   <data name="LblAzimuthMeasurementButtonTooltip" xml:space="preserve">
-    <value>Measures Azimuth Error by three steps.
-1. Takes image and platesolves for actual coordinates at current position
-2. Slew telescope using Right Ascension axis by 0.5 degrees
-3. Take another image at the new position, plate solves it for the actual position
-Using those two points the actual azimuth error will be calculated and displayed</value>
+    <value>Måler asimutavvik i tre trinn:
+1. Ta bilde og finn koordinatene astrometisk
+2. Sving teleskopet 0.5 grader i rektascensjon-aksen
+3. Ta et nytt bilde, finn de nye koordinatene astrometrisk, for koordinater og bruk disse til å beregne asimut-avvik</value>
   </data>
   <data name="LblAzimuthMeasurementDescription" xml:space="preserve">
     <value>Pek teleskopet sør, nær deklinasjon 0 og nære meridianen</value>
@@ -993,8 +992,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>D.A.R.V. Slew</value>
   </data>
   <data name="LblDARVSlewButtonTooltip" xml:space="preserve">
-    <value>This will take an exposure while slewing the scope slowly to one side and back
-when the lines are not aligned there is some Polar Alignment error</value>
+    <value>Tar bilde imens teleskopet svinges frem og tilbake. Hvis strekene i bildet ikke overlapper, tyder det på avvik i poljusteringen</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
     <value>Specify the duration for the D.A.R.V. procedure. The telescope will slew half the time in one direction on RA axis and then slew back. In case of no Polar Alignment error it will display as a straight line. Otherwise a V shaped line. For Azimuth Error Measurement slew the scope near meridian, otherwise east or west.</value>
@@ -1174,7 +1172,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Kan ikke koble til ASCOM kuppel-driver:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Driver can follow</value>
+    <value>Driver støtter følging</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Shutter status</value>
@@ -1204,10 +1202,10 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>I hjemposisjon</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Driver following telescope</value>
+    <value>Driver følger teleskop</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
-    <value>Slewing</value>
+    <value>Svinger</value>
   </data>
   <data name="LblDomeAzimuth" xml:space="preserve">
     <value>Asimut</value>
@@ -1216,7 +1214,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>No Dome Source</value>
   </data>
   <data name="LblDomeCannotSlew" xml:space="preserve">
-    <value>Dome cannot slew</value>
+    <value>Kuppel kan ikke svinges</value>
   </data>
   <data name="LblDomeCannotFindHome" xml:space="preserve">
     <value>Kuppel kan ikke finne hjemposisjon</value>
@@ -1623,10 +1621,10 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Fokusforskyving</value>
   </data>
   <data name="LblFocusPointValidationFailed" xml:space="preserve">
-    <value>Calculated HFR for focus at position {0} differs more than 25% from actual HFR
-Actual HFR : {1}
-Calculated HFR: {2}
-    </value>
+    <value>Oppnådd HFR avviker mer enn 25% fra forventet HFR
+Fokusposisjon: {0}
+Oppnådd HFR : {1}
+Forventet HFR: {2}</value>
   </data>
   <data name="LblFolderToWatch" xml:space="preserve">
     <value>Bildemappe</value>
@@ -1671,7 +1669,7 @@ Calculated HFR: {2}
     <value>Posisjon fra GPS</value>
   </data>
   <data name="LblGPSNoFix" xml:space="preserve">
-    <value>GPS has No Fix</value>
+    <value>GPS har ikke posisjon</value>
   </data>
   <data name="LblGPSNotFound" xml:space="preserve">
     <value>Ingen GPS-modul funnet</value>
@@ -1686,7 +1684,7 @@ Calculated HFR: {2}
     <value>Guider tilkoblet</value>
   </data>
   <data name="LblGuiderDitherButNotConnected" xml:space="preserve">
-    <value>Guider Dither is enabled, but application is not connected to Guider</value>
+    <value>Dither under guiding er aktivert, men ingen guider er tilkoblet</value>
   </data>
   <data name="LblGuiderNoResume" xml:space="preserve">
     <value>Guider did not send resume message in time. Sequence will resume, but make sure Guider is guiding again!</value>
@@ -1731,19 +1729,19 @@ Calculated HFR: {2}
     <value>Beregnet HFR for bildet (HFR-deteksjon må aktiveres)</value>
   </data>
   <data name="LblHigh" xml:space="preserve">
-    <value>Høy</value>
+    <value>Høyere</value>
   </data>
   <data name="LblHighest" xml:space="preserve">
-    <value>Highest</value>
+    <value>Høyest</value>
   </data>
   <data name="LblHistogram" xml:space="preserve">
     <value>Histogram</value>
   </data>
   <data name="LblHistogramResolution" xml:space="preserve">
-    <value>Histogram Resolution</value>
+    <value>Histogram-oppløsning</value>
   </data>
   <data name="LblHistogramResolutionTooltip" xml:space="preserve">
-    <value>Specifies the number of data points that should be used for the histogram</value>
+    <value>Angir antall datapunkter som skal brukes for histogrammet</value>
   </data>
   <data name="LblHistory" xml:space="preserve">
     <value>Historikk</value>
@@ -1755,7 +1753,7 @@ Calculated HFR: {2}
     <value>Antall paneler horisontalt</value>
   </data>
   <data name="LblHost" xml:space="preserve">
-    <value>Host</value>
+    <value>Adresse</value>
   </data>
   <data name="LblHour" xml:space="preserve">
     <value>Time</value>
@@ -1854,7 +1852,7 @@ Calculated HFR: {2}
     <value>Breddegrad</value>
   </data>
   <data name="LblLayout" xml:space="preserve">
-    <value>Layout</value>
+    <value>Vinduplassering</value>
   </data>
   <data name="LblLblBlackClippingTooltip" xml:space="preserve">
     <value>Antall standardavvik under median som klippes bort (blir sort)</value>
@@ -2101,10 +2099,10 @@ Calculated HFR: {2}
     <value>Ingen</value>
   </data>
   <data name="LblNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Vanlig</value>
   </data>
   <data name="LblNoRotator" xml:space="preserve">
-    <value>No Rotator</value>
+    <value>Ingen dreiemotor</value>
   </data>
   <data name="LblNorthern" xml:space="preserve">
     <value>Nord</value>
@@ -2245,7 +2243,7 @@ Calculated HFR: {2}
     <value>OK</value>
   </data>
   <data name="LblOldPosition" xml:space="preserve">
-    <value>Old Position</value>
+    <value>Forrige posisjon</value>
     <comment>Previous Focuser Position</comment>
   </data>
   <data name="LblOn" xml:space="preserve">
@@ -2258,7 +2256,7 @@ Calculated HFR: {2}
     <value>Opasitet</value>
   </data>
   <data name="LblOpenManual" xml:space="preserve">
-    <value>Open Manual</value>
+    <value>Åpne håndbok</value>
   </data>
   <data name="LblOpenWeatherMapAPIKey" xml:space="preserve">
     <value>OpenWeatherMap API-nøkkel</value>
@@ -2267,7 +2265,7 @@ Calculated HFR: {2}
     <value>Bruker OpenWeatherMap sitt vær-API. Værdata blir oppdatert hvert 10. minutt.</value>
   </data>
   <data name="LblOpenWeatherMapClientInfo" xml:space="preserve">
-    <value>NINA internal OpenWeatherMap API client</value>
+    <value>NINA intern OpenWeatherMap API-klient</value>
   </data>
   <data name="LblOptions" xml:space="preserve">
     <value>Alternativer</value>
@@ -2300,7 +2298,7 @@ Calculated HFR: {2}
     <value>Passer meridian</value>
   </data>
   <data name="LblPatternName" xml:space="preserve">
-    <value>Pattern Name</value>
+    <value>Navn på mønster</value>
   </data>
   <data name="LblPauseBetweenFilters" xml:space="preserve">
     <value>Vent mellom filtre</value>
@@ -2396,7 +2394,7 @@ Calculated HFR: {2}
     <value>Pikselskala</value>
   </data>
   <data name="LblPixelScaleTooltip" xml:space="preserve">
-    <value>Pixel scale in arcseconds per pixel</value>
+    <value>Pikselstørrelse i buesekunder</value>
   </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Pikselstørrelse</value>
@@ -2477,7 +2475,7 @@ Calculated HFR: {2}
     <value>Pekeretning er utenfor toleransen. Gjentar...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceReslew" xml:space="preserve">
-    <value>Telescope not inside tolerance. Re-slew to target...</value>
+    <value>Pekeretning er utenfor toleransen. Svinger på ny mot mål...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceSyncing" xml:space="preserve">
     <value>Pekeretning er utenfor toleransen. Synkroniserer teleskop...</value>
@@ -2510,7 +2508,7 @@ Calculated HFR: {2}
     <value>Vennligst roter {0} grader</value>
   </data>
   <data name="LblPolarAlignment" xml:space="preserve">
-    <value>Polar Alignment</value>
+    <value>Poljustering</value>
   </data>
   <data name="LblPort" xml:space="preserve">
     <value>Port</value>
@@ -2558,10 +2556,10 @@ Calculated HFR: {2}
     <value>Fremdrift</value>
   </data>
   <data name="LblPull" xml:space="preserve">
-    <value>Pull</value>
+    <value>Trekk</value>
   </data>
   <data name="LblPush" xml:space="preserve">
-    <value>Push</value>
+    <value>Skyv</value>
   </data>
   <data name="LblPx" xml:space="preserve">
     <value>px</value>
@@ -2627,25 +2625,25 @@ Calculated HFR: {2}
     <value>Anbefalt eksponeringstid</value>
   </data>
   <data name="LblReconnectAll" xml:space="preserve">
-    <value>Reconnect all devices?</value>
+    <value>Koble til alle enheter på ny?</value>
   </data>
   <data name="LblReconnectCamera" xml:space="preserve">
-    <value>Please reconnect camera!</value>
+    <value>Vennligst koble til kamera!</value>
   </data>
   <data name="LblReconnectFilterwheel" xml:space="preserve">
-    <value>Please reconnect filterwheel!</value>
+    <value>Venligst koble til filterhjul!</value>
   </data>
   <data name="LblReconnectFocuser" xml:space="preserve">
-    <value>Please reconnect focuser!</value>
+    <value>Vennligst koble til fokusmotor!</value>
   </data>
   <data name="LblReconnectTelescope" xml:space="preserve">
-    <value>Please reconnect telescope!</value>
+    <value>Vennligst koble til teleskop!</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
-    <value>Reference Date</value>
+    <value>Referansedato</value>
   </data>
   <data name="LblRegions" xml:space="preserve">
-    <value>Regions</value>
+    <value>Regioner</value>
   </data>
   <data name="LblRelease" xml:space="preserve">
     <value>Offisiell</value>
@@ -2669,19 +2667,19 @@ Calculated HFR: {2}
     <value>Erstatt som sekvensmål</value>
   </data>
   <data name="LblRescanDevices" xml:space="preserve">
-    <value>Rescan Devices</value>
+    <value>Skann etter enheter</value>
   </data>
   <data name="LblResetAndContinue" xml:space="preserve">
     <value>Tilbakestill og fortsett</value>
   </data>
   <data name="LblResetDockLayout" xml:space="preserve">
-    <value>Tilbakestill brukergrensesnitt</value>
+    <value>Tilbakestill vinduplassering</value>
   </data>
   <data name="LblResetDockLayoutConfirmation" xml:space="preserve">
-    <value>Skal brukergrensesnittet tilbakestilles?</value>
+    <value>Skal vinduplasseringen tilbakestilles?</value>
   </data>
   <data name="LblReslewToTarget" xml:space="preserve">
-    <value>Reslew to Target</value>
+    <value>Sving på ny</value>
   </data>
   <data name="LblResumeAutoguider" xml:space="preserve">
     <value>Fortsett autoguiding</value>
@@ -2711,13 +2709,13 @@ Calculated HFR: {2}
     <value>Toleranse for rotasjon</value>
   </data>
   <data name="LblRotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>Dreiemotor</value>
   </data>
   <data name="LblRotatorConnected" xml:space="preserve">
-    <value>Rotator Connected</value>
+    <value>Dreiemotor tilkoblet</value>
   </data>
   <data name="LblRotatorConnectionLost" xml:space="preserve">
-    <value>Rotator connection lost! Please reconnect rotator!</value>
+    <value>Tilkobling til dreiemotor mistet! Koble til dreiemotor på nytt!</value>
   </data>
   <data name="LblSave" xml:space="preserve">
     <value>Lagre</value>
@@ -2880,7 +2878,7 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>SharpCap Sensor Analysis folder</value>
   </data>
   <data name="LblSharpCapSensorAnalysisLoadedFormat" xml:space="preserve">
-    <value>Loaded {0} sensors</value>
+    <value>Lastet {0} sensorer</value>
   </data>
   <data name="LblSharpCapSensorAnalysisPathTooltip" xml:space="preserve">
     <value>Mappen til filer fra SharpCap sensoranalyse, hvis de ligger annet sted enn vanlig</value>
@@ -2907,10 +2905,10 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Atlas</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Himmelkatalog-bildemappe</value>
+    <value>Atlas-bildemappe</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>Himmelkatalog (frakoblet modus)</value>
+    <value>Atlas (frakoblet modus)</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Himmellysstyrke</value>
@@ -2925,31 +2923,31 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Komposisjon-mellomlager</value>
   </data>
   <data name="LblSkyTemperature" xml:space="preserve">
-    <value>Sky Temperature</value>
+    <value>Himmeltemperatur</value>
   </data>
   <data name="LblSlew" xml:space="preserve">
-    <value>Slew</value>
+    <value>Sving til</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>Sving og sentrer</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
-    <value>Slew Duration</value>
+    <value>Svingevarighet</value>
   </data>
   <data name="LblSlewEnabledButTelescopeNotConnected" xml:space="preserve">
-    <value>Slew to target is enabled, yet telescope is not connected</value>
+    <value>Sving til mål er aktivert, men teleskopet er ikke tilkoblet</value>
   </data>
   <data name="LblSlewRateDegSec" xml:space="preserve">
-    <value>Slew Rate (deg/sec)</value>
+    <value>Svingrate (grader/sekund)</value>
   </data>
   <data name="LblSlewToTarget" xml:space="preserve">
-    <value>Slew to target</value>
+    <value>Sving til mål</value>
   </data>
   <data name="LblSlewToZenith" xml:space="preserve">
-    <value>Slew to zenith</value>
+    <value>Sving til senit</value>
   </data>
   <data name="LblSlewWhenTargetCoordsUnset" xml:space="preserve">
-    <value>At least one target with slew enabled has no target coordinates set</value>
+    <value>Minst ett mål hvor sving-til er aktivert, mangler koordinater</value>
   </data>
   <data name="LblSnapPortStart" xml:space="preserve">
     <value>Snap Port Start Command</value>
@@ -2982,11 +2980,11 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Start autofokusering</value>
   </data>
   <data name="LblStartBacklashMeasurementConfirmation" xml:space="preserve">
-    <value>Backlash Measurement will start now.
-Before proceeding, please confirm your system is currently at or close to good focus</value>
+    <value>Måling av slakk starter nå.
+Før du fortsetter, bekreft at systemet er i eller nær god fokus</value>
   </data>
   <data name="LblStartBacklashQuestion" xml:space="preserve">
-    <value>Start Backlash Measurement?</value>
+    <value>Start måling av slakk?</value>
   </data>
   <data name="LblStartGuiding" xml:space="preserve">
     <value>Start guiding</value>
@@ -3004,7 +3002,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Starting OUT Backlash Measurement</value>
   </data>
   <data name="LblStartSequenceAnyway" xml:space="preserve">
-    <value>Start Sequence Anyway?</value>
+    <value>Start sekvens allikevel?</value>
   </data>
   <data name="LblState" xml:space="preserve">
     <value>Tilstand</value>
@@ -3040,7 +3038,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Stop Tracking</value>
   </data>
   <data name="LblStretchImage" xml:space="preserve">
-    <value>Stretching image</value>
+    <value>Strekker bilde</value>
   </data>
   <data name="LblStsciSkySurvey" xml:space="preserve">
     <value>STScl Sky Survey</value>
@@ -3103,7 +3101,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>MålDek</value>
   </data>
   <data name="LblTargetHeightDegrees" xml:space="preserve">
-    <value>Minimum Height (degree)</value>
+    <value>Minste høyde (grader)</value>
   </data>
   <data name="LblTargetName" xml:space="preserve">
     <value>Målnavn</value>
@@ -3127,7 +3125,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Temperaturmål</value>
   </data>
   <data name="LblTargetWidthDegrees" xml:space="preserve">
-    <value>Minimum Width (degree)</value>
+    <value>Minste bredde (grader)</value>
   </data>
   <data name="LblTelescope" xml:space="preserve">
     <value>Teleskop</value>
@@ -3136,7 +3134,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Teleskop kan ikke puls-guides</value>
   </data>
   <data name="LblTelescopeCannotSlew" xml:space="preserve">
-    <value>Telescope cannot slew</value>
+    <value>Teleskopet kan ikke svinges</value>
   </data>
   <data name="LblTelescopeConnected" xml:space="preserve">
     <value>Teleskop koblet til</value>
@@ -3160,7 +3158,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Telescope is not tracking. Sync is only available when tracking!</value>
   </data>
   <data name="LblTelescopeParkedWarn" xml:space="preserve">
-    <value>Telescope is parked. Cannot slew while parked</value>
+    <value>Teleskopet er parkert og kan derfor ikke svinges</value>
   </data>
   <data name="LblTelescopeSnapPort" xml:space="preserve">
     <value>Telescope Snap Port</value>
@@ -3214,7 +3212,7 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Tidsavbrudd</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>Tidsavbrudd ved setting av brytertilstand til {0} for bryter [ID: {1}, navn: {2}]. Bryterens tilstand er nå {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Tidssone</value>
@@ -3232,10 +3230,10 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Verktøy</value>
   </data>
   <data name="LblTooltipAddSequence" xml:space="preserve">
-    <value>Add new row to sequence list</value>
+    <value>Legg til ny rad i sekvens</value>
   </data>
   <data name="LblTooltipAddTarget" xml:space="preserve">
-    <value>Add new empty target sequence</value>
+    <value>Legg til tom instruksjonsblokk med mål</value>
   </data>
   <data name="LblTooltipAutoStretch" xml:space="preserve">
     <value>Slår automatisk strekking av bilde på/av (kun visning)</value>
@@ -3375,7 +3373,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Når aktivert vil fargekanalene strekkes uavhengig av hverandre. Dette skjuler bakgrunnen, og forbedrer pålitelighet til autofokus og astrometriske løsninger i lysforurensede områder. Prosesseringstid er lengre.</value>
   </data>
   <data name="LblUnpark" xml:space="preserve">
-    <value>Unpark</value>
+    <value>Avparker</value>
   </data>
   <data name="LblUPBV2AmpereHours" xml:space="preserve">
     <value>Amperetimer</value>
@@ -3492,7 +3490,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Bruk SharpCap sensoranalyse</value>
   </data>
   <data name="LblUseSideOfPier" xml:space="preserve">
-    <value>Use Telescope Side of Pier</value>
+    <value>Bruk teleskop-siden av søylen</value>
   </data>
   <data name="LblUseSnapPort" xml:space="preserve">
     <value>Use Telescope Snap Port</value>
@@ -3504,10 +3502,10 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Venter til dither er ferdig</value>
   </data>
   <data name="LblWaitForImageProcessing" xml:space="preserve">
-    <value>Waiting for previous image to finish processing</value>
+    <value>Venter på behandling av forrige bilde</value>
   </data>
   <data name="LblWaitForTemperatureStep" xml:space="preserve">
-    <value>Waiting for camera to reach next temperature step</value>
+    <value>Venter på at kamera når neste temperaturtrinn</value>
   </data>
   <data name="LblWaiting" xml:space="preserve">
     <value>Venter</value>
@@ -3525,13 +3523,13 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Advarsel</value>
   </data>
   <data name="LblWarnTelescopeParked" xml:space="preserve">
-    <value>The Telescope is parked, and will be automatically unparked if user proceeds with sequence start</value>
+    <value>Teleskopet er parkert og vil avparkeres automatisk hvis sekvensen startes</value>
   </data>
   <data name="LblWeather" xml:space="preserve">
     <value>Vær</value>
   </data>
   <data name="LblWeatherASCOMConnectFailed" xml:space="preserve">
-    <value>Unable to connect to ASCOM ObservingConditions driver:</value>
+    <value>Kan ikke koble til ASCOM ObservingConditions-driver:</value>
   </data>
   <data name="LblWeatherConnected" xml:space="preserve">
     <value>Værdatakilde tilkoblet</value>
@@ -3546,7 +3544,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Ingen værdatakilde</value>
   </data>
   <data name="LblWeatherReconnect" xml:space="preserve">
-    <value>Weather data source connection lost! Error message:</value>
+    <value>Tilkobling til værdatakilde mistet! Feilmelding:</value>
   </data>
   <data name="LblWelcome" xml:space="preserve">
     <value>Velkommen til Nighttime Imaging 'N' Astronomy!</value>
@@ -3567,7 +3565,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Vindhastighet</value>
   </data>
   <data name="LblXAxisScale" xml:space="preserve">
-    <value>X-Axis Scale</value>
+    <value>X-akseskala</value>
   </data>
   <data name="LblXisf" xml:space="preserve">
     <value>XISF</value>
@@ -3591,10 +3589,10 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>XISF dataformat av type {0} støttes ikke</value>
   </data>
   <data name="LblYAxisScale" xml:space="preserve">
-    <value>Y-Axis Scale</value>
+    <value>Y-akseskala</value>
   </data>
   <data name="LblYAxisUnits" xml:space="preserve">
-    <value>Y-Axis Units</value>
+    <value>Y-akseenheter</value>
   </data>
   <data name="LblYes" xml:space="preserve">
     <value>Ja</value>
@@ -3670,13 +3668,13 @@ Auto bruker mønster hentet fra kameradriveren. Gjelder ikke DSLR-kameraer.</val
     <value>Running end of sequence options</value>
   </data>
   <data name="LblSQMPatternDescription" xml:space="preserve">
-    <value>Sky Quality Meter reading</value>
+    <value>Himmelkvalitet-måling</value>
   </data>
   <data name="LblReadoutModePatternDescription" xml:space="preserve">
-    <value>Camera Readout Mode</value>
+    <value>Kamera-utlesingsmodus</value>
   </data>
   <data name="LblSerialPortCannotOpen" xml:space="preserve">
-    <value>Cannot open serial port {0}: {1}</value>
+    <value>Kan ikke åpne serieport {0}: {1}</value>
   </data>
   <data name="LblPointingTolerance" xml:space="preserve">
     <value>Pekenøyaktighet</value>
@@ -3688,10 +3686,10 @@ Auto bruker mønster hentet fra kameradriveren. Gjelder ikke DSLR-kameraer.</val
     <value>Eksponering ferdig</value>
   </data>
   <data name="LblCameraTimeout" xml:space="preserve">
-    <value>Camera Timeout - Camera did not set image as ready after exposuretime + {0} seconds</value>
+    <value>Tidsavbrudd for kamera - bilde var ikke klart etter eksponeringstid + {0} sekunder</value>
   </data>
   <data name="LblImagePatternPreview" xml:space="preserve">
-    <value>Pattern Preview</value>
+    <value>Forhåndsvisning av mønster</value>
   </data>
   <data name="LblB1950" xml:space="preserve">
     <value>B1950</value>
@@ -3712,7 +3710,7 @@ Auto bruker mønster hentet fra kameradriveren. Gjelder ikke DSLR-kameraer.</val
     <value>Lagrer bilde</value>
   </data>
   <data name="LblLowDiskSpaceForSequence" xml:space="preserve">
-    <value>Available space on drive {0} may be insufficient. The estimated disk space required for the sequence is {1}, but only {2} remains.</value>
+    <value>Tilgjengelig plass på disk {0} er kanskje for lite. Anslått diskplass for sekvensen er {1}, men disken har bare plass til {2}.</value>
   </data>
   <data name="LblNoValidFirmwareVersion" xml:space="preserve">
     <value>Ingen gyldig firmware-versjon.</value>
@@ -3785,9 +3783,9 @@ Denne metoden kan bare endres når fokusmotor er frakoblet!</value>
     <value>Kameraet venter på å slå av kjøling</value>
   </data>
   <data name="LblWarmCamBtnTooltip" xml:space="preserve">
-    <value>Warms the camera back to ambient temperature and turns the cooler off.
-A duration is optional. Most camera drivers already regulate the cooler power automatically and will only gradually increase the temperature.
-In case a longer duration is needed, a duration can be specified and the application will slowly raise the target temperature of the camera based on the given duration.</value>
+    <value>Varmer kameraet til omgivelsestemperatur, og slår av kjøleren.
+Varighet er valgfritt. De fleste kameradrivere regulerer kjøleeffekten automatisk, og vil selv gradvis øke temperaturen.
+I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt varighet.</value>
   </data>
   <data name="LblWaitForImageSaving" xml:space="preserve">
     <value>Venter på bildelagring</value>
@@ -3872,7 +3870,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Stopper all bevegelse til kuppel</value>
   </data>
   <data name="LblDomeManualSlewTooltip" xml:space="preserve">
-    <value>Rotate the dome to a target azimuth</value>
+    <value>Svinger kuppelen til en bestemt asimutvinkel</value>
   </data>
   <data name="LblDomeParkTooltip" xml:space="preserve">
     <value>Snur kuppelen til parkeringsposisjonen til driveren, og lukk kuppelen</value>
@@ -3899,7 +3897,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Asimut-toleranse</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
-    <value>The dome slews if the target azimuth is off by more than this amount</value>
+    <value>Kuppelen svinges hvis avviket fra ønsket asimutvinkel er større enn denne verdien</value>
   </data>
   <data name="LblDomeDirectDriver" xml:space="preserve">
     <value>Use NINA Direct Following</value>
@@ -3923,7 +3921,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Kuppelradius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
-    <value>Measure from the center to the rim of the dome, along the base</value>
+    <value>Mål fra kanten av kuppelen til senterpunktet</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
     <value>Teleskopposisjon +øst/-vest</value>
@@ -3938,7 +3936,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
   </data>
   <data name="LblDomeFollowError" xml:space="preserve">
-    <value>Error while syncing Dome. Dome following now stopped.</value>
+    <value>Feil ved synkronisering av kuppel. Kuppel-følging er deaktivert.</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
     <value>Avbryt sekvens</value>
@@ -3980,7 +3978,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Camera has no mechanical shutter, no automated flat panel is connected and sequence only contains DARK/BIAS items. Make sure camera is covered.</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
-    <value>Auto Focus Filter Settings</value>
+    <value>Filterinnstillinger</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
     <value>Meridianvending om</value>
@@ -4001,10 +3999,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Denne verdien spesifiserer standard forskyving som skal brukes når ingen forskyving er angitt eksplisitt</value>
   </data>
   <data name="LbLUsbLimitDescription" xml:space="preserve">
-    <value>Camera USB speed or traffic limit setting</value>
+    <value>Innstilling for USB-hastighet eller hastighetsbegrensing</value>
   </data>
   <data name="LblFocuserMoveToPosition" xml:space="preserve">
-    <value>Moving focuser to position {0}</value>
+    <value>Flytter til fokusposisjon {0}</value>
   </data>
   <data name="LblCameraConnectedOnExit" xml:space="preserve">
     <value>Kameraet er fortsatt tilkoblet. Avslutt allikevel?</value>
@@ -4019,16 +4017,16 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Koble fra fokusmotor?</value>
   </data>
   <data name="LblDisconnectRotator" xml:space="preserve">
-    <value>Disconnect Rotator?</value>
+    <value>Koble fra dreiemotor?</value>
   </data>
   <data name="LblDisconnectTelescope" xml:space="preserve">
     <value>Koble fra teleskop?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
-    <value>Telescope is parked. You may need to unpark your scope before slewing.</value>
+    <value>Teleskopet er parkert. Du må avparkere teleskopet før det kan svinges.</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
-    <value>Side of Pier</value>
+    <value>Side av søyle</value>
   </data>
   <data name="LblCameraTimeoutOption" xml:space="preserve">
     <value>Tidsavbrudd for kamera</value>
@@ -4049,7 +4047,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Minste intensitet</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
-    <value>Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds.</value>
+    <value>Lysstyrke til guidestjerne på en skala fra 0-255. Hvis lysstyrken faller under angitt nivå, vil NINA pause guiding til lysstyrken henter seg inn igjen. Dette kan forårsakes av skydekke.</value>
   </data>
   <data name="LblSeeing" xml:space="preserve">
     <value>Seeing</value>
@@ -4067,31 +4065,31 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Sky Flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
-    <value>Dome synchronization error. No longer following telescope. {0}</value>
+    <value>Feil ved kuppelsynkronisering. Kuppel følger ikke lengre teleskopet. {0}</value>
   </data>
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
     <value>Kuppel klarte ikke å synkronisere etter meridianvending</value>
   </data>
   <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
-    <value>Dome failed to synchronize during Centering</value>
+    <value>Kuppel kunne ikke synkronisere under sentrering</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
-    <value>Close dome shutter at sequence end</value>
+    <value>Lukk kuppel ved sekvensslutt</value>
   </data>
   <data name="LblDomeEnableFollowingWarning" xml:space="preserve">
-    <value>Could not enable Dome/Telescope following</value>
+    <value>Kunne ikke aktivere følging for kuppel/teleskop</value>
   </data>
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
     <value>Park dome at sequence end</value>
   </data>
   <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
-    <value>Allow sync while mount slews</value>
+    <value>Tillat synkronisering når teleskop svinges</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
-    <value>Sync slew dome when scope slews</value>
+    <value>Sving kuppel synkront med svinging av teleskop</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
     <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
@@ -4100,10 +4098,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Finn hjemposisjon før parkering</value>
   </data>
   <data name="LblDomeSlewCW" xml:space="preserve">
-    <value>Move CW</value>
+    <value>Sving med klokka</value>
   </data>
   <data name="LblDomeSlewCCW" xml:space="preserve">
-    <value>Move CCW</value>
+    <value>Sving mot klokka</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
@@ -4121,19 +4119,19 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Lukker kuppel øyeblikkelig hvis sikkerhetsovervåkeren rapporterer utrygg tilstand</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
-    <value>AF Sequence Timeout</value>
+    <value>Tidsavbrudd ved autofokusering</value>
   </data>
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for an auto focus during a sequence before cancelling to continue</value>
+    <value>Tid, i sekunder, som det ventes på autofokusering</value>
   </data>
   <data name="LblMetaGuideLowIntensityStopGuiding" xml:space="preserve">
-    <value>Stopped guiding due to low star intensity. There may be clouds.</value>
+    <value>Guiding stoppet på grunn av svake stjerner. Det kan være skydekke.</value>
   </data>
   <data name="LblDomeSyncTimeout" xml:space="preserve">
-    <value>Synchronization Timeout</value>
+    <value>Tidsavbrudd ved synkronisering</value>
   </data>
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
-    <value>The maximum amount of time, in seconds, to wait for the Dome and Telescope to synchronize their positions</value>
+    <value>Tid, i sekunder, som det ventes på synkronisering av kuppel og teleskop</value>
   </data>
   <data name="LblC2A" xml:space="preserve">
     <value>C2A</value>
@@ -4142,7 +4140,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Kameranavn</value>
   </data>
   <data name="LblRotatorAngleDescription" xml:space="preserve">
-    <value>Angle of the rotator</value>
+    <value>Vinkel til dreiemotor</value>
   </data>
   <data name="LblStarCount" xml:space="preserve">
     <value>Antall stjerner</value>
@@ -4166,7 +4164,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Antall ganger</value>
   </data>
   <data name="LblRotatorNotConnected" xml:space="preserve">
-    <value>Rotator not connected</value>
+    <value>Dreiemotor ikke koblet til</value>
   </data>
   <data name="LblScript" xml:space="preserve">
     <value>Skript</value>
@@ -4223,10 +4221,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Unknown format to import targets</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
-    <value>Ultra Mode</value>
+    <value>Ultramodus</value>
   </data>
   <data name="LblUltraModeTooltip" xml:space="preserve">
-    <value>Enables the Ultra Mode for extra low read noise </value>
+    <value>Aktiverer ultramodus for ekstra lav utlesingsstøy </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
     <value>Reverse movement direction of rotator. Toggle this, if the platesolver rotates into the wrong direction.</value>
@@ -4253,7 +4251,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Move Sky Position</value>
   </data>
   <data name="LblPixelMargin" xml:space="preserve">
-    <value>Keep guide stars off sensor edges by at least</value>
+    <value>Hold guidestjerner unna bildekant med minst</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Legg {0} minutter til etter meridian</value>
@@ -4355,7 +4353,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Flytt fokusposisjon</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
-    <value>Sends a dither signal to the guider</value>
+    <value>Sender dither-signal til guideren</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
     <value>Dither</value>
@@ -4382,13 +4380,13 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Sving, sentrer og roter</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
     <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Sving og sentrer</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Parkerer teleskopet i parkeringsposisjonen</value>
@@ -4397,22 +4395,22 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Parker teleskop</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
-    <value>Slews the telescope to the given altitude and azimuth coordinates</value>
+    <value>Svinger teleskopet til angitt elevasjon- og asimutvinkel</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
-    <value>Slew To Alt/Az</value>
+    <value>Sving til Alt/Az</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
-    <value>Slews the telescope to the given right ascension and declination coordinates</value>
+    <value>Svinger teleskopet til angitt elevasjon- og asimutvinkel</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
-    <value>Slew To Ra/Dec</value>
+    <value>Sving til RA/Dek</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
-    <value>Unparks the telescope</value>
+    <value>Avparkerer teleskopet</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
-    <value>Unpark Scope</value>
+    <value>Avparker teleskop</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
     <value>Set Tracking</value>
@@ -4493,19 +4491,19 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Kameraet har ikke en kjøler og er ikke i stand til å styre temperatur</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose" xml:space="preserve">
-    <value>The flat device does not support opening or closing the cover</value>
+    <value>Flatpanelet støtter ikke åpning eller lukking av deksel</value>
   </data>
   <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
-    <value>Load complete sequence from JSON file</value>
+    <value>Åpne sekvens fra JSON-fil</value>
   </data>
   <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
-    <value>Unable to load sequence - Sequencer root element must be sequence root container!</value>
+    <value>Kunne ikke åpne sekvens - rotelementet er ikke av riktig type!</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
-    <value>Save complete sequence to JSON file</value>
+    <value>Lagre sekvensen som JSON-fil</value>
   </data>
   <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
-    <value>Unable to deserialize JSON</value>
+    <value>Kan ikke deserialisere JSON</value>
   </data>
   <data name="LblValue" xml:space="preserve">
     <value>Verdi</value>
@@ -4517,10 +4515,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Setter en bryter til angitt tilstand</value>
   </data>
   <data name="LblSwitchNotConnected" xml:space="preserve">
-    <value>Switch is not connected!</value>
+    <value>Bryter er ikke tilkoblet!</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_InvalidSwitchValue" xml:space="preserve">
-    <value>Invalid value for selected switch! Minimum {0} / Maximum {1} / StepSize {2}</value>
+    <value>Ugyldig verdi for valgt bryter! Min {0} / Maks {1} / Trinnstørrelse {2}</value>
   </data>
   <data name="LblContainer" xml:space="preserve">
     <value>Container</value>
@@ -4529,10 +4527,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Utility</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
-    <value>Sends a dither command to the guider after the specified number of exposures</value>
+    <value>Sender dither-kommando til guider etter angitt antall bilder</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
-    <value>Dither after Exposures</value>
+    <value>Dither etter bilder</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
     <value>Fortsetter guiding hvis den tidligere var stoppet</value>
@@ -4655,7 +4653,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Slå lys av/på</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes flat exposures</value>
+    <value>Bruker innlært eksponeringstid for å ta flatbilder</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Trained Flat Exposure</value>
@@ -4671,7 +4669,7 @@ In case a longer duration is needed, a duration can be specified and the applica
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
     <value>Sekvensmål-område
-Legg til en instruksjonsblokker med mål her, eller legg til mål fra himmelkatalogen eller komposisjonshjelperen</value>
+Legg til en instruksjonsblokker med mål her, eller legg til mål fra atlaset eller komposisjonshjelperen</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Repetisjonsbetingelser</value>
@@ -4695,10 +4693,10 @@ Legg til en instruksjonsblokker med mål her, eller legg til mål fra himmelkata
     <value>Tving kalibrering</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
-    <value>No switch selected!</value>
+    <value>Ingen bryter valgt!</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
-    <value>Command a dither after the specified amount of exposures. A value of 0 will disable dither for this item.</value>
+    <value>Utfører dither etter angitt antall bilder. Verdi 0 vil deaktivere dither for instruksjonen.</value>
   </data>
   <data name="LblInstructionSet" xml:space="preserve">
     <value>Instruksjoner</value>
@@ -4861,10 +4859,10 @@ Hvis blokken over er kollapset, blir gjeldende instruksjon flyttet over denne.</
     <value>Finn hjemposisjon for kuppel</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
-    <value>Slews the dome to an absolute azimuth position</value>
+    <value>Svinger kuppelen til en bestemt asimut-retning</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Slew Dome Azimuth</value>
+    <value>Sving kuppel til asimutretning</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
@@ -4906,7 +4904,7 @@ Hvis blokken over er kollapset, blir gjeldende instruksjon flyttet over denne.</
     <value>Sekvensen inneholder instruksjoner som er ugyldige eller ferdige. Disse instruksjonene hoppes over, og tas ikke med.</value>
   </data>
   <data name="LblRotateTarget" xml:space="preserve">
-    <value>Rotate Target</value>
+    <value>Roter mål</value>
   </data>
   <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
     <value>Sikkerhetsovervåking har mistet tilkoblingen!</value>
@@ -5017,7 +5015,7 @@ Eksempel:
     <value>Server aktivert</value>
   </data>
   <data name="LblServerEnabledTooltip" xml:space="preserve">
-    <value>Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
+    <value>Kjører en tjeneste på port 59590 med samme API som SGP for kompatibilitet med annen programvare. Hvis tjenesten ikke starter, kan det være du må oppdatere brannmurinnstillinger med netsh (se NINA-dokumentasjonen).</value>
   </data>
   <data name="LblServerFailed" xml:space="preserve">
     <value>Server failed to start. Check the NINA documentation. {0}</value>
@@ -5078,11 +5076,11 @@ I denne modusen kan sekvenser bygges opp med elementære instruksjoner, triggere
     <value>Forberedelser</value>
   </data>
   <data name="LblUnparked" xml:space="preserve">
-    <value>Unparked</value>
+    <value>Ikke parkert</value>
     <comment>If the telescope is not in park position</comment>
   </data>
   <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
-    <value>Waiting For Telescope To Park</value>
+    <value>Venter på parkering av teleskop</value>
   </data>
   <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
     <value>Weather Underground API-nøkkel</value>
@@ -5097,16 +5095,16 @@ I denne modusen kan sekvenser bygges opp med elementære instruksjoner, triggere
     <value>Promote selected row</value>
   </data>
   <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
-    <value>An error occurred while adding a new template. Refer to the logs for more details.</value>
+    <value>En feil oppstod ved oppretting av ny mal. Se loggene for mer detaljer.</value>
   </data>
   <data name="Lbl_SequenceTemplateController_DeleteTemplateFailed" xml:space="preserve">
-    <value>An error occurred while deleting the template. Refer to the logs for more details.</value>
+    <value>En feil oppstod ved sletting av mal. Se loggene for mer detaljer.</value>
   </data>
   <data name="Lbl_SequenceTemplateController_LoadUserTemplatesFailed" xml:space="preserve">
-    <value>An error occurred during template refresh. Refer to the logs for more details.</value>
+    <value>En feil oppstod ved oppdatering av mal. Se loggene for mer detaljer.</value>
   </data>
   <data name="Lbl_SequenceTargetController_AddNewTargetFailed" xml:space="preserve">
-    <value>An error occurred while adding the target. Refer to the logs for more details.</value>
+    <value>En feil oppstod når målet ble lagt til. Se loggene for mer detaljer.</value>
   </data>
   <data name="Lbl_SequenceTargetController_DeleteTargetFailed" xml:space="preserve">
     <value>An error occurred while deleting the target. Refer to the logs for more details.</value>
@@ -5115,10 +5113,10 @@ I denne modusen kan sekvenser bygges opp med elementære instruksjoner, triggere
     <value>An error occurred while loading the list of targets. Refer to the logs for more details.</value>
   </data>
   <data name="LblSequenceTemplateFolder" xml:space="preserve">
-    <value>Sequence Template Folder</value>
+    <value>Mappe for sekvensmaler</value>
   </data>
   <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
-    <value>The folder where sequence templates for the advanced sequencer are stored in</value>
+    <value>Mappen der malene for avanserte sekvenser lagres</value>
   </data>
   <data name="LblWeatherUndergroundClientDescription" xml:space="preserve">
     <value>Uses WU PWS API. Weather is refreshed every 10m</value>
@@ -5184,10 +5182,10 @@ I denne modusen kan sekvenser bygges opp med elementære instruksjoner, triggere
     <value>Venter på grunn av solas elevasjon ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
-    <value>Exits the loop when the moon's illumination level matches the specified parameters.</value>
+    <value>Stopper repetisjon når månefasen er som angitt.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
-    <value>Moon Illumination</value>
+    <value>Månefase</value>
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Avslutning</value>
@@ -5201,19 +5199,19 @@ Et større antall gjør triggeren mindre følsom for kortvarige hendelser som vi
 Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktisk endrer seg.</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
-    <value>No writable switch available</value>
+    <value>Ingen styrbar bryter tilgjengelig</value>
   </data>
   <data name="LblPHD2ROIPct" xml:space="preserve">
     <value>ROI Percentage to find Guidestar</value>
   </data>
   <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
-    <value>The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame</value>
+    <value>Prosentandel av bildet som vurderes for valg av guidestjerne i PHD2, målt fra senter av bildet</value>
   </data>
   <data name="LblDitherSkippedBecauseNotGuiding" xml:space="preserve">
-    <value>Dither was skipped because PHD2 was not actively guiding</value>
+    <value>Dither ble hoppet over fordi guiding i PHD2 ikke var aktiv</value>
   </data>
   <data name="LblDitherSkippedBecauseNotLostLock" xml:space="preserve">
-    <value>Dither was skipped because PHD2 has lost the locked guide star</value>
+    <value>Dither ble hoppet over fordi PHD2 har mistet guidestjernen</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Description" xml:space="preserve">
     <value>Skrur kameraets duggvarmer på eller av</value>
@@ -5231,7 +5229,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
   </data>
   <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
-    <value>Target {0} saved to target list</value>
+    <value>Mål {0} lagret i mållisten</value>
   </data>
   <data name="LblCustomHorizon" xml:space="preserve">
     <value>Egendefinert horisont</value>
@@ -5255,13 +5253,13 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Venter til målet er over horisonten. Målets elevasjon {0}° / horisont {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
-    <value>A condition that loops while the target is above the horizon and then stops the current instruction set</value>
+    <value>En betingelse som gjentar instruksjonsblokken så lenge målet er over horisonten</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Loop While Altitude Above Horizon</value>
+    <value>Gjenta når over horisont</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
-    <value>Target will never be above the horizon</value>
+    <value>Målet vil aldri komme over horisonten</value>
   </data>
   <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
     <value>Moving rotator to mechanical position {0}</value>
@@ -5288,7 +5286,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Snapshots</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Slew, Center and Rotate</value>
+    <value>Sving, sentrer og roter</value>
   </data>
   <data name="LblFindHomeToolTip" xml:space="preserve">
     <value>Ber teleskopet om å finne hjemposisjonen</value>
@@ -5339,7 +5337,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Rask</value>
   </data>
   <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
-    <value>Set the button slew rate in degrees per second</value>
+    <value>Svingrate for styreknappene i grader per sekund</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
     <value>Firmware-versjon</value>
@@ -5378,7 +5376,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Settle Time</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
-    <value>Initializing Sequencer...</value>
+    <value>Initialiserer sekvens...</value>
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Initializing Layout</value>
@@ -5457,7 +5455,7 @@ Et godt utgangspunkt for terskelverdien er 0.8 - resultater med lavere R²-verdi
     <value>Settpunkt for kameratemperatur</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOM - tillat odde pikselstørrelser</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
     <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
@@ -5516,10 +5514,10 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
-    <value>Current sequence title</value>
+    <value>Sekvenstittel</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+    <value>Kuppel rapporterte ikke åpning/lukking eller feil. Dette er ikke-standard og utrygg oppførsel. Vennligst rapporter dette til kuppel-leverandøren.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Åpning av kuppel mislyktes. Statusen rapporteres fortsatt som lukket, etter åpning.</value>
@@ -5586,7 +5584,7 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Tags</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>Binning bruker snittverdi</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
     <value>Normalt er binning additiv. Dataene har samme bitdybde som kameraet, så lyssterke piksler kan klippe. Gjennomsnittmodus hindrer dette fra å skje, på bekostning av dynamikktap som følge av heltallsdivisjon.</value>
@@ -5628,29 +5626,29 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Antall forsøk</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>Angir hvordan sekvensen skal fortsettes etter alle forsøk på å utføre instruksjonen har feilet.
+Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke dette ønsket.</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
-    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+    <value>Antall forsøk på å utføre en instruksjon.</value>
   </data>
   <data name="LblStopSequence" xml:space="preserve">
-    <value>Stop Sequence</value>
+    <value>Stopp sekvens</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>Sekvensmal "{0}" er opprettet.</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>Sekvensmal "{0}" har blitt oppdatert.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>Mål "{0}" er opprettet.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>Mål "{0}" har blitt oppdatert.</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>Venter på tidligere sving</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
     <value>Vil du tilbakestille fremdrift for hele sekvensen?</value>
@@ -5677,7 +5675,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
-    <value>Advanced Sequence</value>
+    <value>Avansert sekvens</value>
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
@@ -5771,7 +5769,7 @@ The default behavior is to continue on errors, however for some instructions it 
     <value>Unable to set mount latitude to {0} and longitude to {1}!</value>
   </data>
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>Dither-hviletid</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
     <value>Failed to start tracking CCD ASCOM server. {0}</value>
@@ -5835,7 +5833,7 @@ Brukes best med en annen repetisjonsbetingelse for å unngå uendelig repetisjon
     <value>Failed to move focuser</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
-    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
+    <value>Sekvensen inneholder en ukjent instruksjon! Vennligst sjekk hvilken instruksjon som er problemet, og pass på at applikasjonen er oppdatert.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
     <value>Toggle</value>
@@ -5850,10 +5848,10 @@ The mirror lockup option must be enabled in the camera as well.
 Refer to your camera's manual for the location of this setting</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
-    <value>{0} has been disconnected from the computer. Check its USB connection and power source</value>
+    <value>{0} har blitt koblet fra datamaskinen. Sjekk USB-tilkoblingen og strømkilden</value>
   </data>
   <data name="LblCanonSdkError" xml:space="preserve">
-    <value>The Canon SDK has experienced an internal error. Unreliable camera operation might result</value>
+    <value>Canon SDK har støtt på en intern feil. Kommunikasjon med kamera kan være upålitelig etter dette</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
     <value>Reset Target</value>
@@ -5889,7 +5887,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>State unavailable</value>
   </data>
   <data name="LblCameraStateReading" xml:space="preserve">
-    <value>Reading out</value>
+    <value>Leser ut</value>
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
     <value>Venter</value>
@@ -5910,10 +5908,10 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Use Star Detector V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>Antegn alt</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>Normal blir bare 200 stjerner antegnet. Hvis valget aktiveres blir alle stjerner antegnet.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
     <value>Stjernedetektor</value>
@@ -5925,7 +5923,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Utilgjengelig for x86</value>
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Varighet</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
     <value>Synkroniserer kuppel</value>
@@ -5940,7 +5938,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Sletter alle instruksjoner, triggere og betingelser i sekvensen</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+    <value>Monteringens tid avviker fra datamaskinens tid med {0:0} sekunder. Dette kan føre til unøyaktig peking og problemer med astrometriske løsninger. Sjekk monteringens dokumentasjon om tidsinnstillinger.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
     <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
@@ -5988,7 +5986,7 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Over horisont</value>
   </data>
   <data name="LblNikonX86Deprecated" xml:space="preserve">
-    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+    <value>Ikke støttet - Nikon distribuerer ikke lenger SDK-programvare for x86-programmer</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
     <value>Ingen installerte programtillegg</value>
@@ -6003,12 +6001,12 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Oppdaterer alle utvidelser som har tilgjengelig oppdatering</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>Kunne ikke svinge for meridianvending.
+Nytt forsøk om {0} sekunder.
+Forsøk {1} av {2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>Kunne ikke svinge for meridianvending, maks antall forsøk er nådd. Avbryter.</value>
   </data>
   <data name="LblROI" xml:space="preserve">
     <value>ROI</value>
