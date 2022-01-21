@@ -9,6 +9,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using NINA.Astrometry;
 using NINA.Core.Locale;
 using NINA.Core.MyMessageBox;
 using NINA.Core.Utility;
@@ -80,6 +81,10 @@ namespace NINA {
             return userSettingsException;
         }
 
+        private void StartupActions() {
+            _ = new EarthRotationParameterUpdater().Update();
+        }
+
         protected override void OnStartup(StartupEventArgs e) {
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
@@ -122,6 +127,8 @@ namespace NINA {
             mainWindow.DataContext = _mainWindowViewModel;
             mainWindow.Show();
             ProfileService.ActivateInstanceWatcher(_profileService, mainWindow);
+
+            StartupActions();
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e) {

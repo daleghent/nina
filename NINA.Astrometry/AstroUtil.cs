@@ -27,10 +27,6 @@ namespace NINA.Astrometry {
 
     public class AstroUtil {
 
-        static AstroUtil() {
-            _ = new EarthRotationParameterUpdater().Update();
-        }
-
         private const double DegreeToRadiansFactor = Math.PI / 180d;
         private const double RadiansToDegreeFactor = 180d / Math.PI;
         private const double RadianstoHourFactor = 12d / Math.PI;

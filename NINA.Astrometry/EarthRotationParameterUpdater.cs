@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Astrometry {
 
-    internal class EarthRotationParameterUpdater {
+    public class EarthRotationParameterUpdater {
 
         private async Task<DateTime> UpdateEarthRotationParameters(DateTime startDate) {
             var maxUnix = 0L;
