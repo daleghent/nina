@@ -49,9 +49,30 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public AsyncObservableCollection<FilterInfo> Filters {
             get {
                 var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+                var positions = info.slotNum;
+
+                // Find duplicate positions due to data corruption and remove duplicates
+                var duplicates = filtersList.GroupBy(x => x.Position).Where(x => x.Count() > 1).ToList();
+                foreach (var group in duplicates) {
+                    foreach (var filterToRemove in group) {
+                        Logger.Warning($"Duplicate filter position defined in filter list. Removing the duplicates and importing from filter wheel again. Removing filter: {filterToRemove.Name}, focus offset: {filterToRemove.FocusOffset}");
+                        filtersList.Remove(filterToRemove);
+                    }
+                }
+
+                // Scan for missing position indexes between 0 .. maxPosition and reimport them
+                var existingPositions = filtersList.Select(x => (int)x.Position).ToList();
+                var missingPositions = Enumerable.Range(0, existingPositions.Max()).Except(existingPositions);
+                foreach (var position in missingPositions) {
+                    if (positions > position) {
+                        var filterToAdd = new FilterInfo(string.Format($"Slot {position}"), 0, (short)position);
+                        Logger.Warning($"Missing filter position. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
+                        filtersList.Insert(position, filterToAdd);
+                    }
+                }
+
                 int i = filtersList.Count();
 
-                var positions = info.slotNum;
 
                 if (positions < i) {
                     /* Too many filters defined. Truncate the list */
