@@ -22,6 +22,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -72,8 +73,29 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
         protected override Task PostConnect() {
             var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-            int profileFilters = filtersList.Count();
 
+            // Find duplicate positions due to data corruption and remove duplicates
+            var duplicates = filtersList.GroupBy(x => x.Position).Where(x => x.Count() > 1).ToList();
+            foreach(var group in duplicates) {
+                foreach(var filterToRemove in group) {
+                    Logger.Warning($"Duplicate filter position defined in filter list. Removing the duplicates and importing from filter wheel again. Removing filter: {filterToRemove.Name}, focus offset: {filterToRemove.FocusOffset}");
+                    filtersList.Remove(filterToRemove);
+                }
+            }
+            
+            // Scan for missing position indexes between 0 .. maxPosition and reimport them
+            var existingPositions = filtersList.Select(x => (int)x.Position).ToList();
+            var missingPositions = Enumerable.Range(0, existingPositions.Max()).Except(existingPositions);
+            foreach(var position in missingPositions) {
+                if(device.Names.Count() > position) { 
+                    var filterToAdd = new FilterInfo(device.Names[position], device.FocusOffsets[position], (short)position);
+                    Logger.Warning($"Missing filter position. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
+                    filtersList.Insert(position, filterToAdd);
+                }
+            }
+            
+
+            int profileFilters = filtersList.Count();
             var deviceFilters = device.Names.Length;
 
             if (profileFilters < deviceFilters) {

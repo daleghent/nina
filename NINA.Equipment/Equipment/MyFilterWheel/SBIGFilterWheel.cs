@@ -77,10 +77,14 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 for (int i = filtersList.Count - 1; i >= 0; --i) {
                     if (filtersList[i].Position < 0 || filtersList[i].Position >= positions) {
                         // Remove any that are out of bounds
-                        filtersList.RemoveAt(i);
+                        var filterToRemove = filtersList[i];
+                        Logger.Warning($"Too many filters defined in the equipment filter list. Removing filter: {filterToRemove.Name}, focus offset: {filterToRemove.FocusOffset}");
+                        filtersList.Remove(filterToRemove);
                     } else if (seen[filtersList[i].Position]) {
                         // Remove duplicates
-                        filtersList.RemoveAt(i);
+                        var filterToRemove = filtersList[i];
+                        Logger.Warning($"Duplicate filters defined in the equipment filter list. Removing filter: {filterToRemove.Name}, focus offset: {filterToRemove.FocusOffset}");
+                        filtersList.Remove(filterToRemove);
                     } else {
                         seen[filtersList[i].Position] = true;
                     }
@@ -93,6 +97,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                         if (i != filtersList.Count) {
                             sorted = false;
                         }
+                        Logger.Info($"Not enough filters defined in the equipment filter list. Importing filter: {filter.Name}, focus offset: {filter.FocusOffset}");
                         filtersList.Add(filter);
                     } else if (filtersList[i].Position != i) {
                         sorted = false;

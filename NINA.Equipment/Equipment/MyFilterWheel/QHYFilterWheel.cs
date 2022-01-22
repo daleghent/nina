@@ -171,13 +171,16 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 if (positions < i) {
                     /* Too many filters defined. Truncate the list */
                     for (; i > (int)Info.Positions; i--) {
-                        filtersList.RemoveAt(i - 1);
+                        var filterToRemove = filtersList[i - 1];
+                        Logger.Warning($"Too many filters defined in the equipment filter list. Removing filter: {filterToRemove.Name}, focus offset: {filterToRemove.FocusOffset}");
+                        filtersList.Remove(filterToRemove);
                     }
                 } else if (positions > i) {
                     /* Too few filters defined. Add missing filter names using Slot <#> format */
                     for (; i <= positions; i++) {
                         var filter = new FilterInfo(string.Format($"Slot {i}"), 0, (short)i);
                         filtersList.Add(filter);
+                        Logger.Info($"Not enough filters defined in the equipment filter list. Importing filter: {filter.Name}, focus offset: {filter.FocusOffset}");
                     }
                 }
 
