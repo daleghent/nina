@@ -199,12 +199,10 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     double rotation = rect.DSORotation;
 
-                    container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
-                        TargetName = DSO?.Name ?? rect.Name ?? string.Empty,
-                        Rotation = AstroUtil.EuclidianModulus(rotation, 360),
-                        InputCoordinates = new InputCoordinates() {
-                            Coordinates = rect.Coordinates
-                        }
+                    container.Name = DSO?.Name;
+                    container.Target.TargetName = DSO?.Name;
+                    container.Target.InputCoordinates = new InputCoordinates() {
+                        Coordinates = rect.Coordinates
                     };
                 }
                 ExistingTargets.Clear();
