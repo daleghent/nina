@@ -36,13 +36,15 @@
             Opacity="0.4"
             Stretch="Uniform" />
 
-        <ListBox 
-            x:Name="ListBox" 
-            SelectedValue="{Binding SelectedThumbnail}"
+        <ListBox
+            x:Name="ListBox"
+            Background="{StaticResource BackgroundBrush}"
+            BorderBrush="Transparent"
             ItemsSource="{Binding Path=Thumbnails}"
-            ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-            ScrollViewer.ScrollChanged="ScrollViewer_ScrollChanged" 
-            ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.ScrollChanged="ScrollViewer_ScrollChanged"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            SelectedValue="{Binding SelectedThumbnail}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Vertical" />
@@ -50,18 +52,18 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="IsSelected" Value="{Binding Content.IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Self}}"/>
+                    <Setter Property="IsSelected" Value="{Binding Content.IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Self}}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListBoxItem">
-                                <Border 
+                                <Border
                                     Name="SelectedItemBorder"
-                                    SnapsToDevicePixels="true"
-                                    Padding="1">
+                                    Padding="1"
+                                    SnapsToDevicePixels="true">
                                     <Border.Style>
                                         <Style TargetType="{x:Type Border}">
-                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="BorderBrush" Value="Transparent" />
+                                            <Setter Property="BorderThickness" Value="0" />
                                         </Style>
                                     </Border.Style>
                                     <Button
@@ -240,8 +242,8 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter TargetName="SelectedItemBorder" Property="BorderBrush" Value="Red"/>
-                                        <Setter TargetName="SelectedItemBorder" Property="BorderThickness" Value="1.5"/>
+                                        <Setter TargetName="SelectedItemBorder" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                        <Setter TargetName="SelectedItemBorder" Property="BorderThickness" Value="1.5" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
