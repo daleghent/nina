@@ -320,7 +320,8 @@ namespace NINA.ViewModel.FramingAssistant {
                         ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
-                        Coordinates = telescopeMediator.GetCurrentPosition()
+                        Coordinates = telescopeMediator.GetCurrentPosition(),
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
 
                     var captureSolver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
@@ -1057,6 +1058,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 PixelSize = pixelSize,
                 Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                 SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
             };
 
             var imageSolver = new ImageSolver(plateSolver, blindSolver);

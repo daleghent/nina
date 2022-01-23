@@ -3892,6 +3892,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Blind Solver for Failures.
+        /// </summary>
+        internal static string LblBlindSolveFailoverEnabled {
+            get {
+                return ResourceManager.GetString("LblBlindSolveFailoverEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blind Solver.
         /// </summary>
         internal static string LblBlindSolver {

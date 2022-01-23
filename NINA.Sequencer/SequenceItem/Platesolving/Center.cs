@@ -153,7 +153,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                 SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
                 Threshold = profileService.ActiveProfile.PlateSolveSettings.Threshold,
-                NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync
+                NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync,
+                BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
             };
 
             var seq = new CaptureSequence(

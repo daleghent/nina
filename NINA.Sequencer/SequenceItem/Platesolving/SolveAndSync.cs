@@ -121,7 +121,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
                 ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
                 Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
-                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius
+                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
             };
 
             var seq = new CaptureSequence(

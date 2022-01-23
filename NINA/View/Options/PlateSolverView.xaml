@@ -62,6 +62,18 @@
                             ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:BlindSolverEnum}}}"
                             SelectedItem="{Binding BlindSolverType}" />
                     </StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <TextBlock
+                            Width="140"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblBlindSolveFailoverEnabled}" />
+
+                        <CheckBox
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            IsChecked="{Binding BlindFailoverEnabled}" />
+
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.RowSpan="2" Grid.Column="1">
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">

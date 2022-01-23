@@ -385,6 +385,7 @@ namespace NINA.ViewModel {
                         PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
 
                     var imageSolver = new ImageSolver(plateSolver, blindSolver);
@@ -394,7 +395,7 @@ namespace NINA.ViewModel {
                     service.Show(plateSolveStatusVM, this.Title + " - " + plateSolveStatusVM.Title, ResizeMode.CanResize, WindowStyle.ToolWindow);
 
                     var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, _progress, _plateSolveToken.Token);
-                    if(telescopeMediator.GetInfo().Connected) { 
+                    if(result.Success && telescopeMediator.GetInfo().Connected) { 
                         var scopePosition = telescopeMediator.GetCurrentPosition();
                         var resultCoordinates = result.Coordinates.Transform(scopePosition.Epoch);
 

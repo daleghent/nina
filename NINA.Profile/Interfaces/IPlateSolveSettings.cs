@@ -40,5 +40,6 @@ namespace NINA.Profile.Interfaces {
         int MaxObjects { get; set; }
         bool Sync { get; set; }
         bool SlewToTarget { get; set; }
+        bool BlindFailoverEnabled { get; set; }
     }
 }

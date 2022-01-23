@@ -321,7 +321,8 @@ namespace NINA.ViewModel.Imaging {
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
                         Threshold = RepeatThreshold,
-                        NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync
+                        NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync,
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
                     _ = await solver.Center(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
                 } else {
@@ -336,7 +337,8 @@ namespace NINA.ViewModel.Imaging {
                         ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
-                        Coordinates = telescopeMediator.GetCurrentPosition()
+                        Coordinates = telescopeMediator.GetCurrentPosition(),
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
                     var result = await solver.Solve(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
                     if (result.Success) {

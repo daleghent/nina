@@ -200,6 +200,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Cooling charts in the camera equipment tab have been merged into one single chart with the history size increased from 100 to 1000
 - On web requests the user-agent header is now filled properly
 - An autofocus indicator in the HFR history will no longer change the Y-Axis scale
+- The automatic roll over to a blind solver can now be switched off in the plate solver tab
 
 ### Subsampling
 - The sub sample button above the image panel has been removed

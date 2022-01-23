@@ -35,6 +35,7 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             plateSolverType = PlateSolverEnum.ASTAP;
             blindSolverType = BlindSolverEnum.ASTAP;
+            blindFailoverEnabled = true;
             astrometryURL = "http://nova.astrometry.net";
             astrometryAPIKey = string.Empty;
             cygwinLocation = string.Empty;
@@ -396,6 +397,23 @@ namespace NINA.Profile {
             set {
                 if (gain != value) {
                     gain = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool blindFailoverEnabled;
+
+
+        [DataMember]
+
+        public bool BlindFailoverEnabled {
+            get {
+                return blindFailoverEnabled;
+            }
+            set {
+                if (blindFailoverEnabled != value) {
+                    blindFailoverEnabled = value;
                     RaisePropertyChanged();
                 }
             }

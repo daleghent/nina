@@ -35,6 +35,8 @@ namespace NINA.PlateSolving {
 
         public bool DisableNotifications { get; set; } = false;
 
+        public bool BlindFailoverEnabled { get; set; } = true;
+
         private Coordinates coordinates;
 
         public Coordinates Coordinates {
@@ -50,6 +52,7 @@ namespace NINA.PlateSolving {
             return $"FocalLength: {FocalLength} " +
                 $"PixelSize: {PixelSize} " +
                 $"SearchRadius: {SearchRadius} " +
+                $"BlindFailoverEnabled: {BlindFailoverEnabled} " +
                 $"Regions: {Regions} " +
                 $"DownSampleFactor: {DownSampleFactor} " +
                 $"MaxObjects: {MaxObjects} " +

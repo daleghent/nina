@@ -279,7 +279,8 @@ namespace NINA.WPF.Base.ViewModel {
                     Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                     SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
                     Threshold = profileService.ActiveProfile.PlateSolveSettings.Threshold,
-                    NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync
+                    NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync,
+                    BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                 };
                 var result = await solver.Center(seq, parameter, default, progress, token);
                 if (!result.Success) {
