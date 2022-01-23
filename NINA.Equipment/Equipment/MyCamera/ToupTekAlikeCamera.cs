@@ -628,6 +628,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         } else {
                             TemperatureSetPoint = 20;
                         }
+                        // Start with cooler disabled
+                        CoolerOn = false;
                         CoolerPowerUpdateTask();
                     }
 
