@@ -667,7 +667,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
-                while (sdk.GetExposureState(ConnectedDevice.DeviceId, this.exposureCcd) == CommandState.IN_PROGRESS) {
+                while (!token.IsCancellationRequested && sdk.GetExposureState(ConnectedDevice.DeviceId, this.exposureCcd) == CommandState.IN_PROGRESS) {
                     await Task.Delay(100, token);
                 }
 
@@ -675,6 +675,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 if (CameraStatus == SBIGCameraStatus.EXPOSING) {
                     CameraStatus = SBIGCameraStatus.WAITING;
                 }
+
+                token.ThrowIfCancellationRequested();
             }
         }
 
