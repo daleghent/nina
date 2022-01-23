@@ -6024,4 +6024,11 @@ Refer to your camera's manual for the location of this setting</value>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
     <value>有効にすると、長方形パネルではなく、空の背景の方が回転します。</value>
   </data>
+  <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
+    <value>シーケンサー内にある目標を更新</value>
+  </data>
+  <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
+    <value>クリックすると、その時点でシーケンサー内に存在している目標のリストが表示されます。 そのうちのどれかをクリックすると、その目標は現在のフレーム名、座標、回転角度によって更新されます。
+モザイクモードの場合は、このボタンは表示されません。</value>
+  </data>
 </root>

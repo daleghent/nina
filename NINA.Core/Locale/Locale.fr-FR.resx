@@ -6049,4 +6049,11 @@ This option should be enabled when automatic camera rotation is available or whe
   <data name="LblRotateSkyTooltip" xml:space="preserve">
     <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
   </data>
+  <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
+    <value>Update Existing Target in Sequencer</value>
+  </data>
+  <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
+    <value>When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
+This button is not visible when in mosaic mode.</value>
+  </data>
 </root>

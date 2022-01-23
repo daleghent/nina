@@ -6008,12 +6008,12 @@ Una vez resuelta, la rotación quedará establecida para el encuadre.</value>
     <value>Actualiza todos los plugins que tengan disponible una actualización a la última versión</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>Error al moverse para realizar el cam bio de meridiano. 
+Se realizará otro intento en {0} segundos.
+Intento {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>Error al moverse para realizar el cambio de meridiano tras intentarlo durante el máximo número de reintentos. Abortando.</value>
   </data>
   <data name="LblROI" xml:space="preserve">
     <value>ROI</value>
@@ -6041,5 +6041,12 @@ Esta opción debería activarse cuando etá disponible la rotación automática 
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
     <value>Cuando está activado, rotará el fondo del espacio en lugar del rectángulo.</value>
+  </data>
+  <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
+    <value>Actualizar objetivo existente en el secuenciador</value>
+  </data>
+  <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
+    <value>Al hacer clic, se mostrará una lista de objetos que ya estaban situados dentro del secuenciador. Después de hacer clic en uno de estos objetos,  se actualizará con el nombre actual de la imagen, las coordenadas y la rotación.
+Este botón no es visible en modo mosaico.</value>
   </data>
 </root>

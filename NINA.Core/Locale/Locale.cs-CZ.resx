@@ -5915,7 +5915,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Skenovat a Analyzovat Hvězdy</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>Použít Detekci Hvězd V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
     <value>Označit Vše</value>
@@ -5924,7 +5924,7 @@ Umístění tohoto nastavení naleznete v příručce k fotoaparátu</value>
     <value>Ve výchozím nastavení je označeno 200 hvězd. Pokud je toto povoleno, jsou detekovány všechny hvězdy.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>Detekce Hvězd</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
     <value>Anotace Hvězd</value>
@@ -6045,5 +6045,12 @@ Tato možnost by měla být povolena, pokud je k dispozici automatické otáčen
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
     <value>Je-li povoleno, pozadí oblohy se otočí místo obdélníku.</value>
+  </data>
+  <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
+    <value>Aktualizuje Stávající Cíl v Sekvenceru</value>
+  </data>
+  <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
+    <value>Po kliknutí se zobrazí seznam cílů, které již byly umístěny uvnitř sekvenceru. Po kliknutí na jeden z těchto cílů bude tento cíl aktualizován o aktuálně zarámovaný název, souřadnice a rotaci.
+Toto tlačítko není viditelné v režimu mozaiky.</value>
   </data>
 </root>
