@@ -60,7 +60,6 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         int RAHours { get; set; }
         int RAMinutes { get; set; }
         int RASeconds { get; set; }
-        IAsyncCommand RecenterCommand { get; }
         FramingRectangle Rectangle { get; set; }
         bool RectangleCalculated { get; }
         ICommand RefreshSkyMapAnnotationCommand { get; }

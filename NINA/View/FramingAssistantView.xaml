@@ -525,21 +525,16 @@
                         </Grid>
                     </GroupBox>
 
-                    <UniformGrid Columns="2">
-                        <Grid>
-                            <Button
-                                Height="25"
-                                Margin="5"
-                                HorizontalAlignment="Stretch"
-                                Command="{Binding RecenterCommand}">
-                                <TextBlock
-                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                    Text="{ns:Loc LblRecenterImage}"
-                                    TextWrapping="Wrap" />
-                            </Button>
-                        </Grid>
-
-                        <Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
                             <ninactrl:CancellableButton
                                 Height="25"
                                 Margin="5"
@@ -607,6 +602,8 @@
                                 ToolTip="{ns:Loc LblDetermineRotationFromCameraTooltip}" />
                         </Grid>
                         <xceed:SplitButton
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
                             Height="25"
                             Margin="5,0,5,0"
                             Command="{Binding GetDSOTemplatesCommand}"
@@ -777,7 +774,7 @@
                                 </StackPanel>
                             </xceed:SplitButton.DropDownContent>
                         </xceed:SplitButton>
-                    </UniformGrid>
+                    </Grid>
                 </StackPanel>
 
 
