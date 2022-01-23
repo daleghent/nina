@@ -9,7 +9,6 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
-using NINA.Utility;
 using NINA.Profile.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -17,8 +16,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using NINA.Equipment.Equipment.MyCamera;
-using NINA.ViewModel.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Utility;
 using NINA.WPF.Base.Interfaces.Mediator;
@@ -27,6 +24,7 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using NINA.Core.Locale;
 using NINA.Image.Interfaces;
+using System.Threading;
 
 namespace NINA.ViewModel {
 
@@ -42,11 +40,18 @@ namespace NINA.ViewModel {
             this.imageDataFactory = imageDataFactory;
 
             this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
+            this.imagingMediator.ImagePrepared += ImagingMediator_ImagePrepared;
 
             SelectCommand = new AsyncCommand<bool>((object o) => {
                 return SelectImage((Thumbnail)o);
             });
             GradeImageCommand = new AsyncCommand<bool>(GradeImage);
+        }
+
+        private void ImagingMediator_ImagePrepared(object sender, ImagePreparedEventArgs e) {
+            // When images that aren't saved are taken, they replace the the image shown. This unselects whatever is currently highlighted.
+            // If the file is saved, it'll be captured later in the AddThumbnail callback
+            SelectedThumbnail = null;
         }
 
         private Task<bool> GradeImage(object arg) {
@@ -89,8 +94,8 @@ namespace NINA.ViewModel {
                         ImagePath = msg.PathToImage,
                         FileType = msg.FileType,
                         Duration = msg.Duration,
-                        Mean = msg.Statistics.Mean,
-                        HFR = msg.StarDetectionAnalysis.HFR,
+                        ImageStatistics = msg.Statistics,
+                        StarDetectionAnalysis = msg.StarDetectionAnalysis,
                         Filter = msg.Filter,
                         IsBayered = msg.IsBayered
                     };
@@ -146,7 +151,11 @@ namespace NINA.ViewModel {
         private async Task<bool> SelectImage(Thumbnail thumbnail) {
             var iarr = await thumbnail.LoadOriginalImage(profileService);
             if (iarr != null) {
-                await imagingMediator.PrepareImage(iarr, new PrepareImageParameters(), new System.Threading.CancellationToken());
+                iarr.SetImageStatistics(thumbnail.ImageStatistics);
+                iarr.StarDetectionAnalysis = thumbnail.StarDetectionAnalysis;
+
+                await imagingMediator.PrepareImage(iarr, new PrepareImageParameters(detectStars: false), CancellationToken.None);
+                SelectedThumbnail = thumbnail;
                 return true;
             } else {
                 return false;

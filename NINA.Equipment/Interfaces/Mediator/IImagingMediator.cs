@@ -56,5 +56,14 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void DestroyImage();
 
         void SetImage(BitmapSource img);
+
+        event EventHandler<ImagePreparedEventArgs> ImagePrepared;
+
+        void OnImagePrepared(ImagePreparedEventArgs e);
+    }
+
+    public class ImagePreparedEventArgs : EventArgs {
+        public IRenderedImage RenderedImage { get; set; }
+        public PrepareImageParameters Parameters { get; set; }
     }
 }

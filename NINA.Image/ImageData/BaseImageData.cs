@@ -71,7 +71,7 @@ namespace NINA.Image.ImageData {
 
         public Nito.AsyncEx.AsyncLazy<IImageStatistics> Statistics { get; private set; }
 
-        public IStarDetectionAnalysis StarDetectionAnalysis { get; private set; }
+        public IStarDetectionAnalysis StarDetectionAnalysis { get; set; }
 
         public IRenderedImage RenderImage() {
             return RenderedImage.Create(this.RenderBitmapSource(), this, profileService, starDetection, starAnnotator);
@@ -79,6 +79,10 @@ namespace NINA.Image.ImageData {
 
         public BitmapSource RenderBitmapSource() {
             return ImageUtility.CreateSourceFromArray(this.Data, this.Properties, PixelFormats.Gray16);
+        }
+
+        public void SetImageStatistics(IImageStatistics imageStatistics) {
+            this.Statistics = new Nito.AsyncEx.AsyncLazy<IImageStatistics>(() => Task.FromResult(imageStatistics));
         }
 
         #region "Save"

@@ -74,5 +74,11 @@ namespace NINA.WPF.Base.Mediator {
         public Task<bool> StartLiveView(CancellationToken ct) {
             return handler.StartLiveView(ct);
         }
+
+        public event EventHandler<ImagePreparedEventArgs> ImagePrepared;
+
+        public void OnImagePrepared(ImagePreparedEventArgs e) {
+            ImagePrepared?.Invoke(handler, e);
+        }
     }
 }

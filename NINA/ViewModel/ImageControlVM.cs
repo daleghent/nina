@@ -43,6 +43,7 @@ namespace NINA.ViewModel {
             IProfileService profileService, 
             ICameraMediator cameraMediator, 
             ITelescopeMediator telescopeMediator, 
+            IImagingMediator imagingMediator,
             IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblImage"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PictureSVG"];
@@ -51,6 +52,7 @@ namespace NINA.ViewModel {
             this.cameraMediator.RegisterConsumer(this);
 
             this.telescopeMediator = telescopeMediator;
+            this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             AutoStretch = profileService.ActiveProfile.ImageSettings.AutoStretch;
             DetectStars = profileService.ActiveProfile.ImageSettings.DetectStars;
@@ -543,6 +545,7 @@ namespace NINA.ViewModel {
 
         public static SemaphoreSlim ss = new SemaphoreSlim(1, 1);
         private ICameraMediator cameraMediator;
+        private IImagingMediator imagingMediator;
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
@@ -587,6 +590,7 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             var processedImage = await ProcessImage(renderedImage, parameters, cancelToken);
+            imagingMediator.OnImagePrepared(new ImagePreparedEventArgs { RenderedImage = renderedImage, Parameters = parameters });
 
             this.RenderedImage = processedImage;
             this.Image = processedImage.Image;

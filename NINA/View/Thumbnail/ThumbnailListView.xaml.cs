@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility.Extensions;
+using System;
 using System.Windows.Controls;
 
 namespace NINA.View {
@@ -26,6 +28,12 @@ namespace NINA.View {
         }
 
         private bool _autoScroll = true;
+
+        public ScrollViewer ScrollViewer {
+            get {
+                return (ScrollViewer)ListBox.GetDescendantByType(typeof(ScrollViewer));
+            }
+        }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e) {
             // User scroll event : set or unset auto-scroll mode

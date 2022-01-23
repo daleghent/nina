@@ -77,11 +77,24 @@ namespace NINA.Image {
             }
         }
 
+        private bool isSelected;
+        public bool IsSelected {
+            get => isSelected;
+            set {
+                isSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public BitmapSource ThumbnailImage { get; set; }
 
-        public double Mean { get; set; }
+        public IImageStatistics ImageStatistics { get; set; }
 
-        public double HFR { get; set; }
+        public double Mean => ImageStatistics?.Mean ?? double.NaN;
+
+        public IStarDetectionAnalysis StarDetectionAnalysis { get; set; }
+
+        public double HFR => StarDetectionAnalysis?.HFR ?? double.NaN;
 
         public bool IsBayered { get; set; }
 

@@ -28,7 +28,9 @@ namespace NINA.Image.Interfaces {
 
         Nito.AsyncEx.AsyncLazy<IImageStatistics> Statistics { get; }
 
-        IStarDetectionAnalysis StarDetectionAnalysis { get; }
+        void SetImageStatistics(IImageStatistics statistics);
+
+        IStarDetectionAnalysis StarDetectionAnalysis { get; set; }
 
         ImageMetaData MetaData { get; }
 
