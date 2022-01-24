@@ -102,7 +102,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double ExposureMax {
             get {
-                return sdk.GetMaxExposureTime();
+                return Math.Ceiling(sdk.GetMaxExposureTime());
             }
         }
 
