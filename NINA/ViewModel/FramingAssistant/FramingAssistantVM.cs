@@ -195,12 +195,12 @@ namespace NINA.ViewModel.FramingAssistant {
                 if(o is IDeepSkyObjectContainer container) {
 
                     var rect = CameraRectangles.First();
-                    container.Name = DSO?.Name ?? rect.Name ?? string.Empty;
+                    var name = GetRectangleName(rect);
 
                     double rotation = rect.DSORotation;
 
-                    container.Name = DSO?.Name;
-                    container.Target.TargetName = DSO?.Name;
+                    container.Name = name;
+                    container.Target.TargetName = name;
                     container.Target.InputCoordinates = new InputCoordinates() {
                         Coordinates = rect.Coordinates
                     };
@@ -214,7 +214,8 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 var deepSkyObjects = new List<DeepSkyObject>();
                 foreach (var rect in CameraRectangles) {
-                    var dso = new DeepSkyObject(DSO?.Name ?? rect.Name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
+                    var name = GetRectangleName(rect);
+                    var dso = new DeepSkyObject(name ?? rect.Name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
 
                     double rotation = rect.DSORotation;
 
@@ -381,18 +382,23 @@ namespace NINA.ViewModel.FramingAssistant {
             return telescopeMediator.SlewToCoordinatesAsync(coordinates, token);
         }
 
+        private string GetRectangleName(FramingRectangle rect) {
+            return rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name ?? string.Empty;
+        }
+
         private IList<IDeepSkyObjectContainer> GetDSOContainerListFromFraming(IDeepSkyObjectContainer template) {
             var l = new List<IDeepSkyObjectContainer>();
             var first = true;
 
             foreach (var rect in CameraRectangles) {
                 var container = (IDeepSkyObjectContainer)template.Clone();
-                container.Name = DSO?.Name ?? rect.Name ?? string.Empty;
+                var name = GetRectangleName(rect);
+                container.Name = name;
 
                 double rotation = rect.DSORotation;
 
                 container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
-                    TargetName = DSO?.Name ?? rect.Name ?? string.Empty,
+                    TargetName = name,
                     Rotation = AstroUtil.EuclidianModulus(rotation, 360),
                     InputCoordinates = new InputCoordinates() {
                         Coordinates = rect.Coordinates
@@ -1166,7 +1172,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     for (int j = 0; j < VerticalPanels; j++) {
                         for (int i = 0; i < HorizontalPanels; i++) {
                             var panelId = id++;
-                            var name = panelId > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + panelId : DSO?.Name;
+                            var name = GetRectangleName(rect);
 
                             var panelX = i * panelWidth - i * panelOverlapWidth;
                             var panelY = j * panelHeight - j * panelOverlapHeight;
