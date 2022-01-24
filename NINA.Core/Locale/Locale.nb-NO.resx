@@ -965,10 +965,10 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Dekk til teleskopet nå</value>
   </data>
   <data name="LblCurrentMean" xml:space="preserve">
-    <value>Current Mean</value>
+    <value>Nåværende gjennomsnitt</value>
   </data>
   <data name="LblCurrentPosition" xml:space="preserve">
-    <value>Current Position</value>
+    <value>Nåværende posisjon</value>
   </data>
   <data name="LblCurrentSequenceEstimates" xml:space="preserve">
     <value>Estimert slutt-tid (gjeldende mål)</value>
@@ -2802,7 +2802,7 @@ Forventet HFR: {2}</value>
     <value>Kommando for sekvensslutt ble ikke funnet '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Forsink start</value>
+    <value>Utsett start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sekvens starter om {0} sekunder</value>
@@ -2811,7 +2811,7 @@ Forventet HFR: {2}</value>
     <value>Sekvensmodus</value>
   </data>
   <data name="LblSequenceModeRotate" xml:space="preserve">
-    <value>Loop</value>
+    <value>Gjenta</value>
   </data>
   <data name="LblSequenceModeStandard" xml:space="preserve">
     <value>I rekkefølge</value>
@@ -3400,7 +3400,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Duggpunkt</value>
   </data>
   <data name="LblUPBV2ExcessCurrent" xml:space="preserve">
-    <value>Excess Current</value>
+    <value>Overstrøm</value>
   </data>
   <data name="LblUPBV2InputCurrent" xml:space="preserve">
     <value>Innstrøm</value>
@@ -3427,7 +3427,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Utgang 4</value>
   </data>
   <data name="LblUPBV2PowerPorts" xml:space="preserve">
-    <value>Power</value>
+    <value>Strøm</value>
   </data>
   <data name="LblUPBV2RelativeHumidity" xml:space="preserve">
     <value>Relativ fuktighet</value>
@@ -3741,16 +3741,16 @@ Denne metoden kan bare endres når fokusmotor er frakoblet!</value>
     <comment>Focuser Backlash Compensation Method by overshooting the position and moving back</comment>
   </data>
   <data name="LblFocuserMoveLargeTooltip" xml:space="preserve">
-    <value>Moves focuser by a large amount using five times the Autofocus Stepsize</value>
+    <value>Endrer fokusavstand mye med fem ganger steglengden</value>
   </data>
   <data name="LblFocuserMoveSmallTooltip" xml:space="preserve">
-    <value>Moves focuser by a small amount using half the Autofocus Stepsize </value>
+    <value>Endrer fokusposisjon med halv steglengde </value>
   </data>
   <data name="LblMoveFocuserTooltip" xml:space="preserve">
-    <value>Moves focuser to the specified target position</value>
+    <value>Flytter fokus til angitt fokusposisjon</value>
   </data>
   <data name="LblMoveRotatorTooltip" xml:space="preserve">
-    <value>Moves rotator to the specified target position</value>
+    <value>Roterer kamera til angitt posisjon</value>
   </data>
   <data name="LblIncompatibleGainsInSequence" xml:space="preserve">
     <value>Sekvens inneholder instruksjoner med ugyldige forsterknings-innstillinger. Disse blir ignorert!</value>
@@ -4170,7 +4170,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Skript</value>
   </data>
   <data name="LblDelay" xml:space="preserve">
-    <value>Delay</value>
+    <value>Tid</value>
   </data>
   <data name="LblTargetJ2000" xml:space="preserve">
     <value>Mål (J2000)</value>
@@ -4377,13 +4377,13 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Ta bilde</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Svinger til, sentrerer målet og dreier kamera i henhold til angitte koordinater og vinkel, ved bruk av astrometri</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
     <value>Sving, sentrer og roter</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Svinger til og sentrerer målet på angitte koordinater ved bruk av astrometri</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>Sving og sentrer</value>
@@ -5226,7 +5226,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Legg mål til i mållisten</value>
   </data>
   <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
-    <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
+    <value>Legger målet til mållisten for senere bruk i avansert sekvens-modus</value>
   </data>
   <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
     <value>Mål {0} lagret i mållisten</value>
@@ -5379,7 +5379,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Initialiserer sekvens...</value>
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
-    <value>Initializing Layout</value>
+    <value>Klargjør grensesnitt</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
     <value>Rotator</value>
@@ -5964,7 +5964,7 @@ Se bruksanvisningen for denne innstillingen</value>
     <value>Kunne ikke lagre bilde</value>
   </data>
   <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
-    <value>Get coordinates from the current scope position</value>
+    <value>Finn koordinater til gjeldende pekeretning</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
     <value>Elevasjon</value>
@@ -6012,16 +6012,16 @@ Forsøk {1} av {2}.</value>
     <comment>Region of interest used for sub frame.</comment>
   </data>
   <data name="LblROIPercentageTooltip" xml:space="preserve">
-    <value>Region of Interest expressed in percentage relative to the center</value>
+    <value>Bildeutsnitt (ROI) definert som en prosentandel fra midten av bildet</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
-    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+    <value>Tar et bilde med angitt eksponeringstid, forsterkning og forskyving, av det bestemte bildeutsnittet</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
-    <value>Take Subframe Exposure</value>
+    <value>Ta bildeutsnitt</value>
   </data>
   <data name="LblPreserveAlignment" xml:space="preserve">
-    <value>Preserve alignment</value>
+    <value>Rett ut ytterkanter</value>
   </data>
   <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
     <value>Aktivering vil sørge for at bildene i mosaikken til sammen vil danne et rektangulært bilde, men dette krever forskjellig rotasjon for hvert bilde.
@@ -6031,13 +6031,13 @@ Bør bare aktiveres når rotering er mulig for hvert bilde.</value>
     <value>Mosaikk-bilder</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
-    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
+    <value>Når aktiv vil bakgrunnsbildet roteres i stedet for bilderammen.</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
-    <value>Update Existing Target in Sequencer</value>
+    <value>Oppdater eksisterende sekvensmål</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
-    <value>When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
-This button is not visible when in mosaic mode.</value>
+    <value>Viser en liste over mål som allerede finnes i sekvensen. Velg det målet som skal oppdateres med navn, koordinater og rotasjon.
+Denne knappen er ikke synlig i mosaikk-modus.</value>
   </data>
 </root>
