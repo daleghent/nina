@@ -1147,13 +1147,15 @@ namespace NINA.ViewModel.FramingAssistant {
                 var y = parameter.OriginalHeight / 2d - height / 2d;
 
                 if (HorizontalPanels == 1 && VerticalPanels == 1) {
-                    CameraRectangles.Add(new FramingRectangle(parameter.Rotation, 0, 0, width, height) {
-                        Name = DSO?.Name,
+                    var rect = new FramingRectangle(parameter.Rotation, 0, 0, width, height) {
                         Rotation = 0,
                         Coordinates = centerCoordinates,
                         DSORotation = AstroUtil.EuclidianModulus(previousRotation + parameter.Rotation, 360),
                         OriginalCoordinates = centerCoordinates
-                    });
+                    };
+                    var name = GetRectangleName(rect);
+                    rect.Name = name;
+                    CameraRectangles.Add(rect);
                 } else {
                     var panelWidth = CameraWidth * conversion;
                     var panelHeight = CameraHeight * conversion;
@@ -1172,7 +1174,6 @@ namespace NINA.ViewModel.FramingAssistant {
                     for (int j = 0; j < VerticalPanels; j++) {
                         for (int i = 0; i < HorizontalPanels; i++) {
                             var panelId = id++;
-                            var name = GetRectangleName(rect);
 
                             var panelX = i * panelWidth - i * panelOverlapWidth;
                             var panelY = j * panelHeight - j * panelOverlapHeight;
@@ -1200,12 +1201,13 @@ namespace NINA.ViewModel.FramingAssistant {
 
                             var rect = new FramingRectangle(parameter.Rotation, panelX, panelY, panelWidth, panelHeight) {
                                 Id = panelId,
-                                Name = name,
                                 Rotation = panelRotation,
                                 Coordinates = panelCenterCoordinates,
                                 DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360),
                                 OriginalCoordinates = panelCenterCoordinates
                             };
+                            var name = GetRectangleName(rect);
+                            rect.Name = name;
                             CameraRectangles.Add(rect);
                         }
                     }
