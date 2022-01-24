@@ -301,7 +301,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
         public double GetPixelSize() {
             if (CheckAndLogError(sVBonyPInvoke.SVBGetSensorPixelSize(id, out float size))) {
-                return size;
+                return Math.Round(size, 2);
             } else {
                 return double.NaN;
             }
