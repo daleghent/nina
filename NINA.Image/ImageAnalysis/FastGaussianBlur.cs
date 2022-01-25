@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Image.ImageAnalysis {
 
-    internal class FastGaussianBlur {
+    public class FastGaussianBlur {
         private readonly byte[] gray;
         private readonly ColorPalette palette;
 
