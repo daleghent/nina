@@ -232,11 +232,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             set {
                 if (sdk.put_Option(ToupTekAlikeOption.OPTION_TEC, value ? 1 : 0)) {
-                    // If fan is currently off, set it to its minimum speed
-                    if (MaxFanSpeed > 0 && FanSpeed == 0) {
-                        FanSpeed = 1;
+                    if(value) {
+                        // If fan is currently off, set it to its minimum speed
+                        if (MaxFanSpeed > 0 && FanSpeed == 0) {
+                            FanSpeed = 1;
+                        }
+                    } else {
+                        // If turning the TEC off, turn the fan off too
+                            FanSpeed = 0;
                     }
-
                     RaisePropertyChanged();
                 } else {
                     Logger.Error($"{Category} - Could not set Cooler to {value}");
