@@ -1522,10 +1522,10 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Gjeldende beregning av eksponeringstid</value>
   </data>
   <data name="LblFlatUserFlatSettings" xml:space="preserve">
-    <value>Innstillinger for flatbilde-hjelper</value>
+    <value>Flat Wizard Settings</value>
   </data>
   <data name="LblFlatUserPromptCancel" xml:space="preserve">
-    <value>Avbryt flatbilde-hjelper</value>
+    <value>Cancel Flat Wizard</value>
   </data>
   <data name="LblFlatUserPromptFailure" xml:space="preserve">
     <value>Fant ikke egnet eksponeringstid</value>

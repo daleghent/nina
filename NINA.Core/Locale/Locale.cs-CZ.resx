@@ -571,9 +571,9 @@ Filtr: {3}</value>
     <value>Změna</value>
   </data>
   <data name="LblChangedSequenceWarning" xml:space="preserve">
-    <value>Pořadí cíle(ů) v sekvenci '{0}' bylo od posledního uložení změněno (nebo ještě nebylo uloženo).
+    <value>The sequence for the target(s) '{0}' have been modified since it was last saved (or has not been saved yet).
         
-Zavřít sekvenci a vše ztratit?</value>
+Do you want to close the sequence and lose the changes anyway?</value>
   </data>
   <data name="LblChangedSequenceWarningTitle" xml:space="preserve">
     <value>Uzavření změněné sekvence</value>
