@@ -114,7 +114,7 @@
                     TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     Type="Vertical"
                     X="{Binding Source={StaticResource proxy}, Path=Data.Ticker.OxyNow, UpdateSourceTrigger=PropertyChanged}"
-                    Color="{Binding Path=Color, Source={StaticResource BorderBrush}}" />
+                    Color="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
                 <oxy:PointAnnotation
                     Fill="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     Shape="Circle"

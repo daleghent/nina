@@ -40,7 +40,7 @@ namespace NINA.Profile {
             annotateUnlimitedStars = false;
             starSensitivity = StarSensitivityEnum.Normal;
             noiseReduction = NoiseReductionEnum.None;
-            detectStars = false;
+            detectStars = true;
             autoStretch = true;
         }
 
