@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Accord.Imaging.Filters;
+using NINA.Core.Utility;
 using System;
 using System.Drawing;
 
@@ -49,12 +50,14 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public static Bitmap ResizeForDetection(Bitmap image, int maxWidth, double resizeFactor) {
-            if (image.Width > maxWidth) {
-                var bmp = new ResizeBicubic((int)Math.Floor(image.Width * resizeFactor), (int)Math.Floor(image.Height * resizeFactor)).Apply(image);
-                image.Dispose();
-                return bmp;
+            using (MyStopWatch.Measure()) {
+                if (image.Width > maxWidth) {
+                    var bmp = new ResizeBicubic((int)Math.Floor(image.Width * resizeFactor), (int)Math.Floor(image.Height * resizeFactor)).Apply(image);
+                    image.Dispose();
+                    return bmp;
+                }
+                return image;
             }
-            return image;
         }
 
         public static bool InROI(Size imageSize, Rectangle blob, double outerCropRatio = 1.0, double innerCropRatio = 1.0) {

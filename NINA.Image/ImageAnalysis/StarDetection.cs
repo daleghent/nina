@@ -19,16 +19,15 @@ using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using NINA.Image.Interfaces;
 
 namespace NINA.Image.ImageAnalysis {
 
@@ -66,10 +65,34 @@ namespace NINA.Image.ImageAnalysis {
 
             state._originalBitmapSource = renderedImage.Image;
 
-            state._resizefactor = 1.0;
             if (state.imageProperties.Width > _maxWidth) {
                 if (p.Sensitivity == StarSensitivityEnum.Highest) {
-                    state._resizefactor = Math.Max(0.625, (double)_maxWidth / state.imageProperties.Width);
+                    state._resizefactor = Math.Max(2 / 3d, (double)_maxWidth / state.imageProperties.Width);
+                } else if (p.Sensitivity == StarSensitivityEnum.High) {
+                    // When setting the sensitivity to high the algorithm will rescale smarter by adjusting the scale based on the image scale based on focal length and pixel size
+                    // This will result in less resizing compared to normal which will take a bit longer, but should yield a much better detection result
+                    var pixelSize = renderedImage.RawImageData.MetaData.Camera.PixelSize;
+                    var fl = renderedImage.RawImageData.MetaData.Telescope.FocalLength;
+                    var imageScale = Astrometry.AstroUtil.ArcsecPerPixel(pixelSize, fl);
+
+                    if (double.IsNaN(imageScale)) {
+                        Logger.Warning("Image scale could not be determined for star detection");
+                        state._resizefactor = Math.Max(1 / 2d, (double)_maxWidth / state.imageProperties.Width);
+                    } else {
+                        state._resizefactor = 1.0;
+                        if (imageScale < 0.5) {
+                            state._resizefactor = 1 / 4d;
+                        }
+                        if (imageScale >= 0.5 && imageScale <= 1.5) {
+                            state._resizefactor = 1 / 3d;
+                        }
+                        if (imageScale >= 1.5 && imageScale <= 2.5) {
+                            state._resizefactor = 1 / 2d;
+                        }
+                        if (imageScale > 1.5) {
+                            state._resizefactor = Math.Max(2 / 3d, (double)_maxWidth / state.imageProperties.Width);
+                        }
+                    }
                 } else {
                     state._resizefactor = (double)_maxWidth / state.imageProperties.Width;
                 }
@@ -91,6 +114,8 @@ namespace NINA.Image.ImageAnalysis {
                     }
                 }
             }
+
+            Logger.Trace($"Star Detection initialized using resizeFactor: {state._resizefactor}, minimum star size: {state._minStarSize}");
 
             return state;
         }
@@ -218,7 +243,7 @@ namespace NINA.Image.ImageAnalysis {
                             stdDev = Math.Sqrt((from star in result.StarList select (star.HFR - mean) * (star.HFR - mean)).Sum() / (result.StarList.Count() - 1));
                         }
 
-                        Logger.Info($"Average HFR: {mean}, HFR σ: {stdDev}, Detected Stars {detectedStars}");
+                        Logger.Info($"Average HFR: {mean}, HFR σ: {stdDev}, Detected Stars {detectedStars}, Sensitivity {p.Sensitivity}, ResizeFactor: {Math.Round(state._resizefactor, 2)}");
 
                         result.AverageHFR = mean;
                         result.HFRStdDev = stdDev;
@@ -244,134 +269,136 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         private List<DetectedStar> IdentifyStars(StarDetectionParams p, State state, Bitmap _bitmapToAnalyze, StarDetectionResult result, CancellationToken token, out int detectedStars) {
-            detectedStars = 0;
-            Blob[] blobs = _blobCounter.GetObjectsInformation();
-            SimpleShapeChecker checker = new SimpleShapeChecker();
-            List<Star> starlist = new List<Star>();
-            double sumRadius = 0;
-            double sumSquares = 0;
-            foreach (Blob blob in blobs) {
-                token.ThrowIfCancellationRequested();
+            using (MyStopWatch.Measure()) {
+                detectedStars = 0;
+                Blob[] blobs = _blobCounter.GetObjectsInformation();
+                SimpleShapeChecker checker = new SimpleShapeChecker();
+                List<Star> starlist = new List<Star>();
+                double sumRadius = 0;
+                double sumSquares = 0;
+                foreach (Blob blob in blobs) {
+                    token.ThrowIfCancellationRequested();
 
-                if (blob.Rectangle.Width > state._maxStarSize
-                    || blob.Rectangle.Height > state._maxStarSize
-                    || blob.Rectangle.Width < state._minStarSize
-                    || blob.Rectangle.Height < state._minStarSize) {
-                    continue;
-                }
-
-                // If camera cannot subSample, but crop ratio is set, use blobs that are either within or without the ROI
-                if (p.UseROI && !InROI(_bitmapToAnalyze, p, blob)) {
-                    continue;
-                }
-
-                var points = _blobCounter.GetBlobsEdgePoints(blob);
-                Accord.Point centerpoint;
-                float radius;
-                var rect = new Rectangle((int)Math.Floor(blob.Rectangle.X * state._inverseResizefactor), (int)Math.Floor(blob.Rectangle.Y * state._inverseResizefactor), (int)Math.Ceiling(blob.Rectangle.Width * state._inverseResizefactor), (int)Math.Ceiling(blob.Rectangle.Height * state._inverseResizefactor));
-
-                //Build a rectangle that encompasses the blob
-                int largeRectXPos = Math.Max(rect.X - rect.Width, 0);
-                int largeRectYPos = Math.Max(rect.Y - rect.Height, 0);
-                int largeRectWidth = rect.Width * 3;
-                if (largeRectXPos + largeRectWidth > state.imageProperties.Width) { largeRectWidth = state.imageProperties.Width - largeRectXPos; }
-                int largeRectHeight = rect.Height * 3;
-                if (largeRectYPos + largeRectHeight > state.imageProperties.Height) { largeRectHeight = state.imageProperties.Height - largeRectYPos; }
-                var largeRect = new Rectangle(largeRectXPos, largeRectYPos, largeRectWidth, largeRectHeight);
-
-                //Star is circle
-                Star s;
-                if (checker.IsCircle(points, out centerpoint, out radius)) {
-                    s = new Star { Position = new Accord.Point(centerpoint.X * (float)state._inverseResizefactor, centerpoint.Y * (float)state._inverseResizefactor), radius = radius * state._inverseResizefactor, Rectangle = rect };
-                } else { //Star is elongated
-                    var eccentricity = CalculateEccentricity(rect.Width, rect.Height);
-                    //Discard highly elliptical shapes.
-                    if (eccentricity > 0.8) {
+                    if (blob.Rectangle.Width > state._maxStarSize
+                        || blob.Rectangle.Height > state._maxStarSize
+                        || blob.Rectangle.Width < state._minStarSize
+                        || blob.Rectangle.Height < state._minStarSize) {
                         continue;
                     }
-                    s = new Star { Position = new Accord.Point(centerpoint.X * (float)state._inverseResizefactor, centerpoint.Y * (float)state._inverseResizefactor), radius = Math.Max(rect.Width, rect.Height) / 2, Rectangle = rect };
-                }
 
-                /* get pixeldata */
-                double starPixelSum = 0;
-                int starPixelCount = 0;
-                double largeRectPixelSum = 0;
-                double largeRectPixelSumSquares = 0;
-                List<ushort> innerStarPixelValues = new List<ushort>();
+                    // If camera cannot subSample, but crop ratio is set, use blobs that are either within or without the ROI
+                    if (p.UseROI && !InROI(_bitmapToAnalyze, p, blob)) {
+                        continue;
+                    }
 
-                for (int x = largeRect.X; x < largeRect.X + largeRect.Width; x++) {
-                    for (int y = largeRect.Y; y < largeRect.Y + largeRect.Height; y++) {
-                        var pixelValue = state._iarr.FlatArray[x + (state.imageProperties.Width * y)];
-                        if (x >= s.Rectangle.X && x < s.Rectangle.X + s.Rectangle.Width && y >= s.Rectangle.Y && y < s.Rectangle.Y + s.Rectangle.Height) { //We're in the small rectangle directly surrounding the star
-                            if (s.InsideCircle(x, y, s.Position.X, s.Position.Y, s.radius)) { // We're in the inner sanctum of the star
-                                starPixelSum += pixelValue;
-                                starPixelCount++;
-                                innerStarPixelValues.Add(pixelValue);
-                                s.maxPixelValue = Math.Max(s.maxPixelValue, pixelValue);
+                    var points = _blobCounter.GetBlobsEdgePoints(blob);
+                    Accord.Point centerpoint;
+                    float radius;
+                    var rect = new Rectangle((int)Math.Floor(blob.Rectangle.X * state._inverseResizefactor), (int)Math.Floor(blob.Rectangle.Y * state._inverseResizefactor), (int)Math.Ceiling(blob.Rectangle.Width * state._inverseResizefactor), (int)Math.Ceiling(blob.Rectangle.Height * state._inverseResizefactor));
+
+                    //Build a rectangle that encompasses the blob
+                    int largeRectXPos = Math.Max(rect.X - rect.Width, 0);
+                    int largeRectYPos = Math.Max(rect.Y - rect.Height, 0);
+                    int largeRectWidth = rect.Width * 3;
+                    if (largeRectXPos + largeRectWidth > state.imageProperties.Width) { largeRectWidth = state.imageProperties.Width - largeRectXPos; }
+                    int largeRectHeight = rect.Height * 3;
+                    if (largeRectYPos + largeRectHeight > state.imageProperties.Height) { largeRectHeight = state.imageProperties.Height - largeRectYPos; }
+                    var largeRect = new Rectangle(largeRectXPos, largeRectYPos, largeRectWidth, largeRectHeight);
+
+                    //Star is circle
+                    Star s;
+                    if (checker.IsCircle(points, out centerpoint, out radius)) {
+                        s = new Star { Position = new Accord.Point(centerpoint.X * (float)state._inverseResizefactor, centerpoint.Y * (float)state._inverseResizefactor), radius = radius * state._inverseResizefactor, Rectangle = rect };
+                    } else { //Star is elongated
+                        var eccentricity = CalculateEccentricity(rect.Width, rect.Height);
+                        //Discard highly elliptical shapes.
+                        if (eccentricity > 0.8) {
+                            continue;
+                        }
+                        s = new Star { Position = new Accord.Point(centerpoint.X * (float)state._inverseResizefactor, centerpoint.Y * (float)state._inverseResizefactor), radius = Math.Max(rect.Width, rect.Height) / 2, Rectangle = rect };
+                    }
+
+                    /* get pixeldata */
+                    double starPixelSum = 0;
+                    int starPixelCount = 0;
+                    double largeRectPixelSum = 0;
+                    double largeRectPixelSumSquares = 0;
+                    List<ushort> innerStarPixelValues = new List<ushort>();
+
+                    for (int x = largeRect.X; x < largeRect.X + largeRect.Width; x++) {
+                        for (int y = largeRect.Y; y < largeRect.Y + largeRect.Height; y++) {
+                            var pixelValue = state._iarr.FlatArray[x + (state.imageProperties.Width * y)];
+                            if (x >= s.Rectangle.X && x < s.Rectangle.X + s.Rectangle.Width && y >= s.Rectangle.Y && y < s.Rectangle.Y + s.Rectangle.Height) { //We're in the small rectangle directly surrounding the star
+                                if (s.InsideCircle(x, y, s.Position.X, s.Position.Y, s.radius)) { // We're in the inner sanctum of the star
+                                    starPixelSum += pixelValue;
+                                    starPixelCount++;
+                                    innerStarPixelValues.Add(pixelValue);
+                                    s.maxPixelValue = Math.Max(s.maxPixelValue, pixelValue);
+                                }
+                                ushort value = pixelValue;
+                                PixelData pd = new PixelData { PosX = x, PosY = y, value = (ushort)value };
+                                s.AddPixelData(pd);
+                            } else { //We're in the larger surrounding holed rectangle, providing local background
+                                largeRectPixelSum += pixelValue;
+                                largeRectPixelSumSquares += pixelValue * pixelValue;
                             }
-                            ushort value = pixelValue;
-                            PixelData pd = new PixelData { PosX = x, PosY = y, value = (ushort)value };
-                            s.AddPixelData(pd);
-                        } else { //We're in the larger surrounding holed rectangle, providing local background
-                            largeRectPixelSum += pixelValue;
-                            largeRectPixelSumSquares += pixelValue * pixelValue;
                         }
                     }
-                }
 
-                s.meanBrightness = starPixelSum / (double)starPixelCount;
-                double largeRectPixelCount = largeRect.Height * largeRect.Width - rect.Height * rect.Width;
-                double largeRectMean = largeRectPixelSum / largeRectPixelCount;
-                s.SurroundingMean = largeRectMean;
-                double largeRectStdev = Math.Sqrt((largeRectPixelSumSquares - largeRectPixelCount * largeRectMean * largeRectMean) / largeRectPixelCount);
-                int minimumNumberOfPixels = (int)Math.Ceiling(Math.Max(state._originalBitmapSource.PixelWidth, state._originalBitmapSource.PixelHeight) / 1000d);
+                    s.meanBrightness = starPixelSum / (double)starPixelCount;
+                    double largeRectPixelCount = largeRect.Height * largeRect.Width - rect.Height * rect.Width;
+                    double largeRectMean = largeRectPixelSum / largeRectPixelCount;
+                    s.SurroundingMean = largeRectMean;
+                    double largeRectStdev = Math.Sqrt((largeRectPixelSumSquares - largeRectPixelCount * largeRectMean * largeRectMean) / largeRectPixelCount);
+                    int minimumNumberOfPixels = (int)Math.Ceiling(Math.Max(state._originalBitmapSource.PixelWidth, state._originalBitmapSource.PixelHeight) / 1000d);
 
-                if (s.meanBrightness >= largeRectMean + Math.Min(0.1 * largeRectMean, largeRectStdev) && innerStarPixelValues.Count(pv => pv > largeRectMean + 1.5 * largeRectStdev) > minimumNumberOfPixels) { //It's a local maximum, and has enough bright pixels, so likely to be a star. Let's add it to our star dictionary.
-                    sumRadius += s.radius;
-                    sumSquares += s.radius * s.radius;
-                    s.CalculateHfr();
-                    starlist.Add(s);
-                }
-            }
-
-            // No stars could be found. Return.
-            if (starlist.Count() == 0) {
-                return new List<DetectedStar>();
-            }
-
-            //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
-            if (starlist.Count > 0) {
-                double avg = sumRadius / (double)starlist.Count();
-                double stdev = Math.Sqrt((sumSquares - starlist.Count() * avg * avg) / starlist.Count());
-                if (p.Sensitivity == StarSensitivityEnum.Normal) {
-                    starlist = starlist.Where(s => s.radius <= avg + 1.5 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
-                } else {
-                    //More sensitivity means getting fainter and smaller stars, and maybe some noise, skewing the distribution towards low radius. Let's be more permissive towards the large star end.
-                    starlist = starlist.Where(s => s.radius <= avg + 2 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
-                }
-            }
-
-            // Ensure we provide the list of detected stars, even if NumberOfAF stars is used
-            detectedStars = starlist.Count;
-
-            //We are performing AF with only a limited number of stars
-            if (p.NumberOfAFStars > 0) {
-                //First AF exposure, let's find the brightest star positions and store them
-                if (starlist.Count() != 0 && (p.MatchStarPositions == null || p.MatchStarPositions.Count() == 0)) {
-                    if (starlist.Count() <= p.NumberOfAFStars) {
-                        result.BrightestStarPositions = starlist.ConvertAll(s => s.Position);
-                    } else {
-                        starlist = starlist.OrderByDescending(s => s.radius * 0.3 + s.meanBrightness * 0.7).Take(p.NumberOfAFStars).ToList<Star>();
-                        result.BrightestStarPositions = starlist.ConvertAll(i => i.Position);
+                    if (s.meanBrightness >= largeRectMean + Math.Min(0.1 * largeRectMean, largeRectStdev) && innerStarPixelValues.Count(pv => pv > largeRectMean + 1.5 * largeRectStdev) > minimumNumberOfPixels) { //It's a local maximum, and has enough bright pixels, so likely to be a star. Let's add it to our star dictionary.
+                        sumRadius += s.radius;
+                        sumSquares += s.radius * s.radius;
+                        s.CalculateHfr();
+                        starlist.Add(s);
                     }
-                    return starlist.Select(s => s.ToDetectedStar()).ToList();
-                } else { //find the closest stars to the brightest stars previously identified
-                    List<Star> topStars = new List<Star>();
-                    p.MatchStarPositions.ForEach(pos => topStars.Add(starlist.Aggregate((min, next) => min.Position.DistanceTo(pos) < next.Position.DistanceTo(pos) ? min : next)));
-                    return topStars.Select(s => s.ToDetectedStar()).ToList(); ;
                 }
+
+                // No stars could be found. Return.
+                if (starlist.Count() == 0) {
+                    return new List<DetectedStar>();
+                }
+
+                //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
+                if (starlist.Count > 0) {
+                    double avg = sumRadius / (double)starlist.Count();
+                    double stdev = Math.Sqrt((sumSquares - starlist.Count() * avg * avg) / starlist.Count());
+                    if (p.Sensitivity != StarSensitivityEnum.Highest) {
+                        starlist = starlist.Where(s => s.radius <= avg + 1.5 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
+                    } else {
+                        //More sensitivity means getting fainter and smaller stars, and maybe some noise, skewing the distribution towards low radius. Let's be more permissive towards the large star end.
+                        starlist = starlist.Where(s => s.radius <= avg + 2 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
+                    }
+                }
+
+                // Ensure we provide the list of detected stars, even if NumberOfAF stars is used
+                detectedStars = starlist.Count;
+
+                //We are performing AF with only a limited number of stars
+                if (p.NumberOfAFStars > 0) {
+                    //First AF exposure, let's find the brightest star positions and store them
+                    if (starlist.Count() != 0 && (p.MatchStarPositions == null || p.MatchStarPositions.Count() == 0)) {
+                        if (starlist.Count() <= p.NumberOfAFStars) {
+                            result.BrightestStarPositions = starlist.ConvertAll(s => s.Position);
+                        } else {
+                            starlist = starlist.OrderByDescending(s => s.radius * 0.3 + s.meanBrightness * 0.7).Take(p.NumberOfAFStars).ToList<Star>();
+                            result.BrightestStarPositions = starlist.ConvertAll(i => i.Position);
+                        }
+                        return starlist.Select(s => s.ToDetectedStar()).ToList();
+                    } else { //find the closest stars to the brightest stars previously identified
+                        List<Star> topStars = new List<Star>();
+                        p.MatchStarPositions.ForEach(pos => topStars.Add(starlist.Aggregate((min, next) => min.Position.DistanceTo(pos) < next.Position.DistanceTo(pos) ? min : next)));
+                        return topStars.Select(s => s.ToDetectedStar()).ToList(); ;
+                    }
+                }
+                return starlist.Select(s => s.ToDetectedStar()).ToList();
             }
-            return starlist.Select(s => s.ToDetectedStar()).ToList();
         }
 
         private double CalculateEccentricity(double width, double height) {
@@ -382,92 +409,68 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         private BlobCounter DetectStructures(Bitmap bmp, CancellationToken token) {
-            var sw = Stopwatch.StartNew();
+            using (MyStopWatch.Measure()) {
+                /* detect structures */
+                BlobCounter blobCounter = new BlobCounter();
+                blobCounter.ProcessImage(bmp);
 
-            /* detect structures */
-            BlobCounter blobCounter = new BlobCounter();
-            blobCounter.ProcessImage(bmp);
+                token.ThrowIfCancellationRequested();
 
-            token.ThrowIfCancellationRequested();
-
-            sw.Stop();
-            Debug.Print("Time for structure detection: " + sw.Elapsed);
-            sw = null;
-
-            return blobCounter;
+                return blobCounter;
+            }
         }
 
         private void PrepareForStructureDetection(Bitmap bmp, StarDetectionParams p, State state, CancellationToken token) {
-            var sw = Stopwatch.StartNew();
-
-            if (p.Sensitivity == StarSensitivityEnum.Normal) {
-                if (p.NoiseReduction == NoiseReductionEnum.None || p.NoiseReduction == NoiseReductionEnum.Median) {
-                    //Still need to apply Gaussian blur, using normal Canny
-                    new CannyEdgeDetector(10, 80).ApplyInPlace(bmp);
-                } else {
-                    //Gaussian blur already applied, using no-blur Canny
-                    new NoBlurCannyEdgeDetector(10, 80).ApplyInPlace(bmp);
-                }
-            } else {
-                int kernelSize = (int)Math.Max(Math.Floor(Math.Max(state._originalBitmapSource.PixelWidth, state._originalBitmapSource.PixelHeight) * state._resizefactor / 500), 3);
-                //Apply blur or sharpen operation prior to applying the Canny Edge Detector
-                if (state._inverseResizefactor > 1.6) {
-                    //Strong blur occurred while resizing, apply fairly strong Gaussian Sharpen
-                    new GaussianSharpen(1.8, kernelSize).ApplyInPlace(bmp);
-                } else if (state._inverseResizefactor > 1) {
-                    //Some blur occurred during resizing, apply Gaussian Sharpen with relative strength proportional to resize factor
-                    double sigma = (state._inverseResizefactor - 1) * 3;
-                    new GaussianSharpen(sigma, kernelSize).ApplyInPlace(bmp);
-                } else {
+            using (MyStopWatch.Measure()) {
+                using (MyStopWatch.Measure("PrepareForStructureDetection - CannyEdge")) {
                     if (p.NoiseReduction == NoiseReductionEnum.None || p.NoiseReduction == NoiseReductionEnum.Median) {
-                        //No resizing or gaussian blur occurred, apply weak Gaussian blur
-                        new GaussianBlur(0.7, 5).ApplyInPlace(bmp);
+                        //Still need to apply Gaussian blur, using normal Canny
+                        new CannyEdgeDetector(10, 80).ApplyInPlace(bmp);
                     } else {
-                        //Gaussian blur already occurred, do nothing
+                        //Gaussian blur already applied, using no-blur Canny
+                        new NoBlurCannyEdgeDetector(10, 80).ApplyInPlace(bmp);
                     }
                 }
-                token.ThrowIfCancellationRequested();
-                new NoBlurCannyEdgeDetector(10, 80).ApplyInPlace(bmp);
-            }
-            token.ThrowIfCancellationRequested();
-            new SISThreshold().ApplyInPlace(bmp);
-            token.ThrowIfCancellationRequested();
-            new BinaryDilation3x3().ApplyInPlace(bmp);
-            token.ThrowIfCancellationRequested();
 
-            sw.Stop();
-            Debug.Print("Time for image preparation: " + sw.Elapsed);
-            sw = null;
+                token.ThrowIfCancellationRequested();
+                using (MyStopWatch.Measure("PrepareForStructureDetection - SISThreshold")) {
+                    new SISThreshold().ApplyInPlace(bmp);
+                }
+
+                token.ThrowIfCancellationRequested();
+                using (MyStopWatch.Measure("PrepareForStructureDetection - BinaryDilation3x3")) {
+                    new BinaryDilation3x3().ApplyInPlace(bmp);
+                }
+                token.ThrowIfCancellationRequested();
+            }
         }
 
         private Bitmap ReduceNoise(Bitmap _bitmapToAnalyze, StarDetectionParams p) {
-            var sw = Stopwatch.StartNew();
-            if (_bitmapToAnalyze.Width > _maxWidth) {
-                Bitmap bmp;
-                switch (p.NoiseReduction) {
-                    case NoiseReductionEnum.High:
-                        bmp = new FastGaussianBlur(_bitmapToAnalyze).Process(2);
-                        break;
+            using (MyStopWatch.Measure()) {
+                if (_bitmapToAnalyze.Width > _maxWidth) {
+                    Bitmap bmp;
+                    switch (p.NoiseReduction) {
+                        case NoiseReductionEnum.High:
+                            bmp = new FastGaussianBlur(_bitmapToAnalyze).Process(2);
+                            break;
 
-                    case NoiseReductionEnum.Highest:
-                        bmp = new FastGaussianBlur(_bitmapToAnalyze).Process(3);
-                        break;
+                        case NoiseReductionEnum.Highest:
+                            bmp = new FastGaussianBlur(_bitmapToAnalyze).Process(3);
+                            break;
 
-                    case NoiseReductionEnum.Median:
-                        bmp = new Median().Apply(_bitmapToAnalyze);
-                        break;
+                        case NoiseReductionEnum.Median:
+                            bmp = new Median().Apply(_bitmapToAnalyze);
+                            break;
 
-                    default:
-                        bmp = new FastGaussianBlur(_bitmapToAnalyze).Process(1);
-                        break;
+                        default:
+                            bmp = new FastGaussianBlur(_bitmapToAnalyze).Process(1);
+                            break;
+                    }
+                    _bitmapToAnalyze.Dispose();
+                    _bitmapToAnalyze = bmp;
                 }
-                _bitmapToAnalyze.Dispose();
-                _bitmapToAnalyze = bmp;
-                sw.Stop();
-                Debug.Print("Time for noise reduction: " + sw.Elapsed);
-                sw = null;
+                return _bitmapToAnalyze;
             }
-            return _bitmapToAnalyze;
         }
 
         public IStarDetectionAnalysis CreateAnalysis() {

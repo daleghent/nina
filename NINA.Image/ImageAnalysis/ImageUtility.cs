@@ -191,8 +191,10 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public static Bitmap Convert16BppTo8Bpp(BitmapSource source) {
-            using (var bmp = BitmapFromSource(source)) {
-                return Accord.Imaging.Image.Convert16bppTo8bpp(bmp);
+            using(MyStopWatch.Measure()) { 
+                using (var bmp = BitmapFromSource(source)) {
+                    return Accord.Imaging.Image.Convert16bppTo8bpp(bmp);
+                }
             }
         }
 
