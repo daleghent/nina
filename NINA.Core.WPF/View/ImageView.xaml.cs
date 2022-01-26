@@ -203,8 +203,8 @@ namespace NINA.WPF.Base.View {
                 val = 0;
             }
 
-            PART_ScaleTransform.ScaleX = val;
-            PART_ScaleTransform.ScaleY = val;
+            PART_ScaleTransform.ScaleX = Math.Floor(val * 100) / 100d;
+            PART_ScaleTransform.ScaleY = Math.Floor(val * 100) / 100d;
 
             PART_TextblockScale.Text = val.ToString("P0", CultureInfo.InvariantCulture);
         }
