@@ -200,7 +200,8 @@
                         behavior:MouseCommandBehavior.RightMouseDownCommand="{Binding RightMouseButtonDownCommand, ElementName=PART_ImageView}"
                         behavior:MouseCommandBehavior.RightMouseMoveCommand="{Binding RightMouseButtonMoveCommand, ElementName=PART_ImageView}"
                         behavior:MouseCommandBehavior.RightMouseUpCommand="{Binding RightMouseButtonUpCommand, ElementName=PART_ImageView}"
-                        ClipToBounds="True">
+                        ClipToBounds="True"
+                        SizeChanged="PART_Canvas_SizeChanged">
                         <Canvas.Background>
                             <VisualBrush>
                                 <VisualBrush.Visual>
