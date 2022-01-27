@@ -23,8 +23,10 @@ using NINA.Astrometry;
 
 namespace NINA.Sequencer.Mediator {
 
+    // This mediator can only be used after it is initialized to prevent cyclic event issues
     public class SequenceMediator : ISequenceMediator {
         private ISequenceNavigationVM sequenceNavigation;
+        private readonly Exception SequenceMediatorException = new Exception("SequencerNavigation not initialized yet!");
 
         public void RegisterSequenceNavigation(ISequenceNavigationVM sequenceNavigation) {
             if (this.sequenceNavigation != null) {
@@ -36,39 +38,75 @@ namespace NINA.Sequencer.Mediator {
         public bool Initialized => sequenceNavigation.Initialized;
 
         public void AddSimpleTarget(DeepSkyObject deepSkyObject) {
-            sequenceNavigation.AddSimpleTarget(deepSkyObject);
+            if (Initialized) {
+                sequenceNavigation.AddSimpleTarget(deepSkyObject);
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public void AddAdvancedTarget(IDeepSkyObjectContainer container) {
-            sequenceNavigation.AddAdvancedTarget(container);
+            if (Initialized) {
+                sequenceNavigation.AddAdvancedTarget(container);
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public void SetAdvancedSequence(ISequenceRootContainer container) {
-            sequenceNavigation.SetAdvancedSequence(container);
+            if (Initialized) {
+                sequenceNavigation.SetAdvancedSequence(container);
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates() {
-            return sequenceNavigation.GetDeepSkyObjectContainerTemplates();
+            if (Initialized) {
+                return sequenceNavigation.GetDeepSkyObjectContainerTemplates();
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public void SwitchToAdvancedView() {
-            sequenceNavigation.SwitchToAdvancedView();
+            if (Initialized) {
+                sequenceNavigation.SwitchToAdvancedView();
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public void SwitchToOverview() {
-            sequenceNavigation.SwitchToOverview();
+            if (Initialized) {
+                sequenceNavigation.SwitchToOverview();
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public void AddTargetToTargetList(IDeepSkyObjectContainer container) {
-            sequenceNavigation.AddTargetToTargetList(container);
+            if (Initialized) {
+                sequenceNavigation.AddTargetToTargetList(container);
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public IList<IDeepSkyObjectContainer> GetAllTargetsInAdvancedSequence() {
-            return sequenceNavigation.GetAllTargetsInAdvancedSequence();
+            if (Initialized) {
+                return sequenceNavigation.GetAllTargetsInAdvancedSequence();
+            } else {
+                throw SequenceMediatorException;
+            }
         }
 
         public IList<IDeepSkyObjectContainer> GetAllTargetsInSimpleSequence() {
-            return sequenceNavigation.GetAllTargetsInSimpleSequence();
+            if (Initialized) {
+                return sequenceNavigation.GetAllTargetsInSimpleSequence();
+            } else {
+                throw SequenceMediatorException;
+            }
         }
     }
 }

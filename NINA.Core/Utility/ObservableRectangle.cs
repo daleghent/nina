@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace NINA.Core.Utility {
 
         private double _x;
 
+        [JsonProperty]
         public double X {
             get {
                 return _x;
@@ -46,6 +48,7 @@ namespace NINA.Core.Utility {
 
         private double _y;
 
+        [JsonProperty]
         public double Y {
             get {
                 return _y;
@@ -58,6 +61,7 @@ namespace NINA.Core.Utility {
 
         private double _width;
 
+        [JsonProperty]
         public double Width {
             get {
                 return _width;
@@ -70,6 +74,7 @@ namespace NINA.Core.Utility {
 
         private double _height;
 
+        [JsonProperty]
         public double Height {
             get {
                 return _height;

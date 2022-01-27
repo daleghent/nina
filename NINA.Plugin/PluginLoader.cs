@@ -29,6 +29,7 @@ using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
+using NINA.Sequencer.Interfaces.Mediator;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Utility.DateTimeProvider;
@@ -86,7 +87,8 @@ namespace NINA.Plugin {
                               IAutoFocusVMFactory autoFocusVMFactory,
                               IImageControlVM imageControlVM,
                               IImageStatisticsVM imageStatisticsVM,
-                              IDomeSynchronization domeSynchronization) {
+                              IDomeSynchronization domeSynchronization,
+                              ISequenceMediator sequenceMediator) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -120,6 +122,7 @@ namespace NINA.Plugin {
             this.imageControlVM = imageControlVM;
             this.imageStatisticsVM = imageStatisticsVM;
             this.domeSynchronization = domeSynchronization;
+            this.sequenceMediator = sequenceMediator;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -424,6 +427,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(imageControlVM);
             container.ComposeExportedValue(imageStatisticsVM);
             container.ComposeExportedValue(domeSynchronization);
+            container.ComposeExportedValue(sequenceMediator);
 
             return container;
         }
@@ -473,6 +477,7 @@ namespace NINA.Plugin {
         private readonly IImageControlVM imageControlVM;
         private readonly IImageStatisticsVM imageStatisticsVM;
         private readonly IDomeSynchronization domeSynchronization;
+        private readonly ISequenceMediator sequenceMediator;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
             return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);
