@@ -179,6 +179,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)
 - Any active field of view or ocular rotation angle is now imported along with coordinates from Stellarium and TheSky X
 - New translation for Czech (Čeština) has been added
+- New translation for Norwegian Bokmal (Norsk bokmål) has been added
 - Can send the sequencer target coordinates to the Framing Wizard
 - Improved Meridian Flip reliability by retrying when changing the pier or slewing close to the meridian fails. NINA now provides a warning suggesting to increase the meridian wait time if this hapens
 - Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider
