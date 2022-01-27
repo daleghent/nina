@@ -663,11 +663,11 @@ namespace NINA.ViewModel.FlatWizard {
 
                     case HistogramMath.ExposureAduState.ExposureBelowLowerBound:
                         switch (dataPoints.Count) {
-                            case int n when n < 2:
+                            case int n when n < 3:
                                 brightness += filter.Settings.FlatDeviceAbsoluteStepSize;
                                 break;
 
-                            case int n when n >= 2 && n < MAX_TRIES:
+                            case int n when n >= 3 && n < MAX_TRIES:
                                 brightness = GetNextDataPoint();
                                 if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
                                 break;
@@ -685,11 +685,11 @@ namespace NINA.ViewModel.FlatWizard {
 
                     case HistogramMath.ExposureAduState.ExposureAboveUpperBound:
                         switch (dataPoints.Count) {
-                            case int n when n < 2:
+                            case int n when n < 3:
                                 await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
                                 break;
 
-                            case int n when n >= 2 && n < MAX_TRIES:
+                            case int n when n >= 3 && n < MAX_TRIES:
                                 brightness = GetNextDataPoint();
                                 if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
                                 break;
