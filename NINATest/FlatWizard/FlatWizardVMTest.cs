@@ -645,6 +645,8 @@ namespace NINATest.FlatWizard {
                 .Returns(GetMeanImage(24000))
                 .Returns(GetMeanImage(24000))
                 .Returns(GetMeanImage(24000))
+                .Returns(GetMeanImage(24000))
+                .Returns(GetMeanImage(24000))
                 .Returns(GetMeanImage(32768));
 
             errorDialogMock.Setup(m => m.Result).Returns(FlatWizardUserPromptResult.ResetAndContinue);
@@ -667,7 +669,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(10);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(9));
         }
 
         [Test]
