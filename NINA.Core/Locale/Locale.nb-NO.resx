@@ -437,13 +437,13 @@ uten stjerner, som f. eks. planeter, men kan være følsom for støy.</value>
     <value>Klipp sortnivå</value>
   </data>
   <data name="LblBlindSolveAttemptForFraming" xml:space="preserve">
-    <value>Image has to be solved for framing.
-Should reference coordinates be taken?
+    <value>Bildets koordinater må finnes med astrometrisk søk.
+Skal referansekoordinatene brukes?
 RA: {0}
-Dec: {1}</value>
+Dek: {1}</value>
   </data>
   <data name="LblBlindSolver" xml:space="preserve">
-    <value>Blind Solver</value>
+    <value>Blind søkemotor</value>
   </data>
   <data name="LblBorder" xml:space="preserve">
     <value>Kant</value>
@@ -467,7 +467,7 @@ Dec: {1}</value>
     <value>Knappbakgrunn, uthevet</value>
   </data>
   <data name="LblByteShuffling" xml:space="preserve">
-    <value>Byte Shuffling</value>
+    <value>Byte-blanding</value>
   </data>
   <data name="LblCache" xml:space="preserve">
     <value>Mellomlager</value>
@@ -479,7 +479,7 @@ Dec: {1}</value>
     <value>Beregnet eksponeringstid</value>
   </data>
   <data name="LblCam" xml:space="preserve">
-    <value>Cam</value>
+    <value>Kamera</value>
   </data>
   <data name="LblCamera" xml:space="preserve">
     <value>Kamera</value>
@@ -553,16 +553,16 @@ i stand til å kompensere for endringer i omgivelsestemperatur</value>
     <value>Cartes du Ciel</value>
   </data>
   <data name="LblCenterDec" xml:space="preserve">
-    <value>Deklinasjon til senter</value>
+    <value>Senter Dek</value>
   </data>
   <data name="LblCenterDecdms" xml:space="preserve">
-    <value>Deklinasjon til senter (dms)</value>
+    <value>Senter Dek (dms)</value>
   </data>
   <data name="LblCenterRA" xml:space="preserve">
-    <value>Rektascensjon til senter</value>
+    <value>Senter RA</value>
   </data>
   <data name="LblCenterRAhms" xml:space="preserve">
-    <value>Rektascensjon til senter (hms)</value>
+    <value>Senter RA (hms)</value>
   </data>
   <data name="LblCenterTarget" xml:space="preserve">
     <value>Sentrer mål</value>
@@ -986,22 +986,22 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Cygwin-mappe</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Dark Flats to take</value>
+    <value>Antall mørke flatbilder</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
-    <value>D.A.R.V. Slew</value>
+    <value>D.A.R.V. drift-poljustering</value>
   </data>
   <data name="LblDARVSlewButtonTooltip" xml:space="preserve">
     <value>Tar bilde imens teleskopet svinges frem og tilbake. Hvis strekene i bildet ikke overlapper, tyder det på avvik i poljusteringen</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
-    <value>Specify the duration for the D.A.R.V. procedure. The telescope will slew half the time in one direction on RA axis and then slew back. In case of no Polar Alignment error it will display as a straight line. Otherwise a V shaped line. For Azimuth Error Measurement slew the scope near meridian, otherwise east or west.</value>
+    <value>Angi varighet for D.A.R.V.-prosessen. Teleskopet svinger i RA-aksen halvparten av tiden, og deretter tilbake. Dersom poljusteringen er god vil stjernene danne rette linjer. Ved avvik dannes en V-formet linje. For måling av asimut-avvik, sving teleskopet nær meridianen, ellers sving teleskopet mot øst eller vest.</value>
   </data>
   <data name="LblDataProvidedBy" xml:space="preserve">
     <value>Data hentet fra</value>
   </data>
   <data name="LblDataToDownloadRatio" xml:space="preserve">
-    <value>Download to Data ratio</value>
+    <value>Nedlastingsforhold</value>
   </data>
   <data name="LblDateFormatDescription" xml:space="preserve">
     <value>Dato med format ÅÅÅÅ-MM-DD</value>
@@ -1028,13 +1028,13 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Bruk debayer-bilde for HFR-beregning. Mer presis, men mer ressurskrevende.</value>
   </data>
   <data name="LblDebayerImage" xml:space="preserve">
-    <value>Debayer Image</value>
+    <value>Debayer bilde</value>
   </data>
   <data name="LblDebayerImageTooltip" xml:space="preserve">
-    <value>Debayer Image on preview (won't affect saved file)</value>
+    <value>Debayer forhåndsvisning (endrer ikke lagret bilde)</value>
   </data>
   <data name="LblDebayeringImage" xml:space="preserve">
-    <value>Debayering image</value>
+    <value>Debayer bilde</value>
   </data>
   <data name="LblDebug" xml:space="preserve">
     <value>Debug</value>
@@ -1052,7 +1052,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Deklinasjon</value>
   </data>
   <data name="LblDecPixError" xml:space="preserve">
-    <value>Dek pikselavvik</value>
+    <value>Dek-avvik (px)</value>
   </data>
   <data name="LblDefaultAutoFocusExposureTime" xml:space="preserve">
     <value>Standard eksponeringstid</value>
@@ -1211,7 +1211,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Asimut</value>
   </data>
   <data name="LblDomeNoSource" xml:space="preserve">
-    <value>No Dome Source</value>
+    <value>Ingen kuppel</value>
   </data>
   <data name="LblDomeCannotSlew" xml:space="preserve">
     <value>Kuppel kan ikke svinges</value>
@@ -1262,7 +1262,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Last ned flere indeksfiler</value>
   </data>
   <data name="LblDownSampleFactor" xml:space="preserve">
-    <value>Downsample factor</value>
+    <value>Nedskaleringsfaktor</value>
   </data>
   <data name="LblDriverInfo" xml:space="preserve">
     <value>Driverinformasjon</value>
@@ -1295,7 +1295,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Lukker flatpanel-deksel</value>
   </data>
   <data name="LblEndOfSequenceDecision" xml:space="preserve">
-    <value>Run end of sequence options?</value>
+    <value>Utfør valg for sekvensslutt?</value>
   </data>
   <data name="LblEndOfSequenceOptions" xml:space="preserve">
     <value>Valg for sekvensslutt</value>
@@ -1316,7 +1316,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Feil</value>
   </data>
   <data name="LblErrorDistance" xml:space="preserve">
-    <value>Error Distance</value>
+    <value>Avvik</value>
   </data>
   <data name="LblErrorLT" xml:space="preserve">
     <value>Avvik &lt;</value>
@@ -1522,10 +1522,10 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Gjeldende beregning av eksponeringstid</value>
   </data>
   <data name="LblFlatUserFlatSettings" xml:space="preserve">
-    <value>Flat Wizard Settings</value>
+    <value>Innstillinger for flatbilde-assistenten</value>
   </data>
   <data name="LblFlatUserPromptCancel" xml:space="preserve">
-    <value>Cancel Flat Wizard</value>
+    <value>Avbryt flatbilde-assistenten</value>
   </data>
   <data name="LblFlatUserPromptFailure" xml:space="preserve">
     <value>Fant ikke egnet eksponeringstid</value>
@@ -1540,19 +1540,19 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Flatbilder</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
-    <value>Flat Wizard Capture</value>
+    <value>Flatbilde-assistent</value>
   </data>
   <data name="LblFLICameraSetup" xml:space="preserve">
     <value>FLI Kameraoppsett</value>
   </data>
   <data name="LblFLIFloodBin" xml:space="preserve">
-    <value>Flood Binning</value>
+    <value>Flood binning</value>
   </data>
   <data name="LblFLIFloodDuration" xml:space="preserve">
-    <value>Flood Duration</value>
+    <value>Flood varighet</value>
   </data>
   <data name="LblFLIFlushCount" xml:space="preserve">
-    <value>Pre-exposure Flush Count</value>
+    <value>Antall flush før eksponering</value>
   </data>
   <data name="LblFlip" xml:space="preserve">
     <value>Gjennomfør vending</value>
@@ -1561,10 +1561,10 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Vender teleskopet</value>
   </data>
   <data name="LblFLIPreRBIMitigation" xml:space="preserve">
-    <value>RBI Mitigation</value>
+    <value>RBI-mitigering</value>
   </data>
   <data name="LblFLISnapshotFlood" xml:space="preserve">
-    <value>Flood for snapshots</value>
+    <value>Flood for enkeltbilder</value>
   </data>
   <data name="LblFocalLength" xml:space="preserve">
     <value>Fokallengde</value>
@@ -1606,7 +1606,7 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Fokusmotor hviletid</value>
   </data>
   <data name="LblFocuserSettleTimeTooltip" xml:space="preserve">
-    <value>If the focuser introduces image shift when moving, set a settle time in seconds here.</value>
+    <value>Hvis fokusmotoren bruker tid på å stabilisere seg, sett en hviletid her.</value>
   </data>
   <data name="LblFocuserTempDescription" xml:space="preserve">
     <value>Fokusmotor-temperatur</value>
@@ -1630,7 +1630,7 @@ Forventet HFR: {2}</value>
     <value>Bildemappe</value>
   </data>
   <data name="LblFrameNFocus" xml:space="preserve">
-    <value>Frame &amp; Focus</value>
+    <value>Sentrer, roter og fokuser</value>
   </data>
   <data name="LblFrameNrDescription" xml:space="preserve">
     <value>Bildenummer på format ####</value>
@@ -1864,7 +1864,7 @@ Forventet HFR: {2}</value>
     <value>Åpne bilde fra fil</value>
   </data>
   <data name="LblLoadImageFromFileTooltip" xml:space="preserve">
-    <value>Download Image from file and use the blindsolver to determine coordinates</value>
+    <value>Åpne bildefil og finn koordinatene ved hjelp av blind søkemotor</value>
   </data>
   <data name="LblLoadProfile" xml:space="preserve">
     <value>Åpne profil</value>
@@ -1924,7 +1924,7 @@ Forventet HFR: {2}</value>
     <value>Manuell fokuseringsmål</value>
   </data>
   <data name="LblManualNotFound" xml:space="preserve">
-    <value>Manual not found</value>
+    <value>Manual ikke funnet</value>
   </data>
   <data name="LblManualRotator" xml:space="preserve">
     <value>Manuell rotasjon</value>
@@ -1945,7 +1945,7 @@ Forventet HFR: {2}</value>
     <value>Maksimal eksponeringstid</value>
   </data>
   <data name="LblMaxIncrement" xml:space="preserve">
-    <value>Max Increment</value>
+    <value>Største trinn</value>
   </data>
   <data name="LblMaxObjects" xml:space="preserve">
     <value>Maks antall objekter</value>
@@ -1993,7 +1993,7 @@ Forventet HFR: {2}</value>
     <value>Min. varighet</value>
   </data>
   <data name="LblMinExposureTimeDownloadRatio" xml:space="preserve">
-    <value>Minimum Exposure Time from Download Ratio</value>
+    <value>Korteste eksponeringstid fra nedlastingsforhold</value>
   </data>
   <data name="LblMinExpTime" xml:space="preserve">
     <value>Korteste eksponeringstid</value>
@@ -2032,7 +2032,7 @@ Forventet HFR: {2}</value>
     <value>NASA Sky Survey</value>
   </data>
   <data name="LblNative" xml:space="preserve">
-    <value>Native</value>
+    <value>Nativ</value>
   </data>
   <data name="LblNauticalDawn" xml:space="preserve">
     <value>Nautisk demring</value>
@@ -2108,7 +2108,7 @@ Forventet HFR: {2}</value>
     <value>Nord</value>
   </data>
   <data name="LblNoSwitch" xml:space="preserve">
-    <value>No Switch</value>
+    <value>Ingen bryter</value>
   </data>
   <data name="LblNoSync" xml:space="preserve">
     <value>Ikke synkroniser</value>
@@ -2274,7 +2274,7 @@ Forventet HFR: {2}</value>
     <value>Sorter etter</value>
   </data>
   <data name="LblOrientation" xml:space="preserve">
-    <value>Rotasjon</value>
+    <value>Vinkel</value>
   </data>
   <data name="LblOverlapPercentage" xml:space="preserve">
     <value>Mengde overlapp</value>
@@ -2448,7 +2448,7 @@ Forventet HFR: {2}</value>
     <value>Astrometrisk løsning har nådd grense for antall forsøk, eller en meridianvending er nødvendig.</value>
   </data>
   <data name="LblPlatesolveFailed" xml:space="preserve">
-    <value>Platesolve failed</value>
+    <value>Astrometrisk søk feilet</value>
   </data>
   <data name="LblPlateSolveFailedDelay" xml:space="preserve">
     <value>Forsinkelse mellom forsøk</value>
@@ -2457,7 +2457,7 @@ Forventet HFR: {2}</value>
     <value>Forsinkelse, i minutter, mellom forsøk på astrometrisk løsning</value>
   </data>
   <data name="LblPlateSolveImage" xml:space="preserve">
-    <value>Plate solve current image</value>
+    <value>Astrometrisk søk for dette bildet</value>
   </data>
   <data name="LblPlateSolveNbOfAttempts" xml:space="preserve">
     <value>Antall forsøk</value>
@@ -2469,7 +2469,7 @@ Forventet HFR: {2}</value>
     <value>Ingen referansekoordinater tilgjengelige</value>
   </data>
   <data name="LblPlateSolveNoFocalLength" xml:space="preserve">
-    <value>Plate solve aborted. The telescope's effective focal length must be specified under Options &gt; Equipment</value>
+    <value>Astrometrisk søk avbrutt. Teleskopets effektive fokallengde må angis under Innstillinger &gt; Utstyr</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceRepeating" xml:space="preserve">
     <value>Pekeretning er utenfor toleransen. Gjentar...</value>
@@ -2484,16 +2484,16 @@ Forventet HFR: {2}</value>
     <value>Astrometri-tjeneste levert av</value>
   </data>
   <data name="LblPlateSolver" xml:space="preserve">
-    <value>Plate Solver</value>
+    <value>Søkemotor</value>
   </data>
   <data name="LblPlateSolveReattemptDelay" xml:space="preserve">
     <value>Venter på neste forsøk på astrometrisk løsning: {0}</value>
   </data>
   <data name="LblPlateSolveSettings" xml:space="preserve">
-    <value>Plate Solver Settings</value>
+    <value>Søkeinnstillinger</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
-    <value>Plate Solving</value>
+    <value>Astrometri</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
     <value>Sentrerer på nytt etter for stor drift</value>
@@ -2532,7 +2532,7 @@ Forventet HFR: {2}</value>
     <value>Forbereder bilde</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Flat Sequence</value>
+    <value>Forbereder sekvens for mørke flatbilder</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flatbilder for filter: {0}</value>
@@ -2541,7 +2541,7 @@ Forventet HFR: {2}</value>
     <value>Følgende mulige problemer er oppdaget for sekvensen:</value>
   </data>
   <data name="LblPreSequenceChecklistHeader" xml:space="preserve">
-    <value>Pre-Sequence Checklist</value>
+    <value>Sjekkliste før sekvensstart</value>
   </data>
   <data name="LblPressure" xml:space="preserve">
     <value>Trykk</value>
@@ -2580,7 +2580,7 @@ Forventet HFR: {2}</value>
     <value>Nedbør</value>
   </data>
   <data name="LblRAPixError" xml:space="preserve">
-    <value>RA pikselavvik</value>
+    <value>RA-avvik (px)</value>
   </data>
   <data name="LblRate" xml:space="preserve">
     <value>Rate</value>
@@ -2827,7 +2827,7 @@ Denne malen vil bli brukt når en ny sekvens opprettes.</value>
     <value>Serieport</value>
   </data>
   <data name="LblSerialRelay" xml:space="preserve">
-    <value>Serial Relay</value>
+    <value>Serielt rele</value>
   </data>
   <data name="LblSetAsSequenceTarget" xml:space="preserve">
     <value>Bruk som sekvensmål</value>
@@ -2959,7 +2959,7 @@ Denne malen vil bli brukt når en ny sekvens opprettes.</value>
     <value>Sobel</value>
   </data>
   <data name="LblSolving" xml:space="preserve">
-    <value>Solving...</value>
+    <value>Søker...</value>
   </data>
   <data name="LblSource" xml:space="preserve">
     <value>Kilde</value>
@@ -3044,7 +3044,7 @@ Før du fortsetter, bekreft at systemet er i eller nær god fokus</value>
     <value>STScl Sky Survey</value>
   </data>
   <data name="LblSubSample" xml:space="preserve">
-    <value>Enable SubSampling</value>
+    <value>Utsnitt</value>
   </data>
   <data name="LblSuccess" xml:space="preserve">
     <value>Vellykket</value>
@@ -3176,7 +3176,7 @@ Før du fortsetter, bekreft at systemet er i eller nær god fokus</value>
     <value>Dec guiderate</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
-    <value>Temp Comp</value>
+    <value>Temp. kompensasjon</value>
   </data>
   <data name="LblTempControl" xml:space="preserve">
     <value>Temperaturstyring</value>
@@ -3218,10 +3218,10 @@ Før du fortsetter, bekreft at systemet er i eller nær god fokus</value>
     <value>Tidssone</value>
   </data>
   <data name="LblTimeOffset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Forskyvning</value>
   </data>
   <data name="LblTimeOffsetTooltip" xml:space="preserve">
-    <value>Offset in minutes from the fixed time of day</value>
+    <value>Forskyvning i minutter fra bestemt tidspunkt</value>
   </data>
   <data name="LblTo" xml:space="preserve">
     <value>Til</value>
@@ -3255,7 +3255,7 @@ Dra firkanten over en stjerne med diffraksjonslinjer. NINA vil analysere disse o
     <value>Slår stjernedeteksjon og analyse av Halv-Fluks Radius (HFR) på/av</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
-    <value>Live View</value>
+    <value>Live visning</value>
   </data>
   <data name="LblTooltipLoop" xml:space="preserve">
     <value>Ta bilder kontinuerlig</value>
@@ -3279,8 +3279,8 @@ Dra firkanten over en stjerne med diffraksjonslinjer. NINA vil analysere disse o
     <value>Starter sekvenser</value>
   </data>
   <data name="LblToolTipSubSample" xml:space="preserve">
-    <value>SubSampling Frame
-Drag the rectangle over the part of the frame you want to subsample and enable subsampling in snap. Your camera will only download the selected area.</value>
+    <value>Bildeutsnitt
+Dra rektangelet der du vil ta et utsnitt, og slå på Utsnitt i Foto-panelet. Kameraet vil kun laste ned det definerte utsnittet.</value>
   </data>
   <data name="LblTooltipTakeExposure" xml:space="preserve">
     <value>Starter eksponering</value>
@@ -3478,10 +3478,10 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>USB-grense</value>
   </data>
   <data name="LblUseBlindSolveFailover" xml:space="preserve">
-    <value>Plate solve failed. Try to solve using Blind Solver?</value>
+    <value>Astrometrisk søk feilet. Forsøke med blind søkemotor?</value>
   </data>
   <data name="LblUseBlindSolveNoCoordinatesRollover" xml:space="preserve">
-    <value>No reference coordinates available. Should the blind solver be used instead?</value>
+    <value>Ingen referansekoordinater tilgjengelig. Skal blind søkemotor brukes i stedet?</value>
   </data>
   <data name="LblUseBuldMode" xml:space="preserve">
     <value>Bruk bulb-modus</value>
@@ -3665,7 +3665,7 @@ Auto bruker mønster hentet fra kameradriveren. Gjelder ikke DSLR-kameraer.</val
     <value>Gjeldende</value>
   </data>
   <data name="LblRunningEndOfSequence" xml:space="preserve">
-    <value>Running end of sequence options</value>
+    <value>Utfører valg for sekvensslutt</value>
   </data>
   <data name="LblSQMPatternDescription" xml:space="preserve">
     <value>Himmelkvalitet-måling</value>
@@ -3756,7 +3756,7 @@ Denne metoden kan bare endres når fokusmotor er frakoblet!</value>
     <value>Sekvens inneholder instruksjoner med ugyldige forsterknings-innstillinger. Disse blir ignorert!</value>
   </data>
   <data name="LblIncompatibleOffsetsInSequence" xml:space="preserve">
-    <value>Sequence cotains items using incompatible Offset settings. These will be ignored!</value>
+    <value>Sekvens inneholder instruksjoner med ugyldige forskyvnings-innstillinger. Disse blir ignorert!</value>
   </data>
   <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
     <value>Legg til binning</value>
@@ -3834,7 +3834,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Lisens</value>
   </data>
   <data name="LblRepository" xml:space="preserve">
-    <value>Repository</value>
+    <value>Kildekode</value>
   </data>
   <data name="LblThirdPartyLicenses" xml:space="preserve">
     <value>Tredjeparts-lisenser</value>
@@ -3900,7 +3900,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Kuppelen svinges hvis avviket fra ønsket asimutvinkel er større enn denne verdien</value>
   </data>
   <data name="LblDomeDirectDriver" xml:space="preserve">
-    <value>Use NINA Direct Following</value>
+    <value>Bruk NINA direkte-følging</value>
   </data>
   <data name="LblDomeFindHome" xml:space="preserve">
     <value>Finn hjemposisjon</value>
@@ -4179,10 +4179,10 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Utfører instruksjoner parallelt</value>
   </data>
   <data name="LblEnterAnnotation" xml:space="preserve">
-    <value>Enter Annotation</value>
+    <value>Angi anmerking</value>
   </data>
   <data name="LblAfterIterations" xml:space="preserve">
-    <value>After Iterations</value>
+    <value>Etter iterasjoner</value>
   </data>
   <data name="LblFlatDeviceNotConnected" xml:space="preserve">
     <value>Flatpanel er ikke tilkoblet</value>
@@ -4209,7 +4209,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Ventetid i sekunder for å la dithering fullføres</value>
   </data>
   <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
-    <value>Lock star when guiding</value>
+    <value>Lås stjerne ved guiding</value>
   </data>
   <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
     <value>Send koordinatene til komposisjonshjelperen</value>
@@ -4227,7 +4227,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Aktiverer ultramodus for ekstra lav utlesingsstøy </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
-    <value>Reverse movement direction of rotator. Toggle this, if the platesolver rotates into the wrong direction.</value>
+    <value>Snu retning til dreiemotor. Sett denne hvis du opplever rotasjon i feil retning.</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey</value>
@@ -4239,16 +4239,16 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Himmelposisjon</value>
   </data>
   <data name="LblTargetMechanicalPosition" xml:space="preserve">
-    <value>Target Mechanical Position</value>
+    <value>Ønsket mekanisk vinkel</value>
   </data>
   <data name="LblTargetSkyPosition" xml:space="preserve">
-    <value>Target Sky Position</value>
+    <value>Ønsket himmelvinkel</value>
   </data>
   <data name="LblMoveMechanicalPosition" xml:space="preserve">
-    <value>Move Mechanical Position</value>
+    <value>Endre mekanisk vinkel</value>
   </data>
   <data name="LblMoveSkyPosition" xml:space="preserve">
-    <value>Move Sky Position</value>
+    <value>Endre himmelvinkel</value>
   </data>
   <data name="LblPixelMargin" xml:space="preserve">
     <value>Hold guidestjerner unna bildekant med minst</value>
@@ -4656,7 +4656,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Bruker innlært eksponeringstid for å ta flatbilder</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
-    <value>Trained Flat Exposure</value>
+    <value>Innlært flatbilde</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>Ingen innlært eksponeringstid funnet for kombinasjon av filter {0}, forsterkning {1} og binning {2}</value>
@@ -4687,7 +4687,7 @@ Legg til en instruksjonsblokker med mål her, eller legg til mål fra atlaset el
     <value>Mal for ny avansert sekvens</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
-    <value>When set, this template will be pre-loaded into the sequencer.</value>
+    <value>Denne malen lastes inn når en ny sekvens opprettes.</value>
   </data>
   <data name="LblForceGuidingCalibration" xml:space="preserve">
     <value>Tving kalibrering</value>
@@ -4754,7 +4754,7 @@ Hvis blokken over er kollapset, blir gjeldende instruksjon flyttet over denne.</
     <value>Venter til målet når angitt elevasjon. {0}° / {1}°</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
-    <value>End of Sequence Instructions</value>
+    <value>Instruksjoner for sekvensslutt</value>
   </data>
   <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
     <value>Parallell sekvensslutt</value>
@@ -5202,7 +5202,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Ingen styrbar bryter tilgjengelig</value>
   </data>
   <data name="LblPHD2ROIPct" xml:space="preserve">
-    <value>ROI Percentage to find Guidestar</value>
+    <value>Utsnitt ved valg av guidestjerne</value>
   </data>
   <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
     <value>Prosentandel av bildet som vurderes for valg av guidestjerne i PHD2, målt fra senter av bildet</value>
@@ -5268,10 +5268,10 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Dreier til posisjon {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+    <value>Finn innlært eksponeringstid basert på angitte parametre, og ta mørke flatbilder</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Flat Exposure</value>
+    <value>Innlært mørkt flatbilde</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Venstre side</value>
@@ -5322,7 +5322,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Parkering avbrutt</value>
   </data>
   <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
-    <value>Estimated Flat Panel Brightness</value>
+    <value>Beregnet flatpanel-lysstyrke</value>
   </data>
   <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
     <value>Gjennomsnittlig ADU var {0}, starter eksponeringstidberegning ved {1}</value>
@@ -5382,7 +5382,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Klargjør grensesnitt</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>Dreiemotor</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
     <value>Roterer kamera til angitt vinkel</value>
@@ -5581,7 +5581,7 @@ Bare relevant ved bruk av en ASCOM-kameradriver!</value>
     <value>Se etter tilgjengelige programtillegg og om nyere versjoner av installerte tillegg finnes.</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>Nøkkelord</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
     <value>Binning bruker snittverdi</value>
@@ -5669,7 +5669,7 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>Deklinasjon horisontal forskyving</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>Den horisontale forskyvningen av senter av teleskopet i forhold til deklinasjonsaksen (motoren ved bunnen av gaffelmonteringen). Positivt er til høyre, som er øst for den nordlige halvkule og vest for den sørlige.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Kuppelradius er ikke riktig konfigurert. I følge innstillingene er teleskopet utenfor kuppelen.</value>
@@ -5682,7 +5682,7 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>Ny enkel sekvens</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Switches to the simple target set planning mode</value>
+    <value>Bytter til enkel målsett-modus</value>
   </data>
   <data name="LblByName" xml:space="preserve">
     <value>Etter navn</value>
@@ -5724,10 +5724,10 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>Parker montering</value>
   </data>
   <data name="LblTargetSetEndOptions" xml:space="preserve">
-    <value>Target Set End Options</value>
+    <value>Sluttvalg for målsett</value>
   </data>
   <data name="LblTargetSetStartOptions" xml:space="preserve">
-    <value>Target Set Start Options</value>
+    <value>Startvalg for målsett</value>
   </data>
   <data name="LblUnparkMount" xml:space="preserve">
     <value>Avparker montering</value>
@@ -5736,10 +5736,10 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>Varm opp kamera</value>
   </data>
   <data name="LblRotatorRangeType" xml:space="preserve">
-    <value>Mechanical Range</value>
+    <value>Mekanisk dreieområde</value>
   </data>
   <data name="LblRotatorRangeStart" xml:space="preserve">
-    <value>Mechanical Range Start</value>
+    <value>Start på mekanisk dreieområde</value>
   </data>
   <data name="LblRotatorRangeFull" xml:space="preserve">
     <value>Full</value>
@@ -5760,7 +5760,7 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>90 grader bevegelsesområdet støttes. Dette er hovedsaklig praktisk for kvadratiske bildesensorer. Posisjoner utenfor dette området justeres automatisk.</value>
   </data>
   <data name="LblRotatorRangeAdjusted" xml:space="preserve">
-    <value>Adjusted rotator target to {0}</value>
+    <value>Justert ønsket vinkel til {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
     <value>Klarte ikke å {0} fra komposisjonshjelperen</value>
@@ -5772,22 +5772,22 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>Dither-hviletid</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
-    <value>Failed to start tracking CCD ASCOM server. {0}</value>
+    <value>Kunne ikke starte Følgende CCD ASCOM-tjeneste. {0}</value>
   </data>
   <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
-    <value>Tracking CCD ASCOM server started</value>
+    <value>Følgende CCD ASCOM-tjeneste startet</value>
   </data>
   <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
-    <value>Tracking CCD ASCOM server stopped</value>
+    <value>Følgende CCD ASCOM-tjeneste stoppet</value>
   </data>
   <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Enabled</value>
+    <value>Følgende CCD ASCOM-tjeneste aktivert</value>
   </data>
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
-    <value>Runs a server in the background to control the built-in tracking camera from other applications</value>
+    <value>Kjører en tjeneste i bakgrunnen for å styre den innebygde følgekameraet fra andre applikasjoner</value>
   </data>
   <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Logging</value>
+    <value>Følgende CCD ASCOM-tjeneste logging</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>Kanalnavn</value>
@@ -5796,10 +5796,10 @@ Vanlig oppførsel er å fortsette ved feil, men for noen instruksjoner er ikke d
     <value>ASCOM-driveren som leser fra denne tjenesten burde ha samme innstilling for kanalnavn (Pipe Name)</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
-    <value>Use External Tracking CCD</value>
+    <value>Bruk ekstern Følgende CCD</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
-    <value>External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect.</value>
+    <value>Innstillinger for ekstern Følgende CCD ble endret. Koble fra og til kameraet igjen for å iverksette endringene.</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} støttes ikke lenger av Microsoft og N.I.N.A. Du kan oppleve feil eller krasjer ved bruk av N.I.N.A. på en Windows-versjon som ikke støttes. N.I.N.A. sine systemkrav er oppgitt i dokumentasjonen på internett.</value>
@@ -5836,7 +5836,7 @@ Brukes best med en annen repetisjonsbetingelse for å unngå uendelig repetisjon
     <value>Sekvensen inneholder en ukjent instruksjon! Vennligst sjekk hvilken instruksjon som er problemet, og pass på at applikasjonen er oppdatert.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
-    <value>Toggle</value>
+    <value>Veksle</value>
   </data>
   <data name="LblMirrorLockupDelay" xml:space="preserve">
     <value>Forsinkelse ved speil-låsing</value>
@@ -5859,10 +5859,10 @@ Se bruksanvisningen for denne innstillingen</value>
     <value>Tilbakestill fremdriften for alle rader for gjeldende mål?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+    <value>Gjør et astrometrisk søk for å finne nåværende vinkel til kamera, og bruker dreiemotor for å oppnå ønsket vinkel. (Sentrerer ikke målet!)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
-    <value>Solve and rotate</value>
+    <value>Søk og roter</value>
   </data>
   <data name="LblInitializingPlugins" xml:space="preserve">
     <value>Initialiserer programtillegg</value>
@@ -5946,19 +5946,19 @@ Se bruksanvisningen for denne innstillingen</value>
     <value>Kameraet er i Ultra-low Voltage Lock-Out (UVLO) modus for å beskytte seg. Dette tyder på problemer med med strømforsyning. Vennligst kontakt QHY for råd om håndtering av denne feilen.</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Kan ikke fastslå kamerarotasjon.</value>
+    <value>Kan ikke fastslå kameravinkel.</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Kamerarotasjon er: {0}°</value>
+    <value>Kameravinkel er: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Finn kameraets rotasjon</value>
+    <value>Finn kameraets vinkel</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>Avbryter astrometrisk søk etter kameravinkel.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Tar et bilde med kameraet, og bestemmer rotasjonen astrometrisk. Denne rotasjonen blir så brukt i komposisjons-hjelperen.</value>
+    <value>Tar et bilde med kameraet, og bestemmer kameravinkelen astrometrisk. Denne vinkelen blir så brukt i komposisjons-hjelperen.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
     <value>Kunne ikke lagre bilde</value>
@@ -6037,7 +6037,7 @@ Bør bare aktiveres når rotering er mulig for hvert bilde.</value>
     <value>Oppdater eksisterende sekvensmål</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
-    <value>Viser en liste over mål som allerede finnes i sekvensen. Velg det målet som skal oppdateres med navn, koordinater og rotasjon.
+    <value>Viser en liste over mål som allerede finnes i sekvensen. Velg det målet som skal oppdateres med navn, koordinater og vinkel.
 Denne knappen er ikke synlig i mosaikk-modus.</value>
   </data>
 </root>

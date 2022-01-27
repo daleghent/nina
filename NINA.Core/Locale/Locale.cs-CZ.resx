@@ -215,7 +215,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba výšky</va
     <value>Anotovat Obraz</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
-    <value>Pokud je toto zaškrtnuto a je zapnutá funkce detekce hvězd, hvězdy detekované na snímku budou opatřeny poznámkami a zobrazí se jejich hodnoty HFR</value>
+    <value>If checked and a star detection for an image is applied, the image will be annotated with the found stars and their respective HFR value</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
     <value>API Klíč</value>
@@ -2497,7 +2497,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Astrometrie</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Znovu vycentruje po příliš velkém posunu</value>
+    <value>Recentering after too much drift</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
     <value>Není nastaven žádný cíl</value>
@@ -2906,7 +2906,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Atlas Hvězd</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Adresář obrázků Atlasu Hvězd</value>
+    <value>Sky Atlas Image Directory</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>Mapa Hvězd (Offline Snímkování)</value>
@@ -4091,13 +4091,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Na konci sekvence zaparkovat kopuli</value>
   </data>
   <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
-    <value>Povolit synchronizaci, zatímco montáž přejíždí</value>
+    <value>Allow sync while mount slews</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>Když je povoleno sledování kopule, NINA často kontroluje, zda je třeba kopuli otočit, aby se vyrovnala s dalekohledem. Když planetárium nebo mobilní aplikace pohne dalekohledem, je vhodné počkat, až se dalekohled přestane pohybovat, aby otočil kopuli.</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
-    <value>Synchronizace kopule při otáčení dalekohledu</value>
+    <value>Sync slew dome when scope slews</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
     <value>Otočí kopulí, aby se synchronizovala s polohou dalekohledu při otáčení. Toto nastavení nezachovává synchronizaci kopule při pohybu dalekohledu.</value>
@@ -4469,7 +4469,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Vycentrovat Po Posunu</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>Spouštěč, který určí pro znovu vycentrování a astrometrii, zda se dalekohled vzdálil příliš daleko od cílových souřadnic</value>
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo zahájení sekvence</value>
