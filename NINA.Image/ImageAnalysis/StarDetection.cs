@@ -64,7 +64,7 @@ namespace NINA.Image.ImageAnalysis {
             }
 
             state._originalBitmapSource = renderedImage.Image;
-
+            state._resizefactor = 1.0;
             if (state.imageProperties.Width > _maxWidth) {
                 if (p.Sensitivity == StarSensitivityEnum.Highest) {
                     state._resizefactor = Math.Max(2 / 3d, (double)_maxWidth / state.imageProperties.Width);
