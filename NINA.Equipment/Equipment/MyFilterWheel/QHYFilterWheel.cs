@@ -176,14 +176,16 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                     }
                 }
 
-                // Scan for missing position indexes between 0 .. maxPosition and reimport them
-                var existingPositions = filtersList.Select(x => (int)x.Position).ToList();
-                var missingPositions = Enumerable.Range(0, existingPositions.Max()).Except(existingPositions);
-                foreach (var position in missingPositions) {
-                    if (positions > position) {
-                        var filterToAdd = new FilterInfo(string.Format($"Slot {position}"), 0, (short)position);
-                        Logger.Warning($"Missing filter position. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
-                        filtersList.Insert(position, filterToAdd);
+                if (filtersList.Count > 0) {
+                    // Scan for missing position indexes between 0 .. maxPosition and reimport them
+                    var existingPositions = filtersList.Select(x => (int)x.Position).ToList();
+                    var missingPositions = Enumerable.Range(0, existingPositions.Max()).Except(existingPositions);
+                    foreach (var position in missingPositions) {
+                        if (positions > position) {
+                            var filterToAdd = new FilterInfo(string.Format($"Slot {position}"), 0, (short)position);
+                            Logger.Warning($"Missing filter position. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
+                            filtersList.Insert(position, filterToAdd);
+                        }
                     }
                 }
 
