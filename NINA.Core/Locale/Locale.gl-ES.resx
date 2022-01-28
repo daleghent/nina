@@ -1236,7 +1236,7 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>A cúpula non pode axustar a apertura</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>A cúpula non pode establecer o acimut</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>A cúpula non pode sincronizar acimut</value>
@@ -1293,7 +1293,7 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>Activar escalado de bit</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
+    <value>Gardar imaxes de 10/12/14 bits con escalado de 16 bits. (Só relevante para cámaras Altair, Omegon, SVBony, RisingCam e ToupTek cando se usa o controlador nativo)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Activado</value>
@@ -3097,12 +3097,11 @@ Antes de continuar, confirma que o sistema está actualmente enfocado ou está m
     <value>O Servizo Sincronizado PHD2 fallou, reiniciando o Guiador Sincronizado PHD2 como Servizo</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronize site settings</value>
+    <value>Sincronizar os parámetros do sitio</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
-
-Should the settings be synchronized?</value>
+    <value>A configuración do sitio do telescopio difire da de NINA.
+Debe sincronizarse a configuración?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Obxectivo</value>
@@ -3356,7 +3355,7 @@ Move o rectangulo sobre a parte do Encadre no que queres facer subsampling. A c�
     <value>Tipo</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Unable to connect camera {0}</value>
+    <value>Non se pode conectar a cámara {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Non se pode establecer o tempo de exposición</value>
@@ -3861,10 +3860,10 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Persiana</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close Shutter</value>
+    <value>Pechar o obturador</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open Shutter</value>
+    <value>Abrir o obturador</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotar en sentido horario</value>
@@ -4083,10 +4082,10 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Erro de sincronización da cúpula. Xa non segue o telescopio. {0}</value>
   </data>
   <data name="LblDomeSyncFailureDuringMeridianFlip" xml:space="preserve">
-    <value>Dome failed to synchronize after Meridian Flip</value>
+    <value>A Cúpula non se puido sincronizar tras o Volteo de Meridiano</value>
   </data>
   <data name="LblDomeSyncFailureDuringCentering" xml:space="preserve">
-    <value>Dome failed to synchronize during Centering</value>
+    <value>A cúpula non se puido sincronizar durante o centrado</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Pechar o obturador da cúpula ó rematar a secuencia</value>
@@ -4104,10 +4103,10 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Cando Seguimento da Cúpula está activado, NINA comprobará decote se a hai que xirar para aliñala co telescopio. Cando unha aplicación externa, como un planetario ou un teléfono móbil, move o telescopio, pode ser útil agardar a que o telescopio xa non se mova para xirar a cúpula.</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
-    <value>Sync slew dome when scope slews</value>
+    <value>Sincronización do xiro da cúpula cando o telescopio xira</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
-    <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
+    <value>Xira a cúpula para sincronizala coa posición do telescopio cando este xira. Esta configuración non mantén a sincronización da cúpula mentres o telescopio fai o seguimento.</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Ir a posición inicial antes de estacionar</value>
@@ -4868,16 +4867,16 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Estacionar Cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
-    <value>Rotates the dome to the home position</value>
+    <value>Rotar a cúpula ata a posición inicial</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
-    <value>Find Dome Home</value>
+    <value>Buscar a posición de repouso da cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
-    <value>Slews the dome to an absolute azimuth position</value>
+    <value>Xira a cúpula para unha posición absoluta de acimut</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Slew Dome Azimuth</value>
+    <value>Xira a cúpula en acimut</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Inicio Paralelo de Instrucións de Secuencia</value>
@@ -4904,16 +4903,16 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Activar sincronización da cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
-    <value>Disables background dome synchronization with the telescope</value>
+    <value>Desactiva a sincronización de fondo da cúpula co telescopio</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
-    <value>Disable Dome Sync</value>
+    <value>Desactivar sincronización da cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
-    <value>Synchronizes the Dome to the current telescope position</value>
+    <value>Sincroniza a cúpula coa posición actual do telescopio</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Sincronizar a cúpula</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>A Secuencia contén filas desactivadas ou nas que a suma do progreso de exposición é igual á suma da exposición total. Estes elementos omítense e non se xeran ítems destas filas para o secuenciador.</value>
@@ -5531,10 +5530,10 @@ Só é relevante cando se usa un controlador de cámara ASCOM!</value>
     <value>Algúns controladores de montura teñen unha implementación inversa do movemento do eixe secundario. Habilítao para inverter a dirección dos comandos de movemento para o eixe secundario.</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
-    <value>Current sequence title</value>
+    <value>Título da secuencia actual</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+    <value>A cúpula non informou do movemento da tapa ou houbo un fallo despois de completar a solicitude. Este é un comportamento inadecuado e perigoso. Infórmao ó teu vendedor de cúpulas.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Fallou a apertura do obturador. O estado do obturador aínda se informa como pechado a pesar de que se iniciou a operación de apertura.</value>
@@ -5674,390 +5673,391 @@ O comportamento predeterminado é continuar con erros, pero para algunhas instru
     <value>Reinicializar secuencia?</value>
   </data>
   <data name="LblMountType" xml:space="preserve">
-    <value>Mount Type</value>
+    <value>Tipo de montura</value>
   </data>
   <data name="LblEquatorial" xml:space="preserve">
-    <value>Equatorial</value>
+    <value>Ecuatorial</value>
   </data>
   <data name="LblForkOnWedge" xml:space="preserve">
-    <value>Fork on Wedge</value>
+    <value>Montura de garfo na base</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>DEC Horizontal Offset</value>
+    <value>Desprazamento horizontal en DEC</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>O desprazamento horizontal do centro do tubo con respecto ó eixe de declinación (o motor na base da montura de garfo). Positivo é "á dereita", que está ó leste para o hemisferio norte e ó oeste para o sur.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
-    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+    <value>O raio da cúpula non está configurado correctamente. A posición calculdada do telescopio está máis alá da cúpula.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
-    <value>Advanced Sequence</value>
+    <value>Secuencia Avanzada</value>
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Target Set</value>
+    <value>Conxunto de obxectivos</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Switches to the simple target set planning mode</value>
+    <value>Cambia para o modo de planificación do conxunto de obxectivos simple</value>
   </data>
   <data name="LblByName" xml:space="preserve">
-    <value>By Name</value>
+    <value>Por nome</value>
   </data>
   <data name="LblByRelevance" xml:space="preserve">
-    <value>By Relevance</value>
+    <value>Por relevancia</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
-    <value>Sequencer Targets Folder</value>
+    <value>Cartafol de obxectivos do secuenciador</value>
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
-    <value>The folder where sequence targets for the advanced sequencer are stored in</value>
+    <value>O cartafol onde se almacenan os obxectivos de secuencia para o secuenciador avanzado</value>
   </data>
   <data name="LblNotInstalled" xml:space="preserve">
-    <value>Not installed</value>
+    <value>Non instalado</value>
   </data>
   <data name="LblVendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>Vendedor</value>
   </data>
   <data name="LblVendorSDKs" xml:space="preserve">
-    <value>Vendor SDKs</value>
+    <value>Vendedor do SDKs</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Unpark operation was cancelled</value>
+    <value>Cancelouse a operación de aparcamento</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
-    <value>Waiting for telescope to unpark</value>
+    <value>Agardando polo telescopio para desaparcar</value>
   </data>
   <data name="LblGlobalTriggers" xml:space="preserve">
-    <value>Global Triggers</value>
+    <value>Desencadeantes Globais</value>
   </data>
   <data name="LblTargetOptions" xml:space="preserve">
-    <value>Target Options</value>
+    <value>Opcións de Obxectivo</value>
   </data>
   <data name="LblCoolCamera" xml:space="preserve">
-    <value>Cool Camera</value>
+    <value>Arrefriar a cámara</value>
   </data>
   <data name="LblParkMount" xml:space="preserve">
-    <value>Park Mount</value>
+    <value>Aparcar a montura</value>
   </data>
   <data name="LblTargetSetEndOptions" xml:space="preserve">
-    <value>Target Set End Options</value>
+    <value>Opcións tras finalizar o conxunto de obxectivos</value>
   </data>
   <data name="LblTargetSetStartOptions" xml:space="preserve">
-    <value>Target Set Start Options</value>
+    <value>Opcións antes de iniciar o conxunto de obxectivos</value>
   </data>
   <data name="LblUnparkMount" xml:space="preserve">
-    <value>Unpark Mount</value>
+    <value>Desaparcar montura</value>
   </data>
   <data name="LblWarmCamera" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Quentar Cámara</value>
   </data>
   <data name="LblRotatorRangeType" xml:space="preserve">
-    <value>Mechanical Range</value>
+    <value>Rango mecánico</value>
   </data>
   <data name="LblRotatorRangeStart" xml:space="preserve">
-    <value>Mechanical Range Start</value>
+    <value>Inicio do rango mecánico</value>
   </data>
   <data name="LblRotatorRangeFull" xml:space="preserve">
-    <value>Full</value>
+    <value>Completo</value>
   </data>
   <data name="LblRotatorRangeFullTooltip" xml:space="preserve">
-    <value>No restrictions for mechanical position</value>
+    <value>Sen restricións para a posición mecánica</value>
   </data>
   <data name="LblRotatorRangeHalf" xml:space="preserve">
-    <value>180 Degrees</value>
+    <value>180 Graos</value>
   </data>
   <data name="LblRotatorRangeHalfTooltip" xml:space="preserve">
-    <value>Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range.</value>
+    <value>Admítese ata a metade do rango de posición mecánica. As orientacións fóra deste rango axustaranse 180 graos para encaixaren dentro do rango configurado.</value>
   </data>
   <data name="LblRotatorRangeQuarter" xml:space="preserve">
-    <value>90 Degrees</value>
+    <value>90 Graos</value>
   </data>
   <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
-    <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
+    <value>Admítense 90 graos do rango de posición mecánica. Isto é útil principalmente para sensores cadrados.
+As orientacións fóra deste rango axustaranse para encaixaren dentro do rango configurado.</value>
   </data>
   <data name="LblRotatorRangeAdjusted" xml:space="preserve">
-    <value>Adjusted rotator target to {0}</value>
+    <value>Obxectivo do rotador axustado a {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
-    <value>Failed to {0} from the framing wizard</value>
+    <value>Erro de {0} dende o asistente de encadre</value>
   </data>
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
-    <value>Unable to set mount latitude to {0} and longitude to {1}!</value>
+    <value>Non se puido establecer a latitude da montura en {0} e a lonxitude en {1}!</value>
   </data>
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>Tempo de estabilización do dither</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
-    <value>Failed to start tracking CCD ASCOM server. {0}</value>
+    <value>Erro ó iniciar o servidor de seguimento da CCD ASCOM. {0}</value>
   </data>
   <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
-    <value>Tracking CCD ASCOM server started</value>
+    <value>Iniciado o seguimento do servidor da CCD ASCOM</value>
   </data>
   <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
-    <value>Tracking CCD ASCOM server stopped</value>
+    <value>Detido o servidor de seguimento da CCD ASCOM</value>
   </data>
   <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Enabled</value>
+    <value>Activado o servidor de seguimento da CCD ASCOM</value>
   </data>
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
-    <value>Runs a server in the background to control the built-in tracking camera from other applications</value>
+    <value>Executa un servidor en segundo plano para controlar a cámara con seguimento incorporado dende outras aplicacións</value>
   </data>
   <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Logging</value>
+    <value>Seguimento da actualización do servidor da CCD ASCOM</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
-    <value>Server Pipe Name</value>
+    <value>Nome do servidor de canalización (Server Pipe)</value>
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
-    <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
+    <value>O controlador ASCOM que le dende este servidor ha de ter configurado o mesmo nome de canalización (Pipe Name)</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
-    <value>Use External Tracking CCD</value>
+    <value>Utilizar CCD de seguimento externo</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCDChanged" xml:space="preserve">
-    <value>External Tracking CCD setting changed. Disconnect and reconnect camera for it to take effect.</value>
+    <value>Mudou a configuración do CCD de seguimento externo. Desconéctao e vólveo conectar á camara para que teña efecto.</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
-    <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
+    <value>{0} xa non é soportado por Microsoft e o proxecto N.I.N.A. Atoparás mal funcionamento e erros na aplicación como resultado do uso de N.I.N.A. nunha versión de Windows desfasada. Os requisitos mínimos actuais de N.I.N.A. están listados na documentación online.</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Sincronizar a cúpula</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+    <value>Un disparador para limitar os movementos de sincronización da cúpula entre os pasos da secuencia de cara a reducir as vibracións durante as exposicións. Isto non se debe usar con Dome Following activado, que se executa continuamente en segundo plano.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>Acimut</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
     <value>Altitude</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
-    <value>Turn dome following off to use the Synchronize Dome Trigger</value>
+    <value>Desactiva o seguimento da cúpula para sincronizar o disparador da cúpula</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
+    <value>Unha condición que comproba se o dispositivo de control de seguridade conectado se non é seguro e encadea un conxunto de instrucións sempre que o monitor de seguridade informe de que non é seguro. Se o dispositivo volve ser seguro, o conxunto de instrucións actuais deterase.
+Úsase mellor xunto con outra condición de bucle para non acabar nun bucle infinito cando o monitor de seguridade non sexa seguro.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
-    <value>Loop while unsafe</value>
+    <value>Repetir mentres non sexa seguro</value>
   </data>
   <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
-    <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+    <value>Non se puido retomar o guiado despois dun cambio do filtro que causou un cambio no foco</value>
   </data>
   <data name="LblMoveFocuserFailed" xml:space="preserve">
-    <value>Failed to move focuser</value>
+    <value>Non se puido mover o enfocador</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
-    <value>Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date.</value>
+    <value>Detectouse unha instrución descoñecida. Comproba a túa secuencia e inspecciona que instrucións non son válidas. Ademais comproba que todo está actualizado.</value>
   </data>
   <data name="LblToggle" xml:space="preserve">
-    <value>Toggle</value>
+    <value>Alternar</value>
   </data>
   <data name="LblMirrorLockupDelay" xml:space="preserve">
-    <value>Mirror lockup delay</value>
+    <value>Atraso no bloqueo do espello</value>
   </data>
   <data name="LblMirrorLockupDelayTooltip" xml:space="preserve">
-    <value>The desired length of time between when the mirror is locked up and when the exposure starts.
-A delay of 0 seconds deactivates this option.
-The mirror lockup option must be enabled in the camera as well.
-Refer to your camera's manual for the location of this setting</value>
+    <value>O período de tempo desexado entre o momento en que o espello está bloqueado e o momento en que comeza a exposición.
+Un atraso de 0 segundos desactiva esta opción.
+A opción de bloqueo do espello tamén debe estar activada na cámara.
+Consulta o manual da cámara para coñecer a localización desta configuración</value>
   </data>
   <data name="LblCanonCameraDisconnected" xml:space="preserve">
-    <value>{0} has been disconnected from the computer. Check its USB connection and power source</value>
+    <value>{0} foi desconectado dende o computador. Comproba a conexión USB e a fonte de alimentación</value>
   </data>
   <data name="LblCanonSdkError" xml:space="preserve">
-    <value>The Canon SDK has experienced an internal error. Unreliable camera operation might result</value>
+    <value>O SDK de Canon tivo un erro interno. Pode producirse un funcionamento pouco fiable da cámara</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTarget" xml:space="preserve">
-    <value>Reset Target</value>
+    <value>Restablecer o obxectivo</value>
   </data>
   <data name="Lbl_OldSequencer_ResetTargetRows" xml:space="preserve">
-    <value>Reset all rows in the current target?</value>
+    <value>Restablecer todas as liñas do obxectivo actual?</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Description" xml:space="preserve">
-    <value>Uses platesolving to determine the current rotation of the current position and uses a rotator to get to the specified sky angle. (It will not center the target!)</value>
+    <value>Usa a astrometría para determinar a rotación da posición actual e usa un rotador para chegar ó ángulo de ceo especificado. (Non centrará o obxectivo!)</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndRotate_Name" xml:space="preserve">
-    <value>Solve and rotate</value>
+    <value>Resolver e rotar</value>
   </data>
   <data name="LblInitializingPlugins" xml:space="preserve">
-    <value>Initializing Plugins</value>
+    <value>Incializando os Plugins</value>
   </data>
   <data name="LblCameraStateDownload" xml:space="preserve">
-    <value>Downloading</value>
+    <value>Descargando</value>
   </data>
   <data name="LblCameraStateError" xml:space="preserve">
-    <value>Error</value>
+    <value>Erro</value>
   </data>
   <data name="LblCameraStateExposing" xml:space="preserve">
-    <value>Exposing</value>
+    <value>Exposición</value>
   </data>
   <data name="LblCameraStateIdle" xml:space="preserve">
-    <value>Idle</value>
+    <value>Inactivo</value>
   </data>
   <data name="LblCameraStateLoadingFile" xml:space="preserve">
-    <value>Loading file</value>
+    <value>Cargando arquivo</value>
   </data>
   <data name="LblCameraStateNoState" xml:space="preserve">
-    <value>State unavailable</value>
+    <value>Estado non avaliable</value>
   </data>
   <data name="LblCameraStateReading" xml:space="preserve">
-    <value>Reading out</value>
+    <value>Lendo</value>
   </data>
   <data name="LblCameraStateWaiting" xml:space="preserve">
-    <value>Waiting</value>
+    <value>Agardando</value>
   </data>
   <data name="LblStarDetectorNoiseReduction" xml:space="preserve">
-    <value>Noise Reduction</value>
+    <value>Redución de Ruído</value>
   </data>
   <data name="LblStarDetectorPrepareForStructureDetection" xml:space="preserve">
-    <value>Preparing for Structure Detection</value>
+    <value>Preparando a Detección de Estruturas</value>
   </data>
   <data name="LblStarDetectorStructureDetection" xml:space="preserve">
-    <value>Structure Detection</value>
+    <value>Detección de Estruturas</value>
   </data>
   <data name="LblStarDetectorStarScan" xml:space="preserve">
-    <value>Scan and Analyze Stars</value>
+    <value>Escanear e Analizar Estrelas</value>
   </data>
   <data name="LblStarDetectorV2" xml:space="preserve">
-    <value>Use Star Detector V2</value>
+    <value>Usar o Detector de Estrelas V2</value>
   </data>
   <data name="LblAnnotateUnlimitedStars" xml:space="preserve">
-    <value>Annotate All</value>
+    <value>Anotar Todo</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
+    <value>Por defecto só se anotan 200 estrelas. ó activar isto serán detectadas todas as estrelas.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
-    <value>Star Detector</value>
+    <value>Detector de Estrelas</value>
   </data>
   <data name="LblStarAnnotator" xml:space="preserve">
-    <value>Star Annotator</value>
+    <value>Anotador de Estrelas</value>
   </data>
   <data name="LblUnavailableForX86" xml:space="preserve">
-    <value>Unavailable in x86</value>
+    <value>Non dispoñible en x86</value>
   </data>
   <data name="LblAutoFocusDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Duración</value>
   </data>
   <data name="LblSynchronizingDome" xml:space="preserve">
-    <value>Synchronizing Dome</value>
+    <value>Sincronizando a cúpula</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearCaption" xml:space="preserve">
-    <value>Clear sequence?</value>
+    <value>Limpar a secuencia?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ClearPrompt" xml:space="preserve">
-    <value>Do you want to clear the complete sequence run?</value>
+    <value>Queres limpar a execución completa da secuencia?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Delete_Tooltip" xml:space="preserve">
-    <value>Deletes all instructions, triggers and conditions from all areas inside the sequence</value>
+    <value>Suprime todas as instrucións, os desencadeadores e as condicións de todas as áreas da secuencia</value>
   </data>
   <data name="LblMountTimeDifferenceTooLarge" xml:space="preserve">
-    <value>The mount's clock differs from the computer's clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount's documentation regarding time configuration.</value>
+    <value>O reloxo da montura difire do reloxo do ordenador en {0:0} segundos. Isto pode levar a apuntamentos inexactos e problemas coa resolución de placas. Revisa a documentación da túa montura sobre a configuración do tempo.</value>
   </data>
   <data name="LblCanonMluNotSupported" xml:space="preserve">
-    <value>{0} is configured with Mirror Lock-Up (MLU) on, but it does not support MLU exposures via USB. Turn MLU off under the camera's Custom Function menu for exposures to succeed.</value>
+    <value>{0} configurouse con Bloqueo do espello (MLU) activado, pero non admite exposicións MLU vía USB. Desactiva MLU no menú Función Personalizada da cámara para poder facer as exposicións.</value>
   </data>
   <data name="LblQhyUvloActiveError" xml:space="preserve">
-    <value>The camera is in ultra-low voltage lockout (UVLO) mode to protect its components. This indicates a possible power supply issue. Please contact QHY support for advice on addressing this issue.</value>
+    <value>A cámara está bloqueada en modo de voltaxe ultrabaixa (UVLO) para protexer os seus compoñentes. Isto indica un posible problema de alimentación. Ponte en contacto co servizo de asistencia de QHY para obter consellos sobre como solucionar este problema.</value>
   </data>
   <data name="LblCameraRotationImportFailed" xml:space="preserve">
-    <value>Unable to determine camera rotation.</value>
+    <value>Non se puido determinar a rotación da cámara.</value>
   </data>
   <data name="LblCameraRotationSolved" xml:space="preserve">
-    <value>Camera rotation has been determined: {0}°</value>
+    <value>Determinouse a rotación da cámara: {0}°</value>
   </data>
   <data name="LblDetermineRotationFromCamera" xml:space="preserve">
-    <value>Determine rotation from camera</value>
+    <value>Determinar a rotación dende a cámara</value>
   </data>
   <data name="LblDetermineRotationFromCameraCancel" xml:space="preserve">
-    <value>Cancels to determine rotation from camera for framing.</value>
+    <value>Cancela para determinar a rotación da cámara para o encuadre.</value>
   </data>
   <data name="LblDetermineRotationFromCameraTooltip" xml:space="preserve">
-    <value>Takes an image with the camera and starts a plate solve to retrieve the camera orientation.
-Once successfully solved, the rotation will be set for framing.</value>
+    <value>Toma unha imaxe coa cámara e inicia astrometría para recuperar a orientación da cámara.
+Unha vez resolto con éxito, establecerase a rotación para encadrar.</value>
   </data>
   <data name="LblSaveFileFailed" xml:space="preserve">
-    <value>Failed to save image</value>
+    <value>Erro ó gardar a imaxe</value>
   </data>
   <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
-    <value>Get coordinates from the current scope position</value>
+    <value>Obter as coordenadas a partir da posición actual do telescopio</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>Elevación</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
-    <value>Device threads for ASCOM</value>
+    <value>Subprocesos de dispositivo para ASCOM</value>
   </data>
   <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
-    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+    <value>Esta é unha configuración experimental que pode mellorar a capacidade de resposta da IU e reducir a posibilidade de que a IU se bloquee ó se conectar ós controladores ASCOM. Esta configuración debe estar activada antes de conectar dispositivos para que teña efecto. Comparte comentarios cos colaboradores en Discord se usas isto, xa que estamos considerando activalo para todos.</value>
   </data>
   <data name="LblDefault" xml:space="preserve">
-    <value>Default</value>
+    <value>Por defecto</value>
   </data>
   <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
-    <value>Flat device cannot control brightness!</value>
+    <value>O dispositivo de flat non pode controlar a luminosidade!</value>
   </data>
   <data name="LblAboveHorizon" xml:space="preserve">
-    <value>Above Horizon</value>
+    <value>Sobre o Horizonte</value>
   </data>
   <data name="LblNikonX86Deprecated" xml:space="preserve">
-    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+    <value>Non soportado - Nikon non distribúe binarios SDK para as aplicacións x86</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
-    <value>No Plugins Installed</value>
+    <value>Non hai plugins instalados</value>
   </data>
   <data name="LblPluginUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>Actualizar todo</value>
   </data>
   <data name="LblPluginUpdateAllCancel" xml:space="preserve">
-    <value>Cancel Update</value>
+    <value>Cancelar actualización</value>
   </data>
   <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
-    <value>Updates all plugins where an update is available to the latest version</value>
+    <value>Actualiza todos os plugins cando unha actualización está dispoñible na súa última versión</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>Erro no volteo do meridiano. 
+Farase outro intento en {0} segundos.
+Intento {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>Erro no volteo do meridiano despois de ralizaro o número máximo de intentos. Abortando.</value>
   </data>
   <data name="LblROI" xml:space="preserve">
-    <value>ROI</value>
+    <value>RDI</value>
     <comment>Region of interest used for sub frame.</comment>
   </data>
   <data name="LblROIPercentageTooltip" xml:space="preserve">
-    <value>Region of Interest expressed in percentage relative to the center</value>
+    <value>Rexión De Interese expresada en porcentaxe respecto ó centro</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
-    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+    <value>Toma unha exposición dunha duración, ganancia e compensación dadas para a rexión de interese especificada</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
-    <value>Take Subframe Exposure</value>
+    <value>Tomar a exposición do subcadro</value>
   </data>
   <data name="LblPreserveAlignment" xml:space="preserve">
-    <value>Preserve alignment</value>
+    <value>Preservar aliñamento</value>
   </data>
   <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
-    <value>Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
-This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
+    <value>Se esta opción está activada, asegurarase de que os paneis se aliñan cun único panel rectangular, pero producirá ángulos de rotación diferentes para cada panel.
+Esta opción debería estar activada cando a rotación automática da cámara está dispoñible ou cando é posible a rotación manual da cámara para cada panel do mosaico.
 </value>
   </data>
   <data name="LblMosaicPanels" xml:space="preserve">
-    <value>Mosaic Panels</value>
+    <value>Paneis de Mosaico</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
-    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
+    <value>Cando estea activado, rotarase o fondo do ceo en lugar do rectángulo.</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
-    <value>Update Existing Target in Sequencer</value>
+    <value>Actualizar un obxectivo do Secuenciador</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
-    <value>When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
-This button is not visible when in mosaic mode.</value>
+    <value>Cando se preme mostrará unha lista de obxectivos que xa estaban colocados no secuenciador. Despois de facer clic nun destes obxectivos, ese obxectivo actualizarase co nome, as coordenadas e a rotación enmarcados actualmente.
+Este botón non é visible cando se está en modo mosaico.</value>
   </data>
 </root>

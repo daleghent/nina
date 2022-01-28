@@ -1885,13 +1885,13 @@
     <value>加载序列失败</value>
   </data>
   <data name="LblLoadSequenceSetFailed" xml:space="preserve">
-    <value>加载目标设置失败</value>
+    <value>载入目标组失败</value>
   </data>
   <data name="LblLoadSequenceToolTip" xml:space="preserve">
     <value>从xml文件加载序列</value>
   </data>
   <data name="LblLoadTargetSet" xml:space="preserve">
-    <value>加载目标设置</value>
+    <value>载入目标组</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
     <value>本地解析</value>
@@ -3914,7 +3914,7 @@
     <value>赤道仪轴长</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
-    <value>如果为经纬仪，则应为0。对于赤道仪，使赤纬为+/-90度，并测量从赤经轴到镜筒中心线的横向距离(单位：毫米)</value>
+    <value>如果为经纬仪，则应为0。对于赤道仪，使赤经或赤纬为+/-90度，并测量从赤经轴到镜筒中心线的横向距离(单位：毫米)</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
     <value>横轴长度</value>
@@ -4223,7 +4223,7 @@
     <value>从外部源导入目标</value>
   </data>
   <data name="LblUnknownImportFormat" xml:space="preserve">
-    <value>导入目标的未知格式</value>
+    <value>导入的目标格式未知</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
     <value>超级模式</value>
@@ -6009,19 +6009,19 @@
     <value>更新所有插件到最新版本</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>中天翻转失败。 
+将在 {0} 秒后进行下一次尝试。
+尝试 {1}/{2}。</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>中天翻转在达到最大尝试次数后仍然失败。正在中止。</value>
   </data>
   <data name="LblROI" xml:space="preserve">
     <value>ROI</value>
     <comment>Region of interest used for sub frame.</comment>
   </data>
   <data name="LblROIPercentageTooltip" xml:space="preserve">
-    <value>Region of Interest expressed in percentage relative to the center</value>
+    <value>以百分比表示的ROI范围，居中于画面</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
     <value>以设定的曝光时间、增益、偏移对指定的ROI进行一次曝光</value>
@@ -6030,24 +6030,23 @@ Attempt {1}/{2}.</value>
     <value>开始子帧曝光</value>
   </data>
   <data name="LblPreserveAlignment" xml:space="preserve">
-    <value>Preserve alignment</value>
+    <value>保持对齐</value>
   </data>
   <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
-    <value>Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
-This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
-</value>
+    <value>启用此选项将保证所有图像板块对齐到一个大矩形，但会导致每个板块的旋转角度不同。
+如果有自动旋转器或可以为每个板块手动旋转相机，应启用此选项。</value>
   </data>
   <data name="LblMosaicPanels" xml:space="preserve">
-    <value>Mosaic Panels</value>
+    <value>马赛克板块</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
     <value>启用后，将旋转天空背景而不是构图矩形框。</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
-    <value>Update Existing Target in Sequencer</value>
+    <value>更新已有的序列目标</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
-    <value>When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
-This button is not visible when in mosaic mode.</value>
+    <value>点击后，将显示已有序列目标的列表。点击其中一个目标后，该目标将更新为现在的名称、坐标和旋转角度。
+此选项在马赛克模式下不可见。</value>
   </data>
 </root>
