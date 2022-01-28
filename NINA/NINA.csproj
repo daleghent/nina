@@ -1143,6 +1143,9 @@
     <Content Include="Database\Migration\5.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\6.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\MallinCam\mallincam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
