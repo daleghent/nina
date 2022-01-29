@@ -6047,4 +6047,7 @@ Bu seçenek, otomatik kamera dönüşü mevcut olduğunda veya her mozaik panel 
     <value>Tıklandığında, sıralayıcıya önceden kaydedilmiş hedeflerin bir listesini gösterecektir. Bu hedeflerden birine tıkladıktan sonra hedef, mevcut çerçeveli ad, koordinatlar ve dönüş ile güncellenir.
 Bu düğme mozaik modundayken görünmez.</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

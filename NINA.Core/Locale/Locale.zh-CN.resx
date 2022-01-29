@@ -6049,4 +6049,7 @@
     <value>点击后，将显示已有序列目标的列表。点击其中一个目标后，该目标将更新为现在的名称、坐标和旋转角度。
 此选项在马赛克模式下不可见。</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

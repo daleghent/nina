@@ -6049,4 +6049,7 @@ Esta opción debería activarse cuando etá disponible la rotación automática 
     <value>Al hacer clic, se mostrará una lista de objetos que ya estaban situados dentro del secuenciador. Después de hacer clic en uno de estos objetos,  se actualizará con el nombre actual de la imagen, las coordenadas y la rotación.
 Este botón no es visible en modo mosaico.</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

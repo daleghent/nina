@@ -6060,4 +6060,7 @@ Esta opción debería estar activada cando a rotación automática da cámara es
     <value>Cando se preme mostrará unha lista de obxectivos que xa estaban colocados no secuenciador. Despois de facer clic nun destes obxectivos, ese obxectivo actualizarase co nome, as coordenadas e a rotación enmarcados actualmente.
 Este botón non é visible cando se está en modo mosaico.</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

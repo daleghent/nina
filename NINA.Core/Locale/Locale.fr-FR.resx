@@ -6055,4 +6055,7 @@ Cette option doit être activée lorsque la rotation automatique de la caméra e
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
     <value>Lorsque vous cliquez dessus, une liste de cibles déjà placées dans le séquenceur s'affiche. Après avoir cliqué sur l'une de ces cibles, celle-ci sera mise à jour avec le nom, les coordonnées et la rotation de la cible actuellement encadrée. Ce bouton n'est pas visible en mode mosaïque.</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

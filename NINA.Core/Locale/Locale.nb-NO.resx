@@ -6040,4 +6040,7 @@ Bør bare aktiveres når rotering er mulig for hvert bilde.</value>
     <value>Viser en liste over mål som allerede finnes i sekvensen. Velg det målet som skal oppdateres med navn, koordinater og vinkel.
 Denne knappen er ikke synlig i mosaikk-modus.</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

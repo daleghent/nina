@@ -6051,4 +6051,7 @@ Diese Option sollte aktiviert sein, wenn eine automatische Kamera-Rotation verf√
     <value>Nach dem Klicken wird eine Liste der Ziele angezeigt, die bereits im Sequenzer platziert wurden. Nach Auswahl eines dieser Ziele wird dieses mit dem aktuellen Namen, Koordinaten und Drehung aktualisiert.
 Dieser Button ist im Mosaik-Modus nicht sichtbar.</value>
   </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Use Blind Solver for Failures</value>
+  </data>
 </root>

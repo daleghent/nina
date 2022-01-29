@@ -215,7 +215,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí skutečná chyba výšky</va
     <value>Anotovat Obraz</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
-    <value>If checked and a star detection for an image is applied, the image will be annotated with the found stars and their respective HFR value</value>
+    <value>Pokud je zaškrtnuto a pro obrázek je použita detekce hvězd, bude obrázek opatřen anotací s nalezenými hvězdami a jejich příslušnou hodnotou HFR</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
     <value>API Klíč</value>
@@ -571,9 +571,9 @@ Filtr: {3}</value>
     <value>Změna</value>
   </data>
   <data name="LblChangedSequenceWarning" xml:space="preserve">
-    <value>The sequence for the target(s) '{0}' have been modified since it was last saved (or has not been saved yet).
+    <value>Pořadí cíle(ů) v sekvenci '{0}' bylo od posledního uložení změněno (nebo ještě nebylo uloženo).
         
-Do you want to close the sequence and lose the changes anyway?</value>
+Chcete sekvenci zavřít a přesto změny ztratit?</value>
   </data>
   <data name="LblChangedSequenceWarningTitle" xml:space="preserve">
     <value>Uzavření změněné sekvence</value>
@@ -2497,7 +2497,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Astrometrie</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>Znovuobnovení po příliš velkém posunu</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
     <value>Není nastaven žádný cíl</value>
@@ -2906,7 +2906,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Atlas Hvězd</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Sky Atlas Image Directory</value>
+    <value>Adresář Atlasu Hvězd</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>Mapa Hvězd (Offline Snímkování)</value>
@@ -4091,13 +4091,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Na konci sekvence zaparkovat kopuli</value>
   </data>
   <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
-    <value>Allow sync while mount slews</value>
+    <value>Povolit synch., zatímco montáž přejíždí</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>Když je povoleno sledování kopule, NINA často kontroluje, zda je třeba kopuli otočit, aby se vyrovnala s dalekohledem. Když planetárium nebo mobilní aplikace pohne dalekohledem, je vhodné počkat, až se dalekohled přestane pohybovat, aby otočil kopuli.</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
-    <value>Sync slew dome when scope slews</value>
+    <value>Synch. kopule při otáčení dalekohledu</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
     <value>Otočí kopulí, aby se synchronizovala s polohou dalekohledu při otáčení. Toto nastavení nezachovává synchronizaci kopule při pohybu dalekohledu.</value>
@@ -4469,7 +4469,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Vycentrovat Po Posunu</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Spouštěč, který zahájí znovuobnovení, co astrometrie určí, že se dalekohled vzdálil příliš daleko od cílových souřadnic</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo zahájení sekvence</value>
@@ -6052,5 +6052,8 @@ Tato možnost by měla být povolena, pokud je k dispozici automatické otáčen
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
     <value>Po kliknutí se zobrazí seznam cílů, které již byly umístěny uvnitř sekvenceru. Po kliknutí na jeden z těchto cílů bude tento cíl aktualizován o aktuálně zarámovaný název, souřadnice a rotaci.
 Toto tlačítko není viditelné v režimu mozaiky.</value>
+  </data>
+  <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
+    <value>Použít Řešení Naslepo při Chybě</value>
   </data>
 </root>
