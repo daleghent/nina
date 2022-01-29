@@ -327,18 +327,18 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         Logger.Debug("MGEN - Guiding didn't start, selecting new guide star");
                         await AutoSelectGuideStar();
                     }
-                }
-                var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
-                if (calibrated) {
-                    Logger.Info("MGEN - Starting Guiding");
-                    await MGen.StartGuiding(ct);
-                    if (!await MGen.IsGuidingActive(ct)) {
-                        Logger.Error("MGEN - Failed to start guiding");
+                    var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
+                    if (calibrated) {
+                        Logger.Info("MGEN - Starting Guiding");
+                        await MGen.StartGuiding(ct);
+                        if (!await MGen.IsGuidingActive(ct)) {
+                            Logger.Error("MGEN - Failed to start guiding");
+                            return false;
+                        }
+                        await WaitForSettling(DitherSettlingTime, progress, ct);
+                    } else {
                         return false;
                     }
-                    await WaitForSettling(DitherSettlingTime, progress, ct);
-                } else {
-                    return false;
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
