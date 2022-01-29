@@ -386,6 +386,7 @@ namespace NINA.ViewModel.Imaging {
                 var success = true;
                 if (Loop) IsLooping = true;
                 Task<IRenderedImage> prepareTask = null;
+                var savedFullImageWhileLooping = false;
                 do {
                     var seq = new CaptureSequence(SnapExposureDuration, ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
                     seq.EnableSubSample = SnapSubSample;
@@ -399,9 +400,6 @@ namespace NINA.ViewModel.Imaging {
 
                     var imageData = await exposureData.ToImageData(progress, _captureImageToken.Token);
 
-                    if (!SnapSubSample)
-                        Image = imageData.RenderImage().Image;
-
                     if (prepareTask?.Status < TaskStatus.RanToCompletion) {
                         await prepareTask;
                     }
@@ -410,6 +408,12 @@ namespace NINA.ViewModel.Imaging {
                         progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });
                         await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
                         imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageTypes.SNAPSHOT);
+                    }
+
+                    if (!SnapSubSample && !savedFullImageWhileLooping) {
+                        var renderedImage = await imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
+                        Image = renderedImage.Image;
+                        savedFullImageWhileLooping = IsLooping;
                     }
 
                     _captureImageToken.Token.ThrowIfCancellationRequested();

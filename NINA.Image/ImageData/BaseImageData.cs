@@ -143,7 +143,8 @@ namespace NINA.Image.ImageData {
                     fi.Directory.Create();
                 }
 
-                File.Move(file, newFileName);
+                FileInfo fileinfo = new FileInfo(file);
+                fileinfo.MoveTo(newFileName);
 
                 Logger.Info($"Saving image at {newFileName}");
 
