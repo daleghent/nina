@@ -92,6 +92,7 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
         public void RecalculateTopLeft(ViewportFoV reference) {
             ViewPortCenter = reference.CenterCoordinates;
             ViewPortCenterPoint = reference.ViewPortCenterPoint;
+            ViewPortRotation = reference.Rotation;
             CenterPoint = coordinates.XYProjection(reference);
             arcSecWidth = reference.ArcSecWidth;
             arcSecHeight = reference.ArcSecHeight;
@@ -105,6 +106,7 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
         public System.Windows.Point CenterPoint { get; private set; }
         public Coordinates ViewPortCenter { get; private set; }
         public System.Windows.Point ViewPortCenterPoint { get; private set; }
+        public double ViewPortRotation { get; private set; }
 
         public string Id { get; }
         public string Name1 { get; }
@@ -165,12 +167,11 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
 
             var panelDeltaX = CenterPoint.X - ViewPortCenterPoint.X;
             var panelDeltaY = CenterPoint.Y - ViewPortCenterPoint.Y;
-            var previousRotation = 0;
-            var referenceCenter = ViewPortCenter.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, previousRotation, arcSecWidth, arcSecHeight);
+            var referenceCenter = ViewPortCenter.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, ViewPortRotation, arcSecWidth, arcSecHeight);
             
             float adjustedAngle = positionAngle;
             if (Math.Abs(ViewPortCenter.RA - coordinates.RA) > 1E-13 || Math.Abs(ViewPortCenter.Dec - coordinates.Dec) > 1E-13) {
-                adjustedAngle = positionAngle - ( 90 - (float)AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, coordinates.RADegrees, referenceCenter.Dec, coordinates.Dec)) + previousRotation;
+                adjustedAngle = positionAngle - ( 90 - ((float)AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, coordinates.RADegrees, referenceCenter.Dec, coordinates.Dec) /*+ (float)ViewPortRotation*/)) ;
             }
 
             g.TranslateTransform((float)CenterPoint.X, (float)CenterPoint.Y);
