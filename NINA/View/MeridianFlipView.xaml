@@ -27,16 +27,22 @@
         </CollectionViewSource>
 
         <DataTemplate x:Key="RecenterTemplate">
-            <StackPanel DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}" Orientation="Horizontal">
+            <StackPanel
+                Margin="5"
+                DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                Orientation="Horizontal">
                 <TextBlock
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="36"
-                    Text="{Binding Status.Status}" />
+                    Text="{Binding Status.Status}"
+                    TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="PassMeridianTemplate">
             <TextBlock
+                Margin="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="36"
@@ -44,33 +50,36 @@
         </DataTemplate>
 
         <DataTemplate x:Key="FlipDataTemplate">
-            <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
+            <Grid Margin="5" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="36"
-                    Text="{Binding Status.Status}" />
+                    Text="{Binding Status.Status}"
+                    TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="SettleDataTemplate">
-            <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
+            <Grid Margin="5" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="36"
-                    Text="{Binding Status.Status}" />
+                    Text="{Binding Status.Status}"
+                    TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
 
         <!--  Default DataTemplate  -->
         <DataTemplate x:Key="DefaultTemplate">
-            <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
+            <Grid Margin="5" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="36"
-                    Text="{Binding Status.Status}" />
+                    Text="{Binding Status.Status}"
+                    TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
 
