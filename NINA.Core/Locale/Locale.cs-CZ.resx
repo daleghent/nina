@@ -6054,6 +6054,6 @@ Tato možnost by měla být povolena, pokud je k dispozici automatické otáčen
 Toto tlačítko není viditelné v režimu mozaiky.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
-    <value>Použít Řešení Naslepo při Chybě</value>
+    <value>Řešení Naslepo při Chybě</value>
   </data>
 </root>
