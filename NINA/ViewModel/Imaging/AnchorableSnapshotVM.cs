@@ -411,7 +411,7 @@ namespace NINA.ViewModel.Imaging {
                     }
 
                     if (!SnapSubSample && !savedFullImageWhileLooping) {
-                        var renderedImage = await imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
+                        var renderedImage = await prepareTask;
                         Image = renderedImage.Image;
                         savedFullImageWhileLooping = IsLooping;
                     }
