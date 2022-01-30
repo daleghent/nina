@@ -14,23 +14,33 @@
 
 using NINA.Core.Enum;
 using NINA.Core.Utility;
+using NINA.Profile;
+using System;
 
 namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class Settings : BaseINPC {
-        private CameraType type = CameraType.RANDOM;
+        public Settings(PluginOptionsAccessor pluginOptionsAccessor) {
+            this.pluginOptionsAccessor = pluginOptionsAccessor;
+            RandomSettings = new RandomSettings(pluginOptionsAccessor);
+            ImageSettings = new ImageSettings(pluginOptionsAccessor);
+            SkySurveySettings = new SkySurveySettings(pluginOptionsAccessor);
+        }
 
         public CameraType Type {
-            get => type;
+            get {
+                return pluginOptionsAccessor.GetValueEnum(nameof(Type), CameraType.RANDOM);
+            }
             set {
-                type = value;
-
+                pluginOptionsAccessor.SetValueEnum(nameof(Type), value);
                 RaisePropertyChanged();
             }
         }
 
-        public RandomSettings RandomSettings { get; set; } = new RandomSettings();
-        public ImageSettings ImageSettings { get; set; } = new ImageSettings();
-        public SkySurveySettings SkySurveySettings { get; set; } = new SkySurveySettings();
+        private PluginOptionsAccessor pluginOptionsAccessor;
+
+        public RandomSettings RandomSettings { get; } 
+        public ImageSettings ImageSettings { get;  }
+        public SkySurveySettings SkySurveySettings { get;  } 
     }
 }

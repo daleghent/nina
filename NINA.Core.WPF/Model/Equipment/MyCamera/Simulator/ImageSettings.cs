@@ -16,59 +16,32 @@ using NINA.Core.Utility;
 using System.IO;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
+using NINA.Profile;
 
 namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class ImageSettings : BaseINPC {
-        private object lockObj = new object();
-        private bool isBayered;
+        private PluginOptionsAccessor pluginOptionsAccessor;
+
+        public ImageSettings(PluginOptionsAccessor pluginOptionsAccessor) {
+            this.pluginOptionsAccessor = pluginOptionsAccessor;
+        }
 
         public bool IsBayered {
-            get => isBayered;
+            get => pluginOptionsAccessor.GetValueBoolean(nameof(IsBayered), false);
             set {
-                isBayered = value;
+                pluginOptionsAccessor.SetValueBoolean(nameof(IsBayered), value);
                 RaisePropertyChanged();
             }
         }
 
-        public string RawType { get; set; } = ".cr2";
-
-        private MemoryStream rawImageStream = null;
-
-        public MemoryStream RAWImageStream {
-            get => rawImageStream;
+        public string ImagePath {
+            get => pluginOptionsAccessor.GetValueString(nameof(ImagePath), string.Empty);
             set {
-                lock (lockObj) {
-                    rawImageStream = value;
-                }
+                pluginOptionsAccessor.SetValueString(nameof(ImagePath), value);
                 RaisePropertyChanged();
             }
         }
 
-        private IRenderedImage _image;
-
-        public IRenderedImage Image {
-            get => _image;
-            set {
-                lock (lockObj) {
-                    _image = value;
-                }
-                RaisePropertyChanged();
-                //RaisePropertyChanged(nameof(CameraXSize));
-                //RaisePropertyChanged(nameof(CameraYSize));
-            }
-        }
-
-        private ImageMetaData _metaData = null;
-
-        public ImageMetaData MetaData {
-            get => _metaData;
-            set {
-                lock (lockObj) {
-                    _metaData = value;
-                }
-                RaisePropertyChanged();
-            }
-        }
     }
 }

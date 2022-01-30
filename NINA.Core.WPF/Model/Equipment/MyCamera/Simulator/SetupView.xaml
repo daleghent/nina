@@ -75,6 +75,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
@@ -82,8 +83,12 @@
                         <TextBlock Text="Is Bayered" />
                         <CheckBox Margin="5,0,0,0" IsChecked="{Binding IsBayered}" />
                     </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Text="Image Path" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding ImagePath}" />
+                    </StackPanel>
                     <ninactrl:AsyncProcessButton
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Height="40"
                         Margin="0,5,0,0"
                         ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
@@ -91,33 +96,6 @@
                         Command="{Binding DataContext.LoadImageCommand, ElementName=UC}"
                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                         Visibility="{Binding Image, Converter={StaticResource InverseNullToVisibilityConverter}}" />
-
-                    <Button
-                        Grid.Row="1"
-                        Height="40"
-                        Margin="0,5,0,0"
-                        Command="{Binding DataContext.UnloadImageCommand, ElementName=UC}"
-                        Visibility="{Binding Image, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                        Unload Image
-                    </Button>
-
-                    <ninactrl:AsyncProcessButton
-                        Grid.Row="2"
-                        Height="40"
-                        Margin="0,5,0,0"
-                        ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
-                        ButtonText="Load RAW"
-                        Command="{Binding DataContext.LoadRAWImageCommand, ElementName=UC}"
-                        LoadingImageBrush="{StaticResource PrimaryBrush}"
-                        Visibility="{Binding RAWImageStream, Converter={StaticResource InverseNullToVisibilityConverter}}" />
-                    <Button
-                        Grid.Row="2"
-                        Height="40"
-                        Margin="0,5,0,0"
-                        Command="{Binding DataContext.UnloadRAWImageCommand, ElementName=UC}"
-                        Visibility="{Binding RAWImageStream, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                        Unload RAW
-                    </Button>
                 </Grid>
             </GroupBox>
             <Grid.Style>
@@ -140,12 +118,8 @@
                         MaxWidth="250"
                         FontStyle="Italic"
                         TextWrapping="Wrap">
-                        Warning! Requires telescope connectn. Additionally this method will overwrite pixel size and focal length profile settings on image download based on the sky survey parameters!
+                        Warning! Requires telescope connection. Additionally this method will overwrite pixel size and focal length profile settings on image download based on the sky survey parameters!
                     </TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="150">Widght and Height</TextBlock>
-                        <TextBox Width="100" Text="{Binding WidthAndHeight}" />
-                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Width="150">FoV</TextBlock>
                         <TextBox Width="100" Text="{Binding FieldOfView}" />

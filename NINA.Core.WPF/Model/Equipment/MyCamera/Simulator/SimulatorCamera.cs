@@ -43,13 +43,17 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             this.exposureDataFactory = exposureDataFactory;
             this.imageDataFactory = imageDataFactory;
 
-            LoadImageCommand = new AsyncCommand<bool>(() => LoadImage(), (object o) => Settings.ImageSettings.RAWImageStream == null);
-            UnloadImageCommand = new RelayCommand((object o) => Settings.ImageSettings.Image = null);
-            LoadRAWImageCommand = new AsyncCommand<bool>(() => LoadRAWImage(), (object o) => Settings.ImageSettings.Image == null);
-            UnloadRAWImageCommand = new RelayCommand((object o) => { Settings.ImageSettings.RAWImageStream.Dispose(); Settings.ImageSettings.RAWImageStream = null; });
+            LoadImageCommand = new AsyncCommand<bool>(() => LoadImageDialog()/*, (object o) => Settings.ImageSettings.RAWImageStream == null*/);
+            //UnloadImageCommand = new RelayCommand((object o) => Settings.ImageSettings.Image = null);
+            //LoadRAWImageCommand = new AsyncCommand<bool>(() => LoadRAWImage(), (object o) => Settings.ImageSettings.Image == null);
+            //UnloadRAWImageCommand = new RelayCommand((object o) => { Settings.ImageSettings.RAWImageStream.Dispose(); Settings.ImageSettings.RAWImageStream = null; });
+
+            var p = new NINA.Profile.PluginOptionsAccessor(profileService, Guid.Parse("65CA9FD7-8984-4609-B206-86F3F9E8C19D"));
+            settings = new Settings(p);
+
         }
 
-        private Settings settings = new Settings();
+        private Settings settings;
 
         public Settings Settings {
             get => settings;
@@ -71,7 +75,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public double CCDTemperature {
             get {
-                return Settings.ImageSettings.MetaData?.Camera.Temperature ?? double.NaN;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
             }
         }
 
@@ -128,7 +132,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public SensorType SensorType {
             get {
-                return Settings.ImageSettings.MetaData?.Camera.SensorType ?? SensorType.Monochrome;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera.SensorType ?? SensorType.Monochrome;
             }
         }
 
@@ -138,13 +142,13 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public int CameraXSize {
             get {
-                return Settings.ImageSettings.Image?.RawImageData?.Properties?.Width ?? Settings.RandomSettings.ImageWidth;
+                return SimulatorImage?.RawImageData?.Properties?.Width ?? Settings.RandomSettings.ImageWidth;
             }
         }
 
         public int CameraYSize {
             get {
-                return Settings.ImageSettings.Image?.RawImageData?.Properties?.Height ?? Settings.RandomSettings.ImageHeight;
+                return SimulatorImage?.RawImageData?.Properties?.Height ?? Settings.RandomSettings.ImageHeight;
             }
         }
 
@@ -176,13 +180,13 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public double PixelSizeX {
             get {
-                return Settings.ImageSettings.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
             }
         }
 
         public double PixelSizeY {
             get {
-                return Settings.ImageSettings.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
             }
         }
 
@@ -323,8 +327,8 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             get {
                 string cameraName = "N.I.N.A. Simulator Camera";
 
-                if (Settings.ImageSettings.MetaData?.Camera.Name.Length > 0) {
-                    cameraName = cameraName + " (" + Settings.ImageSettings.MetaData.Camera.Name + ")";
+                if (SimulatorImage?.RawImageData?.MetaData?.Camera.Name.Length > 0) {
+                    cameraName = cameraName + " (" + SimulatorImage.RawImageData.MetaData.Camera.Name + ")";
                 }
 
                 return cameraName;
@@ -333,7 +337,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public double Temperature {
             get {
-                return Settings.ImageSettings.MetaData?.Camera.Temperature ?? double.NaN;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
             }
         }
 
@@ -465,6 +469,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public void Disconnect() {
             this.telescopeMediator.RemoveConsumer(this);
+            this.SimulatorImage = null;
             Connected = false;
         }
 
@@ -506,20 +511,24 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                         metaData: new ImageMetaData());
 
                 case CameraType.IMAGE:
-                    if (Settings.ImageSettings.Image != null) {
-                        return exposureDataFactory.CreateCachedExposureData(Settings.ImageSettings.Image.RawImageData);
+                    if (SimulatorImage == null && !string.IsNullOrWhiteSpace(Settings.ImageSettings.ImagePath)) {
+                        await LoadImage(Settings.ImageSettings.ImagePath);
                     }
 
-                    if (Settings.ImageSettings.RAWImageStream != null) {
-                        byte[] rawBytes = Settings.ImageSettings.RAWImageStream.ToArray();
-                        Settings.ImageSettings.RAWImageStream.Position = 0;
-                        return exposureDataFactory.CreateRAWExposureData(
-                            converter: profileService.ActiveProfile.CameraSettings.RawConverter,
-                            rawBytes: rawBytes,
-                            rawType: Settings.ImageSettings.RawType,
-                            bitDepth: this.BitDepth,
-                            metaData: new ImageMetaData());
+                    if (SimulatorImage != null) {
+                        return exposureDataFactory.CreateCachedExposureData(SimulatorImage.RawImageData);
                     }
+
+                    //if (Settings.ImageSettings.RAWImageStream != null) {
+                    //    byte[] rawBytes = Settings.ImageSettings.RAWImageStream.ToArray();
+                    //    Settings.ImageSettings.RAWImageStream.Position = 0;
+                    //    return exposureDataFactory.CreateRAWExposureData(
+                    //        converter: profileService.ActiveProfile.CameraSettings.RawConverter,
+                    //        rawBytes: rawBytes,
+                    //        rawType: Settings.ImageSettings.RawType,
+                    //        bitDepth: this.BitDepth,
+                    //        metaData: new ImageMetaData());
+                    //}
                     throw new Exception("No Image source set in Simulator!");
 
                 case CameraType.SKYSURVEY:
@@ -539,19 +548,19 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                     }
 
                     if (!ImageCache.TryGetValue(coordinates.ToString(), out var image)) {
-                        image = await survey.GetImage(string.Empty, coordinates, AstroUtil.DegreeToArcmin(1), Settings.SkySurveySettings.WidthAndHeight, Settings.SkySurveySettings.WidthAndHeight, token, default);
+                        image = await survey.GetImage(string.Empty, coordinates, AstroUtil.DegreeToArcmin(settings.SkySurveySettings.FieldOfView), 2500, 2500, token, default);
                         ImageCache[coordinates.ToString()] = image;
                     }
                     var data = await exposureDataFactory.CreateImageArrayExposureDataFromBitmapSource(image.Image);
 
                     var arcsecPerPix = image.Image.PixelWidth / AstroUtil.ArcminToArcsec(image.FoVWidth);
-                    // Assume a fixed pixel Size of 3
-                    var pixelSize = 3;
+                    // Assume a fixed pixel size
+                    var pixelSize = 3.76;
                     var factor = AstroUtil.DegreeToArcsec(AstroUtil.ToDegree(1)) / 1000d;
                     // Calculate focal length based on assumed pixel size and result image
                     var focalLength = (factor * pixelSize) / arcsecPerPix;
 
-                    profileService.ActiveProfile.CameraSettings.PixelSize = 3;
+                    profileService.ActiveProfile.CameraSettings.PixelSize = 3.8;
                     profileService.ActiveProfile.TelescopeSettings.FocalLength = (int)focalLength;
 
                     return data;
@@ -587,51 +596,37 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             WindowService.Show(this, "Simulator Setup", System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
         }
 
-        private async Task<bool> LoadRAWImage() {
-            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Title = "Load Image";
-            dialog.FileName = "Image";
-            dialog.DefaultExt = ".cr2";
-
-            if (dialog.ShowDialog() == true) {
-                Settings.ImageSettings.RawType = Path.GetExtension(dialog.FileName).TrimStart('.').ToLower();
-                await Task.Run(() => {
-                    using (var fileStream = File.OpenRead(dialog.FileName)) {
-                        var memStream = new MemoryStream();
-                        memStream.SetLength(fileStream.Length);
-                        fileStream.Read(memStream.GetBuffer(), 0, (int)fileStream.Length);
-                        memStream.Position = 0;
-                        Settings.ImageSettings.RAWImageStream = memStream;
-                    }
-                });
-            }
-            return true;
-        }
-
-        private async Task<bool> LoadImage() {
+        private async Task<bool> LoadImageDialog() {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Title = "Load Image";
             dialog.FileName = "Image";
             dialog.DefaultExt = ".tiff";
 
             if (dialog.ShowDialog() == true) {
-                var rawData = await imageDataFactory.CreateFromFile(dialog.FileName, BitDepth, Settings.ImageSettings.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
-                Settings.ImageSettings.Image = rawData.RenderImage();
-                Settings.ImageSettings.MetaData = rawData.MetaData;
-
-                if (Settings.ImageSettings.MetaData?.Camera.SensorType != SensorType.Monochrome) {
-                    Settings.ImageSettings.IsBayered = true;
-                }
+                settings.ImageSettings.ImagePath = dialog.FileName;
+                await LoadImage(dialog.FileName);
 
                 return true;
             }
             return false;
         }
 
+        private async Task LoadImage(string path) {
+            if(File.Exists(path)) { 
+                var rawData = await imageDataFactory.CreateFromFile(path, BitDepth, Settings.ImageSettings.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                this.SimulatorImage = rawData.RenderImage();
+
+                if (SimulatorImage.RawImageData.MetaData?.Camera.SensorType != SensorType.Monochrome) {
+                    Settings.ImageSettings.IsBayered = true;
+                }
+            }
+        }
+
         public IAsyncCommand LoadImageCommand { get; private set; }
         public ICommand UnloadImageCommand { get; private set; }
         public IAsyncCommand LoadRAWImageCommand { get; private set; }
         public ICommand UnloadRAWImageCommand { get; private set; }
+        public IRenderedImage SimulatorImage { get; private set; }
 
         private TelescopeInfo telescopeInfo;
 

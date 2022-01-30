@@ -13,86 +13,64 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using NINA.Profile;
 
 namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class SkySurveySettings : BaseINPC {
+        private PluginOptionsAccessor pluginOptionsAccessor;
 
-        public SkySurveySettings() {
-            WidthAndHeight = 2500;
-            FieldOfView = 1;
-            RAError = 0;
-            DecError = 0;
+        public SkySurveySettings(PluginOptionsAccessor pluginOptionsAccessor) {
+            this.pluginOptionsAccessor = pluginOptionsAccessor;
         }
 
         private object lockObj = new object();
-        private int decError;
 
         public int DecError {
-            get => decError;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(DecError), 0);
             set {
                 lock (lockObj) {
-                    decError = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(DecError), value);
                 }
                 RaisePropertyChanged();
             }
         }
-
-        private int raError;
 
         public int RAError {
-            get => raError;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(RAError), 0);
             set {
                 lock (lockObj) {
-                    raError = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(RAError), value);
                 }
                 RaisePropertyChanged();
             }
         }
-
-        private int azShift;
 
         public int AzShift {
-            get => azShift;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(AzShift), 0);
             set {
                 lock (lockObj) {
-                    azShift = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(AzShift), value);
                 }
                 RaisePropertyChanged();
             }
         }
-
-        private int altShift;
 
         public int AltShift {
-            get => altShift;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(AltShift), 0);
             set {
                 lock (lockObj) {
-                    altShift = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(AltShift), value);
                 }
                 RaisePropertyChanged();
             }
         }
-
-        private int widthAndHeight;
-
-        public int WidthAndHeight {
-            get => widthAndHeight;
-            set {
-                lock (lockObj) {
-                    widthAndHeight = value;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
-        private double fieldOfView;
 
         public double FieldOfView {
-            get => fieldOfView;
+            get => pluginOptionsAccessor.GetValueDouble(nameof(FieldOfView), 1);
             set {
                 lock (lockObj) {
-                    fieldOfView = value;
+                    pluginOptionsAccessor.SetValueDouble(nameof(FieldOfView), value);
                 }
                 RaisePropertyChanged();
             }

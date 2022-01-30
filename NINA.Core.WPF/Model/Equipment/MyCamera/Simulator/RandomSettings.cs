@@ -13,65 +13,55 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using NINA.Profile;
 
 namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class RandomSettings : BaseINPC {
 
-        public RandomSettings() {
-            ImageWidth = 640;
-            ImageHeight = 480;
-            ImageMean = 5000;
-            ImageStdDev = 100;
+        public RandomSettings(Profile.PluginOptionsAccessor pluginOptionsAccessor) {
+            this.pluginOptionsAccessor = pluginOptionsAccessor;
         }
 
         private object lockObj = new object();
 
-        private int imageWidth;
+        private PluginOptionsAccessor pluginOptionsAccessor;
 
         public int ImageWidth {
-            get => imageWidth;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(ImageWidth), 640);
             set {
                 lock (lockObj) {
-                    imageWidth = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(ImageWidth), value);
                 }
                 RaisePropertyChanged();
-                //RaisePropertyChanged(nameof(CameraXSize));
             }
         }
-
-        private int imageHeight;
 
         public int ImageHeight {
-            get => imageHeight;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(ImageHeight), 480);
             set {
                 lock (lockObj) {
-                    imageHeight = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(ImageHeight), value);
                 }
                 RaisePropertyChanged();
-                //RaisePropertyChanged(nameof(CameraYSize));
             }
         }
-
-        private int imageMean;
 
         public int ImageMean {
-            get => imageMean;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(ImageMean), 5000);
             set {
                 lock (lockObj) {
-                    imageMean = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(ImageMean), value);
                 }
                 RaisePropertyChanged();
             }
         }
 
-        private int imageStdDev;
-
         public int ImageStdDev {
-            get => imageStdDev;
+            get => pluginOptionsAccessor.GetValueInt32(nameof(ImageStdDev), 100);
             set {
                 lock (lockObj) {
-                    imageStdDev = value;
+                    pluginOptionsAccessor.SetValueInt32(nameof(ImageStdDev), value);
                 }
                 RaisePropertyChanged();
             }
