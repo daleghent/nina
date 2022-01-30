@@ -114,6 +114,30 @@ namespace NINA.Astrometry {
             }
         }
 
+        private double? _positionAngle;
+
+        public double? PositionAngle {
+            get {
+                return _positionAngle;
+            }
+            set {
+                _positionAngle = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double? _sizeMin;
+
+        public double? SizeMin {
+            get {
+                return _sizeMin;
+            }
+            set {
+                _sizeMin = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private double? _size;
 
         public double? Size {

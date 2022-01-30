@@ -255,7 +255,8 @@ namespace NINA.Astrometry {
                                         dso.sizemin,
                                         dso.sizemax,
                                         dso.constellation,
-                                        dso.surfacebrightness
+                                        dso.surfacebrightness,
+                                        dso.positionangle
                                     };
 
                         if (!string.IsNullOrEmpty(searchParams.Constellation)) {
@@ -353,6 +354,14 @@ namespace NINA.Astrometry {
 
                             if (row.sizemax.HasValue) {
                                 dso.Size = row.sizemax;
+                            }
+
+                            if(row.sizemin.HasValue) {
+                                dso.SizeMin = row.sizemin;
+                            }
+
+                            if(row.positionangle.HasValue) {
+                                dso.PositionAngle = row.positionangle;
                             }
 
                             dso.AlsoKnownAs = catalogueResult[row.id].Select(x => x.designation).ToList();

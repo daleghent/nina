@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using System;
 using System.Drawing;
 using System.Linq;
 using Color = System.Drawing.Color;
@@ -27,6 +28,7 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
         private double arcSecHeight;
         private readonly double sizeWidth;
         private readonly double sizeHeight;
+        private readonly float positionAngle;
         private Coordinates coordinates;
 
         /// <summary>
@@ -47,10 +49,17 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
                 sizeWidth = DSO_DEFAULT_SIZE;
             }
 
-            if (dso.Size != null && dso.Size >= arcSecHeight) {
-                sizeHeight = dso.Size.Value;
+            if(dso.PositionAngle.HasValue) {
+                positionAngle = (90 - (float)dso.PositionAngle.Value);
+
+                if (dso.SizeMin != null && dso.SizeMin >= arcSecHeight) {
+                    sizeHeight = dso.SizeMin.Value;
+                } else {
+                    sizeHeight = DSO_DEFAULT_SIZE;
+                }
             } else {
-                sizeHeight = DSO_DEFAULT_SIZE;
+                positionAngle = 0f;
+                sizeHeight = sizeWidth;
             }
 
             Id = dso.Id;
@@ -81,6 +90,8 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
         public PointF TextPosition { get; private set; }
 
         public void RecalculateTopLeft(ViewportFoV reference) {
+            ViewPortCenter = reference.CenterCoordinates;
+            ViewPortCenterPoint = reference.ViewPortCenterPoint;
             CenterPoint = coordinates.XYProjection(reference);
             arcSecWidth = reference.ArcSecWidth;
             arcSecHeight = reference.ArcSecHeight;
@@ -92,6 +103,8 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
         public double RadiusHeight => (sizeHeight / arcSecHeight) / 2;
 
         public System.Windows.Point CenterPoint { get; private set; }
+        public Coordinates ViewPortCenter { get; private set; }
+        public System.Windows.Point ViewPortCenterPoint { get; private set; }
 
         public string Id { get; }
         public string Name1 { get; }
@@ -150,10 +163,25 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
                     break;
             }
 
+            var panelDeltaX = CenterPoint.X - ViewPortCenterPoint.X;
+            var panelDeltaY = CenterPoint.Y - ViewPortCenterPoint.Y;
+            var previousRotation = 0;
+            var referenceCenter = ViewPortCenter.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, previousRotation, arcSecWidth, arcSecHeight);
+            
+            float adjustedAngle = positionAngle;
+            if (Math.Abs(ViewPortCenter.RA - coordinates.RA) > 1E-13 || Math.Abs(ViewPortCenter.Dec - coordinates.Dec) > 1E-13) {
+                adjustedAngle = positionAngle - ( 90 - (float)AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, coordinates.RADegrees, referenceCenter.Dec, coordinates.Dec)) + previousRotation;
+            }
+
+            g.TranslateTransform((float)CenterPoint.X, (float)CenterPoint.Y);
+            g.RotateTransform(adjustedAngle);
+            g.TranslateTransform(-(float)CenterPoint.X, -(float)CenterPoint.Y);
             g.FillEllipse(dsoFillColorBrush, (float)(this.CenterPoint.X - this.RadiusWidth), (float)(this.CenterPoint.Y - this.RadiusHeight),
                     (float)(this.RadiusWidth * 2), (float)(this.RadiusHeight * 2));
             g.DrawEllipse(dsoPen, (float)(this.CenterPoint.X - this.RadiusWidth), (float)(this.CenterPoint.Y - this.RadiusHeight),
                 (float)(this.RadiusWidth * 2), (float)(this.RadiusHeight * 2));
+            g.ResetTransform();
+
             var size1 = g.MeasureString(this.Name1, dsoFont);
             g.DrawString(this.Name1, dsoFont, dsoSolidBrush, this.TextPosition.X - size1.Width / 2, (float)(this.TextPosition.Y));
             if (this.Name2 != null) {
