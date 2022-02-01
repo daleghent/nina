@@ -400,12 +400,16 @@
                                 Columns="2"
                                 Visibility="{Binding IsMosaic, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOverlapPercentage}" />
-                                <ninactrl:UnitTextBox
+                                <ninactrl:IntStepperControl
                                     Margin="5,0,0,0"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}}"
-                                    Unit="%" />
+                                    MaxValue="100"
+                                    MinValue="1"
+                                    StepSize="10"
+                                    Unit="%"
+                                    Value="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}, Mode=TwoWay}" />
                             </UniformGrid>
+
                             <UniformGrid Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRotation}" />
                                 <Grid>
@@ -426,14 +430,14 @@
                                         Margin="5,0,0,0"
                                         IsEnabled="{Binding RectangleCalculated}"
                                         IsSnapToTickEnabled="True"
-                                        Maximum="360"
+                                        Maximum="359.99"
                                         Minimum="0"
                                         TickFrequency="5"
-                                        Value="{Binding RectangleRotation}" />
+                                        Value="{Binding RectangleTotalRotation}" />
                                 </Grid>
                             </UniformGrid>
                             <UniformGrid
-                                Margin="0,0,0,6"
+                                Margin="0,5,0,6"
                                 Columns="2"
                                 Visibility="{Binding IsMosaic, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPreserveAlignment}">

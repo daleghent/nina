@@ -1013,6 +1013,7 @@ namespace NINA.ViewModel.FramingAssistant {
                                 this.DSO.Coordinates = fileSkySurveyImage.Data.MetaData.WorldCoordinateSystem.Coordinates;
                                 RaiseCoordinatesChanged();
                             }
+                            Rectangle = null;
                         }
 
                         await _dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
@@ -1129,7 +1130,10 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private void CalculateRectangle(ViewportFoV parameter) {
             if (parameter != null) {
-                var previousRotation = Rectangle?.Rotation ?? 0;
+                var previousRotation = 0d;
+                if(Rectangle != null) {
+                    previousRotation = AstroUtil.EuclidianModulus(Rectangle.TotalRotation - parameter.Rotation, 360);
+                }                
                 Rectangle = null;
                 CameraRectangles.Clear();
 
@@ -1183,12 +1187,12 @@ namespace NINA.ViewModel.FramingAssistant {
                             var panelDeltaX = panelCenter.X - center.X;
                             var panelDeltaY = panelCenter.Y - center.Y;
 
-                            var referenceCenter = centerCoordinates.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, previousRotation, imageArcsecWidth, imageArcsecHeight);
+                            var referenceCenter = centerCoordinates.Shift(Math.Abs(panelDeltaX) < 1E-10 ? 1 : 0, panelDeltaY, previousRotation, imageArcsecWidth, imageArcsecHeight);
 
                             var panelCenterCoordinates = centerCoordinates.Shift(panelDeltaX, panelDeltaY, previousRotation, imageArcsecWidth, imageArcsecHeight);
 
                             double positionAngle = 90;
-                            if (Math.Abs(centerCoordinates.RA - panelCenterCoordinates.RA) > 1E-13 || Math.Abs(centerCoordinates.Dec - panelCenterCoordinates.Dec) > 1E-13) {
+                            if (Math.Abs(centerCoordinates.RADegrees - panelCenterCoordinates.RADegrees) > 0.001 || Math.Abs(centerCoordinates.Dec - panelCenterCoordinates.Dec) > 0.001) {
                                 positionAngle = AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, panelCenterCoordinates.RADegrees, referenceCenter.Dec, panelCenterCoordinates.Dec) + previousRotation;
                             }
 
@@ -1259,6 +1263,26 @@ namespace NINA.ViewModel.FramingAssistant {
                     DSO.Coordinates = Rectangle.Coordinates;
                     RaiseCoordinatesChanged();
 
+
+                    var mainRectangleReferenceCenter = Rectangle.OriginalCoordinates.Shift(Math.Abs(accumulatedDeltaX) < 1E-10 ? 1 : 0, accumulatedDeltaY, Rectangle.OriginalOffset, imageArcsecWidth, imageArcsecHeight);
+                    double mainRectanglePA = 90;
+                    var previousTotal = Rectangle.TotalRotation;
+                    if (Math.Abs(Rectangle.OriginalCoordinates.RADegrees - Rectangle.Coordinates.RADegrees) > 0.001 || Math.Abs(Rectangle.OriginalCoordinates.Dec - Rectangle.Coordinates.Dec) > 0.001) {
+                        mainRectanglePA = AstroUtil.CalculatePositionAngle(mainRectangleReferenceCenter.RADegrees, Rectangle.Coordinates.RADegrees, mainRectangleReferenceCenter.Dec, Rectangle.Coordinates.Dec) + Rectangle.OriginalOffset;
+
+                        if(accumulatedDeltaX < 0) {
+                            // When the rectangle is left of center, the PA has to be adjusted by 180°, otherwise it will end upside down
+                           mainRectanglePA += 180;
+                        }
+
+                    }
+
+                    Rectangle.RotationOffset = Rectangle.OriginalOffset - -(90 - mainRectanglePA);
+                    Rectangle.Rotation = -(90 - mainRectanglePA) + previousTotal - Rectangle.OriginalOffset;
+                    RaisePropertyChanged(nameof(RectangleRotation));
+                    RaisePropertyChanged(nameof(RectangleTotalRotation));
+                    RaisePropertyChanged(nameof(InverseRectangleRotation));
+
                     var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
 
                     foreach (var rect in CameraRectangles) {
@@ -1269,13 +1293,14 @@ namespace NINA.ViewModel.FramingAssistant {
                         var panelDeltaX = panelCenter.X - center.X;
                         var panelDeltaY = panelCenter.Y - center.Y;
 
-                        var referenceCenter = Rectangle.Coordinates.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, Rectangle.Rotation, imageArcsecWidth, imageArcsecHeight);
+                        var referenceCenter = Rectangle.Coordinates.Shift(Math.Abs(panelDeltaX) < 1E-10 ? 1 : 0, panelDeltaY, Rectangle.Rotation, imageArcsecWidth, imageArcsecHeight);
 
                         var panelCenterCoordinates = Rectangle.Coordinates.Shift(panelDeltaX, panelDeltaY, Rectangle.Rotation, imageArcsecWidth, imageArcsecHeight);
 
                         double positionAngle = 90;
-                        if (Math.Abs(Rectangle.Coordinates.RA - panelCenterCoordinates.RA) > 1E-13 || Math.Abs(Rectangle.Coordinates.Dec - panelCenterCoordinates.Dec) > 1E-13) {
+                        if (Math.Abs(Rectangle.Coordinates.RADegrees - panelCenterCoordinates.RADegrees) > 0.001 || Math.Abs(Rectangle.Coordinates.Dec - panelCenterCoordinates.Dec) > 0.001) {
                             positionAngle = AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, panelCenterCoordinates.RADegrees, referenceCenter.Dec, panelCenterCoordinates.Dec) + Rectangle.Rotation;
+                            
                         }
 
                         double panelRotation = -(90 - positionAngle);
@@ -1284,6 +1309,7 @@ namespace NINA.ViewModel.FramingAssistant {
                             panelRotation = 0;
                             dsoRotation += (90 - positionAngle);
                         }
+                        
                         rect.Rotation = panelRotation;
                         rect.DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360);
                     }

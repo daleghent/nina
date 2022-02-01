@@ -24,6 +24,17 @@ namespace NINA.Astrometry {
 
         public ObservableRotatingRectangle(double rotationOffset, double x, double y, double width, double height) : this(x,y,width,height) {
             _rotationOffset = rotationOffset;
+            OriginalOffset = _rotationOffset;
+        }
+
+        public double OriginalOffset { get; }
+
+        private double _rotationOffset;
+        public double RotationOffset {
+            get => _rotationOffset;
+            set {
+                _rotationOffset = AstroUtil.MathMod(value, 360);
+            }
         }
 
         private double _rotation;
@@ -41,7 +52,6 @@ namespace NINA.Astrometry {
             }
         }
 
-        private readonly double _rotationOffset;
 
         public double TotalRotation {
             get {
@@ -51,7 +61,7 @@ namespace NINA.Astrometry {
             }
             set {
                 //This will rise property changed for TotalRotation
-                Rotation = value - _rotationOffset;
+                Rotation = AstroUtil.MathMod(value - _rotationOffset, 360);
             }
         }
     }
