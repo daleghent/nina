@@ -88,8 +88,9 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 var existingPositions = filtersList.Select(x => (int)x.Position).ToList();
                 var missingPositions = Enumerable.Range(0, existingPositions.Max()).Except(existingPositions);
                 foreach(var position in missingPositions) {
-                    if(device.Names.Count() > position) { 
-                        var filterToAdd = new FilterInfo(device.Names[position], device.FocusOffsets[position], (short)position);
+                    if(device.Names.Count() > position) {
+                        var offset = device.FocusOffsets.Length > position ? device.FocusOffsets[position] : 0;
+                        var filterToAdd = new FilterInfo(device.Names[position], offset, (short)position);
                         Logger.Warning($"Missing filter position. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
                         filtersList.Insert(position, filterToAdd);
                     }
@@ -103,7 +104,8 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             if (profileFilters < deviceFilters) {
                 /* Not enough filters defined. Add missing to the list */
                 for (int i = profileFilters; i < deviceFilters; i++) {
-                    var filter = new FilterInfo(device.Names[i], device.FocusOffsets[i], (short)i);
+                    var offset = device.FocusOffsets.Length > i ? device.FocusOffsets[i] : 0;
+                    var filter = new FilterInfo(device.Names[i], offset, (short)i);
                     Logger.Info($"Not enough filters defined in the equipment filter list. Importing filter: {filter.Name}, focus offset: {filter.FocusOffset}");
                     filtersList.Add(filter);
                 }
