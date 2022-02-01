@@ -1727,7 +1727,7 @@ Přeskočit.</value>
     <value>Vše</value>
   </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
-    <value>Vypočtené HFR obrazu (musí být povolena detekce HFR)</value>
+    <value>Vypočítaný HFR obraz (detekce HFR musí být povolena)</value>
   </data>
   <data name="LblHigh" xml:space="preserve">
     <value>Vysoký</value>
@@ -3398,10 +3398,10 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Data Zařízení</value>
   </data>
   <data name="LblUPBV2DewHeater" xml:space="preserve">
-    <value>Port Topného Pásku</value>
+    <value>Port Topného Tělesa</value>
   </data>
   <data name="LblUPBV2DewHeaterPorts" xml:space="preserve">
-    <value>Topné Pásky</value>
+    <value>Topná Tělesa</value>
   </data>
   <data name="LblUPBV2DewPoint" xml:space="preserve">
     <value>Rosný Bod</value>
@@ -4658,7 +4658,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Přepíná světlo flat zařízení</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
-    <value>Zapnout Světlo</value>
+    <value>Přepínač Světla</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
     <value>Vyhledá hodnotu expozice z průvodce pro zadané parametry a provede flat expozice</value>
@@ -5227,7 +5227,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Zapíná nebo vypíná rosný ohřívač kamery</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Topné Pásky</value>
+    <value>Topné Těleso</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
     <value>Připojená kamera nemá rosný ohřívač, který lze ovládat</value>

@@ -6050,6 +6050,6 @@ Esta opción debería activarse cuando etá disponible la rotación automática 
 Este botón no es visible en modo mosaico.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
-    <value>Use Blind Solver for Failures</value>
+    <value>Usar astrometría ciega en los fallos</value>
   </data>
 </root>
