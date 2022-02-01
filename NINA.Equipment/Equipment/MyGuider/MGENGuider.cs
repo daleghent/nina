@@ -318,7 +318,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             try {
-                if (!await MGen.IsActivelyGuiding(ct)) {
+                var wasActivelyGuiding = await MGen.IsActivelyGuiding(ct);
+                if (!wasActivelyGuiding) {
                     try {
                         Logger.Debug("MGEN - Not actively guiding, attempting to start guiding");
                         await MGen.StartGuiding(ct);
@@ -327,19 +328,20 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         Logger.Debug("MGEN - Guiding didn't start, selecting new guide star");
                         await AutoSelectGuideStar();
                     }
-                    var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
-                    if (calibrated) {
-                        Logger.Info("MGEN - Starting Guiding");
-                        await MGen.StartGuiding(ct);
-                        if (!await MGen.IsGuidingActive(ct)) {
-                            Logger.Error("MGEN - Failed to start guiding");
-                            return false;
-                        }
-                        await WaitForSettling(DitherSettlingTime, progress, ct);
-                    } else {
+                }
+                var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
+                if (calibrated || !wasActivelyGuiding) {
+                    Logger.Info("MGEN - Starting Guiding");
+                    await MGen.StartGuiding(ct);
+                    if (!await MGen.IsGuidingActive(ct)) {
+                        Logger.Error("MGEN - Failed to start guiding");
                         return false;
                     }
+                    await WaitForSettling(DitherSettlingTime, progress, ct);
+                } else {
+                    return await MGen.IsActivelyGuiding(ct);
                 }
+                
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
@@ -350,6 +352,16 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return true;
         }
 
+        /// <summary>
+        /// Starts a calibration if the forceCalibration or needsCalibration flag is true, the calibration status was not done or the last calibration status was in error state        /// 
+        /// </summary>
+        /// <param name="forceCalibration"></param>
+        /// <param name="ct"></param>
+        /// <returns>
+        ///     true: A calibration was done successfully
+        ///     false: No calibration was required
+        ///     throws Exception: The calibration failed
+        /// </returns>
         private async Task<bool> StartCalibrationIfRequired(bool forceCalibration, CancellationToken ct) {
             using (ct.Register(async () => await MGen.CancelCalibration())) {
                 var calibrationStatus = await MGen.QueryCalibration(ct);
@@ -369,8 +381,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
                     if (MGen is MGEN3.MGEN3) {
                         calibrationStatus = await MGen.QueryCalibration(ct);
                         if (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done)) {
-                            Logger.Error("Calibration was not successful");
-                            return false;
+                            Logger.Error($"MGEN3 calibration was not succcessful: {calibrationStatus.Error}");
+                            throw new Exception(calibrationStatus.Error);
                         }
                     } else {
                         do {
@@ -381,15 +393,15 @@ namespace NINA.Equipment.Equipment.MyGuider {
                     }
 
                     if (calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
-                        Logger.Error(calibrationStatus.Error);
-                        Notification.ShowError(calibrationStatus.Error);
-                        return false;
+                        Logger.Error($"MGEN2 calibration was not succcessful: {calibrationStatus.Error}");
+                        throw new Exception(calibrationStatus.Error);
                     } else {
                         needsCalibration = false;
                         return true;
                     }
                 }
-                return calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done);
+                // No calibration was required - return false;
+                return false;
             }
         }
 
