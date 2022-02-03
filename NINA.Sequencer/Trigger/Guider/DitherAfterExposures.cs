@@ -108,7 +108,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             var shouldTrigger = lastTriggerId < history.ImageHistory.Count && history.ImageHistory.Count > 0 && ProgressExposures == 0;
 
             if (shouldTrigger) {
-                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration() + nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero)) {
                     Logger.Warning("Dither should be triggered, however the meridian flip is too close to be executed");
                     shouldTrigger = false;
                 }

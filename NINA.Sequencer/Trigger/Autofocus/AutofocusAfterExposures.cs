@@ -120,7 +120,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                 && history.ImageHistory.Last().AutoFocusPoint == null;
 
             if (shouldTrigger) {
-                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration() + nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero)) {
                     Logger.Warning("Autofocus should be triggered, however the meridian flip is too close to be executed");
                     shouldTrigger = false;
                 }
