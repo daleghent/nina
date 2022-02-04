@@ -1270,7 +1270,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     if (Math.Abs(Rectangle.OriginalCoordinates.RADegrees - Rectangle.Coordinates.RADegrees) > 0.001 || Math.Abs(Rectangle.OriginalCoordinates.Dec - Rectangle.Coordinates.Dec) > 0.001) {
                         mainRectanglePA = AstroUtil.CalculatePositionAngle(mainRectangleReferenceCenter.RADegrees, Rectangle.Coordinates.RADegrees, mainRectangleReferenceCenter.Dec, Rectangle.Coordinates.Dec) + Rectangle.OriginalOffset;
 
-                        if(accumulatedDeltaX < 0) {
+                        if(accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec >= 0 || accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec < 0) {
                             // When the rectangle is left of center, the PA has to be adjusted by 180°, otherwise it will end upside down
                            mainRectanglePA += 180;
                         }
@@ -1286,12 +1286,12 @@ namespace NINA.ViewModel.FramingAssistant {
                     var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
 
                     foreach (var rect in CameraRectangles) {
-                        rect.Coordinates = rect.OriginalCoordinates.Shift(accumulatedDeltaX, accumulatedDeltaY, ImageParameter.Rotation,
-                            imageArcsecWidth, imageArcsecHeight);
 
                         var panelCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d, rect.Y + Rectangle.Y + rect.Height / 2d);
                         var panelDeltaX = panelCenter.X - center.X;
                         var panelDeltaY = panelCenter.Y - center.Y;
+
+                        rect.Coordinates = Rectangle.Coordinates.Shift(panelDeltaX, panelDeltaY, Rectangle.TotalRotation, imageArcsecWidth, imageArcsecHeight);
 
                         var referenceCenter = Rectangle.Coordinates.Shift(Math.Abs(panelDeltaX) < 1E-10 ? 1 : 0, panelDeltaY, Rectangle.Rotation, imageArcsecWidth, imageArcsecHeight);
 
