@@ -21,10 +21,12 @@ namespace NINA.Utility {
     /// This class is a container for objects that have global scope and need to be instantiated at application startup. Bindings must be resolvable from IoCBindings
     /// </summary>
     public class GlobalObjects {
-        private readonly PluggableBehaviorManager pluggableBehaviorManager;
+        private readonly IPluggableBehaviorManager pluggableBehaviorManager;
 
-        public GlobalObjects(PluggableBehaviorManager pluggableBehaviorManager) {
+        public GlobalObjects(IPluggableBehaviorManager pluggableBehaviorManager) {
             this.pluggableBehaviorManager = pluggableBehaviorManager;
+
+            this.pluggableBehaviorManager.Initialize();
         }
     }
 }

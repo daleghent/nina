@@ -12,7 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:NINA.View"
+    xmlns:local="clr-namespace:NINA.View.Imaging"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
@@ -20,6 +20,16 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BuiltIn" DataType="{x:Type UserControl}">
+                <view:AutoFocusChart />
+            </DataTemplate>
+            <local:AutoFocusDataTemplateSelector
+                x:Key="TemplateSelector"
+                BuiltIn="{StaticResource BuiltIn}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="5,0,5,0">
             <Grid.RowDefinitions>
@@ -29,7 +39,10 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
-            <view:AutoFocusChart DataContext="{Binding AutoFocusVM}" />
+            <ContentControl
+                Content="{Binding}"
+                ContentTemplateSelector="{StaticResource TemplateSelector}"
+                DataContext="{Binding AutoFocusVM}" /> 
 
             <ComboBox
                 Name="PART_FocusChartComboBox"

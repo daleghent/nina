@@ -31,5 +31,7 @@ namespace NINA.Core.Interfaces {
         AsyncObservableCollection<T> Behaviors { get; set; }
 
         T SelectedBehavior { get; set; }
+
+        event EventHandler SelectedBehaviorChanged;
     }
 }

@@ -333,6 +333,7 @@
     <Compile Include="Utility\AvalonDock\PaneStyleSelector.cs" />
     <Compile Include="Utility\GlobalObjects.cs" />
     <Compile Include="Utility\IoCBindings.cs" />
+    <Compile Include="Utility\IPluggableBehaviorManager.cs" />
     <Compile Include="Utility\PaneTemplateSelector.cs" />
     <Compile Include="Utility\PluggableAutoFocusVMFactory.cs" />
     <Compile Include="Utility\PluggableBehaviorManager.cs" />
@@ -369,6 +370,7 @@
     <Compile Include="View\Imaging\AnchorableSequenceNavigationView.xaml.cs">
       <DependentUpon>AnchorableSequenceNavigationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\AutoFocusDataTemplateSelector.cs" />
     <Compile Include="View\Plugins\AvailablePluginsView.xaml.cs">
       <DependentUpon>AvailablePluginsView.xaml</DependentUpon>
     </Compile>

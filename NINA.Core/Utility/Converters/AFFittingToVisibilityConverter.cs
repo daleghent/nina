@@ -27,9 +27,12 @@ namespace NINA.Core.Utility.Converters {
     public class AFFittingToVisibilityConverter : IMultiValueConverter {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-            var source = (string)values[0];
-            var method = (AFMethodEnum)values[1];
-            var fitting = (AFCurveFittingEnum)values[2];
+            var source = values[0] as string;
+            var method = values[1] as AFMethodEnum?;
+            var fitting = values[2] as AFCurveFittingEnum?;
+            if (source == null || method == null || fitting == null) {
+                return Visibility.Collapsed;
+            }
 
             if (method == AFMethodEnum.CONTRASTDETECTION) {
                 if (source == "GaussianFitting") {

@@ -135,6 +135,7 @@ namespace NINA.Utility {
                     Bind<IExposureDataFactory>().To<ExposureDataFactory>().InSingletonScope();
                     Bind<IAutoFocusVMFactory>().To<PluggableAutoFocusVMFactory>().InSingletonScope();
                     Bind<IMeridianFlipVMFactory>().To<MeridianFlipVMFactory>().InSingletonScope();
+                    Bind<IPluggableBehaviorManager>().To<PluggableBehaviorManager>().InSingletonScope();
 
                     Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),
                         new ImagingVM(

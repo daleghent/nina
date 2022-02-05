@@ -21,6 +21,7 @@ using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Image.ImageAnalysis;
 using NINA.Profile.Interfaces;
+using NINA.Utility;
 using NINA.WPF.Base.Interfaces;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
@@ -61,6 +62,7 @@ namespace NINA.Imaging.ViewModel.Imaging {
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
                 IApplicationStatusMediator applicationStatusMediator,
+                IPluggableBehaviorManager pluggableBehaviorManager,
                 IPluggableBehaviorSelector<IAutoFocusVMFactory> autoFocusVMFactorySelector
         ) : base(profileService) {
             Title = Loc.Instance["LblAutoFocus"];
@@ -77,10 +79,8 @@ namespace NINA.Imaging.ViewModel.Imaging {
             this.applicationStatusMediator = applicationStatusMediator;
 
             this.autoFocusVMFactorySelector = autoFocusVMFactorySelector;
-            // NOTE: pluggable behavior manager has not been initialized yet, so this will always return the built-in AF factory,
-            // until the first AF run happens. LoadChart depends on this to not be null though. We should move this out to a separate object.
-            // I think you said this already
-            this.AutoFocusVM = autoFocusVMFactorySelector.SelectedBehavior.Create();
+            pluggableBehaviorManager.Initialized += PluggableBehaviorManager_Initialized;
+            autoFocusVMFactorySelector.SelectedBehaviorChanged += AutoFocusVMFactorySelector_SelectedBehaviorChanged;
 
             ChartList = new AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>();
             ChartListSelectable = true;
@@ -94,10 +94,6 @@ namespace NINA.Imaging.ViewModel.Imaging {
             };
             reportFileWatcher.Created += ReportFileWatcher_Created;
             reportFileWatcher.Deleted += ReportFileWatcher_Deleted;
-            Task.Run(() => {
-                InitializeChartList();
-            });
-
             StartAutoFocusCommand = new AsyncCommand<AutoFocusReport>(
                 () =>
                     Task.Run(
@@ -123,7 +119,29 @@ namespace NINA.Imaging.ViewModel.Imaging {
             SelectionChangedCommand = new AsyncCommand<bool>(LoadChart);
         }
 
-        public IAutoFocusVM AutoFocusVM { get; private set; }
+        private void AutoFocusVMFactorySelector_SelectedBehaviorChanged(object sender, EventArgs e) {
+            InitializeAutoFocusVM();
+        }
+
+        private void PluggableBehaviorManager_Initialized(object sender, EventArgs e) {
+            InitializeAutoFocusVM();
+        }
+
+        private void InitializeAutoFocusVM() {
+            this.AutoFocusVM = autoFocusVMFactorySelector.SelectedBehavior.Create();
+            Task.Run(() => {
+                InitializeChartList();
+            });
+        }
+
+        private IAutoFocusVM autoFocusVM;
+        public IAutoFocusVM AutoFocusVM {
+            get => autoFocusVM;
+            private set {
+                autoFocusVM = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public ICommand CancelAutoFocusCommand { get; private set; }
 

@@ -30,12 +30,36 @@ namespace NINA.Utility {
         where DefaultT : T {
         private readonly IProfileService profileService;
         private readonly DefaultT ninaDefault;
+        private string selectedContentId;
 
         public PluggableBehaviorSelector(IProfileService profileService, DefaultT ninaDefault) {
             this.profileService = profileService;
             this.ninaDefault = ninaDefault;
             Behaviors = new AsyncObservableCollection<T>();
             Behaviors.Add(ninaDefault);
+
+            this.profileService.ProfileChanged += ProfileService_ProfileChanged;
+            this.profileService.ActiveProfile.ApplicationSettings.PropertyChanged += ApplicationSettings_PropertyChanged;
+            profileService.ActiveProfile.ApplicationSettings.SelectedPluggableBehaviorsLookup.TryGetValue(typeof(T).FullName, out selectedContentId);
+        }
+
+        private void ProfileService_ProfileChanged(object sender, EventArgs e) {
+            this.profileService.ActiveProfile.ApplicationSettings.PropertyChanged += ApplicationSettings_PropertyChanged;
+            DetectSelectedBehaviorChanged();
+        }
+
+        private void ApplicationSettings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(profileService.ActiveProfile.ApplicationSettings.SelectedPluggableBehaviors)) {
+                DetectSelectedBehaviorChanged();
+            }
+        }
+
+        private void DetectSelectedBehaviorChanged() {
+            profileService.ActiveProfile.ApplicationSettings.SelectedPluggableBehaviorsLookup.TryGetValue(typeof(T).FullName, out string contentId);
+            if (contentId != selectedContentId) {
+                SelectedBehaviorChanged?.Invoke(this, new EventArgs());
+                selectedContentId = contentId;
+            }
         }
 
         public Type GetInterfaceType() {
@@ -48,6 +72,8 @@ namespace NINA.Utility {
         }
 
         private AsyncObservableCollection<T> behaviors;
+
+        public event EventHandler SelectedBehaviorChanged;
 
         public AsyncObservableCollection<T> Behaviors {
             get => behaviors;
