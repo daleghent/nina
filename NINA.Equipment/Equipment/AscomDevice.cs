@@ -289,15 +289,16 @@ namespace NINA.Equipment.Equipment {
                             return defaultValue;
                         }
                     } catch (Exception ex) {
-                        if (ex.InnerException is PropertyNotImplementedException || ex.InnerException is System.NotImplementedException) {
+                        if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException 
+                            || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
                             Logger.Info($"Property {type.Name}.{propertyName} GET is not implemented in this driver ({Name})");
 
                             memory.IsImplemented = false;
                             return defaultValue;
                         }
 
-                        if (ex.InnerException is NotConnectedException) {
-                            Logger.Error($"{Name} is not connected ", ex.InnerException);
+                        if (ex is NotConnectedException || ex.InnerException is NotConnectedException) {
+                            Logger.Error($"{Name} is not connected ", ex.InnerException ?? ex);
                         }
 
                         var logEx = ex.InnerException ?? ex;
@@ -342,7 +343,8 @@ namespace NINA.Equipment.Equipment {
                         return false;
                     }
                 } catch (Exception ex) {
-                    if (ex.InnerException is PropertyNotImplementedException || ex.InnerException is System.NotImplementedException) {
+                    if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException
+                        || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
                         Logger.Info($"Property {type.Name}.{propertyName} SET is not implemented in this driver ({Name})");
                         memory.IsImplemented = false;
                         return false;
@@ -358,8 +360,8 @@ namespace NINA.Equipment.Equipment {
                         return false;
                     }
 
-                    if (ex.InnerException is NotConnectedException) {
-                        Logger.Error($"{Name} is not connected ", ex.InnerException);
+                    if (ex is NotConnectedException || ex.InnerException is NotConnectedException) {
+                        Logger.Error($"{Name} is not connected ", ex.InnerException ?? ex);
                         return false;
                     }
 
