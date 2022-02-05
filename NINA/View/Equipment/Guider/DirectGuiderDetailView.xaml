@@ -42,7 +42,7 @@
                     <CheckBox Height="25" HorizontalAlignment="Left">
                         <CheckBox.IsChecked>
                             <Binding
-                                Path="ActiveProfile.GuiderSettings.MetaGuideMinIntensity"
+                                Path="ActiveProfile.GuiderSettings.DitherRAOnly"
                                 Source="{StaticResource ProfileService}"
                                 UpdateSourceTrigger="LostFocus" />
                         </CheckBox.IsChecked>
