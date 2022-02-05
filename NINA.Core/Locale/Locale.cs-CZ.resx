@@ -344,7 +344,7 @@ Detekce kontrastu používá techniku zpracování obrazu k odhadu kontrastu pro
     <value>Pokud automatické ostření selže, protože HFR je horší než původní zaostření, určí, kolik pokusů má automatické ostření provést, než bude úspěšné. Jinak bude obnovena původní poloha zaostření.</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPoint" xml:space="preserve">
-    <value>AutoOstření Počet Snímků na Bod</value>
+    <value>Počet Snímků na Bod AutoOstření</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPointTooltip" xml:space="preserve">
     <value>Kolik snímků se použije k určení ostřícího bodu. Pokud je hodnota větší než 1, použije se více snímků a bod zaostření se vypočítá z jejich průměru</value>
@@ -571,9 +571,9 @@ Filtr: {3}</value>
     <value>Změna</value>
   </data>
   <data name="LblChangedSequenceWarning" xml:space="preserve">
-    <value>Pořadí cíle(ů) v sekvenci '{0}' bylo od posledního uložení změněno (nebo ještě nebylo uloženo).
+    <value>Pořadí cíle(ů) v sekvenci '{0}'  bylo od posledního uložení změněno (nebo ještě nebylo uloženo).
         
-Chcete sekvenci zavřít a přesto změny ztratit?</value>
+Chcete sekvenci zavřít a o změny tak přijít?</value>
   </data>
   <data name="LblChangedSequenceWarningTitle" xml:space="preserve">
     <value>Uzavření změněné sekvence</value>
@@ -976,7 +976,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Aktuální Barevné Schéma Uživatelského Rozhraní</value>
   </data>
   <data name="LblCurveFittingMethod" xml:space="preserve">
-    <value>AutoOstření Přizpůsobení Křivky</value>
+    <value>Přizpůsobení Křivky AutoOstření</value>
   </data>
   <data name="LblCygwinBashNotFound" xml:space="preserve">
     <value>Cygwin bash nenalezen</value>
@@ -1183,22 +1183,22 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Lze zaparkovat</value>
   </data>
   <data name="LblDomeCanSetAzimuth" xml:space="preserve">
-    <value>Nastavit azimut</value>
+    <value>Lze nastavit azimut</value>
   </data>
   <data name="LblDomeCanSyncAzimuth" xml:space="preserve">
-    <value>Synchronizovat azimutu</value>
+    <value>Lze synchronizovat azimut</value>
   </data>
   <data name="LblDomeCanPark" xml:space="preserve">
-    <value>Zaparkovat</value>
+    <value>Lze zaparkovat</value>
   </data>
   <data name="LblDomeCanFindHome" xml:space="preserve">
-    <value>Přejít do výchozí polohy</value>
+    <value>Lze přejít do výchozí polohy</value>
   </data>
   <data name="LblDomeAtPark" xml:space="preserve">
     <value>Zaparkováno</value>
   </data>
   <data name="LblDomeAtHome" xml:space="preserve">
-    <value>Ve výchozí</value>
+    <value>Ve výchozí pozici</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
     <value>Ovladač sleduje dalekohled</value>
@@ -1835,7 +1835,7 @@ Přeskočit.</value>
     <value>Stabilizuje se</value>
   </data>
   <data name="LblItemsPerPage" xml:space="preserve">
-    <value>Položek na stránce</value>
+    <value>Items per page</value>
   </data>
   <data name="LblJ2000" xml:space="preserve">
     <value>J2000</value>
@@ -3872,13 +3872,13 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Synchronizace</value>
   </data>
   <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
-    <value>Synchronizuje azimut kopule s hodnotou vypočítanou ze směru dalekohledu a měření kupole</value>
+    <value>Synchronizuje azimut kopule s hodnotou vypočítanou ze směru dalekohledu a měření kopule</value>
   </data>
   <data name="LblDomeStopTooltip" xml:space="preserve">
     <value>Zastaví pohyb štěrbiny a otáčení kopule</value>
   </data>
   <data name="LblDomeManualSlewTooltip" xml:space="preserve">
-    <value>Otočit kopuli na azimut cíle</value>
+    <value>Otočit kopuli do cílového azimutu</value>
   </data>
   <data name="LblDomeParkTooltip" xml:space="preserve">
     <value>Otočí kopulí do polohy zaparkovat definovanou ovladačem a zavřít štěrbinu</value>
@@ -3905,7 +3905,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Tolerance Azimutu</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
-    <value>Kopule se pohybuje, pokud je vzdálenost azimutu cíle větší než tato hodnota</value>
+    <value>Pokud se azimut cíle vychýlí o více než tuto hodnotu, kopule se otočí</value>
   </data>
   <data name="LblDomeDirectDriver" xml:space="preserve">
     <value>Použít Přímé Sledování NINA</value>
@@ -3917,7 +3917,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Délka Osy GEM</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
-    <value>Pokud je použit Alt/Az musí být 0. U montáže EQ otočte osu RA na +/- 90 stupňů a změřte boční vzdálenost (v mm) od osy ke středu otvoru dalekohledu</value>
+    <value>Pokud je použit Alt/Az musí být 0. U montáže EQ nastavte natočení RA na +/- 90 stupňů a změřte boční vzdálenost (v mm) od osy ke středu otvoru dalekohledu</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
     <value>Délka Boční Osy</value>
@@ -3929,19 +3929,19 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Poloměr Kopule</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
-    <value>Změřte od středu k okraji kopule, podél základny</value>
+    <value>Změřte vzdálenost od středu k okraji kopule podél základny</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
     <value>Poloha Dalekohledu V/Z</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Změřte východní nebo západní odsazení (v mm) od středu montáže ke středu kopule. Pozitivní je na východ.</value>
+    <value>Změřte východní nebo západní offset (v mm) od středu montáže ke středu kopule. Kladná hodnota je směrem na východ.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Poloha Dalekohledu S/J</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
-    <value>Sledování kopule může být nepřesné. Zkontrolujte, zda je vaše epocha správně nakonfigurována, a proveďte astrometrii a synchronizaci</value>
+    <value>Sledování kopule může být nepřesné. Zkontrolujte, zda je vaše epocha montáže správně nakonfigurována, a proveďte astrometrii a synchronizaci</value>
   </data>
   <data name="LblDomeFollowError" xml:space="preserve">
     <value>Chyba při synchronizaci kopule. Sledování kopule se zastavilo.</value>
@@ -3950,7 +3950,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Zrušte Sekvenci</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Změřte severní nebo jižní odsazení (v mm) od středu montáže ke středu kopule. Pozitivní je na sever.</value>
+    <value>Změřte Severní nebo Jižní offset (v mm) od středu montáže ke středu kopule. Pozitivní je na sever.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>Pozastavit Sekvenci</value>
@@ -4103,7 +4103,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Otočí kopulí, aby se synchronizovala s polohou dalekohledu při otáčení. Toto nastavení nezachovává synchronizaci kopule při pohybu dalekohledu.</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
-    <value>Před zaparkováním najít parkovací pozici</value>
+    <value>Před zaparkováním najít výchozí pozici</value>
   </data>
   <data name="LblDomeSlewCW" xml:space="preserve">
     <value>Pohyb Vpravo</value>
@@ -4870,7 +4870,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Orientuje kopule do absolutní azimutální polohy</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Posouvá Kopuli v Azimutu</value>
+    <value>Posun Kopulí v Azimutu</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Pokyny pro Paralelní Zahájení Sekvence</value>
@@ -4879,16 +4879,16 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Otevřít kryt při zahájení sekvence</value>
   </data>
   <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
-    <value>Po zahájení sekvence otevřít štěrbinu</value>
+    <value>Po zahájení sekvence otevřít štěrbinu kopule</value>
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
-    <value>Odparkovat kopuli a zahájit sekvenci</value>
+    <value>Odparkovat kopuli na začátku sekvence</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Otevřít štěrbinu kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
-    <value>Otevřít Štěrbinu</value>
+    <value>Otevřít Štěrbinu Kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
     <value>Zajišťuje, že kopule zůstane synchronizována s dalekohledem</value>
@@ -4897,7 +4897,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Povolit Synchronizaci Kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
-    <value>Deaktivuje synchronizaci pozadí kopule s dalekohledem</value>
+    <value>Deaktivuje synchronizaci kopule s dalekohledem na pozadí</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
     <value>Zakázat Synchronizaci Kopule</value>
@@ -5233,7 +5233,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Připojená kamera nemá rosný ohřívač, který lze ovládat</value>
   </data>
   <data name="LblAddTargetToTargetList" xml:space="preserve">
-    <value>Přidat Cíl do Cílového Seznamu</value>
+    <value>Přidání Cíle Do Seznamu Cílů</value>
   </data>
   <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
     <value>Přidá nastavený cíl do cílové sekce seznamu v postranním panelu pokročilého sekvencéru pro pozdější použití</value>
@@ -5468,10 +5468,10 @@ Dobrým výchozím bodem pro prahovou hodnotu je hodnota 0,8 - vše, co je níž
     <value>ASCOM umožňuje lichý rozměr pixelu</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>V předchozích verzích N.I.N.A. byla šířka a výška ovladače ASCOM vždy omezena na sudá čísla, a to i pro monokamery. 
-Pokud je tato možnost povolena, aplikace nyní umožní plnou lichou rozměr pixelů na monokamerách. 
+    <value>V předchozích verzích N.I.N.A. byla šířka a výška ovladače ASCOM vždy omezena na sudá čísla, a to i pro mono kamery. 
+Pokud je tato funkce povolena, aplikace nyní umožňuje u mono kamer plný rozměr lichých pixelů.
 Toto nastavení nebude mít žádný vliv na barevné senzory.
-To má význam pouze při použití ovladače kamery ASCOM!</value>
+Má význam pouze při použití ovladače kamery ASCOM!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
     <value>Časový limit Zahájení Pointace</value>
@@ -5527,7 +5527,7 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Aktuální název sekvence</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Kopule po dokončení požadavku nehlásila pohyby nebo selhání štěrbiny. Jedná se o nebezpečnou operaci, která nesplňuje normy. Obraťte se na výrobce kopule.</value>
+    <value>Kopule po dokončení požadavku nehlásila pohyby nebo chybu štěrbiny. Jedná se o nestandardní a nebezpečné chování, které nesplňuje normy. Informujte o tom svého dodavatele kopulí.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Otevření štěrbiny selhalo. Stav štěrbiny je stále hlášen jako zavřená.</value>
@@ -5676,13 +5676,13 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Vidlicová montáž na klínu</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>Horizontální rozdíl v DEC</value>
+    <value>Horizontální Offset v DEC</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>Horizontální rozdíl od středu OTA k ose deklinace (motor ve spodní části držáku vidlice). Pozitivní je „zprava doprava“, což je východ na severní polokouli a západ na jih.</value>
+    <value>Horizontální offset od středu OTA k ose deklinace (motor na základně vidlicové montáže). Pozitivní je „zprava doprava“, což je východ pro severní polokouli a západ pro jižní.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
-    <value>Poloměr kopule není nastaven správně. Vypočítaná poloha dalekohledu je za kopulí.</value>
+    <value>Poloměr kopule není nastaven správně. Vypočítaná poloha dalekohledu je mimo kopuli.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
     <value>Pokročilá Sekvence</value>
