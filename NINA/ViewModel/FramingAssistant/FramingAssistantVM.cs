@@ -1377,7 +1377,9 @@ namespace NINA.ViewModel.FramingAssistant {
                 return false;
             }
 
-            var dso = new DeepSkyObject(string.Empty, telescopeInfo.Coordinates, string.Empty, null);
+            var coordinates = telescopeInfo.Coordinates.Transform(Epoch.J2000);
+
+            var dso = new DeepSkyObject(string.Empty, coordinates, string.Empty, null);
             await SetCoordinates(dso);
             return true;
         }
