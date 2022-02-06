@@ -35,18 +35,25 @@ using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Model;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Enum;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
     public class MGENGuider : BaseINPC, IGuider {
         public readonly IMGEN MGen;
         private IProfileService profileService;
+        private ITelescopeMediator telescopeMediator;
+        private Coordinates lastCalibratedCoords = null;
+        private PierSide lastCalibratedSideOfPier;
+        private Coordinates lastKnownGuidingPosition = null;
 
-        public MGENGuider(IMGEN mgen, string name, string id, IProfileService profileService) {
+        public MGENGuider(IMGEN mgen, string name, string id, IProfileService profileService, ITelescopeMediator telescopeMediator) {
             this.MGen = mgen;
             this.Name = name;
             this.Id = id;
             this.profileService = profileService;
+            this.telescopeMediator = telescopeMediator;
             MGenUpCommand = new AsyncCommand<bool>((object o) => {
                 return PressButton(MGEN.MGENButton.UP, default);
             },
@@ -163,7 +170,6 @@ namespace NINA.Equipment.Equipment.MyGuider {
                             Logger.Info($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                             starSearchSuccess = await MGen.SetNewGuidingPosition(starDetail);
                             Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess}");
-                            needsCalibration = true;
                             Logger.Debug($"MGEN - Setting Imaging Parameter - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime} Threshold: {imagingParameter.Threshold}");
                             await MGen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
                             break;
@@ -175,10 +181,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         Logger.Error($"MGEN - No guide star found!");
                     }
                     return starSearchSuccess;
-                } else {
-                    //MGEN3 Star Search is different and doesn't need to set a single star therefore this is skipped
-                    needsCalibration = true;
-                }
+                } 
             }
             return numberOfStars > 0;
         }
@@ -299,7 +302,11 @@ namespace NINA.Equipment.Equipment.MyGuider {
                     Logger.Debug("MGEN - Dithering");
                     var task = await Task.Run<bool>(async () => {
                         bool dithered = await MGen.Dither(ct);
-                        if (dithered) await WaitForSettling(DitherSettlingTime, progress, ct);
+                        if (dithered) {
+                            await WaitForSettling(DitherSettlingTime, progress, ct);
+                            Logger.Debug($"MGEN - Storing last known guiding position: {lastKnownGuidingPosition}");
+                            lastKnownGuidingPosition = telescopeMediator.GetInfo().Connected ? telescopeMediator.GetCurrentPosition() : null;
+                        }
                         return dithered;
                     });
                 } else {
@@ -319,7 +326,18 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             try {
                 var wasActivelyGuiding = await MGen.IsActivelyGuiding(ct);
-                if (!wasActivelyGuiding) {
+                bool telescopeMoved = false;
+                if (telescopeMediator.GetInfo().Connected) {
+                    Logger.Debug($"MGEN - Last known guiding position: {lastKnownGuidingPosition}");
+                    Logger.Debug($"MGEN - Current telescope position: {telescopeMediator.GetCurrentPosition()}");
+                    Logger.Debug($"MGEN - Last known (calibrated) side of pier: {lastCalibratedSideOfPier}");
+                    Logger.Debug($"MGEN - Current side of pier: {telescopeMediator.GetInfo().SideOfPier}");
+                    telescopeMoved = (lastKnownGuidingPosition == null || lastCalibratedSideOfPier != telescopeMediator.GetInfo().SideOfPier ||
+                        (telescopeMediator.GetCurrentPosition() - lastKnownGuidingPosition).Distance.ArcMinutes >
+                        profileService.ActiveProfile.PlateSolveSettings.Threshold);
+                    Logger.Debug($"Telescope moved: {telescopeMoved}");
+                }
+                if (!wasActivelyGuiding && !telescopeMoved) {
                     try {
                         Logger.Debug("MGEN - Not actively guiding, attempting to start guiding");
                         await MGen.StartGuiding(ct);
@@ -327,6 +345,14 @@ namespace NINA.Equipment.Equipment.MyGuider {
                     } catch (NoStarSeenException) {
                         Logger.Debug("MGEN - Guiding didn't start, selecting new guide star");
                         await AutoSelectGuideStar();
+                    }
+                } else if (telescopeMoved) {
+                    Logger.Debug("MGEN - Telescope moved from last known guiding position, selecting new guide star");
+                    await AutoSelectGuideStar();
+                    if (telescopeMediator.GetInfo().Connected) {
+                        lastKnownGuidingPosition = telescopeMediator.GetCurrentPosition();
+                    } else {
+                        lastKnownGuidingPosition = null;
                     }
                 }
                 var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
@@ -365,7 +391,25 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private async Task<bool> StartCalibrationIfRequired(bool forceCalibration, CancellationToken ct) {
             using (ct.Register(async () => await MGen.CancelCalibration())) {
                 var calibrationStatus = await MGen.QueryCalibration(ct);
-                if (forceCalibration || needsCalibration || !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
+                if (lastCalibratedCoords != null) {
+                    Logger.Debug($"MGEN - Last calibration declination: {lastCalibratedCoords.Dec}");
+                    Logger.Debug($"MGEN - Last calibration side of pier: {lastCalibratedSideOfPier}");
+                } else {
+                    Logger.Debug($"MGEN - Last calibration location: not set yet");
+                }
+                bool movedTooFar = false;
+                if (telescopeMediator.GetInfo().Connected) {
+                    Logger.Debug($"MGEN - Current declination: {telescopeMediator.GetCurrentPosition().Dec}");
+                    Logger.Debug($"MGEN - Current side of pier: {telescopeMediator.GetInfo().SideOfPier}");
+                    movedTooFar = (lastCalibratedCoords == null ? true :
+                        (lastCalibratedSideOfPier != telescopeMediator.GetInfo().SideOfPier ||
+                        Math.Max(Math.Cos(lastCalibratedCoords.Dec * Math.PI / 180), Math.Cos(telescopeMediator.GetCurrentPosition().Dec * Math.PI / 180)) /
+                        Math.Min(Math.Cos(lastCalibratedCoords.Dec * Math.PI / 180), Math.Cos(telescopeMediator.GetCurrentPosition().Dec * Math.PI / 180)) > 1.2));
+                } else {
+                    Logger.Debug("MGEN - Telescope not connected, impossible to determine if calibration is still good");
+                }
+                Logger.Debug($"MGEN - Moved too far? {movedTooFar}");
+                if (movedTooFar || forceCalibration || needsCalibration || !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
                     if (await MGen.IsGuidingActive()) {
                         Logger.Debug("MGEN - Stopping guiding to start new calibration");
                         await MGen.StopGuiding();
@@ -396,6 +440,12 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         Logger.Error($"MGEN2 calibration was not succcessful: {calibrationStatus.Error}");
                         throw new Exception(calibrationStatus.Error);
                     } else {
+                        if (telescopeMediator.GetInfo().Connected) {
+                            lastCalibratedCoords = telescopeMediator.GetCurrentPosition();
+                            lastCalibratedSideOfPier = telescopeMediator.GetInfo().SideOfPier;
+                            Logger.Debug($"MGEN - Stored calibration declination: {lastCalibratedCoords}");
+                            Logger.Debug($"MGEN - Stored calibration side of pier: {lastCalibratedSideOfPier}");
+                        }
                         needsCalibration = false;
                         return true;
                     }
@@ -416,6 +466,12 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public async Task<bool> StopGuiding(CancellationToken ct) {
             if (await MGen.IsGuidingActive(ct)) {
                 Logger.Debug("MGEN - Stopping Guiding");
+                if (telescopeMediator.GetInfo().Connected) {
+                    lastKnownGuidingPosition = telescopeMediator.GetCurrentPosition();
+                    Logger.Debug($"MGEN - Storing last known guiding position: {lastKnownGuidingPosition}");
+                } else {
+                    lastKnownGuidingPosition = null;
+                }
                 return await MGen.StopGuiding(ct);
             } else {
                 return false;
