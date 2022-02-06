@@ -202,7 +202,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 ValidateMode();
                 int iso = ISOSpeeds.Where((x) => x.Key == value).FirstOrDefault().Value;
                 if (CheckError(SetProperty(EDSDK.PropID_ISOSpeed, iso))) {
-                    Notification.ShowError(Loc.Instance["LblUnableToSetISO"]);
+                    Notification.ShowExternalError(Loc.Instance["LblUnableToSetISO"], Loc.Instance["LblCanonDriverError"]);
                 }
                 RaisePropertyChanged();
             }
@@ -319,12 +319,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 case EDSDK.StateEvent_Shutdown:
                     Logger.Error("CANON: Camera has suddenly disconnected");
-                    Notification.ShowError(string.Format(Loc.Instance["LblCanonCameraDisconnected"], Name));
+                    Notification.ShowExternalError(string.Format(Loc.Instance["LblCanonCameraDisconnected"], Name), Loc.Instance["LblCanonDriverError"]);
                     break;
 
                 case EDSDK.StateEvent_InternalError:
                     Logger.Error("CANON: Canon SDK has encountered an internal error");
-                    Notification.ShowError(Loc.Instance["LblCanonSdkError"]);
+                    Notification.ShowExternalError(Loc.Instance["LblCanonSdkError"], Loc.Instance["LblCanonDriverError"]);
                     break;
             }
 
@@ -921,7 +921,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return true;
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblCanonDriverError"]);
                     return false;
                 }
             });

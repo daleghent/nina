@@ -387,7 +387,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         Logger.Info("ASCOM - Driver does not implement Gain SET");
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex.Message);
-                        Notification.ShowWarning(ex.Message);
+                        Notification.ShowExternalWarning(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                     } catch (Exception) {
                         CanSetGain = false;
                     }
@@ -655,7 +655,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         device.ReadoutMode = value;
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
-                        Notification.ShowError(ex.Message);
+                        Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                     } catch (PropertyNotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(ReadoutMode)} SET");
                     }
@@ -782,7 +782,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             metaData: new ImageMetaData());
                     } catch (OperationCanceledException) {
                     } catch (Exception ex) {
-                        Notification.ShowError(ex.Message);
+                        Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                         Logger.Error(ex);
                     }
                     return null;
@@ -827,7 +827,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     device.StopExposure();
                 } catch (Exception e) {
                     Logger.Error(e);
-                    Notification.ShowError(e.Message);
+                    Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
                 }
             }
         }
@@ -838,7 +838,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     device.AbortExposure();
                 } catch (Exception e) {
                     Logger.Error(e);
-                    Notification.ShowError(e.Message);
+                    Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
                 }
             }
         }
@@ -939,7 +939,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                 }
             }
         }

@@ -730,7 +730,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         var settleDone = message.ToObject<PhdEventSettleDone>();
                         if (settleDone.Error != null) {
                             Logger.Error("PHD2 error:" + settleDone.Error);
-                            Notification.ShowWarning("PHD2 error: " + settleDone.Error);
+                            Notification.ShowExternalWarning(settleDone.Error, Loc.Instance["LblPhd2Warning"]);
                         } else {
                             Logger.Debug("PHD2 settle completed");
                         }

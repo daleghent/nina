@@ -191,7 +191,7 @@ namespace NINA.Equipment.Equipment {
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(string.Format(Loc.Instance["LblUnableToConnect"], Name, ex.Message));
+                    Notification.ShowExternalError(string.Format(Loc.Instance["LblUnableToConnect"], Name, ex.Message), Loc.Instance["LblASCOMDriverError"]);
                 }
                 return Connected;
             });
@@ -218,7 +218,7 @@ namespace NINA.Equipment.Equipment {
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                 }
             }
         }

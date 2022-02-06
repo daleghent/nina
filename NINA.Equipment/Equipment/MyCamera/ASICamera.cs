@@ -428,10 +428,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         metaData: new ImageMetaData());
                 } catch (OperationCanceledException) {
                 } catch (CameraDownloadFailedException ex) {
-                    Notification.ShowError(ex.Message);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
                 }
                 return null;
             });
@@ -729,7 +729,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     RaiseAllPropertiesChanged();
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
                 }
                 return success;
             });

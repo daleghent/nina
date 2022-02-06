@@ -70,10 +70,14 @@ namespace NINA.Core.Utility.Notification {
             lock (_lock) {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["AboutSVG"];
+                        GeometryGroup symbol = null;
+                        if (Application.Current != null && Application.Current.Resources.Contains("AboutSVG")) {
+                            symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["AboutSVG"];
+                        }
                         var brush = new SolidColorBrush(Color.FromArgb(255, 00, 00, 255));
                         var foregroundBrush = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblInfo"], message, symbol, brush, lifetime));
+                        var background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblInfo"], message, symbol, brush, background, lifetime));
                     }));
                 }
             }
@@ -83,10 +87,14 @@ namespace NINA.Core.Utility.Notification {
             lock (_lock) {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CheckedCircledSVG"];
+                        GeometryGroup symbol = null;
+                        if (Application.Current != null && Application.Current.Resources.Contains("CheckedCircledSVG")) {
+                            symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CheckedCircledSVG"];
+                        }
                         var brush = new SolidColorBrush(Color.FromArgb(255, 00, 255, 00));
                         var foregroundBrush = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblSuccess"], message, symbol, brush, TimeSpan.FromSeconds(10)));
+                        var background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblSuccess"], message, symbol, brush, background, TimeSpan.FromSeconds(10)));
                     }));
                 }
             }
@@ -100,9 +108,13 @@ namespace NINA.Core.Utility.Notification {
             lock (_lock) {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ExclamationCircledSVG"];
+                        GeometryGroup symbol = null;
+                        if (Application.Current != null && Application.Current.Resources.Contains("ExclamationCircledSVG")) {
+                            symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ExclamationCircledSVG"];
+                        }
                         var brush = new SolidColorBrush(Color.FromArgb(255, 255, 255, 00));
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblWarning"], message, symbol, brush, lifetime));
+                        var background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblWarning"], message, symbol, brush, background, lifetime));
                     }));
                 }
             }
@@ -112,14 +124,62 @@ namespace NINA.Core.Utility.Notification {
             lock (_lock) {
                 if (notifier != null) {
                     dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        var symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CancelCircledSVG"];
+                        GeometryGroup symbol = null;
+                        if (Application.Current != null && Application.Current.Resources.Contains("CancelCircledSVG")) {
+                            symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CancelCircledSVG"];
+                        }
                         var brush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 00));
-                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblError"], message, symbol, brush, TimeSpan.FromHours(24)));
+                        var background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42));
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(Locale.Loc.Instance["LblError"], message, symbol, brush, background, TimeSpan.FromHours(24)));
                     }));
                 }
             }
         }
 
+        public static void ShowExternalError(string message, string header) {
+            lock (_lock) {
+                if (notifier != null) {
+                    dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                        GeometryGroup symbol = null;
+                        if(Application.Current != null && Application.Current.Resources.Contains("CommunicationErrorSVG")) {
+                            symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CommunicationErrorSVG"];
+                        }
+                        
+                        var brush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 00));
+                        var background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42));
+
+                        if (string.IsNullOrWhiteSpace(header)) {
+                            header = Locale.Loc.Instance["LblExternalError"];
+                        }
+
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(header, message, symbol, brush, background, TimeSpan.FromHours(24)));
+                    }));
+                }
+            }
+        }
+
+        public static void ShowExternalWarning(string message, string header) {
+            lock (_lock) {
+                if (notifier != null) {
+                    dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                        GeometryGroup symbol = null;
+                        if (Application.Current != null && Application.Current.Resources.Contains("CommunicationWarningSVG")) {
+                            symbol = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CommunicationWarningSVG"];
+                        }
+
+                        var brush = new SolidColorBrush(Color.FromArgb(255, 255, 255, 00));
+                        var background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42));
+
+                        if (string.IsNullOrWhiteSpace(header)) {
+                            header = Locale.Loc.Instance["LblExternalError"];
+                        }
+
+                        notifier.Notify<CustomNotification>(() => new CustomNotification(header, message, symbol, brush, background, TimeSpan.FromHours(24)));
+                    }));
+                }
+            }
+        }
+        
         public static void CloseAll() {
             lock (_lock) {
                 notifier?.ClearMessages(new ClearAll());
@@ -142,11 +202,12 @@ namespace NINA.Core.Utility.Notification {
 
         public override NotificationDisplayPart DisplayPart => _displayPart ?? (_displayPart = new CustomDisplayPart(this));
 
-        public CustomNotification(string header, string message, Geometry symbol, Brush color, TimeSpan lifetime) : base(message, new MessageOptions()) {
+        public CustomNotification(string header, string message, Geometry symbol, Brush color, Brush background, TimeSpan lifetime) : base(message, new MessageOptions()) {
             Header = header;
             Symbol = symbol;
             Color = color;
             Lifetime = lifetime;
+            Background = background ?? new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 42, 42, 42)); 
         }
 
         public ICommand CloseAllCommand { get; } = new RelayCommand((object o) => Notification.CloseAll());
@@ -185,6 +246,18 @@ namespace NINA.Core.Utility.Notification {
             }
             set {
                 _color = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private Brush _background;
+
+        public Brush Background {
+            get {
+                return _background;
+            }
+            set {
+                _background = value;
                 RaisePropertyChanged();
             }
         }

@@ -69,7 +69,7 @@ namespace NINA.PlateSolving.Solvers {
             if (!string.IsNullOrWhiteSpace(warning)) {
                 Logger.Warning($"ASTAP - {warning}");
                 if (!parameter.DisableNotifications) {
-                    Notification.ShowWarning($"ASTAP - {warning}");
+                    Notification.ShowExternalWarning($"{warning}", Loc.Instance["LblASTAPWarning"]);
                 }
             }
 
