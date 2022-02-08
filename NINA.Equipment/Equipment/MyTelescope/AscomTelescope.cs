@@ -1034,31 +1034,37 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 }
 
                 if (Connected && device.CanSetTracking) {
-                    // Set the mode regardless of whether it is the same as what is currently set
-                    // Some ASCOM drivers incorrectly report custom rates as Sidereal, and this can help force set the tracking mode to the desired value
-                    var currentTrackingMode = TrackingRate.TrackingMode;
-                    switch (value) {
-                        case TrackingMode.Sidereal:
-                            device.TrackingRate = DriveRates.driveSidereal;
-                            break;
+                    try {
+                        // Set the mode regardless of whether it is the same as what is currently set
+                        // Some ASCOM drivers incorrectly report custom rates as Sidereal, and this can help force set the tracking mode to the desired value
+                        var currentTrackingMode = TrackingRate.TrackingMode;
+                        switch (value) {
+                            case TrackingMode.Sidereal:
+                                device.TrackingRate = DriveRates.driveSidereal;
+                                break;
 
-                        case TrackingMode.Lunar:
-                            device.TrackingRate = DriveRates.driveLunar;
-                            break;
+                            case TrackingMode.Lunar:
+                                device.TrackingRate = DriveRates.driveLunar;
+                                break;
 
-                        case TrackingMode.Solar:
-                            device.TrackingRate = DriveRates.driveSolar;
-                            break;
+                            case TrackingMode.Solar:
+                                device.TrackingRate = DriveRates.driveSolar;
+                                break;
 
-                        case TrackingMode.King:
-                            device.TrackingRate = DriveRates.driveKing;
-                            break;
-                    }
-                    device.Tracking = (value != TrackingMode.Stopped);
-                    if (currentTrackingMode != value) {
-                        RaisePropertyChanged();
-                        RaisePropertyChanged(nameof(TrackingRate));
-                        RaisePropertyChanged(nameof(TrackingEnabled));
+                            case TrackingMode.King:
+                                device.TrackingRate = DriveRates.driveKing;
+                                break;
+                        }
+                        device.Tracking = (value != TrackingMode.Stopped);
+
+                        if (currentTrackingMode != value) {
+                            RaisePropertyChanged();
+                            RaisePropertyChanged(nameof(TrackingRate));
+                            RaisePropertyChanged(nameof(TrackingEnabled));
+                        }
+                    } catch(Exception ex) {
+                        Logger.Error(ex);
+                        Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                     }
                 }
             }

@@ -960,8 +960,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         public bool SetTrackingMode(TrackingMode trackingMode) {
-            if (Telescope?.Connected == true && trackingMode != TrackingMode.Custom) {
-                Telescope.TrackingMode = trackingMode;
+            if (Telescope?.Connected == true && !Telescope.AtPark && trackingMode != TrackingMode.Custom) {                
+                Telescope.TrackingMode = trackingMode;                
                 return Telescope.TrackingMode == trackingMode;
             }
             return false;
