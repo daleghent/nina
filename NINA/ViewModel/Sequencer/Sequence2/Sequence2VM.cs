@@ -393,7 +393,13 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         public IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates() {
-            return TemplateController.Templates.Where(x => x.Container is IDeepSkyObjectContainer).Select(y => y.Container as IDeepSkyObjectContainer).ToList();
+            var emptyContainer = SequencerFactory.GetContainer<DeepSkyObjectContainer>();
+            var templates = TemplateController.Templates.Where(x => x.Container is IDeepSkyObjectContainer).Select(y => y.Container as IDeepSkyObjectContainer).ToList();
+            
+            var items = new List<IDeepSkyObjectContainer>();
+            items.Add(emptyContainer);
+            items.AddRange(templates);
+            return items;
         }
 
         public void AddTarget(IDeepSkyObjectContainer container) {
