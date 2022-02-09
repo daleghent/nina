@@ -201,7 +201,8 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     container.Name = name;
                     container.Target.TargetName = name;
-                    container.Target.InputCoordinates = new InputCoordinates() {
+                    container.Target.Rotation = AstroUtil.EuclidianModulus(rect.DSORotation, 360);
+                    container.Target.InputCoordinates = new InputCoordinates() {                        
                         Coordinates = rect.Coordinates
                     };
                 }
