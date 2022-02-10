@@ -204,6 +204,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - An autofocus indicator in the HFR history will no longer change the Y-Axis scale
 - The automatic roll over to a blind solver can now be switched off in the plate solver tab
 - For the first image in an image view control, the image will now be shown as size to fit instead of 1:1 by default
+- Profiles can now store an arbitrary description
 
 ### Subsampling
 - The sub sample button above the image panel has been removed

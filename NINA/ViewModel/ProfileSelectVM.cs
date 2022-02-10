@@ -121,7 +121,7 @@ namespace NINA.ViewModel {
                         var dialogResult = (DialogResultEventArgs)e;
                         if (dialogResult.DialogResult != true) {
                             _cancelTokenSource.Cancel();
-                            profileService.SelectProfile(new ProfileMeta() { Id = _defaultProfile.Id, Name = _defaultProfile.Name, Location = _defaultProfile.Location });
+                            profileService.SelectProfile(new ProfileMeta() { Id = _defaultProfile.Id, Name = _defaultProfile.Name, Location = _defaultProfile.Location, Description = _defaultProfile.Description });
                         } else {
                             if (UseSavedProfile == true) {
                                 Properties.Settings.Default.UseSavedProfileSelection = true;

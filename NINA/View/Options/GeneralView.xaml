@@ -81,6 +81,16 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
+                                <GridViewColumn Header="{ns:Loc LblDescription}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Description}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="{ns:Loc LblId}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -163,6 +173,21 @@
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
                             Text="{Binding ActiveProfile.Name}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblDescription}" />
+                        <TextBox
+                            MinWidth="120"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            AcceptsReturn="True"
+                            Text="{Binding ActiveProfile.Description}"
+                            TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -796,7 +821,10 @@
                             VerticalContentAlignment="Center"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Latitude" StringFormat="{}{0:0.000}" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="Latitude"
+                                    StringFormat="{}{0:0.000}"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:LatitudeRule />
                                     </Binding.ValidationRules>
@@ -846,7 +874,10 @@
                             VerticalContentAlignment="Center"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Longitude" StringFormat="{}{0:0.000}" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="Longitude"
+                                    StringFormat="{}{0:0.000}"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:LongitudeRule />
                                     </Binding.ValidationRules>
@@ -866,7 +897,10 @@
                             VerticalContentAlignment="Center"
                             Unit="m">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Elevation" StringFormat="{}{0:0.0}" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="Elevation"
+                                    StringFormat="{}{0:0.0}"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
                                             <rules:DoubleRangeRule.ValidRange>

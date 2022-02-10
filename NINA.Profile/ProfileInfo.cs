@@ -29,6 +29,15 @@ namespace NINA.Profile {
                 RaisePropertyChanged();
             }
         }
+        private string description;
+
+        public string Description {
+            get => description;
+            set {
+                description = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public string Location { get; set; }
         private bool isActive;

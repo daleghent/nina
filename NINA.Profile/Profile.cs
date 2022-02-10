@@ -94,6 +94,7 @@ namespace NINA.Profile {
         /// Setting default values prior to deserialization
         /// </summary>
         private void SetDefaultValues() {
+            this.Description = string.Empty;
             ApplicationSettings = new ApplicationSettings();
             AstrometrySettings = new AstrometrySettings();
             CameraSettings = new CameraSettings();
@@ -193,6 +194,20 @@ namespace NINA.Profile {
             set {
                 if (name != value) {
                     name = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("Settings");
+                }
+            }
+        }
+
+        private string description = string.Empty;
+
+        [DataMember]
+        public string Description {
+            get => description;
+            set {
+                if (description != value) {
+                    description = value;
                     RaisePropertyChanged();
                     RaisePropertyChanged("Settings");
                 }
@@ -363,6 +378,7 @@ namespace NINA.Profile {
                         return new ProfileMeta() {
                             Id = p.Id,
                             Name = p.Name,
+                            Description = p.Description,
                             Location = p.Location,
                             LastUsed = p.LastUsed
                         };
@@ -381,6 +397,7 @@ namespace NINA.Profile {
                                 return new ProfileMeta() {
                                     Id = p.Id,
                                     Name = p.Name,
+                                    Description = p.Description,
                                     Location = p.Location,
                                     LastUsed = p.LastUsed
                                 };

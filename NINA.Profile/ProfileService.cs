@@ -184,6 +184,9 @@ namespace NINA.Profile {
             if (e.PropertyName == nameof(IProfile.Name)) {
                 Profiles.Where(x => ActiveProfile.Id == x.Id).First().Name = ActiveProfile.Name;
             }
+            if (e.PropertyName == nameof(IProfile.Description)) {
+                Profiles.Where(x => ActiveProfile.Id == x.Id).First().Description = ActiveProfile.Description;
+            }
         }
 
         private void RegisterChangedEventHandlers() {
@@ -281,7 +284,7 @@ namespace NINA.Profile {
                     if (clone != null) {
                         clone.Save();
 
-                        var info = new ProfileMeta() { Id = clone.Id, Name = clone.Name, Location = clone.Location };
+                        var info = new ProfileMeta() { Id = clone.Id, Name = clone.Name, Location = clone.Location, Description = clone.Description };
                         Profiles.Add(info);
                         clone.Dispose();
 

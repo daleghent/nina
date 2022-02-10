@@ -21,6 +21,7 @@ namespace NINA.Profile.Interfaces {
     public interface IProfile : IDisposable, INotifyPropertyChanged {
         Guid Id { get; set; }
         string Name { get; set; }
+        string Description { get; }
         string Location { get; }
         DateTime LastUsed { get; }
         IApplicationSettings ApplicationSettings { get; set; }

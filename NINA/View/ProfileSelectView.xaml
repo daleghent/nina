@@ -23,6 +23,7 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" MinHeight="20" />
             <RowDefinition Height="20" />
             <RowDefinition Height="20" />
             <RowDefinition Height="20" />
@@ -45,56 +46,66 @@
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
-            Text="{ns:Loc LblCamera}" />
+            VerticalAlignment="Center"
+            Text="{ns:Loc LblDescription}" />
         <TextBlock
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding Camera}" />
+            Text="{Binding SelectedProfileMeta.Description}"
+            TextWrapping="Wrap" />
         <TextBlock
             Grid.Row="2"
+            Grid.Column="0"
+            Text="{ns:Loc LblCamera}" />
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="{Binding Camera}" />
+        <TextBlock
+            Grid.Row="3"
             Grid.Column="0"
             Text="{ns:Loc LblFilterWheel}" />
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             Text="{Binding FilterWheel}" />
         <TextBlock
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             Text="{ns:Loc LblFocuser}" />
         <TextBlock
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             Text="{Binding Focuser}" />
         <TextBlock
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             Text="{ns:Loc LblTelescope}" />
         <TextBlock
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             Text="{Binding Telescope}" />
         <TextBlock
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="0"
             Text="{ns:Loc LblFocalLength}" />
         <TextBlock
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="1"
             Text="{Binding FocalLength, Converter={StaticResource NaNToDoubleDashConverter}}" />
         <CheckBox
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="0"
             Margin="5,0,5,0"
             IsChecked="{Binding UseSavedProfile}" />
         <TextBlock
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="1"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Text="{ns:Loc LblSaveSelectedProfileAndDontAskAgain}" />
         <Button
-            Grid.Row="7"
+            Grid.Row="8"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="0,5,0,0"
