@@ -136,10 +136,14 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         private void UpdateCurrentSunState() {
-            var latlong = profileService.ActiveProfile.AstrometrySettings;
+            var observerInfo = new ObserverInfo() {
+                Latitude = profileService.ActiveProfile.AstrometrySettings.Latitude,
+                Longitude = profileService.ActiveProfile.AstrometrySettings.Longitude,
+                Elevation = profileService.ActiveProfile.AstrometrySettings.Elevation,
+            };
             var now = DateTime.UtcNow;
 
-            CurrentSunAltitude = AstroUtil.GetSunAltitude(now, latlong.Latitude, latlong.Longitude);
+            CurrentSunAltitude = AstroUtil.GetSunAltitude(now, observerInfo);
         }
     }
 }

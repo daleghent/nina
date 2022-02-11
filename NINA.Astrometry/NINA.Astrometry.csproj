@@ -136,6 +136,7 @@
     <Compile Include="Body\Earth.cs" />
     <Compile Include="Body\Moon.cs" />
     <Compile Include="Body\Sun.cs" />
+    <Compile Include="ObserverInfo.cs" />
     <Compile Include="Constellation.cs" />
     <Compile Include="ConstellationBoundary.cs" />
     <Compile Include="Converters\ArcsecToLabelConverter.cs" />

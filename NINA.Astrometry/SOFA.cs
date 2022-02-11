@@ -21,7 +21,7 @@ namespace NINA.Astrometry {
     /// <summary>
     /// http://www.iausofa.org/current_C.html#Downloads
     /// </summary>
-    internal static class SOFA {
+    public static class SOFA {
         private const string DLLNAME = "SOFAlib.dll";
 
         static SOFA() {
@@ -777,6 +777,21 @@ namespace NINA.Astrometry {
             return SOFA_Atoc13(type, ob1, ob2, utc1, utc2, dut1, elong, phi, hm, xp, yp, phpa, tc, rh, wl, ref rc, ref dc);
         }
 
+        /// <summary>
+        /// Angular separation between two sets of spherical coordinates.
+        ///
+        /// This function is part of the International Astronomical Union’s
+        /// SOFA(Standards Of Fundamental Astronomy) software collection.
+        /// </summary>
+        /// <param name="al">first longitude (radians)</param>
+        /// <param name="ap">first latitude (radians)</param>
+        /// <param name="bl">second longitude (radians)</param>
+        /// <param name="bp">second latitude (radians)</param>
+        /// <returns>angular separation (radians)</returns>
+        public static double Seps(double al, double ap, double bl, double bp) {
+            return SOFA_Seps(al, ap, bl, bp);
+        }
+
         #endregion "Public Methods"
 
         #region "External DLL calls"
@@ -813,6 +828,9 @@ namespace NINA.Astrometry {
 
         [DllImport(DLLNAME, EntryPoint = "iauAtoc13", CallingConvention = CallingConvention.Cdecl)]
         private static extern short SOFA_Atoc13(string type, double ob1, double ob2, double utc1, double utc2, double dut1, double elong, double phi, double hm, double xp, double yp, double phpa, double tc, double rh, double wl, ref double rc, ref double dc);
+
+        [DllImport(DLLNAME, EntryPoint = "iauSeps", CallingConvention = CallingConvention.Cdecl)]
+        private static extern double SOFA_Seps(double al, double ap, double bl, double bp);
 
         #endregion "External DLL calls"
     }

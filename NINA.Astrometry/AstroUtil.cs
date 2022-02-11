@@ -498,39 +498,71 @@ namespace NINA.Astrometry {
             return Regex.IsMatch(value, pattern);
         }
 
-        private static Tuple<NOVAS.SkyPosition, NOVAS.SkyPosition> GetMoonAndSunPosition(DateTime date, double jd) {
+        public static NOVAS.SkyPosition GetMoonPosition(DateTime date, double jd, ObserverInfo oberverInfo) {
             var deltaT = DeltaT(date);
 
-            var obs = new NOVAS.Observer() {
-                OnSurf = new NOVAS.OnSurface() { },
-                Where = (short)NOVAS.ObserverLocation.EarthGeoCenter
+            var onSurface = new NOVAS.OnSurface() {
+                Latitude = oberverInfo.Latitude,
+                Longitude = oberverInfo.Longitude,
+                Height = oberverInfo.Elevation,
+                Temperature = oberverInfo.Temperature,
+                Pressure = oberverInfo.Pressure
             };
 
-            var moon = new NOVAS.CelestialObject() {
+            var obs = new NOVAS.Observer() {
+                OnSurf = onSurface,
+                Where = (short)NOVAS.ObserverLocation.EarthSurface
+            };
+
+            var celestialObject = new NOVAS.CelestialObject() {
                 Name = "Moon",
                 Number = (short)NOVAS.Body.Moon,
                 Star = new NOVAS.CatalogueEntry(),
                 Type = (short)NOVAS.ObjectType.MajorPlanetSunOrMoon
             };
 
-            var moonPosition = new NOVAS.SkyPosition();
+            var skyPosition = new NOVAS.SkyPosition();
 
             var jdTt = jd + SecondsToDays(deltaT);
+            _ = NOVAS.Place(jdTt, celestialObject, obs, deltaT, NOVAS.CoordinateSystem.EquinoxOfDate, NOVAS.Accuracy.Full, ref skyPosition);
 
-            var err = NOVAS.Place(jdTt, moon, obs, deltaT, NOVAS.CoordinateSystem.EquinoxOfDate, NOVAS.Accuracy.Full, ref moonPosition);
+            return skyPosition;
+        }
 
-            var sun = new NOVAS.CelestialObject() {
+        public static NOVAS.SkyPosition GetSunPosition(DateTime date, double jd, ObserverInfo oberverInfo) {
+            var deltaT = DeltaT(date);
+
+            var onSurface = new NOVAS.OnSurface() {
+                Latitude = oberverInfo.Latitude,
+                Longitude = oberverInfo.Longitude,
+                Height = oberverInfo.Elevation,
+                Temperature = oberverInfo.Temperature,
+                Pressure = oberverInfo.Pressure
+            };
+
+            var obs = new NOVAS.Observer() {
+                OnSurf = onSurface,
+                Where = (short)NOVAS.ObserverLocation.EarthSurface
+            };
+
+            var celestialObject = new NOVAS.CelestialObject() {
                 Name = "Sun",
                 Number = (short)NOVAS.Body.Sun,
                 Star = new NOVAS.CatalogueEntry(),
                 Type = (short)NOVAS.ObjectType.MajorPlanetSunOrMoon
             };
 
-            var sunPosition = new NOVAS.SkyPosition();
+            var skyPosition = new NOVAS.SkyPosition();
 
-            NOVAS.Place(jdTt, sun, obs, deltaT, NOVAS.CoordinateSystem.EquinoxOfDate, NOVAS.Accuracy.Full, ref sunPosition);
+            var jdTt = jd + SecondsToDays(deltaT);
+            _ = NOVAS.Place(jdTt, celestialObject, obs, deltaT, NOVAS.CoordinateSystem.EquinoxOfDate, NOVAS.Accuracy.Full, ref skyPosition);
 
-            return new Tuple<NOVAS.SkyPosition, NOVAS.SkyPosition>(moonPosition, sunPosition);
+            return skyPosition;
+        }
+
+        public static Tuple<NOVAS.SkyPosition, NOVAS.SkyPosition> GetMoonAndSunPosition(DateTime date, double jd, ObserverInfo observerInfo = null) {
+            if (observerInfo == null) { observerInfo = new ObserverInfo(); }
+            return new Tuple<NOVAS.SkyPosition, NOVAS.SkyPosition>(GetMoonPosition(date, jd, observerInfo), GetSunPosition(date, jd, observerInfo));
         }
 
         private static double GetMoonPositionAngle(DateTime date) {
@@ -611,24 +643,44 @@ namespace NINA.Astrometry {
             return CalculateMoonIllumination(date);
         }
 
-        public static double GetMoonAltitude(DateTime date, double latitude, double longitude) {
+        public static double GetMoonAltitude(DateTime date, ObserverInfo observerInfo) {
             var jd = GetJulianDate(date);
             var tuple = GetMoonAndSunPosition(date, jd);
 
-            var siderealTime = GetLocalSiderealTime(date, longitude);
+            var siderealTime = GetLocalSiderealTime(date, observerInfo.Longitude);
             var hourAngle = HoursToDegrees(GetHourAngle(siderealTime, tuple.Item1.RA));
 
-            return GetAltitude(hourAngle, latitude, tuple.Item1.Dec);
+            return GetAltitude(hourAngle, observerInfo.Latitude, tuple.Item1.Dec);
         }
 
-        public static double GetSunAltitude(DateTime date, double latitude, double longitude) {
+        public static double GetSunAltitude(DateTime date, ObserverInfo observerInfo) {
             var jd = GetJulianDate(date);
             var tuple = GetMoonAndSunPosition(date, jd);
 
-            var siderealTime = GetLocalSiderealTime(date, longitude);
+            var siderealTime = GetLocalSiderealTime(date, observerInfo.Longitude);
             var hourAngle = HoursToDegrees(GetHourAngle(siderealTime, tuple.Item2.RA));
 
-            return GetAltitude(hourAngle, latitude, tuple.Item2.Dec);
+            return GetAltitude(hourAngle, observerInfo.Latitude, tuple.Item2.Dec);
+        }
+
+        [Obsolete("Use NINA.Astrometry.ObserverInfo object instead of latitude and longitude arguments")]
+        public static double GetMoonAltitude(DateTime date, double latitude, double longitude) {
+            var observerInfo = new ObserverInfo() {
+                Latitude = latitude,
+                Longitude = longitude,
+            };
+
+            return GetMoonAltitude(date, observerInfo);
+        }
+
+        [Obsolete("Use NINA.Astrometry.ObserverInfo object instead of latitude and longitude arguments")]
+        public static double GetSunAltitude(DateTime date, double latitude, double longitude) {
+            var observerInfo = new ObserverInfo() {
+                Latitude = latitude,
+                Longitude = longitude,
+            };
+
+            return GetSunAltitude(date, observerInfo);
         }
 
         /// <summary>

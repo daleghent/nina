@@ -136,10 +136,15 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         private void UpdateCurrentMoonState() {
-            var latlong = profileService.ActiveProfile.AstrometrySettings;
+            var observerInfo = new ObserverInfo() {
+                Latitude = profileService.ActiveProfile.AstrometrySettings.Latitude,
+                Longitude = profileService.ActiveProfile.AstrometrySettings.Longitude,
+                Elevation = profileService.ActiveProfile.AstrometrySettings.Elevation,
+            };
+
             var now = DateTime.UtcNow;
 
-            CurrentMoonAltitude = AstroUtil.GetMoonAltitude(now, latlong.Latitude, latlong.Longitude);
+            CurrentMoonAltitude = AstroUtil.GetMoonAltitude(now, observerInfo);
         }
     }
 }
