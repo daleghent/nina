@@ -24,6 +24,7 @@ using NINA.Image.Interfaces;
 using NINA.Image.RawConverter;
 using NINA.Profile.Interfaces;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -369,7 +370,25 @@ namespace NINA.Image.ImageData {
                         break;
                 }
 
-                encoder.Frames.Add(BitmapFrame.Create(RenderBitmapSource()));
+                var metadata = new BitmapMetadata("tiff");
+                try {
+                    // This will populate the TIFF Metadata using stringified FITS style header cards, to retain partial meta data that is not natively supported by TIFF                    
+                    metadata.ApplicationName = CoreUtil.Title;
+
+                    var fitsHeader = new FITSHeader(Properties.Width, Properties.Height);
+                    fitsHeader.PopulateFromMetaData(MetaData);
+                    var sb = new StringBuilder();
+                    foreach (var header in fitsHeader.HeaderCards) {
+                        sb.AppendLine(header.GetHeaderString());
+                    }
+                    sb.AppendLine("END");
+                    metadata.Title = sb.ToString();
+                } catch(Exception ex) {
+                    Logger.Error("Failed to generate TIFF metadata", ex);
+                }
+
+                var frame = BitmapFrame.Create(RenderBitmapSource(), null, metadata, null);
+                encoder.Frames.Add(frame);
                 encoder.Save(fs);
             }
 
@@ -496,10 +515,72 @@ namespace NINA.Image.ImageData {
             bmp.DestinationFormat = System.Windows.Media.PixelFormats.Gray16;
             bmp.EndInit();
 
+            var metaData = new ImageMetaData();
+            if (decoder.Frames[0].Metadata is BitmapMetadata bmpMd) {
+                try {
+                if (!string.IsNullOrWhiteSpace(bmpMd.Title)) {
+                        /* Parse potential FITS header on a best guess base by checking for a start of "SIMPLE" and stop at "END" or no more lines 
+                         * Anything that would break the parse will just result in a failed meta data read and empty meta data is used instead.
+                         */
+                        if (bmpMd.Title.StartsWith("SIMPLE")) {
+                            var fitsHeader = new FITSHeader(bmp.PixelWidth, bmp.PixelHeight);
+                            // Assume FITS style meta data is available
+                            using (StringReader reader = new StringReader(bmpMd.Title)) {
+                                string line = string.Empty;
+                                do {
+                                    line = reader.ReadLine();
+                                    if (line == null) { continue; }
+                                    if(line == "END") { break; }
+
+                                    // do something with the line
+                                    var indexSlash = line.IndexOf('/');
+                                    
+                                    var key = line.Substring(0, 8).Trim();
+
+                                    var value = string.Empty;
+                                    if(indexSlash > 0) {
+                                        value = line.Substring(9, indexSlash - 10).Trim();
+                                    } else {
+                                        value = line.Substring(9, 80 - 9).Trim();
+                                    }                                
+
+                                    var comment = string.Empty;
+                                    if(indexSlash > 0) {
+                                        comment = line.Substring(indexSlash + 1, line.Length - indexSlash - 1).Trim();
+                                    }
+                                
+
+                                    if (value.Contains(".")) {
+                                        if (double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var parsedValue)) {
+                                            fitsHeader.Add(key, parsedValue, comment);
+                                        }
+                                    } else {
+                                        if (int.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var parsedValue)) { 
+                                            fitsHeader.Add(key, parsedValue, comment);
+                                        }
+                                    }
+                                
+
+                                } while (line != null);
+
+                                try {
+                                    metaData = fitsHeader.ExtractMetaData();
+                                } catch (Exception ex) {
+                                    Logger.Error(ex.Message);
+                                }
+                            }
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    Logger.Error("Failed to parse FITS like metadata from TIFF", ex);
+                }
+            }
+
             var stride = (bmp.PixelWidth * bmp.Format.BitsPerPixel + 7) / 8;
             var pixels = new ushort[bmp.PixelWidth * bmp.PixelHeight];
             bmp.CopyPixels(pixels, stride, 0);
-            return imageDataFactory.CreateBaseImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, new ImageMetaData());
+            return imageDataFactory.CreateBaseImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, metaData);
         }
 
         #endregion "Load"
