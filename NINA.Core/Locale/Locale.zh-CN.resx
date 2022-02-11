@@ -5794,7 +5794,7 @@
     <value>在后台运行一个服务，以从其他应用程序中控制内置的跟踪相机</value>
   </data>
   <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Logging</value>
+    <value>跟踪CCD ASCOM服务器日志</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>服务管道名称</value>

@@ -1835,7 +1835,7 @@ Přeskočit.</value>
     <value>Stabilizuje se</value>
   </data>
   <data name="LblItemsPerPage" xml:space="preserve">
-    <value>Items per page</value>
+    <value>Položky na stránku</value>
   </data>
   <data name="LblJ2000" xml:space="preserve">
     <value>J2000</value>
