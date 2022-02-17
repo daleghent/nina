@@ -149,6 +149,7 @@ namespace NINA.ViewModel.Sequencer {
                         try {
                             LoadSequenceFromFile(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate);
                             SavePath = string.Empty;
+                            Sequencer.MainContainer.ClearHasChanged();
                         } catch (Exception ex) {
                             Logger.Error("Startup Sequence failed to load", ex);
                         }
@@ -254,8 +255,8 @@ namespace NINA.ViewModel.Sequencer {
                     SavePath = file;
                     Sequencer.MainContainer = container;
                     Sequencer.MainContainer.Validate();
-                    Sequencer.MainContainer.ClearHasChanged();
                     SavePath = file;
+                    Sequencer.MainContainer.ClearHasChanged();
                 } else {
                     Logger.Error("Unable to load sequence - Sequencer root element must be sequence root container!");
                     Notification.ShowError(Loc.Instance["Lbl_Sequencer_RootElementMustBeRootContainer"]);
