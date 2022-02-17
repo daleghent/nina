@@ -2740,7 +2740,7 @@ Calculated HFR: {2}
     <value>Save Image as</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>For DSLRs the image file format setting is ignored. RAW format will be saved instead!</value>
+    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Save selected profile and don't ask again next time</value>

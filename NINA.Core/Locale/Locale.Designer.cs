@@ -13742,7 +13742,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For DSLRs the image file format setting is ignored. RAW format will be saved instead!.
+        ///   Looks up a localized string similar to This setting is ignored for DSLRs when using the native driver. The camera&apos;s RAW format will be saved instead!.
         /// </summary>
         internal static string LblSaveImageAsDSLRNote {
             get {
