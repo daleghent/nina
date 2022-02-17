@@ -121,7 +121,7 @@
                         Width="{Binding CameraInfo.XSize}"
                         Height="{Binding CameraInfo.YSize}">
                         <Canvas.Background>
-                            <ImageBrush x:Name="fullImage" ImageSource="{Binding Image}"  Stretch="None"/>
+                            <ImageBrush x:Name="fullImage" ImageSource="{Binding Image}"  Stretch="UniformToFill"/>
                         </Canvas.Background>
                         <Rectangle
                             Canvas.Left="{Binding SubSampleRectangle.X}"
@@ -132,7 +132,7 @@
                             behavior:DragCommandBehavior.DragMoveCommand="{Binding SubSampleRectangleMoveCommand}"
                             behavior:DragCommandBehavior.OverrideCursor="True"
                             behavior:DragCommandBehavior.ResizeBoundary="20"
-                            Fill="{StaticResource SecondaryBrush}"
+                            Fill="{StaticResource ButtonBackgroundSelectedBrush}"
                             Opacity="0.4" />
                     </Canvas>
                 </Viewbox>
