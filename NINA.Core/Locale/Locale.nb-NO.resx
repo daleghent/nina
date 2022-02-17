@@ -6041,6 +6041,6 @@ Bør bare aktiveres når rotering er mulig for hvert bilde.</value>
 Denne knappen er ikke synlig i mosaikk-modus.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
-    <value>Use Blind Solver for Failures</value>
+    <value>Bruk blind søkemotor når søk feiler</value>
   </data>
 </root>

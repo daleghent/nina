@@ -3090,12 +3090,10 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
     <value>El servei PHD2 sincronitzat ha fallat i es torna a reiniciar aquest guiatge sincronitzat de PHD2 com a servei</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronize site settings</value>
+    <value>Sincronitza la configuració del lloc</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
-
-Should the settings be synchronized?</value>
+    <value>La configuració del lloc del telescopi és diferent de la de NINA. Vol sincronitzar la configuració?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Objectiu</value>
@@ -4094,10 +4092,10 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Quan el seguiment de la Cúpula està activat, NINA comprovarà sovint si cal girar la Cúpula per alinear-se amb el telescopi. Quan una aplicació externa, com ara un Planetari o un comandament manual, mou el telescopi, pot ser útil esperar que el telescopi ja no es mogui per a fer girar la cúpula.</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
-    <value>Sync slew dome when scope slews</value>
+    <value>Sincronitza el gir de la cúpula quan el telescopi gira</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
-    <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
+    <value>Gira la cúpula per sincronitzar-la amb la posició del telescopi quan gira. Aquesta configuració no manté la sincronització de la cúpula a mesura que segueix el telescopi.</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Trobar la posició inicial antes d'estacionar (park)</value>
@@ -4858,16 +4856,16 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Aparca la cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
-    <value>Rotates the dome to the home position</value>
+    <value>Gira la cúpula fins a la posició d'inici</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
-    <value>Find Dome Home</value>
+    <value>Troba la posició d'inici de la cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
-    <value>Slews the dome to an absolute azimuth position</value>
+    <value>Girar la cúpula a una posició azimut absoluta</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Slew Dome Azimuth</value>
+    <value>Gira l'Azimut de la cúpula</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Instruccions en paral·lel de l'Inici de Seqüència</value>
@@ -4894,10 +4892,10 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Activa la Sincronització de Cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
-    <value>Disables background dome synchronization with the telescope</value>
+    <value>Desactiva la sincronització del terra de la cúpula amb el telescopi</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
-    <value>Disable Dome Sync</value>
+    <value>Desactiva la sincronització de la cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>Sincronitza la cúpula amb la posició actual del telescopi</value>
@@ -5524,7 +5522,7 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Títol de la seqüència actual</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+    <value>La cúpula no va informar de moviment o fallada de la persiana després de completar la sol·licitud. Aquest és un comportament no conforme i perillós. Informeu-ho al vostre proveïdor de cúpula.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>S'ha produït un error en obrir l'obturador. L'estat de l'obturador encara s'informa com a tancat després d'iniciar l'operació d'obturador obert.</value>
@@ -5794,7 +5792,7 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>Executa un servidor en segon pla per a controlar la càmera de seguiment des d'altres aplicacions</value>
   </data>
   <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Logging</value>
+    <value>Seguiment del registre del servidor ASCOM del CCD</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>Nom del servidor del tub (Server Pipe)</value>
@@ -5837,7 +5835,7 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
     <value>No s'ha pogut reprendre la guia després d'un canvi de filtre que ha provocat el moviment del centrat</value>
   </data>
   <data name="LblMoveFocuserFailed" xml:space="preserve">
-    <value>Failed to move focuser</value>
+    <value>No s'ha pogut moure l'enfocador</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>S'ha detectat una instrucció desconeguda. Comproveu de nou la seqüència i inspeccioneu quines instruccions no són vàlides. A més, valideu que tot estigui actualitzat.</value>
@@ -5973,82 +5971,82 @@ Un cop resolt amb èxit, s'establirà la rotació per enquadrar.</value>
     <value>No s'ha pogut desar la imatge</value>
   </data>
   <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
-    <value>Get coordinates from the current scope position</value>
+    <value>Obté coordenades de la posició actual del telescopi</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>Elevació</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
-    <value>Device threads for ASCOM</value>
+    <value>Processos del dispositiu per a ASCOM</value>
   </data>
   <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
-    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+    <value>Aquesta és una configuració experimental que pot millorar la resposta de la interfície d'usuari i reduir la possibilitat que la interfície d'usuari es bloquegi en connectar-se als controladors ASCOM. Aquesta configuració s'ha d'activar abans de connectar dispositius perquè tingui efecte. Si us plau, compartiu els vostres comentaris amb els col·laboradors de Discord si el feu servi, ja que estem considerant habilitar-ho per a tothom.</value>
   </data>
   <data name="LblDefault" xml:space="preserve">
-    <value>Default</value>
+    <value>Per defecte</value>
   </data>
   <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
-    <value>Flat device cannot control brightness!</value>
+    <value>El Panell de Flats no pot controlar la brillantor!</value>
   </data>
   <data name="LblAboveHorizon" xml:space="preserve">
-    <value>Above Horizon</value>
+    <value>Per sobre de l'horitzó</value>
   </data>
   <data name="LblNikonX86Deprecated" xml:space="preserve">
-    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+    <value>No és compatible: Nikon ja no distribueix binaris SDK per a aplicacions x86</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
-    <value>No Plugins Installed</value>
+    <value>No hi ha Complements instal·lats</value>
   </data>
   <data name="LblPluginUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>Actualitzar-ho tot</value>
   </data>
   <data name="LblPluginUpdateAllCancel" xml:space="preserve">
-    <value>Cancel Update</value>
+    <value>Cancel·la l'actualització</value>
   </data>
   <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
-    <value>Updates all plugins where an update is available to the latest version</value>
+    <value>Actualitza tots els complements on hi hagi una actualització disponible a la darrera versió</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>No s'ha pogut girar per al canvi de meridià.
+Es farà un altre intent d'aquí a {0} segons.
+Intenteu {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>No s'ha pogut girar per al canvi de meridià després del nombre màxim de reintents. Avortant.</value>
   </data>
   <data name="LblROI" xml:space="preserve">
     <value>ROI</value>
     <comment>Region of interest used for sub frame.</comment>
   </data>
   <data name="LblROIPercentageTooltip" xml:space="preserve">
-    <value>Region of Interest expressed in percentage relative to the center</value>
+    <value>Regió d'interès expressada en percentatge respecte al centre</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
-    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+    <value>Pren una exposició per a la durada, el guany i la compensació per a la regió d'interès especificada</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
-    <value>Take Subframe Exposure</value>
+    <value>Pren l'exposició del submarc</value>
   </data>
   <data name="LblPreserveAlignment" xml:space="preserve">
-    <value>Preserve alignment</value>
+    <value>Conserva l'alineació</value>
   </data>
   <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
-    <value>Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
-This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
+    <value>Si aquesta opció està activada, s'assegurarà que els panells s'alineen amb un únic panell rectangular, però donarà lloc a diferents angles de rotació per a cada panell.
+Aquesta opció s'ha d'activar quan la rotació automàtica de la càmera està disponible o quan la rotació manual de la càmera és possible per a cada panell de mosaic.
 </value>
   </data>
   <data name="LblMosaicPanels" xml:space="preserve">
-    <value>Mosaic Panels</value>
+    <value>Tessel·les</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
-    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
+    <value>Quan està activat, es girarà el fons del cel en lloc del rectangle.</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
-    <value>Update Existing Target in Sequencer</value>
+    <value>Actualitza l'objectiu existent al seqüenciador</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
-    <value>When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
-This button is not visible when in mosaic mode.</value>
+    <value>Quan es fa clic, es mostrarà una llista d'objectius que ja estaven col·locats dins del seqüenciador. Després de fer clic en un d'aquests objectius, aquest s'actualitzarà amb el nom, les coordenades i la rotació emmarcats actualment.
+Aquest botó no és visible en mode mosaic.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Utilitza Blind Solver per a errors</value>

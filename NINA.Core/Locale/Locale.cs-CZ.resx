@@ -2770,7 +2770,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Vybrat novou Pointaci</value>
   </data>
   <data name="LblSelectProfileInUseWarning" xml:space="preserve">
-    <value>Vybraný profil nelze vybrat. Už se používá v jiné instanci N.I.N.A!</value>
+    <value>Selected profile cannot be chosen. It is already in use by another N.I.N.A. instance!</value>
   </data>
   <data name="LblSensorAnalysisPoorFit" xml:space="preserve">
     <value>Analýza Senzoru je nepravidelná a nemusí poskytovat přesné výsledky. Zvažte jeho opětovné spuštění.</value>
