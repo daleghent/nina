@@ -63,7 +63,7 @@ namespace NINA.Sequencer.Container {
                     foreach (var trigger in GetTriggersSnapshot()) {
                         trigger.Detach();
                     }
-
+                    SequenceTitle = Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_Name"];
                     ClearContainer(Items[0] as ISequenceContainer);
                     ClearContainer(Items[1] as ISequenceContainer);
                     ClearContainer(Items[2] as ISequenceContainer);

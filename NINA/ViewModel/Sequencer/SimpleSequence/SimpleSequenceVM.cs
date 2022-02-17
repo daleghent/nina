@@ -66,7 +66,7 @@ using NINA.Sequencer.Trigger;
 
 namespace NINA.ViewModel {
 
-    internal class SimpleSequenceVM : SequencerBaseVM, ISimpleSequenceVM, ICameraConsumer {
+    internal class SimpleSequenceVM : BaseVM, ISimpleSequenceVM, ICameraConsumer {
 
         public SimpleSequenceVM(
                 IProfileService profileService,
@@ -121,6 +121,19 @@ namespace NINA.ViewModel {
                 }
             };
         }
+
+        private string savePath = string.Empty;
+
+        public string SavePath {
+            get => savePath;
+            set {
+                savePath = value;
+                Sequencer.MainContainer.SequenceTitle = Path.GetFileNameWithoutExtension(savePath);
+                RaisePropertyChanged();
+            }
+        }
+
+        public ISequencer Sequencer { get; protected set; }
 
         private void MoveLeft(object obj) {
             if(obj is ISimpleDSOContainer container) {

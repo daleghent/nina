@@ -53,10 +53,11 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Sequencer.SequenceItem.Imaging;
 using NINA.Sequencer.Trigger.Autofocus;
 using NINA.Equipment.Equipment.MyCamera;
+using System.ComponentModel;
 
 namespace NINA.ViewModel.Sequencer {
 
-    internal class Sequence2VM : SequencerBaseVM, ISequence2VM {
+    internal class Sequence2VM : BaseVM, ISequence2VM {
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
         private ICameraMediator cameraMediator;
@@ -68,8 +69,8 @@ namespace NINA.ViewModel.Sequencer {
             IApplicationStatusMediator applicationStatusMediator,
             ICameraMediator cameraMediator,
             ISequencerFactory factory
-
             ) : base(profileService) {
+            
             this.applicationStatusMediator = applicationStatusMediator;
 
             this.sequenceMediator = sequenceMediator;
@@ -90,6 +91,48 @@ namespace NINA.ViewModel.Sequencer {
             DetachCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(Detach);
             SkipCurrentItemCommand = new AsyncCommand<bool>(SkipCurrentItem);
             SkipToEndOfSequenceCommand = new AsyncCommand<bool>(SkipToEndOfSequence);
+        }
+
+        private string savePath = string.Empty;
+        public string SavePath {
+            get => savePath;
+            set {
+                savePath = value;
+                if(!string.IsNullOrWhiteSpace(value)) {
+                    DetachSequencerINPC();
+                    Sequencer.MainContainer.SequenceTitle = Path.GetFileNameWithoutExtension(value);
+                    AttachSequencerINPC();
+                }                
+                RaisePropertyChanged();
+            }
+        }
+
+        private ISequencer sequencer;
+        public ISequencer Sequencer {
+            get => sequencer;
+            private set {
+                DetachSequencerINPC();
+                sequencer = value;
+                AttachSequencerINPC();
+            }
+        }
+
+        private void DetachSequencerINPC() {
+            if (sequencer != null && sequencer.MainContainer is INotifyPropertyChanged oldinpc) {
+                oldinpc.PropertyChanged -= Sequencer_PropertyChanged;
+            }
+        }
+
+        private void AttachSequencerINPC() {
+            if (sequencer != null && sequencer.MainContainer is INotifyPropertyChanged newinpc) {
+                newinpc.PropertyChanged += Sequencer_PropertyChanged;
+            }
+        }
+
+        private void Sequencer_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if(e.PropertyName == nameof(Sequencer.MainContainer.SequenceTitle)) {
+                SavePath = string.Empty;
+            }
         }
 
         private bool IsSimpleSequencerEnabled() {
