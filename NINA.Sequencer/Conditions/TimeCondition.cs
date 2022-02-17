@@ -55,7 +55,7 @@ namespace NINA.Sequencer.Conditions {
             Tick();
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING && this.Status != SequenceEntityStatus.DISABLED) {
                         Logger.Info("Time limit exceeded - Interrupting current Instruction Set");
                         await this.Parent.Interrupt();
                     }

@@ -59,7 +59,7 @@ namespace NINA.Sequencer.Conditions {
         private async Task InterruptWhenTargetBelowHorizon() {
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING && this.Status != SequenceEntityStatus.DISABLED) {
                         Logger.Info("Target is below horizon - Interrupting current Instruction Set");
                         await this.Parent.Interrupt();
                     }

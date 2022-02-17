@@ -54,7 +54,7 @@ namespace NINA.Sequencer.Conditions {
             CalculateCurrentMoonState();
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING && this.Status != SequenceEntityStatus.DISABLED) {
                         Logger.Info("Moon is outside of the specified altitude range - Interrupting current Instruction Set");
                         await this.Parent.Interrupt();
                     }
