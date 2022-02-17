@@ -242,12 +242,15 @@ namespace NINA.Sequencer.Container {
 
         public bool CheckConditions(ISequenceItem previousItem, ISequenceItem nextItem) {
             lock (lockObj) {
-                if (Conditions.Count == 0) {
+                var c = GetConditionsSnapshot().Where(x => x.Status != SequenceEntityStatus.DISABLED).ToList();
+
+                if (c.Count == 0) {
                     return false;
                 }
 
                 bool check = true;
-                foreach (var condition in Conditions) {
+                foreach (var condition in c) {
+                    if (condition.Status == SequenceEntityStatus.DISABLED) { continue; }
                     check = check && condition.RunCheck(previousItem, nextItem);
                 }
 
@@ -485,6 +488,7 @@ namespace NINA.Sequencer.Container {
                 localTriggers = Triggers.ToArray();
             }
             foreach (var trigger in localTriggers) {
+                if(trigger.Status == SequenceEntityStatus.DISABLED) { continue; }
                 if (trigger.ShouldTrigger(previousItem, nextItem)) {
                     var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
                     await trigger.Run(context, progress, token);
@@ -498,6 +502,7 @@ namespace NINA.Sequencer.Container {
                 localTriggers = Triggers.ToArray();
             }
             foreach (var trigger in localTriggers) {
+                if (trigger.Status == SequenceEntityStatus.DISABLED) { continue; }
                 if (trigger.ShouldTriggerAfter(previousItem, nextItem)) {
                     var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
                     await trigger.Run(context, progress, token);

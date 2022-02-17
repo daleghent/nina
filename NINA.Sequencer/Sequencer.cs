@@ -163,7 +163,7 @@ namespace NINA.Sequencer {
 
             if (container is IConditionable conditionable) {
                 foreach (var condition in conditionable.GetConditionsSnapshot()) {
-                    if (condition is IValidatable) {
+                    if (condition.Status != Core.Enum.SequenceEntityStatus.DISABLED && condition is IValidatable) {
                         var v = condition as IValidatable;
                         v.Validate();
                         issues.AddRange(v.Issues);
@@ -173,7 +173,7 @@ namespace NINA.Sequencer {
 
             if (container is ITriggerable triggerable) {
                 foreach (var trigger in triggerable.GetTriggersSnapshot()) {
-                    if (trigger is IValidatable) {
+                    if (trigger.Status != Core.Enum.SequenceEntityStatus.DISABLED && trigger is IValidatable) {
                         var v = trigger as IValidatable;
                         v.Validate();
                         issues.AddRange(v.Issues);
@@ -182,13 +182,13 @@ namespace NINA.Sequencer {
             }
 
             foreach (var item in container.GetItemsSnapshot()) {
-                if (item is IValidatable) {
+                if (item.Status != Core.Enum.SequenceEntityStatus.DISABLED && item is IValidatable) {
                     var v = item as IValidatable;
                     v.Validate();
                     issues.AddRange(v.Issues);
                 }
 
-                if (item is ISequenceContainer && !(item is IImmutableContainer)) {
+                if (item is ISequenceContainer && !(item is IImmutableContainer) && item.Status != Core.Enum.SequenceEntityStatus.DISABLED) {
                     // The immutablecontainer is excluded as it will itself validate the things of its children
                     issues.AddRange(Validate(item as ISequenceContainer));
                 }

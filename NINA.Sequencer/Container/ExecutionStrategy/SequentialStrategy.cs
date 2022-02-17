@@ -196,8 +196,8 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         private bool CanContinue(ISequenceContainer container, ISequenceItem previousItem, ISequenceItem nextItem) {
             var conditionable = container as IConditionable;
             var canContinue = false;
-            var conditions = conditionable?.GetConditionsSnapshot();
-            if (conditions?.Count > 0) {
+            var conditions = conditionable?.GetConditionsSnapshot()?.Where(x => x.Status != SequenceEntityStatus.DISABLED).ToList();
+            if (conditions != null && conditions.Count > 0) {
                 canContinue = conditionable.CheckConditions(previousItem, nextItem);
             } else {
                 canContinue = container.Iterations < 1;

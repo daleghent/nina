@@ -38,11 +38,13 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             var tasks = new List<Task>();
             var items = context.GetItemsSnapshot();
             foreach (var item in items) {
-                var itemProgress = new Progress<ApplicationStatus>((p) => {
-                    p.Source = item.Name;
-                    progress?.Report(p);
-                });
-                tasks.Add(item.Run(itemProgress, token));
+                if(item.Status != Core.Enum.SequenceEntityStatus.DISABLED) { 
+                    var itemProgress = new Progress<ApplicationStatus>((p) => {
+                        p.Source = item.Name;
+                        progress?.Report(p);
+                    });
+                    tasks.Add(item.Run(itemProgress, token));
+                }
             }
             return Task.WhenAll(tasks);
         }

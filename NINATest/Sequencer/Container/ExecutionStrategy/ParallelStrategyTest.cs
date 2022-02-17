@@ -34,8 +34,12 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
         public async Task Execute_AllItemsAreCalled() {
             var containerMock = new Mock<ISequenceContainer>();
             var item1Mock = new Mock<ISequenceItem>();
+            item1Mock.Setup(x => x.Status).Returns(NINA.Core.Enum.SequenceEntityStatus.CREATED);
             var item2Mock = new Mock<ISequenceItem>();
-            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
+            item2Mock.Setup(x => x.Status).Returns(NINA.Core.Enum.SequenceEntityStatus.CREATED);
+            var item3Mock = new Mock<ISequenceItem>();
+            item3Mock.Setup(x => x.Status).Returns(NINA.Core.Enum.SequenceEntityStatus.DISABLED);
+            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object, item3Mock.Object };
             containerMock.Setup(x => x.GetItemsSnapshot()).Returns(items);
 
             var sut = new ParallelStrategy();
@@ -44,6 +48,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
 
             item1Mock.Verify(x => x.Run(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
             item2Mock.Verify(x => x.Run(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+            item3Mock.Verify(x => x.Run(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]

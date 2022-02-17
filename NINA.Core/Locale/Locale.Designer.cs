@@ -631,6 +631,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disables or enables the current instruction set and all its content..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DisableEnable_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DisableEnable_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creates a duplicate of current set and all its items and append it to the parent instruction set.
         /// </summary>
         internal static string Lbl_SequenceContainer_Duplicate_Tooltip {
@@ -933,6 +942,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disables the current instruction. A disabled instruction will not run during sequence execution..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Disable_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Disable_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closes the shutter of the dome.
         /// </summary>
         internal static string Lbl_SequenceItem_Dome_CloseDomeShutter_Description {
@@ -1082,6 +1100,15 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_Duplicate_Tooltip {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Duplicate_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables the current instruction, to be considered again to run during sequence execution..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Enable_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Enable_Tooltip", resourceCulture);
             }
         }
         
@@ -13742,7 +13769,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For DSLRs the image file format setting is ignored. RAW format will be saved instead!.
+        ///   Looks up a localized string similar to This setting is ignored for DSLRs when using the native driver. The camera&apos;s RAW format will be saved instead!.
         /// </summary>
         internal static string LblSaveImageAsDSLRNote {
             get {
