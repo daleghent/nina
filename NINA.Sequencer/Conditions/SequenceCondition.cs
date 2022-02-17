@@ -54,7 +54,16 @@ namespace NINA.Sequencer.Conditions {
         public string Description { get; set; }
         public GeometryGroup Icon { get; set; }
         public string Category { get; set; }
-        public SequenceEntityStatus Status { get; set; }
+
+        private SequenceEntityStatus status = SequenceEntityStatus.CREATED;
+
+        public SequenceEntityStatus Status {
+            get => status;
+            set {
+                status = value;
+                RaisePropertyChanged();
+            }
+        }
 
         [JsonProperty]
         public ISequenceContainer Parent { get; set; }
@@ -83,7 +92,7 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu);
+        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu, (o) => Status != SequenceEntityStatus.DISABLED);
 
         public virtual void AfterParentChanged() {
         }
@@ -95,6 +104,8 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public bool RunCheck(ISequenceItem previousItem, ISequenceItem nextItem) {
+            if(this.Status == SequenceEntityStatus.DISABLED) { return false; }
+
             try {
                 if (this is IValidatable && !(this is ISequenceContainer)) {
                     var validatable = this as IValidatable;
@@ -152,6 +163,15 @@ namespace NINA.Sequencer.Conditions {
         public ICommand MoveUpCommand => null;
 
         public ICommand MoveDownCommand => null;
+        public ICommand DisableEnableCommand => new GalaSoft.MvvmLight.Command.RelayCommand(() => {
+            if (Status != SequenceEntityStatus.DISABLED) {
+                Status = SequenceEntityStatus.DISABLED;
+                ShowMenu = false;
+            } else {
+                Status = SequenceEntityStatus.CREATED;
+            }
+
+        });
 
         public void Detach() {
             Parent?.Remove(this);

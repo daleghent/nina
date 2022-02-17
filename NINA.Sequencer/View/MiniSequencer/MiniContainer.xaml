@@ -35,8 +35,9 @@
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBlock.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.Sequencer;component/Resources/Styles/ProgressStyle.xaml" />
-                <ResourceDictionary>
+                <wpfutil:SharedResourceDictionary>
 
+                    <converter:DisabledStatusToInvisibleConverter x:Key="DisabledStatusToInvisibleConverter" />
                     <converter:SequenceEntityStatusRunningToVisibilityConverter x:Key="SequenceEntityStatusRunningToVisibilityConverter" />
                     <DataTemplate x:Key="TriggerTemplate" DataType="{x:Type trigger:SequenceTrigger}">
                         <local:MiniTrigger />
@@ -61,7 +62,7 @@
                         SequenceContainer="{StaticResource SequenceContainerTemplate}"
                         SequenceItem="{StaticResource SequenceItemTemplate}"
                         SequenceTrigger="{StaticResource TriggerTemplate}" />
-                </ResourceDictionary>
+                </wpfutil:SharedResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -89,7 +90,17 @@
             HorizontalAlignment="Center"
             Data="{Binding Icon}"
             Fill="{StaticResource PrimaryBrush}"
-            Stretch="Uniform" />
+            Stretch="Uniform">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static enum:SequenceEntityStatus.DISABLED}">
+                            <Setter Property="Opacity" Value="0.4" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
         <TextBlock
             Grid.Column="2"
             Margin="5,0,0,0"
@@ -100,34 +111,41 @@
                         <DataTrigger Binding="{Binding Status}" Value="{x:Static enum:SequenceEntityStatus.RUNNING}">
                             <Setter Property="FontWeight" Value="Bold" />
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static enum:SequenceEntityStatus.DISABLED}">
+                            <Setter Property="TextDecorations" Value="Strikethrough" />
+                            <Setter Property="Opacity" Value="0.4" />
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <Border
+        <Grid
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="2"
-            BorderBrush="Transparent"
-            Visibility="{Binding Conditions.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
-            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,0.5">
-                <ItemsControl ItemTemplateSelector="{StaticResource TemplateSelector}" ItemsSource="{Binding Conditions}" />
+            Visibility="{Binding Status, Converter={StaticResource DisabledStatusToInvisibleConverter}}">
+            <Border BorderBrush="Transparent" Visibility="{Binding Conditions.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,0.5">
+                    <ItemsControl ItemTemplateSelector="{StaticResource TemplateSelector}" ItemsSource="{Binding Conditions}" />
+                </Border>
             </Border>
-        </Border>
-        <Border
+        </Grid>
+        <Grid
             Grid.Row="2"
             Grid.Column="1"
             Grid.ColumnSpan="2"
-            BorderBrush="Transparent"
-            Visibility="{Binding Triggers.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
-            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,0.5">
-                <ItemsControl ItemTemplateSelector="{StaticResource TemplateSelector}" ItemsSource="{Binding Triggers}" />
+            Visibility="{Binding Status, Converter={StaticResource DisabledStatusToInvisibleConverter}}">
+            <Border BorderBrush="Transparent" Visibility="{Binding Triggers.Count, Converter={StaticResource ZeroToVisibilityConverter}}">
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,0.5">
+                    <ItemsControl ItemTemplateSelector="{StaticResource TemplateSelector}" ItemsSource="{Binding Triggers}" />
+                </Border>
             </Border>
-        </Border>
+        </Grid>
         <ContentControl
             Grid.Row="3"
             Grid.Column="1"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="2"
+            Visibility="{Binding Status, Converter={StaticResource DisabledStatusToInvisibleConverter}}">
             <ContentControl.Content>
                 <ItemsControl ItemTemplateSelector="{StaticResource TemplateSelector}" ItemsSource="{Binding Items}" />
             </ContentControl.Content>

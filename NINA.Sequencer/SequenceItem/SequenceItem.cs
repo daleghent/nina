@@ -56,6 +56,15 @@ namespace NINA.Sequencer.SequenceItem {
         public GeometryGroup Icon { get; set; }
         public ICommand MoveDownCommand => new GalaSoft.MvvmLight.Command.RelayCommand(MoveDown);
         public ICommand MoveUpCommand => new GalaSoft.MvvmLight.Command.RelayCommand(MoveUp);
+        public ICommand DisableEnableCommand => new GalaSoft.MvvmLight.Command.RelayCommand(() => {
+            if(Status != SequenceEntityStatus.DISABLED) {
+                Status = SequenceEntityStatus.DISABLED;
+                ShowMenu = false;
+            } else {
+                Status = SequenceEntityStatus.CREATED;
+            }
+            
+        });
 
         public string Name {
             get => name;
@@ -102,7 +111,7 @@ namespace NINA.Sequencer.SequenceItem {
             }
         }
 
-        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu);
+        public ICommand ShowMenuCommand => new GalaSoft.MvvmLight.Command.RelayCommand<object>((o) => ShowMenu = !ShowMenu, (o) => Status != SequenceEntityStatus.DISABLED);
 
         public SequenceEntityStatus Status {
             get => status;
@@ -149,7 +158,9 @@ namespace NINA.Sequencer.SequenceItem {
         }
 
         public virtual void ResetProgress() {
-            this.Status = SequenceEntityStatus.CREATED;
+            if(this.Status != SequenceEntityStatus.DISABLED) { 
+                this.Status = SequenceEntityStatus.CREATED;
+            }
         }
 
         public virtual void ResetProgressCascaded() {
@@ -269,10 +280,12 @@ namespace NINA.Sequencer.SequenceItem {
         }
 
         public void Skip() {
-            this.Status = SequenceEntityStatus.SKIPPED;
-            try {
-                localCts?.Cancel();
-            } catch (Exception) { }
+            if (this.Status != SequenceEntityStatus.DISABLED) {
+                this.Status = SequenceEntityStatus.SKIPPED;
+                try {
+                    localCts?.Cancel();
+                } catch (Exception) { }
+            }
         }
 
         public virtual void Initialize() {

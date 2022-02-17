@@ -19,6 +19,7 @@ namespace NINA.Core.Enum {
         RUNNING,
         FINISHED,
         FAILED,
-        SKIPPED
+        SKIPPED,
+        DISABLED
     }
 }

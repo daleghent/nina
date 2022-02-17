@@ -49,6 +49,8 @@
                 <wpfutil:SharedResourceDictionary>
                     <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
                     <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
+                    <converter:StatusToEnabledConverter x:Key="StatusToEnabledConverter" />
+                    <converter:DisabledStatusToStrikethroughConverter x:Key="DisabledStatusToStrikethroughConverter" />
                 </wpfutil:SharedResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -305,7 +307,9 @@
                                 DockPanel.Dock="Left"
                                 FontSize="10pt"
                                 Foreground="{StaticResource ButtonForegroundBrush}"
-                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}"
+                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                TextDecorations="{Binding Status, Converter={StaticResource DisabledStatusToStrikethroughConverter}}" />
                             <Border Grid.Column="1" Background="{StaticResource SecondaryBackgroundBrush}">
                                 <ContentPresenter
                                     Margin="2,0,10,0"
@@ -372,6 +376,30 @@
                                         <Button.ToolTip>
                                             <ToolTip>
                                                 <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SaveAsTemplate_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="EnableDisableButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding DisableEnableCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        Visibility="{Binding DisableEnableCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource PowerSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_DisableEnable_Tooltip}" />
                                             </ToolTip>
                                         </Button.ToolTip>
                                     </Button>
@@ -501,6 +529,7 @@
                     <ninactrl:DetachingExpander.Content>
                         <DockPanel
                             HorizontalAlignment="Stretch"
+                            IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}"
                             IsHitTestVisible="True"
                             LastChildFill="True">
                             <Border DockPanel.Dock="Top">

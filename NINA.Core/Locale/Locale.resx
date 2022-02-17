@@ -6077,4 +6077,13 @@ This button is not visible when in mosaic mode.</value>
   <data name="LblPhd2Warning" xml:space="preserve">
     <value>PHD2 Warning</value>
   </data>
+  <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
+    <value>Disables the current instruction. A disabled instruction will not run during sequence execution.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
+    <value>Enables the current instruction, to be considered again to run during sequence execution.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
+    <value>Disables or enables the current instruction set and all its content.</value>
+  </data>
 </root>
