@@ -376,7 +376,7 @@ namespace NINA.Sequencer.Behaviors {
         public HitTestResultBehavior GetAllDragDropBehaviorsBelowMyself(HitTestResult result) {
             var hit = (result.VisualHit as FrameworkElement);
             // check for self, if we hit self, ignore
-            if (hit is DragDropAdorner || AssociatedObject.DataContext == (result.VisualHit as FrameworkElement).DataContext) {
+            if (hit is DragDropAdorner || (result.VisualHit is FrameworkElement elem && AssociatedObject.DataContext == elem.DataContext)) {
                 return HitTestResultBehavior.Continue;
             }
             // add item below self, continue
