@@ -55,6 +55,10 @@ namespace NINA.Plugin {
 
     public class PluginLoader : IPluginLoader {
 
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AddDllDirectory(string lpPathName);
+
         public PluginLoader(IProfileService profileService,
                               ICameraMediator cameraMediator,
                               ITelescopeMediator telescopeMediator,
@@ -134,6 +138,7 @@ namespace NINA.Plugin {
                 new SunriseProvider(nighttimeCalculator),
                 new MeridianProvider(profileService)
             };
+            assemblyReferencePathMap = new Dictionary<string, string>();
         }
 
         private void DeployFromStaging() {
@@ -232,8 +237,13 @@ namespace NINA.Plugin {
                             AsyncContext.Run(() => LoadPlugin(file));
                         }
 
-                        if (Directory.Exists(Constants.UserExtensionsFolder)) {
-                            files.AddRange(Directory.GetFiles(Constants.UserExtensionsFolder, "*.dll", SearchOption.AllDirectories));
+                        // Enumerate only 1 level deep, where we'd expect plugin dlls to be in the root of the plugin folder
+                        var userExtensionsDirectory = new DirectoryInfo(Constants.UserExtensionsFolder);
+                        if (userExtensionsDirectory.Exists) {
+                            files.AddRange(userExtensionsDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
+                            foreach (var subDirectory in userExtensionsDirectory.GetDirectories()) {
+                                files.AddRange(subDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
+                            }
                         }
 
                         foreach (var file in files) {
@@ -267,9 +277,10 @@ namespace NINA.Plugin {
                 }
 
                 var settings = new AppDomainSetup {
-                    ApplicationBase = AppDomain.CurrentDomain.BaseDirectory
+                    ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
                 };
                 var childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
+
                 var handle = Activator.CreateInstance(
                     childDomain,
                     typeof(PluginAssemblyLoader).Assembly.FullName,
@@ -283,6 +294,27 @@ namespace NINA.Plugin {
                 );
                 var loader = (PluginAssemblyLoader)handle.Unwrap();
                 var references = loader.GrabAssemblyReferences(file);
+
+                var pluginFileInfo = new FileInfo(file);
+                var pluginDllDirectory = new DirectoryInfo(Path.Combine(pluginFileInfo.Directory.FullName, "dll"));
+                if (pluginDllDirectory.Exists) {
+                    // If there's a dll sub-directory, enumerate the references for any potentially matching dlls, and add them
+                    // to a dictionary that can be used by the assembly resolver
+                    foreach (var reference in references) {
+                        if (assemblyReferencePathMap.ContainsKey(reference)) {
+                            continue;
+                        }
+
+                        var assemblyName = new AssemblyName(reference);
+                        var assemblyPath = Path.Combine(pluginDllDirectory.FullName, assemblyName.Name + ".dll");
+                        if (!File.Exists(assemblyPath)) {
+                            continue;
+                        }
+                        assemblyReferencePathMap.Add(reference, assemblyPath);
+                    }
+                }
+
+
                 AppDomain.Unload(childDomain);
 
                 if (references.FirstOrDefault(x => x.Contains("NINA.Plugin")) != null) {
@@ -306,6 +338,11 @@ namespace NINA.Plugin {
 
                                 //Add the loaded plugin assembly to the assembly resolver
                                 Assemblies.Add(plugin.Assembly);
+
+                                // If there's a dll sub-directory for the plugin, add it to the dll search path to help deal with subsequent loads
+                                if (pluginDllDirectory.Exists && !AddDllDirectory(pluginDllDirectory.FullName)) {
+                                    Logger.Warning($"Failed to add {pluginDllDirectory.FullName} to dll search path");
+                                }
                                 Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
                             } else {
                                 throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum version of {manifest.MinimumApplicationVersion}, but N.I.N.A. is {applicationVersion}");
@@ -478,9 +515,20 @@ namespace NINA.Plugin {
         private readonly IImageStatisticsVM imageStatisticsVM;
         private readonly IDomeSynchronization domeSynchronization;
         private readonly ISequenceMediator sequenceMediator;
+        private readonly Dictionary<string, string> assemblyReferencePathMap;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
-            return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);
+            var assembly = this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);
+            if (assembly == null) {
+                if (assemblyReferencePathMap.TryGetValue(args.Name, out string assemblyPath)) {
+                    try {
+                        assembly = Assembly.LoadFrom(assemblyPath);
+                    } catch (Exception) {
+                        Logger.Warning($"Failed to load dependent assembly {args.Name} using {assemblyPath}");
+                    }
+                }
+            }
+            return assembly;
         }
 
         /// <summary>
