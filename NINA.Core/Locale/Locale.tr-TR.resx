@@ -2732,7 +2732,7 @@ Hesaplanan HFR: {2}
     <value>Resmi şu adla kaydet</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>DSLR makinalar için resim dosya formatı gözardı edilecek. Onun yerine RAW formatında kaydedilecek!</value>
+    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Seçili profili kaydet ve bir daha sorma</value>
@@ -6049,5 +6049,20 @@ Bu düğme mozaik modundayken görünmez.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Use Blind Solver for Failures</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>ASCOM Driver Error</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Canon Driver Error</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>ZWO Driver Error</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>ASTAP Warning</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>PHD2 Warning</value>
   </data>
 </root>

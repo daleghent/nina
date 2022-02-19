@@ -2735,7 +2735,7 @@ HFR calculat: {2}    </value>
     <value>Desar com</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>Per a les DSLR, la configuració del format del fitxer d'imatge s'ignora. S'utilitzarà el format RAW!</value>
+    <value>Aquesta configuració s'ignora per a les DSLR quan s'utilitza el controlador natiu. En lloc d'això, es desarà el format RAW de la càmera!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Deseu el perfil seleccionat i no ho torneu a preguntar la propera vegada</value>
@@ -6050,5 +6050,20 @@ Aquest botó no és visible en mode mosaic.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Utilitza Blind Solver per a errors</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>Error del controlador ASCOM</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Error del Controlador Canon</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>Error del Controlador ZWO</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>Avís ASTAP</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>Avís PHD2</value>
   </data>
 </root>

@@ -2740,7 +2740,7 @@ HFR calculé: {2}</value>
     <value>Enregistrer image sous</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>Pour les APN, le paramètre de format de fichier image est ignoré. Le format RAW sera enregistré à la place!</value>
+    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Enregistrer le profil sélectionné et ne plus demander la prochaine fois</value>
@@ -6057,5 +6057,20 @@ Cette option doit être activée lorsque la rotation automatique de la caméra e
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Use Blind Solver for Failures</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>ASCOM Driver Error</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Canon Driver Error</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>ZWO Driver Error</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>ASTAP Warning</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>PHD2 Warning</value>
   </data>
 </root>

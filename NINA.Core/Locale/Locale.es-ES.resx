@@ -2732,7 +2732,7 @@ Calculado HFR: {2}
     <value>Guardar como</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>El formato de archivo se ignorará para cámaras DSLR. ¡Se usará el formato RAW!</value>
+    <value>Este ajuste será ignorado en las DSLR cuando se use el controlador nativo. ¡En su lugar se guardará el formato RAW de la cámara!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Guardar el perfil seleccionado y no volver a preguntar la próxima vez.</value>
@@ -6051,5 +6051,20 @@ Este botón no es visible en modo mosaico.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Usar astrometría ciega en los fallos</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>Error de controlador ASCOM</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Error del controlador de Canon</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>Error del controlador de ZWO</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>Advertencia de ASTAP</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>Advertencia de PHD2</value>
   </data>
 </root>

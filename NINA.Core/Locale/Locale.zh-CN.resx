@@ -2735,7 +2735,7 @@
     <value>图像另存为</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>对于 DSLR，忽略图像文件格式设置。将保存为RAW格式！</value>
+    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>保存选定的配置文件，下次不再询问</value>
@@ -6051,5 +6051,20 @@
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Use Blind Solver for Failures</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>ASCOM Driver Error</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Canon Driver Error</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>ZWO Driver Error</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>ASTAP Warning</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>PHD2 Warning</value>
   </data>
 </root>

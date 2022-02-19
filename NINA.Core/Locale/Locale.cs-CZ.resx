@@ -2734,7 +2734,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Uložit obraz jako</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>U digitálních zrcadlovek je nastavení formátu obrazu ignorováno. Je použit formát RAW!</value>
+    <value>Toto nastavení je u digitálních zrcadlovek při použití nativního ovladače ignorováno. Místo toho bude uložen formát RAW!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Uložit vybraný profil a příště se neptat</value>
@@ -2770,7 +2770,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Vybrat novou Pointaci</value>
   </data>
   <data name="LblSelectProfileInUseWarning" xml:space="preserve">
-    <value>Selected profile cannot be chosen. It is already in use by another N.I.N.A. instance!</value>
+    <value>Zvolený profil nelze vybrat. Už se používá v jiné instalaci N.I.N.A!</value>
   </data>
   <data name="LblSensorAnalysisPoorFit" xml:space="preserve">
     <value>Analýza Senzoru je nepravidelná a nemusí poskytovat přesné výsledky. Zvažte jeho opětovné spuštění.</value>
@@ -6055,5 +6055,20 @@ Toto tlačítko není viditelné v režimu mozaiky.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Řešení Naslepo při Chybě</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>Chyba Ovladače ASCOM</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Chyba Ovladače Canon</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>Chyba Ovladače ZWO</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>Varování ASTAP</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>Varování PHD2</value>
   </data>
 </root>

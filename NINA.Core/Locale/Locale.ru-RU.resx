@@ -2733,7 +2733,7 @@ Dec: {1}</value>
     <value>Сохранить изображение как</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>Для DSLR параметр формата изображения игнорируется. Формат RAW будет сохранен вместо этого!</value>
+    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Всегда использовать этот профиль</value>
@@ -6054,5 +6054,20 @@ This button is not visible when in mosaic mode.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Use Blind Solver for Failures</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>ASCOM Driver Error</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Canon Driver Error</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>ZWO Driver Error</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>ASTAP Warning</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>PHD2 Warning</value>
   </data>
 </root>

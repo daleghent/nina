@@ -2740,7 +2740,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>圖像另存為</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>對於 DSLR，忽略影像檔格式設置。將保存原始格式！</value>
+    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>保存選定的設定檔，下次不再詢問</value>
@@ -6061,5 +6061,20 @@ This button is not visible when in mosaic mode.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
     <value>Use Blind Solver for Failures</value>
+  </data>
+  <data name="LblASCOMDriverError" xml:space="preserve">
+    <value>ASCOM Driver Error</value>
+  </data>
+  <data name="LblCanonDriverError" xml:space="preserve">
+    <value>Canon Driver Error</value>
+  </data>
+  <data name="LblZWODriverError" xml:space="preserve">
+    <value>ZWO Driver Error</value>
+  </data>
+  <data name="LblASTAPWarning" xml:space="preserve">
+    <value>ASTAP Warning</value>
+  </data>
+  <data name="LblPhd2Warning" xml:space="preserve">
+    <value>PHD2 Warning</value>
   </data>
 </root>
