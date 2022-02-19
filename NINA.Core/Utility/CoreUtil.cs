@@ -128,7 +128,7 @@ namespace NINA.Core.Utility {
             status = string.IsNullOrWhiteSpace(status) ? NINA.Core.Locale.Loc.Instance["LblWaiting"] : status;
 
             var elapsed = new TimeSpan(0);
-            while (elapsed < t && !token.IsCancellationRequested) {
+            while (elapsed < t) {
                 var delta = await Delay(100, token);
                 elapsed += delta;
 
@@ -160,6 +160,7 @@ namespace NINA.Core.Utility {
                         }
                     );
                 }
+                token.ThrowIfCancellationRequested();
             }
             return elapsed;
         }
