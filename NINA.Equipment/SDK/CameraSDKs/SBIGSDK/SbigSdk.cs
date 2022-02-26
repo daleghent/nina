@@ -33,6 +33,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
     /// </summary>
     public class SbigSdk : ISbigSdk {
         private object driverLock = new object();
+        private object readoutLock = new object();
         private IMicroCache<SBIG.QueryTemperatureStatusResults2> queryTemperatureStatusCache;
 
         private class ConnectedDevice {
@@ -668,6 +669,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
             double exposureTimeSecs,
             Point exposureStart,
             Size exposureSize) {
+            Logger.Trace($"SBIGSDK: StartExposure DeviceId={deviceId}, Ccd={ccd}");
             lock (driverLock) {
                 var connectedDevice = GetConnectedDevice(deviceId);
                 using (var driver = EnsureActiveDriver(deviceId)) {
@@ -701,6 +703,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// <param name="deviceId">The connected device to operate on</param>
         /// <param name="ccd">The CCD to use for the exposure</param>
         public void EndExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd) {
+            Logger.Trace($"SBIGSDK: EndExposure DeviceId={deviceId}, Ccd={ccd}");
             lock (driverLock) {
                 using (var driver = EnsureActiveDriver(deviceId)) {
                     UnivDrvCommand(SBIG.Cmd.CC_END_EXPOSURE, new SBIG.EndExposureParams(ccd));
@@ -716,11 +719,13 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// <param name="ct">The cancellation token</param>
         /// <returns>Object containing flat array of 16-bit pixel data and other metadata</returns>
         public SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd, CancellationToken ct) {
-            // Only one exposure can be readout at a time, so the entire driver should be locked during exposure download
-            lock (driverLock) {
+            Logger.Trace($"SBIGSDK: Start DownloadExposure DeviceId={deviceId}, Ccd={ccd}");
+            lock (readoutLock) {
                 var connectedDevice = GetConnectedDevice(deviceId);
                 var exposureParams = ccd == SBIG.CCD.Imaging ? connectedDevice.latestStartExposureParams : connectedDevice.latestStartTrackingExposureParams;
                 using (var driver = EnsureActiveDriver(deviceId)) {
+                    var pinnedParams = default(GCHandle);
+                    var dataGcHandle = default(GCHandle);
                     var tempStatus = QueryTemperatureStatus(deviceId);
                     bool coolingEnabled = tempStatus.coolingEnabled > 0;
                     if (coolingEnabled) {
@@ -735,29 +740,39 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                         width = exposureParams.width,
                         height = exposureParams.height,
                     };
-                    UnivDrvCommand(SBIG.Cmd.CC_START_READOUT, readoutParams);
 
-                    var data = new ushort[exposureParams.width * exposureParams.height];
-                    var dataGcHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
-                    var pinnedPtr = dataGcHandle.AddrOfPinnedObject();
-                    var readoutLineParams = new SBIG.ReadoutLineParams() {
-                        ccd = ccd,
-                        pixelStart = exposureParams.left,
-                        pixelLength = exposureParams.width,
-                        readoutMode = exposureParams.readoutMode
-                    };
+                    ushort[] data = null;
+                    try { 
+                        UnivDrvCommand(SBIG.Cmd.CC_START_READOUT, readoutParams);
 
-                    var pinnedParams = GCHandle.Alloc(readoutLineParams, GCHandleType.Pinned);
-                    try {
+                        data = new ushort[exposureParams.width * exposureParams.height];
+                        dataGcHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
+                        var pinnedPtr = dataGcHandle.AddrOfPinnedObject();
+                        var readoutLineParams = new SBIG.ReadoutLineParams() {
+                            ccd = ccd,
+                            pixelStart = exposureParams.left,
+                            pixelLength = exposureParams.width,
+                            readoutMode = exposureParams.readoutMode
+                        };
+
+                        pinnedParams = GCHandle.Alloc(readoutLineParams, GCHandleType.Pinned);
                         for (int i = 0; i < exposureParams.height; i++) {
                             if (ct.IsCancellationRequested) {
                                 throw new OperationCanceledException();
                             }
                             UnivDrvCommandDirect(SBIG.Cmd.CC_READOUT_LINE, pinnedParams.AddrOfPinnedObject(), pinnedPtr + (i * exposureParams.width * sizeof(ushort)));
                         }
+                    } catch (Exception e) {
+                        Logger.Error("SBIGSDK: DownloadExposure failed", e);
+                        throw;
                     } finally {
-                        pinnedParams.Free();
-                        dataGcHandle.Free();
+                        Logger.Trace($"SBIGSDK: End DownloadExposure DeviceId={deviceId}, Ccd={ccd}");
+                        if (pinnedParams != default(GCHandle)) {
+                            pinnedParams.Free();
+                        }
+                        if (dataGcHandle != default(GCHandle)) {
+                            dataGcHandle.Free();
+                        }
 
                         try {
                             UnivDrvCommand(SBIG.Cmd.CC_END_READOUT, readoutParams);

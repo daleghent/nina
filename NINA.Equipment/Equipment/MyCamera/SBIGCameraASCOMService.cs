@@ -189,7 +189,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             ServerCallContext context) {
             this.camera.AbortExposure();
             this.exposeAndDownloadCts?.Cancel();
-            this.exposeAndDownloadCts = null;
+            this.exposeAndDownloadCts = new CancellationTokenSource();
             return new Empty();
         }
 
@@ -215,7 +215,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.camera.StartExposure(captureParams);
             this.exposeAndDownloadTask = Task.Run(async () => {
                 await this.camera.WaitUntilExposureIsReady(ct);
+                ct.ThrowIfCancellationRequested();
+
                 var exposureData = await this.camera.DownloadExposure(ct);
+                ct.ThrowIfCancellationRequested();
                 if (exposureData != null) {
                     return await exposureData.ToImageData();
                 }
