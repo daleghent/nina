@@ -125,22 +125,6 @@
                     Position="Bottom" />
             </oxy:Plot.Axes>
             <oxy:Plot.Series>
-                <oxy:LineSeries
-                    Title="{ns:Loc LblRA}"
-                    DataFieldX="Id"
-                    DataFieldY="RADistanceRawDisplay"
-                    ItemsSource="{Binding GuideSteps}"
-                    XAxisKey="DataAxisX"
-                    YAxisKey="DistanceAxis"
-                    Color="Blue" />
-                <oxy:LineSeries
-                    Title="{ns:Loc LblDec}"
-                    DataFieldX="Id"
-                    DataFieldY="DECDistanceRawDisplay"
-                    ItemsSource="{Binding GuideSteps}"
-                    XAxisKey="DataAxisX"
-                    YAxisKey="DistanceAxis"
-                    Color="Red" />
                 <oxy:LinearBarSeries
                     Title="{ns:Loc LblRACorrections}"
                     BarWidth="3"
@@ -165,6 +149,22 @@
                     XAxisKey="DataAxisX"
                     YAxisKey="DurationAxis"
                     Color="Red" />
+                <oxy:LineSeries
+                    Title="{ns:Loc LblRA}"
+                    DataFieldX="Id"
+                    DataFieldY="RADistanceRawDisplay"
+                    ItemsSource="{Binding GuideSteps}"
+                    XAxisKey="DataAxisX"
+                    YAxisKey="DistanceAxis"
+                    Color="CornflowerBlue" />
+                <oxy:LineSeries
+                    Title="{ns:Loc LblDec}"
+                    DataFieldX="Id"
+                    DataFieldY="DECDistanceRawDisplay"
+                    ItemsSource="{Binding GuideSteps}"
+                    XAxisKey="DataAxisX"
+                    YAxisKey="DistanceAxis"
+                    Color="OrangeRed" />
                 <oxy:LineSeries
                     Title="{ns:Loc LblDither}"
                     DataFieldX="Id"
