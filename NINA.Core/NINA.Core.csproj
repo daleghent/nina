@@ -106,6 +106,11 @@
     <Compile Include="Interfaces\IPluggableBehavior.cs" />
     <Compile Include="Interfaces\IPluggableBehaviorSelector.cs" />
     <Compile Include="Interfaces\Utility\IMicroCache.cs" />
+    <Compile Include="Locale\Locale.ko-KR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Locale.ko-KR.resx</DependentUpon>
+    </Compile>
     <Compile Include="Locale\Locale.nb-NO.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -458,6 +463,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Locale.ja-JP.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Locale\Locale.ko-KR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Locale.ko-KR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Locale\Locale.nb-NO.resx">
       <Generator>ResXFileCodeGenerator</Generator>

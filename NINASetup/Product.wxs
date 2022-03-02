@@ -170,6 +170,8 @@
 			<ComponentGroupRef Id="zh_Hant_files" />
 			<ComponentGroupRef Id="de_files" />
 			<ComponentGroupRef Id="nb_NO_files" />
+			<ComponentGroupRef Id="ko_KR_files" />
+			<ComponentGroupRef Id="pt_files" />
 		</Feature>
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
@@ -325,6 +327,8 @@
 					<Directory Id="zh_Hant" Name="zh-Hant" />
 					<Directory Id="Equipment" Name="Equipment" />
 					<Directory Id="nb_NO" Name="nb-NO" />
+					<Directory Id="ko_KR" Name="ko-KR" />
+					<Directory Id="pt" Name="pt" />
 				</Directory>
 			</Directory>
 			<Directory Id="ProgramMenuFolder">
@@ -691,6 +695,9 @@
 			<Component Id="Database_Migration_5.sql" Guid="c8b51616-73d0-49e3-91cc-88503889a10b">
 				<File Id="Database_Migration_5.sql" Name="5.sql" Source="$(var.NINA_TargetDir)Database\Migration\5.sql" />
 			</Component>
+			<Component Id="Database_Migration_6.sql" Guid="5bdcdd4a-5ba9-4842-b4e7-aea3cc1448ac">
+			  <File Id="Database_Migration_6.sql" Name="6.sql" Source="$(var.NINA_TargetDir)Database\Migration\6.sql" />
+			</Component>
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
@@ -888,6 +895,13 @@
 				<File Id="nb_NO_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)nb-NO\NINA.Core.resources.dll" />
 			</Component>
 		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+	  <ComponentGroup Id="ko_KR_files" Directory="ko_KR">
+	    <Component Id="ko_KR_NINA.Core.resources.dll" Guid="ebf93db4-7346-4646-95c4-b912b2627d5f">
+	      <File Id="ko_KR_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)ko-KR\NINA.Core.resources.dll" />
+	    </Component>
+	  </ComponentGroup>
 	</Fragment>
 
 	<!-- x64 Dependencies -->
@@ -1764,6 +1778,13 @@
 				<File Id="de_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)de\AvalonDock.resources.dll" />
 			</Component>
 		</ComponentGroup>
+	</Fragment>
+	<Fragment>
+	  <ComponentGroup Id="pt_files" Directory="pt">
+	    <Component Id="pt_AvalonDock.resources.dll" Guid="5333970e-2607-4707-81f5-bcc6f6395a4b">
+	      <File Id="pt_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt\AvalonDock.resources.dll" />
+	    </Component>
+	  </ComponentGroup>
 	</Fragment>
 	<!-- Avalondock localization End -->
 </Wix>
