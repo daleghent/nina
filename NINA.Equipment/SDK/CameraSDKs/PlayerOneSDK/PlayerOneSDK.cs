@@ -172,9 +172,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
                     }
                 }
             } catch (AccessViolationException ex) {
-                Logger.Error($"{nameof(SVBonySDK)} - Access Violation Exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(PlayerOneSDK)} - Access Violation Exception occurred during frame download!", ex);
             } catch (Exception ex) {
-                Logger.Error($"{nameof(SVBonySDK)} - Unexpected exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(PlayerOneSDK)} - Unexpected exception occurred during frame download!", ex);
             }
 
             return null;
