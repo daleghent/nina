@@ -78,6 +78,7 @@ namespace NINATest.Sequencer.SequenceItem.Dome {
         [Test]
         public async Task Execute_NoIssues_LogicCalled() {
             domeMediatorMock.Setup(x => x.GetInfo()).Returns(new DomeInfo() { Connected = true });
+            domeMediatorMock.Setup(x => x.OpenShutter(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
 
             var sut = new OpenDomeShutter(domeMediatorMock.Object);
             await sut.Execute(default, default);

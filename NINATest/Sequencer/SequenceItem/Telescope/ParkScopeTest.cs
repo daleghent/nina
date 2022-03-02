@@ -81,6 +81,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         [Test]
         public async Task Execute_NoIssues_LogicCalled() {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            telescopeMediatorMock.Setup(x => x.ParkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
 
             var sut = new ParkScope(telescopeMediatorMock.Object, guiderMediatorMock.Object);
             await sut.Execute(default, default);

@@ -19,8 +19,6 @@ using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
@@ -59,9 +57,10 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             }
         }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            // Todo - this interface lacks progress
-            return domeMediator.CloseShutter(token);
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            if (!await domeMediator.CloseShutter(token)) {
+                throw new SequenceEntityFailedException();
+            }
         }
 
         public bool Validate() {
