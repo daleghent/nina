@@ -199,6 +199,7 @@
     <Compile Include="Equipment\MyCamera\FLICamera.cs" />
     <Compile Include="Equipment\MyCamera\NikonCamera.cs" />
     <Compile Include="Equipment\MyCamera\PersistSettingsCameraDecorator.cs" />
+    <Compile Include="Equipment\MyCamera\PlayerOneCamera.cs" />
     <Compile Include="Equipment\MyCamera\QHYCamera.cs" />
     <Compile Include="Equipment\MyCamera\SBIGCamera.cs" />
     <Compile Include="Equipment\MyCamera\SBIGCameraASCOMService.cs" />
@@ -214,6 +215,12 @@
     <Compile Include="Exceptions\CameraExposureFailedException.cs" />
     <Compile Include="Interfaces\IDeviceDispatcher.cs" />
     <Compile Include="SDK\CameraSDKs\MallinCamSDK\mallincam.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\IPlayerOnePInvokeProxy.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\IPlayerOneSDK.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\PlayerOneControl.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\PlayerOnePInvoke.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\PlayerOneProvider.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\PlayerOneSDK.cs" />
     <Compile Include="SDK\CameraSDKs\SBIGSDK\SBIGFilterWheelProvider.cs" />
     <Compile Include="Equipment\MyCamera\SVBonyCamera.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlikeCamera.cs" />

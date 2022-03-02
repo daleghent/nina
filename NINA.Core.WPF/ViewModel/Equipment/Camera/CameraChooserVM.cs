@@ -32,6 +32,7 @@ using NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;
 using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Image.Interfaces;
+using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -135,6 +136,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                             }
                         }
                     }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /* Player One */
+                try {
+                    var provider = new PlayerOneProvider(profileService, exposureDataFactory);
+                    var playerOneCameras = provider.GetEquipment();
+                    Logger.Info($"Found {playerOneCameras?.Count} Player One Cameras");
+                    devices.AddRange(playerOneCameras);
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }

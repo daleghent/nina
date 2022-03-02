@@ -104,6 +104,7 @@
 			<ComponentGroupRef Id="External_x64_SVBony_files" />
 			<ComponentGroupRef Id="External_x64_SBIG_files" />
 			<ComponentGroupRef Id="External_x64_MallinCam_files" />
+			<ComponentGroupRef Id="External_x64_PlayerOne_files" />
 			<?else?>
 			<ComponentGroupRef Id="External_x86_FTDI_files" />
 			<ComponentGroupRef Id="External_x86_AllPro_files" />
@@ -125,6 +126,7 @@
 			<ComponentGroupRef Id="External_x86_SVBony_files" />
 			<ComponentGroupRef Id="External_x86_SBIG_files" />
 			<ComponentGroupRef Id="External_x86_MallinCam_files" />
+			<ComponentGroupRef Id="External_x86_PlayerOne_files" />
 			<?endif?>
 			<ComponentGroupRef Id="Utility_ColorSchema_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -248,6 +250,7 @@
 							<Directory Id="External_x64_SVBony" Name="SVBony" />
 							<Directory Id="External_x64_SBIG" Name="SBIG" />
 							<Directory Id="External_x64_MallinCam" Name="MallinCam" />
+							<Directory Id="External_x64_PlayerOne" Name="PlayerOne" />
 						</Directory>
 						<Directory Id="External_x86" Name="x86">
 							<Directory Id="External_x86_AllPro" Name="AllPro" />
@@ -270,6 +273,7 @@
 							<Directory Id="External_x86_SVBony" Name="SVBony" />
 							<Directory Id="External_x86_SBIG" Name="SBIG" />
 							<Directory Id="External_x86_MallinCam" Name="MallinCam" />
+							<Directory Id="External_x86_PlayerOne" Name="PlayerOne" />
 						</Directory>
 					</Directory>
 					<Directory Id="Utility" Name="Utility">
@@ -1421,6 +1425,14 @@
 			</Component>
 		</ComponentGroup>
 	</Fragment>
+	
+	<Fragment>
+		<ComponentGroup Id="External_x64_PlayerOne_files" Directory="External_x64_PlayerOne">
+			<Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524">
+				<File Id="External_x64_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOneCamera.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
 
 	<?else?>
 
@@ -1632,6 +1644,14 @@
 		<ComponentGroup Id="External_x86_MallinCam_files" Directory="External_x86_MallinCam">
 			<Component Win64="$(var.Win64)" Id="External_x86_MallinCam_mallincam.dll" Guid="5a676019-685b-486c-b3b2-5fabf1bf02fc">
 				<File Id="External_x86_MallinCam_mallincam.dll" Name="mallincam.dll" Source="$(var.NINA_TargetDir)External\x86\MallinCam\mallincam.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+	
+	<Fragment>
+		<ComponentGroup Id="External_x86_PlayerOne_files" Directory="External_x86_PlayerOne">
+			<Component Win64="$(var.Win64)" Id="External_x86_PlayerOne_PlayerOneCamera.dll" Guid="857fda00-6a08-4ae8-82e3-f69cb0c46e32">
+				<File Id="External_x86_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x86\PlayerOne\PlayerOneCamera.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>

@@ -113,6 +113,9 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 ### Risingcam
 - Native support for Risingcam added
 
+### Player One
+- Native support for Player One Cameras
+
 ### ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
