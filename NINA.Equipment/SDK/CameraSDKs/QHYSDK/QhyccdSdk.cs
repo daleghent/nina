@@ -334,6 +334,36 @@ namespace QHYCCD {
             return version;
         }
 
+        // Added for Live view/recording
+        public uint BeginQHYCCDLive() {
+            lock (lockobj) {
+                return BeginQHYCCDLive(handle);
+            }
+        }
+
+        // These two methods are identical on the C side, they just have different pointer types (they're ABI compatible).
+        public uint GetQHYCCDLiveFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] byte[] rawArray) {
+            lock (lockobj) {
+                return GetQHYCCDLiveFrame(handle, ref sizeX, ref sizeY, ref bpp, ref channels, rawArray);
+            }
+        }
+
+        public uint GetQHYCCDLiveFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] ushort[] rawArray) {
+            lock (lockobj) {
+                return GetQHYCCDSingleFrame(handle, ref sizeX, ref sizeY, ref bpp, ref channels, rawArray);
+            }
+        }
+
+        public uint StopQHYCCDLive() {
+            lock (lockobj) {
+                return StopQHYCCDLive(handle);
+            }
+        }
+
+        public uint GetQHYCCDMemLength() {
+            return GetQHYCCDMemLength(handle);
+        }
+
         #endregion Utility Methods
 
         #region Exception Generator
@@ -959,6 +989,23 @@ namespace QHYCCD {
 
         [DllImport(DLLNAME, EntryPoint = "GetQHYCCDPressure", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         private static extern unsafe uint GetQHYCCDPressure(IntPtr handle, ref double pressure);
+
+        // Added for Live view/recording
+        [DllImport(DLLNAME, EntryPoint = "BeginQHYCCDLive", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint BeginQHYCCDLive(IntPtr handle);
+
+        // These two methods are identical on the C side, they just have different pointer types (they're ABI compatible).
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDLiveFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDLiveFrame(IntPtr handle, ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] byte[] rawArray);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDLiveFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDLiveFrame(IntPtr handle, ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] ushort[] rawArray);
+
+        [DllImport(DLLNAME, EntryPoint = "StopQHYCCDLive", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint StopQHYCCDLive(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDMemLength", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDMemLength(IntPtr handle);
 
         #endregion DLL Imports
 

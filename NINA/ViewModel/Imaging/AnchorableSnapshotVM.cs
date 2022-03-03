@@ -352,7 +352,12 @@ namespace NINA.ViewModel.Imaging {
             LiveViewEnabled = true;
             _liveViewCts = new CancellationTokenSource();
             try {
-                await this.imagingMediator.StartLiveView(_liveViewCts.Token);
+                var seq = new CaptureSequence(SnapExposureDuration, ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
+                seq.EnableSubSample = SnapSubSample;
+                seq.SubSambleRectangle = SubSampleRectangle;
+                seq.Gain = SnapGain;
+
+                await this.imagingMediator.StartLiveView(seq, _liveViewCts.Token);
             } catch (OperationCanceledException) {
             } finally {
                 LiveViewEnabled = false;

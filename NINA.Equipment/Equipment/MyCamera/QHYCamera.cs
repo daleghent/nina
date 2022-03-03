@@ -23,6 +23,7 @@ using System.Management;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using NINA.Image.ImageData;
 using Nito.AsyncEx;
 using NINA.Core.Enum;
@@ -32,6 +33,7 @@ using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Exceptions;
+using NINA.Core.Model;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -39,6 +41,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private static readonly TimeSpan COOLING_TIMEOUT = TimeSpan.FromSeconds(2);
         private AsyncObservableCollection<BinningMode> _binningModes;
         private bool _connected = false;
+        private bool _liveViewEnabled = false;
         private short _readoutModeForNormalImages = 0;
         private short _readoutModeForSnapImages = 0;
         private Task coolerTask;
@@ -283,6 +286,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public bool EnableSubSample { get; set; }
         public double ExposureMax => Info.ExpMax / 1e6;
         public double ElectronsPerADU => double.NaN;
+        private bool reconnect = false;
 
         /// <summary>
         // We store the camera's exposure times in microseconds
@@ -336,7 +340,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public string Id => $"{Description}";
-        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public short MaxBinX => (short)SupportedBinFactors.DefaultIfEmpty(1).Max();
         public short MaxBinY => MaxBinX;
@@ -726,7 +729,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * from now on.
                  */
                 Sdk.Open(cameraID);
-                ThrowOnFailure("SetQHYCCDStreamMode", Sdk.SetStreamMode((byte)QhySdk.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE));
+                if (LiveViewEnabled) {
+                    ThrowOnFailure("SetQHYCCDStreamMode", Sdk.SetStreamMode((byte)QhySdk.QHYCCD_CAMERA_MODE.VIDEO_STREAM));
+                } else {
+                    ThrowOnFailure("SetQHYCCDStreamMode", Sdk.SetStreamMode((byte)QhySdk.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE));
+                }
 
                 /*
                  * Initialize the camera and make it available for use
@@ -795,6 +802,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 Logger.Debug($"QHYCCD: Readout mode names: {string.Join(", ", modeList)}");
                 ReadoutModes = modeList;
+
+                // Check camera for DDR memory and set to use it.
+                Logger.Debug("QHYCCD: checking DDR memory.");
+                if (Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_DDR)) {
+                    Logger.Debug("QHYCCD: DDR memory checked");
+                    if (Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_DDR, 1)) {
+                        Logger.Debug("QHYCCD: start using DDR memory.");
+                    } else {
+                        Logger.Debug("QHYCCD: cannot start using DDR memory.");
+                    }
+                }
+
+                var ddr_buffer = Sdk.GetControlValue(QhySdk.CONTROL_ID.DDR_BUFFER_CAPACITY);
+                Logger.Debug("QHYCCD: DDR_BUFFER_CAPACITY " + ddr_buffer);
+                var ddr_read_threshold = Sdk.GetControlValue(QhySdk.CONTROL_ID.DDR_BUFFER_READ_THRESHOLD);
+                Logger.Debug("QHYCCD: DDR_BUFFER_READ_THRESHOLD " + ddr_read_threshold);
 
                 /*
                  * Get our min and max shutter speed (exposure times)
@@ -928,15 +951,18 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 QhyFPGAVersion = GetFPGAVersion();
                 QhySdkVersion = GetSdkVersion();
 
-                /*
-                 * Check the USB driver version and emit a warning if it's below the recommended minimum version
-                 */
-                DriverVersionCheck();
+                // Only check driver versions on new connection, because this is really slow.
+                if (!reconnect) {
+                    /*
+                     * Check the USB driver version and emit a warning if it's below the recommended minimum version
+                     */
+                    DriverVersionCheck();
 
-                Logger.Info($"QHYCCD: SDK version: {QhySdkVersion}");
-                Logger.Info($"QHYCCD: USB driver version: {QhyUsbDriverVersion}");
-                Logger.Info($"QHYCCD: Camera firmware version: {QhyFirmwareVersion}");
-                Logger.Info($"QHYCCD: Camera FPGA versions: {QhyFPGAVersion}");
+                    Logger.Info($"QHYCCD: SDK version: {QhySdkVersion}");
+                    Logger.Info($"QHYCCD: USB driver version: {QhyUsbDriverVersion}");
+                    Logger.Info($"QHYCCD: Camera firmware version: {QhyFirmwareVersion}");
+                    Logger.Info($"QHYCCD: Camera FPGA versions: {QhyFPGAVersion}");
+                }
 
                 /*
                  * Announce that this camera is now initialized and ready
@@ -993,15 +1019,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 Logger.Debug("QHYCCD: Downloading exposure...");
 
-                while (Sdk.GetExposureRemaining() > 0) {
-                    await Task.Delay(100, ct);
-                }
-
-                bool is16bit = Info.Bpp > 8;
-
                 /*
                  * Size the image data byte array for the image
                  */
+                bool is16bit = Info.Bpp > 8;
                 uint numPixels = is16bit ? ImageSize / 2U : ImageSize;
                 ushort[] ImgData = new ushort[numPixels];
 
@@ -1048,10 +1069,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if (!Connected) {
                 throw new Exception("QHYCCD is not connected");
             }
-        }
-
-        public Task<IExposureData> DownloadLiveView(CancellationToken ct) {
-            throw new NotImplementedException();
         }
 
         public void SetBinning(short x, short y) {
@@ -1162,7 +1179,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
              */
             Logger.Debug("QHYCCD: Starting exposure...");
             CameraState = CameraStates.Exposing;
-            if (Sdk.ExpSingleFrame() == QhySdk.QHYCCD_ERROR) {
+            uint ret = Sdk.ExpSingleFrame();
+            if (ret == QhySdk.QHYCCD_ERROR) {
                 Logger.Error("QHYCCD: Failed to initiate the exposure!");
                 CameraState = CameraStates.Idle;
                 return;
@@ -1170,11 +1188,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             downloadExposureTaskCTS?.Dispose();
             downloadExposureTaskCTS = new CancellationTokenSource();
+            if (ret != QhySdk.QHYCCD_READ_DIRECTLY) {
+                while (Sdk.GetExposureRemaining() > 0) {
+                    Task.Delay(100, downloadExposureTaskCTS.Token);
+                }
+            }
             downloadExposureTask = StartDownloadExposure(downloadExposureTaskCTS.Token);
-        }
-
-        public void StartLiveView() {
-            throw new System.NotImplementedException();
         }
 
         public void StopExposure() {
@@ -1184,8 +1203,168 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public bool LiveViewEnabled {
+            get => _liveViewEnabled;
+            set {
+                if (_liveViewEnabled != value) {
+                    _liveViewEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private void ReconnectForLiveView() {
+            // Steps documented as required when changing live view:
+            // CloseQHYCCD
+            // ReleaseQHYCCDResource
+            // ScanQHYCCD
+            // OpenQHYCCD
+            // SetLiveStreamMode
+            // It appears that ReleaseQHYCCDResource and ScanQHYCCD can be skipped in newer drivers?
+            reconnect = true;
+            Disconnect();
+            ConnectSync();
+            reconnect = false;
+        }
+
+        public void StartLiveView(CaptureSequence sequence) {
+            RaiseIfNotConnected();
+            LiveViewEnabled = true;
+            ReconnectForLiveView();
+
+            if (Sdk.SetStreamMode((byte)QhySdk.QHYCCD_CAMERA_MODE.VIDEO_STREAM) != QhySdk.QHYCCD_SUCCESS) {
+                Logger.Warning("QHYCCD: Failed to switch to single exposuremode");
+                CameraState = CameraStates.Error;
+                return;
+            }
+
+            if (Sdk.SetBitsMode((uint)16) != QhySdk.QHYCCD_SUCCESS) {
+                CameraState = CameraStates.Error;
+                return;
+            }
+
+            uint startx, starty, sizex, sizey;
+            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
+                Logger.Warning("QHYCCD: Failed to set resolution for live view");
+                CameraState = CameraStates.Error;
+                return;
+            }
+
+            /* Exposure length (in microseconds) */
+            if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_EXPOSURE, sequence.ExposureTime * 1e6)) {
+                Logger.Error("QHYCCD: Failed to set exposure time");
+                return;
+            }
+
+            /*
+             * Set binning
+             * Certain models of camera require a 200ms pause after setting the bin mode.
+             * SetQHYCCDBinMode() will return QHYCCD_DELAY_200MS if that is required.
+             */
+            uint rv;
+            if ((rv = Sdk.SetBinMode((uint)BinX, (uint)BinY)) != QhySdk.QHYCCD_SUCCESS) {
+                if (rv == QhySdk.QHYCCD_DELAY_200MS) {
+                    Thread.Sleep(200);
+                } else {
+                    Logger.Warning($"QHYCCD: Failed to set BIN mode {BinX}x{BinY}");
+                }
+            }
+
+            /*
+             * Calculate exposure array size, with overflow protection.
+             * Strictly speaking, we should also multiply by the number of image channels (aka planes)
+             * but since we do no debayer anything here in the driver, that number will always be 1 (monochrome).
+             */
+            ImageSize = (uint)((sizex * sizey * BitDepth) + (8 - 1)) / 8;
+
+            if (Sdk.BeginQHYCCDLive() != QhySdk.QHYCCD_SUCCESS) {
+                Logger.Warning("QHYCCD: Failed to start live view");
+                CameraState = CameraStates.Error;
+                LiveViewEnabled = false;
+                ReconnectForLiveView();
+                return;
+            }
+            CameraState = CameraStates.Exposing;
+
+            Logger.Debug("QHYCCD: Enabled live view");
+        }
+
         public void StopLiveView() {
-            throw new NotImplementedException();
+            RaiseIfNotConnected();
+            if (Sdk.StopQHYCCDLive() != QhySdk.QHYCCD_SUCCESS) {
+                Logger.Warning("QHYCCD: Failed to stop live view");
+                CameraState = CameraStates.Error;
+                // Continue on to reconnecting the camera
+            } else if (Sdk.SetStreamMode((byte)QhySdk.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE) != QhySdk.QHYCCD_SUCCESS) {
+                Logger.Warning("QHYCCD: Failed to switch to single exposuremode");
+                CameraState = CameraStates.Error;
+                // Continue on to reconnecting the camera
+            } else {
+                CameraState = CameraStates.Idle;
+            }
+            LiveViewEnabled = false;
+            ReconnectForLiveView();
+            Logger.Debug("QHYCCD: Disabled live view");
+        }
+
+        public Task<IExposureData> DownloadLiveView(CancellationToken ct) {
+            RaiseIfNotConnected();
+            return Task.Run<IExposureData>(async () => {
+                uint rv;
+                uint width = 0;
+                uint height = 0;
+                uint bpp = 0;
+                uint channels = 0;
+
+                Logger.Debug("QHYCCD: Downloading exposure...");
+
+                /*
+                 * Size the image data byte array for the image
+                 */
+                uint size = Sdk.GetQHYCCDMemLength();
+                byte[] ImgData = new byte[size];
+                
+                var loop = 1;
+                while (!ct.IsCancellationRequested) {
+                    rv = Sdk.GetQHYCCDLiveFrame(ref width, ref height, ref bpp, ref channels, ImgData);
+                    if (rv == uint.MaxValue) {
+                        await Task.Yield();
+                        // GetQHYCCDLiveFrame returns -1 when the data isn't available yet, requiring looping.
+                        Thread.Sleep(1);
+                        loop++;
+                        continue;
+                    } else if (rv > size) {
+                        // rv returns how many bytes have been downloaded if there is still more to do. 0 indicates completion
+                        Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv}");
+                        throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
+                    } else {
+                        break;
+                    }
+                }
+                Logger.Debug("Wait for liveFrame " + loop + " ms.");
+                Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
+
+                /*
+                 * Copy the image byte array to an allocated buffer
+                 */
+                IntPtr buf = Marshal.AllocHGlobal(ImgData.Length);
+                Marshal.Copy(ImgData, 0, buf, ImgData.Length);
+                var cameraDataToManaged = new CameraDataToManaged(buf, (int)width, (int)height, (int)bpp, bitScaling: bpp != 16);
+                var arr = cameraDataToManaged.GetData();
+                ImgData = null;
+                Marshal.FreeHGlobal(buf);
+
+                CameraState = CameraStates.Idle;
+
+                Logger.Debug("QHYCCD: Downloading exposure finished.");
+                return exposureDataFactory.CreateImageArrayExposureData(
+                    input: arr,
+                    width: (int)width,
+                    height: (int)height,
+                    bitDepth: BitDepth,
+                    isBayered: SensorType != SensorType.Monochrome,
+                    metaData: new ImageMetaData());
+            }, ct);
         }
 
         public bool QhyIncludeOverscan {

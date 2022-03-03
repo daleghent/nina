@@ -956,7 +956,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int USBLimitMin => -1;
         public int USBLimitStep => -1;
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             throw new System.NotImplementedException();
         }
 

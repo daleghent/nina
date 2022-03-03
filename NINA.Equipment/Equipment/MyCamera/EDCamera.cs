@@ -949,7 +949,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set => profileService.ActiveProfile.CameraSettings.MirrorLockupDelay = value;
         }
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             uint err = EDSDK.EdsGetPropertyData(_cam, EDSDK.PropID_Evf_OutputDevice, 0, out uint device);
 
             if (err == EDSDK.EDS_ERR_OK) {

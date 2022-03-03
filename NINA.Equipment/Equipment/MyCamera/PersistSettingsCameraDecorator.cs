@@ -339,8 +339,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.Camera.StartExposure(sequence);
         }
 
-        public void StartLiveView() {
-            this.Camera.StartLiveView();
+        public void StartLiveView(CaptureSequence sequence) {
+            this.Camera.StartLiveView(sequence);
         }
 
         public void StopExposure() {

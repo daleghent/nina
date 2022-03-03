@@ -344,11 +344,11 @@ namespace NINA.ViewModel {
             ImageControl.Image = img;
         }
 
-        public async Task<bool> StartLiveView(CancellationToken ct) {
+        public async Task<bool> StartLiveView(CaptureSequence sequence, CancellationToken ct) {
             //todo: see if this is necessary
             //ImageControl.IsLiveViewEnabled = true;
             try {
-                var liveViewEnumerable = cameraMediator.LiveView(ct);
+                var liveViewEnumerable = cameraMediator.LiveView(sequence, ct);
                 await liveViewEnumerable.ForEachAsync(async exposureData => {
                     var imageData = await exposureData.ToImageData(progress, ct);
                     await ImageControl.PrepareImage(imageData, new PrepareImageParameters(), ct);

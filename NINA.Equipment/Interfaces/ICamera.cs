@@ -95,7 +95,7 @@ namespace NINA.Equipment.Interfaces {
 
         Task<IExposureData> DownloadExposure(CancellationToken token);
 
-        void StartLiveView();
+        void StartLiveView(CaptureSequence sequence);
 
         Task<IExposureData> DownloadLiveView(CancellationToken token);
 

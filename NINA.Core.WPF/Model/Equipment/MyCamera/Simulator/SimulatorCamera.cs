@@ -644,7 +644,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         public void UpdateValues() {
         }
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             LiveViewEnabled = true;
         }
 

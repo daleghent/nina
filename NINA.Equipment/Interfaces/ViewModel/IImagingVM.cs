@@ -55,6 +55,6 @@ namespace NINA.Equipment.Interfaces.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken token);
 
-        Task<bool> StartLiveView(CancellationToken ct);
+        Task<bool> StartLiveView(CaptureSequence sequence, CancellationToken ct);
     }
 }

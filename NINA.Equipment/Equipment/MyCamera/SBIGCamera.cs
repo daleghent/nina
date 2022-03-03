@@ -845,7 +845,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool DewHeaterOn { get => false; set => throw new InvalidOperationException(); }
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             throw new InvalidOperationException();
         }
 

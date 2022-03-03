@@ -33,8 +33,8 @@ namespace NINA.WPF.Base.Mediator {
             return handler.Capture(sequence, token, progress);
         }
 
-        public IAsyncEnumerable<IExposureData> LiveView(CancellationToken token) {
-            return handler.LiveView(token);
+        public IAsyncEnumerable<IExposureData> LiveView(CaptureSequence sequence, CancellationToken token) {
+            return handler.LiveView(sequence, token);
         }
 
         public Task<IExposureData> Download(CancellationToken token) {

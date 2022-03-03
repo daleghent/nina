@@ -96,5 +96,17 @@ namespace QHYCCD {
         string GetFwVersion();
 
         string GetFpgaVersion();
+
+        // Added for Live view/recording
+        uint BeginQHYCCDLive();
+
+        // These two methods are identical on the C side, they just have different pointer types (they're ABI compatible).
+        uint GetQHYCCDLiveFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] byte[] rawArray);
+
+        uint GetQHYCCDLiveFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] ushort[] rawArray);
+
+        uint StopQHYCCDLive();
+
+        uint GetQHYCCDMemLength();
     }
 }

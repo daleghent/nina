@@ -29,7 +29,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
         Task Capture(CaptureSequence sequence, CancellationToken token,
             IProgress<ApplicationStatus> progress);
 
-        IAsyncEnumerable<IExposureData> LiveView(CancellationToken token);
+        IAsyncEnumerable<IExposureData> LiveView(CaptureSequence sequence, CancellationToken token);
 
         Task<IExposureData> Download(CancellationToken token);
 

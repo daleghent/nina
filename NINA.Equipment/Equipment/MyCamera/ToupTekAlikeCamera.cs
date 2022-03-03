@@ -975,7 +975,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Disconnect();
         }
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             throw new System.NotImplementedException();
         }
 

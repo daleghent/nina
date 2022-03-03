@@ -640,11 +640,25 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             });
         }
 
-        public IAsyncEnumerable<IExposureData> LiveView(CancellationToken ct) {
+        public IAsyncEnumerable<IExposureData> LiveView(CaptureSequence sequence, CancellationToken ct) {
             return new AsyncEnumerable<IExposureData>(async yield => {
-                if (CameraInfo.Connected && _cam.CanShowLiveView) {
+                if (CameraInfo.Connected) {
                     try {
-                        _cam.StartLiveView();
+                        SetGain(sequence.Gain);
+                        SetOffset(sequence.Offset);
+                        if (sequence.Binning == null) {
+                            SetBinning(1, 1);
+                        } else {
+                            SetBinning(sequence.Binning.X, sequence.Binning.Y);
+                        }
+
+                        if (sequence.EnableSubSample) {
+                            SetSubSampleArea((int)sequence.SubSambleRectangle.X, (int)sequence.SubSambleRectangle.Y, (int)sequence.SubSambleRectangle.Width, (int)sequence.SubSambleRectangle.Height);
+                        } else {
+                            Cam.EnableSubSample = false;
+                        }
+
+                        _cam.StartLiveView(sequence);
 
                         while (true) {
                             var iarr = await _cam.DownloadLiveView(ct);
@@ -697,6 +711,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 if (sequence.EnableSubSample) {
                     SetSubSampleArea((int)sequence.SubSambleRectangle.X, (int)sequence.SubSambleRectangle.Y, (int)sequence.SubSambleRectangle.Width, (int)sequence.SubSambleRectangle.Height);
+                } else {
+                    Cam.EnableSubSample = false;
                 }
 
                 CameraInfo.IsExposing = true;

@@ -852,7 +852,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             throw new System.NotImplementedException();
         }
 

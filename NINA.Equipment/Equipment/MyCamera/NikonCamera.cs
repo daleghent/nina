@@ -96,7 +96,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public void StartLiveView() {
+        public void StartLiveView(CaptureSequence sequence) {
             _camera.LiveViewEnabled = true;
             LiveViewEnabled = true;
         }

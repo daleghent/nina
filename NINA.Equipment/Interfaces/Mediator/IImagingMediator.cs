@@ -51,7 +51,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
             PrepareImageParameters parameters,
             CancellationToken token);
 
-        Task<bool> StartLiveView(CancellationToken ct);
+        Task<bool> StartLiveView(CaptureSequence sequence, CancellationToken ct);
 
         void DestroyImage();
 
