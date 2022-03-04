@@ -45,10 +45,16 @@ namespace NINA.Core.Model {
             p = new ImagePattern(ImagePatternKeys.DateMinus12, Locale.Loc.Instance["LblDateFormatDescription2"]);
             patterns.Add(p.Key, p);
 
+            p = new ImagePattern(ImagePatternKeys.DateUtc, Locale.Loc.Instance["LblDateUTCFormatDescription"]);
+            patterns.Add(p.Key, p);
+
             p = new ImagePattern(ImagePatternKeys.DateTime, Locale.Loc.Instance["LblDateTimeFormatDescription"]);
             patterns.Add(p.Key, p);
 
             p = new ImagePattern(ImagePatternKeys.Time, Locale.Loc.Instance["LblTimeFormatDescription"]);
+            patterns.Add(p.Key, p);
+
+            p = new ImagePattern(ImagePatternKeys.TimeUtc, Locale.Loc.Instance["LblTimeUTCFormatDescription"]);
             patterns.Add(p.Key, p);
 
             p = new ImagePattern(ImagePatternKeys.FrameNr, Locale.Loc.Instance["LblFrameNrDescription"]);
@@ -166,9 +172,11 @@ namespace NINA.Core.Model {
 
             p.Set(ImagePatternKeys.Filter, "L");
             p.Set(ImagePatternKeys.Date, "2016-01-01");
+            p.Set(ImagePatternKeys.DateUtc, "2016-01-01");
             p.Set(ImagePatternKeys.DateMinus12, "2015-12-31");
             p.Set(ImagePatternKeys.DateTime, "2016-01-01_12-00-00");
             p.Set(ImagePatternKeys.Time, "12-00-00");
+            p.Set(ImagePatternKeys.TimeUtc, "12-00-00");
             p.Set(ImagePatternKeys.FrameNr, "0001");
             p.Set(ImagePatternKeys.ImageType, "LIGHT");
             p.Set(ImagePatternKeys.Binning, "1x1");
@@ -204,9 +212,11 @@ namespace NINA.Core.Model {
 
         public static readonly string Filter = "$$FILTER$$";
         public static readonly string Date = "$$DATE$$";
+        public static readonly string DateUtc = "$$DATEUTC$$";
         public static readonly string DateMinus12 = "$$DATEMINUS12$$";
         public static readonly string DateTime = "$$DATETIME$$";
         public static readonly string Time = "$$TIME$$";
+        public static readonly string TimeUtc = "$$TIMEUTC$$";
         public static readonly string FrameNr = "$$FRAMENR$$";
         public static readonly string ImageType = "$$IMAGETYPE$$";
         public static readonly string Binning = "$$BINNING$$";

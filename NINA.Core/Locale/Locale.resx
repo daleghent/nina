@@ -6086,4 +6086,10 @@ This button is not visible when in mosaic mode.</value>
   <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
     <value>Disables or enables the current instruction set and all its content.</value>
   </data>
+  <data name="LblDateUTCFormatDescription" xml:space="preserve">
+    <value>UTC date with format YYYY-MM-DD</value>
+  </data>
+  <data name="LblTimeUTCFormatDescription" xml:space="preserve">
+    <value>UTC time with format HH-mm-ss</value>
+  </data>
 </root>

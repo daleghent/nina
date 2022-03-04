@@ -6071,6 +6071,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UTC date with format YYYY-MM-DD.
+        /// </summary>
+        internal static string LblDateUTCFormatDescription {
+            get {
+                return ResourceManager.GetString("LblDateUTCFormatDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dawn.
         /// </summary>
         internal static string LblDawn {
@@ -15995,6 +16004,15 @@ namespace NINA.Core.Locale {
         internal static string LblTimeSpan {
             get {
                 return ResourceManager.GetString("LblTimeSpan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UTC time with format HH-mm-ss.
+        /// </summary>
+        internal static string LblTimeUTCFormatDescription {
+            get {
+                return ResourceManager.GetString("LblTimeUTCFormatDescription", resourceCulture);
             }
         }
         

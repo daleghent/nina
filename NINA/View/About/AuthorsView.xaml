@@ -71,6 +71,7 @@
             <TextBlock Text="Phil Blankenship" />
             <TextBlock Text="Jerome Hollon" />
             <TextBlock Text="Marc Blank" />
+            <TextBlock Text="Ethan Chappel" />
         </StackPanel>
     </StackPanel>
 </UserControl>
