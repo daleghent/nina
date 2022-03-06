@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Model.Equipment;
 using NINA.Equipment.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
@@ -44,7 +45,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
         public string Category { get; } = "Finger Lakes Instrumentation";
 
-        public string Id => Info.Id;
+        public string Id => $"{Info.Model}#{Info.Id}";
 
         public async Task<bool> Connect(CancellationToken token) {
             return await Task.Run(() => {
@@ -101,8 +102,8 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             get {
                 StringBuilder version = new StringBuilder(128);
 
-                if (Connected && (string.IsNullOrEmpty(driverInfo))) {
-                    if ((LibFLI.FLIGetLibVersion(version, 128)) == 0) {
+                if (Connected && string.IsNullOrEmpty(driverInfo)) {
+                    if (LibFLI.FLIGetLibVersion(version, 128) == 0) {
                         driverInfo = version.ToString();
                     }
                 }
@@ -190,8 +191,54 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                             Logger.Error($"FLI FWheel: FLIGetFilterName() failed. Returned {rv}");
                         }
 
-                        var filter = new FilterInfo(positionName.ToString(), 0, (short)i);
-                        filtersList.Add(filter);
+                        if (string.IsNullOrEmpty(positionName.ToString())) {
+                            break;
+                        }
+
+                        string filterName;
+
+                        if (Info.Model.Contains("CenterLine")) {
+                            var regex = @"(Empty|^$)";
+
+                            var filterNames = positionName.ToString().Split('/');
+                            var wheel0 = filterNames[0];
+                            var wheel1 = filterNames[1];
+
+                            var isWheel0Empty = Regex.Match(wheel0, regex, RegexOptions.IgnoreCase);
+                            var isWheel1Empty = Regex.Match(wheel1, regex, RegexOptions.IgnoreCase);
+
+                            if (isWheel0Empty.Success && isWheel1Empty.Success) {
+                                var slot0 = "Empty";
+                                var slot1 = "Empty";
+
+                                if (!string.IsNullOrEmpty(wheel0)) {
+                                    slot0 = wheel0;
+                                }
+
+                                if (!string.IsNullOrEmpty(wheel1)) {
+                                    slot1 = wheel1;
+                                }
+
+                                filtersList.Add(new FilterInfo($"{slot0}/{slot1}", 0, (short)i));
+                                continue;
+                            }
+
+                            wheel0 = Regex.Replace(wheel0, regex, string.Empty, RegexOptions.IgnoreCase);
+                            wheel1 = Regex.Replace(wheel1, regex, string.Empty, RegexOptions.IgnoreCase);
+
+                            if (string.IsNullOrEmpty(wheel0)) {
+                                filterName = wheel1;
+                            } else if (string.IsNullOrEmpty(wheel1)) {
+                                filterName = wheel0;
+                            } else {
+                                filterName = $"{wheel0}/{wheel1}";
+                            }
+
+                        } else {
+                            filterName = positionName.ToString();
+                        }
+
+                        filtersList.Add(new FilterInfo(filterName, 0, (short)i));
                     }
                 }
 
