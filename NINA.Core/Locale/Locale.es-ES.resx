@@ -6067,4 +6067,19 @@ Este botón no es visible en modo mosaico.</value>
   <data name="LblPhd2Warning" xml:space="preserve">
     <value>Advertencia de PHD2</value>
   </data>
+  <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
+    <value>Deshabilita la instrucción actual. Una instrucción desactivada no se ejecutará durante la ejecución de la secuencia.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
+    <value>Activa la instrucción actual, para ser tenida en cuenta de nuevo durante la ejecución de la secuencia.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
+    <value>Deshabilita o habilita el conjunto de instrucciones actual y todo su contenido.</value>
+  </data>
+  <data name="LblDateUTCFormatDescription" xml:space="preserve">
+    <value>Fecha con formato AAAA-MM-DD</value>
+  </data>
+  <data name="LblTimeUTCFormatDescription" xml:space="preserve">
+    <value>Fecha con formato HH-mm-ss</value>
+  </data>
 </root>

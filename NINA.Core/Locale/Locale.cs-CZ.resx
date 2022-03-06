@@ -232,7 +232,7 @@ Chyba byla zaznamenána do %localappdata%\NINA\Logs.
 Má se aplikace pokusit zotavit z chyby? (Může vést k neočekávanému chování)</value>
   </data>
   <data name="LblApplicationStartDateDescription" xml:space="preserve">
-    <value>Datum zahájení aplikace ve formátu YYYY-MM-DD</value>
+    <value>Datum spuštění aplikace ve formátu RRRR-MM-DD</value>
   </data>
   <data name="LblArcmin" xml:space="preserve">
     <value>obl.min</value>
@@ -1006,7 +1006,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Datum ve formátu RRRR-MM-DD</value>
   </data>
   <data name="LblDateFormatDescription2" xml:space="preserve">
-    <value>Datum posunut zpět o 12 hodin ve formátu RRRR-MM-DD</value>
+    <value>Datum posunuté o 12 hodin zpět ve formátu RRRR-MM-DD</value>
   </data>
   <data name="LblDateTimeFormatDescription" xml:space="preserve">
     <value>Datum ve formátu RRRR-MM-DD_HH-mm-ss</value>
@@ -2088,7 +2088,7 @@ Přeskočit.</value>
     <value>Žádná Pointace</value>
   </data>
   <data name="LblNoImage" xml:space="preserve">
-    <value>Obraz není k dispozici</value>
+    <value>Žádný obrázek není k dispozici</value>
   </data>
   <data name="LblNoiseReduction" xml:space="preserve">
     <value>Redukce Šumu</value>
@@ -2455,7 +2455,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Zpoždění mezi pokusy</value>
   </data>
   <data name="LblPlateSolveFailedDelayTooltip" xml:space="preserve">
-    <value>Interval v minutách mezi dvěma neúspěšnými pokusy o astrometrii</value>
+    <value>Prodleva v minutách mezi dvěma pokusy o astrometrii</value>
   </data>
   <data name="LblPlateSolveImage" xml:space="preserve">
     <value>Astrometrie aktuálního obrazu</value>
@@ -4996,7 +4996,7 @@ Upozornění: Tento pokyn NEVYcentruje dalekohled na cíl, ale bude pouze synchr
     <value>Cíl "{0}" bude odstraněn. Chcete odstranit existující cíl? Tato akce je nezvratná.</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
-    <value>Uloží aktuálního cíle a veškerého jeho obsahu pro opětovné použití</value>
+    <value>Uložení aktuálního cíle a veškerého jeho obsahu pro opakované použití</value>
   </data>
   <data name="LblIntercept" xml:space="preserve">
     <value>Průsečík</value>
@@ -6070,5 +6070,20 @@ Toto tlačítko není viditelné v režimu mozaiky.</value>
   </data>
   <data name="LblPhd2Warning" xml:space="preserve">
     <value>Varování PHD2</value>
+  </data>
+  <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
+    <value>Zakáže aktuální instrukci. Zakázaná instrukce se během provádění sekvence nespustí.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
+    <value>Povolí aktuální instrukci, aby se během provádění sekvence znovu zvážilo její spuštění.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
+    <value>Zakáže nebo povolí aktuální sadu instrukcí a veškerý její obsah.</value>
+  </data>
+  <data name="LblDateUTCFormatDescription" xml:space="preserve">
+    <value>Datum UTC ve formátu RRRR-MM-DD</value>
+  </data>
+  <data name="LblTimeUTCFormatDescription" xml:space="preserve">
+    <value>Čas UTC ve formátu HH-mm-ss</value>
   </data>
 </root>

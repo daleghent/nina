@@ -6092,4 +6092,19 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
   <data name="LblPhd2Warning" xml:space="preserve">
     <value>PHD2 경고</value>
   </data>
+  <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
+    <value>현재 명령 비활성화. 시퀀스 실행 중에 비활성화된 명령어는 실행되지 않습니다</value>
+  </data>
+  <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
+    <value>현재 명령 활성화. 시퀀스 실행하는 동안 다시 평가됩니다.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
+    <value>현재 명령어 세트와 모든 콘텐츠 비활성화 또는 활성화</value>
+  </data>
+  <data name="LblDateUTCFormatDescription" xml:space="preserve">
+    <value>UTC 날짜 및 포맷 YYYY-MM-DD</value>
+  </data>
+  <data name="LblTimeUTCFormatDescription" xml:space="preserve">
+    <value>UTC 시간 및 포맷 HH-mm-ss</value>
+  </data>
 </root>

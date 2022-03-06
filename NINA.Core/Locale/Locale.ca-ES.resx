@@ -6066,4 +6066,19 @@ Aquest botó no és visible en mode mosaic.</value>
   <data name="LblPhd2Warning" xml:space="preserve">
     <value>Avís PHD2</value>
   </data>
+  <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
+    <value>Desactiva la instrucció actual. La instrucció desactivada no es considerarà durant l'execució de la seqüència.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
+    <value>Activa la instrucció actual, perque es torni a executar durant el procés de la seqüència.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
+    <value>Activa o desactiva el conjunt d'instruccions actual i tot el seu contingut.</value>
+  </data>
+  <data name="LblDateUTCFormatDescription" xml:space="preserve">
+    <value>Data UTC amb format AAAA-MM-DD</value>
+  </data>
+  <data name="LblTimeUTCFormatDescription" xml:space="preserve">
+    <value>Hora UTC amb format HH-mm-ss</value>
+  </data>
 </root>
