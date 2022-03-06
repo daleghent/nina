@@ -51,19 +51,35 @@ namespace NINA.Image {
             return null;
         }
 
-        public void ChangeGrade(string grade) {
+        public async Task<bool> ChangeGrade(string grade) {
             var oldFileName = GetFilePath();
             if (File.Exists(oldFileName)) {
-                try {
-                    Grade = grade;
-                    File.Move(oldFileName, GetFilePath());
-                    RaisePropertyChanged(nameof(FilePath));
-                    RaisePropertyChanged(nameof(Grade));
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
+                int attemptsRemaining = 3;
+                Grade = grade;
+                while (attemptsRemaining > 0) {
+                    try {
+                        // This operation may fail because of antivirus. In that case, we'd expect an IOException
+                        File.Move(oldFileName, GetFilePath());
+                        RaisePropertyChanged(nameof(FilePath));
+                        RaisePropertyChanged(nameof(Grade));
+                        return true;
+                    } catch (IOException ex) {
+                        if (--attemptsRemaining > 0) {
+                            Logger.Error($"Failed to change grade. Retrying...", ex);
+                            await Task.Delay(TimeSpan.FromSeconds(2));
+                        } else {
+                            Logger.Error("Failed to change grade. Aborting...", ex);
+                            Notification.ShowError(ex.Message);
+                            return false;
+                        }
+                    } catch (Exception ex) {
+                        Logger.Error("Failed to change grade. Aborting...", ex);
+                        Notification.ShowError(ex.Message);
+                        return false;
+                    }
                 }
             }
+            return false;
         }
 
         private string GetFilePath() {

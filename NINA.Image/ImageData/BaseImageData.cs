@@ -111,6 +111,9 @@ namespace NINA.Image.ImageData {
                 }
             } catch (OperationCanceledException) {
                 throw;
+            } catch (AggregateException ae) {
+                Logger.Error(ae);
+                throw ae.InnerException;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;

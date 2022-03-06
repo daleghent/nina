@@ -55,18 +55,16 @@ namespace NINA.ViewModel {
         }
 
         private Task<bool> GradeImage(object arg) {
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 if (arg is Thumbnail) {
                     var selected = arg as Thumbnail;
                     //Order is from "" -> "BAD" -> ""
                     switch (selected.Grade) {
                         case "": {
-                                selected.ChangeGrade("BAD");
-                                break;
+                                return await selected.ChangeGrade("BAD");
                             }
                         case "BAD": {
-                                selected.ChangeGrade("");
-                                break;
+                                return await selected.ChangeGrade("");
                             }
                     }
                     return true;
