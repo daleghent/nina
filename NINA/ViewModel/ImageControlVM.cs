@@ -574,6 +574,11 @@ namespace NINA.ViewModel {
                     var bayerPattern = cameraInfo.SensorType;
                     if (profileService.ActiveProfile.CameraSettings.BayerPattern != BayerPatternEnum.Auto) {
                         bayerPattern = (SensorType)profileService.ActiveProfile.CameraSettings.BayerPattern;
+                    } else if (!cameraInfo.Connected) {
+                        var imageSensorType = data.MetaData?.Camera?.SensorType;
+                        if (imageSensorType.HasValue) {
+                            bayerPattern = imageSensorType.Value;
+                        }
                     }
 
                     renderedImage = renderedImage.Debayer(saveColorChannels: unlinkedStretch, saveLumChannel: starDetection, bayerPattern: bayerPattern);
