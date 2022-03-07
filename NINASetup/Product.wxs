@@ -1581,9 +1581,6 @@
 
 	<Fragment>
 		<ComponentGroup Id="External_x86_Omegon_files" Directory="External_x86_Omegon">
-			<Component Win64="$(var.Win64)" Id="External_x86_Omegon_updatefw.exe" Guid="EB01B554-A472-486F-8C47-A1913D5FD939">
-				<File Id="External_x86_Omegon_updatefw.exe" Name="updatefw.exe" Source="$(var.NINA_ProjectDir)External\x86\Omegon\updatefw.exe" />
-			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_Omegon_omegonprocam.dll" Guid="3C687E4C-4A78-4082-BEF2-70D2BA00A14F">
 				<File Id="External_x86_Omegon_omegonprocam.dll" Name="omegonprocam.dll" Source="$(var.NINA_ProjectDir)External\x86\Omegon\omegonprocam.dll" />
 			</Component>
@@ -1592,9 +1589,6 @@
 
 	<Fragment>
 		<ComponentGroup Id="External_x86_ToupTek_files" Directory="External_x86_ToupTek">
-			<Component Win64="$(var.Win64)" Id="External_x86_ToupTek_updatefw.exe" Guid="968ed6dc-9379-485e-8c7e-7274bd589293">
-				<File Id="External_x86_ToupTek_updatefw.exe" Name="updatefw.exe" Source="$(var.NINA_ProjectDir)External\x86\ToupTek\updatefw.exe" />
-			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_ToupTek_toupcam.dll" Guid="c6eb2a4b-8c5c-4459-9a4b-8d76a1fff868">
 				<File Id="External_x86_ToupTek_toupcam.dll" Name="toupcam.dll" Source="$(var.NINA_ProjectDir)External\x86\ToupTek\toupcam.dll" />
 			</Component>
