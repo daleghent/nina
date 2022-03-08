@@ -9328,11 +9328,29 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can Shift Tracking.
+        /// </summary>
+        internal static string LblGuiderCanSetShift {
+            get {
+                return ResourceManager.GetString("LblGuiderCanSetShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guider Connected.
         /// </summary>
         internal static string LblGuiderConnected {
             get {
                 return ResourceManager.GetString("LblGuiderConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dec Shift Rate.
+        /// </summary>
+        internal static string LblGuiderDecShiftRate {
+            get {
+                return ResourceManager.GetString("LblGuiderDecShiftRate", resourceCulture);
             }
         }
         
@@ -9373,11 +9391,29 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RA Shift Rate.
+        /// </summary>
+        internal static string LblGuiderRAShiftRate {
+            get {
+                return ResourceManager.GetString("LblGuiderRAShiftRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guider resume failed.
         /// </summary>
         internal static string LblGuiderResumeFailed {
             get {
                 return ResourceManager.GetString("LblGuiderResumeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Shift.
+        /// </summary>
+        internal static string LblGuiderSetShiftRate {
+            get {
+                return ResourceManager.GetString("LblGuiderSetShiftRate", resourceCulture);
             }
         }
         
@@ -9391,11 +9427,29 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shift Enabled.
+        /// </summary>
+        internal static string LblGuiderShiftEnabled {
+            get {
+                return ResourceManager.GetString("LblGuiderShiftEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guider Status.
         /// </summary>
         internal static string LblGuiderStatus {
             get {
                 return ResourceManager.GetString("LblGuiderStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop Shift.
+        /// </summary>
+        internal static string LblGuiderStopShift {
+            get {
+                return ResourceManager.GetString("LblGuiderStopShift", resourceCulture);
             }
         }
         
@@ -11997,6 +12051,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setting shift rate after losing shift lock failed.
+        /// </summary>
+        internal static string LblPhd2GuiderRestartShiftLockFailed {
+            get {
+                return ResourceManager.GetString("LblPhd2GuiderRestartShiftLockFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restored shift rate after losing shift lock.
+        /// </summary>
+        internal static string LblPhd2GuiderRestartShiftLockSuccess {
+            get {
+                return ResourceManager.GetString("LblPhd2GuiderRestartShiftLockSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift Axis.
+        /// </summary>
+        internal static string LblPhd2GuiderShiftAxis {
+            get {
+                return ResourceManager.GetString("LblPhd2GuiderShiftAxis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 History Size.
         /// </summary>
         internal static string LblPHD2HistorySize {
@@ -13351,6 +13432,15 @@ namespace NINA.Core.Locale {
         internal static string LblReslewToTarget {
             get {
                 return ResourceManager.GetString("LblReslewToTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restarting guiding failed after lost shift lock.
+        /// </summary>
+        internal static string LblRestartGuidingAfterLostShiftLockFailed {
+            get {
+                return ResourceManager.GetString("LblRestartGuidingAfterLostShiftLockFailed", resourceCulture);
             }
         }
         

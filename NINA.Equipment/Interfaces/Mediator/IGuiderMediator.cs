@@ -36,5 +36,9 @@ namespace NINA.Equipment.Interfaces.Mediator {
         Task<bool> AutoSelectGuideStar(CancellationToken token);
 
         Task<bool> ClearCalibration(CancellationToken token);
+
+        Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct);
+
+        Task<bool> StopShifting(CancellationToken ct);
     }
 }

@@ -216,6 +216,11 @@ namespace NINA.Equipment.Equipment.MyGuider {
             get => true;
         }
 
+        public bool CanSetShiftRate => false;
+        public bool ShiftEnabled => false;
+        public double ShiftRateRA => double.NaN;
+        public double ShiftRateDec => double.NaN;
+
         public Task<bool> ClearCalibration(CancellationToken ct) {
             return Task.FromResult(true);
         }
@@ -318,6 +323,14 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public void SetupDialog() {
+        }
+
+        public Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct) {
+            return Task.FromResult(false);
+        }
+
+        public Task<bool> StopShifting(CancellationToken ct) {
+            return Task.FromResult(true);
         }
     }
 }

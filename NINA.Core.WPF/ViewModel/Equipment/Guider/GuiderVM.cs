@@ -56,6 +56,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             RefreshGuiderListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !GuiderInfo.Connected);
             DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => GuiderInfo.Connected);
             ClearGraphCommand = new RelayCommand((object o) => ResetGraphValues());
+            SetShiftRateCommand = new AsyncCommand<bool>(SetShiftRateVM);
+            StopShiftCommand = new AsyncCommand<bool>(StopShiftVM);
 
             GuideStepsHistory = new GuideStepsHistory(HistorySize, GuiderScale, GuiderMaxY);
 
@@ -340,8 +342,77 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             }
         }
 
+        private double raShiftRate = 0.0d;
+        public double RAShiftRate {
+            get => raShiftRate;
+            set {
+                raShiftRate = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double decShiftRate = 0.0d;
+        public double DecShiftRate {
+            get => decShiftRate;
+            set {
+                decShiftRate = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private void CancelConnectGuider(object o) {
             _cancelConnectGuiderSource?.Cancel();
+        }
+
+        private Task<bool> SetShiftRateVM() {
+            return Task.Run(async () => {
+                try {
+                    return await SetShiftRate(RAShiftRate, DecShiftRate, CancellationToken.None);
+                } catch (Exception e) {
+                    Notification.ShowError($"Set shift rate failed. {e.Message}");
+                    Logger.Error(e, "Failed to set shift rate");
+                    return false;
+                }
+            });
+        }
+
+        private Task<bool> StopShiftVM() {
+            return Task.Run(async () => {
+                try {
+                    return await StopShifting(CancellationToken.None);
+                } catch (Exception e) {
+                    Notification.ShowError($"Stop shifting failed. {e.Message}");
+                    Logger.Error(e, "Failed to stop shifting");
+                    return false;
+                }
+            });
+        }
+
+        public async Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct) {
+            if (!Guider.Connected) {
+                Logger.Error("Attempted to set shift rate when guider is not connected");
+                return false;
+            }
+            if (!Guider.CanSetShiftRate) {
+                Logger.Error("Attempted to set shift rate when guider does not support it");
+                return false;
+            }
+
+            return await Guider.SetShiftRate(raShiftRate, decShiftRate, ct);
+        }
+
+        public async Task<bool> StopShifting(CancellationToken ct) {
+            if (!Guider.Connected) {
+                Logger.Error("Attempted to disable shift when guider is not connected");
+                return false;
+            }
+            if (!Guider.ShiftEnabled) {
+                Logger.Info("Guider shifter is not enabled. Nothing to disable");
+                return true;
+            }
+
+            await Guider.StopShifting(ct);
+            return true;
         }
 
         private IGuiderMediator guiderMediator;
@@ -353,5 +424,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         public ICommand DisconnectGuiderCommand { get; private set; }
         public ICommand ClearGraphCommand { get; private set; }
         public ICommand CancelConnectGuiderCommand { get; }
+        public ICommand SetShiftRateCommand { get; private set; }
+        public ICommand StopShiftCommand { get; private set; }
     }
 }

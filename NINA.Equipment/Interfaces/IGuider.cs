@@ -24,6 +24,10 @@ namespace NINA.Equipment.Interfaces {
         double PixelScale { get; set; }
         string State { get; }
         bool CanClearCalibration { get; }
+        bool CanSetShiftRate { get; }
+        bool ShiftEnabled { get; }
+        double ShiftRateRA { get; } // arcsec/hr
+        double ShiftRateDec { get; } // arcsec/hr
 
         event EventHandler<IGuideStep> GuideEvent;
 
@@ -38,6 +42,10 @@ namespace NINA.Equipment.Interfaces {
         Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Task<bool> ClearCalibration(CancellationToken ct);
+
+        Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct);
+
+        Task<bool> StopShifting(CancellationToken ct);
     }
 
     public interface IGuiderAppState {

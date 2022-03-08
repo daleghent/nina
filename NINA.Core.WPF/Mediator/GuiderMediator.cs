@@ -51,5 +51,13 @@ namespace NINA.WPF.Base.Mediator {
         public Task<bool> ClearCalibration(CancellationToken token) {
             return handler.ClearCalibration(token);
         }
+
+        public Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct) {
+            return handler.SetShiftRate(raShiftRate, decShiftRate, ct);
+        }
+
+        public Task<bool> StopShifting(CancellationToken ct) {
+            return handler.StopShifting(ct);
+        }
     }
 }

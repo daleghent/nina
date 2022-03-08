@@ -383,6 +383,11 @@ namespace NINA.Equipment.Equipment.MyGuider {
             get => false;
         }
 
+        public bool CanSetShiftRate => false;
+        public bool ShiftEnabled => false;
+        public double ShiftRateRA => double.NaN;
+        public double ShiftRateDec => double.NaN;
+
         public Task<bool> ClearCalibration(CancellationToken ct) {
             return Task.FromResult(false);
         }
@@ -552,6 +557,14 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public void SetupDialog() {
             var windowService = windowServiceFactory.Create();
             windowService.ShowDialog(this, Loc.Instance["LblMetaGuideSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
+        }
+
+        public Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct) {
+            return Task.FromResult(false);
+        }
+
+        public Task<bool> StopShifting(CancellationToken ct) {
+            return Task.FromResult(true);
         }
     }
 

@@ -35,5 +35,9 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> ClearCalibration(CancellationToken token);
 
         RMS StopRMSRecording(Guid handle);
+
+        Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct);
+
+        Task<bool> StopShifting(CancellationToken ct);
     }
 }

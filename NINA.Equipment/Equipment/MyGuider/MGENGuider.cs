@@ -20,16 +20,10 @@ using NINA.Astrometry;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Locale;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
@@ -459,6 +453,11 @@ namespace NINA.Equipment.Equipment.MyGuider {
             get => true;
         }
 
+        public bool CanSetShiftRate => false;
+        public bool ShiftEnabled => false;
+        public double ShiftRateRA => double.NaN;
+        public double ShiftRateDec => double.NaN;
+
         public Task<bool> ClearCalibration(CancellationToken ct) {
             return Task.FromResult(true);
         }
@@ -525,6 +524,14 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public string DriverInfo => "";
 
         public string DriverVersion => "";
+
+        public Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct) {
+            return Task.FromResult(false);
+        }
+
+        public Task<bool> StopShifting(CancellationToken ct) {
+            return Task.FromResult(true);
+        }
     }
 
     public class MGenLogger : NINA.MGEN.ILogger {

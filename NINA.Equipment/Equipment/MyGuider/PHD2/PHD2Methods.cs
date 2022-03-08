@@ -277,7 +277,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     public class Phd2SetLockShiftParamsParameter {
 
         [JsonProperty(PropertyName = "rate")]
-        public float Rate { get; set; }
+        public double[] Rate { get; set; }
 
         [JsonProperty(PropertyName = "units")]
         public string Units { get; set; }
@@ -413,6 +413,25 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
     public class GetLockPositionResponse : PhdMethodResponse {
         public int[] result;
+    }
+
+    public class GetLockShiftParamsResponse : PhdMethodResponse {
+        public LockShiftParams result;
+    }
+
+    public class LockShiftParams {
+
+        [JsonProperty(PropertyName = "enabled")]
+        public bool Enabled { get; set; }
+
+        [JsonProperty(PropertyName = "rate")]
+        public float[] Rate { get; set; }
+
+        [JsonProperty(PropertyName = "units")]
+        public string Units { get; set; }
+
+        [JsonProperty(PropertyName = "axes")]
+        public string Axes { get; set; }
     }
 
     public class PhdError {

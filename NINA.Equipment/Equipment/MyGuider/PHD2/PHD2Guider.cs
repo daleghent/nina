@@ -204,6 +204,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         await ChangeProfile(profileService.ActiveProfile.GuiderSettings.PHD2ProfileId.Value);
                     }
                     await EnsurePHD2EquipmentConnected();
+                    await TryRefreshShiftLockParams();
                 }
 
                 var msg = new Phd2GetPixelScale();
@@ -448,7 +449,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             });
         }
 
-        public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+        public Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            return StartGuidingPrivate(forceCalibration, true, progress, ct);
+        }
+
+        private async Task<bool> StartGuidingPrivate(bool forceCalibration, bool waitForSettle, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (!Connected)
                 return false;
 
@@ -494,7 +499,9 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         if ((await Task.WhenAny(timeout, guidingHasBegun)) == guidingHasBegun) {
                             // Guiding has been started successfully in time
                             // Wait for phd2 to settle and exit
-                            await WaitForSettling(progress, ct);
+                            if (waitForSettle) {
+                                await WaitForSettling(progress, ct);
+                            }
                             return true;
                         }
                         cancelOnTimeoutOrParent.Cancel();
@@ -518,6 +525,27 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 await Task.Delay(5000, ct); // 5000ms sleep between retries
             }
             return false;
+        }
+
+        private Task RestartForLostShiftLock() {
+            return Task.Run(async () => {
+                await this.StopGuiding(CancellationToken.None);
+
+                // Don't wait for settling when restarting due to lost lock shift, which should minimize downtime
+                if (!await StartGuidingPrivate(false, false, null, CancellationToken.None)) {
+                    Notification.ShowError(Loc.Instance["LblRestartGuidingAfterLostShiftLockFailed"]);
+                    Logger.Error("Failed to restart guiding after lost shift lock");
+                    return;
+                }
+
+                if (!await SetShiftRate(ShiftRateRA, ShiftRateDec, CancellationToken.None)) {
+                    Notification.ShowError(Loc.Instance["LblPhd2GuiderRestartShiftLockFailed"]);
+                    Logger.Error("Failed to set shift rate after lost shift lock");
+                } else {
+                    Notification.ShowInformation(Loc.Instance["LblPhd2GuiderRestartShiftLockSuccess"]);
+                    Logger.Info("Successfully restarted shift lock after losing it");
+                }
+            });
         }
 
         private async Task<bool> WaitForStarSelected(IProgress<ApplicationStatus> progress, CancellationToken ct) {
@@ -573,7 +601,49 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             Logger.Info($"Phd2 - Requesting to start guiding. Recalibrate: {forceCalibration}");
 
             var guideMsgResponse = await SendMessage(guideMsg);
-            return guideMsgResponse.error == null;
+            if (guideMsgResponse.error == null) {
+                await TryRefreshShiftLockParams();
+                return true;
+            }
+            return false;
+        }
+
+        private async Task<bool> TryRefreshShiftLockParams() {
+            var getShiftLockParamsMsg = new Phd2GetLockShiftParams();
+            Logger.Trace($"Phd2 - Requesting shift lock params");
+
+            try {
+                var getShiftLockParamsResponse = await SendMessage<GetLockShiftParamsResponse>(getShiftLockParamsMsg);
+                if (getShiftLockParamsResponse.error != null) {
+                    Logger.Error($"Failed to get shift lock params. Code={getShiftLockParamsResponse.error.code}, Message={getShiftLockParamsResponse.error.message}");
+                    return false;
+                }
+
+                var result = getShiftLockParamsResponse.result;
+                if (result.Enabled) {
+                    if (result.Units == "pixels/hr") {
+                        var raShiftRate = result.Rate[0] * PixelScale;
+                        var decShiftRate = result.Rate[1] * PixelScale;
+                        ShiftRateRA = raShiftRate;
+                        ShiftRateDec = decShiftRate;
+                    } else {
+                        // already arcsec/hr
+                        var raShiftRate = result.Rate[0];
+                        var decShiftRate = result.Rate[1];
+                        ShiftRateRA = raShiftRate;
+                        ShiftRateDec = decShiftRate;
+                    }
+                    ShiftRateAxis = result.Axes;
+                    ShiftEnabled = true;
+                } else {
+                    ShiftEnabled = false;
+                }
+                return true;
+            } catch (Exception e) {
+                ShiftEnabled = false;
+                Logger.Error("Failed to get shift lock parameters", e);
+                return false;
+            }
         }
 
         private async Task<bool> WaitForGuidingStarted(IProgress<ApplicationStatus> progress, CancellationToken ct) {
@@ -625,6 +695,44 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         public bool CanClearCalibration {
             get => true;
+        }
+
+        public bool CanSetShiftRate => true;
+
+        private bool shiftEnabled;
+        public bool ShiftEnabled {
+            get => shiftEnabled;
+            private set {
+                shiftEnabled = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double shiftRateRA;
+        public double ShiftRateRA {
+            get => shiftRateRA;
+            private set {
+                shiftRateRA = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double shiftRateDec;
+        public double ShiftRateDec {
+            get => shiftRateDec;
+            private set {
+                shiftRateDec = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string shiftRateAxis;
+        public string ShiftRateAxis {
+            get => shiftRateAxis;
+            private set {
+                shiftRateAxis = value;
+                RaisePropertyChanged();
+            }
         }
 
         public async Task<bool> ClearCalibration(CancellationToken ct) {
@@ -687,6 +795,63 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             genericError.id = 1;
             genericError.error = new PhdError() { code = -1, message = "Unable to get response from phd2" };
             return genericError;
+        }
+
+        public async Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct) {
+            Logger.Info($"Setting shift rate to RA={raArcsecPerHour}, Dec={decArcsecPerHour}");
+            try {
+                var setLockShiftMsg = new Phd2SetLockShiftParams() {
+                    Parameters = new Phd2SetLockShiftParamsParameter() {
+                        Axes = "RA/Dec",
+                        Units = "arcsec/hr",
+                        Rate = new double[] { raArcsecPerHour, decArcsecPerHour }
+                    }
+                };
+                var lockShiftResponse = await SendMessage(setLockShiftMsg);
+                if (lockShiftResponse.error != null) {
+                    Logger.Error($"Failed to set shift rate to RA={raArcsecPerHour}, Dec={decArcsecPerHour}. Code={lockShiftResponse.error.code}, Message={lockShiftResponse.error.message}");
+                    return false;
+                }
+
+                var setLockShiftEnabledMsg = new Phd2SetLockShiftEnabled() {
+                    Parameters = new bool[] { true }
+                };
+                var setLockShiftEnabledResponse = await SendMessage(setLockShiftEnabledMsg);
+                if (setLockShiftEnabledResponse.error != null) {
+                    Logger.Error($"Failed to enable lock shift. Code={lockShiftResponse.error.code}, Message={lockShiftResponse.error.message}");
+                    return false;
+                }
+
+                _ = TryRefreshShiftLockParams();
+                return true;
+            } catch (Exception e) {
+                Logger.Error(e, "Failed to set shift rate");
+                return false;
+            }
+        }
+
+        public async Task<bool> StopShifting(CancellationToken ct) {
+            Logger.Info($"Stop shifting");
+            try {
+                if (!Connected || !ShiftEnabled) {
+                    return true;
+                }
+
+                var setLockShiftEnabledMsg = new Phd2SetLockShiftEnabled() {
+                    Parameters = new bool[] { false }
+                };
+                var setLockShiftEnabledResponse = await SendMessage(setLockShiftEnabledMsg);
+                if (setLockShiftEnabledResponse.error != null) {
+                    Logger.Error($"Failed to disable lock shift. Code={setLockShiftEnabledResponse.error.code}, Message={setLockShiftEnabledResponse.error.message}");
+                    return false;
+                }
+
+                _ = TryRefreshShiftLockParams();
+                return true;
+            } catch (Exception e) {
+                Logger.Error(e, "Failed to disable shift");
+                return false;
+            }
         }
 
         public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
@@ -765,6 +930,9 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
+                case "StartGuiding": {
+                        break;
+                    }
                 case "LockPositionSet": {
                         var lockPosition = message.ToObject<PhdEventLockPositionSet>();
                         Logger.Debug($"PHD2 - Lock position set at x:{lockPosition.X} y:{lockPosition.Y}");
@@ -777,6 +945,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     }
                 case "LockPositionShiftLimitReached": {
                         Logger.Debug($"PHD2 - LockPositionShiftLimitReached!");
+                        _ = RestartForLostShiftLock();
                         break;
                     }
                 default: {
