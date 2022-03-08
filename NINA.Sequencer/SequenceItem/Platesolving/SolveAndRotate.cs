@@ -31,8 +31,6 @@ using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -219,9 +217,9 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override void AfterParentChanged() {
-            var tuple = ItemUtility.RetrieveContextCoordinates(this.Parent);
-            if (tuple.Item1 != null) {
-                Rotation = tuple.Item2;
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(this.Parent);
+            if (contextCoordinates != null) {
+                Rotation = contextCoordinates.Rotation;
                 Inherited = true;
             } else {
                 Inherited = false;

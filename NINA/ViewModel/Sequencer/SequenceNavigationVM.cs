@@ -166,7 +166,7 @@ namespace NINA.ViewModel.Sequencer {
             ActiveSequencerVM = this;
         }
 
-        public void AddSimpleTarget(DeepSkyObject deepSkyObject) {
+        public void AddSimpleTarget(IDeepSkyObject deepSkyObject) {
             SimpleSequenceVM.AddTarget(deepSkyObject);
             ActiveSequencerVM = SimpleSequenceVM;
         }

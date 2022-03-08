@@ -136,6 +136,7 @@
     <Compile Include="Body\Earth.cs" />
     <Compile Include="Body\Moon.cs" />
     <Compile Include="Body\Sun.cs" />
+    <Compile Include="Interfaces\IDeepSkyObject.cs" />
     <Compile Include="ObserverInfo.cs" />
     <Compile Include="Constellation.cs" />
     <Compile Include="ConstellationBoundary.cs" />
@@ -168,6 +169,8 @@
     <Compile Include="RiseAndSet\NauticalTwilightRiseAndSet.cs" />
     <Compile Include="RiseAndSet\RiseAndSetEvent.cs" />
     <Compile Include="RiseAndSet\SunRiseAndSet.cs" />
+    <Compile Include="SiderealShiftTrackingRate.cs" />
+    <Compile Include="SkyObjectBase.cs" />
     <Compile Include="SOFA.cs" />
     <Compile Include="Star.cs" />
     <Compile Include="TopocentricCoordinates.cs" />

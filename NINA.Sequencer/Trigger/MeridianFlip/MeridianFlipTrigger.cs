@@ -142,8 +142,9 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         }
 
         public override Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var target = ItemUtility.RetrieveContextCoordinates(context).Item1;
-            if (target == null) {
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(context);
+            var target = contextCoordinates?.Coordinates;
+            if (contextCoordinates == null) {
                 target = telescopeMediator.GetCurrentPosition();
                 Logger.Warning("No target information available for flip. Taking current telescope coordinates instead for the flip.");
             }

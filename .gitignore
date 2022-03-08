@@ -2,6 +2,8 @@
 NINA/External/*/Altair
 NINA/External/*/Canon
 NINA/External/*/Nikon
+NINA/External/**/*.lib
+NINA/External/**/*.exe
 
 # Exclude nuget.exe
 /publish/nuget.exe

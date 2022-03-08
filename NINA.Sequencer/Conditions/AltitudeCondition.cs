@@ -142,7 +142,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void AfterParentChanged() {
-            var coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
+            var coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent)?.Coordinates;
             if (coordinates != null) {
                 Coordinates.Coordinates = coordinates;
                 HasDsoParent = true;

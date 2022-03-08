@@ -49,8 +49,8 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
                 sizeWidth = DSO_DEFAULT_SIZE;
             }
 
-            if(dso.PositionAngle.HasValue) {
-                positionAngle = (90 - (float)dso.PositionAngle.Value);
+            if(dso.PositionAngle != null) {
+                positionAngle = (90 - (float)dso.PositionAngle.Degree);
 
                 if (dso.SizeMin != null && dso.SizeMin >= arcSecHeight) {
                     sizeHeight = dso.SizeMin.Value;

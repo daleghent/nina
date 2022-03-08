@@ -159,6 +159,7 @@
     <Compile Include="Conditions\TimeCondition.cs" />
     <Compile Include="Conditions\TimeSpanCondition.cs" />
     <Compile Include="Conditions\UnknownSequenceCondition.cs" />
+    <Compile Include="Container\ContextCoordinates.cs" />
     <Compile Include="Container\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>

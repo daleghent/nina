@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Astrometry.Interfaces;
 using NINA.Core.Model;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Sequencer.Container;
@@ -37,7 +38,7 @@ namespace NINA.ViewModel.Sequencer {
 
         void SwitchToOverview();
 
-        void AddSimpleTarget(DeepSkyObject deepSkyObject);
+        void AddSimpleTarget(IDeepSkyObject deepSkyObject);
 
         void AddAdvancedTarget(IDeepSkyObjectContainer container);
 

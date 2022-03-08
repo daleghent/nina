@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using NINA.Sequencer.Interfaces.Mediator;
 using NINA.Astrometry;
+using NINA.Astrometry.Interfaces;
 
 namespace NINA.Sequencer.Mediator {
 
@@ -37,7 +38,7 @@ namespace NINA.Sequencer.Mediator {
 
         public bool Initialized => sequenceNavigation.Initialized;
 
-        public void AddSimpleTarget(DeepSkyObject deepSkyObject) {
+        public void AddSimpleTarget(IDeepSkyObject deepSkyObject) {
             if (Initialized) {
                 sequenceNavigation.AddSimpleTarget(deepSkyObject);
             } else {

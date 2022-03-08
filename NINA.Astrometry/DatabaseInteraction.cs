@@ -361,7 +361,7 @@ namespace NINA.Astrometry {
                             }
 
                             if(row.positionangle.HasValue) {
-                                dso.PositionAngle = row.positionangle;
+                                dso.PositionAngle = Angle.ByDegree(row.positionangle.Value);
                             }
 
                             dso.AlsoKnownAs = catalogueResult[row.id].Select(x => x.designation).ToList();

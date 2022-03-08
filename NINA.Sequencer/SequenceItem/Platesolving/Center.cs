@@ -185,9 +185,9 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override void AfterParentChanged() {
-            var coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
-            if (coordinates != null) {
-                Coordinates.Coordinates = coordinates;
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(this.Parent);
+            if (contextCoordinates != null) {
+                Coordinates.Coordinates = contextCoordinates.Coordinates;
                 Inherited = true;
             } else {
                 Inherited = false;

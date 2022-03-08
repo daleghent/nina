@@ -44,8 +44,7 @@ namespace NINATest.Sequencer.Utility {
         public void RetrieveContextCoordinates_IsNull_NoParent_ReturnNull() {
             var coordinates = ItemUtility.RetrieveContextCoordinates(null);
 
-            coordinates.Item1.Should().BeNull();
-            coordinates.Item2.Should().Be(0);
+            coordinates.Should().BeNull();
         }
 
         [Test]
@@ -54,8 +53,7 @@ namespace NINATest.Sequencer.Utility {
 
             var coordinates = ItemUtility.RetrieveContextCoordinates(containerMock.Object);
 
-            coordinates.Item1.Should().BeNull();
-            coordinates.Item2.Should().Be(0);
+            coordinates.Should().BeNull();
         }
 
         [Test]
@@ -66,8 +64,7 @@ namespace NINATest.Sequencer.Utility {
 
             var coordinates = ItemUtility.RetrieveContextCoordinates(containerMock.Object);
 
-            coordinates.Item1.Should().BeNull();
-            coordinates.Item2.Should().Be(0);
+            coordinates.Should().BeNull();
         }
 
         [Test]
@@ -83,10 +80,10 @@ namespace NINATest.Sequencer.Utility {
 
             var coordinates = ItemUtility.RetrieveContextCoordinates(containerMock.Object);
 
-            coordinates.Item1.Should().NotBeNull();
-            coordinates.Item1.RA.Should().Be(coords.RA);
-            coordinates.Item1.Dec.Should().Be(coords.Dec);
-            coordinates.Item2.Should().Be(100);
+            coordinates.Should().NotBeNull();
+            coordinates.Coordinates.RA.Should().Be(coords.RA);
+            coordinates.Coordinates.Dec.Should().Be(coords.Dec);
+            coordinates.Rotation.Should().Be(100);
         }
 
         [Test]
@@ -104,10 +101,10 @@ namespace NINATest.Sequencer.Utility {
 
             var coordinates = ItemUtility.RetrieveContextCoordinates(containerMock.Object);
 
-            coordinates.Item1.Should().NotBeNull();
-            coordinates.Item1.RA.Should().Be(coords.RA);
-            coordinates.Item1.Dec.Should().Be(coords.Dec);
-            coordinates.Item2.Should().Be(100);
+            coordinates.Should().NotBeNull();
+            coordinates.Coordinates.RA.Should().Be(coords.RA);
+            coordinates.Coordinates.Dec.Should().Be(coords.Dec);
+            coordinates.Rotation.Should().Be(100);
         }
 
         [Test]

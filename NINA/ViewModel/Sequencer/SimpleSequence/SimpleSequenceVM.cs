@@ -454,7 +454,7 @@ namespace NINA.ViewModel {
             (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
         }
 
-        public void AddTarget(DeepSkyObject deepSkyObject) {
+        public void AddTarget(IDeepSkyObject deepSkyObject) {
             var target = GetTemplate();
             target.Target.InputCoordinates.Coordinates = deepSkyObject.Coordinates.Clone();
             target.Target.TargetName = deepSkyObject.Name;

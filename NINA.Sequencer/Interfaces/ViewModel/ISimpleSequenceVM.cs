@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Astrometry;
+using NINA.Astrometry.Interfaces;
 using NINA.Core.Model;
 using NINA.Core.Utility.WindowService;
 using NINA.Sequencer.Container;
@@ -48,6 +49,6 @@ namespace NINA.ViewModel.Interfaces {
 
         void AddDownloadTime(TimeSpan t);
 
-        void AddTarget(DeepSkyObject deepSkyObject);
+        void AddTarget(IDeepSkyObject deepSkyObject);
     }
 }

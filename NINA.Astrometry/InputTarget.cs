@@ -17,6 +17,7 @@ using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using NINA.Core.Model;
+using NINA.Astrometry.Interfaces;
 
 namespace NINA.Astrometry {
 
@@ -46,9 +47,9 @@ namespace NINA.Astrometry {
             }
         }
 
-        private DeepSkyObject deepSkyObject;
+        private IDeepSkyObject deepSkyObject;
 
-        public DeepSkyObject DeepSkyObject {
+        public IDeepSkyObject DeepSkyObject {
             get => deepSkyObject;
             set {
                 deepSkyObject = value;

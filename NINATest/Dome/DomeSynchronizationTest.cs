@@ -264,5 +264,16 @@ namespace NINATest.Dome {
             Assert.IsTrue(CalculateCoordinates(sut, poleCoordinates, PierSide.pierEast).Azimuth.Equals(expectedAzimuth, DEGREES_EPSILON));
             Assert.IsTrue(CalculateCoordinates(sut, poleCoordinates, PierSide.pierWest).Azimuth.Equals(expectedAzimuth, DEGREES_EPSILON));
         }
+
+        [Test]
+        public void DomeTooSmallTest() {
+            var sut = Initialize(gemAxisLength: 370, mountOffsetX: -30, mountOffsetY: 35, mountOffsetZ: 40, domeRadius: 1000);
+
+            // When pointed at the celestial pole, an AltAz should still have an azimuth of 0 as long as the E/W mount offset is 0, regardless of gem length
+            var coordinates = GetCoordinatesFromAltAz(64, 208);
+            var result = CalculateCoordinates(sut, coordinates, PierSide.pierWest);
+
+            Console.WriteLine();
+        }
     }
 }

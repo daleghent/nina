@@ -123,9 +123,9 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override void AfterParentChanged() {
-            var coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
-            if (coordinates != null) {
-                Coordinates.Coordinates = coordinates;
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(this.Parent);
+            if (contextCoordinates != null) {
+                Coordinates.Coordinates = contextCoordinates.Coordinates;
                 HasDsoParent = true;
             } else {
                 HasDsoParent = false;

@@ -37,10 +37,10 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {
-            var contextCoordinates = Utility.ItemUtility.RetrieveContextCoordinates(context?.Parent);
-            if (contextCoordinates.Item1 != null) {
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(context?.Parent);
+            if (contextCoordinates != null) {
                 var siderealTime = Angle.ByHours(AstroUtil.GetLocalSiderealTime(DateTime.Now, profileService.ActiveProfile.AstrometrySettings.Longitude));
-                var timeToMeridian = MeridianFlip.TimeToMeridian(contextCoordinates.Item1, siderealTime);
+                var timeToMeridian = MeridianFlip.TimeToMeridian(contextCoordinates.Coordinates, siderealTime);
                 return DateTime.Now + timeToMeridian;
             }
             return DateTime.Now;

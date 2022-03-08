@@ -17,10 +17,7 @@ using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NINA.Sequencer.Trigger;
-using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Sequencer.Interfaces;
 using NINA.Sequencer.SequenceItem;
 
@@ -28,16 +25,19 @@ namespace NINA.Sequencer.Utility {
 
     public class ItemUtility {
 
-        public static (Coordinates, double) RetrieveContextCoordinates(ISequenceContainer parent) {
+        public static ContextCoordinates RetrieveContextCoordinates(ISequenceContainer parent) {
             if (parent != null) {
                 var container = parent as IDeepSkyObjectContainer;
                 if (container != null) {
-                    return (container.Target.InputCoordinates.Coordinates.Transform(container.Target.InputCoordinates.Coordinates.Epoch), container.Target.Rotation);
+                    return new ContextCoordinates(
+                        container.Target.InputCoordinates.Coordinates, 
+                        container.Target.Rotation,
+                        container.Target.DeepSkyObject.ShiftTrackingRate);
                 } else {
                     return RetrieveContextCoordinates(parent.Parent);
                 }
             } else {
-                return (null, 0);
+                return null;
             }
         }
 

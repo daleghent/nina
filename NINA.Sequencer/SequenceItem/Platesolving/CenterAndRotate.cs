@@ -217,10 +217,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override void AfterParentChanged() {
-            var tuple = ItemUtility.RetrieveContextCoordinates(this.Parent);
-            if (tuple.Item1 != null) {
-                Coordinates.Coordinates = tuple.Item1;
-                Rotation = tuple.Item2;
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(this.Parent);
+            if (contextCoordinates != null) {
+                Coordinates.Coordinates = contextCoordinates.Coordinates;
+                Rotation = contextCoordinates.Rotation;
                 Inherited = true;
             } else {
                 Inherited = false;
