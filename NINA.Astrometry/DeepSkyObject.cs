@@ -53,6 +53,26 @@ namespace NINA.Astrometry {
         }
 
         protected override void UpdateHorizonAndTransit() {
+
+            // It turns out that 2/3 of calls made here are during clone operations and deserialization,
+            // at which time the Coordinates object is basically "empty" (RA = 0, Dec = 0, Epoch = J2000)
+            // Each call to this method generates up to 1,000 or more calls to AstroUtil
+
+            // Basically, each DSO in a template or sequence or target will call here 20 or so times, each
+            // time looping 240 times getting altitude/azimuth, etc.  Only a couple of those 20 are worthwhile.
+
+            // For 100 DSO's (not unreasonable at all), that's 2000 * 240 * 3 calls to AstroUtils, taking up
+            // many actual seconds of work (which prevents the display of the target list, among other things)
+            // That's over one million calls!
+
+            // 80%+ of the remaining calls (or more) could be removed if deserialization didn't generate
+            // a call here 8 or more times for each Coordinates object (RA hours, minutes, seconds; Dec hours, minutes, seconds;
+            // rotation; and more)!  It's unclear how to do that, so I leave it to others
+
+            if (Coordinates.RA == 0 && Coordinates.Dec == 0 && Coordinates.Epoch == Epoch.J2000) {
+                return;
+            }
+
             var start = this._referenceDate;
             Altitudes.Clear();
             Horizon.Clear();
