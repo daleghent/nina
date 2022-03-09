@@ -2994,6 +2994,9 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
   <data name="LblStartGuidingFailed" xml:space="preserve">
     <value>Inicio de Guiado ha fallado</value>
   </data>
+  <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
+    <value>Fallo al reiniciar el guiado tras perder el bloqueo de compensación</value>
+  </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>Comenzando tomas de medidas Backlash HACIA DENTRO.</value>
   </data>
@@ -6081,5 +6084,32 @@ Este botón no es visible en modo mosaico.</value>
   </data>
   <data name="LblTimeUTCFormatDescription" xml:space="preserve">
     <value>Fecha con formato HH-mm-ss</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>Puede cambiar la compensación</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>Compensación activada</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>Ratio de compensación AR</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>Ratio de compensación Dec</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>Eje de compensación</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>Ajustar compensación</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>Detener compensación</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>Fallo al ajustar el ratio de compensación tras perder el bloqueo de compensación</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>Retrouver la vitesse de décalage après la perte du verrouillage de décalage</value>
   </data>
 </root>

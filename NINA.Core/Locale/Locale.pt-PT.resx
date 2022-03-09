@@ -2997,6 +2997,9 @@ Antes de prosseguir, confirme se o sistema se encontra focado ou perto</value>
   <data name="LblStartGuidingFailed" xml:space="preserve">
     <value>Falha ao iniciar a guiagem</value>
   </data>
+  <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
+    <value>Restarting guiding failed after lost shift lock</value>
+  </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>A Iniciar a Medição de Backlash para Dentro</value>
   </data>
@@ -6084,5 +6087,32 @@ This button is not visible when in mosaic mode.</value>
   </data>
   <data name="LblTimeUTCFormatDescription" xml:space="preserve">
     <value>UTC time with format HH-mm-ss</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>Can Shift Tracking</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>Shift Enabled</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>RA Shift Rate</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>Dec Shift Rate</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>Shift Axis</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>Set Shift</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>Stop Shift</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>Setting shift rate after losing shift lock failed</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>Restored shift rate after losing shift lock</value>
   </data>
 </root>

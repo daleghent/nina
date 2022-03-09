@@ -2996,6 +2996,9 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
   <data name="LblStartGuidingFailed" xml:space="preserve">
     <value>Zahájit pointaci selhalo</value>
   </data>
+  <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
+    <value>Po odblokování zámku posunu selhala obnova pointaci</value>
+  </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>Měření Zpětné Vůle DOVNITŘ Začíná</value>
   </data>
@@ -5773,7 +5776,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Cíl rotátoru byl upraven na {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
-    <value>Snímkování {0} selhalo</value>
+    <value>Selhalo {0} z průvodce Snímkování</value>
   </data>
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
     <value>Zeměpisnou šířku {0} a {1} délku montáže nelze upravit!</value>
@@ -6085,5 +6088,32 @@ Toto tlačítko není viditelné v režimu mozaiky.</value>
   </data>
   <data name="LblTimeUTCFormatDescription" xml:space="preserve">
     <value>Čas UTC ve formátu HH-mm-ss</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>Sledování Posunu</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>Posun Povolen</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>Rychlost Posunu RA</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>Rychlost Posunu Dec</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>Osa Posunu</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>Nastavit Posun</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>Zastavit Posun</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>Po odblokování zámku posunu se nepodařilo nastavit rychlost posunu</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>Po odblokování posunu obnovena rychlost posunu</value>
   </data>
 </root>

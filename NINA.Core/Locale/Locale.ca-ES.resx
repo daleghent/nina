@@ -2997,6 +2997,9 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
   <data name="LblStartGuidingFailed" xml:space="preserve">
     <value>Ha fallat l'inici del Guiatge</value>
   </data>
+  <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
+    <value>No s'ha pogut restablir la guia després de perdre el bloqueig de desplaçament</value>
+  </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>Començant a mesurar Backlash IN</value>
   </data>
@@ -6080,5 +6083,32 @@ Aquest botó no és visible en mode mosaic.</value>
   </data>
   <data name="LblTimeUTCFormatDescription" xml:space="preserve">
     <value>Hora UTC amb format HH-mm-ss</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>Pot canviar el desplaçament</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>Desplaçament activat</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>Taxa de desplaçament AR</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>Taxa de desplaçament Dec</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>Eix de desplaçament</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>Ajustar desplaçament</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>Aturar desplaçament</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>Error establint la taxa de desplaçament després de perdre el bloqueig de desplaçament</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>S'ha recuperat la taxa de desplaçament després de perdre el bloqueig de desplaçament</value>
   </data>
 </root>
