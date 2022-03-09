@@ -148,11 +148,9 @@ namespace NINA.Astrometry {
             }
         }
 
-        private static int count = 0;
         private void RaiseCoordinatesChanged() {
             if(!deserializing) { 
                 if(Coordinates?.RA != 0 || Coordinates?.Dec != 0) {
-                    System.Threading.Interlocked.Increment(ref count);
                     RaisePropertyChanged(nameof(Coordinates));
                     RaisePropertyChanged(nameof(RAHours));
                     RaisePropertyChanged(nameof(RAMinutes));

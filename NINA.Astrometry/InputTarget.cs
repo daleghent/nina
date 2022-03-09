@@ -129,10 +129,8 @@ namespace NINA.Astrometry {
             }
         }
 
-        private static int count = 0;
         private void RaiseCoordinatesChanged() {
             if(!deserializing) { 
-                System.Threading.Interlocked.Increment(ref count);
                 RaisePropertyChanged(nameof(Rotation));
                 RaisePropertyChanged(nameof(InputCoordinates));
 
