@@ -16,11 +16,23 @@ using Newtonsoft.Json;
 using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
+using System.Runtime.Serialization;
 
 namespace NINA.Astrometry {
 
     [JsonObject(MemberSerialization.OptIn)]
     public class InputCoordinates : BaseINPC {
+        private bool deserializing = false;
+        [OnDeserializing]
+        public void OnDeserializing(StreamingContext context) {
+            deserializing = true;
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            deserializing = false;
+            RaiseCoordinatesChanged();
+        }
 
         public InputCoordinates() {
             Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
@@ -136,17 +148,23 @@ namespace NINA.Astrometry {
             }
         }
 
+        private static int count = 0;
         private void RaiseCoordinatesChanged() {
-            RaisePropertyChanged(nameof(Coordinates));
-            RaisePropertyChanged(nameof(RAHours));
-            RaisePropertyChanged(nameof(RAMinutes));
-            RaisePropertyChanged(nameof(RASeconds));
-            RaisePropertyChanged(nameof(DecDegrees));
-            RaisePropertyChanged(nameof(DecMinutes));
-            RaisePropertyChanged(nameof(DecSeconds));
-            NegativeDec = Coordinates?.Dec < 0;
+            if(!deserializing) { 
+                if(Coordinates?.RA != 0 || Coordinates?.Dec != 0) {
+                    System.Threading.Interlocked.Increment(ref count);
+                    RaisePropertyChanged(nameof(Coordinates));
+                    RaisePropertyChanged(nameof(RAHours));
+                    RaisePropertyChanged(nameof(RAMinutes));
+                    RaisePropertyChanged(nameof(RASeconds));
+                    RaisePropertyChanged(nameof(DecDegrees));
+                    RaisePropertyChanged(nameof(DecMinutes));
+                    RaisePropertyChanged(nameof(DecSeconds));
+                    NegativeDec = Coordinates?.Dec < 0;
 
-            this.CoordinatesChanged?.Invoke(this, new EventArgs());
+                    this.CoordinatesChanged?.Invoke(this, new EventArgs());
+                }
+            }
         }
 
         public event EventHandler CoordinatesChanged;

@@ -18,11 +18,23 @@ using NINA.Astrometry;
 using System;
 using NINA.Core.Model;
 using NINA.Astrometry.Interfaces;
+using System.Runtime.Serialization;
 
 namespace NINA.Astrometry {
 
     [JsonObject(MemberSerialization.OptIn)]
     public class InputTarget : BaseINPC {
+        private bool deserializing = false;
+        [OnDeserializing]
+        public void OnDeserializing(StreamingContext context) {
+            deserializing = true;
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            deserializing = false;
+            RaiseCoordinatesChanged();
+        }
 
         public InputTarget(Angle latitude, Angle longitude, CustomHorizon horizon) {
             this.latitude = latitude;
@@ -65,9 +77,11 @@ namespace NINA.Astrometry {
                 return targetName;
             }
             set {
-                targetName = value;
-                RaisePropertyChanged();
-                RaiseCoordinatesChanged();
+                if(value != targetName) { 
+                    targetName = value;
+                    RaisePropertyChanged();
+                    RaiseCoordinatesChanged();
+                }
             }
         }
 
@@ -78,9 +92,12 @@ namespace NINA.Astrometry {
             get {
                 return rotation;
             }
-            set {
-                rotation = value;
-                RaiseCoordinatesChanged();
+            set {   
+                if(value != rotation) { 
+                    rotation = value;
+                    RaiseCoordinatesChanged();
+                }
+                
             }
         }
 
@@ -112,15 +129,19 @@ namespace NINA.Astrometry {
             }
         }
 
+        private static int count = 0;
         private void RaiseCoordinatesChanged() {
-            RaisePropertyChanged(nameof(Rotation));
-            RaisePropertyChanged(nameof(InputCoordinates));
+            if(!deserializing) { 
+                System.Threading.Interlocked.Increment(ref count);
+                RaisePropertyChanged(nameof(Rotation));
+                RaisePropertyChanged(nameof(InputCoordinates));
 
-            DeepSkyObject.Name = TargetName;
-            DeepSkyObject.Coordinates = InputCoordinates.Coordinates;
-            DeepSkyObject.Rotation = Rotation;
+                DeepSkyObject.Name = TargetName;
+                DeepSkyObject.Coordinates = InputCoordinates.Coordinates;
+                DeepSkyObject.Rotation = Rotation;
 
-            this.CoordinatesChanged?.Invoke(this, new EventArgs());
+                this.CoordinatesChanged?.Invoke(this, new EventArgs());
+            }
         }
 
         public event EventHandler CoordinatesChanged;

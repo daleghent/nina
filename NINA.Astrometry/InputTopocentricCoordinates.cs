@@ -16,11 +16,23 @@ using Newtonsoft.Json;
 using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
+using System.Runtime.Serialization;
 
 namespace NINA.Astrometry {
 
     [JsonObject(MemberSerialization.OptIn)]
     public class InputTopocentricCoordinates : BaseINPC {
+        private bool deserializing = false;
+        [OnDeserializing]
+        public void OnDeserializing(StreamingContext context) {
+            deserializing = true;
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            deserializing = false;
+            RaiseCoordinatesChanged();
+        }
 
         public InputTopocentricCoordinates(Angle latitude, Angle longitude) {
             Coordinates = new TopocentricCoordinates(Angle.Zero, Angle.Zero, latitude, longitude);
@@ -137,14 +149,18 @@ namespace NINA.Astrometry {
         }
 
         private void RaiseCoordinatesChanged() {
-            RaisePropertyChanged(nameof(Coordinates));
-            RaisePropertyChanged(nameof(AzDegrees));
-            RaisePropertyChanged(nameof(AzMinutes));
-            RaisePropertyChanged(nameof(AzSeconds));
-            RaisePropertyChanged(nameof(AltDegrees));
-            RaisePropertyChanged(nameof(AltMinutes));
-            RaisePropertyChanged(nameof(AltSeconds));
-            NegativeAlt = Coordinates?.Altitude.Degree < 0;
+            if(!deserializing) { 
+                if(Coordinates?.Azimuth.Degree != 0 || Coordinates?.Altitude.Degree != 0) { 
+                    RaisePropertyChanged(nameof(Coordinates));
+                    RaisePropertyChanged(nameof(AzDegrees));
+                    RaisePropertyChanged(nameof(AzMinutes));
+                    RaisePropertyChanged(nameof(AzSeconds));
+                    RaisePropertyChanged(nameof(AltDegrees));
+                    RaisePropertyChanged(nameof(AltMinutes));
+                    RaisePropertyChanged(nameof(AltSeconds));
+                    NegativeAlt = Coordinates?.Altitude.Degree < 0;
+                }
+            }
         }
     }
 }
