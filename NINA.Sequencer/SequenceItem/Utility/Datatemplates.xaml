@@ -220,6 +220,49 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <StackPanel Orientation="Horizontal"
+        DataContext="{Binding Data}"
+        x:Key="WaitProgress"
+        x:Shared="false">
+        <TextBlock
+            Margin="5,0,0,0"
+            VerticalAlignment="Center"
+            Text="{ns:Loc LblAltitude}" />
+        <TextBlock
+            Margin="5,0,0,0"
+            VerticalAlignment="Center"
+            Text="{Binding CurrentAltitude}" 
+            ToolTip="Current Altitude" />
+        <TextBlock VerticalAlignment="Center" Text="°" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
+        <TextBlock VerticalAlignment="Center" Text=" " />
+        <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" />
+        <TextBlock VerticalAlignment="Center" Text=" " />
+        <TextBlock VerticalAlignment="Center" Text="{Binding TargetAltitude}" ToolTip="Your target altitude" />
+        <TextBlock VerticalAlignment="Center" Text="°" />
+        <TextBlock Margin="8,0,0,0"
+                   VerticalAlignment="Center" 
+                   Text="⏰" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding Approximate}" />
+        <TextBlock
+            VerticalAlignment="Center"
+            Text="{Binding ExpectedTime}" ToolTip="Time when the target altitude is expected to be reached" />
+    </StackPanel>
+
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.WaitForAltitude_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Comparator}" />
+                    <TextBlock VerticalAlignment="Center" Text=" " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Offset}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Approximate}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type local:WaitForAltitude}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
@@ -231,10 +274,10 @@
                             SelectedValue="{Binding AboveOrBelow}"
                             SelectedValuePath="Content">
                             <ComboBoxItem>
-                                <s:String>&gt;=</s:String>
+                                <s:String>&lt;</s:String>
                             </ComboBoxItem>
                             <ComboBoxItem>
-                                <s:String>&lt;=</s:String>
+                                <s:String>&gt;</s:String>
                             </ComboBoxItem>
                         </ComboBox>
                         <ninactrl:UnitTextBox
@@ -244,9 +287,13 @@
                             TextAlignment="Right"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Altitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Data.Offset" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
-                                        <rules:GreaterThanZeroRule />
+                                        <rules:DoubleRangeRule>
+                                            <rules:DoubleRangeRule.ValidRange>
+                                                <rules:DoubleRangeChecker Maximum="90" Minimum="-90" />
+                                            </rules:DoubleRangeRule.ValidRange>
+                                        </rules:DoubleRangeRule>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </ninactrl:UnitTextBox.Text>
@@ -348,6 +395,9 @@
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
+             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
 
@@ -355,12 +405,14 @@
         <mini:MiniSequenceItem>
             <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Comparator}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding UserMoonAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                        Text="{Binding Data.TargetAltitude, StringFormat={}{0:0.00}}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Approximate}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
                 </StackPanel>
             </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
@@ -373,8 +425,8 @@
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" />
                         <ComboBox
                             Margin="5,0,0,0"
-                            ItemsSource="{Binding ComparisonOperators}"
-                            SelectedValue="{Binding Comparator}" />
+                            ItemsSource="{Binding Data.ComparisonOperators}"
+                            SelectedValue="{Binding Data.Comparator}" />
                         <ninactrl:UnitTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
@@ -382,7 +434,7 @@
                             TextAlignment="Right"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="UserMoonAltitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Data.Offset" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
                                             <rules:DoubleRangeRule.ValidRange>
@@ -396,6 +448,9 @@
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
+            </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
 
@@ -403,12 +458,14 @@
         <mini:MiniSequenceItem>
             <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Comparator}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding UserSunAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                        Text="{Binding Data.TargetAltitude, StringFormat={}{0:0.00}}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Approximate}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
                 </StackPanel>
             </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
@@ -421,8 +478,8 @@
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" />
                         <ComboBox
                             Margin="5,0,0,0"
-                            ItemsSource="{Binding ComparisonOperators}"
-                            SelectedValue="{Binding Comparator}" />
+                            ItemsSource="{Binding Data.ComparisonOperators}"
+                            SelectedValue="{Binding Data.Comparator}" />
                         <ninactrl:UnitTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
@@ -430,7 +487,7 @@
                             TextAlignment="Right"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="UserSunAltitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Data.Offset" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
                                             <rules:DoubleRangeRule.ValidRange>
@@ -444,14 +501,29 @@
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
+            </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.WaitUntilAboveHorizon_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="+ " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Offset}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Approximate}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type local:WaitUntilAboveHorizon}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
-
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOffset}" />
                     <TextBox
                         MinWidth="40"
@@ -459,7 +531,7 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="AltitudeOffset">
+                            <Binding Path="Data.Offset">
                                 <Binding.ValidationRules>
                                     <rules:DoubleRangeRule>
                                         <rules:DoubleRangeRule.ValidRange>
@@ -569,6 +641,9 @@
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
+           <view:SequenceBlockView.SequenceItemProgressContent>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
+           </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
 </ResourceDictionary>

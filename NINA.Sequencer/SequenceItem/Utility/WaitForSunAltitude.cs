@@ -20,10 +20,11 @@ using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Sequencer.Validations;
+using static NINA.Sequencer.Utility.ItemUtility;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -33,117 +34,66 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Utility")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class WaitForSunAltitude : SequenceItem {
-        private readonly IProfileService profileService;
-        private double userSunAltitude;
-        private double currentSunAltitude;
-        private ComparisonOperatorEnum comparator;
+    public class WaitForSunAltitude : WaitForAltitudeBase, IValidatable {
 
         [ImportingConstructor]
-        public WaitForSunAltitude(IProfileService profileService) {
-            this.profileService = profileService;
-            UserSunAltitude = 0d;
-            Comparator = ComparisonOperatorEnum.GREATER_THAN;
-
-            UpdateCurrentSunState();
+        public WaitForSunAltitude(IProfileService profileService) : base(profileService, useCustomHorizon: false) {
         }
 
-        private WaitForSunAltitude(WaitForSunAltitude cloneMe) : this(cloneMe.profileService) {
+        private WaitForSunAltitude(WaitForSunAltitude cloneMe) : this(cloneMe.ProfileService) {
             CopyMetaData(cloneMe);
         }
 
         public override object Clone() {
             return new WaitForSunAltitude(this) {
-                Comparator = Comparator,
-                UserSunAltitude = UserSunAltitude
+                Data = Data.Clone()
             };
         }
 
-        [JsonProperty]
-        public double UserSunAltitude {
-            get => userSunAltitude;
-            set {
-                userSunAltitude = value;
-                RaisePropertyChanged();
-                UpdateCurrentSunState();
-            }
-        }
-
-        [JsonProperty]
-        public ComparisonOperatorEnum Comparator {
-            get => comparator;
-            set {
-                comparator = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public double CurrentSunAltitude {
-            get => currentSunAltitude;
-            set {
-                currentSunAltitude = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public ComparisonOperatorEnum[] ComparisonOperators => Enum.GetValues(typeof(ComparisonOperatorEnum))
-            .Cast<ComparisonOperatorEnum>()
-            .Where(p => p != ComparisonOperatorEnum.EQUALS)
-            .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
-            .ToArray();
-
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             do {
-                UpdateCurrentSunState();
+                 CalculateExpectedTime();
 
-                bool mustWait = false;
-
-                switch (Comparator) {
-                    case ComparisonOperatorEnum.LESS_THAN:
-                        if (CurrentSunAltitude < UserSunAltitude) { mustWait = true; }
-                        break;
-
-                    case ComparisonOperatorEnum.LESS_THAN_OR_EQUAL:
-                        if (CurrentSunAltitude <= UserSunAltitude) { mustWait = true; }
-                        break;
-
-                    case ComparisonOperatorEnum.GREATER_THAN:
-                        if (CurrentSunAltitude > UserSunAltitude) { mustWait = true; }
-                        break;
-
-                    case ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL:
-                        if (CurrentSunAltitude >= UserSunAltitude) { mustWait = true; }
-                        break;
-                }
-
-                if (mustWait) {
+                if (MustWait()) {
                     progress.Report(new ApplicationStatus() {
                         Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress"],
-                            Math.Round(CurrentSunAltitude, 2),
-                            AttributeHelper.GetDescription(Comparator),
-                            Math.Round(UserSunAltitude, 2))
+                            Data.CurrentAltitude,
+                            AttributeHelper.GetDescription(Data.Comparator),
+                            Data.TargetAltitude)
                     });
 
-                    await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
+                    await CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
                 } else {
                     break;
                 }
             } while (true);
         }
 
-        public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(WaitForSunAltitude)}, UserSunAltitude: {UserSunAltitude}, Compartor: {Comparator}, CurrentSunAltitude: {CurrentSunAltitude}";
+        private bool MustWait() {
+
+            switch (Data.Comparator) {
+                case ComparisonOperatorEnum.GREATER_THAN:
+                   return Data.CurrentAltitude > Data.TargetAltitude;
+                
+                default:
+                    return Data.CurrentAltitude <= Data.TargetAltitude;
+            }
         }
 
-        private void UpdateCurrentSunState() {
-            var observerInfo = new ObserverInfo() {
-                Latitude = profileService.ActiveProfile.AstrometrySettings.Latitude,
-                Longitude = profileService.ActiveProfile.AstrometrySettings.Longitude,
-                Elevation = profileService.ActiveProfile.AstrometrySettings.Elevation,
-            };
-            var now = DateTime.UtcNow;
+        // See SunAltitudeCondition for documentation on the -.833 constant
+        public override void CalculateExpectedTime() {
+            Data.Coordinates.Coordinates = CalculateSunRADec(Data.Observer);
+            Data.CurrentAltitude = AstroUtil.GetSunAltitude(DateTime.Now, Data.Observer);
+            CalculateExpectedTimeCommon(Data, -.833, until: false, 30, AstroUtil.GetSunAltitude);
+        }
 
-            CurrentSunAltitude = AstroUtil.GetSunAltitude(now, observerInfo);
+        public override string ToString() {
+            return $"Category: {Category}, Item: {nameof(WaitForSunAltitude)}, TargetAltitude: {Data.TargetAltitude}, Comparator: {Data.Comparator}, CurrentSunAltitude: {Data.CurrentAltitude}";
+        }
+
+        public bool Validate() {
+            CalculateExpectedTime();
+            return true;
         }
     }
 }

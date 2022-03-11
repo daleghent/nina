@@ -387,7 +387,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loop While Altitude Above Horizon.
+        ///   Looks up a localized string similar to Loop while Altitude Above Horizon.
         /// </summary>
         internal static string Lbl_SequenceCondition_AboveHorizonCondition_Name {
             get {
@@ -405,7 +405,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loop Until Altitude Sets Below.
+        ///   Looks up a localized string similar to Loop until Altitude Below.
         /// </summary>
         internal static string Lbl_SequenceCondition_AltitudeCondition_Name {
             get {
@@ -460,7 +460,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moon Altitude.
+        ///   Looks up a localized string similar to Loop until Moon Altitude.
         /// </summary>
         internal static string Lbl_SequenceCondition_MoonAltitudeCondition_Name {
             get {
@@ -515,7 +515,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sun Altitude.
+        ///   Looks up a localized string similar to Loop until Sun Altitude.
         /// </summary>
         internal static string Lbl_SequenceCondition_SunAltitudeCondition_Name {
             get {
@@ -1971,7 +1971,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wait until above horizon.
+        ///   Looks up a localized string similar to Wait until Above horizon.
         /// </summary>
         internal static string Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name {
             get {

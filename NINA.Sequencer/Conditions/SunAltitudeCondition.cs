@@ -13,18 +13,12 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Core.Enum;
 using NINA.Profile.Interfaces;
-using NINA.Sequencer.SequenceItem;
-using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using NINA.Sequencer.Utility;
-using System.Runtime.Serialization;
+using static NINA.Sequencer.Utility.ItemUtility;
+using NINA.Sequencer.SequenceItem.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -34,126 +28,31 @@ namespace NINA.Sequencer.Conditions {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class SunAltitudeCondition : SequenceCondition {
-        private readonly IProfileService profileService;
-        private double userSunAltitude;
-        private double currentSunAltitude;
-        private ComparisonOperatorEnum comparator;
+    public class SunAltitudeCondition : LoopForSunMoonAltitudeBase {
 
         [ImportingConstructor]
-        public SunAltitudeCondition(IProfileService profileService) {
-            this.profileService = profileService;
-            UserSunAltitude = 0d;
-            Comparator = ComparisonOperatorEnum.GREATER_THAN;
-
-            CalculateCurrentSunState();
-            ConditionWatchdog = new ConditionWatchdog(InterruptWhenSunOutsideOfBounds, TimeSpan.FromSeconds(5));
+        public SunAltitudeCondition(IProfileService profileService) : base(profileService, useCustomHorizon: false) {
+            InterruptReason = "Sun is outside of the specified range";
         }
-
-        private async Task InterruptWhenSunOutsideOfBounds() {
-            CalculateCurrentSunState();
-            if (!Check(null, null)) {
-                if (this.Parent != null) {
-                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING && this.Status != SequenceEntityStatus.DISABLED) {
-                        Logger.Info("Sun is outside of the specified range - Interrupting current Instruction Set");
-                        await this.Parent.Interrupt();
-                    }
-                }
-            }
-        }
-
-        private SunAltitudeCondition(SunAltitudeCondition cloneMe) : this(cloneMe.profileService) {
+        private SunAltitudeCondition(SunAltitudeCondition cloneMe) : this(cloneMe.ProfileService) {
             CopyMetaData(cloneMe);
         }
 
         public override object Clone() {
             return new SunAltitudeCondition(this) {
-                UserSunAltitude = UserSunAltitude,
-                Comparator = Comparator
-            };
+                Data = Data.Clone()
+           };
         }
 
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context) {
-            RunWatchdogIfInsideSequenceRoot();
-        }
+        //h = 0 degrees: Center of Sun's disk touches a mathematical horizon
+        //h = -0.25 degrees: Sun's upper limb touches a mathematical horizon
+        //h = -0.583 degrees: Center of Sun's disk touches the horizon; atmospheric refraction accounted for
+        //h = -0.833 degrees: Sun's upper limb touches the horizon; atmospheric refraction accounted for
 
-        [JsonProperty]
-        public double UserSunAltitude {
-            get => userSunAltitude;
-            set {
-                userSunAltitude = value;
-                RaisePropertyChanged();
-                CalculateCurrentSunState();
-            }
-        }
-
-        [JsonProperty]
-        public ComparisonOperatorEnum Comparator {
-            get => comparator;
-            set {
-                comparator = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public double CurrentSunAltitude {
-            get => currentSunAltitude;
-            set {
-                currentSunAltitude = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public ComparisonOperatorEnum[] ComparisonOperators => Enum.GetValues(typeof(ComparisonOperatorEnum))
-            .Cast<ComparisonOperatorEnum>()
-            .Where(p => p != ComparisonOperatorEnum.EQUALS)
-            .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
-            .ToArray();
-
-        public override void AfterParentChanged() {
-            RunWatchdogIfInsideSequenceRoot();
-        }
-
-        public override string ToString() {
-            return $"Condition: {nameof(SunAltitudeCondition)}, " +
-                $"CurrentSunAltitude: {CurrentSunAltitude}, Comparator: {Comparator}, UserSunAltitude: {UserSunAltitude}";
-        }
-
-        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
-            // See if the sun's altitude is outside of the user's wishes
-            switch (Comparator) {
-                case ComparisonOperatorEnum.LESS_THAN:
-                    if (CurrentSunAltitude < UserSunAltitude) { return false; }
-                    break;
-
-                case ComparisonOperatorEnum.LESS_THAN_OR_EQUAL:
-                    if (CurrentSunAltitude <= UserSunAltitude) { return false; }
-                    break;
-
-                case ComparisonOperatorEnum.GREATER_THAN:
-                    if (CurrentSunAltitude > UserSunAltitude) { return false; }
-                    break;
-
-                case ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL:
-                    if (CurrentSunAltitude >= UserSunAltitude) { return false; }
-                    break;
-            }
-
-            // Everything is fine
-            return true;
-        }
-
-        private void CalculateCurrentSunState() {
-            var observerInfo = new ObserverInfo() {
-                Latitude = profileService.ActiveProfile.AstrometrySettings.Latitude,
-                Longitude = profileService.ActiveProfile.AstrometrySettings.Longitude,
-                Elevation = profileService.ActiveProfile.AstrometrySettings.Elevation,
-            };
-
-            var now = DateTime.UtcNow;
-
-            CurrentSunAltitude = AstroUtil.GetSunAltitude(now, observerInfo);
+        public override void CalculateExpectedTime() {
+            Data.Coordinates.Coordinates = CalculateSunRADec(Data.Observer);
+            Data.CurrentAltitude = AstroUtil.GetSunAltitude(DateTime.Now, Data.Observer);
+            CalculateExpectedTimeCommon(Data, -.833, until: true, 30, AstroUtil.GetSunAltitude);
         }
     }
 }

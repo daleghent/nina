@@ -42,7 +42,7 @@ namespace NINATest.Sequencer.Conditions {
 
             item2.Should().NotBeSameAs(sut);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.Altitude.Should().Be(sut.Altitude);
+            item2.Data.Offset.Should().Be(sut.Data.Offset);
         }
 
         [Test]
@@ -54,8 +54,8 @@ namespace NINATest.Sequencer.Conditions {
             var coords = altaz.Transform(Epoch.J2000);
 
             var sut = new AltitudeCondition(profileServiceMock.Object);
-            sut.Coordinates.Coordinates = coords;
-            sut.Altitude = targetAltitude;
+            sut.Data.Coordinates.Coordinates = coords;
+            sut.Data.Offset = targetAltitude;
 
             Assert.IsTrue(
                 sut.Check(null, null));
@@ -73,8 +73,8 @@ namespace NINATest.Sequencer.Conditions {
             var coords = altaz.Transform(Epoch.J2000);
 
             var sut = new AltitudeCondition(profileServiceMock.Object);
-            sut.Coordinates.Coordinates = coords;
-            sut.Altitude = targetAltitude;
+            sut.Data.Coordinates.Coordinates = coords;
+            sut.Data.Offset = targetAltitude;
 
             Assert.IsTrue(
                 sut.Check(null, null));
@@ -89,8 +89,8 @@ namespace NINATest.Sequencer.Conditions {
             var coords = altaz.Transform(Epoch.J2000);
 
             var sut = new AltitudeCondition(profileServiceMock.Object);
-            sut.Coordinates.Coordinates = coords;
-            sut.Altitude = targetAltitude;
+            sut.Data.Coordinates.Coordinates = coords;
+            sut.Data.Offset = targetAltitude;
             Assert.IsFalse(
                 sut.Check(null, null));
         }
@@ -98,7 +98,7 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public void ToString_Test() {
             var sut = new AltitudeCondition(profileServiceMock.Object);
-            sut.Altitude = 30;
+            sut.Data.Offset = 30;
             sut.ToString().Should().Be("Condition: AltitudeCondition, Altitude >= 30");
         }
 
@@ -120,8 +120,8 @@ namespace NINATest.Sequencer.Conditions {
             sut.AttachNewParent(parentMock.Object);
 
             sut.HasDsoParent.Should().BeTrue();
-            sut.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
-            sut.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
+            sut.Data.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
+            sut.Data.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
         }
 
         [Test]

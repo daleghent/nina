@@ -43,16 +43,16 @@ namespace NINATest.Sequencer.Conditions {
 
             item2.Should().NotBeSameAs(sut);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.UserMoonAltitude.Should().Be(sut.UserMoonAltitude);
-            item2.Comparator.Should().Be(sut.Comparator);
+            item2.Data.TargetAltitude.Should().Be(sut.Data.TargetAltitude);
+            item2.Data.Comparator.Should().Be(sut.Data.Comparator);
         }
 
         [Test]
         public void MoonAltitudeCondition_NoProviderInConstructor_NoCrash() {
             var sut = new MoonAltitudeCondition(profileServiceMock.Object);
 
-            sut.UserMoonAltitude.Should().Be(0);
-            sut.Comparator.Should().Be(ComparisonOperatorEnum.GREATER_THAN);
+            sut.Data.TargetAltitude.Should().Be(0);
+            sut.Data.Comparator.Should().Be(ComparisonOperatorEnum.GREATER_THAN);
         }
 
         [Test]
@@ -61,18 +61,16 @@ namespace NINATest.Sequencer.Conditions {
 
             var expectedOperators = new List<ComparisonOperatorEnum>() {
                 ComparisonOperatorEnum.LESS_THAN,
-                ComparisonOperatorEnum.LESS_THAN_OR_EQUAL,
-                ComparisonOperatorEnum.GREATER_THAN,
-                ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL
+                ComparisonOperatorEnum.GREATER_THAN
             };
 
-            sut.ComparisonOperators.Should().BeEquivalentTo(expectedOperators);
+            sut.Data.ComparisonOperators.Should().BeEquivalentTo(expectedOperators);
         }
 
         [Test]
         [TestCase(10, 20, ComparisonOperatorEnum.LESS_THAN, false)]
         [TestCase(20, 10, ComparisonOperatorEnum.LESS_THAN, true)]
-        [TestCase(10, 10, ComparisonOperatorEnum.LESS_THAN, true)]
+        //[TestCase(10, 10, ComparisonOperatorEnum.LESS_THAN, true)]   Only < and > now
         [TestCase(10, 10.01, ComparisonOperatorEnum.LESS_THAN, false)]
         [TestCase(10, 9.99, ComparisonOperatorEnum.LESS_THAN, true)]
         [TestCase(10, 20, ComparisonOperatorEnum.GREATER_THAN, true)]
@@ -80,33 +78,24 @@ namespace NINATest.Sequencer.Conditions {
         [TestCase(10, 10, ComparisonOperatorEnum.GREATER_THAN, true)]
         [TestCase(10, 10.01, ComparisonOperatorEnum.GREATER_THAN, true)]
         [TestCase(10, 9.99, ComparisonOperatorEnum.GREATER_THAN, false)]
-        [TestCase(10, 20, ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, false)]
-        [TestCase(20, 10, ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, true)]
-        [TestCase(10, 10, ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, false)]
-        [TestCase(10, 10.01, ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, false)]
-        [TestCase(10, 9.99, ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, true)]
-        [TestCase(10, 20, ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, true)]
-        [TestCase(20, 10, ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, false)]
-        [TestCase(10, 10, ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, false)]
-        [TestCase(10, 10.01, ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, true)]
-        [TestCase(10, 9.99, ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, false)]
+
         public void Check_LESS_THAN(double currentAlt, double userAlt, ComparisonOperatorEnum Comparator, bool expected) {
             var sut = new MoonAltitudeCondition(profileServiceMock.Object);
-            sut.Comparator = Comparator;
-            sut.UserMoonAltitude = userAlt;
-            sut.CurrentMoonAltitude = currentAlt;
+            sut.Data.Comparator = Comparator;
+            sut.Data.TargetAltitude = userAlt;
+            sut.Data.CurrentAltitude = currentAlt;
 
-            sut.Check(default, default).Should().Be(expected);
+            sut.Check(default, default, true).Should().Be(expected);
         }
 
         [Test]
         public void ToString_Test() {
             var sut = new MoonAltitudeCondition(profileServiceMock.Object);
-            sut.Comparator = ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL;
-            sut.UserMoonAltitude = 10;
-            sut.CurrentMoonAltitude = 20;
+            sut.Data.Comparator = ComparisonOperatorEnum.GREATER_THAN;
+            sut.Data.TargetAltitude = 10;
+            sut.Data.CurrentAltitude = 20;
 
-            sut.ToString().Should().Be("Condition: MoonAltitudeCondition, CurrentMoonAltitude: 20, Comparator: GREATER_THAN_OR_EQUAL, UserMoonAltitude: 10");
+            sut.ToString().Should().Be("Condition: MoonAltitudeCondition, CurrentAltitude: 20, Comparator: GREATER_THAN, TargetAltitude: 10");
         }
 
         [Test]

@@ -50,8 +50,8 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         [Test]
         public void WaitUntilAboveHorizon_Clone_GoodClone() {
             sut.Icon = new System.Windows.Media.GeometryGroup();
-            sut.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
-            sut.AltitudeOffset = 10;
+            sut.Data.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
+            sut.Data.Offset = 10;
 
             var item2 = (WaitUntilAboveHorizon)sut.Clone();
 
@@ -59,10 +59,10 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             item2.Name.Should().BeSameAs(sut.Name);
             item2.Description.Should().BeSameAs(sut.Description);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.AltitudeOffset.Should().Be(10);
-            item2.Coordinates.Should().NotBeSameAs(sut.Coordinates);
-            item2.Coordinates.Coordinates.RA.Should().Be(sut.Coordinates.Coordinates.RA);
-            item2.Coordinates.Coordinates.Dec.Should().Be(sut.Coordinates.Coordinates.Dec);
+            item2.Data.Offset.Should().Be(10);
+            item2.Data.Coordinates.Should().NotBeSameAs(sut.Data.Coordinates);
+            item2.Data.Coordinates.Coordinates.RA.Should().Be(sut.Data.Coordinates.Coordinates.RA);
+            item2.Data.Coordinates.Coordinates.Dec.Should().Be(sut.Data.Coordinates.Coordinates.Dec);
         }
 
         [Test]
@@ -88,8 +88,8 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
             sut.AttachNewParent(parentMock.Object);
 
-            sut.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
-            sut.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
+            sut.Data.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
+            sut.Data.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20191231T23:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
-            sut.Coordinates.Coordinates = coordinates;
+            sut.Data.Coordinates.Coordinates = coordinates;
 
             await sut.Run(default, default);
 
@@ -115,7 +115,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
                 .Returns(DateTime.ParseExact("20200101T11:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
-            sut.Coordinates.Coordinates = coordinates;
+            sut.Data.Coordinates.Coordinates = coordinates;
 
             await sut.Run(default, default);
 
@@ -135,7 +135,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20200101T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
-            sut.Coordinates.Coordinates = coordinates;
+            sut.Data.Coordinates.Coordinates = coordinates;
 
             await sut.Run(default, default);
 
@@ -147,8 +147,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         public async Task CustomHorizon_TargetStartsBelowHorizon_RisesAboveHorizon_ItemExecuted() {
             var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
             using (var sr = new StringReader(horizonDefinition)) {
-                var horizon = CustomHorizon.FromReader_Standard(sr);
-                profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
+                sut.Data.Horizon = CustomHorizon.FromReader_Standard(sr);
             }
 
             var mockDateProvider = new Mock<ICustomDateTime>();
@@ -159,7 +158,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
                 .Returns(DateTime.ParseExact("20200101T13:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
-            sut.Coordinates.Coordinates = coordinates;
+            sut.Data.Coordinates.Coordinates = coordinates;
 
             await sut.Run(default, default);
 

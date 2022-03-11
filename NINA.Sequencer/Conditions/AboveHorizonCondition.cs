@@ -13,21 +13,14 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Core.Enum;
-using NINA.Core.Model;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.SequenceItem;
-using NINA.Sequencer.Utility;
-using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
-using NINA.Sequencer.Interfaces;
-using System.Threading.Tasks;
+using NINA.Sequencer.SequenceItem.Utility;
+using static NINA.Sequencer.Utility.ItemUtility;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -37,71 +30,33 @@ namespace NINA.Sequencer.Conditions {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class AboveHorizonCondition : SequenceCondition {
-        private readonly IProfileService profileService;
-        private InputCoordinates coordinates;
-        private bool isEastOfMeridian;
-        private double currentAltitude;
-        private double currentAlzimuth;
-        private string risingSettingDisplay;
+    public class AboveHorizonCondition : LoopForAltitudeBase {
+
         private bool hasDsoParent;
-        private double horizonAltitude;
-        private double altitudeOffset;
 
         [ImportingConstructor]
-        public AboveHorizonCondition(IProfileService profileService) {
-            this.profileService = profileService;
-            altitudeOffset = 0;
-            Coordinates = new InputCoordinates();
-            ConditionWatchdog = new ConditionWatchdog(InterruptWhenTargetBelowHorizon, TimeSpan.FromSeconds(5));
+        public AboveHorizonCondition(IProfileService profileService) : base(profileService, useCustomHorizon: true) {
+            this.DateTime = new SystemDateTime();
+            Data.Offset = 0;
+            InterruptReason = "Target is below horizon";
         }
 
-        private async Task InterruptWhenTargetBelowHorizon() {
-            if (!Check(null, null)) {
-                if (this.Parent != null) {
-                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING && this.Status != SequenceEntityStatus.DISABLED) {
-                        Logger.Info("Target is below horizon - Interrupting current Instruction Set");
-                        await this.Parent.Interrupt();
-                    }
-                }
-            }
-        }
-
-        private AboveHorizonCondition(AboveHorizonCondition cloneMe) : this(cloneMe.profileService) {
+        private AboveHorizonCondition(AboveHorizonCondition cloneMe) : this(cloneMe.ProfileService) {
             CopyMetaData(cloneMe);
         }
 
+        public ICustomDateTime DateTime { get; set; }
+
         public override object Clone() {
             return new AboveHorizonCondition(this) {
-                Coordinates = Coordinates.Clone(),
-                AltitudeOffset = AltitudeOffset
+                Data = Data.Clone()
             };
         }
 
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context) {
-            RunWatchdogIfInsideSequenceRoot();
-        }
-
-        [JsonProperty]
-        public InputCoordinates Coordinates {
-            get => coordinates;
-            set {
-                if (coordinates != null) {
-                    coordinates.PropertyChanged -= Coordinates_PropertyChanged;
-                }
-                coordinates = value;
-                if (coordinates != null) {
-                    coordinates.PropertyChanged += Coordinates_PropertyChanged;
-                }
-                RaisePropertyChanged();
-                CalculateCurrentAltitude();
-            }
-        }
-
         private void Coordinates_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            CalculateCurrentAltitude();
+            CalculateExpectedTime();
         }
+
 
         [JsonProperty]
         public bool HasDsoParent {
@@ -112,60 +67,10 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        [JsonProperty]
-        public double AltitudeOffset {
-            get => altitudeOffset;
-            set {
-                altitudeOffset = value;
-                RaisePropertyChanged();
-                CalculateCurrentAltitude();
-            }
-        }
-
-        public double CurrentAltitude {
-            get => currentAltitude;
-            private set {
-                currentAltitude = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public double HorizonAltitude {
-            get => horizonAltitude;
-            private set {
-                horizonAltitude = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public double CurrentAzimuth {
-            get => currentAlzimuth;
-            private set {
-                currentAlzimuth = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string RisingSettingDisplay {
-            get => risingSettingDisplay;
-            private set {
-                risingSettingDisplay = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool IsEastOfMeridian {
-            get => isEastOfMeridian;
-            private set {
-                isEastOfMeridian = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public override void AfterParentChanged() {
-            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(this.Parent);
+            var contextCoordinates = RetrieveContextCoordinates(this.Parent);
             if (contextCoordinates != null) {
-                Coordinates.Coordinates = contextCoordinates.Coordinates;
+                Data.Coordinates.Coordinates = contextCoordinates.Coordinates;
                 HasDsoParent = true;
             } else {
                 HasDsoParent = false;
@@ -177,32 +82,23 @@ namespace NINA.Sequencer.Conditions {
             return $"Condition: {nameof(AboveHorizonCondition)}";
         }
 
-        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
-            CalculateCurrentAltitude();
-
-            return CurrentAltitude >= HorizonAltitude;
+         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
+            CalculateExpectedTime();
+            return Data.CurrentAltitude >= Data.TargetAltitude;
         }
 
-        private void CalculateCurrentAltitude() {
-            var location = profileService.ActiveProfile.AstrometrySettings;
-            var altaz = Coordinates
-                .Coordinates
-                .Transform(
-                    Angle.ByDegree(location.Latitude),
-                    Angle.ByDegree(location.Longitude));
-            IsEastOfMeridian = altaz.AltitudeSite == AltitudeSite.EAST;
-            var currentAlt = Math.Round(altaz.Altitude.Degree, 2);
-            var currentAz = Math.Round(altaz.Azimuth.Degree, 2);
-            CurrentAltitude = currentAlt;
-            CurrentAzimuth = currentAz;
-            RisingSettingDisplay = IsEastOfMeridian ? "^" : "v";
+        public double GetCurrentAltitude(DateTime time, ObserverInfo observer) {
+            TopocentricCoordinates altaz = Data.Coordinates.Coordinates.Transform(Angle.ByDegree(observer.Latitude), Angle.ByDegree(observer.Longitude), time);
+            return altaz.Altitude.Degree;
+        }
 
-            var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
-            var horizonAltitude = 0d;
-            if (horizon != null) {
-                horizonAltitude = Math.Round(horizon.GetAltitude(CurrentAzimuth), 2);
-            }
-            HorizonAltitude = horizonAltitude + AltitudeOffset;
+        public override void CalculateExpectedTime() {
+            CalculateExpectedTime(DateTime.Now);
+        }
+
+        public void CalculateExpectedTime(DateTime time) {
+            Data.CurrentAltitude = GetCurrentAltitude(time, Data.Observer);
+            CalculateExpectedTimeCommon(Data, offset: 0, until: false, 90, GetCurrentAltitude);
         }
     }
 }

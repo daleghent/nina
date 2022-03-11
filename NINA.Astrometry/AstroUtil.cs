@@ -565,7 +565,7 @@ namespace NINA.Astrometry {
             return new Tuple<NOVAS.SkyPosition, NOVAS.SkyPosition>(GetMoonPosition(date, jd, observerInfo), GetSunPosition(date, jd, observerInfo));
         }
 
-        private static double GetMoonPositionAngle(DateTime date) {
+        public static double GetMoonPositionAngle(DateTime date) {
             var jd = GetJulianDate(date);
             var tuple = GetMoonAndSunPosition(date, jd);
             var moonPosition = tuple.Item1;

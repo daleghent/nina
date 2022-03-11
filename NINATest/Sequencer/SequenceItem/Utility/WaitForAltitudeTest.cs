@@ -46,7 +46,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         [Test]
         public void WaitForAltitude_Clone_GoodClone() {
             sut.Icon = new System.Windows.Media.GeometryGroup();
-            sut.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
+            sut.Data.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
 
             var item2 = (WaitForAltitude)sut.Clone();
 
@@ -54,11 +54,11 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             item2.Name.Should().BeSameAs(sut.Name);
             item2.Description.Should().BeSameAs(sut.Description);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.Altitude.Should().Be(sut.Altitude);
+            item2.Data.Offset.Should().Be(sut.Data.Offset);
             item2.AboveOrBelow.Should().Be(sut.AboveOrBelow);
-            item2.Coordinates.Should().NotBeSameAs(sut.Coordinates);
-            item2.Coordinates.Coordinates.RA.Should().Be(sut.Coordinates.Coordinates.RA);
-            item2.Coordinates.Coordinates.Dec.Should().Be(sut.Coordinates.Coordinates.Dec);
+            item2.Data.Coordinates.Should().NotBeSameAs(sut.Data.Coordinates);
+            item2.Data.Coordinates.Coordinates.RA.Should().Be(sut.Data.Coordinates.Coordinates.RA);
+            item2.Data.Coordinates.Coordinates.Dec.Should().Be(sut.Data.Coordinates.Coordinates.Dec);
         }
 
         [Test]
@@ -84,8 +84,8 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
             sut.AttachNewParent(parentMock.Object);
 
-            sut.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
-            sut.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
+            sut.Data.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
+            sut.Data.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
         }
     }
 }

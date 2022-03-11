@@ -20,10 +20,11 @@ using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Sequencer.Validations;
+using static NINA.Sequencer.Utility.ItemUtility;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -33,118 +34,68 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Utility")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class WaitForMoonAltitude : SequenceItem {
-        private readonly IProfileService profileService;
-        private double userMoonAltitude;
-        private double currentMoonAltitude;
-        private ComparisonOperatorEnum comparator;
+    public class WaitForMoonAltitude : WaitForAltitudeBase, IValidatable {
 
         [ImportingConstructor]
-        public WaitForMoonAltitude(IProfileService profileService) {
-            this.profileService = profileService;
-            UserMoonAltitude = 0d;
-            Comparator = ComparisonOperatorEnum.GREATER_THAN;
-
-            UpdateCurrentMoonState();
+        public WaitForMoonAltitude(IProfileService profileService) : base(profileService, useCustomHorizon: false) {
+            Data.Offset = 0d;
+            Name = Name;
         }
 
-        private WaitForMoonAltitude(WaitForMoonAltitude cloneMe) : this(cloneMe.profileService) {
+        private WaitForMoonAltitude(WaitForMoonAltitude cloneMe) : this(cloneMe.ProfileService) {
             CopyMetaData(cloneMe);
         }
 
         public override object Clone() {
             return new WaitForMoonAltitude(this) {
-                Comparator = Comparator,
-                UserMoonAltitude = UserMoonAltitude
+                Data = Data.Clone()
             };
         }
 
-        [JsonProperty]
-        public double UserMoonAltitude {
-            get => userMoonAltitude;
-            set {
-                userMoonAltitude = value;
-                RaisePropertyChanged();
-                UpdateCurrentMoonState();
-            }
-        }
-
-        [JsonProperty]
-        public ComparisonOperatorEnum Comparator {
-            get => comparator;
-            set {
-                comparator = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public double CurrentMoonAltitude {
-            get => currentMoonAltitude;
-            set {
-                currentMoonAltitude = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public ComparisonOperatorEnum[] ComparisonOperators => Enum.GetValues(typeof(ComparisonOperatorEnum))
-            .Cast<ComparisonOperatorEnum>()
-            .Where(p => p != ComparisonOperatorEnum.EQUALS)
-            .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
-            .ToArray();
-
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             do {
-                UpdateCurrentMoonState();
+                CalculateExpectedTime();
 
-                bool mustWait = false;
-
-                switch (Comparator) {
-                    case ComparisonOperatorEnum.LESS_THAN:
-                        if (CurrentMoonAltitude < UserMoonAltitude) { mustWait = true; }
-                        break;
-
-                    case ComparisonOperatorEnum.LESS_THAN_OR_EQUAL:
-                        if (CurrentMoonAltitude <= UserMoonAltitude) { mustWait = true; }
-                        break;
-
-                    case ComparisonOperatorEnum.GREATER_THAN:
-                        if (CurrentMoonAltitude > UserMoonAltitude) { mustWait = true; }
-                        break;
-
-                    case ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL:
-                        if (CurrentMoonAltitude >= UserMoonAltitude) { mustWait = true; }
-                        break;
-                }
-
-                if (mustWait) {
+                if (MustWait()) {
                     progress.Report(new ApplicationStatus() {
                         Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress"],
-                        Math.Round(CurrentMoonAltitude, 2),
-                        AttributeHelper.GetDescription(Comparator),
-                        Math.Round(UserMoonAltitude, 2))
+                        Math.Round(Data.CurrentAltitude, 2),
+                        AttributeHelper.GetDescription(Data.Comparator),
+                        Math.Round(Data.TargetAltitude, 2))
                     });
 
-                    await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
+                    await CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
                 } else {
                     break;
                 }
             } while (true);
         }
+        
+        private bool MustWait() {
+            CalculateExpectedTime();
 
-        public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(WaitForMoonAltitude)}, UserMoonAltitude: {UserMoonAltitude}, Compartor: {Comparator}, CurrentMoonAltitude: {CurrentMoonAltitude}";
+            switch (Data.Comparator) {
+                case ComparisonOperatorEnum.GREATER_THAN:
+                    return Data.CurrentAltitude > Data.TargetAltitude;
+                default:
+                    return Data.CurrentAltitude <= Data.TargetAltitude;
+            }
         }
 
-        private void UpdateCurrentMoonState() {
-            var observerInfo = new ObserverInfo() {
-                Latitude = profileService.ActiveProfile.AstrometrySettings.Latitude,
-                Longitude = profileService.ActiveProfile.AstrometrySettings.Longitude,
-                Elevation = profileService.ActiveProfile.AstrometrySettings.Elevation,
-            };
+        // See MoonAltitudeCondition for explanation of the constant
+        public override void CalculateExpectedTime() {
+            Data.Coordinates.Coordinates = CalculateMoonRADec(Data.Observer);
+            Data.CurrentAltitude = AstroUtil.GetMoonAltitude(DateTime.Now, Data.Observer);
+            CalculateExpectedTimeCommon(Data, -.583, until: false, 60, AstroUtil.GetMoonAltitude);
+        }
 
-            var now = DateTime.UtcNow;
+        public override string ToString() {
+            return $"Category: {Category}, Item: {nameof(WaitForMoonAltitude)}, TargetAltitude: {Data.TargetAltitude}, Comparator: {Data.Comparator}, CurrentAltitude: {Data.CurrentAltitude}";
+        }
 
-            CurrentMoonAltitude = AstroUtil.GetMoonAltitude(now, observerInfo);
+        public bool Validate() {
+            CalculateExpectedTime();
+            return true;
         }
     }
 }

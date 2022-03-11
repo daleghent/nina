@@ -360,6 +360,32 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <StackPanel Orientation="Horizontal"
+        DataContext="{Binding Data}"
+        x:Key="WaitProgress"
+        x:Shared="false">
+        <TextBlock
+            Margin="5,0,0,0"
+            VerticalAlignment="Center"
+            Text="{ns:Loc LblAltitude}" />
+        <TextBlock
+            Margin="5,0,0,0"
+            VerticalAlignment="Center"
+            Text="{Binding CurrentAltitude}" />
+        <TextBlock VerticalAlignment="Center" Text="° " />
+        <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
+        <TextBlock VerticalAlignment="Center" Text=" " />
+        <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" />
+        <TextBlock VerticalAlignment="Center" Text=" " />
+        <TextBlock VerticalAlignment="Center" Text="{Binding TargetAltitude}" />
+        <TextBlock VerticalAlignment="Center" Text="°" />
+        <TextBlock Margin="8,0,0,0"
+                   VerticalAlignment="Center" 
+                   Text="⏰" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding Approximate}" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding ExpectedTime}" />
+    </StackPanel>
+    
     <DataTemplate x:Key="NINA.Sequencer.Conditions.AltitudeCondition_Mini">
         <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
@@ -368,15 +394,10 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblAltitude}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="° " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
-                    <TextBlock VerticalAlignment="Center" Text=" / " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                    <TextBlock VerticalAlignment="Center" Text=" &lt; " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Offset}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
                 </StackPanel>
             </mini:MiniCondition.ConditionProgressContent>
         </mini:MiniCondition>
@@ -399,9 +420,13 @@
                             TextAlignment="Right"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="Altitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Data.Offset" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
-                                        <rules:GreaterThanZeroRule />
+                                        <rules:DoubleRangeRule>
+                                            <rules:DoubleRangeRule.ValidRange>
+                                                <rules:DoubleRangeChecker Maximum="90" Minimum="-90" />
+                                            </rules:DoubleRangeRule.ValidRange>
+                                        </rules:DoubleRangeRule>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </ninactrl:UnitTextBox.Text>
@@ -504,21 +529,7 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{ns:Loc LblAltitude}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="° " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
-                    <TextBlock VerticalAlignment="Center" Text=" / " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
-                </StackPanel>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
@@ -530,22 +541,16 @@
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{ns:Loc Lbl_SequenceCondition_MoonAltitudeCondition_Name}" />
-                    <TextBlock VerticalAlignment="Center" Text=":" />
+                        Text="{ns:Loc LblAltitude}" />
+                    <TextBlock VerticalAlignment="Center" Text=" " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Comparator}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding CurrentMoonAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding Comparator}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding UserMoonAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                        Text="{Binding Data.TargetAltitude, StringFormat={}{0:0.00}}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Approximate}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
                 </StackPanel>
             </mini:MiniCondition.ConditionProgressContent>
         </mini:MiniCondition>
@@ -555,16 +560,14 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblLoopUntil}" />
-                        <TextBlock VerticalAlignment="Center" Text=":" />
                         <TextBlock
                             Margin="5,0,0,0"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblAltitude}" />
                         <ComboBox
                             Margin="5,0,0,0"
-                            ItemsSource="{Binding ComparisonOperators}"
-                            SelectedValue="{Binding Comparator}" />
+                            ItemsSource="{Binding Data.ComparisonOperators}"
+                            SelectedValue="{Binding Data.Comparator}" />
                         <ninactrl:UnitTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
@@ -573,7 +576,7 @@
                             TextAlignment="Right"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="UserMoonAltitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Data.Offset" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
                                             <rules:DoubleRangeRule.ValidRange>
@@ -588,18 +591,7 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{ns:Loc LblAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text=":" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentMoonAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
-                </StackPanel>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
@@ -692,22 +684,15 @@
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{ns:Loc Lbl_SequenceCondition_SunAltitudeCondition_Name}" />
-                    <TextBlock VerticalAlignment="Center" Text=":" />
+                        Text="{ns:Loc LblAltitude}" />
+                    <TextBlock VerticalAlignment="Center" Text=" " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Comparator}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding CurrentSunAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding Comparator}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding UserSunAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                        Text="{Binding Data.TargetAltitude, StringFormat={}{0:0.00}}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
                 </StackPanel>
             </mini:MiniCondition.ConditionProgressContent>
         </mini:MiniCondition>
@@ -717,16 +702,14 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblLoopUntil}" />
-                        <TextBlock VerticalAlignment="Center" Text=":" />
                         <TextBlock
                             Margin="5,0,0,0"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblAltitude}" />
                         <ComboBox
                             Margin="5,0,0,0"
-                            ItemsSource="{Binding ComparisonOperators}"
-                            SelectedValue="{Binding Comparator}" />
+                            ItemsSource="{Binding Data.ComparisonOperators}"
+                            SelectedValue="{Binding Data.Comparator}" />
                         <ninactrl:UnitTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
@@ -735,7 +718,7 @@
                             TextAlignment="Right"
                             Unit="°">
                             <ninactrl:UnitTextBox.Text>
-                                <Binding Path="UserSunAltitude" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="Data.Offset" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
                                             <rules:DoubleRangeRule.ValidRange>
@@ -750,18 +733,7 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{ns:Loc LblAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text=":" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentSunAltitude, StringFormat={}{0:0.00}}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
-                </StackPanel>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
@@ -773,16 +745,11 @@
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{ns:Loc LblAltitude}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="° " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
-                    <TextBlock VerticalAlignment="Center" Text=" / " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding HorizonAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                        Text="{ns:Loc LblAboveHorizon}" />
+                    <TextBlock VerticalAlignment="Center" Text=" + " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.Offset}" />
+                    <TextBlock VerticalAlignment="Center" Text="° ⏰" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Data.ExpectedTime}" />
                 </StackPanel>
             </mini:MiniCondition.ConditionProgressContent>
         </mini:MiniCondition>
@@ -798,7 +765,7 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="AltitudeOffset">
+                            <Binding Path="Data.Offset">
                                 <Binding.ValidationRules>
                                     <rules:DoubleRangeRule>
                                         <rules:DoubleRangeRule.ValidRange>
@@ -909,21 +876,7 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{ns:Loc LblAltitude}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="° " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
-                    <TextBlock VerticalAlignment="Center" Text=" / " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding HorizonAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
-                </StackPanel>
+                <ContentPresenter Content="{StaticResource WaitProgress}" />
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>

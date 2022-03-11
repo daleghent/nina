@@ -41,8 +41,8 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             item2.Name.Should().BeSameAs(sut.Name);
             item2.Description.Should().BeSameAs(sut.Description);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.UserMoonAltitude.Should().Be(sut.UserMoonAltitude);
-            item2.Comparator.Should().Be(sut.Comparator);
+            item2.Data.TargetAltitude.Should().Be(sut.Data.TargetAltitude);
+            item2.Data.Comparator.Should().Be(sut.Data.Comparator);
         }
     }
 }

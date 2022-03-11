@@ -236,9 +236,16 @@ namespace NINA.Astrometry {
         }
 
         public TopocentricCoordinates Transform(Angle latitude, Angle longitude, double elevation, double pressurehPa, double tempCelcius, double relativeHumidity, double wavelength) {
+            return this.Transform(latitude, longitude, elevation, 0.0d, 0.0d, 0.0d, 0.0d, DateTime.Now);
+        }
+
+        public TopocentricCoordinates Transform(Angle latitude, Angle longitude, DateTime now) {
+            return this.Transform(latitude, longitude, 0.0, 0.0d, 0.0d, 0.0d, 0.0d, now);
+        }
+
+        public TopocentricCoordinates Transform(Angle latitude, Angle longitude, double elevation, double pressurehPa, double tempCelcius, double relativeHumidity, double wavelength, DateTime now) {
             var transform = this.Transform(Epoch.J2000);
 
-            var now = DateTime.Now;
             var jdUTC = AstroUtil.GetJulianDate(now);
 
             var deltaUT = AstroUtil.DeltaUT(now);

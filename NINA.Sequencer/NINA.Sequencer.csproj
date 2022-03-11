@@ -151,6 +151,7 @@
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Conditions\LoopCondition.cs" />
+    <Compile Include="Conditions\LoopForSunMoonAltitudeBase.cs" />
     <Compile Include="Conditions\MoonAltitudeCondition.cs" />
     <Compile Include="Conditions\MoonIlluminationCondition.cs" />
     <Compile Include="Conditions\SafetyMonitorCondition.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Conditions\TimeCondition.cs" />
     <Compile Include="Conditions\TimeSpanCondition.cs" />
     <Compile Include="Conditions\UnknownSequenceCondition.cs" />
+    <Compile Include="Conditions\LoopForAltitudeBase.cs" />
     <Compile Include="Container\ContextCoordinates.cs" />
     <Compile Include="Container\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
@@ -293,6 +295,8 @@
     <Compile Include="SequenceItem\Utility\ExternalScript.cs" />
     <Compile Include="SequenceItem\Utility\MessageBox.cs" />
     <Compile Include="SequenceItem\Utility\WaitForAltitude.cs" />
+    <Compile Include="SequenceItem\Utility\WaitLoopData.cs" />
+    <Compile Include="SequenceItem\Utility\WaitForAltitudeBase.cs" />
     <Compile Include="SequenceItem\Utility\WaitForMoonAltitude.cs" />
     <Compile Include="SequenceItem\Utility\WaitForSunAltitude.cs" />
     <Compile Include="SequenceItem\Utility\WaitForTime.cs" />
