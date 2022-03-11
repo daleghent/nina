@@ -360,10 +360,11 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
-    <StackPanel Orientation="Horizontal"
-        DataContext="{Binding Data}"
+    <StackPanel
         x:Key="WaitProgress"
-        x:Shared="false">
+        x:Shared="false"
+        DataContext="{Binding Data}"
+        Orientation="Horizontal">
         <TextBlock
             Margin="5,0,0,0"
             VerticalAlignment="Center"
@@ -379,13 +380,14 @@
         <TextBlock VerticalAlignment="Center" Text=" " />
         <TextBlock VerticalAlignment="Center" Text="{Binding TargetAltitude}" />
         <TextBlock VerticalAlignment="Center" Text="°" />
-        <TextBlock Margin="8,0,0,0"
-                   VerticalAlignment="Center" 
-                   Text="⏰" />
+        <TextBlock
+            Margin="8,0,0,0"
+            VerticalAlignment="Center"
+            Text="⏰" />
         <TextBlock VerticalAlignment="Center" Text="{Binding Approximate}" />
         <TextBlock VerticalAlignment="Center" Text="{Binding ExpectedTime}" />
     </StackPanel>
-    
+
     <DataTemplate x:Key="NINA.Sequencer.Conditions.AltitudeCondition_Mini">
         <mini:MiniCondition>
             <mini:MiniCondition.ConditionProgressContent>
@@ -433,7 +435,7 @@
                         </ninactrl:UnitTextBox>
                     </StackPanel>
                     <StackPanel
-                        DataContext="{Binding Coordinates}"
+                        DataContext="{Binding Data.Coordinates}"
                         Orientation="Horizontal"
                         Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type view:SequenceBlockView}}, Path=DataContext.HasDsoParent, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <TextBlock Margin="5,0,5,0" VerticalAlignment="Center">|</TextBlock>
@@ -781,7 +783,7 @@
                         VerticalAlignment="Center"
                         Text="°" />
                     <StackPanel
-                        DataContext="{Binding Coordinates}"
+                        DataContext="{Binding Data.Coordinates}"
                         Orientation="Horizontal"
                         Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type view:SequenceBlockView}}, Path=DataContext.HasDsoParent, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRA}" />
