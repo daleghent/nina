@@ -130,7 +130,7 @@
     <value>서</value>
   </data>
   <data name="LblAberrationInspector" xml:space="preserve">
-    <value>수차 검사</value>
+    <value>수차 검사기</value>
   </data>
   <data name="LblActive" xml:space="preserve">
     <value>활성</value>
@@ -151,22 +151,22 @@
     <value>콘트라스트 검출(실험)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
-    <value>오토 포커스가 켜져있지만 포커서가 연결되어 있지 않음</value>
+    <value>오토포커스를 사용하도록 설정했지만 포커서가 연결되지 않았습니다.</value>
   </data>
   <data name="LblAFStarHFR" xml:space="preserve">
     <value>별 HFR</value>
   </data>
   <data name="LblAfter" xml:space="preserve">
-    <value>후에</value>
+    <value>이후</value>
   </data>
   <data name="LblAFUseBrightestStars" xml:space="preserve">
     <value>가장 밝은 n개의 별을 사용</value>
   </data>
   <data name="LblAFUseBrightestStarsTooltip" xml:space="preserve">
-    <value>AF를 밝은 별로 제한. 0은 무제한</value>
+    <value>오토포커스를 가장 밝은 별들로 제한. 0은 무제한.</value>
   </data>
   <data name="LblAllProSpikeAFlatPanel" xml:space="preserve">
-    <value>AllPro Spike-a-Flat Panel</value>
+    <value>AllPro사의 Spike-a 플랫 패널</value>
   </data>
   <data name="LblAlnitakFlatPanel" xml:space="preserve">
     <value>Alnitak 플랫 패널</value>
@@ -181,7 +181,7 @@
     <value>고도</value>
   </data>
   <data name="LblAltitudeErrorMeasurement" xml:space="preserve">
-    <value>고도 오류 측정</value>
+    <value>고도 오차 측정</value>
   </data>
   <data name="LblAltitudeMeasurement" xml:space="preserve">
     <value>고도 측정</value>
@@ -227,16 +227,18 @@
     <value>겉보기 크기</value>
   </data>
   <data name="LblApplicationInBreakMode" xml:space="preserve">
-    <value>소프트웨어에서 처리되지 않은 예외가 발생하여 종료됩니다. 오류가 "%localappdata%\NINA\Logs" 폴더에 저장되었습니다. 소프트웨어에서 오류를 복구할까요?(예기치 않은 동작이 발생할 수 있습니다.)</value>
+    <value>응용프로그램에서 처리되지 않은 예외가 발생하여 종료해야 할 가능성이 큽니다.
+오류가 "%localappdata%\NINA\Logs"에 기록되었습니다.
+응용프로그램에서 오류 복구를 시도할까요? (예기치 않은 동작을 유발할 수 있음)</value>
   </data>
   <data name="LblApplicationStartDateDescription" xml:space="preserve">
-    <value>소프트웨어 시작일 형식 YYYY-MM-DD</value>
+    <value>응용 프로그램 시작 날짜(YYY-MM-DD)</value>
   </data>
   <data name="LblArcmin" xml:space="preserve">
-    <value>각도 분[아크 분]</value>
+    <value>분각</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>최대 각도 분[아크 분]</value>
+    <value>최대 분각</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>각도 초</value>
@@ -260,7 +262,7 @@
     <value>ASPS exe를 찾을 수 없음</value>
   </data>
   <data name="LblASTAP" xml:space="preserve">
-    <value>ASTAP는 천문 Stacking 프로그램으로 천문 측정 솔버이며, FITS 뷰어이다.</value>
+    <value>ASTAP는 천문 스태킹과 솔빙 프로그램이며 FITS 이미지 뷰어이다.</value>
   </data>
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>ASTAP 위치</value>
@@ -272,7 +274,7 @@
     <value>ASTAP</value>
   </data>
   <data name="LblAstrometry" xml:space="preserve">
-    <value>천문 측정학</value>
+    <value>측성학</value>
   </data>
   <data name="LblAstrometryNet" xml:space="preserve">
     <value>Astrometry.Net</value>
@@ -1030,7 +1032,7 @@ Dec[적위]: {1}</value>
     <value>이미지 컬러 변환</value>
   </data>
   <data name="LblDebug" xml:space="preserve">
-    <value>Debug</value>
+    <value>디버그</value>
   </data>
   <data name="LblDec" xml:space="preserve">
     <value>Dec[적위]</value>
@@ -2567,7 +2569,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>반경</value>
   </data>
   <data name="LblRAError" xml:space="preserve">
-    <value>Ra[적경] 오류</value>
+    <value>Ra[적경] 오차</value>
   </data>
   <data name="LblRainRate" xml:space="preserve">
     <value>강수량</value>
@@ -2576,10 +2578,10 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>RA[적경] 픽셀 오차</value>
   </data>
   <data name="LblRate" xml:space="preserve">
-    <value>비율</value>
+    <value>속도</value>
   </data>
   <data name="LblRawConverter" xml:space="preserve">
-    <value>Raw 컨버터</value>
+    <value>Raw 변환기</value>
   </data>
   <data name="LblRawConverterTooltip" xml:space="preserve">
     <value>DSLR의 Raw 파일 변환에 사용할 도구 선택</value>
@@ -2989,7 +2991,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>가이딩 시작이 실패했습니다.</value>
   </data>
   <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
-    <value>Restarting guiding failed after lost shift lock</value>
+    <value>Shift 잠금 해제 후 가이드 다시 시작 실패</value>
   </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>IN 백래시 측정이 시작되었습니다.</value>
@@ -4045,7 +4047,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>최소 밝기</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
-    <value>가이드 별의 밝기가 0-255의 척도로 측정됩니다. 만약 밝기가 이 값 이하로 떨어지면, 돌아올 때 까지 NINA는 가이드를 중단합니다. 이것은 구름이 있음을 의미할 수 있습니다.</value>
+    <value>가이드 별의 밝기는 0-255의 단위로 측정됩니다. 가이드 별의 밝기가 이 값 이하로 떨어지면 NINA는 별의 밝기가 돌아올때까지 가이딩을 중지 합니다. 이것은 구름이 있음을 의미 할 수 있다.</value>
   </data>
   <data name="LblSeeing" xml:space="preserve">
     <value>보기[Seeing]</value>
@@ -6111,30 +6113,30 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
     <value>UTC 시간 및 포맷 HH-mm-ss</value>
   </data>
   <data name="LblGuiderCanSetShift" xml:space="preserve">
-    <value>Can Shift Tracking</value>
+    <value>Shift 추적 가능</value>
   </data>
   <data name="LblGuiderShiftEnabled" xml:space="preserve">
-    <value>Shift Enabled</value>
+    <value>Shift 활성화됨</value>
   </data>
   <data name="LblGuiderRAShiftRate" xml:space="preserve">
-    <value>RA Shift Rate</value>
+    <value>RA[적경] Shift 속도</value>
   </data>
   <data name="LblGuiderDecShiftRate" xml:space="preserve">
-    <value>Dec Shift Rate</value>
+    <value>Dec[적위] Shift 속도</value>
   </data>
   <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
-    <value>Shift Axis</value>
+    <value>Shift 축</value>
   </data>
   <data name="LblGuiderSetShiftRate" xml:space="preserve">
-    <value>Set Shift</value>
+    <value>Shift 설정</value>
   </data>
   <data name="LblGuiderStopShift" xml:space="preserve">
-    <value>Stop Shift</value>
+    <value>Shift 멈춤</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
-    <value>Setting shift rate after losing shift lock failed</value>
+    <value>Shift 잠금 해제 후 Shift 속도 설정 실패</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
-    <value>Restored shift rate after losing shift lock</value>
+    <value>Shift 잠금 해제 후 Shift 속도 설정 복원됨</value>
   </data>
 </root>
