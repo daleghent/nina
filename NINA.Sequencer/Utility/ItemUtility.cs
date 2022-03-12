@@ -23,6 +23,7 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Utility;
 using NINA.Core.Enum;
 using NINA.Core.Locale;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Utility {
 
@@ -171,9 +172,9 @@ namespace NINA.Sequencer.Utility {
         private static readonly int LOOP_INTERVAL = 5;  // How many minutes for each loop
         private static readonly int NEAR_TIME = 10;  // How close before we get an exact time
 
-        public static void Iterate(WaitLoopData info, RiseSetMeridian rsm, bool greater, bool sense, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
+        public static void Iterate(WaitLoopData data, RiseSetMeridian rsm, bool greater, bool sense, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
             // We'll iterate (not too much) to get a better time
-            info.SetApproximate(true);
+            data.SetApproximate(true);
 
             bool ns = (greater && sense) || (!greater && !sense);
 
@@ -181,7 +182,7 @@ namespace NINA.Sequencer.Utility {
             DateTime startTime, endTime;
             int interval;
             int loops = allowance / LOOP_INTERVAL;
-            TimeSpan span = info.ExpectedDateTime - DateTime.Now;
+            TimeSpan span = data.ExpectedDateTime - DateTime.Now;
             // If we're within 5 minutes, get a precise time by iterating every minute starting now
             // Otherwise, set a range for iteration and check every five minutes
             DateTime baseTime = DateTime.Now;
@@ -189,10 +190,18 @@ namespace NINA.Sequencer.Utility {
                 interval = 1;
                 startTime = baseTime;
                 endTime = startTime.AddMinutes(NEAR_TIME);
-                info.SetApproximate(false);
+                data.SetApproximate(false);
             } else {
                 interval = LOOP_INTERVAL;
                 baseTime = ns ? rsm.Rise : rsm.Set;
+                if (data.UseCustomHorizon) {
+                    // We know which of rise/set to use, now determine the horizon at THAT time, which could be quite different
+                    double targetAltitude = data.GetTargetAltitudeWithHorizon(baseTime);
+                    rsm = CalculateTimeAtAltitude(data.Coordinates.Coordinates, data.Latitude, data.Longitude, targetAltitude);
+                    // Reset baseTime to newly acquired expected time; this saves iterations and potentially prevents
+                    // a failure if the horizon has a very steep slope at the initially expected time
+                    baseTime = ns ? rsm.Rise : rsm.Set;
+                }
                 startTime = baseTime.AddMinutes(-loops / 2 * interval);
                 endTime = baseTime.AddMinutes(loops * interval);
             }
@@ -201,18 +210,18 @@ namespace NINA.Sequencer.Utility {
             while (startTime < endTime) {
                 if (startTime >= now) {
                     // Get the "current" altitude at the given time and see if the condition is met at that time
-                    double altitude = getCurrentAltitude(startTime, info.Observer);
-                    Console.WriteLine(info.Name + "  #" + iterations + " " + (startTime - baseTime).Minutes + " -> Time: " + startTime.ToString("t") + ", Current: " + Math.Round(altitude, 2) + " Target: " + info.TargetAltitude);
+                    double altitude = getCurrentAltitude(startTime, data.Observer);
+                    //Console.WriteLine(data.Name + "  #" + iterations + " " + (startTime - baseTime).Minutes + " -> Time: " + startTime.ToString("t") + ", Current: " + Math.Round(altitude, 2) + " Target: " + data.TargetAltitude);
 
-                    double targetAltitude = info.TargetAltitude;
-                    if (info.UseCustomHorizon) {
-                        targetAltitude = info.GetTargetAltitudeWithHorizon(startTime);
-                        info.TargetAltitude = targetAltitude;
+                    double targetAltitude = data.TargetAltitude;
+                    if (data.UseCustomHorizon) {
+                        targetAltitude = data.GetTargetAltitudeWithHorizon(startTime);
+                        data.TargetAltitude = targetAltitude;
                     }
 
                     if ((ns && (altitude >= targetAltitude)) || (!ns && (altitude < targetAltitude))) {
-                        Console.WriteLine(info.Name + ": " + ++iterations + " iterations: " + (startTime - baseTime).Minutes + " minutes from predicted");
-                        info.ExpectedDateTime = startTime;
+                        Console.WriteLine(data.Name + ": " + ++iterations + " iterations: " + (startTime - baseTime).Minutes + " minutes from predicted");
+                        data.ExpectedDateTime = startTime;
                         return;
                     } else {
                         iterations++;
@@ -221,8 +230,8 @@ namespace NINA.Sequencer.Utility {
                 startTime = startTime.AddMinutes(interval);
             }
             // Log this!
-            Console.WriteLine(info.Name + " Failed Iterations: " + ++iterations + ", Time: " + Math.Round((DateTime.Now - now).TotalMilliseconds), 1);
-            info.ExpectedDateTime = startTime;
+            Logger.Info(data.Name + ": CalculateExpectedTime failed after " + ++iterations + " iterations, Custom: " + data.UseCustomHorizon);
+            data.ExpectedDateTime = startTime;
         }
 
         /*
@@ -237,44 +246,47 @@ namespace NINA.Sequencer.Utility {
          * We either know that the expected time is "Now" (i.e. the condition is already met) or we will iterate to find
          * the actual time
          */
-        public static void CalculateExpectedTimeCommon(WaitLoopData info, double offset, bool until, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
+        public static void CalculateExpectedTimeCommon(WaitLoopData data, double offset, bool until, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
 
             // Don't waste time on constructors
-            Coordinates coord = info.Coordinates.Coordinates;
+            Coordinates coord = data.Coordinates.Coordinates;
             if (coord.RADegrees == 0 && coord.Dec == 0) {
                 return;
             }
 
-            info.SetApproximate(false);
+            data.SetApproximate(false);
 
-            double targetAltitude = info.Offset;
-            if (info.UseCustomHorizon) {
-                targetAltitude = info.GetTargetAltitudeWithHorizon(DateTime.Now);
+            double targetAltitude = data.Offset;
+            if (data.UseCustomHorizon) {
+                targetAltitude = data.GetTargetAltitudeWithHorizon(DateTime.Now);
             }
 
-            RiseSetMeridian rsm = CalculateTimeAtAltitude(coord, info.Latitude, info.Longitude, targetAltitude + offset);
-            info.IsRising = rsm.IsRising;
+            RiseSetMeridian rsm = CalculateTimeAtAltitude(coord, data.Latitude, data.Longitude, targetAltitude + offset);
+            data.IsRising = rsm.IsRising;
+
+            // Not thrilled with this exception, but don't want a more significant refactor at this point
+            // For AltitudeCondition, an additional requirement is that a rising target shouldn't be considered
+            // "below" the target altitude, regardless of its current altitude (i.e. we must wait until it's setting)
+            bool mustSet = data.Name == "AltitudeCondition";
+
             if (rsm.Rise == DateTime.MinValue) {
-                info.ExpectedTime = "--";
+                data.ExpectedTime = "--";
             } else {
-                if (info.UseCustomHorizon) {
-                    targetAltitude = info.GetTargetAltitudeWithHorizon(DateTime.Now);
-                }
-                switch (info.Comparator) {
+                 switch (data.Comparator) {
                     case ComparisonOperatorEnum.GREATER_THAN:
-                        if ((until && info.CurrentAltitude > targetAltitude) || (!until && info.CurrentAltitude <= targetAltitude)) {
-                            info.TargetAltitude = targetAltitude;
-                            info.ExpectedTime = Loc.Instance["LblNow"];
+                        if ((until && data.CurrentAltitude > targetAltitude) || (!until && data.CurrentAltitude <= targetAltitude) && (!mustSet || (mustSet && !data.IsRising))) {
+                            data.TargetAltitude = targetAltitude;
+                            data.ExpectedTime = Loc.Instance["LblNow"];
                         } else {
-                            Iterate(info, rsm, greater: true, until, allowance, getCurrentAltitude);
+                            Iterate(data, rsm, greater: true, until, allowance, getCurrentAltitude);
                         }
                         return;
                     default:
-                        if ((until && info.CurrentAltitude <= targetAltitude) || (!until && info.CurrentAltitude > targetAltitude)) {
-                            info.TargetAltitude = targetAltitude;
-                            info.ExpectedTime = Loc.Instance["LblNow"];
+                        if ((until && data.CurrentAltitude <= targetAltitude) || (!until && data.CurrentAltitude > targetAltitude)) {
+                            data.TargetAltitude = targetAltitude;
+                            data.ExpectedTime = Loc.Instance["LblNow"];
                         } else {
-                            Iterate(info, rsm, greater: false, until, allowance, getCurrentAltitude);
+                            Iterate(data, rsm, greater: false, until, allowance, getCurrentAltitude);
                         }
                         return;
                 }
