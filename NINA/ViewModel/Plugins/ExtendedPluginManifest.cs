@@ -23,6 +23,7 @@ namespace NINA.ViewModel.Plugins {
             this.Descriptions = manifest.Descriptions;
             this.Identifier = manifest.Identifier;
             this.Homepage = manifest.Homepage;
+            this.ChangelogURL = manifest.ChangelogURL;
             this.Installer = manifest.Installer;
             this.License = manifest.License;
             this.LicenseURL = manifest.LicenseURL;
