@@ -25,7 +25,16 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         [JsonProperty]
         public WaitLoopData Data { get; set; }
 
-        // Backward compatibility
+        public IList<string> Issues {
+            get => issues;
+            set {
+                issues = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public abstract void CalculateExpectedTime();
+
         #region Obsolete Migration Properties
 
         [JsonProperty(propertyName: "Comparator")]
@@ -79,18 +88,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         [JsonIgnore]
         public InputCoordinates Coordinates { get; set; }
         #endregion
-
-        // End backward compatibility
-
-        public IList<string> Issues {
-            get => issues;
-            set {
-                issues = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public abstract void CalculateExpectedTime();
     }
 }
 
