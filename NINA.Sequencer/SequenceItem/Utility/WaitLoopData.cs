@@ -119,6 +119,9 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public InputCoordinates Coordinates { get; set; }
 
         public void SetCoordinates(InputCoordinates coordinates) {
+            // Don't do anything if we're really not changing coordinates
+            // Otherwise, we'll reset expected time to midnight, etc.
+            if (Coordinates == coordinates) return;
             Coordinates = coordinates;
             ExpectedDateTime = DateTime.MinValue;
         }

@@ -171,6 +171,7 @@ namespace NINA.Sequencer.Utility {
 
         private static readonly int LOOP_INTERVAL = 5;  // How many minutes for each loop
         private static readonly int NEAR_TIME = 10;  // How close before we get an exact time
+        private static readonly int NEAR_TIME_HORIZON = 60;
 
         public static void Iterate(WaitLoopData data, RiseSetMeridian rsm, bool greater, bool sense, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
             // We'll iterate (not too much) to get a better time
@@ -194,16 +195,31 @@ namespace NINA.Sequencer.Utility {
             } else {
                 interval = LOOP_INTERVAL;
                 baseTime = ns ? rsm.Rise : rsm.Set;
-                if (data.UseCustomHorizon) {
-                    // We know which of rise/set to use, now determine the horizon at THAT time, which could be quite different
-                    double targetAltitude = data.GetTargetAltitudeWithHorizon(baseTime);
-                    rsm = CalculateTimeAtAltitude(data.Coordinates.Coordinates, data.Latitude, data.Longitude, targetAltitude);
-                    // Reset baseTime to newly acquired expected time; this saves iterations and potentially prevents
-                    // a failure if the horizon has a very steep slope at the initially expected time
-                    baseTime = ns ? rsm.Rise : rsm.Set;
+                if (baseTime < now) {
+                    baseTime = baseTime.AddDays(1);
                 }
-                startTime = baseTime.AddMinutes(-loops / 2 * interval);
-                endTime = baseTime.AddMinutes(loops * interval);
+                if (data.UseCustomHorizon) {
+                    // With custom horizons, we have to do significant iteration so we'll use 10 minutes as
+                    // our iteration time
+                    if (ns) {
+                        startTime = rsm.Rise;
+                        endTime = rsm.Meridian;
+                    } else {
+                        startTime = rsm.Meridian;
+                        endTime = rsm.Set;
+                    }
+                    if (startTime < now) {
+                        startTime = now;
+                    }
+                    if (startTime > endTime) {
+                        endTime = endTime.AddDays(1);
+                    }
+                    // We'll be +/0- 10 minutes when > an hour away, otherwise 5 minutes
+                    interval = Math.Abs(span.TotalMinutes) < NEAR_TIME_HORIZON ? 5 : 10;
+                } else {
+                    startTime = baseTime.AddMinutes(-loops / 2 * interval);
+                    endTime = baseTime.AddMinutes(loops * interval);
+                }
             }
 
             int iterations = 0;
@@ -211,16 +227,16 @@ namespace NINA.Sequencer.Utility {
                 if (startTime >= now) {
                     // Get the "current" altitude at the given time and see if the condition is met at that time
                     double altitude = getCurrentAltitude(startTime, data.Observer);
-                    //Console.WriteLine(data.Name + "  #" + iterations + " " + (startTime - baseTime).Minutes + " -> Time: " + startTime.ToString("t") + ", Current: " + Math.Round(altitude, 2) + " Target: " + data.TargetAltitude);
+                    //Console.WriteLine(data.Name + "  #" + iterations + " " + (startTime - baseTime).TotalMinutes + " -> Time: " + startTime.ToString("t") + ", Current: " + Math.Round(altitude, 2) + " Target: " + data.TargetAltitude);
 
                     double targetAltitude = data.TargetAltitude;
                     if (data.UseCustomHorizon) {
                         targetAltitude = data.GetTargetAltitudeWithHorizon(startTime);
-                        data.TargetAltitude = targetAltitude;
                     }
 
                     if ((ns && (altitude >= targetAltitude)) || (!ns && (altitude < targetAltitude))) {
-                        Console.WriteLine(data.Name + ": " + ++iterations + " iterations: " + (startTime - baseTime).Minutes + " minutes from predicted");
+                        Console.WriteLine(data.Name + ": " + ++iterations + " iterations: " + (startTime - baseTime).TotalMinutes + " minutes from predicted");
+                        data.TargetAltitude = targetAltitude;
                         data.ExpectedDateTime = startTime;
                         return;
                     } else {
@@ -258,7 +274,9 @@ namespace NINA.Sequencer.Utility {
 
             double targetAltitude = data.Offset;
             if (data.UseCustomHorizon) {
-                targetAltitude = data.GetTargetAltitudeWithHorizon(DateTime.Now);
+                // For computing rise/set time, use minimum horizon altitude
+                if (data.Horizon == null) return;
+                targetAltitude = data.Horizon.GetMinAltitude();
             }
 
             RiseSetMeridian rsm = CalculateTimeAtAltitude(coord, data.Latitude, data.Longitude, targetAltitude + offset);
@@ -268,6 +286,11 @@ namespace NINA.Sequencer.Utility {
             // For AltitudeCondition, an additional requirement is that a rising target shouldn't be considered
             // "below" the target altitude, regardless of its current altitude (i.e. we must wait until it's setting)
             bool mustSet = data.Name == "AltitudeCondition";
+
+            if (data.UseCustomHorizon) {
+                // For knowing if the condition is met NOW, target altitude must use current horizon
+                targetAltitude = data.GetTargetAltitudeWithHorizon(DateTime.Now) + offset;
+            }
 
             if (rsm.Rise == DateTime.MinValue) {
                 data.ExpectedTime = "--";
