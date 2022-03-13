@@ -2733,7 +2733,7 @@ Forventet HFR: {2}</value>
     <value>Lagre bilde som</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
+    <value>Innstillingen ignoreres for DSLR hvis innebygget driver brukes. RAW-format lagres i stedet!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Lagre valgt profil og ikke spør igjen neste gang</value>
@@ -6047,19 +6047,46 @@ Denne knappen er ikke synlig i mosaikk-modus.</value>
     <value>Bruk blind søkemotor når søk feiler</value>
   </data>
   <data name="LblASCOMDriverError" xml:space="preserve">
-    <value>ASCOM Driver Error</value>
+    <value>ASCOM driver-feil</value>
   </data>
   <data name="LblCanonDriverError" xml:space="preserve">
-    <value>Canon Driver Error</value>
+    <value>Canon driver-feil</value>
   </data>
   <data name="LblZWODriverError" xml:space="preserve">
-    <value>ZWO Driver Error</value>
+    <value>ZWO driver-feil</value>
   </data>
   <data name="LblASTAPWarning" xml:space="preserve">
-    <value>ASTAP Warning</value>
+    <value>ASTAP advarsel</value>
   </data>
   <data name="LblPhd2Warning" xml:space="preserve">
-    <value>PHD2 Warning</value>
+    <value>PHD2 advarsel</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>Can Shift Tracking</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>Shift Enabled</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>RA Shift Rate</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>Dec Shift Rate</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>Shift Axis</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>Set Shift</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>Stop Shift</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>Setting shift rate after losing shift lock failed</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>Restored shift rate after losing shift lock</value>
   </data>
   <data name="LblGuiderCanSetShift" xml:space="preserve">
     <value>Can Shift Tracking</value>

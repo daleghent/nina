@@ -2733,7 +2733,7 @@ Dec: {1}</value>
     <value>Сохранить изображение как</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
+    <value>Этот параметр игнорируется для зеркальных фотокамер при использовании родного драйвера. Вместо этого будет сохранен формат камеры RAW!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Всегда использовать этот профиль</value>
@@ -3092,12 +3092,12 @@ Dec: {1}</value>
     <value>Синхронизированная служба PHD2 прервана, перезапуск синхронизированной гида PHD2 в качестве службы</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
-    <value>Synchronize site settings</value>
+    <value>Синхронизировать настройки сайта</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
+    <value>Настройки локации телескопа отличаются от настроек NINA.
 
-Should the settings be synchronized?</value>
+Должны ли быть синхронизированы настройки?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Цель (J2000)</value>
@@ -4099,10 +4099,10 @@ Should the settings be synchronized?</value>
     <value>Когда слежение купола включено, NINA часто проверяет нужно ли поворачивать купол в строке с помощью телескопа. Когда внешнее приложение, например планетарий или телефон, перемещает телескоп, возможно, будет полезно дождаться, пока телескоп больше не движется до поворота купола.</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlew" xml:space="preserve">
-    <value>Sync slew dome when scope slews</value>
+    <value>Синхронизация поворота купола при повороте телескопа</value>
   </data>
   <data name="LblDomeSyncSlewWhenMountSlewTooltip" xml:space="preserve">
-    <value>Slews the dome to synchronize it with the telescope position when it slews. This setting doesn't maintain the dome synchronization as the scope tracks.</value>
+    <value>Поворачивает купол, чтобы синхронизировать его с положением телескопа, когда он поворачивается. Этот параметр не поддерживает синхронизацию купола при слежении телескопа.</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Найти дом перед парковкой</value>
@@ -4863,16 +4863,16 @@ Should the settings be synchronized?</value>
     <value>Запарковать купол</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Description" xml:space="preserve">
-    <value>Rotates the dome to the home position</value>
+    <value>Поворачивает купол в начальную позицию</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_FindHome_Name" xml:space="preserve">
-    <value>Find Dome Home</value>
+    <value>Найти дом купола</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Description" xml:space="preserve">
-    <value>Slews the dome to an absolute azimuth position</value>
+    <value>Поворачивает купол в положение абсолютного азимута</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SetDomeAzimuth_Name" xml:space="preserve">
-    <value>Slew Dome Azimuth</value>
+    <value>Повернуть на азимут купола</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Параллельный старт инструкций по серии</value>
@@ -4899,10 +4899,10 @@ Should the settings be synchronized?</value>
     <value>Включить синхронизацию купола</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
-    <value>Disables background dome synchronization with the telescope</value>
+    <value>Отключает фоновую синхронизацию купола с телескопом</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
-    <value>Disable Dome Sync</value>
+    <value>Отключить синхронизацию купола</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_SynchronizeDome_Description" xml:space="preserve">
     <value>Синхронизирует купол с текущим положением телескопа</value>
@@ -5529,7 +5529,7 @@ Should the settings be synchronized?</value>
     <value>Название текущей последовательности</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Dome did not report shutter movement or failure after completing the request. This is non conformant and dangerous behavior. Please report this to your dome vendor.</value>
+    <value>Купол не сообщил о движении или сбое затвора после выполнения запроса. Это неконформное и опасное поведение. Сообщите об этом поставщику купола.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Ошибка при открытии затвора. Состояние затвора все равно сообщается, что закрыто после открытия затвора.</value>
@@ -5799,7 +5799,7 @@ Should the settings be synchronized?</value>
     <value>Запуск сервера в фоновом режиме для управления встроенной отслеживающей камерой из других приложений</value>
   </data>
   <data name="LblTrackingASCOMServerLoggingEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Logging</value>
+    <value>Отслеживание CCD ASCOM сервера логируется</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
     <value>Имя канала сервера</value>
@@ -5842,7 +5842,7 @@ Should the settings be synchronized?</value>
     <value>Не удалось возобновить гидирование после изменения фильтра, которое привело к перемещению фокуса</value>
   </data>
   <data name="LblMoveFocuserFailed" xml:space="preserve">
-    <value>Failed to move focuser</value>
+    <value>Не удалось переместить фокусер</value>
   </data>
   <data name="LblUnknownInstructionValidation" xml:space="preserve">
     <value>Обнаружена неизвестная инструкция! Пожалуйста, дважды проверьте свою последовательность и проверьте, какие инструкции стали недействительными. Кроме того, убедитесь, что все обновлено.</value>
@@ -5978,100 +5978,127 @@ Should the settings be synchronized?</value>
     <value>Не удалось сохранить изображение</value>
   </data>
   <data name="LblScopeCoordinatesTooltip" xml:space="preserve">
-    <value>Get coordinates from the current scope position</value>
+    <value>Получить координаты из текущей позиции телескопа</value>
   </data>
   <data name="LblElevation" xml:space="preserve">
-    <value>Elevation</value>
+    <value>Высота</value>
   </data>
   <data name="LblPerDeviceThreadingEnabled" xml:space="preserve">
-    <value>Device threads for ASCOM</value>
+    <value>Поток устройства для ASCOM</value>
   </data>
   <data name="LblPerDeviceThreadingEnabledTooltip" xml:space="preserve">
-    <value>This is an experimental setting that may improve UI responsiveness and reduce the chance of UI hangs when connecting to ASCOM drivers. This setting must be enabled before connecting devices for it to have an effect. Please share feedback with the contributors in Discord if you use this, since we're considering enabling this for everyone.</value>
+    <value>Это экспериментальная настройка, которая может улучшить реакцию пользовательского интерфейса и снизить вероятность зависания пользовательского интерфейса при подключении к драйверам ASCOM. Этот параметр должен быть включен перед подключением устройств, чтобы он действовал. Пожалуйста, поделитесь отзывом с участниками в Discord, если вы используете это, поскольку мы рассматриваем возможность включения этого для всех.</value>
   </data>
   <data name="LblDefault" xml:space="preserve">
-    <value>Default</value>
+    <value>По умолчанию</value>
   </data>
   <data name="LblFlatDeviceCannotControlBrightness" xml:space="preserve">
-    <value>Flat device cannot control brightness!</value>
+    <value>Флэт устройство не может контролировать яркость!</value>
   </data>
   <data name="LblAboveHorizon" xml:space="preserve">
-    <value>Above Horizon</value>
+    <value>Выше горизонта</value>
   </data>
   <data name="LblNikonX86Deprecated" xml:space="preserve">
-    <value>Not supported - Nikon no longer distributes SDK binaries for x86 applications</value>
+    <value>Не поддерживается - Nikon больше не распространяет SDK файлы для приложений x86</value>
   </data>
   <data name="LblNoPluginsInstalled" xml:space="preserve">
-    <value>No Plugins Installed</value>
+    <value>Плагины не установлены</value>
   </data>
   <data name="LblPluginUpdateAll" xml:space="preserve">
-    <value>Update All</value>
+    <value>Обновить все</value>
   </data>
   <data name="LblPluginUpdateAllCancel" xml:space="preserve">
-    <value>Cancel Update</value>
+    <value>Отменить обновление</value>
   </data>
   <data name="LblPluginUpdateAllTooltip" xml:space="preserve">
-    <value>Updates all plugins where an update is available to the latest version</value>
+    <value>Обновляет все плагины, где доступно обновление до последней версии</value>
   </data>
   <data name="LblMeridianFlipRetry" xml:space="preserve">
-    <value>Failed to slew for meridian flip. 
-Another attempt will be made in {0} seconds.
-Attempt {1}/{2}.</value>
+    <value>Не удалось движение для перекладки по меридиану.
+Еще одна попытка будет предпринята через {0} секунд.
+Попытка {1}/{2}.</value>
   </data>
   <data name="LblMeridianFlipRetryFailed" xml:space="preserve">
-    <value>Failed to slew for meridian flip after maximum number of retries. Aborting.</value>
+    <value>Не удалось двигаться для перекладки меридиана после максимального количества попыток. Прерывание.</value>
   </data>
   <data name="LblROI" xml:space="preserve">
     <value>ROI</value>
     <comment>Region of interest used for sub frame.</comment>
   </data>
   <data name="LblROIPercentageTooltip" xml:space="preserve">
-    <value>Region of Interest expressed in percentage relative to the center</value>
+    <value>Область интереса, выраженная в процентах относительно центра</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Description" xml:space="preserve">
-    <value>Takes an exposure for the given duration, gain and offset for the specified region of interest</value>
+    <value>Делает экспозицию для заданной продолжительности, усиления и смещения для указанной области интереса</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeSubframeExposure_Name" xml:space="preserve">
-    <value>Take Subframe Exposure</value>
+    <value>Сделать экспозицию субфрейма</value>
   </data>
   <data name="LblPreserveAlignment" xml:space="preserve">
-    <value>Preserve alignment</value>
+    <value>Сохранить выравнивание</value>
   </data>
   <data name="LblPreserveAlignmentTooltip" xml:space="preserve">
-    <value>Having this option enabled will ensure that the panels align to a single rectangular panel, but will result in different rotation angles for each panel. 
-This option should be enabled when automatic camera rotation is available or when manual rotation of the camera is possible for each mosaic panel.
+    <value>Если эта опция включена, панели будут выровнены по одной прямоугольной панели, но при этом будут разные углы поворота для каждой панели.
+Эта опция должна быть включена, когда доступен автоматический поворот камеры или когда возможен ручной поворот камеры для каждой мозаичной панели.
 </value>
   </data>
   <data name="LblMosaicPanels" xml:space="preserve">
-    <value>Mosaic Panels</value>
+    <value>Мозаические панели</value>
   </data>
   <data name="LblRotateSkyTooltip" xml:space="preserve">
-    <value>When enabled, the sky background will be rotated instead of the rectangle.</value>
+    <value>Когда включено, фон неба будет повернут вместо прямоугольника.</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencer" xml:space="preserve">
-    <value>Update Existing Target in Sequencer</value>
+    <value>Обновить существующую цель в последовательности</value>
   </data>
   <data name="LblUpdateExistingTargetInSequencerTooltip" xml:space="preserve">
-    <value>When clicked it will show a list of targets that were already placed inside the sequencer. After clicking one of these targets that target will be updated with the currently framed name, coordinates and rotation.
-This button is not visible when in mosaic mode.</value>
+    <value>При нажатии будет показан список целей, которые уже были помещены внутри последовательности. После нажатия на одну из этих целей цель будет обновлена с нынешним именем, координатами и вращением.
+Эта кнопка не видна в мозаичном режиме.</value>
   </data>
   <data name="LblBlindSolveFailoverEnabled" xml:space="preserve">
-    <value>Use Blind Solver for Failures</value>
+    <value>Использовать расознование вслепую для неудач</value>
   </data>
   <data name="LblASCOMDriverError" xml:space="preserve">
-    <value>ASCOM Driver Error</value>
+    <value>Ошибка драйвера ASCOM</value>
   </data>
   <data name="LblCanonDriverError" xml:space="preserve">
-    <value>Canon Driver Error</value>
+    <value>Ошибка драйвера Canon</value>
   </data>
   <data name="LblZWODriverError" xml:space="preserve">
-    <value>ZWO Driver Error</value>
+    <value>Ошибка драйвера ZWO</value>
   </data>
   <data name="LblASTAPWarning" xml:space="preserve">
-    <value>ASTAP Warning</value>
+    <value>Предупреждение ASTAP</value>
   </data>
   <data name="LblPhd2Warning" xml:space="preserve">
-    <value>PHD2 Warning</value>
+    <value>Предупреждение PHD2</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>Can Shift Tracking</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>Shift Enabled</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>RA Shift Rate</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>Dec Shift Rate</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>Shift Axis</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>Set Shift</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>Stop Shift</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>Setting shift rate after losing shift lock failed</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>Restored shift rate after losing shift lock</value>
   </data>
   <data name="LblGuiderCanSetShift" xml:space="preserve">
     <value>Can Shift Tracking</value>

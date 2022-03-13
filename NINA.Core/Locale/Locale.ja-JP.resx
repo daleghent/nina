@@ -2724,7 +2724,7 @@
     <value>画像保存形式</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
+    <value>一眼レフのネイティブドライバーを使っているとき、この設定は無視されます。画像はカメラのRAW形式で保存されます。</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>選択されたプロファイルを保存して、次回は質問しない。</value>
@@ -6038,19 +6038,46 @@ Refer to your camera's manual for the location of this setting</value>
     <value>Use Blind Solver for Failures</value>
   </data>
   <data name="LblASCOMDriverError" xml:space="preserve">
-    <value>ASCOM Driver Error</value>
+    <value>ASCOMドライバーのエラー</value>
   </data>
   <data name="LblCanonDriverError" xml:space="preserve">
-    <value>Canon Driver Error</value>
+    <value>Canonドライバーのエラー</value>
   </data>
   <data name="LblZWODriverError" xml:space="preserve">
-    <value>ZWO Driver Error</value>
+    <value>ZWOドライバーのエラー</value>
   </data>
   <data name="LblASTAPWarning" xml:space="preserve">
-    <value>ASTAP Warning</value>
+    <value>ASTAPの警告</value>
   </data>
   <data name="LblPhd2Warning" xml:space="preserve">
-    <value>PHD2 Warning</value>
+    <value>PHD2の警告</value>
+  </data>
+  <data name="LblGuiderCanSetShift" xml:space="preserve">
+    <value>シフト追尾可能</value>
+  </data>
+  <data name="LblGuiderShiftEnabled" xml:space="preserve">
+    <value>シフト有効</value>
+  </data>
+  <data name="LblGuiderRAShiftRate" xml:space="preserve">
+    <value>赤経シフトレート</value>
+  </data>
+  <data name="LblGuiderDecShiftRate" xml:space="preserve">
+    <value>赤緯シフトレート</value>
+  </data>
+  <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
+    <value>シフト軸</value>
+  </data>
+  <data name="LblGuiderSetShiftRate" xml:space="preserve">
+    <value>シフトを設定</value>
+  </data>
+  <data name="LblGuiderStopShift" xml:space="preserve">
+    <value>シフト停止</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
+    <value>シフトロック解除後の、シフトレートの設定に失敗しました</value>
+  </data>
+  <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
+    <value>シフトロック解除後の、シフトレートを復元しました</value>
   </data>
   <data name="LblGuiderCanSetShift" xml:space="preserve">
     <value>シフト追尾可能</value>
