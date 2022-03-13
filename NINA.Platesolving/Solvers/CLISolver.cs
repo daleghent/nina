@@ -70,16 +70,28 @@ namespace NINA.PlateSolving.Solvers {
             } finally {
                 progress?.Report(new ApplicationStatus() { Status = string.Empty });
                 if (imagePath != null && File.Exists(imagePath)) {
-                    File.Delete(imagePath);
+                    try { 
+                        File.Delete(imagePath);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
                 }
                 if (outputPath != null && File.Exists(outputPath)) {
-                    File.Delete(outputPath);
+                    try {
+                        File.Delete(outputPath);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
                 }
 
                 foreach (var file in GetSideCarFilePaths(imagePath)) {
-                    if (File.Exists(file)) {
-                        File.Delete(file);
-                    }
+                    try {
+                        if (File.Exists(file)) {
+                            File.Delete(file);
+                        }
+                    } catch(Exception ex) {
+                        Logger.Error(ex);
+                    }                    
                 }
             }
             return result;
