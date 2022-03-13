@@ -115,52 +115,45 @@ namespace NINA.Core.MyMessageBox {
         public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxResult defaultresult) {
             var dialogresult = defaultresult;
             dialogresult = Application.Current.Dispatcher.Invoke(() => {
-                var MyMessageBox = new MyMessageBox();
-                MyMessageBox.Title = caption;
-                MyMessageBox.Text = messageBoxText;
+                var MyMessageBox = new MyMessageBox {
+                    Title = caption,
+                    Text = messageBoxText,
+                };
 
                 if (button == MessageBoxButton.OKCancel) {
-                    MyMessageBox.CancelVisibility = System.Windows.Visibility.Visible;
-                    MyMessageBox.OKVisibility = System.Windows.Visibility.Visible;
-                    MyMessageBox.YesVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.NoVisibility = System.Windows.Visibility.Hidden;
+                    MyMessageBox.CancelVisibility = Visibility.Visible;
+                    MyMessageBox.OKVisibility = Visibility.Visible;
+                    MyMessageBox.YesVisibility = Visibility.Hidden;
+                    MyMessageBox.NoVisibility = Visibility.Hidden;
                 } else if (button == MessageBoxButton.YesNo) {
-                    MyMessageBox.CancelVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.OKVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.YesVisibility = System.Windows.Visibility.Visible;
-                    MyMessageBox.NoVisibility = System.Windows.Visibility.Visible;
+                    MyMessageBox.CancelVisibility = Visibility.Hidden;
+                    MyMessageBox.OKVisibility = Visibility.Hidden;
+                    MyMessageBox.YesVisibility = Visibility.Visible;
+                    MyMessageBox.NoVisibility = Visibility.Visible;
                 } else if (button == MessageBoxButton.OK) {
-                    MyMessageBox.CancelVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.OKVisibility = System.Windows.Visibility.Visible;
-                    MyMessageBox.YesVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.NoVisibility = System.Windows.Visibility.Hidden;
+                    MyMessageBox.CancelVisibility = Visibility.Hidden;
+                    MyMessageBox.OKVisibility = Visibility.Visible;
+                    MyMessageBox.YesVisibility = Visibility.Hidden;
+                    MyMessageBox.NoVisibility = Visibility.Hidden;
                 } else {
-                    MyMessageBox.CancelVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.OKVisibility = System.Windows.Visibility.Visible;
-                    MyMessageBox.YesVisibility = System.Windows.Visibility.Hidden;
-                    MyMessageBox.NoVisibility = System.Windows.Visibility.Hidden;
+                    MyMessageBox.CancelVisibility = Visibility.Hidden;
+                    MyMessageBox.OKVisibility = Visibility.Visible;
+                    MyMessageBox.YesVisibility = Visibility.Hidden;
+                    MyMessageBox.NoVisibility = Visibility.Hidden;
                 }
 
-                var mainwindow = System.Windows.Application.Current.MainWindow;
-                System.Windows.Window win = new MyMessageBoxView {
-                    DataContext = MyMessageBox
+                var mainwindow = Application.Current.MainWindow;
+                Window win = new MyMessageBoxView {
+                    DataContext = MyMessageBox,
+                    Owner = mainwindow,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 };
-                win.ContentRendered += (object sender, EventArgs e) => {
-                    var window = (System.Windows.Window)sender;
-                    window.InvalidateVisual();
-
-                    var rect = mainwindow.GetAbsolutePosition();
-                    window.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
-                    window.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
-                };
-
-                mainwindow.Opacity = 0.8;
-                win.Owner = mainwindow;
                 win.Closed += (object sender, EventArgs e) => {
                     Application.Current.MainWindow.Focus();
                 };
-                win.ShowDialog();
 
+                mainwindow.Opacity = 0.8;
+                win.ShowDialog();
                 mainwindow.Opacity = 1;
 
                 if (win.DialogResult == null) {
