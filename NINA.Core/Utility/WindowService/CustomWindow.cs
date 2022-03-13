@@ -12,12 +12,16 @@
 
 #endregion "copyright"
 
+using System;
 using System.Windows;
 using System.Windows.Input;
 
 namespace NINA.Core.Utility.WindowService {
 
     public class CustomWindow : Window {
+        public CustomWindow() {
+            FixLayout();
+        }
 
         public static readonly DependencyProperty CloseCommandProperty =
         DependencyProperty.Register(nameof(CloseCommand), typeof(ICommand), typeof(Window), null);
@@ -25,6 +29,15 @@ namespace NINA.Core.Utility.WindowService {
         public ICommand CloseCommand {
             get { return (ICommand)GetValue(CloseCommandProperty); }
             set { SetValue(CloseCommandProperty, value); }
+        }
+
+        private void FixLayout() {
+            void Window_SourceInitialized(object sender, EventArgs e) {
+                this.InvalidateMeasure();
+                this.SourceInitialized -= Window_SourceInitialized;
+            }
+
+            this.SourceInitialized += Window_SourceInitialized;
         }
     }
 }
