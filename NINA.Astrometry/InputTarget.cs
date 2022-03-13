@@ -135,7 +135,7 @@ namespace NINA.Astrometry {
                 RaisePropertyChanged(nameof(InputCoordinates));
 
                 DeepSkyObject.Name = TargetName;
-                DeepSkyObject.Coordinates = InputCoordinates.Coordinates;
+                DeepSkyObject.Coordinates = InputCoordinates?.Coordinates;
                 DeepSkyObject.Rotation = Rotation;
 
                 this.CoordinatesChanged?.Invoke(this, new EventArgs());
