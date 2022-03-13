@@ -85,10 +85,6 @@ namespace NINA.Core.Utility.WindowService {
                 this.OnClosed?.Invoke(this, null);
                 mainwindow.Focus();
             };
-            window.ContentRendered += (object sender, EventArgs e) => {
-                var win = (System.Windows.Window)sender;
-                win.InvalidateVisual();                
-            };
 
             return window;
         }
