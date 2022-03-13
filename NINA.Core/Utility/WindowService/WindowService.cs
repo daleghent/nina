@@ -34,10 +34,8 @@ namespace NINA.Core.Utility.WindowService {
 
         public void Show(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None) {
             dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => {
-                window = GenerateWindow(title, resizeMode, windowStyle, null);
-
-                window.Content = content;
-                window.Owner = Application.Current.MainWindow;
+                window = GenerateWindow(content, title, resizeMode, windowStyle, null);
+                                
                 window.Show();
             }));
         }
@@ -55,7 +53,8 @@ namespace NINA.Core.Utility.WindowService {
             }));
         }
 
-        private CustomWindow GenerateWindow(string title, ResizeMode resizeMode, WindowStyle windowStyle, ICommand closeCommand) {
+        private CustomWindow GenerateWindow(object content, string title, ResizeMode resizeMode, WindowStyle windowStyle, ICommand closeCommand) {
+            var mainwindow = Application.Current.MainWindow;
             var window = new CustomWindow() {
                 SizeToContent = SizeToContent.WidthAndHeight,
                 Title = title,
@@ -65,6 +64,9 @@ namespace NINA.Core.Utility.WindowService {
                 MinHeight = 300,
                 MinWidth = 350,
                 Style = Application.Current.TryFindResource("NoResizeWindow") as Style,
+                Owner = mainwindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Content = content
             };
 
             if (closeCommand == null) {
@@ -73,7 +75,6 @@ namespace NINA.Core.Utility.WindowService {
                 window.CloseCommand = closeCommand;
             }
 
-            var mainwindow = Application.Current.MainWindow;
 
             window.Closing += (object sender, CancelEventArgs e) => {
                 if ((sender is Window w) && w.IsFocused) {
@@ -86,22 +87,16 @@ namespace NINA.Core.Utility.WindowService {
             };
             window.ContentRendered += (object sender, EventArgs e) => {
                 var win = (System.Windows.Window)sender;
-                win.InvalidateVisual();
-
-                var rect = mainwindow.GetAbsolutePosition();
-                win.Left = rect.Left + (rect.Width - win.ActualWidth) / 2;
-                win.Top = rect.Top + (rect.Height - win.ActualHeight) / 2;
+                win.InvalidateVisual();                
             };
-            window.Owner = mainwindow;
 
             return window;
         }
 
         public IDispatcherOperationWrapper ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null) {
             return new DispatcherOperationWrapper(dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                window = GenerateWindow(title, resizeMode, windowStyle, closeCommand);
-
-                window.Content = content;
+                window = GenerateWindow(content, title, resizeMode, windowStyle, closeCommand);
+                                
                 Application.Current.MainWindow.Opacity = 0.8;
                 var result = window.ShowDialog();
                 this.OnDialogResultChanged?.Invoke(this, new DialogResultEventArgs(result));
