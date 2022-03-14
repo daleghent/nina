@@ -16,6 +16,7 @@ using NINA.Astrometry.Interfaces;
 using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using NINA.Core.Utility.WindowService;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
@@ -359,6 +360,7 @@ namespace NINA.Plugin {
                                     LongDescription = ex.Message
                                 }
                             };
+                            Notification.ShowError(string.Format(Loc.Instance["LblPluginFailedToLoad"], failedManifest.Name, failedManifest.Version));
                             Logger.Error($"Failed to load plugin at {file} - {failedManifest.Name} version {failedManifest.Version}", ex);
                             Plugins[failedManifest] = false;
                         }

@@ -12732,6 +12732,16 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load plugin {0} version {1}.
+        ///Please check if there is an update available..
+        /// </summary>
+        internal static string LblPluginFailedToLoad {
+            get {
+                return ResourceManager.GetString("LblPluginFailedToLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugin installation for plugin {0} failed..
         /// </summary>
         internal static string LblPluginInstallationFailed {
