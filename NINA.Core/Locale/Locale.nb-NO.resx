@@ -4838,7 +4838,7 @@ Hvis blokken over er kollapset, blir gjeldende instruksjon flyttet over denne.</
     <value>En betingelse som stopper repetisjonene når målet går under en bestemt elevasjon</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Repeter inntil nedre elevasjon</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kuppel</value>
@@ -5140,13 +5140,13 @@ I denne modusen kan sekvenser bygges opp med elementære instruksjoner, triggere
     <value>Stopper repetisjon når månens elevasjon er som angitt.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Månens elevasjon</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Stopper repetisjon når solas elevasjon er som angitt.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Solas elevasjon</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5250,7 +5250,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Venter til målets er over horisonten. Dersom en egendefinert horisont er angitt, brukes denne i stedet for 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Vent til over horisont</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Venter til målet er over horisonten. Målets elevasjon {0}° / horisont {1}°</value>
@@ -5259,7 +5259,7 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>En betingelse som gjentar instruksjonsblokken så lenge målet er over horisonten</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Gjenta når over horisont</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Målet vil aldri komme over horisonten</value>

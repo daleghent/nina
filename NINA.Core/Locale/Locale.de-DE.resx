@@ -4848,7 +4848,7 @@ Wenn die nächste Position ein nicht aufgeklappter Befehlssatz ist, wird die Anw
     <value>Eine Bedingung, die eine Anweisungsfolge wiederholt bis sich das Ziel unterhalb der angegebenen Horizonthöhe befindet und dann die Anweisungsfolge beendet</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Wiederholen bis Höher geringer als</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kuppel</value>
@@ -5151,13 +5151,13 @@ Dort kann die Sequenz mit sehr viel detaillierteren Anweisungen, Auslösern und 
     <value>Verlässt die Schleife, wenn die angegebene Mondhöhe erreicht ist.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Mondhöhe</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Verlässt die Schleife, wenn die angegebene Sonnenhöhe erreicht ist.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Sonnenhöhe</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5261,7 +5261,7 @@ Andererseits hilft bei sich schnell ändernden atmosphärischen Bedingungen ein 
     <value>Wartet, bis die Zielhöhe über dem Horizont liegt. Wenn ein benutzerdefinierter Horizont verwendet wird, wird diese Höhe anstelle von 0° verwendet</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Warte bis überm Horizont</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Warte bis das Ziel oberhalb des Horizonts ist. Ziel Höhe {0}° / Horizont Höhe {1}°</value>
@@ -5270,7 +5270,7 @@ Andererseits hilft bei sich schnell ändernden atmosphärischen Bedingungen ein 
     <value>Eine Bedingung, die eine Anweisungsfolge wiederholt, solange das Ziel sich überm Horizont befindet und dann diese Anweisungsfolge beendet</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Schleife, solange Höhe oberhalb des Horizonts</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Das Ziel wird nie über dem Horizont liegen</value>

@@ -4843,7 +4843,7 @@
     <value>循环直到目标低于指定高度，然后跳过该组内的其余指令</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>循环到低于高度角</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>圆顶</value>
@@ -5147,13 +5147,13 @@
     <value>当月球达到指定高度时退出循环。</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>月球高度</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>当太阳达到指定高度时退出循环。</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>太阳高度</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5257,7 +5257,7 @@
     <value>等待目标升到地平线上方。如果使用了自定义地平线，则使用该高度而不是0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>等待到超出地平线</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>正在等待目标超出地平线。目标高度 {0}° / 地平线高度 {1}°</value>
@@ -5266,7 +5266,7 @@
     <value>目标在地平线上方时循环。如果使用了自定义地平线，则使用该高度而不是0</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>超出地平线时循环</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>目标永远不会升到地平线上</value>

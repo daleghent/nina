@@ -4841,7 +4841,7 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Una condició que crea un bucle fins que l'objectiu es fixa per sota de l'altitud donada i després atura el conjunt d'instruccions actual</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Bucle fins que l'Altitud estigui per sota</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Cúpula</value>
@@ -5145,13 +5145,13 @@ Allà, la seqüència es pot planificar des de zero mitjançant instruccions, ac
     <value>Surt del bucle quan l'altitud de la lluna coincideix amb els paràmetres especificats.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitud de la Lluna</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Surt del bucle quan l'altitud del Sol coincideix amb els paràmetres especificats.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitud del Sol</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5255,7 +5255,7 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Espera fins que l'altitud de l'objectiu estigui per sobre de l'horitzó. Si s'utilitza un horitzó personalitzat, s'utilitzarà aquesta altitud en lloc de 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Espereu fins a estar sobre l'horitzó</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>S'està esperant que l'objectiu estigui per sobre de l'horitzó. Altitud objectiu {0} ° / Altitud horitzó {1} °</value>
@@ -5264,7 +5264,7 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Una condició que crea un bucle mentre l'objectiu està per sobre de l'horitzó i després atura el conjunt d'instruccions actuals</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>En bucle mentre l'altitud està per sobre l'horitzó</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>L’objectiu mai no estarà per sobre de l’horitzó</value>

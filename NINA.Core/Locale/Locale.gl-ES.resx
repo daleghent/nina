@@ -4852,7 +4852,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Unha condición que se repite ata que o obxectivo se fixa por debaixo da altitude dada e despois detén o conxunto de instrucións actuais</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Bucle ata que a Altitude estea por debaixo de</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Cúpula</value>
@@ -5156,13 +5156,13 @@ Nel a secuencia pódese planificar dende cero empregando instrucións granulares
     <value>Sae do bucle cando a altitude da lúa coincida cos parámetros especificados.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitude da Lúa</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Sae do bucle cando a altitude do sol coincida cos parámetros especificados.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitude do Sol</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5266,7 +5266,7 @@ Para condicións de cambio rápido, un tamaño de mostra máis pequeno axudará 
     <value>Agarda ata que a altitude obxectivo estea por enriba do horizonte. Se se usa un horizonte personalizado, úsase esa altitude en lugar de 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Agarda ata que esta por riba do horizonte</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Agardando ata que o obxectivo estea sobre o horizonte. Altitude do Obxectivo {0}° / Altitude do Horizonte {1}°</value>
@@ -5275,7 +5275,7 @@ Para condicións de cambio rápido, un tamaño de mostra máis pequeno axudará 
     <value>Unha condición que se produce mentres o obxectivo está por riba do horizonte e despois detén o conxunto de instrucións actual</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Repite mentres a altitude está sobre o horizonte</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>O obxectivo non vai chegar a estar sobre o horizonte</value>

@@ -4840,7 +4840,7 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>Belirtilen yüksekliğe ulaşılana kadar döngü yapan ve ardından mevcut yönerge setini durduran bir koşul</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Belirtilen yüksekliğin altına düşünceye dek döndür</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Dome</value>
@@ -5144,13 +5144,13 @@ Bu modda sekans, ince ayrıntılı talimatlar, tetikleyiciler ve koşullar kulla
     <value>Ayın yüksekliği belirtilen parametrelerle eşleştiğinde döngüden çıkar.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Ay yüksekliği</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Güneşin yüksekliği belirtilen parametrelerle eşleştiğinde döngüden çıkar.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Güneş yüksekliği</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5254,7 +5254,7 @@ Hızla değişen koşullar için, daha küçük bir örnek boyutu, örneğin hı
     <value>Hedefin yüksekliği ufkun üzerinde oluncaya kadar bekler. Özel ufuk kullanılırsa, 0 yerine bu yükseklik kullanılır</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Ufuk üzerine kadar bekle</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Ufkun üzerine çıkıncaya kadar bekleniyor. Hedef yüksekliği {0}° / ufuk yüksekliği {1}°</value>
@@ -5263,7 +5263,7 @@ Hızla değişen koşullar için, daha küçük bir örnek boyutu, örneğin hı
     <value>Hedef ufkun üzerindeyken döngü yapan ve ardından mevcut yönerge setini durduran koşul</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Yükseklik ufuk üzerine çıkana dek döndür</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Hedef ufuk üzerine hiç çıkmayacak</value>

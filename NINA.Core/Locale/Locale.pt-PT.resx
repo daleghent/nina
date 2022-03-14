@@ -4845,7 +4845,7 @@ Se a posição acima não for um conjunto de instruções expandido, será movid
     <value>Uma instrução que é repetida até que o objecto se encontre abaixo da altitude definida e pára o conjunto actual de instruções</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Repetir até que a altitude seja inferior a</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Dome</value>
@@ -5149,13 +5149,13 @@ A sequência pode ser planificada a partir do zero, usando instruções pormenor
     <value>Parar de repetir quando a altitude da Lua corresponder aos parâmetros definidos.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitude da Lua</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Parar de repetir quando a altitude do Sol corresponder aos parâmetros definidos.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitude do Sol</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5259,7 +5259,7 @@ Para mudar rapidamente as condições, uma amostra menor ajudará a responder ma
     <value>Aguarda até que a altitude do objecto esteja acima do horizonte. Se for usado um horizonte personalizado, essa altitude será usada em vez de 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Aguarda até que esteja acima do horizonte</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>A aguardar que o objecto esteja acima do horizonte. Altitue do Objecto {0} º / Altitude do Horizonte {1} º</value>
@@ -5268,7 +5268,7 @@ Para mudar rapidamente as condições, uma amostra menor ajudará a responder ma
     <value>Uma condição que é repetida enquanto o objecto se encontre acima do horizonte e pára o conjunto actual de instruções</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Repetir enquanto a Altitude seja superior ao horizonte</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>O objecto nunca estará acima do horizonte</value>

@@ -4842,7 +4842,7 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Una condición que crea un bucle hasta que el objetivo esté por encima de la altitud dada y luego detiene el conjunto actual de instrucciones</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Bucle hasta que la Altitud esté por debajo</value>
+    <value>En bucle hasta que la Altitud esté por debajo</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Cúpula</value>
@@ -5146,13 +5146,13 @@ Allí la secuencia puede planificarse desde cero utilizando instrucciones pormen
     <value>Sale del bucle cuando la altitud de la luna coincide con los parámetros especificados.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitud de la Luna</value>
+    <value>En bucle hasta que la Altitud de la Luna</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Sale del bucle cuando la altitud de la luna coincide con los parámetros especificados.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitud del sol</value>
+    <value>En bucle hasta que la Altitud del Sol</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5256,7 +5256,7 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Espera hasta que la altitud de objetivo esté por encima del horizonte. Si se utiliza un horizonte personalizado, esa altitud se usará en lugar de 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Esperar hasta estar sobre el horizonte</value>
+    <value>Espera hasta que esté sobre el horizonte</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Esperando hasta que el objetivo esté sobre el horizonte. Altitud del objetivo {0}° / Altitud de horizonte {1}°</value>

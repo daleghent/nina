@@ -4849,7 +4849,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Une condition qui boucle jusqu'à ce que la cible se situe en dessous de l'altitude donnée, puis arrête la série d'instructions en cours</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Boucle jusqu'à ce que l'altitude descende en dessous</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Dôme</value>
@@ -5153,13 +5153,13 @@ La séquence peut alors être planifiée à partir de zéro à l'aide d'instruct
     <value>Quitte la boucle lorsque l'altitude de la lune correspond aux paramètres spécifiés.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitude de la Lune</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Quitte la boucle lorsque l'altitude du soleil correspond aux paramètres spécifiés.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Altitude du Soleil</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5263,7 +5263,7 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
     <value>Attend que l'altitude cible soit au-dessus de l'horizon. Si un horizon personnalisé est utilisé, cette altitude est utilisée au lieu de 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Attendre jusqu'à l'horizon</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Attente jusqu'à ce que la cible soit au-dessus de l'horizon. Altitude de la cible {0}° / Altitude de l'horizon {1}°</value>
@@ -5272,7 +5272,7 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
     <value>Une condition qui boucle tant que la cible est au-dessus de l'horizon et qui arrête ensuite le jeu d'instructions en cours</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Boucler tant que l'altitude est au-dessus de l'horizon</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>La cible ne sera jamais au-dessus de l'horizon</value>

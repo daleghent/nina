@@ -4831,7 +4831,7 @@
     <value>目標が指定された高度の下に来るまでに、命令セットをループさせてから停止させる条件</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>高度の下に来るまでループ</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>ドーム</value>
@@ -5134,13 +5134,13 @@
     <value>月の高度が指定したパラメータに一致したとき、ループを終了します。</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>月の高度</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>太陽の高度が指定したパラメータに一致したとき、ループを終了します。</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>太陽の高度</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5242,7 +5242,7 @@
     <value>目標の高度が地平線の上になるまで待機します。カスタム地平線が使用される場合、その高度は 0 の代わりとして使用されます。</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>地平線の上に来るまで待機</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>目標が地平線の上に来るまで待機中です。目標の高度 {0}° / 地平線の高度 {1}°</value>
@@ -5251,7 +5251,7 @@
     <value>目標が地平線の上にある間ループし、その後で現在の命令セットを停止する条件</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>高度が地平線の上にある間ループ</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>目標は決して地平線の上に来ることはありません</value>

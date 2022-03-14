@@ -4292,7 +4292,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Podmínka, která se opakuje, dokud není dosaženo zadaného času, poté zastaví aktuální sadu pokynů</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
-    <value>Cyklus v Trvání</value>
+    <value>Cyklus Do Trvání</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
     <value>Funguje jako sekvenční instrukční sada, ale uvnitř lze zadat objekt hluboké oblohy, který v případě potřeby automaticky naplní všechny instrukce uvnitř souřadnicemi a otočením.</value>
@@ -4846,7 +4846,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Podmínka, která se opakuje, dokud se stanovený cíl nedostane pod danou výšku, a poté zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Cyklus, Dokud Výška Neklesne Pod</value>
+    <value>Cyklus do Výšky Pod</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kopule</value>
@@ -5150,13 +5150,13 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Ukončí cyklus, pokud výška Měsíce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Výška Měsíce</value>
+    <value>Cyklus do Výšky Měsíce</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Ukončí cyklus, pokud výška Slunce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Výška Slunce</value>
+    <value>Cyklus do Výšky Slunce</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5260,7 +5260,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Čeká, až bude cílová výška nad obzorem. Pokud se používá vlastní horizont, používá se tato výška namísto 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Čeká, až bude nad horizontem</value>
+    <value>Počkat, až Bude nad horizontem</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Čekám, až bude cíl nad obzorem. Cílová Výška {0}° / Výška Horizontu {1}°</value>
@@ -5269,7 +5269,7 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Podmínka, která se opakuje, dokud je cíl nad horizontem, poté se zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Cyklus, Dokud je Výška nad Horizontem</value>
+    <value>Cyklus Dokud je Výška Nad Horizontem</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Cíl nikdy nebude nad obzorem</value>

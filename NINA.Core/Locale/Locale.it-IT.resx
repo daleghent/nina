@@ -4850,7 +4850,7 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
     <value>A condition that loops until the target sets below the given altitude and then stops the current instruction set</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop Until Altitude Sets Below</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Osservatorio</value>
@@ -5154,13 +5154,13 @@ La sequenza può essere pianificata da zero utilizzando istruzioni specifiche, t
     <value>Exits the loop when the moon's altitude matches the specified parameters.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Moon Altitude</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Exits the loop when the sun's altitude matches the specified paramters.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Sun Altitude</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5264,7 +5264,7 @@ Per condizoini che cambiano rapidamente, una dimensione del campione più piccol
     <value>Attendere che l'altitudine del target sia al di sopra dell'orizzonte. Se si usa un orizzonte personalizzato, questa altitudine viene usata invece di 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Attendere fino al superamento dell'orizzonte</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>In attesa che il target sia sopra l'orizzonte. Altitudine target {0}° / Altitudine orizzonte {1}°</value>
@@ -5273,7 +5273,7 @@ Per condizoini che cambiano rapidamente, una dimensione del campione più piccol
     <value>Una condizione che si ripete fino a quando il tempo specificato è stato raggiunto e quindi arresta le istruzioni correnti</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Ripeti mentre l'Altitudine è sopra L'Orizzonte</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Il target non sarà mai al di sopra dell'orizzonte</value>

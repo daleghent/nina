@@ -4845,7 +4845,7 @@ Dec: {1}</value>
     <value>Условие, которое повторяется до тех пор, пока цель не опустится ниже заданной высоты, а затем останавливает текущий набор инструкций</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Цикл, пока высота не будет установлена ниже</value>
+    <value>Loop until Altitude Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Купол</value>
@@ -5149,13 +5149,13 @@ Dec: {1}</value>
     <value>Выход из цикла когда высота Луны соответствует заданным параметрам.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Высота Луны</value>
+    <value>Loop until Moon Altitude</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Выход из цикла когда высота Солнца соответствует заданным параметрам.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Высота Солнца</value>
+    <value>Loop until Sun Altitude</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5259,7 +5259,7 @@ Dec: {1}</value>
     <value>Ждёт пока высота цели выше горизонта. Если используется пользовательский горизонт, эта высота используется вместо 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Дождитесь пока выше горизонта</value>
+    <value>Wait until Above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>Ожидание до цели выше горизонта. Высота цели {0}° / высота горизонта {1}°</value>
@@ -5268,7 +5268,7 @@ Dec: {1}</value>
     <value>Условие, которое повторяется, пока цель находится над горизонтом, а затем останавливает текущий набор инструкций</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Цикл пока высота над горизонтом</value>
+    <value>Loop while Altitude Above Horizon</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Цель никогда не будет выше горизонта</value>
