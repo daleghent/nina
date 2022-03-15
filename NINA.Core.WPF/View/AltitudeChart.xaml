@@ -144,58 +144,66 @@
         </oxy:Plot>
 
         <Grid
-            Margin="36,12,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            Margin="{Binding MoonMargin, ElementName=UC}"
+            HorizontalAlignment="{Binding MoonHorizontalAlignment, ElementName=UC}"
+            VerticalAlignment="{Binding MoonVerticalAlignment, ElementName=UC}"
             Visibility="{Binding ShowMoon, ElementName=UC, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ToggleButton
+                Width="24"
+                Height="24"
+                HorizontalAlignment="{Binding MoonHorizontalAlignment, ElementName=UC}"
+                VerticalAlignment="{Binding MoonVerticalAlignment, ElementName=UC}"
+                IsChecked="{Binding Moon.DisplayMoon}"
+                Visibility="{Binding ShowMoon, ElementName=UC, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <ToggleButton.ToolTip>
+                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                        <TextBlock Text="{ns:Loc LblDisplayMoonChart}" />
+                    </ToolTip>
+                </ToggleButton.ToolTip>
+                <ToggleButton.Style>
+                    <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Path
+                                            Margin="5"
+                                            Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Path
+                                            Margin="5"
+                                            Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                            Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                            Stretch="Uniform" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
             <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="{Binding MoonHorizontalAlignment, ElementName=UC}"
+                VerticalAlignment="{Binding MoonVerticalAlignment, ElementName=UC}"
                 Foreground="{StaticResource ButtonForegroundBrush}"
                 Text="{Binding Moon.SeparationText}"
                 ToolTip="{ns:Loc LblMoonSeparation}"
                 Visibility="{Binding Moon.DisplayMoon, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" />
         </Grid>
 
-        <ToggleButton
-            Width="24"
-            Height="24"
-            Margin="{Binding MoonMargin, ElementName=UC}"
-            HorizontalAlignment="{Binding MoonHorizontalAlignment, ElementName=UC}"
-            VerticalAlignment="{Binding MoonVerticalAlignment, ElementName=UC}"
-            IsChecked="{Binding Moon.DisplayMoon}"
-            Visibility="{Binding ShowMoon, ElementName=UC, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <ToggleButton.ToolTip>
-                <ToolTip ToolTipService.ShowOnDisabled="True">
-                    <TextBlock Text="{ns:Loc LblDisplayMoonChart}" />
-                </ToolTip>
-            </ToggleButton.ToolTip>
-            <ToggleButton.Style>
-                <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
-                    <Style.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Path
-                                        Margin="5"
-                                        Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Path
-                                        Margin="5"
-                                        Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
-                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                        Stretch="Uniform" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ToggleButton.Style>
-        </ToggleButton>
+
     </Grid>
 </UserControl>
