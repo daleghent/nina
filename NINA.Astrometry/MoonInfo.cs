@@ -62,7 +62,7 @@ namespace NINA.Astrometry {
             }
             set {
                 _separation = value;
-                SeparationText = "θ" + Math.Round(Separation, 0) + "°";
+                SeparationText = Math.Round(Separation, 0).ToString().PadLeft(3, '0') + "°";
                 RaisePropertyChanged();
             }
         }
