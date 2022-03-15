@@ -171,22 +171,36 @@
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter Property="Content">
                                     <Setter.Value>
-                                        <Path
-                                            Margin="5"
-                                            Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource NewMoonSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                            <Path
+                                                Margin="5"
+                                                Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                                Fill="Black"
+                                                Stretch="Uniform" />
+                                        </Grid>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter Property="Content">
                                     <Setter.Value>
-                                        <Path
-                                            Margin="5"
-                                            Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
-                                            Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                            Stretch="Uniform" />
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource NewMoonSVG}"
+                                                Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                Stretch="Uniform" />
+                                            <Path
+                                                Margin="5"
+                                                Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                                Fill="Black"
+                                                Stretch="Uniform" />
+                                        </Grid>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>

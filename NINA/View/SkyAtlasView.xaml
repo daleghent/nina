@@ -451,6 +451,7 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
 
                                         <!--  will be displayed when no image is available  -->
@@ -523,7 +524,51 @@
                                                 </StackPanel>
                                             </Grid>
                                         </StackPanel>
-                                        <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+
+
+                                        <Grid
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Bottom">
+                                            <StackPanel
+                                                Margin="0,6,0,6"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                                <Grid>
+                                                    <Path
+                                                        Width="20"
+                                                        Height="20"
+                                                        Data="{StaticResource NewMoonSVG}"
+                                                        Fill="LightGray"
+                                                        Stretch="Uniform" />
+                                                    <Path
+                                                        Width="20"
+                                                        Height="20"
+                                                        Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                                        Fill="Black"
+                                                        Stretch="Uniform" />
+                                                </Grid>
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    MinWidth="40"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="LightGray"
+                                                    Text="{Binding Moon.SeparationText}">
+
+                                                    <TextBlock.ToolTip>
+                                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                            <TextBlock Text="{ns:Loc LblMoonSeparation}" />
+                                                        </ToolTip>
+                                                    </TextBlock.ToolTip>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+
+
+                                        <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
 
                                             <Grid>
                                                 <StackPanel
@@ -604,7 +649,7 @@
                         Header="{ns:Loc LblAltitude}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <alt:AltitudeChart  NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                                <alt:AltitudeChart NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" ShowMoon="False" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
