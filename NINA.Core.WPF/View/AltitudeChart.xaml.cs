@@ -47,5 +47,33 @@ namespace NINA.WPF.Base.View {
             get => (bool)GetValue(AnnotateTimeAxisProperty);
             set => SetValue(AnnotateTimeAxisProperty, value);
         }
+
+        public static DependencyProperty MoonHorizontalAlignmentProperty = DependencyProperty.Register("MoonHorizontalAlignment", typeof(HorizontalAlignment), typeof(AltitudeChart), new PropertyMetadata(HorizontalAlignment.Right));
+
+        public HorizontalAlignment MoonHorizontalAlignment {
+            get => (HorizontalAlignment)GetValue(MoonHorizontalAlignmentProperty);
+            set => SetValue(MoonHorizontalAlignmentProperty, value);
+        }
+
+        public static DependencyProperty MoonVerticalAlignmentProperty = DependencyProperty.Register("MoonVerticalAlignment", typeof(VerticalAlignment), typeof(AltitudeChart), new PropertyMetadata(VerticalAlignment.Top));
+
+        public VerticalAlignment MoonVerticalAlignment {
+            get => (VerticalAlignment)GetValue(MoonVerticalAlignmentProperty);
+            set => SetValue(MoonVerticalAlignmentProperty, value);
+        }
+
+        public static DependencyProperty MoonMarginProperty = DependencyProperty.Register("MoonMargin", typeof(Thickness), typeof(AltitudeChart), new PropertyMetadata(new Thickness(0, 10, 10, 0)));
+
+        public Thickness MoonMargin {
+            get => (Thickness)GetValue(MoonMarginProperty);
+            set => SetValue(MoonMarginProperty, value);
+        }
+
+        public static DependencyProperty ShowMoonProperty = DependencyProperty.Register("ShowMoon", typeof(bool), typeof(AltitudeChart), new PropertyMetadata(true));
+
+        public bool ShowMoon {
+            get => (bool)GetValue(ShowMoonProperty);
+            set => SetValue(ShowMoonProperty, value);
+        }
     }
 }

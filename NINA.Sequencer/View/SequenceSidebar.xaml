@@ -858,6 +858,56 @@
                                                         Text="{Binding Target.Rotation}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="°" />
                                                 </StackPanel>
+                                                <StackPanel DataContext="{Binding Target.DeepSkyObject}" Orientation="Horizontal">
+                                                    <ToggleButton
+                                                        Width="50"
+                                                        Height="24"
+                                                        Margin="0,0,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center"
+                                                        IsChecked="{Binding Moon.DisplayMoon}">
+                                                        <ToggleButton.ToolTip>
+                                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                                <TextBlock Text="{ns:Loc LblDisplayMoonChart}" />
+                                                            </ToolTip>
+                                                        </ToggleButton.ToolTip>
+                                                        <ToggleButton.Style>
+                                                            <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsChecked" Value="True">
+                                                                        <Setter Property="Content">
+                                                                            <Setter.Value>
+                                                                                <Path
+                                                                                    Margin="5"
+                                                                                    Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                                                    Stretch="Uniform" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsChecked" Value="False">
+                                                                        <Setter Property="Content">
+                                                                            <Setter.Value>
+                                                                                <Path
+                                                                                    Margin="5"
+                                                                                    Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                                                                    Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                                                    Stretch="Uniform" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </ToggleButton.Style>
+                                                    </ToggleButton>
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{Binding Moon.SeparationText}"
+                                                        ToolTip="{ns:Loc LblMoonSeparation}"
+                                                        Visibility="{Binding Moon.DisplayMoon, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" />
+                                                </StackPanel>
                                             </StackPanel>
 
                                             <altitude:AltitudeChart
@@ -869,7 +919,8 @@
                                                 AnnotateAltitudeAxis="False"
                                                 AnnotateTimeAxis="False"
                                                 DataContext="{Binding Container.Target.DeepSkyObject}"
-                                                NighttimeData="{Binding DataContext.Container.NighttimeData, ElementName=PART_Grid}" />
+                                                NighttimeData="{Binding DataContext.Container.NighttimeData, ElementName=PART_Grid}"
+                                                ShowMoon="False" />
                                         </Grid>
                                         <Border.Style>
                                             <Style TargetType="Border">

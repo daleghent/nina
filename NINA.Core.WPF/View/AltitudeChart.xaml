@@ -111,9 +111,9 @@
                 <oxy:AreaSeries
                     DataFieldX="Key"
                     DataFieldY="Value"
-                    Visibility="{Binding Moon.DisplayMoon, Converter={StaticResource BooleanToVisibilityHiddenConverter}}"
                     ItemsSource="{Binding Moon.DataPoints}"
                     TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}&#176;"
+                    Visibility="{Binding Moon.DisplayMoon, Converter={StaticResource BooleanToVisibilityHiddenConverter}}"
                     Color="{Binding Moon.Color}" />
 
             </oxy:Plot.Series>
@@ -140,25 +140,29 @@
                     TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     X="{Binding MaxAltitude.X}"
                     Y="{Binding MaxAltitude.Y}" />
-             </oxy:Plot.Annotations>
+            </oxy:Plot.Annotations>
         </oxy:Plot>
-        
-        <TextBlock 
-                Margin="36,12,0,0"
-                Text="{Binding Moon.SeparationText}"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                ToolTip="{ns:Loc LblMoonSeparation}"
+
+        <Grid
+            Margin="36,12,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Visibility="{Binding ShowMoon, ElementName=UC, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <TextBlock
                 Foreground="{StaticResource ButtonForegroundBrush}"
+                Text="{Binding Moon.SeparationText}"
+                ToolTip="{ns:Loc LblMoonSeparation}"
                 Visibility="{Binding Moon.DisplayMoon, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" />
+        </Grid>
 
         <ToggleButton
-                Width="24"
-                Height="24"
-                Margin="10,10,0,0"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                IsChecked="{Binding Moon.DisplayMoon}">
+            Width="24"
+            Height="24"
+            Margin="{Binding MoonMargin, ElementName=UC}"
+            HorizontalAlignment="{Binding MoonHorizontalAlignment, ElementName=UC}"
+            VerticalAlignment="{Binding MoonVerticalAlignment, ElementName=UC}"
+            IsChecked="{Binding Moon.DisplayMoon}"
+            Visibility="{Binding ShowMoon, ElementName=UC, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <ToggleButton.ToolTip>
                 <ToolTip ToolTipService.ShowOnDisabled="True">
                     <TextBlock Text="{ns:Loc LblDisplayMoonChart}" />
@@ -171,10 +175,10 @@
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Path
-                                            Margin="5"
-                                            Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                        Margin="5"
+                                        Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                        Stretch="Uniform" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -182,10 +186,10 @@
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Path
-                                            Margin="5"
-                                            Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
-                                            Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                            Stretch="Uniform" />
+                                        Margin="5"
+                                        Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                        Stretch="Uniform" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
