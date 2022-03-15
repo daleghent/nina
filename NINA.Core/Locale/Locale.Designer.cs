@@ -6621,6 +6621,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display moon chart.
+        /// </summary>
+        internal static string LblDisplayMoonChart {
+            get {
+                return ResourceManager.GetString("LblDisplayMoonChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distance.
         /// </summary>
         internal static string LblDistance {
@@ -10868,6 +10877,15 @@ namespace NINA.Core.Locale {
         internal static string LblMoonRise {
             get {
                 return ResourceManager.GetString("LblMoonRise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Angular separation between moon and target.
+        /// </summary>
+        internal static string LblMoonSeparation {
+            get {
+                return ResourceManager.GetString("LblMoonSeparation", resourceCulture);
             }
         }
         

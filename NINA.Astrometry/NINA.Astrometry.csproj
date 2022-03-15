@@ -137,6 +137,7 @@
     <Compile Include="Body\Moon.cs" />
     <Compile Include="Body\Sun.cs" />
     <Compile Include="Interfaces\IDeepSkyObject.cs" />
+    <Compile Include="MoonInfo.cs" />
     <Compile Include="ObserverInfo.cs" />
     <Compile Include="Constellation.cs" />
     <Compile Include="ConstellationBoundary.cs" />
