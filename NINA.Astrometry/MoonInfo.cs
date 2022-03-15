@@ -94,8 +94,7 @@ namespace NINA.Astrometry {
         }
 
         public AstroUtil.MoonPhase Phase {
-            get { return AstroUtil.GetMoonPhase(DateTime.Now); }
-            set { }
+            get { return AstroUtil.GetMoonPhase(DateTime.Now); }            
         }
 
         public Color Color {
@@ -105,7 +104,6 @@ namespace NINA.Astrometry {
                 byte alpha = (byte)(255 - gray);
                 return Color.FromArgb(alpha, gray, gray, gray);
             }
-            set { }
         }
 
         private void CalculateMoonData() {
