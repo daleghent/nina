@@ -112,6 +112,7 @@
     <Compile Include="ManifestDefinition\PluginDescription.cs" />
     <Compile Include="ManifestDefinition\PluginInstallerDetails.cs" />
     <Compile Include="ManifestDefinition\PluginManifest.cs" />
+    <Compile Include="PluginCompatibility.cs" />
     <Compile Include="PluginInstaller.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="PluginFetcher.cs" />

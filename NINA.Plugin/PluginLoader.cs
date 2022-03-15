@@ -140,7 +140,10 @@ namespace NINA.Plugin {
                 new MeridianProvider(profileService)
             };
             assemblyReferencePathMap = new Dictionary<string, string>();
+            compatibilityMap = new PluginCompatibilityMap();
         }
+
+        private readonly PluginCompatibilityMap compatibilityMap;
 
         private void DeployFromStaging() {
             var staging = Constants.StagingFolder;
@@ -330,29 +333,34 @@ namespace NINA.Plugin {
                         var manifest = manifestImport.PluginManifestImport;
 
                         try {
-                            Compose(plugin);
-
-                            if (PluginVersion.IsPluginCompatible(manifest.MinimumApplicationVersion, applicationVersion)) {
-                                await manifest.Initialize();
-
-                                Plugins[manifest] = true;
-
-                                //Add the loaded plugin assembly to the assembly resolver
-                                Assemblies.Add(plugin.Assembly);
-
-                                // If there's a dll sub-directory for the plugin, add it to the dll search path to help deal with subsequent loads
-                                if (pluginDllDirectory.Exists && !AddDllDirectory(pluginDllDirectory.FullName)) {
-                                    Logger.Warning($"Failed to add {pluginDllDirectory.FullName} to dll search path");
-                                }
-                                Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
-                            } else {
+                            if (!PluginVersion.IsPluginCompatible(manifest.MinimumApplicationVersion, applicationVersion)) {
                                 throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum version of {manifest.MinimumApplicationVersion}, but N.I.N.A. is {applicationVersion}");
                             }
+
+                            if(!compatibilityMap.IsCompatible(manifest)) {
+                                throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum plugin version of {compatibilityMap.GetMinimumVersion(manifest)}, but current plugin version is {manifest.Version}");
+                            }
+
+                            Compose(plugin);
+
+                            await manifest.Initialize();
+
+                            Plugins[manifest] = true;
+
+                            //Add the loaded plugin assembly to the assembly resolver
+                            Assemblies.Add(plugin.Assembly);
+
+                            // If there's a dll sub-directory for the plugin, add it to the dll search path to help deal with subsequent loads
+                            if (pluginDllDirectory.Exists && !AddDllDirectory(pluginDllDirectory.FullName)) {
+                                Logger.Warning($"Failed to add {pluginDllDirectory.FullName} to dll search path");
+                            }
+                            Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
+                           
                         } catch (Exception ex) {
                             //Manifest ok - plugin composition failed
                             var failedManifest = new PluginManifest {
                                 Author = manifest.Author,
-                                Identifier = file,
+                                Identifier = string.IsNullOrWhiteSpace(manifest?.Identifier) ? file : manifest.Identifier,
                                 Name = manifest.Name,
                                 Version = manifest.Version,
                                 Descriptions = new PluginDescription {
