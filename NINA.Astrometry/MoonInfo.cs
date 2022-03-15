@@ -47,8 +47,10 @@ namespace NINA.Astrometry {
 
         public void SetReferenceDateAndObserver(DateTime date, ObserverInfo observer) {
             _observer = observer;
-            if (date != _referenceDate) {
-                _referenceDate = date;
+
+            var calculate = DisplayMoon && date != _referenceDate;
+            _referenceDate = date;
+            if (calculate) {
                 CalculateMoonData();
             }
             CalculateSeparation(date);
@@ -82,6 +84,11 @@ namespace NINA.Astrometry {
             get { return _displayMoon; }
             set {
                 _displayMoon = value;
+                if(value) {
+                    if (Points.Count == 0) {
+                        CalculateMoonData();
+                    }
+                }
                 RaisePropertyChanged();
             }
         }
