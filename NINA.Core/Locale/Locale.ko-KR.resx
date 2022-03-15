@@ -4836,7 +4836,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>타겟이 주어진 고도 아래로 떨어질 때까지 반복 후 현재 명령어 세트를 중지하는 조건</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Altitude Below</value>
+    <value>고도가 낮아질 때까지 반복</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>돔</value>
@@ -5149,13 +5149,13 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>달의 고도가 지정된 매개 변수와 일치하면 반복을 종료합니다.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Moon Altitude</value>
+    <value>달의 고도까지 반복</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>태양의 고도가 지정된 매개 변수와 일치하면 반복을 종료합니다.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Sun Altitude</value>
+    <value>태양의 고도까지 반복</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5262,7 +5262,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
 사용자 지정 수평선이 사용되는 경우 고도는 0 대신 사용됩니다.</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Wait until Above horizon</value>
+    <value>지평선 위로 올라올때 까지 기다림</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>타겟이 수평선 위로 올 때까지 대기 중입니다.
@@ -5272,7 +5272,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>타겟이 수평선 위로 있는 동안 반복하고, 그 후 현재 명령 세트를 중지하는 조건</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Loop while Altitude Above Horizon</value>
+    <value>지평선 고도 위로 올라올때 까지 반복</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>타겟은 수평선 위로 오지 않습니다.</value>
