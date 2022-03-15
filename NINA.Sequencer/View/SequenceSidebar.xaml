@@ -905,8 +905,7 @@
                                                         VerticalAlignment="Center"
                                                         Foreground="{StaticResource ButtonForegroundBrush}"
                                                         Text="{Binding Moon.SeparationText}"
-                                                        ToolTip="{ns:Loc LblMoonSeparation}"
-                                                        Visibility="{Binding Moon.DisplayMoon, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" />
+                                                        ToolTip="{ns:Loc LblMoonSeparation}" />
                                                 </StackPanel>
                                             </StackPanel>
 
