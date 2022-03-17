@@ -1019,6 +1019,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 Logger.Debug("QHYCCD: Downloading exposure...");
 
+                while (Sdk.GetExposureRemaining() > 0) {
+                    await Task.Delay(10, ct);
+                }
+
                 /*
                  * Size the image data byte array for the image
                  */
@@ -1030,11 +1034,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * Download the image from the camera
                  */
                 CameraState = CameraStates.Download;
+                ct.ThrowIfCancellationRequested();
                 if (is16bit) {
+                    Logger.Trace("GetSingleFrame start");
                     rv = Sdk.GetSingleFrame(ref width, ref height, ref bpp, ref channels, ImgData);
+                    Logger.Trace("GetSingleFrame end");
                 } else {
                     byte[] ImgDataBytes = new byte[numPixels];
+                    Logger.Trace("GetSingleFrame start");
                     rv = Sdk.GetSingleFrame(ref width, ref height, ref bpp, ref channels, ImgDataBytes);
+                    Logger.Trace("GetSingleFrame end");
                     for (int i = 0; i < ImgDataBytes.Length; i++) {
                         ImgData[i] = ImgDataBytes[i];
                     }
@@ -1188,11 +1197,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             downloadExposureTaskCTS?.Dispose();
             downloadExposureTaskCTS = new CancellationTokenSource();
-            if (ret != QhySdk.QHYCCD_READ_DIRECTLY) {
-                while (Sdk.GetExposureRemaining() > 0) {
-                    Task.Delay(100, downloadExposureTaskCTS.Token);
-                }
-            }
             downloadExposureTask = StartDownloadExposure(downloadExposureTaskCTS.Token);
         }
 
@@ -1302,6 +1306,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } else {
                 CameraState = CameraStates.Idle;
             }
+
             LiveViewEnabled = false;
             ReconnectForLiveView();
             Logger.Debug("QHYCCD: Disabled live view");
@@ -1330,7 +1335,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (rv == uint.MaxValue) {
                         await Task.Yield();
                         // GetQHYCCDLiveFrame returns -1 when the data isn't available yet, requiring looping.
-                        Thread.Sleep(1);
+                        await Task.Delay(1, ct);
                         loop++;
                         continue;
                     } else if (rv > size) {
