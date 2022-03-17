@@ -201,7 +201,14 @@ namespace NINA.Sequencer.Utility {
                 if (data.UseCustomHorizon) {
                     // With custom horizons, we have to do significant iteration so we'll use 10 minutes as
                     // our iteration time
-                    if (ns) {
+
+                    if (rsm.Rise == DateTime.MinValue) {
+                        // This is the hardest case; the target doesn't fall below our lowest horizon so we
+                        // can't determine beforehand a good rise/set time for boundaries
+                        startTime = DateTime.Now;
+                        endTime = startTime.AddHours(24);
+                        baseTime = startTime;
+                    } else if (ns) {
                         startTime = rsm.Rise;
                         endTime = rsm.Meridian;
                     } else {
@@ -248,6 +255,8 @@ namespace NINA.Sequencer.Utility {
             // Log this!
             Logger.Info(data.Name + ": CalculateExpectedTime failed after " + ++iterations + " iterations, Custom: " + data.UseCustomHorizon);
             data.ExpectedDateTime = startTime;
+            data.ExpectedTime = "--";
+            data.TargetAltitude = double.NaN;
         }
 
         /*
@@ -292,30 +301,26 @@ namespace NINA.Sequencer.Utility {
                 targetAltitude = data.GetTargetAltitudeWithHorizon(DateTime.Now) + offset;
             }
 
-            if (rsm.Rise == DateTime.MinValue) {
-                data.ExpectedTime = "--";
-            } else {
-                 switch (data.Comparator) {
-                    case ComparisonOperatorEnum.GREATER_THAN:
-                        if ((until && data.CurrentAltitude > targetAltitude) || (!until && data.CurrentAltitude <= targetAltitude) && (!mustSet || (mustSet && !data.IsRising))) {
-                            data.TargetAltitude = targetAltitude;
-                            data.ExpectedTime = Loc.Instance["LblNow"];
-                        } else {
-                            Iterate(data, rsm, greater: true, until, allowance, getCurrentAltitude);
-                        }
-                        return;
-                    default:
-                        if ((until && data.CurrentAltitude <= targetAltitude) || (!until && data.CurrentAltitude > targetAltitude)) {
-                            data.TargetAltitude = targetAltitude;
-                            data.ExpectedTime = Loc.Instance["LblNow"];
-                        } else {
-                            Iterate(data, rsm, greater: false, until, allowance, getCurrentAltitude);
-                        }
-                        return;
-                }
+            switch (data.Comparator) {
+                case ComparisonOperatorEnum.GREATER_THAN:
+                    if ((until && data.CurrentAltitude > targetAltitude) || (!until && data.CurrentAltitude <= targetAltitude) && (!mustSet || (mustSet && !data.IsRising))) {
+                        data.TargetAltitude = targetAltitude;
+                        data.ExpectedTime = Loc.Instance["LblNow"];
+                    } else {
+                        Iterate(data, rsm, greater: true, until, allowance, getCurrentAltitude);
+                    }
+                    return;
+                default:
+                    if ((until && data.CurrentAltitude <= targetAltitude) || (!until && data.CurrentAltitude > targetAltitude)) {
+                        data.TargetAltitude = targetAltitude;
+                        data.ExpectedTime = Loc.Instance["LblNow"];
+                    } else {
+                        Iterate(data, rsm, greater: false, until, allowance, getCurrentAltitude);
+                    }
+                    return;
             }
         }
-        
+
         public static RiseSetMeridian CalculateTimeAtAltitude(Coordinates coord, double latitude, double longitude, double targetAltitude, DateTime time) {
             int tzoHours = new DateTimeOffset(time).Offset.Hours;
             double ra = coord.RADegrees;

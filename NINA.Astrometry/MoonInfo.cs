@@ -53,7 +53,8 @@ namespace NINA.Astrometry {
             if (calculate) {
                 CalculateMoonData();
             }
-            CalculateSeparation(date);
+            // Calculate separation in the middle of the chart period
+            CalculateSeparation(date.AddHours(12));
         }
 
         private double _separation;
