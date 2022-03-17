@@ -6112,4 +6112,14 @@ Este botón no es visible en modo mosaico.</value>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
     <value>Retrouver la vitesse de décalage après la perte du verrouillage de décalage</value>
   </data>
+  <data name="LblDisplayMoonChart" xml:space="preserve">
+    <value>Mostrar gráfico de la luna</value>
+  </data>
+  <data name="LblMoonSeparation" xml:space="preserve">
+    <value>Separación angular entre la luna y el objetivo</value>
+  </data>
+  <data name="LblPluginFailedToLoad" xml:space="preserve">
+    <value>Error al cargar el plugin {0} versión {1}.
+Por favor, comprueba si hay disponible actualización.</value>
+  </data>
 </root>

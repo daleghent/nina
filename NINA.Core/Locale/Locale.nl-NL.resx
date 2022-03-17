@@ -6110,4 +6110,14 @@ This button is not visible when in mosaic mode.</value>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
     <value>Restored shift rate after losing shift lock</value>
   </data>
+  <data name="LblDisplayMoonChart" xml:space="preserve">
+    <value>Display moon chart</value>
+  </data>
+  <data name="LblMoonSeparation" xml:space="preserve">
+    <value>Angular separation between moon and target</value>
+  </data>
+  <data name="LblPluginFailedToLoad" xml:space="preserve">
+    <value>Failed to load plugin {0} version {1}.
+Please check if there is an update available.</value>
+  </data>
 </root>

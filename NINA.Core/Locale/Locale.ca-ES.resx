@@ -4841,7 +4841,7 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Una condició que crea un bucle fins que l'objectiu es fixa per sota de l'altitud donada i després atura el conjunt d'instruccions actual</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Altitude Below</value>
+    <value>Repeteix fins que l'altitud estigui per sota</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Cúpula</value>
@@ -5145,13 +5145,13 @@ Allà, la seqüència es pot planificar des de zero mitjançant instruccions, ac
     <value>Surt del bucle quan l'altitud de la lluna coincideix amb els paràmetres especificats.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Moon Altitude</value>
+    <value>Repeteix fins a l'altitud de la Lluna</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Surt del bucle quan l'altitud del Sol coincideix amb els paràmetres especificats.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Sun Altitude</value>
+    <value>Repeteix fins a l'altitud el Sol</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5255,7 +5255,7 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Espera fins que l'altitud de l'objectiu estigui per sobre de l'horitzó. Si s'utilitza un horitzó personalitzat, s'utilitzarà aquesta altitud en lloc de 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Wait until Above horizon</value>
+    <value>Espera fins que estigui per Sobre de l'horitzó</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>S'està esperant que l'objectiu estigui per sobre de l'horitzó. Altitud objectiu {0} ° / Altitud horitzó {1} °</value>
@@ -5264,7 +5264,7 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Una condició que crea un bucle mentre l'objectiu està per sobre de l'horitzó i després atura el conjunt d'instruccions actuals</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Loop while Altitude Above Horizon</value>
+    <value>Repeteix mentre l'altitud estigui per sobre de l'horitzó</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>L’objectiu mai no estarà per sobre de l’horitzó</value>
@@ -6110,5 +6110,15 @@ Aquest botó no és visible en mode mosaic.</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
     <value>S'ha recuperat la taxa de desplaçament després de perdre el bloqueig de desplaçament</value>
+  </data>
+  <data name="LblDisplayMoonChart" xml:space="preserve">
+    <value>Mostra la carta de la Lluna</value>
+  </data>
+  <data name="LblMoonSeparation" xml:space="preserve">
+    <value>Separació angular entre la lluna i l'objectiu</value>
+  </data>
+  <data name="LblPluginFailedToLoad" xml:space="preserve">
+    <value>No s'ha pogut iniciar el connector {0} versió {1}.
+Comproveu si hi ha una actualització disponible.</value>
   </data>
 </root>

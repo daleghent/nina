@@ -6116,4 +6116,14 @@ Toto tlačítko není viditelné v režimu mozaiky.</value>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
     <value>Po odblokování posunu obnovena rychlost posunu</value>
   </data>
+  <data name="LblDisplayMoonChart" xml:space="preserve">
+    <value>Zobrazit graf Měsíce</value>
+  </data>
+  <data name="LblMoonSeparation" xml:space="preserve">
+    <value>Úhlová vzdálenost mezi Měsícem a cílem</value>
+  </data>
+  <data name="LblPluginFailedToLoad" xml:space="preserve">
+    <value>Nepodařilo se načíst plugin {0} verze {1}.
+Zkontrolujte, zda je k dispozici aktualizace.</value>
+  </data>
 </root>
