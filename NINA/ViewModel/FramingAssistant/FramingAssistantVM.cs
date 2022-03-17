@@ -185,7 +185,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 var advancedTargets = sequenceMediator.GetAllTargetsInAdvancedSequence();
 
                 List<IDeepSkyObjectContainer> targets = new List<IDeepSkyObjectContainer>(simpleTargets);
-                targets.AddRange(advancedTargets);
+                targets.AddRange(advancedTargets.Where(a => a.Target?.DeepSkyObject is DeepSkyObject));
                 ExistingTargets = targets;
                 RaisePropertyChanged(nameof(ExistingTargets));
 
@@ -193,18 +193,19 @@ namespace NINA.ViewModel.FramingAssistant {
 
             UpdateExistingTargetInSequencerCommand = new RelayCommand((object o) => {
                 if(o is IDeepSkyObjectContainer container) {
+                    if (container.Target?.DeepSkyObject is DeepSkyObject) {
+                        var rect = CameraRectangles.First();
+                        var name = GetRectangleName(rect);
 
-                    var rect = CameraRectangles.First();
-                    var name = GetRectangleName(rect);
+                        double rotation = rect.DSORotation;
 
-                    double rotation = rect.DSORotation;
-
-                    container.Name = name;
-                    container.Target.TargetName = name;
-                    container.Target.Rotation = AstroUtil.EuclidianModulus(rect.DSORotation, 360);
-                    container.Target.InputCoordinates = new InputCoordinates() {                        
-                        Coordinates = rect.Coordinates
-                    };
+                        container.Name = name;
+                        container.Target.TargetName = name;
+                        container.Target.Rotation = AstroUtil.EuclidianModulus(rect.DSORotation, 360);
+                        container.Target.InputCoordinates = new InputCoordinates() {
+                            Coordinates = rect.Coordinates
+                        };
+                    }
                 }
                 ExistingTargets.Clear();
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);

@@ -474,6 +474,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 TrackingModes = Telescope.TrackingModes,
                                 TrackingRate = Telescope.TrackingRate,
                                 TrackingEnabled = Telescope.TrackingEnabled,
+                                CanSetDeclinationRate = Telescope.CanSetDeclinationRate,
+                                CanSetRightAscensionRate = Telescope.CanSetRightAscensionRate,
                                 CanSetTrackingEnabled = Telescope.CanSetTrackingEnabled,
                                 CanFindHome = Telescope.CanFindHome,
                                 CanPark = Telescope.CanPark,
@@ -609,6 +611,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSetTrackingEnabled), out o);
             TelescopeInfo.CanSetTrackingEnabled = (bool)(o ?? false);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSetDeclinationRate), out o);
+            TelescopeInfo.CanSetDeclinationRate = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSetRightAscensionRate), out o);
+            TelescopeInfo.CanSetRightAscensionRate = (bool)(o ?? false);
+
             telescopeValues.TryGetValue(nameof(TelescopeInfo.TrackingEnabled), out o);
             TelescopeInfo.TrackingEnabled = (bool)(o ?? false);
 
@@ -652,6 +660,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.AtPark), _telescope?.AtPark ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.AtHome), _telescope?.AtHome ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.CanSetTrackingEnabled), _telescope?.CanSetTrackingEnabled ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.CanSetDeclinationRate), _telescope?.CanSetDeclinationRate ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.CanSetRightAscensionRate), _telescope?.CanSetRightAscensionRate ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.TrackingRate), _telescope?.TrackingRate ?? TrackingRate.STOPPED);
             telescopeValues.Add(nameof(TelescopeInfo.TrackingEnabled), _telescope?.TrackingEnabled ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.TrackingModes), _telescope?.TrackingModes ?? ImmutableList<TrackingMode>.Empty);

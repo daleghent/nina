@@ -257,6 +257,20 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             set { canSetTracking = value; RaisePropertyChanged(); }
         }
 
+        private bool canSetDeclinationRate;
+
+        public bool CanSetDeclinationRate {
+            get { return canSetDeclinationRate; }
+            set { canSetDeclinationRate = value; RaisePropertyChanged(); }
+        }
+
+        private bool canSetRightAscensionRate;
+
+        public bool CanSetRightAscensionRate {
+            get { return canSetRightAscensionRate; }
+            set { canSetRightAscensionRate = value; RaisePropertyChanged(); }
+        }
+
         private Epoch equatorialSystem;
 
         public Epoch EquatorialSystem {

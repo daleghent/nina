@@ -164,6 +164,7 @@
     <Compile Include="NighttimeData.cs" />
     <Compile Include="NOVAS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RectangularCoordinates.cs" />
     <Compile Include="RiseAndSet\AstronomicalTwilightRiseAndSet.cs" />
     <Compile Include="RiseAndSet\CustomRiseAndSet.cs" />
     <Compile Include="RiseAndSet\MoonRiseAndSet.cs" />

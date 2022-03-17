@@ -118,6 +118,10 @@ namespace NINA.Astrometry {
             return Angle.ByRadians(this.Radians);
         }
 
+        public static Angle operator -(Angle a) {
+            return Angle.ByRadians(-a.Radians);
+        }
+
         public static Angle operator +(Angle a, Angle b) {
             return Angle.ByRadians(a.Radians + b.Radians);
         }

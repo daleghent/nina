@@ -1,23 +1,36 @@
-﻿namespace NINA.Astrometry {
+﻿using System;
+
+namespace NINA.Astrometry {
     public class SiderealShiftTrackingRate {
         public static readonly SiderealShiftTrackingRate Disabled = CreateDisabled();
 
-        private SiderealShiftTrackingRate(bool enabled, double raArcsecsPerHour, double decArcsecsPerHour) {
+        private SiderealShiftTrackingRate(bool enabled, double raDegreesPerHour, double decDegreesPerHour) {
             this.Enabled = enabled;
-            this.RAArcsecsPerHour = raArcsecsPerHour;
-            this.DecArcsecsPerHour = decArcsecsPerHour;
+            this.RADegreesPerHour = raDegreesPerHour;
+            this.DecDegreesPerHour = decDegreesPerHour;
         }
 
         public bool Enabled { get; private set; }
-        public double RAArcsecsPerHour { get; private set; }
-        public double DecArcsecsPerHour { get; private set; }
+        public double RADegreesPerHour { get; private set; }
+        public double DecDegreesPerHour { get; private set; }
+        public double RAArcsecsPerHour => RADegreesPerHour * 3600.0d;
+        public double DecArcsecsPerHour => DecDegreesPerHour * 3600.0d;
+        public double RAArcsecsPerSec => RADegreesPerHour;
+        public double DecArcsecsPerSec => DecDegreesPerHour;
 
         public static SiderealShiftTrackingRate CreateDisabled() {
             return new SiderealShiftTrackingRate(false, 0.0d, 0.0d);
         }
 
-        public static SiderealShiftTrackingRate Create(double raArcsecsPerHour, double decArcsecsPerHour) {
-            return new SiderealShiftTrackingRate(true, raArcsecsPerHour, decArcsecsPerHour);
+        public static SiderealShiftTrackingRate Create(double raDegreesPerHour, double decDegreesPerHour) {
+            return new SiderealShiftTrackingRate(true, raDegreesPerHour, decDegreesPerHour);
+        }
+
+        public static SiderealShiftTrackingRate Create(Coordinates start, Coordinates end, TimeSpan between) {
+            var raDiff = end.RADegrees - start.RADegrees;
+            var decDiff = end.Dec - start.Dec;
+            var hoursDiff = between.TotalSeconds / 3600.0d;
+            return new SiderealShiftTrackingRate(true, raDiff / hoursDiff, decDiff / hoursDiff);
         }
     }
 }

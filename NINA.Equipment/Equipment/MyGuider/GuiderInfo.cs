@@ -24,5 +24,15 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 RaisePropertyChanged();
             }
         }
+
+        private bool _canSetShiftRate;
+
+        public bool CanSetShiftRate {
+            get => _canSetShiftRate;
+            set {
+                _canSetShiftRate = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

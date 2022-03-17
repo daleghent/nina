@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using NINA.Core.Interfaces;
 using NINA.Core.Model;
 using System;
@@ -26,8 +27,8 @@ namespace NINA.Equipment.Interfaces {
         bool CanClearCalibration { get; }
         bool CanSetShiftRate { get; }
         bool ShiftEnabled { get; }
-        double ShiftRateRA { get; } // arcsec/hr
-        double ShiftRateDec { get; } // arcsec/hr
+
+        SiderealShiftTrackingRate ShiftRate { get; }
 
         event EventHandler<IGuideStep> GuideEvent;
 
@@ -43,7 +44,7 @@ namespace NINA.Equipment.Interfaces {
 
         Task<bool> ClearCalibration(CancellationToken ct);
 
-        Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct);
+        Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct);
 
         Task<bool> StopShifting(CancellationToken ct);
     }

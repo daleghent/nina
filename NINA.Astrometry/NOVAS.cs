@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -26,6 +27,13 @@ namespace NINA.Astrometry {
 
         private static double JPL_EPHEM_START_DATE = 2305424.5; // First date of data in the ephemerides file
         private static double JPL_EPHEM_END_DATE = 2525008.5; // Last date of data in the ephemerides file
+        private static readonly Lazy<NOVAS.CatalogueEntry> dummy_star = new Lazy<NOVAS.CatalogueEntry>(() => {
+            var result = NOVAS_make_cat_entry("DUMMY", "xxx", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, out var output);
+            if (result != 0) {
+                throw new Exception($"Failed to create dummy star cat entry. Result={result}");
+            }
+            return output;
+        });
 
         static NOVAS() {
             DllLoader.LoadDll(Path.Combine("NOVAS", DLLNAME));
@@ -46,6 +54,10 @@ namespace NINA.Astrometry {
 
         public static double JulianDate(short year, short month, short day, double hour) {
             return NOVAS_JulianDate(year, month, day, hour);
+        }
+
+        public static DateTime JulianToDateTime(double jdtt) {
+            return SOFA.J2000 + TimeSpan.FromDays(jdtt - SOFA.J2000_jd);
         }
 
         public static double CalDate(double jtd, ref short year, ref short month, ref short day, ref double hour) {
@@ -82,6 +94,49 @@ namespace NINA.Astrometry {
             }
         }
 
+        /// <summary>
+        /// This function gets apparent coordinates for the given solar system body
+        /// </summary>
+        /// <param name="jd_tt">Julian date</param>
+        /// <param name="body">Solar system body</param>
+        /// <param name="accuracy">Requested level of accuracy. Full by default</param>
+        /// <returns>Apparent equatorial coordinates from an earth-based geocentric observer</returns>
+        public static Coordinates PlanetApparentCoordinates(double jd_tt, Body body, Accuracy accuracy = Accuracy.Full) {
+            var result = NOVAS_make_object(ObjectType.MajorPlanetSunOrMoon, (short)body, body.ToString(), dummy_star.Value, out var celestialObject);
+            if (result != 0) {
+                throw new Exception($"Failed MakeObject for {body}. Result={result}");
+            }
+
+            result = NOVAS_app_planet(jd_tt, celestialObject, accuracy, out var ra, out var dec, out var _);
+            if (result != 0) {
+                throw new Exception($"Failed AppPlanet for {body}. Result={result}");
+            }
+
+            var referenceDateTime = JulianToDateTime(jd_tt);
+            return new Coordinates(Angle.ByHours(ra), Angle.ByDegree(dec), Epoch.JNOW, referenceDateTime);
+        }
+
+        /// <summary>
+        /// This function gets the position and velocity of a solar system body represented as rectangular (cartesian) coordinates
+        /// </summary>
+        /// <param name="jd_tt">Julian date</param>
+        /// <param name="body">Solar system body</param>
+        /// <param name="origin">Origin reference</param>
+        /// <returns>Rectangular position and velocity vectors</returns>
+        public static RectangularPV BodyPositionAndVelocity(double jdtt, Body body, SolarSystemOrigin origin) {
+            var jd = new double[] { jdtt, 0 };
+            var position = new double[3];
+            var velocity = new double[3];
+            var result = NOVAS_solarsystem_hp(jd, body, origin, position, velocity);
+            if (result != 0) {
+                throw new Exception($"SolarSystemBodyPV failed for {body} with origin {origin}. Result={result}");
+            }
+
+            return new RectangularPV(
+                new RectangularCoordinates(position[0], position[1], position[2]),
+                new RectangularCoordinates(velocity[0], velocity[1], velocity[2]));
+        }
+
         private static readonly object lockObj = new object();
 
         #endregion "Public Methods"
@@ -108,6 +163,45 @@ namespace NINA.Astrometry {
 
         [DllImport(DLLNAME, EntryPoint = "refract", CallingConvention = CallingConvention.Cdecl)]
         private static extern double NOVAS_Refract(ref OnSurface location, RefractionOption refractionOption, double zdObs);
+
+        [DllImport(DLLNAME, EntryPoint = "solarsystem_hp", CallingConvention = CallingConvention.Cdecl)]
+        private static extern short NOVAS_solarsystem_hp(
+            [In][MarshalAs(UnmanagedType.LPArray, SizeConst = 2)] double[] tjd,
+            Body body,
+            SolarSystemOrigin origin,
+            [In, Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 3)] double[] position,
+            [In, Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 3)] double[] velocity);
+
+        [DllImport(DLLNAME, EntryPoint = "make_cat_entry", CallingConvention = CallingConvention.Cdecl)]
+        private static extern short NOVAS_make_cat_entry(
+            [MarshalAs(UnmanagedType.LPTStr, SizeConst = SIZE_OF_OBJ_NAME)] string star_name,
+            [MarshalAs(UnmanagedType.LPTStr, SizeConst = SIZE_OF_CAT_NAME)] string catalog,
+            long star_num,
+            double ra,
+            double dec,
+            double pm_ra,
+            double pm_dec,
+            double parallax,
+            double rad_vel,
+            [Out] out CatalogueEntry star);
+
+        [DllImport(DLLNAME, EntryPoint = "make_object", CallingConvention = CallingConvention.Cdecl)]
+        private static extern short NOVAS_make_object(
+            ObjectType type,
+            short number,
+            [MarshalAs(UnmanagedType.LPTStr, SizeConst = SIZE_OF_OBJ_NAME)] string name,
+            CatalogueEntry star_data,
+            [Out] out CelestialObject cel_obj);
+
+        [DllImport(DLLNAME, EntryPoint = "app_planet", CallingConvention = CallingConvention.Cdecl)]
+        private static extern short NOVAS_app_planet(
+            double jd_tt,
+            CelestialObject ss_body,
+            Accuracy accuracy,
+            [Out] out double ra,
+            [Out] out double dec,
+            [Out] out double dis);
+
 
         #endregion "External DLL calls"
 
@@ -346,6 +440,11 @@ namespace NINA.Astrometry {
             NoRefraction = 0,
             StandardRefraction = 1,
             LocationRefraction = 2
+        }
+
+        public enum SolarSystemOrigin : short {
+            Barycenter = 0,
+            SolarCenterOfMass = 1
         }
 
         #endregion "NOVAS helper enums"

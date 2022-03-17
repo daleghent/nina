@@ -27,6 +27,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Equipment.MyGuider.MetaGuide;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Model;
+using NINA.Astrometry;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -385,8 +386,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public bool CanSetShiftRate => false;
         public bool ShiftEnabled => false;
-        public double ShiftRateRA => double.NaN;
-        public double ShiftRateDec => double.NaN;
+        public SiderealShiftTrackingRate ShiftRate => SiderealShiftTrackingRate.Disabled;
 
         public Task<bool> ClearCalibration(CancellationToken ct) {
             return Task.FromResult(false);
@@ -559,7 +559,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             windowService.ShowDialog(this, Loc.Instance["LblMetaGuideSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
 
-        public Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct) {
+        public Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct) {
             return Task.FromResult(false);
         }
 

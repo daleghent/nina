@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -29,6 +30,16 @@ namespace NINA.Astrometry {
         }
 
         #region "Public Methods"
+
+        /// <summary>
+        /// Julian Date at J2000 - 2000/01/01 12:00 UTC
+        /// </summary>
+        public static readonly double J2000_jd = 2451545.0;
+
+        /// <summary>
+        /// J2000 epoch date
+        /// </summary>
+        public static DateTime J2000 = new DateTime(2000, 1, 1, 12, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Transform ICRS star data, epoch J2000.0, to CIRS.
@@ -792,6 +803,23 @@ namespace NINA.Astrometry {
             return SOFA_Seps(al, ap, bl, bp);
         }
 
+        /// <summary>
+        /// Mean obliquity of the ecliptic.
+        ///
+        /// Mean obliquity of the ecliptic, IAU 1980 model.
+        /// </summary>
+        /// <param name="utc1">UTC as a 2−part quasi Julian Date (Notes 3−4)</param>
+        /// <param name="utc2">UTC as a 2−part quasi Julian Date (Notes 3−4)</param>
+        /// <returns>obliquity of the ecliptic (radians, Note 2)</returns>
+        public static Angle MeanEcclipticObliquity(double utc1, double utc2) {
+            double tai1 = 0, tai2 = 0, tt1 = 0, tt2 = 0;
+            SOFA_Utctai(utc1, utc2, ref tai1, ref tai2);
+            SOFA_Taitt(tai1, tai2, ref tt1, ref tt2);
+
+            var meanObliquity = SOFA_iauObl80(tt1, tt2);
+            return Angle.ByRadians(meanObliquity);
+        }
+
         #endregion "Public Methods"
 
         #region "External DLL calls"
@@ -831,6 +859,9 @@ namespace NINA.Astrometry {
 
         [DllImport(DLLNAME, EntryPoint = "iauSeps", CallingConvention = CallingConvention.Cdecl)]
         private static extern double SOFA_Seps(double al, double ap, double bl, double bp);
+
+        [DllImport(DLLNAME, EntryPoint = "iauObl80", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double SOFA_iauObl80(double date1, double date2);
 
         #endregion "External DLL calls"
     }

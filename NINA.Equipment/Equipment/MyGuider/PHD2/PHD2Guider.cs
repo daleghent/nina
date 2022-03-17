@@ -35,6 +35,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
+using NINA.Astrometry;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -538,7 +539,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     return;
                 }
 
-                if (!await SetShiftRate(ShiftRateRA, ShiftRateDec, CancellationToken.None)) {
+                if (!await SetShiftRate(ShiftRate, CancellationToken.None)) {
                     Notification.ShowError(Loc.Instance["LblPhd2GuiderRestartShiftLockFailed"]);
                     Logger.Error("Failed to set shift rate after lost shift lock");
                 } else {
@@ -624,14 +625,12 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     if (result.Units == "pixels/hr") {
                         var raShiftRate = result.Rate[0] * PixelScale;
                         var decShiftRate = result.Rate[1] * PixelScale;
-                        ShiftRateRA = raShiftRate;
-                        ShiftRateDec = decShiftRate;
+                        ShiftRate = SiderealShiftTrackingRate.Create(raShiftRate, decShiftRate);
                     } else {
                         // already arcsec/hr
                         var raShiftRate = result.Rate[0];
                         var decShiftRate = result.Rate[1];
-                        ShiftRateRA = raShiftRate;
-                        ShiftRateDec = decShiftRate;
+                        ShiftRate = SiderealShiftTrackingRate.Create(raShiftRate, decShiftRate);
                     }
                     ShiftRateAxis = result.Axes;
                     ShiftEnabled = true;
@@ -708,20 +707,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             }
         }
 
-        private double shiftRateRA;
-        public double ShiftRateRA {
-            get => shiftRateRA;
+        private SiderealShiftTrackingRate shiftRate = SiderealShiftTrackingRate.Disabled;
+        public SiderealShiftTrackingRate ShiftRate {
+            get => shiftRate;
             private set {
-                shiftRateRA = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double shiftRateDec;
-        public double ShiftRateDec {
-            get => shiftRateDec;
-            private set {
-                shiftRateDec = value;
+                shiftRate = value;
                 RaisePropertyChanged();
             }
         }
@@ -797,7 +787,13 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return genericError;
         }
 
-        public async Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct) {
+        public async Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct) {
+            if (!shiftTrackingRate.Enabled) {
+                return await StopShifting(ct);
+            }
+
+            double raArcsecPerHour = shiftTrackingRate.RAArcsecsPerHour;
+            double decArcsecPerHour = shiftTrackingRate.DecArcsecsPerHour;
             Logger.Info($"Setting shift rate to RA={raArcsecPerHour}, Dec={decArcsecPerHour}");
             try {
                 var setLockShiftMsg = new Phd2SetLockShiftParams() {

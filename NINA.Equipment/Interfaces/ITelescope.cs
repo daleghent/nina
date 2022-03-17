@@ -78,6 +78,8 @@ namespace NINA.Equipment.Interfaces {
         double GuideRateDeclinationArcsecPerSec { get; }
         bool CanMovePrimaryAxis { get; }
         bool CanMoveSecondaryAxis { get; }
+        bool CanSetDeclinationRate { get; }
+        bool CanSetRightAscensionRate { get; }
 
         IList<(double, double)> GetAxisRates(TelescopeAxes axis);
 

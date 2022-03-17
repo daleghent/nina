@@ -35,6 +35,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using Nito.AsyncEx;
 using System.Linq;
+using NINA.Astrometry;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
@@ -152,6 +153,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     GuiderInfo = new GuiderInfo {
                         Connected = connected,
                         CanClearCalibration = Guider.CanClearCalibration,
+                        CanSetShiftRate = Guider.CanSetShiftRate,
                         Name = Guider.Name,
                         Description = Guider.Description,
                         DriverInfo = Guider.DriverInfo,
@@ -367,7 +369,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         private Task<bool> SetShiftRateVM() {
             return Task.Run(async () => {
                 try {
-                    return await SetShiftRate(RAShiftRate, DecShiftRate, CancellationToken.None);
+                    var shiftRate = SiderealShiftTrackingRate.Create(RAShiftRate, DecShiftRate);
+                    return await SetShiftRate(shiftRate, CancellationToken.None);
                 } catch (Exception e) {
                     Notification.ShowError($"Set shift rate failed. {e.Message}");
                     Logger.Error(e, "Failed to set shift rate");
@@ -388,7 +391,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             });
         }
 
-        public async Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct) {
+        public async Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct) {
             if (!Guider.Connected) {
                 Logger.Error("Attempted to set shift rate when guider is not connected");
                 return false;
@@ -398,7 +401,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 return false;
             }
 
-            return await Guider.SetShiftRate(raShiftRate, decShiftRate, ct);
+            return await Guider.SetShiftRate(shiftTrackingRate, ct);
         }
 
         public async Task<bool> StopShifting(CancellationToken ct) {

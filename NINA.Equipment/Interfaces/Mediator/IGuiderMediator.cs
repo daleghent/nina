@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyGuider;
 using NINA.Equipment.Interfaces.ViewModel;
@@ -37,7 +38,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Task<bool> ClearCalibration(CancellationToken token);
 
-        Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct);
+        Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct);
 
         Task<bool> StopShifting(CancellationToken ct);
     }

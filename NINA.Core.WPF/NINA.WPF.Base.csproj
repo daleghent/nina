@@ -263,6 +263,7 @@
     <Compile Include="Utility\MVVMLight\WeakActionGeneric.cs" />
     <Compile Include="Utility\MVVMLight\WeakFunc.cs" />
     <Compile Include="Utility\MVVMLight\WeakFuncGeneric.cs" />
+    <Compile Include="Utility\ProgressFactory.cs" />
     <Compile Include="Utility\SharedResourceDictionary.cs" />
     <Compile Include="ViewModel\AutoFocus\Chart.cs" />
     <Compile Include="ViewModel\BuiltInAutoFocusVMFactory.cs" />

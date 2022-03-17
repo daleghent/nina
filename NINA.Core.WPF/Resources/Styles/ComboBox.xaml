@@ -63,7 +63,7 @@
             Focusable="False" />
     </ControlTemplate>
 
-    <Style TargetType="ComboBox">
+    <Style x:Key="StandardComboBox" TargetType="ComboBox">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
@@ -155,6 +155,7 @@
         </Setter>
         <Style.Triggers />
     </Style>
+    <Style BasedOn="{StaticResource StandardComboBox}" TargetType="ComboBox" />
 
     <Style TargetType="{x:Type ComboBoxItem}">
         <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />

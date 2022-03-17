@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Model;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Astrometry;
 
 namespace NINA.WPF.Base.Mediator {
 
@@ -52,8 +53,8 @@ namespace NINA.WPF.Base.Mediator {
             return handler.ClearCalibration(token);
         }
 
-        public Task<bool> SetShiftRate(double raShiftRate, double decShiftRate, CancellationToken ct) {
-            return handler.SetShiftRate(raShiftRate, decShiftRate, ct);
+        public Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct) {
+            return handler.SetShiftRate(shiftTrackingRate, ct);
         }
 
         public Task<bool> StopShifting(CancellationToken ct) {
