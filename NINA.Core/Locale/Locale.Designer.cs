@@ -16497,7 +16497,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom ({0}, {1}).
+        ///   Looks up a localized string similar to Custom ({0:0.####}, {1:0.####}).
         /// </summary>
         internal static string LblTrackingCustomRate {
             get {

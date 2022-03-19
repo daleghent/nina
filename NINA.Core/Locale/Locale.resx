@@ -3337,7 +3337,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Custom</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Custom ({0}, {1})</value>
+    <value>Custom ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit North</value>
