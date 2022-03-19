@@ -30,6 +30,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public string SerialNumber;
         public SBIG.DeviceType DeviceId;
         public FilterWheelInfo? FilterWheelInfo;
+
+        public override string ToString() {
+            return $"{{{nameof(CameraType)}={CameraType}, {nameof(Name)}={Name}, {nameof(SerialNumber)}={SerialNumber}, {nameof(DeviceId)}={DeviceId}, {nameof(FilterWheelInfo)}={FilterWheelInfo}}}";
+        }
     }
 
     public struct DeviceInfo {
@@ -39,6 +43,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public CcdCameraInfo? TrackingCameraInfo;
         public CcdCameraInfo? ExternalTrackingCameraInfo;
         public FilterWheelInfo? FilterWheelInfo;
+
+        public override string ToString() {
+            return $"{{{nameof(DeviceId)}={DeviceId}, {nameof(CameraType)}={CameraType}, {nameof(CameraInfo)}={CameraInfo}, {nameof(TrackingCameraInfo)}={TrackingCameraInfo}, {nameof(ExternalTrackingCameraInfo)}={ExternalTrackingCameraInfo}, {nameof(FilterWheelInfo)}={FilterWheelInfo}}}";
+        }
     }
 
     public struct ReadoutMode {
@@ -77,6 +85,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public double ElectronsPerAdu;
         public double PixelWidthMicrons;
         public double PixelHeightMicrons;
+
+        public override string ToString() {
+            return $"{{{nameof(ReadoutMode)}={ReadoutMode}, {nameof(BinX)}={BinX}, {nameof(BinY)}={BinY}, {nameof(BinningOffChip)}={BinningOffChip}, {nameof(Width)}={Width}, {nameof(Height)}={Height}, {nameof(ElectronsPerAdu)}={ElectronsPerAdu}, {nameof(PixelWidthMicrons)}={PixelWidthMicrons}, {nameof(PixelHeightMicrons)}={PixelHeightMicrons}}}";
+        }
     }
 
     public enum SBIG_CAMERA_STATE {
@@ -124,6 +136,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public bool IsSTXL;
         public bool HasMechanicalShutter;
         public CcdType CcdType;
+
+        public override string ToString() {
+            return $"{nameof(FirmwareVersion)}={FirmwareVersion}, {nameof(CameraType)}={CameraType}, {nameof(Name)}={Name}, {nameof(ReadoutModeConfigs)}={ReadoutModeConfigs}, {nameof(BadColumns)}={BadColumns}, {nameof(HasAntiBloomingGateProtection)}={HasAntiBloomingGateProtection}, {nameof(SerialNumber)}={SerialNumber}, {nameof(AdcBits)}={AdcBits}, {nameof(FilterType)}={FilterType}, {nameof(CcdFrameType)}={CcdFrameType}, {nameof(HasElectronicShutter)}={HasElectronicShutter}, {nameof(SupportsExternalTracker)}={SupportsExternalTracker}, {nameof(SupportsBTDI)}={SupportsBTDI}, {nameof(HasAO8)}={HasAO8}, {nameof(HasFrameBuffer)}={HasFrameBuffer}, {nameof(RequiresStartExposure2)}={RequiresStartExposure2}, {nameof(NumberExtraUnbinnedRows)}={NumberExtraUnbinnedRows}, {nameof(IsSTXL)}={IsSTXL}, {nameof(HasMechanicalShutter)}={HasMechanicalShutter}, {nameof(CcdType)}={CcdType}";
+        }
     }
 
     public struct FilterWheelInfo {
@@ -132,17 +148,29 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public SBIG.CfwStatus Status;
         public uint FirmwareVersion;
         public uint FilterCount;
+
+        public override string ToString() {
+            return $"{{{nameof(Model)}={Model}, {nameof(Position)}={Position}, {nameof(Status)}={Status}, {nameof(FirmwareVersion)}={FirmwareVersion}, {nameof(FilterCount)}={FilterCount}}}";
+        }
     }
 
     public struct FilterWheelStatus {
         public SBIG.CfwPosition Position;
         public SBIG.CfwStatus Status;
+
+        public override string ToString() {
+            return $"{nameof(Position)}={Position}, {nameof(Status)}={Status}";
+        }
     }
 
     public class SBIGExposureData {
         public ushort[] Data;
         public ushort Width;
         public ushort Height;
+
+        public override string ToString() {
+            return $"{{{nameof(Data)}={Data.Length} bytes, {nameof(Width)}={Width}, {nameof(Height)}={Height}}}";
+        }
     }
 
     public interface ISbigSdk {

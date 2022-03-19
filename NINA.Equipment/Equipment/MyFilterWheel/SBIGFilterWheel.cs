@@ -45,7 +45,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             this.sbigFilterWheelInfo = queriedDeviceInfo.FilterWheelInfo.Value;
             this.profileService = profileService;
             this.Id = queriedDeviceInfo.SerialNumber;
-            this.Name = queriedDeviceInfo.Name;
+            this.Name = $"{queriedDeviceInfo.Name} (FW)";
             this.DriverVersion = sdk.GetSdkVersion();
             this.Description = $"{queriedDeviceInfo.Name} on {queriedDeviceInfo.DeviceId}";
         }

@@ -581,6 +581,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                         ++j;
                     }
 
+                    foreach (var queryInfo in queryInfos) {
+                        Logger.Trace($"SBIGSDK: Queried device - {queryInfo}");
+                    }
+
                     return queryInfos;
                 }
             }
