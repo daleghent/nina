@@ -51,29 +51,14 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 UseCustomHorizon = UseCustomHorizon
             };
         }
-
-        public bool UseCustomHorizon { get; private set; }
-        public string Name { get; private set; }
-        public double Latitude { get; private set; }
-        public double Longitude { get; private set; }
-        public double Elevation { get; private set; }
-        public CustomHorizon Horizon { get; set; }
-        public ObserverInfo Observer { get; private set; }
-
         [JsonProperty]
-        public double TargetAltitude {
-            get => targetAltitude;
-            set {
-                if (targetAltitude != value) {
-                    targetAltitude = value;
-                    ExpectedDateTime = DateTime.MinValue;
-                    // While "thinking" we show this.  For some reason, the time doesn't get updated til next pass...
-                    ExpectedTime = "...";
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public InputCoordinates Coordinates { get; set; }
 
+        /// <summary>
+        /// The Offset is the user input for the desired result
+        /// For Horzions this is [current horizon] + offset => target horizon
+        /// For Altitudes this is [0] + offset => target altitude
+        /// </summary>
         [JsonProperty]
         public double Offset {
             get => offset;
@@ -88,15 +73,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 RaisePropertyChanged();
             }
         }
-
-        [JsonProperty]
-        public ComparisonOperatorEnum[] ComparisonOperators => Enum.GetValues(typeof(ComparisonOperatorEnum))
-            .Cast<ComparisonOperatorEnum>()
-            .Where(p => p != ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL)
-            .Where(p => p != ComparisonOperatorEnum.LESS_THAN_OR_EQUAL)
-            .Where(p => p != ComparisonOperatorEnum.EQUALS)
-            .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
-            .ToArray();
 
         [JsonProperty]
         public ComparisonOperatorEnum Comparator {
@@ -115,8 +91,35 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        [JsonProperty]
-        public InputCoordinates Coordinates { get; set; }
+        public bool UseCustomHorizon { get; private set; }
+        public string Name { get; private set; }
+        public double Latitude { get; private set; }
+        public double Longitude { get; private set; }
+        public double Elevation { get; private set; }
+        public CustomHorizon Horizon { get; set; }
+        public ObserverInfo Observer { get; private set; }
+        
+        public double TargetAltitude {
+            get => targetAltitude;
+            set {
+                if (targetAltitude != value) {
+                    targetAltitude = value;
+                    ExpectedDateTime = DateTime.MinValue;
+                    // While "thinking" we show this.  For some reason, the time doesn't get updated til next pass...
+                    ExpectedTime = "...";
+                    RaisePropertyChanged();
+                }
+            }
+        }
+                
+        public ComparisonOperatorEnum[] ComparisonOperators => Enum.GetValues(typeof(ComparisonOperatorEnum))
+            .Cast<ComparisonOperatorEnum>()
+            .Where(p => p != ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL)
+            .Where(p => p != ComparisonOperatorEnum.LESS_THAN_OR_EQUAL)
+            .Where(p => p != ComparisonOperatorEnum.EQUALS)
+            .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
+            .ToArray();
+
 
         public void SetCoordinates(InputCoordinates coordinates) {
             // Don't do anything if we're really not changing coordinates
@@ -126,7 +129,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             ExpectedDateTime = DateTime.MinValue;
         }
 
-        [JsonProperty]
+
         public string RisingSettingDisplay {
             get => risingSettingDisplay;
             set {
@@ -172,7 +175,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        [JsonProperty]
         public string ExpectedTime {
             get => expectedTime;
             set {

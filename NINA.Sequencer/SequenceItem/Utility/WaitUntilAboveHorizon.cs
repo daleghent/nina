@@ -75,7 +75,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress"], Math.Round(Data.CurrentAltitude, 2), Math.Round(Data.TargetAltitude, 2))
                 });
 
-                if (Data.CurrentAltitude > Data.TargetAltitude) {
+                if (Data.CurrentAltitude > Data.GetTargetAltitudeWithHorizon(DateTime.Now)) {
                     Logger.Info("WaitUntilAboveHorizon finished: " + Data.CurrentAltitude + " > " + Data.TargetAltitude + " Offset = " + Data.Offset);
                     break;
                 } else {
