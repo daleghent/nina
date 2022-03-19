@@ -193,9 +193,12 @@ namespace NINA.Profile {
         public int AutoFocusTotalNumberOfAttempts {
             get {
                 if (autoFocusTotalNumberOfAttempts < 1) { return 1; }
+                if (autoFocusTotalNumberOfAttempts > 5) { return 5; }
                 return autoFocusTotalNumberOfAttempts;
             }
             set {
+                if(value < 1) { value = 1; }
+                if(value > 5) { value = 5; }
                 if (autoFocusTotalNumberOfAttempts != value) {
                     autoFocusTotalNumberOfAttempts = value;
                     RaisePropertyChanged();
