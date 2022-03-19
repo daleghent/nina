@@ -76,6 +76,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 });
 
                 if (Data.CurrentAltitude > Data.TargetAltitude) {
+                    Logger.Info("WaitUntilAboveHorizon finished: " + Data.CurrentAltitude + " > " + Data.TargetAltitude + " Offset = " + Data.Offset);
                     break;
                 } else {
                     _ = await CoreUtil.Delay(TimeSpan.FromSeconds(UpdateInterval), token);

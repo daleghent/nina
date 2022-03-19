@@ -37,11 +37,11 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
                 case ComparisonOperatorEnum.GREATER_THAN:
                 case ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL:
-                    if (Data.CurrentAltitude > Data.TargetAltitude) { return false; }
+                    if (Data.CurrentAltitude > Data.Offset) { return false; }
                     break;
 
                 default:
-                    if (Data.CurrentAltitude <= Data.TargetAltitude) { return false; }
+                    if (Data.CurrentAltitude <= Data.Offset) { return false; }
                     break;
             }
             return true;

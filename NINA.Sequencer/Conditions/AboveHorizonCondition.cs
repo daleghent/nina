@@ -84,7 +84,7 @@ namespace NINA.Sequencer.Conditions {
 
          public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             CalculateExpectedTime();
-            return Data.CurrentAltitude >= Data.TargetAltitude;
+            return Data.CurrentAltitude >= Data.GetTargetAltitudeWithHorizon(DateTime.Now);
         }
 
         public double GetCurrentAltitude(DateTime time, ObserverInfo observer) {

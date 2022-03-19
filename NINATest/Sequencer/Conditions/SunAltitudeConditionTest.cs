@@ -79,7 +79,7 @@ namespace NINATest.Sequencer.Conditions {
         public void Check_LESS_THAN(double currentAlt, double userAlt, ComparisonOperatorEnum Comparator, bool expected) {
             var sut = new SunAltitudeCondition(profileServiceMock.Object);
             sut.Data.Comparator = Comparator;
-            sut.Data.TargetAltitude = userAlt;
+            sut.Data.Offset = userAlt;
             sut.Data.CurrentAltitude = currentAlt;
 
             sut.Check(default, default, true).Should().Be(expected);

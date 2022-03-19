@@ -73,10 +73,10 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
             switch (Data.Comparator) {
                 case ComparisonOperatorEnum.GREATER_THAN:
-                   return Data.CurrentAltitude > Data.TargetAltitude;
+                   return Data.CurrentAltitude > Data.Offset;
                 
                 default:
-                    return Data.CurrentAltitude <= Data.TargetAltitude;
+                    return Data.CurrentAltitude <= Data.Offset;
             }
         }
 

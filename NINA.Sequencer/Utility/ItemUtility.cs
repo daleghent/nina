@@ -303,7 +303,7 @@ namespace NINA.Sequencer.Utility {
 
             switch (data.Comparator) {
                 case ComparisonOperatorEnum.GREATER_THAN:
-                    if ((until && data.CurrentAltitude > targetAltitude) || (!until && data.CurrentAltitude <= targetAltitude) && (!mustSet || (mustSet && !data.IsRising))) {
+                    if ((until && data.CurrentAltitude > targetAltitude) || (!until && data.CurrentAltitude <= targetAltitude)) {
                         data.TargetAltitude = targetAltitude;
                         data.ExpectedTime = Loc.Instance["LblNow"];
                     } else {
@@ -311,7 +311,7 @@ namespace NINA.Sequencer.Utility {
                     }
                     return;
                 default:
-                    if ((until && data.CurrentAltitude <= targetAltitude) || (!until && data.CurrentAltitude > targetAltitude)) {
+                    if ((until && data.CurrentAltitude <= targetAltitude && (!mustSet || (mustSet && !data.IsRising))) || (!until && data.CurrentAltitude > targetAltitude)) {
                         data.TargetAltitude = targetAltitude;
                         data.ExpectedTime = Loc.Instance["LblNow"];
                     } else {

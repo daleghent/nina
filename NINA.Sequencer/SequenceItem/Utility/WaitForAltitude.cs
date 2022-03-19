@@ -81,9 +81,9 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitForAltitude_Progress"], Math.Round(altaz.Altitude.Degree, 2), Data.TargetAltitude)
                 });
 
-                if (aboveOrBelow == ">" && altaz.Altitude.Degree >= Data.TargetAltitude) {
+                if (aboveOrBelow == ">" && altaz.Altitude.Degree >= Data.Offset) {
                     break;
-                } else if (aboveOrBelow == "<" && altaz.Altitude.Degree <= Data.TargetAltitude) {
+                } else if (aboveOrBelow == "<" && altaz.Altitude.Degree <= Data.Offset) {
                     break;
                 }
 
