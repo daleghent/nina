@@ -93,10 +93,10 @@ namespace NINA.Core.Model {
             sum_RA2 += (raDistance * raDistance);
             sum_Dec += decDistance;
             sum_Dec2 += (decDistance * decDistance);
-            if (raDistance > PeakRA) {
-                PeakRA = raDistance;
+            if (Math.Abs(raDistance) > PeakRA) {
+                PeakRA = Math.Abs(raDistance);
             }
-            if (decDistance > PeakDec) {
+            if (Math.Abs(decDistance) > PeakDec) {
                 PeakDec = decDistance;
             }
 
