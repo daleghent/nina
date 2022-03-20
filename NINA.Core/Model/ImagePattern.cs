@@ -33,106 +33,106 @@ namespace NINA.Core.Model {
 
         public ImagePatterns() {
             patterns = new Dictionary<string, ImagePattern>();
-            var p = new ImagePattern(ImagePatternKeys.Filter, Locale.Loc.Instance["LblFilternameDescription"]);
+            var p = new ImagePattern(ImagePatternKeys.Filter, Locale.Loc.Instance["LblFilternameDescription"], Locale.Loc.Instance["LblFilterWheel"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.ApplicationStartDate, Locale.Loc.Instance["LblApplicationStartDateDescription"]);
+            p = new ImagePattern(ImagePatternKeys.ApplicationStartDate, Locale.Loc.Instance["LblApplicationStartDateDescription"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Date, Locale.Loc.Instance["LblDateFormatDescription"]);
+            p = new ImagePattern(ImagePatternKeys.Date, Locale.Loc.Instance["LblDateFormatDescription"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.DateMinus12, Locale.Loc.Instance["LblDateFormatDescription2"]);
+            p = new ImagePattern(ImagePatternKeys.DateMinus12, Locale.Loc.Instance["LblDateFormatDescription2"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.DateUtc, Locale.Loc.Instance["LblDateUTCFormatDescription"]);
+            p = new ImagePattern(ImagePatternKeys.DateUtc, Locale.Loc.Instance["LblDateUTCFormatDescription"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.DateTime, Locale.Loc.Instance["LblDateTimeFormatDescription"]);
+            p = new ImagePattern(ImagePatternKeys.DateTime, Locale.Loc.Instance["LblDateTimeFormatDescription"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Time, Locale.Loc.Instance["LblTimeFormatDescription"]);
+            p = new ImagePattern(ImagePatternKeys.Time, Locale.Loc.Instance["LblTimeFormatDescription"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.TimeUtc, Locale.Loc.Instance["LblTimeUTCFormatDescription"]);
+            p = new ImagePattern(ImagePatternKeys.TimeUtc, Locale.Loc.Instance["LblTimeUTCFormatDescription"], Locale.Loc.Instance["LblTime"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.FrameNr, Locale.Loc.Instance["LblFrameNrDescription"]);
+            p = new ImagePattern(ImagePatternKeys.FrameNr, Locale.Loc.Instance["LblFrameNrDescription"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.ImageType, Locale.Loc.Instance["LblImageTypeDescription"]);
+            p = new ImagePattern(ImagePatternKeys.ImageType, Locale.Loc.Instance["LblImageTypeDescription"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Binning, Locale.Loc.Instance["LblBinningDescription"]);
+            p = new ImagePattern(ImagePatternKeys.Binning, Locale.Loc.Instance["LblBinningDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.SensorTemp, Locale.Loc.Instance["LblTemperatureDescription"]);
+            p = new ImagePattern(ImagePatternKeys.SensorTemp, Locale.Loc.Instance["LblTemperatureDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.TemperatureSetPoint, Locale.Loc.Instance["LblTemperatureSetPointDescription"]);
+            p = new ImagePattern(ImagePatternKeys.TemperatureSetPoint, Locale.Loc.Instance["LblTemperatureSetPointDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.ExposureTime, Locale.Loc.Instance["LblExposureTimeDescription"]);
+            p = new ImagePattern(ImagePatternKeys.ExposureTime, Locale.Loc.Instance["LblExposureTimeDescription"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.TargetName, Locale.Loc.Instance["LblTargetNameDescription"]);
+            p = new ImagePattern(ImagePatternKeys.TargetName, Locale.Loc.Instance["LblTargetNameDescription"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Gain, Locale.Loc.Instance["LblGainDescription"]);
+            p = new ImagePattern(ImagePatternKeys.Gain, Locale.Loc.Instance["LblGainDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Offset, Locale.Loc.Instance["LblOffsetDescription"]);
+            p = new ImagePattern(ImagePatternKeys.Offset, Locale.Loc.Instance["LblOffsetDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.USBLimit, Locale.Loc.Instance["LbLUsbLimitDescription"]);
+            p = new ImagePattern(ImagePatternKeys.USBLimit, Locale.Loc.Instance["LbLUsbLimitDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.RMS, Locale.Loc.Instance["LblGuidingRMSDescription"]);
+            p = new ImagePattern(ImagePatternKeys.RMS, Locale.Loc.Instance["LblGuidingRMSDescription"], Locale.Loc.Instance["LblGuider"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.RMSArcSec, Locale.Loc.Instance["LblGuidingRMSArcSecDescription"]);
+            p = new ImagePattern(ImagePatternKeys.RMSArcSec, Locale.Loc.Instance["LblGuidingRMSArcSecDescription"], Locale.Loc.Instance["LblGuider"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.PeakRA, Locale.Loc.Instance["LblGuidingPeakRADescription"]);
+            p = new ImagePattern(ImagePatternKeys.PeakRA, Locale.Loc.Instance["LblGuidingPeakRADescription"], Locale.Loc.Instance["LblGuider"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.PeakRAArcSec, Locale.Loc.Instance["LblGuidingPeakRAArcSecDescription"]);
+            p = new ImagePattern(ImagePatternKeys.PeakRAArcSec, Locale.Loc.Instance["LblGuidingPeakRAArcSecDescription"], Locale.Loc.Instance["LblGuider"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.PeakDec, Locale.Loc.Instance["LblGuidingPeakDecDescription"]);
+            p = new ImagePattern(ImagePatternKeys.PeakDec, Locale.Loc.Instance["LblGuidingPeakDecDescription"], Locale.Loc.Instance["LblGuider"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.PeakDecArcSec, Locale.Loc.Instance["LblGuidingPeakDecArcSecDescription"]);
+            p = new ImagePattern(ImagePatternKeys.PeakDecArcSec, Locale.Loc.Instance["LblGuidingPeakDecArcSecDescription"], Locale.Loc.Instance["LblGuider"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.FocuserPosition, Locale.Loc.Instance["LblFocuserPositionDescription"]);
+            p = new ImagePattern(ImagePatternKeys.FocuserPosition, Locale.Loc.Instance["LblFocuserPositionDescription"], Locale.Loc.Instance["LblFocuser"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.FocuserTemp, Locale.Loc.Instance["LblFocuserTempDescription"]);
+            p = new ImagePattern(ImagePatternKeys.FocuserTemp, Locale.Loc.Instance["LblFocuserTempDescription"], Locale.Loc.Instance["LblFocuser"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.HFR, Locale.Loc.Instance["LblHFRPatternDescription"]);
+            p = new ImagePattern(ImagePatternKeys.HFR, Locale.Loc.Instance["LblHFRPatternDescription"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.SQM, Locale.Loc.Instance["LblSQMPatternDescription"]);
+            p = new ImagePattern(ImagePatternKeys.SQM, Locale.Loc.Instance["LblSQMPatternDescription"], Locale.Loc.Instance["LblWeather"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.ReadoutMode, Locale.Loc.Instance["LblReadoutModePatternDescription"]);
+            p = new ImagePattern(ImagePatternKeys.ReadoutMode, Locale.Loc.Instance["LblReadoutModePatternDescription"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Camera, Locale.Loc.Instance["LblCameraName"]);
+            p = new ImagePattern(ImagePatternKeys.Camera, Locale.Loc.Instance["LblCameraName"], Locale.Loc.Instance["LblCamera"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.Telescope, Locale.Loc.Instance["LblTelescopeName"]);
+            p = new ImagePattern(ImagePatternKeys.Telescope, Locale.Loc.Instance["LblTelescopeName"], Locale.Loc.Instance["LblTelescope"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.RotatorAngle, Locale.Loc.Instance["LblRotatorAngleDescription"]);
+            p = new ImagePattern(ImagePatternKeys.RotatorAngle, Locale.Loc.Instance["LblRotatorAngleDescription"], Locale.Loc.Instance["LblRotator"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.StarCount, Locale.Loc.Instance["LblStarCount"]);
+            p = new ImagePattern(ImagePatternKeys.StarCount, Locale.Loc.Instance["LblStarCount"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
 
-            p = new ImagePattern(ImagePatternKeys.SequenceTitle, Locale.Loc.Instance["LblSequenceTitle"]);
+            p = new ImagePattern(ImagePatternKeys.SequenceTitle, Locale.Loc.Instance["LblSequenceTitle"], Locale.Loc.Instance["LblImage"]);
             patterns.Add(p.Key, p);
         }
 
@@ -264,9 +264,10 @@ namespace NINA.Core.Model {
 
     public class ImagePattern {
 
-        public ImagePattern(string k, string d) {
+        public ImagePattern(string k, string d, string c) {
             Key = k;
             Description = d;
+            Category = c;
         }
 
         public string Value { get; set; }
@@ -274,5 +275,7 @@ namespace NINA.Core.Model {
         public string Key { get; set; }
 
         public string Description { get; set; }
+
+        public string Category { get; set; }
     }
 }

@@ -240,33 +240,52 @@
                     Text="{Binding ElementName=ImageFilePatternTextBox, Path=Text, Converter={StaticResource ImagePatternToTextConverter}}"
                     TextWrapping="Wrap" />
 
-                <ListView
-                    x:Name="ImagePatternList"
+                <Grid
                     Grid.Row="6"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0"
-                    ItemsSource="{Binding DataContext.ImagePatterns.Items, ElementName=UC}"
-                    SelectionMode="Single">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn
-                                Width="Auto"
-                                DisplayMemberBinding="{Binding Key}"
-                                Header="{ns:Loc LblPatternName}" />
-                            <GridViewColumn
-                                Width="Auto"
-                                DisplayMemberBinding="{Binding Description}"
-                                Header="{ns:Loc LblDescription}" />
-                        </GridView>
-                    </ListView.View>
+                    Margin="0,5,0,0">
+                    <Grid.Resources>
+                        <CollectionViewSource x:Key="GroupedPatterns" Source="{Binding DataContext.ImagePatterns.Items, ElementName=UC}">
+                            <CollectionViewSource.GroupDescriptions>
+                                <PropertyGroupDescription PropertyName="Category" />
+                            </CollectionViewSource.GroupDescriptions>
+                        </CollectionViewSource>
+                    </Grid.Resources>
+                    <ListView
+                        x:Name="ImagePatternList"
+                        ItemsSource="{Binding Source={StaticResource GroupedPatterns}}"
+                        SelectionMode="Single">
+                        <ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn
+                                    Width="Auto"
+                                    DisplayMemberBinding="{Binding Key}"
+                                    Header="{ns:Loc LblPatternName}" />
+                                <GridViewColumn
+                                    Width="Auto"
+                                    DisplayMemberBinding="{Binding Description}"
+                                    Header="{ns:Loc LblDescription}" />
+                            </GridView>
+                        </ListView.View>
 
-                    <ListView.ItemContainerStyle>
-                        <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="ListViewItem">
-                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
-                            <EventSetter Event="PreviewMouseDoubleClick" Handler="ListViewItem_PreviewMouseDoubleClick" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="ListViewItem">
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                                <EventSetter Event="PreviewMouseDoubleClick" Handler="ListViewItem_PreviewMouseDoubleClick" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+
             </Grid>
         </GroupBox>
 

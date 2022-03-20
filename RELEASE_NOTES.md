@@ -244,6 +244,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - A new optional setting R² threshold can now be set. When this threshold is non-zero, the autofocus run has to fullfill a minimum required R² - [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) - above this threshold to be considered as successful.
 
 ### File name patterns and FITS keywords
+- Keyword list to choose from is now grouped by category
 - Added `CENTALT`, and `CENTAZ` keywords
 - Added `AIRMASS` keyword, calculated from mount altitude using Gueymard 1993
 - Added `$$CAMERA$$` file pattern
@@ -251,6 +252,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
 - Added `$$TEMPERATURESETPOINT$$` file pattern
+- Added Guider Peak file patterns `$$PEAKRA$$` `$$PEAKRAARCSEC$$` `$$PEAKDEC$$` `$$PEAKDECARCSEC$$`
 
 #### Included Camera SDK Versions can now be found inside the about page of N.I.N.A.
 

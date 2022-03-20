@@ -228,6 +228,7 @@ To identify what has changed in between beta builds, please refer to the <a href
 <li>ASCOM connection that is lost without any raised error will now be tried to be reconnected one time. If an error happens due to that the application will disconnect like before.</li>
 <li>ASCOM get and set methods use a unified logic to ensure same behavior for all devices</li>
 <li><em>FLI</em>: Background flush is now disabled prior to readout to prevent a hung readout</li>
+<li><em>FLI</em>: Filter wheel driver now removes any extraneous <code>/</code> character from single-filter positions on CenterLine filter wheels</li>
 <li><em>MGEN2</em> now supports unattended guide star selection and calibration, and automatic meridian flips</li>
 <li>Altair, MallinCam, Omegon, RisingCam and ToupTek subsampling is now available</li>
 </ul>
@@ -308,6 +309,7 @@ To identify what has changed in between beta builds, please refer to the <a href
 </ul>
 <h3 id="file-name-patterns-and-fits-keywords">File name patterns and FITS keywords</h3>
 <ul>
+<li>Keyword list to choose from is now grouped by category</li>
 <li>Added <code>CENTALT</code>, and <code>CENTAZ</code> keywords</li>
 <li>Added <code>AIRMASS</code> keyword, calculated from mount altitude using Gueymard 1993</li>
 <li>Added <code>$$CAMERA$$</code> file pattern</li>
@@ -315,6 +317,7 @@ To identify what has changed in between beta builds, please refer to the <a href
 <li>Added <code>$$ROTATEANGLE$$</code> file pattern</li>
 <li>Added <code>$$STARCOUNT$$</code> file pattern</li>
 <li>Added <code>$$TEMPERATURESETPOINT$$</code> file pattern</li>
+<li>Added Guider Peak file patterns <code>$$PEAKRA$$</code> <code>$$PEAKRAARCSEC$$</code> <code>$$PEAKDEC$$</code> <code>$$PEAKDECARCSEC$$</code></li>
 </ul>
 <h4 id="included-camera-sdk-versions-can-now-be-found-inside-the-about-page-of-n.i.n.a">Included Camera SDK Versions can now be found inside the about page of N.I.N.A.</h4>
 <h1 id="version-1.10-hf3">Version 1.10 HF3</h1>
