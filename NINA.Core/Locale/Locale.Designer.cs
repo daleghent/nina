@@ -9463,6 +9463,42 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Peak Dec guiding error during exposure in arc seconds.
+        /// </summary>
+        internal static string LblGuidingPeakDecArcSecDescription {
+            get {
+                return ResourceManager.GetString("LblGuidingPeakDecArcSecDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peak Dec guiding error during exposure in pixels.
+        /// </summary>
+        internal static string LblGuidingPeakDecDescription {
+            get {
+                return ResourceManager.GetString("LblGuidingPeakDecDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peak RA guiding error during exposure in arc seconds.
+        /// </summary>
+        internal static string LblGuidingPeakRAArcSecDescription {
+            get {
+                return ResourceManager.GetString("LblGuidingPeakRAArcSecDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peak RA guiding error during exposure in pixels.
+        /// </summary>
+        internal static string LblGuidingPeakRADescription {
+            get {
+                return ResourceManager.GetString("LblGuidingPeakRADescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Root mean square error of guiding during exposure in arc seconds.
         /// </summary>
         internal static string LblGuidingRMSArcSecDescription {

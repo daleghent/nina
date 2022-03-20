@@ -1714,6 +1714,18 @@ Calculated HFR: {2}
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Root mean square error of guiding during exposure in pixels</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in pixels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in pixels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Halt</value>
   </data>

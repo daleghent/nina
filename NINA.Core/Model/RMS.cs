@@ -26,7 +26,7 @@ namespace NINA.Core.Model {
         private double ra;
         private double dec;
         private double total;
-
+ 
         public double RA {
             get {
                 return ra;
@@ -83,12 +83,22 @@ namespace NINA.Core.Model {
 
         public double Scale { get; private set; } = 1;
 
+        public double PeakRA { get; set; } = 0;
+
+        public double PeakDec { get; set; } = 0;
+
         public void AddDataPoint(double raDistance, double decDistance) {
             datapoints++;
             sum_RA += raDistance;
             sum_RA2 += (raDistance * raDistance);
             sum_Dec += decDistance;
             sum_Dec2 += (decDistance * decDistance);
+            if (raDistance > PeakRA) {
+                PeakRA = raDistance;
+            }
+            if (decDistance > PeakDec) {
+                PeakDec = decDistance;
+            }
 
             CalculateRMS();
         }
@@ -120,6 +130,8 @@ namespace NINA.Core.Model {
             RA = 0;
             Dec = 0;
             Total = 0;
+            PeakRA = 0;
+            PeakDec = 0;
             RaiseAllPropertiesChanged();
         }
 

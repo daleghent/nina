@@ -235,6 +235,10 @@ namespace NINA.Image.ImageData {
             if (metadata.Image.RecordedRMS != null) {
                 p.Set(ImagePatternKeys.RMS, metadata.Image.RecordedRMS.Total);
                 p.Set(ImagePatternKeys.RMSArcSec, metadata.Image.RecordedRMS.Total * metadata.Image.RecordedRMS.Scale);
+                p.Set(ImagePatternKeys.PeakRA, metadata.Image.RecordedRMS.PeakRA);
+                p.Set(ImagePatternKeys.PeakRAArcSec, metadata.Image.RecordedRMS.PeakRA * metadata.Image.RecordedRMS.Scale);
+                p.Set(ImagePatternKeys.PeakDec, metadata.Image.RecordedRMS.PeakDec);
+                p.Set(ImagePatternKeys.PeakDecArcSec, metadata.Image.RecordedRMS.PeakDec * metadata.Image.RecordedRMS.Scale);
             }
 
             if (metadata.Focuser.Position.HasValue) {

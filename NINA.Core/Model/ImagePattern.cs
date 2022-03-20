@@ -93,6 +93,18 @@ namespace NINA.Core.Model {
             p = new ImagePattern(ImagePatternKeys.RMSArcSec, Locale.Loc.Instance["LblGuidingRMSArcSecDescription"]);
             patterns.Add(p.Key, p);
 
+            p = new ImagePattern(ImagePatternKeys.PeakRA, Locale.Loc.Instance["LblGuidingPeakRADescription"]);
+            patterns.Add(p.Key, p);
+
+            p = new ImagePattern(ImagePatternKeys.PeakRAArcSec, Locale.Loc.Instance["LblGuidingPeakRAArcSecDescription"]);
+            patterns.Add(p.Key, p);
+
+            p = new ImagePattern(ImagePatternKeys.PeakDec, Locale.Loc.Instance["LblGuidingPeakDecDescription"]);
+            patterns.Add(p.Key, p);
+
+            p = new ImagePattern(ImagePatternKeys.PeakDecArcSec, Locale.Loc.Instance["LblGuidingPeakDecArcSecDescription"]);
+            patterns.Add(p.Key, p);
+
             p = new ImagePattern(ImagePatternKeys.FocuserPosition, Locale.Loc.Instance["LblFocuserPositionDescription"]);
             patterns.Add(p.Key, p);
 
@@ -188,6 +200,10 @@ namespace NINA.Core.Model {
             p.Set(ImagePatternKeys.Offset, "10");
             p.Set(ImagePatternKeys.RMS, 0.35);
             p.Set(ImagePatternKeys.RMSArcSec, 0.65);
+            p.Set(ImagePatternKeys.PeakRA, 0.9);
+            p.Set(ImagePatternKeys.PeakRAArcSec, 1.39);
+            p.Set(ImagePatternKeys.PeakDec, 0.8);
+            p.Set(ImagePatternKeys.PeakDecArcSec, 1.44);
             p.Set(ImagePatternKeys.FocuserPosition, 12542);
             p.Set(ImagePatternKeys.FocuserTemp, "3.94");
             p.Set(ImagePatternKeys.ApplicationStartDate, Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd"));
@@ -228,6 +244,10 @@ namespace NINA.Core.Model {
         public static readonly string Offset = "$$OFFSET$$";
         public static readonly string RMS = "$$RMS$$";
         public static readonly string RMSArcSec = "$$RMSARCSEC$$";
+        public static readonly string PeakRA = "$$PEAKRA$$";
+        public static readonly string PeakRAArcSec = "$$PEAKRAARCSEC$$";
+        public static readonly string PeakDec = "$$PEAKDEC$$";
+        public static readonly string PeakDecArcSec = "$$PEAKDECARCSEC$$";
         public static readonly string FocuserPosition = "$$FOCUSERPOSITION$$";
         public static readonly string FocuserTemp = "$$FOCUSERTEMP$$";
         public static readonly string ApplicationStartDate = "$$APPLICATIONSTARTDATE$$";
