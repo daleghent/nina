@@ -264,6 +264,9 @@ namespace NINA.Core.Model {
 
     public class ImagePattern {
 
+        public ImagePattern(string k, string d) : this(k, d, "") {
+        }
+
         public ImagePattern(string k, string d, string c) {
             Key = k;
             Description = d;
