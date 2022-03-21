@@ -114,6 +114,8 @@
             InstalledAndRequiresRestart="{StaticResource InstalledAndRequiresRestartButton}"
             NotInstalled="{StaticResource NotInstalledButton}"
             UpdateAvailable="{StaticResource UpdateAvailableButton}" />
+
+        <BitmapImage x:Key="DefaultImage" UriSource="/NINA;component/Resources/plugin.png" />
     </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -190,7 +192,7 @@
                                                         MaxWidth="25"
                                                         MaxHeight="25"
                                                         RenderOptions.BitmapScalingMode="HighQuality"
-                                                        Source="{Binding Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}}" />
+                                                        Source="{Binding Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}, TargetNullValue={StaticResource DefaultImage}, FallbackValue={StaticResource DefaultImage}}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -415,7 +417,7 @@
                                     Margin="0,10,0,0"
                                     VerticalAlignment="Top"
                                     RenderOptions.BitmapScalingMode="HighQuality"
-                                    Source="{Binding Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}}" />
+                                    Source="{Binding Descriptions.FeaturedImageURL, Converter={StaticResource NullImageConverter}, TargetNullValue={StaticResource DefaultImage}, FallbackValue={StaticResource DefaultImage}}" />
                             </Grid>
                         </Grid>
 

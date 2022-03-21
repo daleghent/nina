@@ -1227,6 +1227,7 @@
     <Content Include="External\x86\SVBony\SVBCameraSDK.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\plugin.png" />
     <Content Include="Utility\DCRaw\dcraw.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
