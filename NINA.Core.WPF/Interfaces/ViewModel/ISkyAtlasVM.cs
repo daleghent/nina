@@ -23,8 +23,6 @@ using NINA.Core.Model;
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface ISkyAtlasVM {
-        AsyncObservableCollection<DateTime> AltitudeTimesFrom { get; set; }
-        AsyncObservableCollection<DateTime> AltitudeTimesThrough { get; set; }
         AsyncObservableCollection<string> BrightnessFrom { get; set; }
         AsyncObservableCollection<string> BrightnessThrough { get; set; }
         ICommand CancelSearchCommand { get; }

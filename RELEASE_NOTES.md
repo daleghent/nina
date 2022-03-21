@@ -220,7 +220,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - It is now possible to define a custom horizon to be used and displayed in the altitude charts
 - Using these custom horizons will make target planning a lot more convenient when only a portion of the sky is available
 - The horizon file consists of a simple mapping of azimuth to altitude values
-- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified time range
+
 ----
 ```markdown
 # Example horizon file content
@@ -236,6 +236,12 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 350 15
 ```
 ----
+
+### Sky Atlas
+- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified duration
+- Filter for time from/through is now only showing time without a day
+- Altitude filter is changed to use a duration instead of a start and end time
+- Moon distance is now shown in the list for each object. Furthermore a new filter is added to filter by moon distance.
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter

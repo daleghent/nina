@@ -19,7 +19,6 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
-    xmlns:vm="clr-namespace:NINA.ViewModel"
     x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -72,6 +71,94 @@
                             </Button>
                         </Grid>
 
+                        <Expander
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            Header="{ns:Loc LblObservation}"
+                            IsExpanded="True">
+                            <StackPanel>
+                                <UniformGrid Columns="2">
+                                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDate}" />
+                                    <DatePicker SelectedDate="{Binding FilterDate}" />
+                                </UniformGrid>
+                                <UniformGrid Columns="2">
+                                    <TextBlock Text="{ns:Loc LblFrom}" />
+
+                                    <ComboBox
+                                        ItemStringFormat="HH:mm"
+                                        ItemsSource="{Binding AltitudeTimesFrom}"
+                                        SelectedValue="{Binding SelectedAltitudeTimeFrom}" />
+                                </UniformGrid>
+                                <UniformGrid Margin="0,2,0,0" Columns="2">
+                                    <TextBlock Text="{ns:Loc LblThrough}" />
+
+
+                                    <ComboBox
+                                        ItemStringFormat="HH:mm"
+                                        ItemsSource="{Binding AltitudeTimesThrough}"
+                                        SelectedValue="{Binding SelectedAltitudeTimeThrough}" />
+                                </UniformGrid>
+                                <UniformGrid Margin="0,2,0,0" Columns="2">
+                                    <TextBlock Text="{ns:Loc LblAltitude}" />
+                                    <ComboBox
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding MinimumAltitudeDegrees}"
+                                        SelectedValue="{Binding SelectedMinimumAltitudeDegrees}"
+                                        SelectedValuePath="Key" />
+                                </UniformGrid>
+                                <UniformGrid Margin="0,2,0,0" Columns="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{ns:Loc LblDuration}" />
+                                        <TextBlock Margin="5,0,0,0" Text="&gt;" />
+                                    </StackPanel>
+                                    <ComboBox
+                                        ItemStringFormat="0h"
+                                        ItemsSource="{Binding AltitudeDurations}"
+                                        SelectedValue="{Binding SelectedAltitudeDuration}" />
+                                </UniformGrid>
+                            </StackPanel>
+                        </Expander>
+                        <Expander
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            Header="{ns:Loc LblApparentSize}"
+                            IsExpanded="True">
+                            <StackPanel>
+                                <UniformGrid Columns="2">
+                                    <TextBlock Text="{ns:Loc LblFrom}" />
+                                    <ComboBox
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SizesFrom}"
+                                        SelectedValue="{Binding SelectedSizeFrom}"
+                                        SelectedValuePath="Key" />
+                                </UniformGrid>
+                                <UniformGrid Margin="0,2,0,0" Columns="2">
+                                    <TextBlock Text="{ns:Loc LblThrough}" />
+                                    <ComboBox
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SizesThrough}"
+                                        SelectedValue="{Binding SelectedSizeThrough}"
+                                        SelectedValuePath="Key" />
+                                </UniformGrid>
+                            </StackPanel>
+                        </Expander>
+                        <Expander
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            Header="{ns:Loc LblMoon}">
+                            <StackPanel>
+                                <UniformGrid Columns="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{ns:Loc LblDistance}" />
+                                        <TextBlock Margin="5,0,0,0" Text="&gt;" />
+                                    </StackPanel>
+                                    <ComboBox
+                                        ItemStringFormat="0°"
+                                        ItemsSource="{Binding MoonDistanceDegrees}"
+                                        SelectedValue="{Binding SelectedMinimumMoonDistanceDegrees}" />
+                                </UniformGrid>
+                            </StackPanel>
+                        </Expander>
                         <Expander
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0,0,0,1"
@@ -169,29 +256,6 @@
                         <Expander
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0,0,0,1"
-                            Header="{ns:Loc LblApparentSize}">
-                            <StackPanel>
-                                <UniformGrid Columns="2">
-                                    <TextBlock Text="{ns:Loc LblFrom}" />
-                                    <ComboBox
-                                        DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SizesFrom}"
-                                        SelectedValue="{Binding SelectedSizeFrom}"
-                                        SelectedValuePath="Key" />
-                                </UniformGrid>
-                                <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblThrough}" />
-                                    <ComboBox
-                                        DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SizesThrough}"
-                                        SelectedValue="{Binding SelectedSizeThrough}"
-                                        SelectedValuePath="Key" />
-                                </UniformGrid>
-                            </StackPanel>
-                        </Expander>
-                        <Expander
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0,0,0,1"
                             Header="{ns:Loc LblApparentMagnitude}">
                             <StackPanel>
                                 <UniformGrid Columns="2">
@@ -203,46 +267,6 @@
                                     <ComboBox ItemsSource="{Binding MagnitudesThrough}" SelectedItem="{Binding SelectedMagnitudeThrough}" />
                                 </UniformGrid>
                             </StackPanel>
-                        </Expander>
-
-                        <Expander
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0,0,0,1"
-                            Header="{ns:Loc LblMinimumAltitude}">
-                            <StackPanel>
-                                <UniformGrid Columns="2">
-                                    <TextBlock Text="{ns:Loc LblFrom}" />
-                                    <ComboBox
-                                        ItemStringFormat="yyyy-MM-dd HH:mm"
-                                        ItemsSource="{Binding AltitudeTimesFrom}"
-                                        SelectedItem="{Binding SelectedAltitudeTimeFrom}" />
-                                </UniformGrid>
-                                <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblThrough}" />
-                                    <ComboBox
-                                        ItemStringFormat="yyyy-MM-dd HH:mm"
-                                        ItemsSource="{Binding AltitudeTimesThrough}"
-                                        SelectedItem="{Binding SelectedAltitudeTimeThrough}" />
-                                </UniformGrid>
-                                <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblAltitude}" />
-                                    <ComboBox
-                                        DisplayMemberPath="Value"
-                                        ItemsSource="{Binding MinimumAltitudeDegrees}"
-                                        SelectedValue="{Binding SelectedMinimumAltitudeDegrees}"
-                                        SelectedValuePath="Key" />
-                                </UniformGrid>
-                            </StackPanel>
-                        </Expander>
-
-                        <Expander
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0,0,0,1"
-                            Header="{ns:Loc LblReferenceDate}">
-                            <UniformGrid Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblReferenceDate}" />
-                                <DatePicker SelectedDate="{Binding FilterDate}" />
-                            </UniformGrid>
                         </Expander>
 
                         <UniformGrid Columns="2">

@@ -79,7 +79,7 @@ namespace NINA.ViewModel {
                 return await framingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
             });
 
-            Task.Run(() => { ResetFilters(null); InitializeFilters(); });
+            Task.Run(() => { NighttimeData = this.nighttimeCalculator.Calculate();  InitializeFilters(); ResetFilters(null); });
             PageSize = 50;
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
@@ -114,7 +114,7 @@ namespace NINA.ViewModel {
             get => filterDate;
             set {
                 if (filterDate != value) {
-                    filterDate = value;
+                    filterDate = value;                  
                     RaisePropertyChanged();
                 }
             }
@@ -129,9 +129,32 @@ namespace NINA.ViewModel {
                 objecttype.Selected = false;
             }
 
-            SelectedAltitudeTimeFrom = DateTime.MinValue;
-            SelectedAltitudeTimeThrough = DateTime.MaxValue;
-            SelectedMinimumAltitudeDegrees = 0;
+            if(NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+                SelectedAltitudeTimeFrom = NighttimeData.TwilightRiseAndSet.Set.Value;
+            } else {
+                if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                } else {
+                    SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                }
+            }
+            if (NighttimeData.TwilightRiseAndSet.Rise.HasValue) {
+                SelectedAltitudeTimeThrough = NighttimeData.TwilightRiseAndSet.Rise.Value;
+            } else {
+                if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                } else {
+                    SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                }
+            }
+            SelectedAltitudeDuration = 1;
+            
+            if (profileService.ActiveProfile.AstrometrySettings.Horizon != null) {
+                SelectedMinimumAltitudeDegrees = ALTITUDEABOVEHORIZONFILTER;
+            } else {
+                SelectedMinimumAltitudeDegrees = 20;
+            }
+            
 
             SelectedBrightnessFrom = null;
             SelectedBrightnessThrough = null;
@@ -144,13 +167,13 @@ namespace NINA.ViewModel {
             SelectedMagnitudeFrom = null;
             SelectedMagnitudeThrough = null;
 
-            SelectedMinimumAltitudeDegrees = 0;
-
             SelectedRAFrom = null;
             SelectedRAThrough = null;
 
-            SelectedSizeFrom = null;
+            SelectedSizeFrom = 300;
             SelectedSizeThrough = null;
+
+            SelectedMinimumMoonDistanceDegrees = 0;
 
             OrderByField = SkyAtlasOrderByFieldsEnum.SIZEMAX;
             OrderByDirection = SkyAtlasOrderByDirectionEnum.DESC;
@@ -190,7 +213,7 @@ namespace NINA.ViewModel {
                     searchParams.SearchOrder.Field = OrderByField.ToString().ToLower();
                     searchParams.SearchOrder.Direction = OrderByDirection.ToString();
 
-                    var result = await db.GetDeepSkyObjects(
+                    IEnumerable<DeepSkyObject> result = await db.GetDeepSkyObjects(
                         profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository,
                         profileService.ActiveProfile.AstrometrySettings.Horizon,
                         searchParams,
@@ -207,37 +230,64 @@ namespace NINA.ViewModel {
                         var cloneDate = d;
                         obj.SetDateAndPosition(cloneDate, latitude, longitude);
                         _searchTokenSource.Token.ThrowIfCancellationRequested();
-                    });
-
-                    /* Check if Altitude Filter is not default */
-                    if (!(SelectedAltitudeTimeFrom == DateTime.MinValue && SelectedAltitudeTimeThrough == DateTime.MaxValue && SelectedMinimumAltitudeDegrees == 0)) {
+                    });       
+                    
+                    if(SelectedMinimumAltitudeDegrees > 0 || SelectedAltitudeDuration > 0) {
                         Func<DeepSkyObject, bool> filterFunction;
+                        var fromDate = GetDateFromReferenceDate(SelectedAltitudeTimeFrom, NighttimeData.ReferenceDate);
+                        var throughDate = GetDateFromReferenceDate(SelectedAltitudeTimeThrough, NighttimeData.ReferenceDate);
+                        var fullDuration = throughDate - fromDate;
+
+                        var minimumDuration = TimeSpan.FromHours(SelectedAltitudeDuration) > fullDuration ? Math.Floor(fullDuration.TotalHours) : SelectedAltitudeDuration;
 
                         if (SelectedMinimumAltitudeDegrees == ALTITUDEABOVEHORIZONFILTER) {
-                            filterFunction = (x) => {
-                                return x.Altitudes.Where((y) => {
-                                    return (y.X > DateTimeAxis.ToDouble(SelectedAltitudeTimeFrom) && y.X < DateTimeAxis.ToDouble(SelectedAltitudeTimeThrough));
-                                }).All((z) => {
-                                    return z.Y > (x.Horizon.Count > 0 ? x.Horizon.First(h => h.X == z.X).Y : 0);
-                                });
+                            filterFunction = (dso) => {
+                                var altitudesBetweenDates = dso.Altitudes
+                                    .Where((y) => { return y.X > DateTimeAxis.ToDouble(fromDate) && y.X < DateTimeAxis.ToDouble(throughDate); })
+                                    .ToList();
+                                
+                                if(altitudesBetweenDates.Count > 1) {                                    
+                                    var duration = TimeSpan.Zero;
+                                    var firstAboveHorizon = altitudesBetweenDates.First();                                    
+
+                                    for(var i = 0; i < altitudesBetweenDates.Count; i++) {
+                                        var item = altitudesBetweenDates[i];
+                                        if (item.Y < (dso.Horizon.Count > 0 ? dso.Horizon.First(h => h.X == item.X).Y : 0)) {
+                                            // current point is below the horizon. Reset duration and set current item to be first item
+                                            duration = TimeSpan.Zero;
+                                            firstAboveHorizon = item;
+                                            continue;
+                                        } else {
+                                            // current point is above the horizon. Add the accumulated duration since the first point
+                                            duration = TimeSpan.FromDays(item.X - firstAboveHorizon.X);
+                                            if(duration > TimeSpan.FromHours(minimumDuration)) {
+                                                // The duration exceeds the minimum desired duration. break out and return success
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                }
+                                return false;                               
                             };
                         } else {
                             filterFunction = (x) => {
-                                return x.Altitudes.Where((y) => {
-                                    return (y.X > DateTimeAxis.ToDouble(SelectedAltitudeTimeFrom) && y.X < DateTimeAxis.ToDouble(SelectedAltitudeTimeThrough));
-                                }).All((z) => {
-                                    return z.Y > SelectedMinimumAltitudeDegrees;
-                                });
+                                var aggregate = x.Altitudes.Where((y) => { return y.X > DateTimeAxis.ToDouble(fromDate) && y.X < DateTimeAxis.ToDouble(throughDate); })                                
+                                    .Where((y) => y.Y > SelectedMinimumAltitudeDegrees)
+                                    .Aggregate(new { min = double.MaxValue, max = double.MinValue }, (accumulator, o) => new { min = Math.Min(o.X, accumulator.min), max = o.X > accumulator.max ? o.X : accumulator.max });
+                                if(aggregate.min != double.MaxValue) {
+                                    return TimeSpan.FromDays(aggregate.max - aggregate.min) > TimeSpan.FromHours(minimumDuration);
+                                }
+                                return false;                                
                             };
                         }
-                        var filteredList = result.Where(filterFunction);
-
-                        var count = filteredList.Count();
-                        /* Apply Altitude Filter */
-                        SearchResult = new PagedList<DeepSkyObject>(PageSize, filteredList);
-                    } else {
-                        SearchResult = new PagedList<DeepSkyObject>(PageSize, result);
+                        result = result.Where(filterFunction);
                     }
+
+                    if(SelectedMinimumMoonDistanceDegrees > 0) {
+                        result = result.Where(x => x.Altitudes.Count > 0 && x.Moon.Separation > SelectedMinimumMoonDistanceDegrees);
+                    }
+
+                    SearchResult = new PagedList<DeepSkyObject>(PageSize, result);
                 } catch (OperationCanceledException) {
                 }
                 return true;
@@ -253,6 +303,7 @@ namespace NINA.ViewModel {
             InitializeBrightnessFilters();
             InitializeSizeFilters();
             InitializeElevationFilters();
+            InitializeMoonDistanceDegreesFilter();
         }
 
         private const double ALTITUDEABOVEHORIZONFILTER = 999;
@@ -264,19 +315,43 @@ namespace NINA.ViewModel {
 
             var d = NighttimeData.ReferenceDate;
 
-            AltitudeTimesFrom.Add(DateTime.MinValue);
-            AltitudeTimesThrough.Add(DateTime.MaxValue);
-
-            for (int i = 0; i <= 24; i++) {
-                AltitudeTimesFrom.Add(d);
-                AltitudeTimesThrough.Add(d);
+            var dates = new List<DateTime>();
+            for (int i = 0; i < 24; i++) {
+                dates.Add(d);
                 d = d.AddHours(1);
             }
+            if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                dates.Add(NighttimeData.SunRiseAndSet.Set.Value);
+            }
+            if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                dates.Add(NighttimeData.SunRiseAndSet.Rise.Value);
+            }
+            if (NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+                dates.Add(NighttimeData.TwilightRiseAndSet.Set.Value);
+            }
+            if (NighttimeData.TwilightRiseAndSet.Rise.HasValue) {
+                dates.Add(NighttimeData.TwilightRiseAndSet.Rise.Value);
+            }
+            if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                dates.Add(NighttimeData.NauticalTwilightRiseAndSet.Set.Value);
+            }
+            if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                dates.Add(NighttimeData.NauticalTwilightRiseAndSet.Rise.Value);
+            }
+            AltitudeTimesFrom = new AsyncObservableCollection<DateTime>(dates.OrderBy(x => x));
+            AltitudeTimesThrough = new AsyncObservableCollection<DateTime>(dates.OrderBy(x => x));
+
+
 
             for (int i = 0; i <= 90; i += 10) {
                 MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(i, i + "°"));
             }
             MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(ALTITUDEABOVEHORIZONFILTER, Loc.Instance["LblAboveHorizon"]));
+
+            AltitudeDurations = new AsyncObservableCollection<double>();
+            for (double i = 0; i <= 12; i++) {
+                AltitudeDurations.Add(i);
+            }
         }
 
         private void InitializeSizeFilters() {
@@ -365,6 +440,21 @@ namespace NINA.ViewModel {
             }
         }
 
+        private void InitializeMoonDistanceDegreesFilter() {
+            MoonDistanceDegrees = new AsyncObservableCollection<double>();
+            for (double i = 0; i < 180; i+=5) {
+                MoonDistanceDegrees.Add(i);
+            }
+        }
+
+        private DateTime GetDateFromReferenceDate(DateTime date, DateTime referenceDate) {
+            if (date.Hour >= 12) {
+                return new DateTime(referenceDate.Year, referenceDate.Month, referenceDate.Day, date.Hour, date.Minute, date.Second);
+            } else {
+                return new DateTime(referenceDate.Year, referenceDate.Month, referenceDate.Day, date.Hour, date.Minute, date.Second) + TimeSpan.FromDays(1);
+            }
+        }
+
         private string _searchObjectName;
         private AsyncObservableCollection<DSOObjectType> _objectTypes;
         private AsyncObservableCollection<string> _constellations;
@@ -393,9 +483,13 @@ namespace NINA.ViewModel {
         private AsyncObservableCollection<DateTime> _altitudeTimesFrom;
         private AsyncObservableCollection<DateTime> _altitudeTimesThrough;
         private AsyncObservableCollection<KeyValuePair<double, string>> _minimumAltitudeDegrees;
+        private AsyncObservableCollection<double> _altitudeDurations;
+        private double _selectedAltitudeDuration;
         private DateTime _selectedAltitudeTimeFrom;
         private DateTime _selectedAltitudeTimeThrough;
         private double _selectedMinimumAltitudeDegrees;
+        private AsyncObservableCollection<double> _moonDistanceDegrees;
+        private double _selectedMinimumMoonDistanceDegrees;
 
         public AsyncObservableCollection<DateTime> AltitudeTimesFrom {
             get {
@@ -416,7 +510,6 @@ namespace NINA.ViewModel {
                 RaisePropertyChanged();
             }
         }
-
         public AsyncObservableCollection<KeyValuePair<double, string>> MinimumAltitudeDegrees {
             get {
                 return _minimumAltitudeDegrees;
@@ -427,23 +520,46 @@ namespace NINA.ViewModel {
             }
         }
 
+        public AsyncObservableCollection<double> AltitudeDurations {
+            get => _altitudeDurations;
+            set {
+                _altitudeDurations = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double SelectedAltitudeDuration {
+            get {
+                return _selectedAltitudeDuration;
+            }
+            set {
+                _selectedAltitudeDuration = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public DateTime SelectedAltitudeTimeFrom {
             get {
                 return _selectedAltitudeTimeFrom;
             }
             set {
-                _selectedAltitudeTimeFrom = value;
-                RaisePropertyChanged();
+                if (value != _selectedAltitudeTimeThrough) {
+                    _selectedAltitudeTimeFrom = value;
+                    RaisePropertyChanged();
+                }
             }
         }
+
 
         public DateTime SelectedAltitudeTimeThrough {
             get {
                 return _selectedAltitudeTimeThrough;
             }
             set {
-                _selectedAltitudeTimeThrough = value;
-                RaisePropertyChanged();
+                if(value != _selectedAltitudeTimeThrough) { 
+                    _selectedAltitudeTimeThrough = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -453,6 +569,26 @@ namespace NINA.ViewModel {
             }
             set {
                 _selectedMinimumAltitudeDegrees = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public AsyncObservableCollection<double> MoonDistanceDegrees {
+            get => _moonDistanceDegrees;
+            set {
+                _moonDistanceDegrees = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double SelectedMinimumMoonDistanceDegrees {
+            get {
+                return _selectedMinimumMoonDistanceDegrees;
+            }
+            set {
+                if(value < 0) { value = 0; }
+                if(value > 180) { value = 180; }
+                _selectedMinimumMoonDistanceDegrees = value;
                 RaisePropertyChanged();
             }
         }

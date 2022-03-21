@@ -6044,6 +6044,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string LblDate {
+            get {
+                return ResourceManager.GetString("LblDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date with format YYYY-MM-DD.
         /// </summary>
         internal static string LblDateFormatDescription {
@@ -10908,6 +10917,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moon.
+        /// </summary>
+        internal static string LblMoon {
+            get {
+                return ResourceManager.GetString("LblMoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moonrise.
         /// </summary>
         internal static string LblMoonRise {
@@ -11705,6 +11723,15 @@ namespace NINA.Core.Locale {
         internal static string LblObjectType_SNREM {
             get {
                 return ResourceManager.GetString("LblObjectType_SNREM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Observation.
+        /// </summary>
+        internal static string LblObservation {
+            get {
+                return ResourceManager.GetString("LblObservation", resourceCulture);
             }
         }
         

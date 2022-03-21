@@ -284,7 +284,7 @@ namespace NINA.Astrometry {
                         }
 
                         if (searchParams.Size.From.HasValue) {
-                            query = query.Where(x => x.sizemin >= searchParams.Size.From);
+                            query = query.Where(x => x.sizemax >= searchParams.Size.From);
                         }
 
                         if (searchParams.Size.Thru.HasValue) {

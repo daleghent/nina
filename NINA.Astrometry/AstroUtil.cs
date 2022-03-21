@@ -17,6 +17,7 @@ using NINA.Core.Database;
 using NINA.Core.Utility;
 using Nito.AsyncEx;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -148,6 +149,7 @@ namespace NINA.Astrometry {
         private static double DeltaUTToday = 0.0;
         private static double DeltaUTYesterday = 0.0;
         private static double DeltaUTTomorrow = 0.0;
+        private static Dictionary<DateTime, double> DeltaUTCache = new Dictionary<DateTime, double>();
         private static DateTime DeltaUTReference;
 
         /// <summary>
@@ -173,20 +175,26 @@ namespace NINA.Astrometry {
                 }
             }
 
-            if (date.Date == DateTime.UtcNow.Date - TimeSpan.FromDays(1)) {
+            if (utcDate.Date == DateTime.UtcNow.Date - TimeSpan.FromDays(1)) {
                 if (DeltaUTYesterday != 0) {
                     return DeltaUTYesterday;
                 }
             }
 
-            if (date.Date == DateTime.UtcNow.Date + TimeSpan.FromDays(1)) {
+            if (utcDate.Date == DateTime.UtcNow.Date + TimeSpan.FromDays(1)) {
                 if (DeltaUTTomorrow != 0) {
                     return DeltaUTTomorrow;
                 }
             }
 
-            db = db ?? new DatabaseInteraction();
             var deltaUT = 0d;
+            if (DeltaUTCache.TryGetValue(utcDate.Date, out deltaUT)) {
+                if(deltaUT != 0) {
+                    return deltaUT;
+                }
+            }
+
+            db = db ?? new DatabaseInteraction();
             try {
                 deltaUT = AsyncContext.Run(() => db.GetUT1_UTC(utcDate, default));
             } catch (Exception ex) {
@@ -204,6 +212,8 @@ namespace NINA.Astrometry {
             if (utcDate.Date == DateTime.UtcNow.Date + TimeSpan.FromDays(1)) {
                 DeltaUTTomorrow = deltaUT;
             }
+
+            DeltaUTCache[utcDate.Date] = deltaUT;
 
             return deltaUT;
         }
