@@ -1708,6 +1708,18 @@ Přeskočit.</value>
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Chyba pointace RMS v pixelech po dobu expozice</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Max. chyba pointace RA během expozice v obloukových vteřinách</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Max. chyba pointace RA během expozice v pixelech</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Max. chyba pointace Dec během expozice v obloukových vteřinách</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Max. chyba pointace Dec během expozice v pixelech</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Zastavit</value>
   </data>
@@ -3331,7 +3343,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Vlastní</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Vlastní ({0}, {1})</value>
+    <value>Uživatelské ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Tranzit Sever</value>

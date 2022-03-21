@@ -1706,6 +1706,18 @@ Obliczone HFR: {2}</value>
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Root mean square error of guiding during exposure in pixels</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in pixels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in pixels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Zatrzymaj</value>
   </data>
@@ -3329,7 +3341,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Własny</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Custom ({0}, {1})</value>
+    <value>Custom ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit North</value>

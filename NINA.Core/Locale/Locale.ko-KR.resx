@@ -1703,6 +1703,18 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>노출 중 가이드의 제곱 평균 제곱근[Rms] 오차[픽셀]</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in pixels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in pixels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>중단</value>
   </data>
@@ -3324,7 +3336,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>사용자 정의</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>사용자 정의 ({0}, {1})</value>
+    <value>Custom ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>북쪽 통과[Transit North]</value>

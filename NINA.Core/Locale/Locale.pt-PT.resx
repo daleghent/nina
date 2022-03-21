@@ -1709,6 +1709,18 @@ HFR Calculado: {2}
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Erro do valor quadrático médio da guiagem durante a exposição em pixeis</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in pixels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in pixels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Parada</value>
   </data>
@@ -3332,7 +3344,7 @@ Arraste o rectângulo sobre a parte da imagem que deseja efectuar sub-sample e s
     <value>Personalizado</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Personalizado ({0}, {1})</value>
+    <value>Custom ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Trânsito Norte</value>

@@ -1709,6 +1709,18 @@ HFR calculat: {2}    </value>
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Error en la mitjana quadrada (RMS) del guiatge durant l'exposició en píxels</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Pic d'error de guiatge en AR, durant l'exposició en arc segons</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Pic d'error de guiatge en AR, durant l'exposició en píxels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Pic d'error de guiatge en Dec, durant l'exposició en arc segons</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Pic d'error de guiatge en Dec, durant l'exposició en píxels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Aturar</value>
   </data>
@@ -3329,7 +3341,7 @@ Arrossegueu el rectangle sobre la part del marc que vulgueu fer SubMostra i acti
     <value>Personalitzat</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Personalitzat ({0}, {1})</value>
+    <value>Personalitzat ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Trànsit Nord</value>

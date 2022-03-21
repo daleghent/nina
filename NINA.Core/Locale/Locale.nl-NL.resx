@@ -1704,6 +1704,18 @@ berekende HFR: {2}
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Wortel van de gemiddelde kwadraatsomfout tijdens de belichting in pixels</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in pixels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in pixels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Halt</value>
   </data>
@@ -3327,7 +3339,7 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
     <value>Custom</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Custom ({0}, {1})</value>
+    <value>Custom ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit noorden</value>

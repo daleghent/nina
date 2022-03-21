@@ -1714,6 +1714,18 @@ HFR Calcolato: {2}
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Errore root mean square di guida durante l'esposizione, in pixels</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Peak RA guiding error during exposure in pixels</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in arc seconds</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Peak Dec guiding error during exposure in pixels</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Ferma</value>
   </data>
@@ -3337,7 +3349,7 @@ Trascina il rettangolo  sulla parte del fotogramma che vuoi estrarre ed abilita 
     <value>Personalizzato</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Personalizzato ({0}, {1})</value>
+    <value>Custom ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit Nord</value>

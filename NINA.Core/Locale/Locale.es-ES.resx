@@ -1706,6 +1706,18 @@ Calculado HFR: {2}
   <data name="LblGuidingRMSDescription" xml:space="preserve">
     <value>Error en la media cuadrática (RMS) del guiado durante la exposición, en pixeles</value>
   </data>
+  <data name="LblGuidingPeakRAArcSecDescription" xml:space="preserve">
+    <value>Pico de error de guiado RA durante la exposición en arco segundos</value>
+  </data>
+  <data name="LblGuidingPeakRADescription" xml:space="preserve">
+    <value>Pico de error de guiado RA durante la exposición en píxeles</value>
+  </data>
+  <data name="LblGuidingPeakDecArcSecDescription" xml:space="preserve">
+    <value>Pico de error de guiado Dec durante la exposición en arco segundos</value>
+  </data>
+  <data name="LblGuidingPeakDecDescription" xml:space="preserve">
+    <value>Pico de error de guiado Dec durante la exposición en píxeles</value>
+  </data>
   <data name="LblHalt" xml:space="preserve">
     <value>Detener</value>
   </data>
@@ -3329,7 +3341,7 @@ Mueve el rectángulo sobre la parte del Encuadre que quieres hacer subsampling. 
     <value>Personalizado</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Personalizado ({0}, {1})</value>
+    <value>Personalizado ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Tránsito Norte</value>
