@@ -6138,4 +6138,13 @@ Toto tlačítko není viditelné v režimu mozaiky.</value>
     <value>Nepodařilo se načíst plugin {0} verze {1}.
 Zkontrolujte, zda je k dispozici aktualizace.</value>
   </data>
+  <data name="LblMoon" xml:space="preserve">
+    <value>Měsíc</value>
+  </data>
+  <data name="LblDate" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="LblObservation" xml:space="preserve">
+    <value>Pozorování</value>
+  </data>
 </root>

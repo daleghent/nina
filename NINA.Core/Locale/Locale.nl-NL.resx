@@ -6132,4 +6132,13 @@ This button is not visible when in mosaic mode.</value>
     <value>Failed to load plugin {0} version {1}.
 Please check if there is an update available.</value>
   </data>
+  <data name="LblMoon" xml:space="preserve">
+    <value>Moon</value>
+  </data>
+  <data name="LblDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="LblObservation" xml:space="preserve">
+    <value>Observation</value>
+  </data>
 </root>

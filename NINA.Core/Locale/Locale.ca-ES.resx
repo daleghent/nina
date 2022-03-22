@@ -6133,4 +6133,13 @@ Aquest botó no és visible en mode mosaic.</value>
     <value>No s'ha pogut iniciar el connector {0} versió {1}.
 Comproveu si hi ha una actualització disponible.</value>
   </data>
+  <data name="LblMoon" xml:space="preserve">
+    <value>Lluna</value>
+  </data>
+  <data name="LblDate" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="LblObservation" xml:space="preserve">
+    <value>Observació</value>
+  </data>
 </root>

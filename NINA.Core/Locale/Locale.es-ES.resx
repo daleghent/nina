@@ -6134,4 +6134,13 @@ Este botón no es visible en modo mosaico.</value>
     <value>Error al cargar el plugin {0} versión {1}.
 Por favor, comprueba si hay disponible actualización.</value>
   </data>
+  <data name="LblMoon" xml:space="preserve">
+    <value>Luna</value>
+  </data>
+  <data name="LblDate" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="LblObservation" xml:space="preserve">
+    <value>Observación</value>
+  </data>
 </root>
