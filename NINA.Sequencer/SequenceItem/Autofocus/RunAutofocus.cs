@@ -137,7 +137,8 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
             var instructionAttempts = Math.Max(1, Attempts);
             var afAttemptsSetting = Math.Max(1, focuserSettings.AutoFocusTotalNumberOfAttempts);
 
-            var time = afAttemptsSetting * instructionAttempts * steps * (exposureTime + settleTime);
+            // More than 10 attempts will be highly unlikely. Safeguard against unreasonable high reattampt values for the estimation
+            var time = Math.Min(10, afAttemptsSetting * instructionAttempts) * steps * (exposureTime + settleTime);
 
             return TimeSpan.FromSeconds(time);
         }

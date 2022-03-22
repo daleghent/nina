@@ -136,6 +136,9 @@ namespace NINA.Sequencer.Conditions {
             var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
             var hasTimeRemaining = (RemainingTime - nextItemDuration) > TimeSpan.Zero;
             if (!hasTimeRemaining && nextItemDuration > TimeSpan.Zero) {
+                if (nextItem != null) {
+                    Logger.Info($"No more time remaining. Remaining: {RemainingTime}, Next Item {nextItem.Name ?? ""}, Next Item Estimated Duration {nextItemDuration}, Next Item Attempts: {nextItem.Attempts}");
+                }
                 // There is no time remaining due to the next instruction taking longer - cut off any remaining time
                 startTime = DateTime.Now.Subtract(TimeSpan.FromHours(Hours) + TimeSpan.FromMinutes(Minutes) + TimeSpan.FromSeconds(Seconds));
                 RaisePropertyChanged(nameof(RemainingTime));
