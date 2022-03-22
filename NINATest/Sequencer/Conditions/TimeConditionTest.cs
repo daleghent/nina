@@ -142,22 +142,27 @@ namespace NINATest.Sequencer.Conditions {
         }
 
         [Test]
-        [TestCase(0, 2, 2)]
-        [TestCase(2, 6, 4)]
-        [TestCase(6, 11, 5)]
-        [TestCase(12, 12, 0)]
-        [TestCase(13, 11, 22)]
-        [TestCase(2, 22, 0)]
-        [TestCase(23, 22, 0)]
-        [TestCase(0, 22, 0)]
-        [TestCase(21, 22, 1)]
-        [TestCase(22, 2, 4)]
-        public void TimeCondition_RemainingTime_CalculatedCorrectly_WithDaySwitches(int nowHours, int conditionHours, int expectedTime) {
+        [TestCase(0,0, 2, 0, 2)]
+        [TestCase(2, 0, 6, 0, 4)]
+        [TestCase(6, 0, 11, 0, 5)]
+        [TestCase(12, 0, 12, 0, 0)]
+        [TestCase(12, 30, 12, 0, 0)]
+        [TestCase(12, 30, 12, 45, 0.25)]
+        [TestCase(12, 30, 18, 30, 6)]
+        [TestCase(12, 30, 4, 30, 16)]
+        [TestCase(11, 30, 4, 30, 0)]
+        [TestCase(13, 0, 11, 0, 22)]
+        [TestCase(2, 0, 22, 0, 0)]
+        [TestCase(23, 0, 22, 0, 0)]
+        [TestCase(0, 0, 22, 0, 0)]
+        [TestCase(21, 0, 22, 0, 1)]
+        [TestCase(22, 0, 2, 0, 4)]
+        public void TimeCondition_RemainingTime_CalculatedCorrectly_WithDaySwitches(int nowHours, int nowMinutes, int conditionHours, int conditionMinutes, double expectedTime) {
             var dateMock = new Mock<ICustomDateTime>();
-            dateMock.SetupGet(x => x.Now).Returns(new DateTime(2000, 1, 1, nowHours, 0, 0));
+            dateMock.SetupGet(x => x.Now).Returns(new DateTime(2000, 1, 1, nowHours, nowMinutes, 0));
 
             var providerMock = new Mock<IDateTimeProvider>();
-            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, conditionHours, 0, 0));
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, conditionHours, conditionMinutes, 0));
 
             var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
             sut.DateTime = dateMock.Object;

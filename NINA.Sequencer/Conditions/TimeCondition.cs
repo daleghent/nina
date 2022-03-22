@@ -162,7 +162,7 @@ namespace NINA.Sequencer.Conditions {
             }
 
             //In case it is 22:00:00 but you want to wait until 01:00:00 o'clock a day of 1 needs to be added
-            if (now.Hour > 12 && then.Hour < 12) {
+            if (now.Hour >= 12 && then.Hour < 12) {
                 then = then.AddDays(1);
             }
 

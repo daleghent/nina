@@ -120,6 +120,12 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         [TestCase(12, 0, 0, 12, 0, 0, 0)]
         [TestCase(12, 0, 0, 12, 0, 1, 1)]
         [TestCase(11, 0, 0, 12, 0, 0, 0)]
+        [TestCase(11, 0, 0, 12, 10, 0, 0)]
+        [TestCase(12, 0, 0, 12, 10, 0, 600)]
+        [TestCase(12, 0, 0, 4, 0, 0, 57600)]
+        [TestCase(12, 10, 0, 12, 20, 0, 600)]
+        [TestCase(12, 10, 0, 13, 10, 0, 3600)]
+        [TestCase(12, 10, 0, 4, 0, 0, 57000)]
         public void WaitForTime__(int nowHours, int nowMinutes, int nowSeconds, int thenHours, int thenMinutes, int thenSeconds, int estimatedDurationSeconds) {
             var now = new Mock<ICustomDateTime>();
             now.SetupGet(x => x.Now).Returns(new DateTime(1999, 1, 1, nowHours, nowMinutes, nowSeconds));
