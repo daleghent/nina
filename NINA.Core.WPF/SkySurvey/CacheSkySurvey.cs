@@ -18,6 +18,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
@@ -101,10 +102,13 @@ namespace NINA.WPF.Base.SkySurvey {
                         }
 
                         var sanitizedName = CoreUtil.ReplaceAllInvalidFilenameChars(skySurveyImage.Name);
-                        var imgFilePath = Path.Combine(framingAssistantCachePath, sanitizedName + ".jpg");
+                        var originalImgFilePath = Path.Combine(framingAssistantCachePath, sanitizedName + ".jpg");
 
-                        imgFilePath = CoreUtil.GetUniqueFilePath(imgFilePath);
-                        var name = Path.GetFileNameWithoutExtension(imgFilePath);
+
+                        originalImgFilePath = RestoreNameFromUniqueBracket(originalImgFilePath);
+                        
+                        var imgFilePath = CoreUtil.GetUniqueFilePath(originalImgFilePath);
+                        var name = Path.GetFileNameWithoutExtension(originalImgFilePath);
 
                         using (var fileStream = new FileStream(imgFilePath, FileMode.Create)) {
                             var encoder = new JpegBitmapEncoder();
@@ -135,6 +139,20 @@ namespace NINA.WPF.Base.SkySurvey {
                 Logger.Error(ex);
                 throw;
             }
+        }
+
+        private string RestoreNameFromUniqueBracket(string originalImgFilePath) {
+            var filename = Path.GetFileName(originalImgFilePath);
+
+            var regex = new Regex(@"^(.*?)(?:\((\d+)\))?\.(.+)$");
+            var matches = regex.Match(filename);
+            var path = originalImgFilePath;
+            if (matches.Groups.Count == 4 && !string.IsNullOrEmpty(matches.Groups[2].Value)) {
+                var originalFileName = matches.Groups[1].Value + "." + matches.Groups[3].Value;
+
+                path = Path.Combine(framingAssistantCachePath, originalFileName);
+            }
+            return path;
         }
 
         public XElement Cache { get; private set; }

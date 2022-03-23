@@ -88,6 +88,10 @@
                                                 Header="{ns:Loc LblDec}" />
                                             <GridViewColumn
                                                 Width="Auto"
+                                                DisplayMemberBinding="{Binding Path=Attribute[FoVW].Value, StringFormat=\{0:0\}\'}"
+                                                Header="{ns:Loc LblFieldOfView}" />
+                                            <GridViewColumn
+                                                Width="Auto"
                                                 DisplayMemberBinding="{Binding Path=Attribute[Source].Value}"
                                                 Header="{ns:Loc LblSource}" />
                                         </GridView>
