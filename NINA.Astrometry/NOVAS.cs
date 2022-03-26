@@ -137,6 +137,27 @@ namespace NINA.Astrometry {
                 new RectangularCoordinates(velocity[0], velocity[1], velocity[2]));
         }
 
+        public static RectangularPV GetPositionOnEarthSurface(double jdtt, double deltaT, Angle latitude, Angle longitude, double elevation) {
+            var observer = new NOVAS.Observer() {
+                Where = 1,
+                OnSurf = new NOVAS.OnSurface() {
+                    Latitude = latitude.Degree,
+                    Longitude = longitude.Degree,
+                    Height = elevation
+                }
+            };
+
+            var pos = new double[3];
+            var vel = new double[3];
+            var result = NOVAS_geo_posvel(jdtt, deltaT, NOVAS.Accuracy.Full, observer, pos, vel);
+            if (result != 0) {
+                throw new Exception($"NOVAS geo_posvel failed. Result={result}");
+            }
+            return new RectangularPV(
+                new RectangularCoordinates(pos[0], pos[1], pos[2]),
+                new RectangularCoordinates(vel[0], vel[1], vel[2]));
+        }
+
         private static readonly object lockObj = new object();
 
         #endregion "Public Methods"
@@ -201,6 +222,12 @@ namespace NINA.Astrometry {
             [Out] out double ra,
             [Out] out double dec,
             [Out] out double dis);
+
+        [DllImport(DLLNAME, EntryPoint = "geo_posvel", CallingConvention = CallingConvention.Cdecl)]
+        public static extern short NOVAS_geo_posvel(
+            double jdtt, double deltaT, NOVAS.Accuracy accuracy, NOVAS.Observer observer,
+            [In, Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 3)] double[] pos,
+            [In, Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 3)] double[] vel);
 
 
         #endregion "External DLL calls"
