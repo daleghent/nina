@@ -322,13 +322,15 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 var wasActivelyGuiding = await MGen.IsActivelyGuiding(ct);
                 bool telescopeMoved = false;
                 if (telescopeMediator.GetInfo().Connected) {
+                    var ditherAmplitude = await MGen.GetDitherAmplitude();
+                    var ditherAmplitudeArcmins = ditherAmplitude.Amplitude * PixelScale / 60.0;
                     Logger.Debug($"MGEN - Last known guiding position: {lastKnownGuidingPosition}");
                     Logger.Debug($"MGEN - Current telescope position: {telescopeMediator.GetCurrentPosition()}");
                     Logger.Debug($"MGEN - Last known (calibrated) side of pier: {lastCalibratedSideOfPier}");
                     Logger.Debug($"MGEN - Current side of pier: {telescopeMediator.GetInfo().SideOfPier}");
                     telescopeMoved = (lastKnownGuidingPosition == null || lastCalibratedSideOfPier != telescopeMediator.GetInfo().SideOfPier ||
                         (telescopeMediator.GetCurrentPosition() - lastKnownGuidingPosition).Distance.ArcMinutes >
-                        profileService.ActiveProfile.PlateSolveSettings.Threshold);
+                        Math.Max(1.2 * ditherAmplitudeArcmins, profileService.ActiveProfile.PlateSolveSettings.Threshold));
                     Logger.Debug($"Telescope moved: {telescopeMoved}");
                 }
                 if (!wasActivelyGuiding && !telescopeMoved) {
@@ -350,7 +352,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
                     }
                 }
                 var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
-                if (calibrated || !wasActivelyGuiding) {
+                var guidingStopped = !await MGen.IsGuidingActive(ct);
+                if (calibrated || !wasActivelyGuiding || guidingStopped) {
                     Logger.Info("MGEN - Starting Guiding");
                     await MGen.StartGuiding(ct);
                     if (!await MGen.IsGuidingActive(ct)) {
