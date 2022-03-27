@@ -96,7 +96,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override object Clone() {
             return new Center(this) {
-                Coordinates = Coordinates.Clone()
+                Coordinates = Coordinates?.Clone()
             };
         }
 

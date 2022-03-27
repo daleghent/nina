@@ -100,7 +100,7 @@ namespace NINA.Sequencer.Container {
                     if (dropTarget != null) {
                         this.Name = dropTarget.TargetName;
                         this.Target.TargetName = dropTarget.TargetName;
-                        this.Target.InputCoordinates = dropTarget.InputCoordinates.Clone();
+                        this.Target.InputCoordinates = dropTarget.InputCoordinate?s.Clone();
                         this.Target.Rotation = dropTarget.Rotation;
                     }
                 }

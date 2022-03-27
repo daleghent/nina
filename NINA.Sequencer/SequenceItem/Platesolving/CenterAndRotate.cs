@@ -87,7 +87,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override object Clone() {
             return new CenterAndRotate(this) {
-                Coordinates = Coordinates.Clone(),
+                Coordinates = Coordinates?.Clone(),
                 Rotation = Rotation
             };
         }

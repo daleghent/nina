@@ -44,7 +44,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         public WaitLoopData Clone() {
             return new WaitLoopData(this) {
-                Coordinates = Coordinates.Clone(),
+                Coordinates = Coordinates?.Clone(),
                 Offset = Offset,
                 Comparator = Comparator,
                 Name = Name,

@@ -97,7 +97,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone(),
                 DistanceArcMinutes = DistanceArcMinutes,
                 AfterExposures = AfterExposures,
-                Coordinates = Coordinates.Clone()
+                Coordinates = Coordinates?.Clone()
             };
         }
 
