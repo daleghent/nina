@@ -403,6 +403,7 @@ namespace NINA.Plugin {
 
                         Plugins[failedManifest] = false;
                         Logger.Error($"Failed to load plugin at {file} - {failedManifest.Name} version {failedManifest.Version} {message}");
+                        Notification.ShowError(string.Format(Loc.Instance["LblPluginFailedToLoad"], failedManifest.Name, failedManifest.Version));
                     }
                 } else {
                     Logger.Trace($"The dll {file} does not reference NINA.Plugin");
