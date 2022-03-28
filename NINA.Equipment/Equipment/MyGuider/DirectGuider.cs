@@ -27,6 +27,7 @@ using NINA.Core.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Core.Model;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -330,6 +331,24 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public Task<bool> StopShifting(CancellationToken ct) {
             return Task.FromResult(true);
+        }
+
+        public IList<string> SupportedActions => new List<string>();
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

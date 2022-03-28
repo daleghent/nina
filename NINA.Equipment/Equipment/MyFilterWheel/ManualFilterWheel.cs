@@ -19,7 +19,7 @@ using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -113,11 +113,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
         }
 
-        public ArrayList SupportedActions {
-            get {
-                return new ArrayList();
-            }
-        }
+        public IList<string> SupportedActions => new List<string>();
 
         public bool HasSetupDialog {
             get {
@@ -152,6 +148,22 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         public void SetupDialog() {
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

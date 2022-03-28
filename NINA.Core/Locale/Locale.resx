@@ -3175,9 +3175,6 @@ Should the settings be synchronized?</value>
   <data name="LblTelescopeNotConnected" xml:space="preserve">
     <value>Telescope not connected</value>
   </data>
-  <data name="LblTelescopeNotConnectedForCommand" xml:space="preserve">
-    <value>Telescope not connected to send command</value>
-  </data>
   <data name="LblTelescopeNotTrackingForSync" xml:space="preserve">
     <value>Telescope is not tracking. Sync is only available when tracking!</value>
   </data>
@@ -6153,7 +6150,46 @@ Please check if there is an update available.</value>
   <data name="LblObservation" xml:space="preserve">
     <value>Observation</value>
   </data>
-    <data name="LblSkyGuardPath" xml:space="preserve">
+  <data name="LblCommand" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="LblRaw" xml:space="preserve">
+    <value>Raw</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
+    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
+    <value>Send Command</value>
+  </data>
+  <data name="LblBoolean" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="LblDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="LblString" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="LblBlind" xml:space="preserve">
+    <value>Blind</value>
+  </data>
+  <data name="LblAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="LblParameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
+    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
+    <value>Device Action</value>
+  </data>
+  <data name="LblNoActionsAvailable" xml:space="preserve">
+    <value>No actions are available</value>
+  </data>
+  <data name="LblSkyGuardPath" xml:space="preserve">
     <value>SkyGuard path</value>
   </data>
   <data name="LblSkyGuardServerPort" xml:space="preserve">

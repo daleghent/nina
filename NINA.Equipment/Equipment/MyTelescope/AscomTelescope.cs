@@ -300,12 +300,6 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public ArrayList SupportedActions {
-            get {
-                return GetProperty(nameof(Telescope.SupportedActions), new ArrayList());
-            }
-        }
-
         public bool IsPulseGuiding {
             get {
                 if (CanPulseGuide) {
@@ -878,32 +872,6 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             if (result < min) result = min;
 
             return result;
-        }
-
-        public string SendCommandString(string command, bool raw = true) {
-            if (Connected) {
-                return device.CommandString(command, raw);
-            } else {
-                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
-                return null;
-            }
-        }
-
-        public bool SendCommandBool(string command, bool raw = true) {
-            if (Connected) {
-                return device.CommandBool(command, raw);
-            } else {
-                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
-                return false;
-            }
-        }
-
-        public void SendCommandBlind(string command, bool raw = true) {
-            if (Connected) {
-                device.CommandBlind(command, raw);
-            } else {
-                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
-            }
         }
 
         private Epoch DetermineEquatorialSystem() {

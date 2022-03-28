@@ -20,7 +20,6 @@ using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp;
 using NINA.Profile.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,7 +65,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
         public string[] Names => this.Filters.Select((x) => x.Name).ToArray();
 
-        public ArrayList SupportedActions => new ArrayList();
+        public IList<string> SupportedActions => new List<string>();
 
         public AsyncObservableCollection<FilterInfo> Filters {
             get {
@@ -247,6 +246,22 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public bool HasSetupDialog => false;
 
         public void SetupDialog() {
+            throw new NotImplementedException();
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
         }
 

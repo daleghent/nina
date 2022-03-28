@@ -355,7 +355,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                                 DriverVersion = rotator.DriverVersion,
                                 CanReverse = rotator.CanReverse,
                                 Reverse = rotator.Reverse,
-                                DeviceId = rotator.Id
+                                DeviceId = rotator.Id,
+                                SupportedActions = rotator.SupportedActions,
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblRotatorConnected"]);
@@ -411,6 +412,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
+            }
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return RotatorInfo?.Connected == true ? rotator.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return RotatorInfo?.Connected == true ? rotator.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return RotatorInfo?.Connected == true ? rotator.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (RotatorInfo?.Connected == true) {
+                rotator.SendCommandBlind(command, raw);
             }
         }
 

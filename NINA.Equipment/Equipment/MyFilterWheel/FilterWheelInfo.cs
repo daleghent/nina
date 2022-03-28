@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Model.Equipment;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
@@ -32,6 +33,16 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
             set {
                 _selectedFilter = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
                 RaisePropertyChanged();
             }
         }

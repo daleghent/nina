@@ -412,7 +412,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                                 BayerOffsetY = Cam.BayerOffsetY,
                                 DefaultGain = DefaultGain,
                                 DefaultOffset = DefaultOffset,
-                                USBLimit = Cam.USBLimit
+                                USBLimit = Cam.USBLimit,
+                                SupportedActions = Cam.SupportedActions,
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblCameraConnected"]);
@@ -928,6 +929,41 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
         public void SetCooler(bool onOff) {
             Cam.CoolerOn = onOff;
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            if (Cam?.Connected == true) {
+                return Cam.Action(actionName, actionParameters);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + actionName);
+                return null;
+            }
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            if (Cam?.Connected == true) {
+                return Cam.SendCommandString(command, raw);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
+                return null;
+            }
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            if (Cam?.Connected == true) {
+                return Cam.SendCommandBool(command, raw);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
+                return false;
+            }
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (Cam?.Connected == true) {
+                Cam.SendCommandBlind(command, raw);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
+            }
         }
 
         public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CoolerPowerHistory { get; private set; }

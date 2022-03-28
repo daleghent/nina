@@ -55,12 +55,6 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
         }
 
-        public ArrayList SupportedActions {
-            get {
-                return device.SupportedActions;
-            }
-        }
-
         private IProfileService profileService;
 
         public AsyncObservableCollection<FilterInfo> Filters {

@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
+
 namespace NINA.Equipment.Equipment.MyFocuser {
 
     public class FocuserInfo : DeviceInfo {
@@ -62,6 +64,16 @@ namespace NINA.Equipment.Equipment.MyFocuser {
         public bool TempCompAvailable {
             get { return tempCompAvailable; }
             set { tempCompAvailable = value; RaisePropertyChanged(); }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

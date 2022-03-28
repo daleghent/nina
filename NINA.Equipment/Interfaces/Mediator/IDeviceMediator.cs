@@ -34,5 +34,13 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void Broadcast(TInfo deviceInfo);
 
         TInfo GetInfo();
+
+        string Action(string actionName, string actionParameters);
+
+        string SendCommandString(string command, bool raw = true);
+
+        bool SendCommandBool(string command, bool raw = true);
+
+        void SendCommandBlind(string command, bool raw = true);
     }
 }

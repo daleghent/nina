@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,5 +35,15 @@ namespace NINA.Equipment.Interfaces {
         void Disconnect();
 
         void SetupDialog();
+
+        IList<string> SupportedActions { get; }
+
+        string Action(string actionName, string actionParameters);
+
+        string SendCommandString(string command, bool raw = true);
+
+        bool SendCommandBool(string command, bool raw = true);
+
+        void SendCommandBlind(string command, bool raw = true);
     }
 }

@@ -14,6 +14,7 @@
 
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
@@ -80,6 +81,16 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             get => _supportsOnOff;
             set {
                 _supportsOnOff = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
                 RaisePropertyChanged();
             }
         }

@@ -25,6 +25,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
 using NINA.Equipment.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
@@ -201,6 +203,24 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOnOff {
             get => true;
+        }
+
+        public IList<string> SupportedActions => new List<string>();
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

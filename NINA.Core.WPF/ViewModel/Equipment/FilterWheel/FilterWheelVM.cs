@@ -205,7 +205,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                                 Description = FW.Description,
                                 DriverInfo = FW.DriverInfo,
                                 DriverVersion = FW.DriverVersion,
-                                DeviceId = FW.Id
+                                DeviceId = FW.Id,
+                                SupportedActions = FW.SupportedActions,
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblFilterwheelConnected"]);
@@ -319,6 +320,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
         public FilterWheelInfo GetDeviceInfo() {
             return FilterWheelInfo;
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return FilterWheelInfo?.Connected == true ? FW.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return FilterWheelInfo?.Connected == true ? FW.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return FilterWheelInfo?.Connected == true ? FW.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (FilterWheelInfo?.Connected == true) {
+                FW.SendCommandBlind(command, raw);
+            }
         }
 
         public IDeviceChooserVM FilterWheelChooserVM { get; set; }

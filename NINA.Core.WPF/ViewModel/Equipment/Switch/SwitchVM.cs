@@ -248,7 +248,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                                 DriverInfo = switchHub.DriverInfo,
                                 DriverVersion = switchHub.DriverVersion,
                                 WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(WritableSwitches),
-                                DeviceId = switchHub.Id
+                                DeviceId = switchHub.Id,
+                                SupportedActions = switchHub.SupportedActions,
                             };
 
                             RaisePropertyChanged(nameof(WritableSwitches));
@@ -297,6 +298,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
         public SwitchInfo GetDeviceInfo() {
             return SwitchInfo;
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return SwitchInfo?.Connected == true ? SwitchHub.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return SwitchInfo?.Connected == true ? SwitchHub.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return SwitchInfo?.Connected == true ? SwitchHub.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (SwitchInfo?.Connected == true) {
+                SwitchHub.SendCommandBlind(command, raw);
+            }
         }
 
         public IAsyncCommand ConnectCommand { get; set; }

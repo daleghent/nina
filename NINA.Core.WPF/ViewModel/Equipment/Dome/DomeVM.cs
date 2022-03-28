@@ -164,7 +164,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                                 AtHome = Dome.AtPark,
                                 DriverFollowing = Dome.DriverFollowing,
                                 Slewing = Dome.Slewing,
-                                Azimuth = Dome.Azimuth
+                                Azimuth = Dome.Azimuth,
+                                SupportedActions = Dome.SupportedActions,
                             };
 
                             RaiseAllPropertiesChanged();
@@ -633,6 +634,29 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public async Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken) {
             return await this.domeFollower.SyncToScopeCoordinates(coordinates, sideOfPier, cancellationToken);
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            if (Dome?.Connected == true) {
+                return Dome.Action(actionName, actionParameters);
+            } else {
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + actionName);
+                return null;
+            }
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return Dome?.Connected == true ? Dome.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return Dome?.Connected == true ? Dome.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (Dome?.Connected == true) {
+                Dome.SendCommandBlind(command, raw);
+            }
         }
 
         private readonly IDeviceUpdateTimer updateTimer;

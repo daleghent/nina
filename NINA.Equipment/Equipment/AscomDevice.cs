@@ -20,7 +20,9 @@ using NINA.Core.Utility.Notification;
 using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -140,6 +142,52 @@ namespace NINA.Equipment.Equipment {
                         device.Connected = value;
                         connected = value;
                     }
+                }
+            }
+        }
+
+        public IList<string> SupportedActions {
+            get {
+                try {
+                    var list = device?.SupportedActions ?? new ArrayList();
+                    return list.Cast<object>().Select(x => x.ToString()).ToList();
+                } catch (Exception) { }
+                return new List<string>();
+            }
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            if (Connected) {
+                return device.Action(actionName, actionParameters);
+            } else {
+                return null;
+            }
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            if (Connected) {
+                lock (lockObj) {
+                    return device.CommandString(command, raw);
+                }
+            } else {
+                return null;
+            }
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            if (Connected) {
+                lock (lockObj) {
+                    return device.CommandBool(command, raw);
+                }
+            } else {
+                return false;
+            }
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (Connected) {
+                lock (lockObj) {
+                    device.CommandBlind(command, raw);
                 }
             }
         }

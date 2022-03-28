@@ -13,11 +13,22 @@
 #endregion "copyright"
 
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace NINA.Equipment.Equipment.MySwitch {
 
     public class SwitchInfo : DeviceInfo {
         public ReadOnlyCollection<IWritableSwitch> WritableSwitches { get; set; }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

@@ -285,6 +285,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public double ElectronsPerADU => double.NaN;
         public bool EnableSubSample { get; set; }
 
+        public IList<string> SupportedActions => new List<string>();
+
         public uint ExposureLength {
             get => Info.ExposureLength;
             set {
@@ -1024,5 +1026,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 RaisePropertyChanged();
             }
         }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
     }
 }

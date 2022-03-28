@@ -34,6 +34,7 @@ using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Exceptions;
 using NINA.Core.Model;
+using System.Collections;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -285,6 +286,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public string DriverVersion => string.Empty;
         public bool EnableSubSample { get; set; }
         public double ExposureMax => Info.ExpMax / 1e6;
+
+        public IList<string> SupportedActions => new List<string>();
+
         public double ElectronsPerADU => double.NaN;
         private bool reconnect = false;
 
@@ -1462,6 +1466,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public string QhyUsbDriverVersion {
             get => Info.UsbDriverVersion;
             private set => Info.UsbDriverVersion = value;
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
 
         private void SetImageResolution() {

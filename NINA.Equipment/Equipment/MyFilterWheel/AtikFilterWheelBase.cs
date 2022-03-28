@@ -15,13 +15,13 @@
 using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using System;
-using System.Collections;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Model.Equipment;
 using NINA.Equipment.SDK.CameraSDKs.AtikSDK;
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
@@ -40,7 +40,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
         public abstract short Position { get; set; }
 
-        public ArrayList SupportedActions => new ArrayList();
+        public IList<string> SupportedActions => new List<string>();
 
         public AsyncObservableCollection<FilterInfo> Filters {
             get {
@@ -88,6 +88,22 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public abstract void Disconnect();
 
         public void SetupDialog() {
+            throw new NotImplementedException();
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
         }
     }

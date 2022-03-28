@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using NINA.Equipment.SDK.FlatDeviceSDKs.AllPro;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
@@ -188,6 +189,24 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         public void SetupDialog() {
+            throw new NotImplementedException();
+        }
+
+        public IList<string> SupportedActions => new List<string>();
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
         }
     }

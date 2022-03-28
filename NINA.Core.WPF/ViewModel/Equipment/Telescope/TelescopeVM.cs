@@ -491,6 +491,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 CanMoveSecondaryAxis = Telescope.CanMoveSecondaryAxis,
                                 PrimaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Primary),
                                 SecondaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Secondary),
+                                SupportedActions = Telescope.SupportedActions,
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
@@ -1001,20 +1002,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
+        public string Action(string actionName, string actionParameters = "") {
+            return Telescope?.Connected == true ? Telescope.Action(actionName, actionParameters) : null;
+        }
+
         public string SendCommandString(string command, bool raw = true) {
-            if (Telescope?.Connected == true) {
-                return Telescope.SendCommandString(command, raw);
-            } else {
-                return null;
-            }
+            return Telescope?.Connected == true ? Telescope.SendCommandString(command, raw) : null;
         }
 
         public bool SendCommandBool(string command, bool raw = true) {
-            if (Telescope?.Connected == true) {
-                return Telescope.SendCommandBool(command, raw);
-            } else {
-                return false;
-            }
+            return Telescope?.Connected == true ? Telescope.SendCommandBool(command, raw) : false;
         }
 
         public void SendCommandBlind(string command, bool raw = true) {

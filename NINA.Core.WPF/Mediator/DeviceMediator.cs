@@ -87,5 +87,21 @@ namespace NINA.WPF.Base.Mediator {
             }
             return handler.GetDeviceInfo();
         }
+
+        public string Action(string actionName, string actionParameters) {
+            return handler.Action(actionName, actionParameters);
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return handler.SendCommandString(command, raw);
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return handler.SendCommandBool(command, raw);
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            handler.SendCommandBlind(command, raw);
+        }
     }
 }

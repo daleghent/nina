@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
+
 namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
     public class SafetyMonitorInfo : DeviceInfo {
@@ -20,6 +22,16 @@ namespace NINA.Equipment.Equipment.MySafetyMonitor {
         public bool IsSafe {
             get { return isSafe; }
             set { isSafe = value; RaisePropertyChanged(); }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

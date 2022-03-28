@@ -21,6 +21,7 @@ using NINA.Core.Locale;
 using System.Windows.Threading;
 using NINA.Core.Utility.Http;
 using NINA.Astrometry;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 {
@@ -195,6 +196,8 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         private Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
+
+        public IList<string> SupportedActions => new List<string>();
 
         #endregion
 
@@ -845,6 +848,22 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         {
             var windowService = windowServiceFactory.Create();
             windowService.ShowDialog(this, Loc.Instance["LblSkyGuardSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
 
         #endregion

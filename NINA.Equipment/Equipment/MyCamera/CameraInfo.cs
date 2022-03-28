@@ -513,5 +513,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             }
         }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

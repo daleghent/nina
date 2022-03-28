@@ -16,13 +16,13 @@ using ASCOM;
 using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using QHYCCD;
-using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Model.Equipment;
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
@@ -152,7 +152,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
         }
 
-        public ArrayList SupportedActions => new ArrayList();
+        public IList<string> SupportedActions => new List<string>();
 
         public void Disconnect() {
             Logger.Debug($"QHYCFW: Closing filter wheel {Name}");
@@ -214,6 +214,22 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public bool HasSetupDialog => false;
 
         public void SetupDialog() {
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

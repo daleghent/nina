@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
+
 namespace NINA.Equipment.Equipment.MyGuider {
 
     public class GuiderInfo : DeviceInfo {
@@ -31,6 +33,16 @@ namespace NINA.Equipment.Equipment.MyGuider {
             get => _canSetShiftRate;
             set {
                 _canSetShiftRate = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
                 RaisePropertyChanged();
             }
         }

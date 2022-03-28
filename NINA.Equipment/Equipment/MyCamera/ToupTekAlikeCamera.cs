@@ -28,6 +28,7 @@ using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
 using System.Drawing;
+using System.Collections;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -169,6 +170,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return max / 1000000.0;
             }
         }
+
+        public IList<string> SupportedActions => new List<string>();
 
         public double ElectronsPerADU => double.NaN;
 
@@ -991,5 +994,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public int USBLimitStep { get => 1; }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
+        }
     }
 }

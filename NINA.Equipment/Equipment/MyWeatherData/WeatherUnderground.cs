@@ -21,6 +21,7 @@ using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -238,6 +239,24 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         }
 
         public void SetupDialog() {
+        }
+
+        public IList<string> SupportedActions => new List<string>();
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
 
         private string GetWUAPIKey() {

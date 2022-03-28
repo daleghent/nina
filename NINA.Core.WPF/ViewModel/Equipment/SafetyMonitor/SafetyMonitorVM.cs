@@ -151,7 +151,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                                 Description = sm.Description,
                                 DriverInfo = sm.DriverInfo,
                                 DriverVersion = sm.DriverVersion,
-                                DeviceId = sm.Id
+                                DeviceId = sm.Id,
+                                SupportedActions = sm.SupportedActions,
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblSafetyMonitorConnected"]);
@@ -201,6 +202,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                 SafetyMonitorInfo = DeviceInfo.CreateDefaultInstance<SafetyMonitorInfo>();
                 BroadcastMonitorInfo();
                 Logger.Info("Disconnected Safety Monitor");
+            }
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return SafetyMonitorInfo?.Connected == true ? safetyMonitor.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return SafetyMonitorInfo?.Connected == true ? safetyMonitor.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return SafetyMonitorInfo?.Connected == true ? safetyMonitor.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (SafetyMonitorInfo?.Connected == true) {
+                safetyMonitor.SendCommandBlind(command, raw);
             }
         }
 

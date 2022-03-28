@@ -21,6 +21,7 @@ using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -236,6 +237,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return 1;
             }
         }
+
+        public IList<string> SupportedActions => new List<string>();
 
         public void SetBinning(short x, short y) {
             BinX = x;
@@ -482,6 +485,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public bool HasDewHeater { get => false; }
 
         public bool DewHeaterOn { get => false; set { } }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
+        }
 
         #endregion "Unsupported Features"
     }

@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
+
 namespace NINA.Equipment.Equipment.MyWeatherData {
 
     public class WeatherDataInfo : DeviceInfo {
@@ -153,6 +155,16 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         public double WindSpeed {
             get => windSpeed;
             set { windSpeed = value; RaisePropertyChanged(); }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

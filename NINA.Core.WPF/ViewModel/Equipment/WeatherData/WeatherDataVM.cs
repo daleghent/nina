@@ -123,7 +123,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                                 Description = WeatherData.Description,
                                 DriverInfo = WeatherData.DriverInfo,
                                 DriverVersion = WeatherData.DriverVersion,
-                                DeviceId = WeatherData.Id
+                                DeviceId = WeatherData.Id,
+                                SupportedActions = WeatherData.SupportedActions,
                             };
 
                             Notification.ShowSuccess(Loc.Instance["LblWeatherConnected"]);
@@ -280,6 +281,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
             WeatherDataInfo = DeviceInfo.CreateDefaultInstance<WeatherDataInfo>();
             BroadcastWeatherDataInfo();
             RaisePropertyChanged(nameof(WeatherData));
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return WeatherDataInfo?.Connected == true ? WeatherData.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return WeatherDataInfo?.Connected == true ? WeatherData.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return WeatherDataInfo?.Connected == true ? WeatherData.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (WeatherDataInfo?.Connected == true) {
+                WeatherData.SendCommandBlind(command, raw);
+            }
         }
 
         private IWeatherData _weatherdev;

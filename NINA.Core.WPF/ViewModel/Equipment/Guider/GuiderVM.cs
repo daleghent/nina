@@ -158,7 +158,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                         Description = Guider.Description,
                         DriverInfo = Guider.DriverInfo,
                         DriverVersion = Guider.DriverVersion,
-                        DeviceId = Guider.Id
+                        DeviceId = Guider.Id,
+                        SupportedActions = Guider.SupportedActions,
                     };
                     BroadcastGuiderInfo();
                     Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);
@@ -364,6 +365,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
         private void CancelConnectGuider(object o) {
             _cancelConnectGuiderSource?.Cancel();
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return GuiderInfo?.Connected == true ? Guider.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return GuiderInfo?.Connected == true ? Guider.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return GuiderInfo?.Connected == true ? Guider.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (GuiderInfo?.Connected == true) {
+                Guider.SendCommandBlind(command, raw);
+            }
         }
 
         private Task<bool> SetShiftRateVM() {

@@ -55,11 +55,5 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
 
         void StopSlew();
-
-        string SendCommandString(string command, bool raw = true);
-
-        bool SendCommandBool(string command, bool raw = true);
-
-        void SendCommandBlind(string command, bool raw = true);
     }
 }

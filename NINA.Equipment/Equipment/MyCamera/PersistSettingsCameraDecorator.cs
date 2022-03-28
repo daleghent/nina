@@ -354,5 +354,23 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public Task WaitUntilExposureIsReady(CancellationToken token) {
             return this.Camera.WaitUntilExposureIsReady(token);
         }
+
+        public IList<string> SupportedActions => this.Camera.SupportedActions;
+
+        public string Action(string actionName, string actionParameters) {
+            return this.Camera.Action(actionName, actionParameters);
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            return this.Camera.SendCommandString(command, raw);
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            return this.Camera.SendCommandBool(command, raw);
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            this.Camera.SendCommandBlind(command, raw);
+        }
     }
 }

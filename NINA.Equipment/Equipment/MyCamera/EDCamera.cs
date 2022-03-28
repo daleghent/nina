@@ -174,6 +174,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public CameraStates CameraState { get => CameraStates.NoState; }
 
+        public IList<string> SupportedActions => new List<string>();
+
         public bool CanSetOffset => false;
 
         public int OffsetMin => 0;
@@ -1034,6 +1036,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
                 }
             });
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

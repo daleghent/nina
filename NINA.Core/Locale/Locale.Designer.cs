@@ -1809,6 +1809,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select and execute any ASCOM (or other) Actions that may be available by the device&apos;s driver.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_DeviceAction_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_DeviceAction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device Action.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_DeviceAction_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_DeviceAction_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calls an external script for the given path.
         /// </summary>
         internal static string Lbl_SequenceItem_Utility_ExternalScript_Description {
@@ -1841,6 +1859,24 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_Utility_MessageBox_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Utility_MessageBox_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_SendCommand_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_SendCommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Command.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_SendCommand_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_SendCommand_Name", resourceCulture);
             }
         }
         
@@ -2599,6 +2635,15 @@ namespace NINA.Core.Locale {
         internal static string LblAbsolute {
             get {
                 return ResourceManager.GetString("LblAbsolute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        internal static string LblAction {
+            get {
+                return ResourceManager.GetString("LblAction", resourceCulture);
             }
         }
         
@@ -3925,6 +3970,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blind.
+        /// </summary>
+        internal static string LblBlind {
+            get {
+                return ResourceManager.GetString("LblBlind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image has to be solved for framing.
         ///Should reference coordinates be taken?
         ///RA: {0}
@@ -3951,6 +4005,15 @@ namespace NINA.Core.Locale {
         internal static string LblBlindSolver {
             get {
                 return ResourceManager.GetString("LblBlindSolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boolean.
+        /// </summary>
+        internal static string LblBoolean {
+            get {
+                return ResourceManager.GetString("LblBoolean", resourceCulture);
             }
         }
         
@@ -4795,6 +4858,15 @@ namespace NINA.Core.Locale {
         internal static string LblColorSensorNotSupported {
             get {
                 return ResourceManager.GetString("LblColorSensorNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command.
+        /// </summary>
+        internal static string LblCommand {
+            get {
+                return ResourceManager.GetString("LblCommand", resourceCulture);
             }
         }
         
@@ -6414,6 +6486,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device.
+        /// </summary>
+        internal static string LblDevice {
+            get {
+                return ResourceManager.GetString("LblDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device polling interval.
         /// </summary>
         internal static string LblDevicePollingInterval {
@@ -6716,6 +6797,15 @@ namespace NINA.Core.Locale {
         internal static string LblDitherSkippedBecauseNotLostLock {
             get {
                 return ResourceManager.GetString("LblDitherSkippedBecauseNotLostLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dither was skipped because SkyGuard was not actively guiding.
+        /// </summary>
+        internal static string LblDitherSkyGuardSkippedBecauseNotGuiding {
+            get {
+                return ResourceManager.GetString("LblDitherSkyGuardSkippedBecauseNotGuiding", resourceCulture);
             }
         }
         
@@ -11169,6 +11259,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No actions are available.
+        /// </summary>
+        internal static string LblNoActionsAvailable {
+            get {
+                return ResourceManager.GetString("LblNoActionsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Camera.
         /// </summary>
         internal static string LblNoCamera {
@@ -11939,6 +12038,15 @@ namespace NINA.Core.Locale {
         internal static string LblParabolic {
             get {
                 return ResourceManager.GetString("LblParabolic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        internal static string LblParameters {
+            get {
+                return ResourceManager.GetString("LblParameters", resourceCulture);
             }
         }
         
@@ -13190,6 +13298,15 @@ namespace NINA.Core.Locale {
         internal static string LblRate {
             get {
                 return ResourceManager.GetString("LblRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raw.
+        /// </summary>
+        internal static string LblRaw {
+            get {
+                return ResourceManager.GetString("LblRaw", resourceCulture);
             }
         }
         
@@ -14788,6 +14905,186 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Callback Reservation Port SkyGuard.
+        /// </summary>
+        internal static string LblSkyGuardCallbackPort {
+            get {
+                return ResourceManager.GetString("LblSkyGuardCallbackPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed connecting to SkyGuard. View logs for more details..
+        /// </summary>
+        internal static string LblSkyGuardConnectError {
+            get {
+                return ResourceManager.GetString("LblSkyGuardConnectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed disconnecting SkyGuard. View logs for more details..
+        /// </summary>
+        internal static string LblSkyGuardDisconnectError {
+            get {
+                return ResourceManager.GetString("LblSkyGuardDisconnectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error on dithering operation. View logs for more details..
+        /// </summary>
+        internal static string LblSkyGuardDitheringError {
+            get {
+                return ResourceManager.GetString("LblSkyGuardDitheringError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard enpoint not reachable. View logs for more details..
+        /// </summary>
+        internal static string LblSkyGuardEndpointNotReachable {
+            get {
+                return ResourceManager.GetString("LblSkyGuardEndpointNotReachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error on start guiding operation. View logs for more details..
+        /// </summary>
+        internal static string LblSkyGuardGuidingError {
+            get {
+                return ResourceManager.GetString("LblSkyGuardGuidingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard is not ready for operations. Check logs for details..
+        /// </summary>
+        internal static string LblSkyGuardNotReady {
+            get {
+                return ResourceManager.GetString("LblSkyGuardNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation cancelled..
+        /// </summary>
+        internal static string LblSkyGuardOperationCancelled {
+            get {
+                return ResourceManager.GetString("LblSkyGuardOperationCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard path.
+        /// </summary>
+        internal static string LblSkyGuardPath {
+            get {
+                return ResourceManager.GetString("LblSkyGuardPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not start SkyGuard. Path not found..
+        /// </summary>
+        internal static string LblSkyGuardPathNotFound {
+            get {
+                return ResourceManager.GetString("LblSkyGuardPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard Server Port.
+        /// </summary>
+        internal static string LblSkyGuardServerPort {
+            get {
+                return ResourceManager.GetString("LblSkyGuardServerPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard Server URL.
+        /// </summary>
+        internal static string LblSkyGuardServerUrl {
+            get {
+                return ResourceManager.GetString("LblSkyGuardServerUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard Setup.
+        /// </summary>
+        internal static string LblSkyGuardSetup {
+            get {
+                return ResourceManager.GetString("LblSkyGuardSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not start SkyGuard. Check logs for details..
+        /// </summary>
+        internal static string LblSkyGuardStartProcessError {
+            get {
+                return ResourceManager.GetString("LblSkyGuardStartProcessError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error on stop guiding operation. View logs for more details..
+        /// </summary>
+        internal static string LblSkyGuardStopGuidingError {
+            get {
+                return ResourceManager.GetString("LblSkyGuardStopGuidingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guider Settling.
+        /// </summary>
+        internal static string LblSkyGuardTimeLapsChecked {
+            get {
+                return ResourceManager.GetString("LblSkyGuardTimeLapsChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For a duration of.
+        /// </summary>
+        internal static string LblSkyGuardTimeLapsGuiding {
+            get {
+                return ResourceManager.GetString("LblSkyGuardTimeLapsGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start guiding timeout delay.
+        /// </summary>
+        internal static string LblSkyGuardTimeOutGuiding {
+            get {
+                return ResourceManager.GetString("LblSkyGuardTimeOutGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settle at &lt;.
+        /// </summary>
+        internal static string LblSkyGuardValueMaxGuiding {
+            get {
+                return ResourceManager.GetString("LblSkyGuardValueMaxGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkyGuard version is not supported by N.I.N.A. View logs for more details..
+        /// </summary>
+        internal static string lblSkyGuardWrongVersion {
+            get {
+                return ResourceManager.GetString("lblSkyGuardWrongVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sky Position.
         /// </summary>
         internal static string LblSkyPosition {
@@ -15329,6 +15626,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String.
+        /// </summary>
+        internal static string LblString {
+            get {
+                return ResourceManager.GetString("LblString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stsci Sky Survey.
         /// </summary>
         internal static string LblStsciSkySurvey {
@@ -15825,15 +16131,6 @@ namespace NINA.Core.Locale {
         internal static string LblTelescopeNotConnected {
             get {
                 return ResourceManager.GetString("LblTelescopeNotConnected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Telescope not connected to send command.
-        /// </summary>
-        internal static string LblTelescopeNotConnectedForCommand {
-            get {
-                return ResourceManager.GetString("LblTelescopeNotConnectedForCommand", resourceCulture);
             }
         }
         

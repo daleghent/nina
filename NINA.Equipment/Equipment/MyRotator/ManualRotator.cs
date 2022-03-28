@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using NINA.Astrometry;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyRotator {
 
@@ -199,6 +200,24 @@ namespace NINA.Equipment.Equipment.MyRotator {
 
         public async Task<bool> MoveAbsoluteMechanical(float position, CancellationToken ct) {
             return await MoveAbsolute(position, ct);
+        }
+
+        public IList<string> SupportedActions => new List<string>();
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

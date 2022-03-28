@@ -106,6 +106,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int SubSampleWidth { get; set; }
         public int SubSampleHeight { get; set; }
 
+        public IList<string> SupportedActions => new List<string>();
+
         private bool _coolerOn;
 
         public bool CoolerOn {
@@ -552,6 +554,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StopLiveView() {
+            throw new NotImplementedException();
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
         }
 

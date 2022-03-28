@@ -26,6 +26,7 @@ using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -399,6 +400,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool HasDewHeater => false;
+
+        public IList<string> SupportedActions => new List<string>();
 
         private SBIGCameraStatus _cameraStatus = SBIGCameraStatus.IDLE;
 
@@ -858,6 +861,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken ct) {
+            throw new NotImplementedException();
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
         }
 

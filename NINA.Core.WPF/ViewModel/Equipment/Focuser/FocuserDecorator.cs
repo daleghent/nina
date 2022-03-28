@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
@@ -71,6 +72,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
         public string DriverVersion => this.focuser.DriverVersion;
 
+        public IList<string> SupportedActions => this.focuser.SupportedActions;
+
         public Task<bool> Connect(CancellationToken token) {
             return this.focuser.Connect(token);
         }
@@ -101,5 +104,22 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         public void SetupDialog() {
             this.focuser.SetupDialog();
         }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return this.focuser.Action(actionName, actionParameters);
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            return this.focuser.SendCommandString(command, raw);
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            return this.focuser.SendCommandBool(command, raw);
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            this.focuser.SendCommandBlind(command, raw);
+        }
+
     }
 }

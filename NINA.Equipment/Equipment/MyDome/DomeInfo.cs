@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Equipment.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyDome {
 
@@ -106,6 +107,16 @@ namespace NINA.Equipment.Equipment.MyDome {
         public double Azimuth {
             get => azimuth;
             set { if (azimuth != value) { azimuth = value; RaisePropertyChanged(); } }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

@@ -22,7 +22,6 @@ namespace NINA.Equipment.Interfaces {
         int[] FocusOffsets { get; }
         string[] Names { get; }
         short Position { get; set; }
-        ArrayList SupportedActions { get; }
         AsyncObservableCollection<FilterInfo> Filters { get; }
     }
 }

@@ -284,6 +284,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                             TempCompAvailable = Focuser.TempCompAvailable,
                             TempComp = Focuser.TempComp,
                             Temperature = Focuser.Temperature,
+                            SupportedActions = Focuser.SupportedActions,
                             Description = Focuser.Description,
                             DriverInfo = Focuser.DriverInfo,
                             DriverVersion = Focuser.DriverVersion,
@@ -417,6 +418,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             private set {
                 focuser = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public string Action(string actionName, string actionParameters = "") {
+            return FocuserInfo?.Connected == true ? Focuser.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return FocuserInfo?.Connected == true ? Focuser.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return FocuserInfo?.Connected == true ? Focuser.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (FocuserInfo?.Connected == true) {
+                Focuser.SendCommandBlind(command, raw);
             }
         }
 

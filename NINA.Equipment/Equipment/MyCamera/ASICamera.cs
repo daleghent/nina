@@ -291,6 +291,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool CanSetTemperature { get; private set; }
 
+        public IList<string> SupportedActions => new List<string>();
+
         public int BitDepth {
             get {
                 //currently ASI camera values are stretched to fit 16 bit
@@ -782,6 +784,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public bool HasBattery => false;
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
+        }
     }
 
     public class CaptureAreaInfo {

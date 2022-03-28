@@ -751,12 +751,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public ArrayList SupportedActions {
-            get {
-                return GetProperty(nameof(Camera.SupportedActions), new ArrayList());
-            }
-        }
-
         public AsyncObservableCollection<BinningMode> BinningModes { get; private set; }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {

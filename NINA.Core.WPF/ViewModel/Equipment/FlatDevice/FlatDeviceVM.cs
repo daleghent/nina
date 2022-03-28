@@ -195,7 +195,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                             Name = newDevice.Name,
                             DeviceId = newDevice.Id,
                             SupportsOpenClose = newDevice.SupportsOpenClose,
-                            SupportsOnOff = newDevice.SupportsOnOff
+                            SupportsOnOff = newDevice.SupportsOnOff,
+                            SupportedActions = newDevice.SupportedActions,
                         };
                         this.Brightness = newDevice.Brightness;
 
@@ -442,6 +443,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     ?.OrderBy(mode => mode?.Name ?? "")
                     .Select(mode => mode?.Name ?? Loc.Instance["LblNone"])
                     .ToList() ?? new List<string>());
+
+        public string Action(string actionName, string actionParameters = "") {
+            return FlatDeviceInfo?.Connected == true ? flatDevice.Action(actionName, actionParameters) : null;
+        }
+
+        public string SendCommandString(string command, bool raw = true) {
+            return FlatDeviceInfo?.Connected == true ? flatDevice.SendCommandString(command, raw) : null;
+        }
+
+        public bool SendCommandBool(string command, bool raw = true) {
+            return FlatDeviceInfo?.Connected == true ? flatDevice.SendCommandBool(command, raw) : false;
+        }
+
+        public void SendCommandBlind(string command, bool raw = true) {
+            if (FlatDeviceInfo?.Connected == true) {
+                flatDevice.SendCommandBlind(command, raw);
+            }
+        }
 
         private void UpdateWizardValueBlocks() {
             var binningModes = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings()

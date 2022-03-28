@@ -476,6 +476,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int USBLimitMin => -1;
         public int USBLimitStep => -1;
 
+        public IList<string> SupportedActions => new List<string>();
+
         public bool CanSetOffset {
             get {
                 return false;
@@ -958,6 +960,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 Connected = connected;
                 return connected;
             });
+        }
+
+        public string Action(string actionName, string actionParameters) {
+            throw new NotImplementedException();
+        }
+
+        public string SendCommandString(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public bool SendCommandBool(string command, bool raw) {
+            throw new NotImplementedException();
+        }
+
+        public void SendCommandBlind(string command, bool raw) {
+            throw new NotImplementedException();
         }
     }
 }

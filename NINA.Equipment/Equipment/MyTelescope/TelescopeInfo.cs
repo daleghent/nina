@@ -16,6 +16,7 @@ using NINA.Core.Enum;
 using NINA.Astrometry;
 using System.Collections.Generic;
 using NINA.Equipment.Interfaces;
+using System.Collections;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
@@ -358,6 +359,16 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public IList<(double, double)> SecondaryAxisRates {
             get { return secondaryAxisRates; }
             set { secondaryAxisRates = value; RaisePropertyChanged(); }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

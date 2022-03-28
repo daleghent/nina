@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using System.Collections.Generic;
+
 namespace NINA.Equipment.Equipment.MyRotator {
 
     public class RotatorInfo : DeviceInfo {
@@ -62,6 +64,16 @@ namespace NINA.Equipment.Equipment.MyRotator {
         public bool Synced {
             get { return synced; }
             set { synced = value; RaisePropertyChanged(); }
+        }
+
+        private IList<string> supportedActions;
+
+        public IList<string> SupportedActions {
+            get => supportedActions;
+            set {
+                supportedActions = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }
