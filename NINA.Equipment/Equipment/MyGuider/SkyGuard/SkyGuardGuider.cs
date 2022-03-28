@@ -822,7 +822,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 string disconnect = ExecuteWebRequest($"{SKSS_Uri}/SKSS_DisconnectCamera");
                 var disconnectStatus = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(disconnect);
 
-                if (disconnectStatus.Status == "success")
+                if (disconnectStatus?.Status == "success")
                 {
                     StopListener();
                     StopSkyProcess();
