@@ -75,6 +75,7 @@ namespace NINA.Sequencer.Conditions {
 
         public override void ResetProgress() {
             CompletedIterations = 0;
+            Status = Core.Enum.SequenceEntityStatus.CREATED;
         }
 
         public override void SequenceBlockFinished() {

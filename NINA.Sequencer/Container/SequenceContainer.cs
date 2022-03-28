@@ -251,7 +251,10 @@ namespace NINA.Sequencer.Container {
                 bool check = true;
                 foreach (var condition in c) {
                     if (condition.Status == SequenceEntityStatus.DISABLED) { continue; }
-                    check = check && condition.RunCheck(previousItem, nextItem);
+                    if (!condition.RunCheck(previousItem, nextItem)) {
+                        condition.Status = SequenceEntityStatus.FINISHED;
+                        check = false;
+                    }
                 }
 
                 return check;

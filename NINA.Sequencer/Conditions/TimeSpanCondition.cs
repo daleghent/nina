@@ -52,6 +52,7 @@ namespace NINA.Sequencer.Conditions {
                 if (this.Parent != null) {
                     if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING && this.Status != SequenceEntityStatus.DISABLED) {
                         Logger.Info("Time limit exceeded - Interrupting current Instruction Set");
+                        Status = SequenceEntityStatus.FINISHED;
                         await this.Parent.Interrupt();
                     }
                 }
@@ -160,6 +161,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void ResetProgress() {
+            Status = SequenceEntityStatus.CREATED;
             previousRemainingTime = null;
             startTime = DateTime.Now;
         }
