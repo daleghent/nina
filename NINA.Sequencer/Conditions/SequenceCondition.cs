@@ -138,6 +138,7 @@ namespace NINA.Sequencer.Conditions {
         public abstract object Clone();
 
         public virtual void ResetProgress() {
+            Status = SequenceEntityStatus.CREATED;
         }
 
         public virtual void Initialize() {
