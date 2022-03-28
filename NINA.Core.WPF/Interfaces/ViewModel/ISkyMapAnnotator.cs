@@ -21,6 +21,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using NINA.WPF.Base.Model.FramingAssistant;
+using NINA.WPF.Base.SkySurvey;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
@@ -29,6 +30,7 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         bool AnnotateConstellations { get; set; }
         bool AnnotateDSO { get; set; }
         bool AnnotateGrid { get; set; }
+        bool UseCachedImages { get; set; }
         List<FramingConstellationBoundary> ConstellationBoundariesInViewPort { get; }
         List<FramingConstellation> ConstellationsInViewport { get; }
         ICommand DragCommand { get; }
@@ -46,12 +48,12 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ViewportFoV ChangeFoV(double vFoVDegrees);
 
         void ClearFrameLineMatrix();
-
+        void ClearImagesForViewport();
         void Dispose();
 
         Dictionary<string, DeepSkyObject> GetDeepSkyObjectsForViewport();
 
-        Task Initialize(Coordinates centerCoordinates, double vFoVDegrees, double imageWidth, double imageHeight, double imageRotation, CancellationToken ct);
+        Task Initialize(Coordinates centerCoordinates, double vFoVDegrees, double imageWidth, double imageHeight, double imageRotation, CacheSkySurvey cache, CancellationToken ct);
 
         Coordinates ShiftViewport(Vector delta);
 

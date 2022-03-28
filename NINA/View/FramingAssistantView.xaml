@@ -1019,6 +1019,45 @@
                                 </Style>
                             </ToggleButton.Style>
                         </ToggleButton>
+                        <ToggleButton
+                            Width="35"
+                            Margin="5"
+                            Command="{Binding RefreshSkyMapAnnotationCommand}"
+                            IsChecked="{Binding SkyMapAnnotator.UseCachedImages}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                    <TextBlock Text="{ns:Loc LblUseCachedImages}" />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                            <ToggleButton.Style>
+                                <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="5"
+                                                        Data="{StaticResource MapSVG}"
+                                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="5"
+                                                        Data="{StaticResource MapSVG}"
+                                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
                     </StackPanel>
                 </wpfbase:ImageView.ButtonHeaderContent>
                 <wpfbase:ImageView.ImageAreaContent>

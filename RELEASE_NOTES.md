@@ -82,6 +82,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Added a center dot for the framing rectangle
 - A new toggle is available to toggle the sky background instead of the framing rectangle
 - The Sky Object Annotation will now properly draw elliptical objects when position angle and size information is available instead of always showing them as circular
+- Offline Sky Survey can now show images from the cache. The "Sky Atlas Image Repository" could unfortunately not be lifted for this, but existing images from the cache in framing will can be used.
 
 ## Imaging Tab - Sequence Panel
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore when using the advanced sequencer

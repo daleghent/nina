@@ -26,8 +26,8 @@ namespace NINA.WPF.Base.SkySurvey {
     /// Description can be found at http://alasky.u-strasbg.fr/hips-image-services/hips2fits
     /// </summary>
     internal class Hips2FitsSurvey : ISkySurvey {
-        private const string Url = "http://alasky.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
-        private const string AltUrl = "http://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
+        private const string AltUrl = "https://alasky.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
+        private const string Url = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
 
         public async Task<SkySurveyImage> GetImage(string name, Coordinates coordinates, double fieldOfView, int width,
             int height, CancellationToken ct, IProgress<int> progress) {
@@ -36,6 +36,8 @@ namespace NINA.WPF.Base.SkySurvey {
             BitmapSource image;
             try {
                 image = await QueryImage(Url, coordinates, fieldOfView, ct, progress);
+            } catch(OperationCanceledException) {
+                throw;            
             } catch (Exception) {
                 image = await QueryImage(AltUrl, coordinates, fieldOfView, ct, progress);
             }

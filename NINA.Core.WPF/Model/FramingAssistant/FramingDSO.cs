@@ -15,6 +15,7 @@
 using NINA.Astrometry;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using Color = System.Drawing.Color;
 using Pen = System.Drawing.Pen;
@@ -168,11 +169,14 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
             var panelDeltaX = CenterPoint.X - ViewPortCenterPoint.X;
             var panelDeltaY = CenterPoint.Y - ViewPortCenterPoint.Y;
             var referenceCenter = ViewPortCenter.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, ViewPortRotation, arcSecWidth, arcSecHeight);
+
             
-            float adjustedAngle = positionAngle;
-            if (Math.Abs(ViewPortCenter.RA - coordinates.RA) > 1E-13 || Math.Abs(ViewPortCenter.Dec - coordinates.Dec) > 1E-13) {
+            
+            
+            float adjustedAngle = positionAngle;            
+            if (Math.Abs(ViewPortCenter.RA - coordinates.RA) > 1E-13 || Math.Abs(ViewPortCenter.Dec - coordinates.Dec) > 1E-13) {                
                 adjustedAngle = positionAngle - ( 90 - ((float)AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, coordinates.RADegrees, referenceCenter.Dec, coordinates.Dec) /*+ (float)ViewPortRotation*/)) ;
-            }
+            }           
 
             g.TranslateTransform((float)CenterPoint.X, (float)CenterPoint.Y);
             g.RotateTransform(adjustedAngle);

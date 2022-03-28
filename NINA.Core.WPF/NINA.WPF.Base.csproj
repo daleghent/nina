@@ -236,6 +236,7 @@
     <Compile Include="Model\FramingAssistant\FramingDSO.cs" />
     <Compile Include="Model\ImageHistoryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkySurvey\CacheImage.cs" />
     <Compile Include="SkySurvey\CacheSkySurvey.cs" />
     <Compile Include="SkySurvey\ESOSkySurvey.cs" />
     <Compile Include="SkySurvey\FileSkySurvey.cs" />

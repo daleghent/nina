@@ -147,11 +147,12 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private bool sequencerActionsOpened;
+
         public bool SequencerActionsOpened {
             get => sequencerActionsOpened;
             set {
                 sequencerActionsOpened = value;
-                if(sequencerActionsOpened) {
+                if (sequencerActionsOpened) {
                     GetDSOTemplatesCommand.Execute(null);
                     GetExistingSequencerTargetsCommand.Execute(null);
                 }
@@ -188,11 +189,10 @@ namespace NINA.ViewModel.FramingAssistant {
                 targets.AddRange(advancedTargets.Where(a => a.Target?.DeepSkyObject is DeepSkyObject));
                 ExistingTargets = targets;
                 RaisePropertyChanged(nameof(ExistingTargets));
-
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated && !IsMosaic);
 
             UpdateExistingTargetInSequencerCommand = new RelayCommand((object o) => {
-                if(o is IDeepSkyObjectContainer container) {
+                if (o is IDeepSkyObjectContainer container) {
                     if (container.Target?.DeepSkyObject is DeepSkyObject) {
                         var rect = CameraRectangles.First();
                         var name = GetRectangleName(rect);
@@ -432,7 +432,22 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private void MouseWheel(object obj) {
             var delta = ((MouseWheelResult)obj).Delta;
-            var stepSize = 2;
+
+            double stepSize;
+            if (FieldOfView < 2) {
+                stepSize = 0.5;
+            } else if (FieldOfView < 10) {
+                stepSize = 1;
+            } else if (FieldOfView < 30) {
+                stepSize = 2;
+            } else if (FieldOfView < 50) {
+                stepSize = 5;
+            } else if (FieldOfView < 100) {
+                stepSize = 10;
+            } else {
+                stepSize = 20;
+            }
+
             if (delta > 0) {
                 if (FieldOfView > 1) {
                     FieldOfView = Math.Max(1, FieldOfView - stepSize);
@@ -503,9 +518,9 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-
         // Flag that indicates if the sky background should be rotated instead of the rectangle
         private bool rotateSky;
+
         public bool RotateSky {
             get => rotateSky;
             set {
@@ -517,7 +532,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         // Proxy Property for derotating the image according to the rectangle rotation
         public double InverseRectangleRotation {
-            get => RotateSky ? (- Rectangle?.Rotation ?? 0) : 0;
+            get => RotateSky ? (-Rectangle?.Rotation ?? 0) : 0;
         }
 
         // Proxy Property to be able to recalculate rectangle on change
@@ -575,6 +590,10 @@ namespace NINA.ViewModel.FramingAssistant {
             if (Cache != null) {
                 var diagResult = MyMessageBox.Show(Loc.Instance["LblClearCache"] + "?", "", MessageBoxButton.YesNo, MessageBoxResult.No);
                 if (diagResult == MessageBoxResult.Yes) {
+
+                    SkyMapAnnotator.UseCachedImages = false;
+                    SkyMapAnnotator.ClearImagesForViewport();
+
                     Cache.Clear();
                     ImageCacheInfo = Cache.Cache;
                     RaisePropertyChanged(nameof(ImageCacheInfo));
@@ -973,6 +992,10 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     SkySurveyImage skySurveyImage = null;
 
+                    if (FramingAssistantSource != SkySurveySource.SKYATLAS) {
+                        SkyMapAnnotator.UseCachedImages = false;
+                    }
+
                     if (Cache != null && DSO != null) {
                         try {
                             skySurveyImage = await Cache.GetImage(FramingAssistantSource.GetCacheSourceString(), DSO.Coordinates.RA, DSO.Coordinates.Dec, DSO.Rotation, AstroUtil.DegreeToArcmin(FieldOfView));
@@ -1024,12 +1047,12 @@ namespace NINA.ViewModel.FramingAssistant {
                             ImageParameter = skySurveyImage;
                         }));
 
-                        if (Cache != null && FramingAssistantSource != SkySurveySource.SKYATLAS && FramingAssistantSource != SkySurveySource.FILE) {
+                        if (Cache != null && FramingAssistantSource != SkySurveySource.SKYATLAS /*&& FramingAssistantSource != SkySurveySource.FILE*/) {
                             SelectedImageCacheInfo = Cache.SaveImageToCache(skySurveyImage);
                             RaisePropertyChanged(nameof(ImageCacheInfo));
                         }
 
-                        await SkyMapAnnotator.Initialize(skySurveyImage.Coordinates, AstroUtil.ArcminToDegree(skySurveyImage.FoVHeight), ImageParameter.Image.PixelWidth, ImageParameter.Image.PixelHeight, ImageParameter.Rotation, _loadImageSource.Token);
+                        await SkyMapAnnotator.Initialize(skySurveyImage.Coordinates, AstroUtil.ArcminToDegree(skySurveyImage.FoVHeight), ImageParameter.Image.PixelWidth, ImageParameter.Image.PixelHeight, ImageParameter.Rotation, Cache, _loadImageSource.Token);
                         SkyMapAnnotator.DynamicFoV = FramingAssistantSource == SkySurveySource.SKYATLAS;
 
                         CalculateRectangle(SkyMapAnnotator.ViewportFoV);
@@ -1106,7 +1129,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public XElement ImageCacheInfo { get; set; }
 
-        private CacheSkySurvey Cache { get; set; }
+        public CacheSkySurvey Cache { get; private set; }
 
         private XElement _selectedImageCacheInfo;
 
@@ -1133,9 +1156,9 @@ namespace NINA.ViewModel.FramingAssistant {
         private void CalculateRectangle(ViewportFoV parameter) {
             if (parameter != null) {
                 var previousRotation = 0d;
-                if(Rectangle != null) {
+                if (Rectangle != null) {
                     previousRotation = AstroUtil.EuclidianModulus(Rectangle.TotalRotation - parameter.Rotation, 360);
-                }                
+                }
                 Rectangle = null;
                 CameraRectangles.Clear();
 
@@ -1230,10 +1253,18 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
+        private bool cachedImagesActive;
+
         private void DragStart(object obj) {
+            cachedImagesActive = SkyMapAnnotator.UseCachedImages;
+            SkyMapAnnotator.UseCachedImages = false;
         }
 
         private void DragStop(object obj) {
+            SkyMapAnnotator.UseCachedImages = cachedImagesActive;
+            if (SkyMapAnnotator.UseCachedImages) {
+                DragMove(new DragResult());
+            }
         }
 
         private void DragMove(object obj) {
@@ -1245,10 +1276,13 @@ namespace NINA.ViewModel.FramingAssistant {
                     var newCenter = SkyMapAnnotator.ShiftViewport(delta);
                     DSO.Coordinates = newCenter;
                     ImageParameter.Coordinates = newCenter;
-                    CalculateRectangle(SkyMapAnnotator.ViewportFoV); 
+                    CalculateRectangle(SkyMapAnnotator.ViewportFoV);
                     RaiseCoordinatesChanged();
 
                     SkyMapAnnotator.UpdateSkyMap();
+                    RaisePropertyChanged(nameof(RectangleRotation));
+                    RaisePropertyChanged(nameof(RectangleTotalRotation));
+                    RaisePropertyChanged(nameof(InverseRectangleRotation));
                 } else {
                     var imageArcsecWidth =
                         AstroUtil.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
@@ -1265,18 +1299,16 @@ namespace NINA.ViewModel.FramingAssistant {
                     DSO.Coordinates = Rectangle.Coordinates;
                     RaiseCoordinatesChanged();
 
-
                     var mainRectangleReferenceCenter = Rectangle.OriginalCoordinates.Shift(Math.Abs(accumulatedDeltaX) < 1E-10 ? 1 : 0, accumulatedDeltaY, Rectangle.OriginalOffset, imageArcsecWidth, imageArcsecHeight);
                     double mainRectanglePA = 90;
                     var previousTotal = Rectangle.TotalRotation;
                     if (Math.Abs(Rectangle.OriginalCoordinates.RADegrees - Rectangle.Coordinates.RADegrees) > 0.001 || Math.Abs(Rectangle.OriginalCoordinates.Dec - Rectangle.Coordinates.Dec) > 0.001) {
                         mainRectanglePA = AstroUtil.CalculatePositionAngle(mainRectangleReferenceCenter.RADegrees, Rectangle.Coordinates.RADegrees, mainRectangleReferenceCenter.Dec, Rectangle.Coordinates.Dec) + Rectangle.OriginalOffset;
 
-                        if(accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec >= 0 || accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec < 0) {
+                        if (accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec >= 0 || accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec < 0) {
                             // When the rectangle is left of center, the PA has to be adjusted by 180°, otherwise it will end upside down
-                           mainRectanglePA += 180;
+                            mainRectanglePA += 180;
                         }
-
                     }
 
                     Rectangle.RotationOffset = Rectangle.OriginalOffset - -(90 - mainRectanglePA);
@@ -1288,7 +1320,6 @@ namespace NINA.ViewModel.FramingAssistant {
                     var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
 
                     foreach (var rect in CameraRectangles) {
-
                         var panelCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d, rect.Y + Rectangle.Y + rect.Height / 2d);
                         var panelDeltaX = panelCenter.X - center.X;
                         var panelDeltaY = panelCenter.Y - center.Y;
@@ -1302,7 +1333,6 @@ namespace NINA.ViewModel.FramingAssistant {
                         double positionAngle = 90;
                         if (Math.Abs(Rectangle.Coordinates.RADegrees - panelCenterCoordinates.RADegrees) > 0.001 || Math.Abs(Rectangle.Coordinates.Dec - panelCenterCoordinates.Dec) > 0.001) {
                             positionAngle = AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, panelCenterCoordinates.RADegrees, referenceCenter.Dec, panelCenterCoordinates.Dec) + Rectangle.Rotation;
-                            
                         }
 
                         double panelRotation = -(90 - positionAngle);
@@ -1311,7 +1341,7 @@ namespace NINA.ViewModel.FramingAssistant {
                             panelRotation = 0;
                             dsoRotation += (90 - positionAngle);
                         }
-                        
+
                         rect.Rotation = panelRotation;
                         rect.DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360);
                     }
@@ -1415,7 +1445,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public ISkyMapAnnotator SkyMapAnnotator {
             get => skyMapAnnotator;
-            set {
+            private set {
                 skyMapAnnotator = value;
                 RaisePropertyChanged();
             }

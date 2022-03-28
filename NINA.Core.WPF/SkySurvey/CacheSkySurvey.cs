@@ -20,13 +20,14 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
 namespace NINA.WPF.Base.SkySurvey {
 
     public class CacheSkySurvey {
-        private string framingAssistantCachePath;
+        public readonly string framingAssistantCachePath;
         private string framingAssistantCachInfo;
 
         public CacheSkySurvey(string framingAssistantCachePath) {
@@ -117,6 +118,10 @@ namespace NINA.WPF.Base.SkySurvey {
                             encoder.Save(fileStream);
                         }
 
+                        SaveThumbnail(skySurveyImage.Image, CacheImage.BigThumbnailSize, imgFilePath);
+                        SaveThumbnail(skySurveyImage.Image, CacheImage.MediumThumbnailSize, imgFilePath);
+                        SaveThumbnail(skySurveyImage.Image, CacheImage.SmallThumbnailSize, imgFilePath);
+
                         XElement xml = new XElement("Image",
                             new XAttribute("Id", skySurveyImage.Id),
                             new XAttribute("RA", skySurveyImage.Coordinates.RA.ToString("R", CultureInfo.InvariantCulture)),
@@ -140,7 +145,19 @@ namespace NINA.WPF.Base.SkySurvey {
                 throw;
             }
         }
+        
+        private void SaveThumbnail(BitmapSource image, int size, string path) {
+            var rescaledImage = new TransformedBitmap(image, new ScaleTransform((double)size / image.PixelWidth, (double)size / image.PixelHeight));
+            var adjustedPath = CacheImage.GetImagePathForThumbnail(path, size);
 
+            using (var fileStream = new FileStream(adjustedPath, FileMode.Create)) {
+                var encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = 70;
+                encoder.Frames.Add(BitmapFrame.Create(rescaledImage));
+                encoder.Save(fileStream);
+            }
+        }
+        
         private string RestoreNameFromUniqueBracket(string originalImgFilePath) {
             var filename = Path.GetFileName(originalImgFilePath);
 

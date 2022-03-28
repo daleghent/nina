@@ -17312,6 +17312,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used..
+        /// </summary>
+        internal static string LblUseCachedImages {
+            get {
+                return ResourceManager.GetString("LblUseCachedImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use SharpCap Sensor Analysis.
         /// </summary>
         internal static string LblUseSharpCapSensorAnalysis {

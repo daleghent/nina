@@ -1,6 +1,7 @@
 #region "copyright"
+
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -8,15 +9,23 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
+
 #endregion "copyright"
-using NINA.Core.Database;
-using NINA.Equipment.Equipment.MyTelescope;
-using NINA.Utility;
+
 using NINA.Astrometry;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Model.FramingAssistant;
+using NINA.WPF.Base.SkySurvey;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,21 +36,19 @@ using System.Windows.Media.Imaging;
 using Color = System.Drawing.Color;
 using Pen = System.Drawing.Pen;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
-using NINA.Equipment.Interfaces.Mediator;
-using NINA.Core.Utility;
-using NINA.Image.ImageAnalysis;
-using NINA.WPF.Base.Interfaces.ViewModel;
-using NINA.WPF.Base.Model.FramingAssistant;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    public class SkyMapAnnotator : BaseINPC, ITelescopeConsumer, ISkyMapAnnotator {
+    public partial class SkyMapAnnotator : BaseINPC, ITelescopeConsumer, ISkyMapAnnotator {
         private readonly DatabaseInteraction dbInstance;
         public ViewportFoV ViewportFoV { get; private set; }
         private List<Constellation> dbConstellations;
         private Dictionary<string, DeepSkyObject> dbDSOs;
+        private List<CacheImage> cacheImages;
         private Bitmap img;
+        private Bitmap dsoImageBuffer;
         private Graphics g;
+        private Graphics dsoImageGraphics;
         private ITelescopeMediator telescopeMediator;
 
         public SkyMapAnnotator(ITelescopeMediator mediator) {
@@ -51,13 +58,16 @@ namespace NINA.ViewModel.FramingAssistant {
             ConstellationsInViewport = new List<FramingConstellation>();
             FrameLineMatrix = new FrameLineMatrix2();
             ConstellationBoundaries = new Dictionary<string, ConstellationBoundary>();
+            cacheImages = new List<CacheImage>();
         }
 
-        public async Task Initialize(Coordinates centerCoordinates, double vFoVDegrees, double imageWidth, double imageHeight, double imageRotation, CancellationToken ct) {
+        public async Task Initialize(Coordinates centerCoordinates, double vFoVDegrees, double imageWidth, double imageHeight, double imageRotation, CacheSkySurvey cache, CancellationToken ct) {
             telescopeMediator.RemoveConsumer(this);
 
             AnnotateDSO = true;
             AnnotateGrid = true;
+
+            this.cache = cache;
 
             ViewportFoV = new ViewportFoV(centerCoordinates, vFoVDegrees, imageWidth, imageHeight, imageRotation);
 
@@ -73,6 +83,11 @@ namespace NINA.ViewModel.FramingAssistant {
             ClearFrameLineMatrix();
 
             img = new Bitmap((int)ViewportFoV.OriginalWidth, (int)ViewportFoV.OriginalHeight, PixelFormat.Format32bppArgb);
+            dsoImageBuffer = new Bitmap((int)ViewportFoV.OriginalWidth, (int)ViewportFoV.OriginalHeight, PixelFormat.Format32bppArgb);
+
+            dsoImageGraphics = Graphics.FromImage(dsoImageBuffer);
+            dsoImageGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            dsoImageGraphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             g = Graphics.FromImage(img);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
@@ -153,12 +168,23 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
+        private CacheSkySurvey cache;
         private bool annotateDSO;
 
         public bool AnnotateDSO {
             get => annotateDSO;
             set {
                 annotateDSO = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool useCachedImages;
+
+        public bool UseCachedImages {
+            get => useCachedImages;
+            set {
+                useCachedImages = value;
                 RaisePropertyChanged();
             }
         }
@@ -204,6 +230,126 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
             }
             return dsoList;
+        }
+
+        public void ClearImagesForViewport() {
+            if(cacheImages != null) { 
+                foreach(var image in cacheImages) {
+                    image.Dispose();
+                }
+                cacheImages.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Query for skyobjects for a reference coordinate that overlap the current viewport
+        /// </summary>
+        /// <returns></returns>
+        private List<CacheImage> GetCacheImagesForViewport() {
+            using (MyStopWatch.Measure()) {
+                double minSize = 6;
+                double maxSize = 600;
+
+                var l = new List<CacheImage>();
+                foreach (var entry in cache.Cache.Elements("Image")) {
+                    double fovW = double.Parse(entry.Attribute("FoVW").Value, CultureInfo.InvariantCulture);
+                    double fovH = double.Parse(entry.Attribute("FoVH").Value, CultureInfo.InvariantCulture);
+
+                    if (fovW < minSize || fovW > maxSize) {
+                        continue;
+                    }
+
+                    double ra = double.Parse(entry.Attribute("RA").Value, CultureInfo.InvariantCulture);
+                    double dec = double.Parse(entry.Attribute("Dec").Value, CultureInfo.InvariantCulture);
+                    double rotation = double.Parse(entry.Attribute("Rotation").Value, CultureInfo.InvariantCulture);
+                    string path = Path.Combine(cache.framingAssistantCachePath, entry.Attribute("FileName").Value);
+
+                    if (AstroUtil.ArcminToArcsec(fovW) > minSize && AstroUtil.ArcminToArcsec(fovH) > minSize) {
+                        var existing = cacheImages.FirstOrDefault(x => x.Coordinates.RA == ra && x.Coordinates.Dec == dec);
+                        if (existing == null) {
+                            existing = new CacheImage(ra, dec, fovW, fovH, rotation, path);
+                            cacheImages.Add(existing);
+                        }
+                        l.Add(existing);
+                    }
+                }
+
+                l = l.Where(x => {
+
+                    if(ViewportFoV.OriginalHFoV > 50) {
+                        // Coarse FoV - just check the center
+                        return ViewportFoV.IsInViewPortBounds(x.Coordinates);
+                    }
+
+                    var top = x.Coordinates.Shift(0, -AstroUtil.ArcminToDegree(x.FoVH / 2d), x.Rotation);
+                    var bottom = x.Coordinates.Shift(0, AstroUtil.ArcminToDegree(x.FoVH / 2d), x.Rotation);
+                    var left = x.Coordinates.Shift(-AstroUtil.ArcminToDegree(x.FoVW / 2d), 0, x.Rotation);
+                    var right = x.Coordinates.Shift(AstroUtil.ArcminToDegree(x.FoVW / 2d), 0, x.Rotation);
+                    if (ViewportFoV.OriginalHFoV > 10) {
+                        // Larger FoV - Check the edge bounds of the image
+                        return ViewportFoV.IsInViewPortBounds(x.Coordinates)
+                                || ViewportFoV.IsInViewPortBounds(top)
+                                || ViewportFoV.IsInViewPortBounds(left)
+                                || ViewportFoV.IsInViewPortBounds(right)
+                                || ViewportFoV.IsInViewPortBounds(bottom)
+                        ;
+                    }
+
+                    var topLeft = x.Coordinates.Shift(-AstroUtil.ArcminToDegree(x.FoVW / 2d), -AstroUtil.ArcminToDegree(x.FoVH / 2d), x.Rotation);
+                    var topRight = x.Coordinates.Shift(AstroUtil.ArcminToDegree(x.FoVW / 2d), -AstroUtil.ArcminToDegree(x.FoVH / 2d), x.Rotation);
+                    var bottomLeft = x.Coordinates.Shift(-AstroUtil.ArcminToDegree(x.FoVW / 2d), AstroUtil.ArcminToDegree(x.FoVH / 2d), x.Rotation);
+                    var bottomRight = x.Coordinates.Shift(AstroUtil.ArcminToDegree(x.FoVW / 2d), AstroUtil.ArcminToDegree(x.FoVH / 2d), x.Rotation);
+                    if (ViewportFoV.OriginalHFoV > 3) {
+                        // Medium FoV - Check the center and edge bounds of the image
+                        return ViewportFoV.IsInViewPortBounds(x.Coordinates)
+                                || ViewportFoV.IsInViewPortBounds(top)
+                                || ViewportFoV.IsInViewPortBounds(left)
+                                || ViewportFoV.IsInViewPortBounds(right)
+                                || ViewportFoV.IsInViewPortBounds(bottom)
+                                || ViewportFoV.IsInViewPortBounds(topLeft)
+                                || ViewportFoV.IsInViewPortBounds(topRight)
+                                || ViewportFoV.IsInViewPortBounds(bottomLeft)
+                                || ViewportFoV.IsInViewPortBounds(bottomRight)
+                        ;
+                    }
+
+                    var halfTop = x.Coordinates.Shift(0, -AstroUtil.ArcminToDegree(x.FoVH / 4d), x.Rotation);
+                    var halfBottom = x.Coordinates.Shift(0, AstroUtil.ArcminToDegree(x.FoVH / 4d), x.Rotation);
+                    var halfLeft = x.Coordinates.Shift(-AstroUtil.ArcminToDegree(x.FoVW / 4d), 0, x.Rotation);
+                    var halfRight = x.Coordinates.Shift(AstroUtil.ArcminToDegree(x.FoVW / 4d), 0, x.Rotation);
+                    var halfTopLeft = x.Coordinates.Shift(-AstroUtil.ArcminToDegree(x.FoVW / 4d), -AstroUtil.ArcminToDegree(x.FoVH / 4d), x.Rotation);
+                    var halfTopRight = x.Coordinates.Shift(AstroUtil.ArcminToDegree(x.FoVW / 4d), -AstroUtil.ArcminToDegree(x.FoVH / 4d), x.Rotation);
+                    var halfBottomLeft = x.Coordinates.Shift(-AstroUtil.ArcminToDegree(x.FoVW / 4d), AstroUtil.ArcminToDegree(x.FoVH / 4d), x.Rotation);
+                    var halfBottomRight = x.Coordinates.Shift(AstroUtil.ArcminToDegree(x.FoVW / 4d), AstroUtil.ArcminToDegree(x.FoVH / 4d), x.Rotation);
+
+                    // Small FoV - Check most points
+                    return ViewportFoV.IsInViewPortBounds(x.Coordinates)
+                            || ViewportFoV.IsInViewPortBounds(top)
+                            || ViewportFoV.IsInViewPortBounds(left)
+                            || ViewportFoV.IsInViewPortBounds(right)
+                            || ViewportFoV.IsInViewPortBounds(bottom)
+                            || ViewportFoV.IsInViewPortBounds(topLeft)
+                            || ViewportFoV.IsInViewPortBounds(topRight)
+                            || ViewportFoV.IsInViewPortBounds(bottomLeft)
+                            || ViewportFoV.IsInViewPortBounds(bottomRight)
+
+
+                            || ViewportFoV.IsInViewPortBounds(halfTop)
+                            || ViewportFoV.IsInViewPortBounds(halfBottom)
+                            || ViewportFoV.IsInViewPortBounds(halfLeft)
+                            || ViewportFoV.IsInViewPortBounds(halfRight)
+                            || ViewportFoV.IsInViewPortBounds(halfTopLeft)
+                            || ViewportFoV.IsInViewPortBounds(halfTopRight)
+                            || ViewportFoV.IsInViewPortBounds(halfBottomLeft)
+                            || ViewportFoV.IsInViewPortBounds(halfBottomRight)
+                    ;
+
+
+                })
+                    //Order in descending order so that smallest field of view is drawn on top, as it most likely contains most details
+                    .OrderByDescending(x => x.FoVW).ToList();
+                return l;
+            }
         }
 
         public Coordinates ShiftViewport(Vector delta) {
@@ -328,9 +474,63 @@ namespace NINA.ViewModel.FramingAssistant {
             FrameLineMatrix.Draw(g);
         }
 
-        public void UpdateSkyMap() {
-            if (Initialized) {
+        private Task DrawBufferedDSOImages(CancellationToken ct) {
+            return Task.Run(async () => {
+                try {
+                    var relevantImages = GetCacheImagesForViewport();
+                    foreach (var cacheImage in relevantImages) {
+                        ct.ThrowIfCancellationRequested();
+                        if (File.Exists(cacheImage.ImagePath)) {
+                            var image = cacheImage.GetImageForScale(ViewportFoV.OriginalHFoV, ViewportFoV.Width);
+                            var sourceR = new RectangleF(0, 0, image.Width, image.Height);
+
+                            var imageResW = AstroUtil.ArcminToArcsec(cacheImage.FoVW) / image.Width;
+                            var imageResH = AstroUtil.ArcminToArcsec(cacheImage.FoVH) / image.Height;
+                            var conversionW = imageResW / ViewportFoV.ArcSecWidth;
+                            var conversionH = imageResH / ViewportFoV.ArcSecHeight;
+                            var dest = new RectangleF(-(float)(image.Width * conversionW / 2f), -(float)(image.Height * conversionH / 2f), (float)(image.Width * conversionW), (float)(image.Height * conversionH));
+
+                            var center = cacheImage.Coordinates.XYProjection(ViewportFoV);
+
+                            var panelDeltaX = center.X - ViewportFoV.ViewPortCenterPoint.X;
+                            var panelDeltaY = center.Y - ViewportFoV.ViewPortCenterPoint.Y;
+                            var referenceCenter = ViewportFoV.CenterCoordinates.Shift(panelDeltaX < 1E-10 ? 1 : 0, panelDeltaY, ViewportFoV.Rotation, ViewportFoV.ArcSecWidth, ViewportFoV.ArcSecHeight);
+
+                            var rotation = -(90 - ((float)AstroUtil.CalculatePositionAngle(referenceCenter.RADegrees, cacheImage.Coordinates.RADegrees, referenceCenter.Dec, cacheImage.Coordinates.Dec)));
+                            if (panelDeltaX < 0) {
+                                rotation += 180;
+                            }
+                            if (cacheImage.Coordinates.Dec < 0 || (referenceCenter.Dec < 0 && cacheImage.Coordinates.Dec >= 0)) {
+                                rotation += 180;
+                            }
+
+                            rotation += (float)cacheImage.Rotation;
+
+                            dsoImageGraphics.TranslateTransform((float)center.X, (float)center.Y);
+                            dsoImageGraphics.RotateTransform(rotation);
+                            dsoImageGraphics.DrawImage(image, dest, sourceR, GraphicsUnit.Pixel);
+                            dsoImageGraphics.ResetTransform();
+                        }
+                    }
+                    ct.ThrowIfCancellationRequested();
+                    renderTimer?.Stop();
+                    
+                    await Task.Delay(renderTimer?.Interval ?? 200);
+                    Render();
+                } catch (Exception) {
+                    renderTimer?.Stop();
+                } finally {
+                }
+            });
+        }
+
+        private void Render() {
+            try {
                 g.Clear(Color.Transparent);
+
+                if (!DllLoader.IsX86() && UseCachedImages) {
+                    g.DrawImage((Bitmap)dsoImageBuffer.Clone(), 0, 0);
+                }
 
                 if (!AnnotateConstellations && AnnotateDSO || AnnotateConstellations) {
                     UpdateAndAnnotateConstellations(AnnotateConstellations);
@@ -355,10 +555,55 @@ namespace NINA.ViewModel.FramingAssistant {
                 if (telescopeConnected) {
                     DrawTelescope();
                 }
-
                 var source = ImageUtility.ConvertBitmap(img, PixelFormats.Bgra32);
                 source.Freeze();
                 SkyMapOverlay = source;
+            } catch (Exception) {
+            }
+        }
+
+        private void OnTimer(object sender, EventArgs e) {
+            Render();
+        }
+
+        private System.Windows.Forms.Timer renderTimer;
+        private CancellationTokenSource renderCts;
+        private Task renderTask;
+        private Coordinates oldCenter;
+        private double oldFoV;
+        private bool oldUseCachedImages;
+        public void UpdateSkyMap() {
+            if (Initialized) {
+                try {
+                    renderTimer?.Stop();
+                    renderCts?.Cancel();
+                    while (renderTask != null && (renderTask.Status < TaskStatus.RanToCompletion)) {
+                    }
+                } catch (Exception) {
+                }
+                var center = ViewportFoV.CenterCoordinates;
+                var fov = ViewportFoV.OriginalHFoV;                
+
+                var needFullRedraw = center != oldCenter || fov != oldFoV || UseCachedImages != oldUseCachedImages;
+                oldCenter = ViewportFoV.CenterCoordinates;
+                oldFoV = ViewportFoV.OriginalHFoV;
+                oldUseCachedImages = UseCachedImages;
+
+                if (needFullRedraw) { 
+                    dsoImageGraphics.Clear(Color.Transparent);
+                }
+                Render();
+
+                if (UseCachedImages && needFullRedraw) {
+                    renderTimer = new System.Windows.Forms.Timer();
+                    renderTimer.Interval = 200;
+                    renderTimer.Tick += new EventHandler(this.OnTimer);
+                    renderTimer.Start();
+
+                    renderCts = new CancellationTokenSource();
+
+                    renderTask = DrawBufferedDSOImages(renderCts.Token);
+                }
             }
         }
 
@@ -396,7 +641,11 @@ namespace NINA.ViewModel.FramingAssistant {
                 var coordinates = deviceInfo.Coordinates.Transform(Epoch.J2000);
                 if (Math.Abs(telescopeCoordinates.RADegrees - coordinates.RADegrees) > 0.01 || Math.Abs(telescopeCoordinates.Dec - coordinates.Dec) > 0.01) {
                     telescopeCoordinates = coordinates;
-                    UpdateSkyMap();
+                    var p = coordinates.XYProjection(ViewportFoV);                    
+                    if (!ViewportFoV.IsOutOfViewportBounds(p)) {                        
+                        UpdateSkyMap();
+                    }
+                    
                 }
             } else {
                 telescopeConnected = false;

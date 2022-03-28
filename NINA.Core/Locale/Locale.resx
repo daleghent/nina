@@ -6216,4 +6216,7 @@ Please check if there is an update available.</value>
   <data name="lblSkyGuardWrongVersion" xml:space="preserve">
     <value>SkyGuard version is not supported by N.I.N.A. View logs for more details.</value>
   </data>
+  <data name="LblUseCachedImages" xml:space="preserve">
+    <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+  </data>
 </root>

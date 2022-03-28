@@ -66,11 +66,12 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ICommand ScrollViewerSizeChangedCommand { get; }
         XElement SelectedImageCacheInfo { get; set; }
         ICommand SetSequencerTargetCommand { get; }
-        ISkyMapAnnotator SkyMapAnnotator { get; set; }
+        ISkyMapAnnotator SkyMapAnnotator { get; }
         ISkySurveyFactory SkySurveyFactory { get; set; }
         IAsyncCommand SlewToCoordinatesCommand { get; }
         ApplicationStatus Status { get; set; }
         int VerticalPanels { get; set; }
+        CacheSkySurvey Cache { get; }
 
         void Dispose();
 

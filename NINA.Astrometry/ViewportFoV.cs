@@ -109,6 +109,14 @@ namespace NINA.Astrometry {
                      point.Y > Height + verticalBoundsPadding);
         }
 
+        public bool IsOutOfViewportBounds(Coordinates coordinates) {
+            return this.IsOutOfViewportBounds(coordinates.XYProjection(this));
+        }
+
+        public bool IsInViewPortBounds(Coordinates coordinates) {
+            return !this.IsOutOfViewportBounds(coordinates.XYProjection(this));
+        }
+
         public void Shift(Vector delta) {
             if (delta.X == 0 && delta.Y == 0 && AbsoluteCenterCoordinates != null) {
                 return;
