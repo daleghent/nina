@@ -134,6 +134,12 @@ To identify what has changed in between beta builds, please refer to the <a href
 <li>When using the simple sequencer the old style will still be shown instead</li>
 </ul>
 <h2 id="new-hardware-support">New hardware support</h2>
+<h3 id="skyguard">SkyGuard</h3>
+<ul>
+<li>Integration of SkyGuard in NINA</li>
+<li>Added of SkyGuard Guider and its setup</li>
+<li>Implementation of the Connect, Disconnect, StartGuiding, StopGuiding and Dither methods</li>
+</ul>
 <h3 id="mgen3">MGEN3</h3>
 <ul>
 <li>Full control of the MGEN3 by mirroring the controller display into N.I.N.A.'s user interface</li>
@@ -284,6 +290,7 @@ To identify what has changed in between beta builds, please refer to the <a href
 <li>It is now possible to define a custom horizon to be used and displayed in the altitude charts</li>
 <li>Using these custom horizons will make target planning a lot more convenient when only a portion of the sky is available</li>
 <li>The horizon file consists of a simple mapping of azimuth to altitude values</li>
+<li>The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified time range</li>
 </ul>
 <hr />
 <pre><code class="language-markdown"># Example horizon file content
@@ -323,7 +330,6 @@ To identify what has changed in between beta builds, please refer to the <a href
 <li>Added <code>$$ROTATEANGLE$$</code> file pattern</li>
 <li>Added <code>$$STARCOUNT$$</code> file pattern</li>
 <li>Added <code>$$TEMPERATURESETPOINT$$</code> file pattern</li>
-<li>Added Guider Peak file patterns <code>$$PEAKRA$$</code> <code>$$PEAKRAARCSEC$$</code> <code>$$PEAKDEC$$</code> <code>$$PEAKDECARCSEC$$</code></li>
 </ul>
 <h4 id="included-camera-sdk-versions-can-now-be-found-inside-the-about-page-of-n.i.n.a">Included Camera SDK Versions can now be found inside the about page of N.I.N.A.</h4>
 <h1 id="version-1.10-hf3">Version 1.10 HF3</h1>

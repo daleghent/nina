@@ -242,6 +242,12 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 ```
 ----
 
+### Sky Atlas
+- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified duration
+- Filter for time from/through is now only showing time without a day
+- Altitude filter is changed to use a duration instead of a start and end time
+- Moon distance is now shown in the list for each object. Furthermore a new filter is added to filter by moon distance.
+
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter
 - When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus
@@ -249,6 +255,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - A new optional setting R² threshold can now be set. When this threshold is non-zero, the autofocus run has to fullfill a minimum required R² - [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) - above this threshold to be considered as successful.
 
 ### File name patterns and FITS keywords
+- Keyword list to choose from is now grouped by category
 - Added `CENTALT`, and `CENTAZ` keywords
 - Added `AIRMASS` keyword, calculated from mount altitude using Gueymard 1993
 - Added `$$CAMERA$$` file pattern
