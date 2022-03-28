@@ -3167,9 +3167,6 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
   <data name="LblTelescopeNotConnected" xml:space="preserve">
     <value>Telescopi no connectat</value>
   </data>
-  <data name="LblTelescopeNotConnectedForCommand" xml:space="preserve">
-    <value>Telescopi no connectat per enviar instruccions</value>
-  </data>
   <data name="LblTelescopeNotTrackingForSync" xml:space="preserve">
     <value>El telescopi no fa un seguiment. La sincronització només està disponible durant el seguiment!</value>
   </data>
@@ -6141,5 +6138,110 @@ Comproveu si hi ha una actualització disponible.</value>
   </data>
   <data name="LblObservation" xml:space="preserve">
     <value>Observació</value>
+  </data>
+  <data name="LblCommand" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="LblRaw" xml:space="preserve">
+    <value>Raw</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
+    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
+    <value>Send Command</value>
+  </data>
+  <data name="LblBoolean" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="LblDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="LblString" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="LblBlind" xml:space="preserve">
+    <value>Blind</value>
+  </data>
+  <data name="LblAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="LblParameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
+    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
+    <value>Device Action</value>
+  </data>
+  <data name="LblNoActionsAvailable" xml:space="preserve">
+    <value>No actions are available</value>
+  </data>
+  <data name="LblSkyGuardPath" xml:space="preserve">
+    <value>Ruta SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardServerPort" xml:space="preserve">
+    <value>Port del Servidor SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardServerUrl" xml:space="preserve">
+    <value>URL del Servidor SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardSetup" xml:space="preserve">
+    <value>Configuració de SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardCallbackPort" xml:space="preserve">
+    <value>Reserva del Port de retorn SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
+    <value>Estabilització del Guiatge</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
+    <value>Per una durada de</value>
+  </data>
+  <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
+    <value>Temps d'espera per començar el Guiatge</value>
+  </data>
+  <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
+    <value>Estabilitzar a &lt;</value>
+  </data>
+  <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>S'ha anul·lat el Dither perquè SkyGuard no estava guiant activament</value>
+  </data>
+  <data name="LblSkyGuardNotReady" xml:space="preserve">
+    <value>SkyGuard no està preparat per operar. Consulteu els registres per obtenir més informació.</value>
+  </data>
+  <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
+    <value>Operació cancel·lada.</value>
+  </data>
+  <data name="LblSkyGuardPathNotFound" xml:space="preserve">
+    <value>No s'ha pogut iniciar SkyGuard. No s'ha trobat el Camí.</value>
+  </data>
+  <data name="LblSkyGuardStartProcessError" xml:space="preserve">
+    <value>No s'ha pogut iniciar SkyGuard. Consulteu els registres per obtenir més informació.</value>
+  </data>
+  <data name="LblSkyGuardConnectError" xml:space="preserve">
+    <value>Error en connectar SkyGuard. Consulteu els registres per obtenir més informació.</value>
+  </data>
+  <data name="LblSkyGuardDisconnectError" xml:space="preserve">
+    <value>Error en desconnectar SkyGuard. Consulteu els registres per obtenir més informació.</value>
+  </data>
+  <data name="LblSkyGuardDitheringError" xml:space="preserve">
+    <value>Error en operacions del Dither. Consulteu els registre per obtenir més informació.</value>
+  </data>
+  <data name="LblSkyGuardEndpointNotReachable" xml:space="preserve">
+    <value>El punt final SkyGuard no està accessible. Consulteu els registres per obtenir més detalls.</value>
+  </data>
+  <data name="LblSkyGuardGuidingError" xml:space="preserve">
+    <value>Error a l'hora d'iniciar l'operació de Guiatge. Consulta els registres per obtenir més detalls.</value>
+  </data>
+  <data name="LblSkyGuardStopGuidingError" xml:space="preserve">
+    <value>Error a l'hora d'aturar l'operació de Guiatge. Consulta els registres per obtenir més detalls.</value>
+  </data>
+  <data name="lblSkyGuardWrongVersion" xml:space="preserve">
+    <value>La versió SkyGuard no està suportada per N.I.N.A. Consulta els registres per obtenir més detalls.</value>
+  </data>
+  <data name="LblUseCachedImages" xml:space="preserve">
+    <value>Això utilitzarà les imatges fora de la memòria cau d'enquadrament i les dibuixarà al mapa del cel fora de línia per emmarcar. Només s'utilitzen imatges que tinguin un camp de visió horitzontal inferior o igual a 10° i superior o igual a 0,1°.</value>
   </data>
 </root>

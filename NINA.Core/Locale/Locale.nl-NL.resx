@@ -3165,9 +3165,6 @@ Should the settings be synchronized?</value>
   <data name="LblTelescopeNotConnected" xml:space="preserve">
     <value>Telescoop niet aangesloten</value>
   </data>
-  <data name="LblTelescopeNotConnectedForCommand" xml:space="preserve">
-    <value>Telescoop niet aangesloten om commando's te verzenden</value>
-  </data>
   <data name="LblTelescopeNotTrackingForSync" xml:space="preserve">
     <value>Telescoop trackt niet. Synchronisatie is allen beschikbaar tijdens het tracken!</value>
   </data>
@@ -6140,5 +6137,110 @@ Please check if there is an update available.</value>
   </data>
   <data name="LblObservation" xml:space="preserve">
     <value>Observation</value>
+  </data>
+  <data name="LblCommand" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="LblRaw" xml:space="preserve">
+    <value>Raw</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
+    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
+    <value>Send Command</value>
+  </data>
+  <data name="LblBoolean" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="LblDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="LblString" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="LblBlind" xml:space="preserve">
+    <value>Blind</value>
+  </data>
+  <data name="LblAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="LblParameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
+    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
+    <value>Device Action</value>
+  </data>
+  <data name="LblNoActionsAvailable" xml:space="preserve">
+    <value>No actions are available</value>
+  </data>
+  <data name="LblSkyGuardPath" xml:space="preserve">
+    <value>SkyGuard path</value>
+  </data>
+  <data name="LblSkyGuardServerPort" xml:space="preserve">
+    <value>SkyGuard Server Port</value>
+  </data>
+  <data name="LblSkyGuardServerUrl" xml:space="preserve">
+    <value>SkyGuard Server URL</value>
+  </data>
+  <data name="LblSkyGuardSetup" xml:space="preserve">
+    <value>SkyGuard Setup</value>
+  </data>
+  <data name="LblSkyGuardCallbackPort" xml:space="preserve">
+    <value>Callback Reservation Port SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
+    <value>Guider Settling</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
+    <value>For a duration of</value>
+  </data>
+  <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
+    <value>Start guiding timeout delay</value>
+  </data>
+  <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
+    <value>Settle at &lt;</value>
+  </data>
+  <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>Dither was skipped because SkyGuard was not actively guiding</value>
+  </data>
+  <data name="LblSkyGuardNotReady" xml:space="preserve">
+    <value>SkyGuard is not ready for operations. Check logs for details.</value>
+  </data>
+  <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="LblSkyGuardPathNotFound" xml:space="preserve">
+    <value>Could not start SkyGuard. Path not found.</value>
+  </data>
+  <data name="LblSkyGuardStartProcessError" xml:space="preserve">
+    <value>Could not start SkyGuard. Check logs for details.</value>
+  </data>
+  <data name="LblSkyGuardConnectError" xml:space="preserve">
+    <value>Failed connecting to SkyGuard. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardDisconnectError" xml:space="preserve">
+    <value>Failed disconnecting SkyGuard. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardDitheringError" xml:space="preserve">
+    <value>Error on dithering operation. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardEndpointNotReachable" xml:space="preserve">
+    <value>SkyGuard enpoint not reachable. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardGuidingError" xml:space="preserve">
+    <value>Error on start guiding operation. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardStopGuidingError" xml:space="preserve">
+    <value>Error on stop guiding operation. View logs for more details.</value>
+  </data>
+  <data name="lblSkyGuardWrongVersion" xml:space="preserve">
+    <value>SkyGuard version is not supported by N.I.N.A. View logs for more details.</value>
+  </data>
+  <data name="LblUseCachedImages" xml:space="preserve">
+    <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
   </data>
 </root>

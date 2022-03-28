@@ -253,7 +253,7 @@
     <value>目前只支持 16 位单色传感器</value>
   </data>
   <data name="LblASPS" xml:space="preserve">
-    <value>全天空解析（ASPS）</value>
+    <value>全天空解析  (ASPS)</value>
   </data>
   <data name="LblASPSDirectory" xml:space="preserve">
     <value>ASPS 位置</value>
@@ -1906,7 +1906,7 @@
     <value>载入目标组</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
-    <value>本地解析</value>
+    <value>本地 Astrometry.Net (ansvr)</value>
   </data>
   <data name="LblLocation" xml:space="preserve">
     <value>位置</value>
@@ -2246,7 +2246,7 @@
     <value>超新星遗迹</value>
   </data>
   <data name="LblOf" xml:space="preserve">
-    <value>的</value>
+    <value>共</value>
   </data>
   <data name="LblOff" xml:space="preserve">
     <value>关闭</value>
@@ -3167,9 +3167,6 @@
   <data name="LblTelescopeNotConnected" xml:space="preserve">
     <value>望远镜未连接</value>
   </data>
-  <data name="LblTelescopeNotConnectedForCommand" xml:space="preserve">
-    <value>望远镜未连接，无法发送命令</value>
-  </data>
   <data name="LblTelescopeNotTrackingForSync" xml:space="preserve">
     <value>望远镜未开启跟踪。 同步仅在跟踪时可用！</value>
   </data>
@@ -3341,7 +3338,7 @@
     <value>自定义</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Custom ({0:0.####}, {1:0.####})</value>
+    <value>自定义 ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>转向北天</value>
@@ -4855,7 +4852,7 @@
     <value>循环直到目标低于指定高度，然后跳过该组内的其余指令</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Altitude Below</value>
+    <value>循环至目标低于高度</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>圆顶</value>
@@ -5159,13 +5156,13 @@
     <value>当月球达到指定高度时退出循环。</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Moon Altitude</value>
+    <value>循环至月球到达高度</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>当太阳达到指定高度时退出循环。</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Sun Altitude</value>
+    <value>循环至太阳到达高度</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5269,7 +5266,7 @@
     <value>等待目标升到地平线上方。如果使用了自定义地平线，则使用该高度而不是0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Wait until Above horizon</value>
+    <value>等待至目标高于地平线</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
     <value>正在等待目标超出地平线。目标高度 {0}° / 地平线高度 {1}°</value>
@@ -5278,7 +5275,7 @@
     <value>目标在地平线上方时循环。如果使用了自定义地平线，则使用该高度而不是0</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Loop while Altitude Above Horizon</value>
+    <value>目标高于地平线时循环</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>目标永远不会升到地平线上</value>
@@ -6083,13 +6080,13 @@
     <value>PHD2 警告</value>
   </data>
   <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
-    <value>Disables the current instruction. A disabled instruction will not run during sequence execution.</value>
+    <value>禁用此指令。已禁用的指令将不会在序列中执行。</value>
   </data>
   <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
-    <value>Enables the current instruction, to be considered again to run during sequence execution.</value>
+    <value>启用此指令，使其可以在序列中执行。</value>
   </data>
   <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
-    <value>Disables or enables the current instruction set and all its content.</value>
+    <value>禁用或启用当前指令集及其内部指令。</value>
   </data>
   <data name="LblDateUTCFormatDescription" xml:space="preserve">
     <value>UTC 日期，格式 YYYY-MM-DD</value>
@@ -6125,22 +6122,127 @@
     <value>Restored shift rate after losing shift lock</value>
   </data>
   <data name="LblDisplayMoonChart" xml:space="preserve">
-    <value>Display moon chart</value>
+    <value>显示月球高度曲线</value>
   </data>
   <data name="LblMoonSeparation" xml:space="preserve">
-    <value>Angular separation between moon and target</value>
+    <value>月球与目标的角距离</value>
   </data>
   <data name="LblPluginFailedToLoad" xml:space="preserve">
-    <value>Failed to load plugin {0} version {1}.
-Please check if there is an update available.</value>
+    <value>加载插件 {0} 版本 {1} 失败。
+请检查是否有可用的更新。</value>
   </data>
   <data name="LblMoon" xml:space="preserve">
-    <value>Moon</value>
+    <value>月球</value>
   </data>
   <data name="LblDate" xml:space="preserve">
-    <value>Date</value>
+    <value>日期</value>
   </data>
   <data name="LblObservation" xml:space="preserve">
-    <value>Observation</value>
+    <value>观测信息</value>
+  </data>
+  <data name="LblCommand" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="LblRaw" xml:space="preserve">
+    <value>Raw</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
+    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
+    <value>Send Command</value>
+  </data>
+  <data name="LblBoolean" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="LblDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="LblString" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="LblBlind" xml:space="preserve">
+    <value>Blind</value>
+  </data>
+  <data name="LblAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="LblParameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
+    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
+    <value>Device Action</value>
+  </data>
+  <data name="LblNoActionsAvailable" xml:space="preserve">
+    <value>No actions are available</value>
+  </data>
+  <data name="LblSkyGuardPath" xml:space="preserve">
+    <value>SkyGuard path</value>
+  </data>
+  <data name="LblSkyGuardServerPort" xml:space="preserve">
+    <value>SkyGuard Server Port</value>
+  </data>
+  <data name="LblSkyGuardServerUrl" xml:space="preserve">
+    <value>SkyGuard Server URL</value>
+  </data>
+  <data name="LblSkyGuardSetup" xml:space="preserve">
+    <value>SkyGuard Setup</value>
+  </data>
+  <data name="LblSkyGuardCallbackPort" xml:space="preserve">
+    <value>Callback Reservation Port SkyGuard</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
+    <value>Guider Settling</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
+    <value>For a duration of</value>
+  </data>
+  <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
+    <value>Start guiding timeout delay</value>
+  </data>
+  <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
+    <value>Settle at &lt;</value>
+  </data>
+  <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>Dither was skipped because SkyGuard was not actively guiding</value>
+  </data>
+  <data name="LblSkyGuardNotReady" xml:space="preserve">
+    <value>SkyGuard is not ready for operations. Check logs for details.</value>
+  </data>
+  <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="LblSkyGuardPathNotFound" xml:space="preserve">
+    <value>Could not start SkyGuard. Path not found.</value>
+  </data>
+  <data name="LblSkyGuardStartProcessError" xml:space="preserve">
+    <value>Could not start SkyGuard. Check logs for details.</value>
+  </data>
+  <data name="LblSkyGuardConnectError" xml:space="preserve">
+    <value>Failed connecting to SkyGuard. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardDisconnectError" xml:space="preserve">
+    <value>Failed disconnecting SkyGuard. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardDitheringError" xml:space="preserve">
+    <value>Error on dithering operation. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardEndpointNotReachable" xml:space="preserve">
+    <value>SkyGuard enpoint not reachable. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardGuidingError" xml:space="preserve">
+    <value>Error on start guiding operation. View logs for more details.</value>
+  </data>
+  <data name="LblSkyGuardStopGuidingError" xml:space="preserve">
+    <value>Error on stop guiding operation. View logs for more details.</value>
+  </data>
+  <data name="lblSkyGuardWrongVersion" xml:space="preserve">
+    <value>SkyGuard version is not supported by N.I.N.A. View logs for more details.</value>
+  </data>
+  <data name="LblUseCachedImages" xml:space="preserve">
+    <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
   </data>
 </root>
