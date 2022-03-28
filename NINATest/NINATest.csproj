@@ -410,10 +410,8 @@
     <Compile Include="Sequencer\SequenceItem\Telescope\SetTrackingTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Telescope\UnparkScopeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\AnnotationTest.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\SendCommandTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\ExternalScriptTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\MessageBoxTest.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\DeviceActionTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForSunAltitudeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForMoonAltitudeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForAltitudeTest.cs" />
