@@ -256,6 +256,9 @@
     <Compile Include="Equipment\MyGuider\PHD2\PhdEvents\PhdEventStartCalibration.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\PhdEvents\PhdEventStartGuiding.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\PhdEvents\PhdEventVersion.cs" />
+    <Compile Include="Equipment\MyGuider\SkyGuard\SkyGuardGuider.cs" />
+    <Compile Include="Equipment\MyGuider\SkyGuard\SkyGuardMessages\SkyGuardEventMessage.cs" />
+    <Compile Include="Equipment\MyGuider\SkyGuard\SkyGuardMessages\SkyGuardStatusMessage.cs" />
     <Compile Include="Exceptions\CameraConnectionLostException.cs" />
     <Compile Include="Exceptions\CameraDownloadFailedException.cs" />
     <Compile Include="Exceptions\PlanetariumFailedToConnect.cs" />

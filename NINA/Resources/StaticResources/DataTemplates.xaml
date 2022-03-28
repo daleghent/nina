@@ -22,6 +22,7 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:pegasus="clr-namespace:NINA.Equipment.Equipment.MySwitch.PegasusAstro;assembly=NINA.Equipment"
     xmlns:phd2="clr-namespace:NINA.Equipment.Equipment.MyGuider.PHD2;assembly=NINA.Equipment"
+    xmlns:skyguard="clr-namespace:NINA.Equipment.Equipment.MyGuider.SkyGuard;assembly=NINA.Equipment"
     xmlns:rotator="clr-namespace:NINA.Equipment.Equipment.MyRotator;assembly=NINA.Equipment"
     xmlns:safety="clr-namespace:NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator;assembly=NINA.WPF.Base"
     xmlns:simulator="clr-namespace:NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;assembly=NINA.WPF.Base"
@@ -114,5 +115,9 @@
 
     <DataTemplate DataType="{x:Type safety:SafetyMonitorSimulator}">
         <safety:SafetyMonitorSimulatorSetup />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type skyguard:SkyGuardGuider}">
+      <equip:SkyGuardSetupView/>
     </DataTemplate>
 </ResourceDictionary>

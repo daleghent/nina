@@ -40,5 +40,13 @@ namespace NINA.Profile.Interfaces {
         bool MetaGuideLockWhenGuiding { get; set; }
         int PHD2ROIPct { get; }
         int? PHD2ProfileId { get; set; }
+        int SkyGuardServerPort { get; set; }
+        string SkyGuardServerUrl { get; set; }
+        string SkyGuardPath { get; set; }
+        int SkyGuardCallbackPort { get; set; }
+        bool SkyGuardTimeLapsChecked { get; set; }
+        double SkyGuardValueMaxGuiding { get; set; }
+        double SkyGuardTimeLapsGuiding { get; set; }
+        double SkyGuardTimeOutGuiding { get; set; }
     }
 }

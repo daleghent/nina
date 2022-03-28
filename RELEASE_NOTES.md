@@ -90,6 +90,11 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 
 ## New hardware support
 
+### SkyGuard
+- Integration of SkyGuard in NINA
+- Added of SkyGuard Guider and its setup
+- Implementation of the Connect, Disconnect, StartGuiding, StopGuiding and Dither methods
+
 ### MGEN3
 - Full control of the MGEN3 by mirroring the controller display into N.I.N.A.'s user interface
 - Automatic power-on when connecting
@@ -220,7 +225,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - It is now possible to define a custom horizon to be used and displayed in the altitude charts
 - Using these custom horizons will make target planning a lot more convenient when only a portion of the sky is available
 - The horizon file consists of a simple mapping of azimuth to altitude values
-
+- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified time range
 ----
 ```markdown
 # Example horizon file content
@@ -237,12 +242,6 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 ```
 ----
 
-### Sky Atlas
-- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified duration
-- Filter for time from/through is now only showing time without a day
-- Altitude filter is changed to use a duration instead of a start and end time
-- Moon distance is now shown in the list for each object. Furthermore a new filter is added to filter by moon distance.
-
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter
 - When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus
@@ -250,7 +249,6 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - A new optional setting R² threshold can now be set. When this threshold is non-zero, the autofocus run has to fullfill a minimum required R² - [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) - above this threshold to be considered as successful.
 
 ### File name patterns and FITS keywords
-- Keyword list to choose from is now grouped by category
 - Added `CENTALT`, and `CENTAZ` keywords
 - Added `AIRMASS` keyword, calculated from mount altitude using Gueymard 1993
 - Added `$$CAMERA$$` file pattern
@@ -258,7 +256,6 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
 - Added `$$TEMPERATURESETPOINT$$` file pattern
-- Added Guider Peak file patterns `$$PEAKRA$$` `$$PEAKRAARCSEC$$` `$$PEAKDEC$$` `$$PEAKDECARCSEC$$`
 
 #### Included Camera SDK Versions can now be found inside the about page of N.I.N.A.
 

@@ -47,6 +47,13 @@ namespace NINA.Profile {
             metaGuidePort = 1277;
             metaGuideMinIntensity = 100;
             metaGuideLockWhenGuiding = false;
+            skyGuardServerUrl = "localhost";
+            skyGuardServerPort = 18700;
+            skyGuardCallbackPort = 8000;
+            skyGuardTimeLapsChecked = false;
+            skyGuardValueMaxGuiding = 1;
+            skyGuardTimeOutGuiding = 5;
+            skyGuardTimeLapsGuiding = 60;
 
             var defaultPHD2Path = Environment.ExpandEnvironmentVariables(@"%programfiles(x86)%\PHDGuiding2\phd2.exe");
 
@@ -58,6 +65,9 @@ namespace NINA.Profile {
             mgenFocalLength = 1000;
             mgenPixelMargin = 10;
             metaGuideDitherSettleSeconds = 30;
+
+            var defaultSkyGuardPath = Environment.ExpandEnvironmentVariables(@"%PROGRAMFILES%\SkyGuard\SkyGuard.exe");
+            skyGuardPath = File.Exists(defaultSkyGuardPath) ? defaultSkyGuardPath : string.Empty;
         }
 
         private double ditherPixels;
@@ -358,5 +368,143 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        #region SkyGuard settings
+        string skyGuardServerUrl;
+        int skyGuardServerPort;
+        string skyGuardPath;
+        int skyGuardCallbackPort;
+        bool skyGuardTimeLapsChecked;
+        double skyGuardValueMaxGuiding;
+        double skyGuardTimeLapsGuiding;
+        double skyGuardTimeOutGuiding;
+
+        /// <summary>
+        /// Property allowing to set the endpoint URL for SkyGuard software
+        /// </summary>
+        [DataMember]
+        public string SkyGuardServerUrl
+        {
+            get => skyGuardServerUrl;
+            set
+            {
+                if (skyGuardServerUrl != value)
+                {
+                    skyGuardServerUrl = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to set endpoint URL port for SkyGuard software
+        /// </summary>
+        [DataMember]
+        public int SkyGuardServerPort
+        {
+            get => skyGuardServerPort;
+            set
+            {
+                if (skyGuardServerPort != value)
+                {
+                    skyGuardServerPort = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property allowing to set SkyGuard.exe file path
+        /// </summary>
+        [DataMember]
+        public string SkyGuardPath
+        {
+            get => skyGuardPath;
+            set
+            {
+                if (skyGuardPath != value)
+                {
+                    skyGuardPath = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to set callback port
+        /// </summary>
+        [DataMember]
+        public int SkyGuardCallbackPort
+        {
+            get => skyGuardCallbackPort;
+            set
+            {
+                if (skyGuardCallbackPort != value)
+                {
+                    skyGuardCallbackPort = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to set callback port
+        /// </summary>
+        [DataMember]
+        public bool SkyGuardTimeLapsChecked
+        {
+            get => skyGuardTimeLapsChecked;
+            set
+            {
+                if (skyGuardTimeLapsChecked != value)
+                {
+                    skyGuardTimeLapsChecked = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        public double SkyGuardValueMaxGuiding
+        {
+            get => skyGuardValueMaxGuiding;
+            set
+            {
+                if (skyGuardValueMaxGuiding != value)
+                {
+                    skyGuardValueMaxGuiding = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        public double SkyGuardTimeLapsGuiding
+        {
+            get => skyGuardTimeLapsGuiding;
+            set
+            {
+                if (skyGuardTimeLapsGuiding != value)
+                {
+                    skyGuardTimeLapsGuiding = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        public double SkyGuardTimeOutGuiding
+        {
+            get => skyGuardTimeOutGuiding;
+            set
+            {
+                if (skyGuardTimeOutGuiding != value)
+                {
+                    skyGuardTimeOutGuiding = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
     }
 }

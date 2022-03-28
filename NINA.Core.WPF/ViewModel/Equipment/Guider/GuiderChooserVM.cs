@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment.MyGuider.SkyGuard;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
@@ -45,6 +46,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 //devices.Add(new SynchronizedPHD2Guider(profileService, cameraMediator, windowServiceFactory)); Non-Functional with current sequencer
                 devices.Add(new DirectGuider(profileService, telescopeMediator));
                 devices.Add(new MetaGuideGuider(profileService, windowServiceFactory));
+                devices.Add(new SkyGuardGuider(profileService, windowServiceFactory));
 
                 try {
                     var mgen2 = new MGEN2.MGEN(Path.Combine("FTDI", "ftd2xx.dll"), new MGenLogger());

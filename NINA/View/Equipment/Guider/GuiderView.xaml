@@ -132,14 +132,18 @@
                     <DataTemplate x:Key="Default">
                         <local:DefaultDetailView />
                     </DataTemplate>
-                    <local:GuiderTemplateSelector
+                    <DataTemplate x:Key="SkyGuardGuider">
+                      <local:SkyGuardDetailView />
+                    </DataTemplate>
+          <local:GuiderTemplateSelector
                         x:Key="ContentSelector"
                         Default="{StaticResource Default}"
                         DirectGuider="{StaticResource DirectGuider}"
                         MGen="{StaticResource MGen}"
                         MetaGuide="{StaticResource MetaGuide}"
-                        PHD2="{StaticResource PHD2}" />
-                </Grid.Resources>
+                        PHD2="{StaticResource PHD2}"
+                        SkyGuardGuider="{StaticResource SkyGuardGuider}"/>
+        </Grid.Resources>
                 <ContentControl
                     VerticalAlignment="Top"
                     Content="{Binding}"

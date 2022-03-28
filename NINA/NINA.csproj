@@ -363,6 +363,12 @@
       <DependentUpon>CameraControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Guider\IsMGEN2ToVisibilityConverter.cs" />
+    <Compile Include="View\Equipment\Guider\SkyGuardDetailView.xaml.cs">
+      <DependentUpon>SkyGuardDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Equipment\Guider\SkyGuardSetupView.xaml.cs">
+      <DependentUpon>SkyGuardSetupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
       <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
     </Compile>
@@ -765,6 +771,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Equipment\Guider\MetaGuideSetupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Equipment\Guider\SkyGuardDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Equipment\Guider\SkyGuardSetupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
