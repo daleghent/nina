@@ -71,7 +71,11 @@ namespace NINA.Astrometry {
         }
 
         public Coordinates ToPolar(Epoch epoch = Epoch.J2000) {
-            var ra = Angle.ByRadians(Math.Atan2(this.Y, this.X));
+            var raRadians = Math.Atan2(this.Y, this.X);
+            if (raRadians < 0.0) {
+                raRadians += Math.PI * 2.0;
+            }
+            var ra = Angle.ByRadians(raRadians);
             var dec = Angle.ByRadians(Math.Asin(this.Z / this.Distance));
             return new Coordinates(ra: ra, dec: dec, epoch: epoch);
         }
