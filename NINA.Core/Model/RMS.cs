@@ -97,7 +97,7 @@ namespace NINA.Core.Model {
                 PeakRA = Math.Abs(raDistance);
             }
             if (Math.Abs(decDistance) > PeakDec) {
-                PeakDec = decDistance;
+                PeakDec = Math.Abs(decDistance);
             }
 
             CalculateRMS();
