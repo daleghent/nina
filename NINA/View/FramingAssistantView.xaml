@@ -1023,7 +1023,8 @@
                             Width="35"
                             Margin="5"
                             Command="{Binding RefreshSkyMapAnnotationCommand}"
-                            IsChecked="{Binding SkyMapAnnotator.UseCachedImages}">
+                            IsChecked="{Binding SkyMapAnnotator.UseCachedImages}"
+                            Visibility="{Binding IsX64, Converter={StaticResource VisibilityConverter}}">
                             <ToggleButton.ToolTip>
                                 <ToolTip ToolTipService.ShowOnDisabled="False">
                                     <TextBlock Text="{ns:Loc LblUseCachedImages}" />

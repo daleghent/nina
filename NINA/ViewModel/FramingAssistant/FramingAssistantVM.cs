@@ -146,6 +146,10 @@ namespace NINA.ViewModel.FramingAssistant {
             });
         }
 
+        public bool IsX64 {
+            get => !DllLoader.IsX86();
+        }
+
         private bool sequencerActionsOpened;
 
         public bool SequencerActionsOpened {
@@ -993,7 +997,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     SkySurveyImage skySurveyImage = null;
 
                     if (FramingAssistantSource == SkySurveySource.SKYATLAS) {
-                        SkyMapAnnotator.UseCachedImages = true;
+                        SkyMapAnnotator.UseCachedImages = IsX64;
                     } else {
                         SkyMapAnnotator.UseCachedImages = false;
                     }
