@@ -88,6 +88,7 @@ namespace NINA.ViewModel {
 
             profileService.LocaleChanged += (object sender, EventArgs e) => {
                 InitializeFilters();
+                ResetFilters(null);
             };
         }
 

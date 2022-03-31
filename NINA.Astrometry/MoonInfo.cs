@@ -38,12 +38,12 @@ namespace NINA.Astrometry {
         }
 
         public List<DataPoint> DataPoints {
-            get { return Points; }
+            get { return Points[_referenceDate]; }
         }
 
-        private static List<DataPoint> Points = new List<DataPoint>();
+        private static Dictionary<DateTime, List<DataPoint>> Points = new Dictionary<DateTime, List<DataPoint>>();
 
-        private static DateTime _referenceDate = DateTime.MinValue;
+        private DateTime _referenceDate = DateTime.MinValue;
 
         public void SetReferenceDateAndObserver(DateTime date, ObserverInfo observer) {
             _observer = observer;
@@ -85,10 +85,8 @@ namespace NINA.Astrometry {
             get { return _displayMoon; }
             set {
                 _displayMoon = value;
-                if(value) {
-                    if (Points.Count == 0) {
-                        CalculateMoonData();
-                    }
+                if(value) {                    
+                    CalculateMoonData();                    
                 }
                 RaisePropertyChanged();
             }
@@ -107,16 +105,24 @@ namespace NINA.Astrometry {
             }
         }
 
+        private static object lockObj = new object();
         private void CalculateMoonData() {
-            Points.Clear();
-            DateTime start = _referenceDate;
-            for (int i = 0; i < 24 * 10 /*24 hours x 10/hr*/; i++) {
-                Points.Add(new DataPoint(DateTimeAxis.ToDouble(start), AstroUtil.GetMoonAltitude(start, _observer)));
-                start = start.AddHours(0.1);
-            }
+            lock(lockObj) { 
+                if(!Points.ContainsKey(_referenceDate)) {
+                    var list = new List<DataPoint>();
 
-            MaxAltitude = Points.OrderByDescending((x) => x.Y).FirstOrDefault();
-            RaisePropertyChanged("DataPoints");
+                    DateTime start = _referenceDate;
+
+                    for (int i = 0; i < 24 * 10 /*24 hours x 10/hr*/; i++) {
+                        list.Add(new DataPoint(DateTimeAxis.ToDouble(start), AstroUtil.GetMoonAltitude(start, _observer)));
+                        start = start.AddHours(0.1);
+                    }
+                    Points.Add(_referenceDate, list);
+
+                    MaxAltitude = list.OrderByDescending((x) => x.Y).FirstOrDefault();
+                    RaisePropertyChanged("DataPoints");
+                }
+            }
         }
 
         private void CalculateSeparation(DateTime time) {
