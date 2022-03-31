@@ -115,11 +115,110 @@ namespace NINA.ViewModel {
                 value = NighttimeCalculator.GetReferenceDate(value);
                 if (filterDate != value) {
                     filterDate = value;
+
+                    var doSearch = SearchResult != null;
                     SearchResult = null;
-                    InitializeFilters();
-                    ResetFilters(value);
+
+                    SoftResetFilters();
                     RaisePropertyChanged();
+
+                    if(doSearch) {
+                        // The date was changed and a search result was already there. Do a search again with the adjusted date.
+                        SearchCommand.Execute(null);
+                    }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Re-evaluate items when FilterDate changes
+        /// </summary>
+        private void SoftResetFilters() {
+            var prevAlt = SelectedMinimumAltitudeDegrees;
+            var prevDuration = SelectedAltitudeDuration;
+            var prevTimeFrom = SelectedAltitudeTimeFrom;
+            var prevTimeThrough = SelectedAltitudeTimeThrough;
+ 
+            var oldDusk = NighttimeData.SunRiseAndSet.Set.HasValue ? NighttimeData.SunRiseAndSet.Set.Value : DateTime.MinValue;
+            var oldDawn = NighttimeData.SunRiseAndSet.Rise.HasValue ? NighttimeData.SunRiseAndSet.Rise.Value : DateTime.MinValue;
+            var oldNauticalDusk = NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue ? NighttimeData.NauticalTwilightRiseAndSet.Set.Value : DateTime.MinValue;
+            var oldNauticalDawn = NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue ? NighttimeData.NauticalTwilightRiseAndSet.Rise.Value : DateTime.MinValue;
+            var oldAstroDusk = NighttimeData.TwilightRiseAndSet.Set.HasValue ? NighttimeData.TwilightRiseAndSet.Set.Value : DateTime.MinValue;
+            var oldAstroDawn = NighttimeData.TwilightRiseAndSet.Rise.HasValue ? NighttimeData.TwilightRiseAndSet.Rise.Value : DateTime.MinValue;
+
+
+            NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
+            
+            InitializeElevationFilters();
+            SelectedMinimumAltitudeDegrees = prevAlt;
+            SelectedAltitudeDuration = prevDuration;
+
+            if(prevTimeFrom == oldDusk) {
+                if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                } else {
+                    SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                }
+            } else if(prevTimeFrom == oldNauticalDusk) {
+                if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.NauticalTwilightRiseAndSet.Set.Value;
+                } else {
+                    if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                        SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                    } else {
+                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                    }
+                }
+            } else if(prevTimeFrom == oldAstroDusk) {
+                if (NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.TwilightRiseAndSet.Set.Value;
+                } else {
+                    if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                        SelectedAltitudeTimeFrom = NighttimeData.NauticalTwilightRiseAndSet.Set.Value;
+                    } else {
+                        if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                            SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                        } else {
+                            SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                        }
+                    }
+                }
+            } else {
+                SelectedAltitudeTimeFrom = prevTimeFrom;
+            }
+
+            if (prevTimeThrough == oldDawn) {
+                if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                } else {
+                    SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                }
+            } else if(prevTimeThrough == oldNauticalDawn) {
+                if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.NauticalTwilightRiseAndSet.Rise.Value;
+                } else {
+                    if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                        SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                    } else {
+                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                    }
+                }
+            } else if(prevTimeThrough == oldAstroDawn) {
+                if (NighttimeData.TwilightRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.TwilightRiseAndSet.Rise.Value;
+                } else {
+                    if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                        SelectedAltitudeTimeThrough = NighttimeData.NauticalTwilightRiseAndSet.Rise.Value;
+                    } else {
+                        if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                            SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                        } else {
+                            SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                        }
+                    }
+                }
+            } else {
+                SelectedAltitudeTimeThrough = prevTimeThrough;
             }
         }
 
@@ -136,7 +235,35 @@ namespace NINA.ViewModel {
                 objecttype.Selected = false;
             }
 
-            if(NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+            ResetAltitudeTimeFilters();
+            SelectedAltitudeDuration = 1;
+            SelectedMinimumAltitudeDegrees = 0;
+
+            SelectedBrightnessFrom = null;
+            SelectedBrightnessThrough = null;
+
+            SelectedConstellation = string.Empty;
+
+            SelectedDecFrom = null;
+            SelectedDecThrough = null;
+
+            SelectedMagnitudeFrom = null;
+            SelectedMagnitudeThrough = null;
+
+            SelectedRAFrom = null;
+            SelectedRAThrough = null;
+
+            SelectedSizeFrom = null;
+            SelectedSizeThrough = null;
+
+            SelectedMinimumMoonDistanceDegrees = 0;
+
+            OrderByField = SkyAtlasOrderByFieldsEnum.SIZEMAX;
+            OrderByDirection = SkyAtlasOrderByDirectionEnum.DESC;
+        }
+
+        private void ResetAltitudeTimeFilters() {
+            if (NighttimeData.TwilightRiseAndSet.Set.HasValue) {
                 SelectedAltitudeTimeFrom = NighttimeData.TwilightRiseAndSet.Set.Value;
             } else {
                 if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
@@ -162,36 +289,6 @@ namespace NINA.ViewModel {
                     }
                 }
             }
-            SelectedAltitudeDuration = 1;
-            
-            if (profileService.ActiveProfile.AstrometrySettings.Horizon != null) {
-                SelectedMinimumAltitudeDegrees = ALTITUDEABOVEHORIZONFILTER;
-            } else {
-                SelectedMinimumAltitudeDegrees = 20;
-            }
-            
-
-            SelectedBrightnessFrom = null;
-            SelectedBrightnessThrough = null;
-
-            SelectedConstellation = string.Empty;
-
-            SelectedDecFrom = null;
-            SelectedDecThrough = null;
-
-            SelectedMagnitudeFrom = null;
-            SelectedMagnitudeThrough = null;
-
-            SelectedRAFrom = null;
-            SelectedRAThrough = null;
-
-            SelectedSizeFrom = 300;
-            SelectedSizeThrough = null;
-
-            SelectedMinimumMoonDistanceDegrees = 0;
-
-            OrderByField = SkyAtlasOrderByFieldsEnum.SIZEMAX;
-            OrderByDirection = SkyAtlasOrderByDirectionEnum.DESC;
         }
 
         private CancellationTokenSource _searchTokenSource;

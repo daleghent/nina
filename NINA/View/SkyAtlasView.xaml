@@ -137,8 +137,7 @@
                         <Expander
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0,0,0,1"
-                            Header="{ns:Loc LblApparentSize}"
-                            IsExpanded="True">
+                            Header="{ns:Loc LblApparentSize}">
                             <StackPanel>
                                 <UniformGrid Columns="2">
                                     <StackPanel Orientation="Horizontal">
