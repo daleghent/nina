@@ -10,14 +10,25 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 The Release Notes below will only mention the changes compared to the last released version.  
 To identify what has changed in between beta builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/release/2.0)
 
-## Change of existing settings and panels
+## Important change of existing settings and panels
 
 - Options page tab location is moved to the left instead of the top to be similar to main tabs
 - Sequencer end options have been moved into the simple sequencer tab
+- Sequencer is split into the old style sequencing and a new much more adjustable advanced sequencer
 - Meridian Flip settings show no longer an enabled flag, but must be enabled in the simple sequencer screen or added as a trigger into the advanced sequencer instead
 - Autofocus options have been moved into a separate tab
-- PHD2 specific settings are now available in the equipment guider tab after connection
-- Optimal exposure calculator is removed from the core application, but available as a plugin
+- PHD2 specific settings are now available in the equipment guider tab after connection  
+- Sky Atlas altitude search is reworked to specify a duration for a time range instead of needing the target to be above for the whole time frame  
+- Optimal exposure calculator is removed from the core application, but available as a plugin  
+
+## <span style="color:yellow;"> X86 Deprecation</span>
+- The x86 version of N.I.N.A. will be phased out after version 2.0. It is already reduced in capabilities, due to the limitations of the x86 platform, and will be removed completely in future.
+- Parallel saving and processing of images is disabled for x86. They will be processed and then saved sequentially
+- Debayering and related settings are disabled for x86
+- Plugins might not be compatible with x86
+- Nikon offers no more x86 SDK libraries
+- Offline Sky Map Image Cache rendering is not available for x86
+
 
 ## Complete Sequencer Rework
 
@@ -82,7 +93,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - Added a center dot for the framing rectangle
 - A new toggle is available to toggle the sky background instead of the framing rectangle
 - The Sky Object Annotation will now properly draw elliptical objects when position angle and size information is available instead of always showing them as circular
-- Offline Sky Survey can now show images from the cache. The "Sky Atlas Image Repository" could unfortunately not be lifted for this, but existing images from the cache in framing will can be used.
+- Offline Sky Map can now show images from the cache (x64 only). The "Sky Atlas Image Repository" could unfortunately not be lifted for this, but existing images from the cache in framing will can be used.
 
 ## Imaging Tab - Sequence Panel
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore when using the advanced sequencer

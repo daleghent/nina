@@ -30,14 +30,25 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h1 id="version-2.0-beta">Version 2.0 - Beta</h1>
 <p>The Release Notes below will only mention the changes compared to the last released version.<br />
 To identify what has changed in between beta builds, please refer to the <a href="https://bitbucket.org/Isbeorn/nina/commits/branch/release/2.0">bitbucket commit history</a></p>
-<h2 id="change-of-existing-settings-and-panels">Change of existing settings and panels</h2>
+<h2 id="important-change-of-existing-settings-and-panels">Important change of existing settings and panels</h2>
 <ul>
 <li>Options page tab location is moved to the left instead of the top to be similar to main tabs</li>
 <li>Sequencer end options have been moved into the simple sequencer tab</li>
+<li>Sequencer is split into the old style sequencing and a new much more adjustable advanced sequencer</li>
 <li>Meridian Flip settings show no longer an enabled flag, but must be enabled in the simple sequencer screen or added as a trigger into the advanced sequencer instead</li>
 <li>Autofocus options have been moved into a separate tab</li>
 <li>PHD2 specific settings are now available in the equipment guider tab after connection</li>
+<li>Sky Atlas altitude search is reworked to specify a duration for a time range instead of needing the target to be above for the whole time frame</li>
 <li>Optimal exposure calculator is removed from the core application, but available as a plugin</li>
+</ul>
+<h2 id="x86-deprecation"><span style="color:yellow;"> X86 Deprecation</span></h2>
+<ul>
+<li>The x86 version of N.I.N.A. will be phased out after version 2.0. It is already reduced in capabilities, due to the limitations of the x86 platform, and will be removed completely in future.</li>
+<li>Parallel saving and processing of images is disabled for x86. They will be processed and then saved sequentially</li>
+<li>Debayering and related settings are disabled for x86</li>
+<li>Plugins might not be compatible with x86</li>
+<li>Nikon offers no more x86 SDK libraries</li>
+<li>Offline Sky Map Image Cache rendering is not available for x86</li>
 </ul>
 <h2 id="complete-sequencer-rework">Complete Sequencer Rework</h2>
 <h3 id="sequence-tab-changed-to-show-a-sequence-navigation-first">Sequence Tab changed to show a sequence navigation first</h3>
@@ -126,7 +137,7 @@ To identify what has changed in between beta builds, please refer to the <a href
 <li>Added a center dot for the framing rectangle</li>
 <li>A new toggle is available to toggle the sky background instead of the framing rectangle</li>
 <li>The Sky Object Annotation will now properly draw elliptical objects when position angle and size information is available instead of always showing them as circular</li>
-<li>Offline Sky Survey can now show images from the cache. The &quot;Sky Atlas Image Repository&quot; could unfortunately not be lifted for this, but existing images from the cache in framing will can be used.</li>
+<li>Offline Sky Map can now show images from the cache (x64 only). The &quot;Sky Atlas Image Repository&quot; could unfortunately not be lifted for this, but existing images from the cache in framing will can be used.</li>
 </ul>
 <h2 id="imaging-tab-sequence-panel">Imaging Tab - Sequence Panel</h2>
 <ul>
