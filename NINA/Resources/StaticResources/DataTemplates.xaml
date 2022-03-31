@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -22,10 +22,10 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:pegasus="clr-namespace:NINA.Equipment.Equipment.MySwitch.PegasusAstro;assembly=NINA.Equipment"
     xmlns:phd2="clr-namespace:NINA.Equipment.Equipment.MyGuider.PHD2;assembly=NINA.Equipment"
-    xmlns:skyguard="clr-namespace:NINA.Equipment.Equipment.MyGuider.SkyGuard;assembly=NINA.Equipment"
     xmlns:rotator="clr-namespace:NINA.Equipment.Equipment.MyRotator;assembly=NINA.Equipment"
     xmlns:safety="clr-namespace:NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator;assembly=NINA.WPF.Base"
     xmlns:simulator="clr-namespace:NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;assembly=NINA.WPF.Base"
+    xmlns:skyguard="clr-namespace:NINA.Equipment.Equipment.MyGuider.SkyGuard;assembly=NINA.Equipment"
     xmlns:switchview="clr-namespace:NINA.View.Equipment.Switch"
     xmlns:telescope="clr-namespace:NINA.WPF.Base.ViewModel.Equipment.Telescope;assembly=NINA.WPF.Base"
     xmlns:view="clr-namespace:NINA.View"
@@ -118,6 +118,6 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type skyguard:SkyGuardGuider}">
-      <equip:SkyGuardSetupView/>
+        <equip:SkyGuardSetupView />
     </DataTemplate>
 </ResourceDictionary>
