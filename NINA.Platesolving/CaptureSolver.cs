@@ -49,7 +49,7 @@ namespace NINA.PlateSolving {
             do {
                 remainingAttempts--;
                 var oldFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
-                var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(), ct, progress);
+                var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(detectStars: false), ct, progress);
 
                 if (renderedImage == null) {
                     plateSolveResult = new PlateSolveResult() { Success = false }; ;
