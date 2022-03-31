@@ -35,7 +35,7 @@ namespace NINA.Core.Enum {
         [Description("LblHips2FitsSurvey")]
         HIPS2FITS,
 
-        [Description("LblSkyAtlasSkySurvey")]
+        [Description("LblOfflineSkyMap")]
         SKYATLAS,
 
         [Description("LblFile")]

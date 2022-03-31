@@ -213,7 +213,12 @@ namespace NINA.Astrometry {
                 DeltaUTTomorrow = deltaUT;
             }
 
-            DeltaUTCache[utcDate.Date] = deltaUT;
+            try {
+                if (!DeltaUTCache.ContainsKey(utcDate.Date)) {
+                    DeltaUTCache.Add(utcDate.Date, deltaUT);
+                }                
+            } catch(Exception) { }
+            
 
             return deltaUT;
         }

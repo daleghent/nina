@@ -29,6 +29,14 @@ namespace NINA.Core.Utility.Converters {
                     return System.Windows.Visibility.Visible;
                 }
             }
+            if (value is double) {
+                var integer = (double)value;
+                if (integer == 0d) {
+                    return System.Windows.Visibility.Collapsed;
+                } else {
+                    return System.Windows.Visibility.Visible;
+                }
+            }
             throw new ArgumentException("Invalid Type for Converter");
         }
 
@@ -42,7 +50,15 @@ namespace NINA.Core.Utility.Converters {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is int) {
                 var integer = (int)value;
-                if (integer > 0) {
+                if (integer > 0d) {
+                    return System.Windows.Visibility.Collapsed;
+                } else {
+                    return System.Windows.Visibility.Visible;
+                }
+            }
+            if (value is double) {
+                var integer = (double)value;
+                if (integer > 0d) {
                     return System.Windows.Visibility.Collapsed;
                 } else {
                     return System.Windows.Visibility.Visible;

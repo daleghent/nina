@@ -81,40 +81,56 @@
                                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDate}" />
                                     <DatePicker SelectedDate="{Binding FilterDate}" />
                                 </UniformGrid>
-                                <UniformGrid Columns="2">
-                                    <TextBlock Text="{ns:Loc LblFrom}" />
-
-                                    <ComboBox
-                                        ItemStringFormat="HH:mm"
-                                        ItemsSource="{Binding AltitudeTimesFrom}"
-                                        SelectedValue="{Binding SelectedAltitudeTimeFrom}" />
-                                </UniformGrid>
-                                <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblThrough}" />
-
-
-                                    <ComboBox
-                                        ItemStringFormat="HH:mm"
-                                        ItemsSource="{Binding AltitudeTimesThrough}"
-                                        SelectedValue="{Binding SelectedAltitudeTimeThrough}" />
-                                </UniformGrid>
                                 <UniformGrid Margin="0,2,0,0" Columns="2">
                                     <TextBlock Text="{ns:Loc LblAltitude}" />
+
                                     <ComboBox
                                         DisplayMemberPath="Value"
                                         ItemsSource="{Binding MinimumAltitudeDegrees}"
                                         SelectedValue="{Binding SelectedMinimumAltitudeDegrees}"
                                         SelectedValuePath="Key" />
                                 </UniformGrid>
-                                <UniformGrid Margin="0,2,0,0" Columns="2">
+                                <UniformGrid Columns="2" Visibility="{Binding SelectedMinimumAltitudeDegrees, Converter={StaticResource ZeroToVisibilityConverter}}">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{ns:Loc LblDuration}" />
-                                        <TextBlock Margin="5,0,0,0" Text="&gt;" />
+                                        <TextBlock Margin="5,0,0,0" Text="&#x21AA;" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblFromTime}" />
+                                    </StackPanel>
+
+                                    <ComboBox
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding AltitudeTimesFrom}"
+                                        SelectedValue="{Binding SelectedAltitudeTimeFrom}"
+                                        SelectedValuePath="Key" />
+                                </UniformGrid>
+                                <UniformGrid
+                                    Margin="0,2,0,0"
+                                    Columns="2"
+                                    Visibility="{Binding SelectedMinimumAltitudeDegrees, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="5,0,0,0" Text="&#x21AA;" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblThroughTime}" />
+                                    </StackPanel>
+
+
+                                    <ComboBox
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding AltitudeTimesThrough}"
+                                        SelectedValue="{Binding SelectedAltitudeTimeThrough}"
+                                        SelectedValuePath="Key" />
+                                </UniformGrid>
+                                <UniformGrid
+                                    Margin="0,2,0,0"
+                                    Columns="2"
+                                    Visibility="{Binding SelectedMinimumAltitudeDegrees, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="5,0,0,0" Text="&#x21AA;" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblVisibleFor}" />
                                     </StackPanel>
                                     <ComboBox
-                                        ItemStringFormat="0h"
+                                        DisplayMemberPath="Value"
                                         ItemsSource="{Binding AltitudeDurations}"
-                                        SelectedValue="{Binding SelectedAltitudeDuration}" />
+                                        SelectedValue="{Binding SelectedAltitudeDuration}"
+                                        SelectedValuePath="Key" />
                                 </UniformGrid>
                             </StackPanel>
                         </Expander>
@@ -125,7 +141,16 @@
                             IsExpanded="True">
                             <StackPanel>
                                 <UniformGrid Columns="2">
-                                    <TextBlock Text="{ns:Loc LblFrom}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblFrom}" />
+                                    </StackPanel>
                                     <ComboBox
                                         DisplayMemberPath="Value"
                                         ItemsSource="{Binding SizesFrom}"
@@ -133,7 +158,16 @@
                                         SelectedValuePath="Key" />
                                 </UniformGrid>
                                 <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblThrough}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblThrough}" />
+                                    </StackPanel>
                                     <ComboBox
                                         DisplayMemberPath="Value"
                                         ItemsSource="{Binding SizesThrough}"
@@ -149,8 +183,14 @@
                             <StackPanel>
                                 <UniformGrid Columns="2">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{ns:Loc LblDistance}" />
-                                        <TextBlock Margin="5,0,0,0" Text="&gt;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblMinimumDistance}" />
                                     </StackPanel>
                                     <ComboBox
                                         ItemStringFormat="0°"
@@ -200,7 +240,16 @@
                                 <StackPanel>
                                     <TextBlock Text="{ns:Loc LblRightAscension}" />
                                     <UniformGrid Columns="2">
-                                        <TextBlock Text="{ns:Loc LblFrom}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="&#x21AA;" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblFrom}" />
+                                        </StackPanel>
                                         <ComboBox
                                             DisplayMemberPath="Value"
                                             ItemsSource="{Binding RAFrom}"
@@ -208,7 +257,16 @@
                                             SelectedValuePath="Key" />
                                     </UniformGrid>
                                     <UniformGrid Margin="0,2,0,0" Columns="2">
-                                        <TextBlock Text="{ns:Loc LblThrough}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="&#x21AA;" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblThrough}" />
+                                        </StackPanel>
                                         <ComboBox
                                             DisplayMemberPath="Value"
                                             ItemsSource="{Binding RAThrough}"
@@ -220,7 +278,16 @@
                                 <StackPanel>
                                     <TextBlock Text="{ns:Loc LblDeclination}" />
                                     <UniformGrid Columns="2">
-                                        <TextBlock Text="{ns:Loc LblFrom}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="&#x21AA;" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblFrom}" />
+                                        </StackPanel>
                                         <ComboBox
                                             DisplayMemberPath="Value"
                                             ItemsSource="{Binding DecFrom}"
@@ -228,7 +295,16 @@
                                             SelectedValuePath="Key" />
                                     </UniformGrid>
                                     <UniformGrid Margin="0,2,0,0" Columns="2">
-                                        <TextBlock Text="{ns:Loc LblThrough}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="&#x21AA;" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblThrough}" />
+                                        </StackPanel>
                                         <ComboBox
                                             DisplayMemberPath="Value"
                                             ItemsSource="{Binding DecThrough}"
@@ -244,11 +320,29 @@
                             Header="{ns:Loc LblSurfaceBrightness}">
                             <StackPanel>
                                 <UniformGrid Columns="2">
-                                    <TextBlock Text="{ns:Loc LblFrom}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblFrom}" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding BrightnessFrom}" SelectedItem="{Binding SelectedBrightnessFrom}" />
                                 </UniformGrid>
                                 <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblThrough}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblThrough}" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding BrightnessThrough}" SelectedItem="{Binding SelectedBrightnessThrough}" />
                                 </UniformGrid>
                             </StackPanel>
@@ -259,11 +353,29 @@
                             Header="{ns:Loc LblApparentMagnitude}">
                             <StackPanel>
                                 <UniformGrid Columns="2">
-                                    <TextBlock Text="{ns:Loc LblFrom}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblFrom}" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding MagnitudesFrom}" SelectedItem="{Binding SelectedMagnitudeFrom}" />
                                 </UniformGrid>
                                 <UniformGrid Margin="0,2,0,0" Columns="2">
-                                    <TextBlock Text="{ns:Loc LblThrough}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="&#x21AA;" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblThrough}" />
+                                    </StackPanel>
                                     <ComboBox ItemsSource="{Binding MagnitudesThrough}" SelectedItem="{Binding SelectedMagnitudeThrough}" />
                                 </UniformGrid>
                             </StackPanel>

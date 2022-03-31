@@ -2976,6 +2976,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        internal static string LblAny {
+            get {
+                return ResourceManager.GetString("LblAny", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any duration.
+        /// </summary>
+        internal static string LblAnyDuration {
+            get {
+                return ResourceManager.GetString("LblAnyDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to API Key.
         /// </summary>
         internal static string LblAPIKey {
@@ -9310,6 +9328,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to from time.
+        /// </summary>
+        internal static string LblFromTime {
+            get {
+                return ResourceManager.GetString("LblFromTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full Well Capacity in e.
         /// </summary>
         internal static string LblFullWellCapacity {
@@ -10923,6 +10950,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimum distance.
+        /// </summary>
+        internal static string LblMinimumDistance {
+            get {
+                return ResourceManager.GetString("LblMinimumDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum Settle Time.
         /// </summary>
         internal static string LblMinimumSettleTime {
@@ -11858,6 +11894,15 @@ namespace NINA.Core.Locale {
         internal static string LblOff {
             get {
                 return ResourceManager.GetString("LblOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline Sky Map.
+        /// </summary>
+        internal static string LblOfflineSkyMap {
+            get {
+                return ResourceManager.GetString("LblOfflineSkyMap", resourceCulture);
             }
         }
         
@@ -14878,15 +14923,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SkyAtlas (Offline Framing).
-        /// </summary>
-        internal static string LblSkyAtlasSkySurvey {
-            get {
-                return ResourceManager.GetString("LblSkyAtlasSkySurvey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sky Brightness.
         /// </summary>
         internal static string LblSkyBrightness {
@@ -16414,6 +16450,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to through time.
+        /// </summary>
+        internal static string LblThroughTime {
+            get {
+                return ResourceManager.GetString("LblThroughTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TIFF.
         /// </summary>
         internal static string LblTiff {
@@ -17695,6 +17740,15 @@ namespace NINA.Core.Locale {
         internal static string LblVerticalPanels {
             get {
                 return ResourceManager.GetString("LblVerticalPanels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to visible for.
+        /// </summary>
+        internal static string LblVisibleFor {
+            get {
+                return ResourceManager.GetString("LblVisibleFor", resourceCulture);
             }
         }
         

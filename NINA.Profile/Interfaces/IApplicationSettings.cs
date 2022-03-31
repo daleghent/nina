@@ -28,5 +28,6 @@ namespace NINA.Profile.Interfaces {
         string SkySurveyCacheDirectory { get; set; }
         AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors { get; set; }
         IReadOnlyDictionary<string, string> SelectedPluggableBehaviorsLookup { get; }
+        int PageSize { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace NINA.Profile {
             SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
             SelectedPluggableBehaviorsLookup = ImmutableDictionary<string, string>.Empty;
             PerDeviceThreadingEnabled = false;
+            PageSize = 50;
         }
 
         [DataMember]
@@ -186,6 +187,22 @@ namespace NINA.Profile {
                     if (selectedPluggableBehaviors != null) {
                         selectedPluggableBehaviors.CollectionChanged += SelectedPluggableBehaviors_CollectionChanged;
                     }
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int pageSize;
+
+        [DataMember]
+        public int PageSize {
+            get {
+                return pageSize;
+            }
+            set {
+                if(value < 1) { value = 1; }                
+                if (pageSize != value) {
+                    pageSize = value;
                     RaisePropertyChanged();
                 }
             }

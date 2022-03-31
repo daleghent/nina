@@ -992,7 +992,9 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     SkySurveyImage skySurveyImage = null;
 
-                    if (FramingAssistantSource != SkySurveySource.SKYATLAS) {
+                    if (FramingAssistantSource == SkySurveySource.SKYATLAS) {
+                        SkyMapAnnotator.UseCachedImages = true;
+                    } else {
                         SkyMapAnnotator.UseCachedImages = false;
                     }
 
