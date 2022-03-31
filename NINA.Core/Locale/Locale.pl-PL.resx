@@ -2918,8 +2918,8 @@ Ten szablon będzie używany przy starcie do inicjowania sekwencji zamiast domy�
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>Ścieżka do katalogu obrazów Sky Atlas</value>
   </data>
-  <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>SkyAtlas (Offline Framing)</value>
+  <data name="LblOfflineSkyMap" xml:space="preserve">
+    <value>Offline Sky Map</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Jasność nieba</value>
@@ -6246,5 +6246,23 @@ Please check if there is an update available.</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
     <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+  </data>
+  <data name="LblAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="LblAnyDuration" xml:space="preserve">
+    <value>Any duration</value>
+  </data>
+  <data name="LblFromTime" xml:space="preserve">
+    <value>from time</value>
+  </data>
+  <data name="LblMinimumDistance" xml:space="preserve">
+    <value>Minimum distance</value>
+  </data>
+  <data name="LblThroughTime" xml:space="preserve">
+    <value>through time</value>
+  </data>
+  <data name="LblVisibleFor" xml:space="preserve">
+    <value>visible for</value>
   </data>
 </root>

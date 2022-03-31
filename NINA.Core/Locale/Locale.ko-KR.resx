@@ -2914,8 +2914,8 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>성도 이미지 폴더</value>
   </data>
-  <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>성도(오프라인 프레이밍)</value>
+  <data name="LblOfflineSkyMap" xml:space="preserve">
+    <value>Offline Sky Map</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>하늘 밝기</value>
@@ -6271,5 +6271,23 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
     <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+  </data>
+  <data name="LblAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="LblAnyDuration" xml:space="preserve">
+    <value>Any duration</value>
+  </data>
+  <data name="LblFromTime" xml:space="preserve">
+    <value>from time</value>
+  </data>
+  <data name="LblMinimumDistance" xml:space="preserve">
+    <value>Minimum distance</value>
+  </data>
+  <data name="LblThroughTime" xml:space="preserve">
+    <value>through time</value>
+  </data>
+  <data name="LblVisibleFor" xml:space="preserve">
+    <value>visible for</value>
   </data>
 </root>

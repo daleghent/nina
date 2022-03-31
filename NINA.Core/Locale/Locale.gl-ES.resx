@@ -2927,8 +2927,8 @@ Este modelo empregarase no inicio para inicializar a secuencia no canto da prede
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>Cartafol Imaxes Sky Atlas</value>
   </data>
-  <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>SkyAtlas (Encadre fóra de liña)</value>
+  <data name="LblOfflineSkyMap" xml:space="preserve">
+    <value>Offline Sky Map</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Luminosidade do ceo</value>
@@ -6255,5 +6255,23 @@ Please check if there is an update available.</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
     <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+  </data>
+  <data name="LblAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="LblAnyDuration" xml:space="preserve">
+    <value>Any duration</value>
+  </data>
+  <data name="LblFromTime" xml:space="preserve">
+    <value>from time</value>
+  </data>
+  <data name="LblMinimumDistance" xml:space="preserve">
+    <value>Minimum distance</value>
+  </data>
+  <data name="LblThroughTime" xml:space="preserve">
+    <value>through time</value>
+  </data>
+  <data name="LblVisibleFor" xml:space="preserve">
+    <value>visible for</value>
   </data>
 </root>

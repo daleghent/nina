@@ -2918,8 +2918,8 @@ Esta plantilla se usará al inicio para iniciar la secuencia en vez de la usada 
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>Directorio Imágenes Atlas Celeste</value>
   </data>
-  <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>Atlas Celeste (Encuadre Fuera de Linea)</value>
+  <data name="LblOfflineSkyMap" xml:space="preserve">
+    <value>Offline Sky Map</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Luminosidad del Cielo</value>
@@ -6141,108 +6141,126 @@ Por favor, comprueba si hay disponible actualización.</value>
     <value>Observación</value>
   </data>
   <data name="LblCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Orden</value>
   </data>
   <data name="LblRaw" xml:space="preserve">
     <value>Raw</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
-    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+    <value>Manda una orden al dispositivo seleccionado en concordancia con los métodos ASCOM SendCommand. Cualquier salida se registrara en el archivo de registro principal de NINA.</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
-    <value>Send Command</value>
+    <value>Enviar orden</value>
   </data>
   <data name="LblBoolean" xml:space="preserve">
-    <value>Boolean</value>
+    <value>Booleano</value>
   </data>
   <data name="LblDevice" xml:space="preserve">
-    <value>Device</value>
+    <value>Dispositivo</value>
   </data>
   <data name="LblString" xml:space="preserve">
-    <value>String</value>
+    <value>Cadena</value>
   </data>
   <data name="LblBlind" xml:space="preserve">
-    <value>Blind</value>
+    <value>Ciego</value>
   </data>
   <data name="LblAction" xml:space="preserve">
-    <value>Action</value>
+    <value>Acción</value>
   </data>
   <data name="LblParameters" xml:space="preserve">
-    <value>Parameters</value>
+    <value>Parámetros</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
-    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+    <value>Seleccione y ejecute cualquier acción ASCOM (u otra) que pueda estar disponible por los controladores del dispositivo</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
-    <value>Device Action</value>
+    <value>Acción del dispositivo</value>
   </data>
   <data name="LblNoActionsAvailable" xml:space="preserve">
-    <value>No actions are available</value>
+    <value>No hay acciones disponibles</value>
   </data>
   <data name="LblSkyGuardPath" xml:space="preserve">
-    <value>SkyGuard path</value>
+    <value>Ruta de SkyGuard</value>
   </data>
   <data name="LblSkyGuardServerPort" xml:space="preserve">
-    <value>SkyGuard Server Port</value>
+    <value>Puerto del Servidor SkyGuard</value>
   </data>
   <data name="LblSkyGuardServerUrl" xml:space="preserve">
-    <value>SkyGuard Server URL</value>
+    <value>URL del servidor SkyGuard</value>
   </data>
   <data name="LblSkyGuardSetup" xml:space="preserve">
-    <value>SkyGuard Setup</value>
+    <value>Configuración de SkyGuard</value>
   </data>
   <data name="LblSkyGuardCallbackPort" xml:space="preserve">
-    <value>Callback Reservation Port SkyGuard</value>
+    <value>Puerto de reserva de retorno SkyGuard</value>
   </data>
   <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
-    <value>Guider Settling</value>
+    <value>Estabilización de guiado</value>
   </data>
   <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
-    <value>For a duration of</value>
+    <value>Con una duración de</value>
   </data>
   <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
-    <value>Start guiding timeout delay</value>
+    <value>Tiempo de espera para iniciar guiado</value>
   </data>
   <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
-    <value>Settle at &lt;</value>
+    <value>Estabilizar en &lt;</value>
   </data>
   <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
-    <value>Dither was skipped because SkyGuard was not actively guiding</value>
+    <value>Dither omitido porque SkyGuard no estaba guiando activamente</value>
   </data>
   <data name="LblSkyGuardNotReady" xml:space="preserve">
     <value>SkyGuard is not ready for operations. Check logs for details.</value>
   </data>
   <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
-    <value>Operation cancelled.</value>
+    <value>Operación cancelada.</value>
   </data>
   <data name="LblSkyGuardPathNotFound" xml:space="preserve">
-    <value>Could not start SkyGuard. Path not found.</value>
+    <value>No se pudo iniciar SkyGuard. Ruta no encontrada.</value>
   </data>
   <data name="LblSkyGuardStartProcessError" xml:space="preserve">
-    <value>Could not start SkyGuard. Check logs for details.</value>
+    <value>No se pudo iniciar SkyGuard. Revisar registros para detalles.</value>
   </data>
   <data name="LblSkyGuardConnectError" xml:space="preserve">
-    <value>Failed connecting to SkyGuard. View logs for more details.</value>
+    <value>Error al conectar con SkyGuard. Ver registros para más detalles.</value>
   </data>
   <data name="LblSkyGuardDisconnectError" xml:space="preserve">
-    <value>Failed disconnecting SkyGuard. View logs for more details.</value>
+    <value>Error al desconectar SkyGuard. Ver registros para más detalles.</value>
   </data>
   <data name="LblSkyGuardDitheringError" xml:space="preserve">
-    <value>Error on dithering operation. View logs for more details.</value>
+    <value>Error en operaciones de dither. Mirar registros para más detalles.</value>
   </data>
   <data name="LblSkyGuardEndpointNotReachable" xml:space="preserve">
-    <value>SkyGuard enpoint not reachable. View logs for more details.</value>
+    <value>Punto final de SkyGuard no accesible. Mirar registros para más detalles.</value>
   </data>
   <data name="LblSkyGuardGuidingError" xml:space="preserve">
-    <value>Error on start guiding operation. View logs for more details.</value>
+    <value>Error al iniciar el guiado. Ver registros para más detalles.</value>
   </data>
   <data name="LblSkyGuardStopGuidingError" xml:space="preserve">
-    <value>Error on stop guiding operation. View logs for more details.</value>
+    <value>Error al detener guiado. Ver registros para más detalles.</value>
   </data>
   <data name="lblSkyGuardWrongVersion" xml:space="preserve">
-    <value>SkyGuard version is not supported by N.I.N.A. View logs for more details.</value>
+    <value>Versión de SkyGuard no soportada por N.I.N.A. Ver registros para más detalles.</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
-    <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+    <value>Esto usará las imágenes fuera del caché de encuadre y las dibujará en el mapa fuera de línea del cielo para enmarcarlas. Sólo se utilizan imágenes con un campo mayor a 0,1º y menor a 10º horizontales.</value>
+  </data>
+  <data name="LblAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="LblAnyDuration" xml:space="preserve">
+    <value>Any duration</value>
+  </data>
+  <data name="LblFromTime" xml:space="preserve">
+    <value>from time</value>
+  </data>
+  <data name="LblMinimumDistance" xml:space="preserve">
+    <value>Minimum distance</value>
+  </data>
+  <data name="LblThroughTime" xml:space="preserve">
+    <value>through time</value>
+  </data>
+  <data name="LblVisibleFor" xml:space="preserve">
+    <value>visible for</value>
   </data>
 </root>

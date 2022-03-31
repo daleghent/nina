@@ -2920,8 +2920,8 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>Adresář Atlasu Hvězd</value>
   </data>
-  <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>Mapa Hvězd (Offline Snímkování)</value>
+  <data name="LblOfflineSkyMap" xml:space="preserve">
+    <value>Offline Sky Map</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Jas Oblohy</value>
@@ -6145,108 +6145,126 @@ Zkontrolujte, zda je k dispozici aktualizace.</value>
     <value>Pozorování</value>
   </data>
   <data name="LblCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Příkaz</value>
   </data>
   <data name="LblRaw" xml:space="preserve">
     <value>Raw</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
-    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+    <value>Odešle příkaz vybranému zařízení v souladu s metodami ASCOM SendCommand. Veškeré vrácené výstupy jsou zaznamenány v hlavním souboru protokolu N.I.N.A.</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
-    <value>Send Command</value>
+    <value>Poslat Příkaz</value>
   </data>
   <data name="LblBoolean" xml:space="preserve">
     <value>Boolean</value>
   </data>
   <data name="LblDevice" xml:space="preserve">
-    <value>Device</value>
+    <value>Zařízení</value>
   </data>
   <data name="LblString" xml:space="preserve">
-    <value>String</value>
+    <value>Řetězec</value>
   </data>
   <data name="LblBlind" xml:space="preserve">
-    <value>Blind</value>
+    <value>Slepý</value>
   </data>
   <data name="LblAction" xml:space="preserve">
-    <value>Action</value>
+    <value>Akce</value>
   </data>
   <data name="LblParameters" xml:space="preserve">
-    <value>Parameters</value>
+    <value>Parametry</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
-    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+    <value>Vyberte a proveďte všechny akce ASCOM (nebo jiné), které mohou být k dispozici v ovladači zařízení</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
-    <value>Device Action</value>
+    <value>Akce Zařízení</value>
   </data>
   <data name="LblNoActionsAvailable" xml:space="preserve">
-    <value>No actions are available</value>
+    <value>Nejsou k dispozici žádné akce</value>
   </data>
   <data name="LblSkyGuardPath" xml:space="preserve">
-    <value>SkyGuard path</value>
+    <value>Cesta ke SkyGuard</value>
   </data>
   <data name="LblSkyGuardServerPort" xml:space="preserve">
-    <value>SkyGuard Server Port</value>
+    <value>Port Serveru SkyGuard</value>
   </data>
   <data name="LblSkyGuardServerUrl" xml:space="preserve">
-    <value>SkyGuard Server URL</value>
+    <value>URL Serveru SkyGuard</value>
   </data>
   <data name="LblSkyGuardSetup" xml:space="preserve">
-    <value>SkyGuard Setup</value>
+    <value>Nastavení SkyGuard</value>
   </data>
   <data name="LblSkyGuardCallbackPort" xml:space="preserve">
-    <value>Callback Reservation Port SkyGuard</value>
+    <value>Zpětný Rezervační Port SkyGuard</value>
   </data>
   <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
-    <value>Guider Settling</value>
+    <value>Nastavení Pointace</value>
   </data>
   <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
-    <value>For a duration of</value>
+    <value>Po dobu trvání</value>
   </data>
   <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
-    <value>Start guiding timeout delay</value>
+    <value>Časová prodleva spuštění pointace</value>
   </data>
   <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
-    <value>Settle at &lt;</value>
+    <value>Stabilizace na &lt;</value>
   </data>
   <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
-    <value>Dither was skipped because SkyGuard was not actively guiding</value>
+    <value>Dithering přeskočen, protože SkyGuard aktivně nepointuje</value>
   </data>
   <data name="LblSkyGuardNotReady" xml:space="preserve">
-    <value>SkyGuard is not ready for operations. Check logs for details.</value>
+    <value>SkyGuard není připraven k operacím. Pro více informací zkontrolujte logy.</value>
   </data>
   <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
-    <value>Operation cancelled.</value>
+    <value>Operace zrušena.</value>
   </data>
   <data name="LblSkyGuardPathNotFound" xml:space="preserve">
-    <value>Could not start SkyGuard. Path not found.</value>
+    <value>Nelze spustit SkyGuard. Cestu nelze najít.</value>
   </data>
   <data name="LblSkyGuardStartProcessError" xml:space="preserve">
-    <value>Could not start SkyGuard. Check logs for details.</value>
+    <value>Nelze spustit SkyGuard. Podrobnosti najdete v protokolu.</value>
   </data>
   <data name="LblSkyGuardConnectError" xml:space="preserve">
-    <value>Failed connecting to SkyGuard. View logs for more details.</value>
+    <value>Nepodařilo se připojit ke SkyGuard. Zobrazit protokoly pro více informací.</value>
   </data>
   <data name="LblSkyGuardDisconnectError" xml:space="preserve">
-    <value>Failed disconnecting SkyGuard. View logs for more details.</value>
+    <value>Nepodařilo se odpojit SkyGuard. Podrobnější informace naleznete v protokolech.</value>
   </data>
   <data name="LblSkyGuardDitheringError" xml:space="preserve">
-    <value>Error on dithering operation. View logs for more details.</value>
+    <value>Chyba při operaci ditheringu. Podrobnější informace naleznete v protokolech.</value>
   </data>
   <data name="LblSkyGuardEndpointNotReachable" xml:space="preserve">
-    <value>SkyGuard enpoint not reachable. View logs for more details.</value>
+    <value>Enpoint SkyGuard není dostupný. Podrobnosti naleznete v protokolech.</value>
   </data>
   <data name="LblSkyGuardGuidingError" xml:space="preserve">
-    <value>Error on start guiding operation. View logs for more details.</value>
+    <value>Chyba při spuštění pointace. Podrobnější informace naleznete v protokolech.</value>
   </data>
   <data name="LblSkyGuardStopGuidingError" xml:space="preserve">
-    <value>Error on stop guiding operation. View logs for more details.</value>
+    <value>Chyba při zastavení pointace. Podrobnější informace naleznete v protokolech.</value>
   </data>
   <data name="lblSkyGuardWrongVersion" xml:space="preserve">
-    <value>SkyGuard version is not supported by N.I.N.A. View logs for more details.</value>
+    <value>Verze SkyGuard není podporována společností N.I.N.A. Podrobnější informace naleznete v protokolech.</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
-    <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+    <value>Tím se použijí snímky z mezipaměti pro snímkování a vykreslí se do offline mapy oblohy pro snímkování. Používají se pouze snímky s horizontálním zorným polem menším nebo rovným 10° a větším nebo rovným 0,1°.</value>
+  </data>
+  <data name="LblAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="LblAnyDuration" xml:space="preserve">
+    <value>Any duration</value>
+  </data>
+  <data name="LblFromTime" xml:space="preserve">
+    <value>from time</value>
+  </data>
+  <data name="LblMinimumDistance" xml:space="preserve">
+    <value>Minimum distance</value>
+  </data>
+  <data name="LblThroughTime" xml:space="preserve">
+    <value>through time</value>
+  </data>
+  <data name="LblVisibleFor" xml:space="preserve">
+    <value>visible for</value>
   </data>
 </root>

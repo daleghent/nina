@@ -2921,8 +2921,8 @@ Aquesta plantilla s'utilitzarà al començament per inicialitzar la seqüència 
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>Directori d'Imatges de Sky Atlas</value>
   </data>
-  <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
-    <value>SkyAtlas (enquadrament Fora de Línia)</value>
+  <data name="LblOfflineSkyMap" xml:space="preserve">
+    <value>Offline Sky Map</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Lluminositat del Cel</value>
@@ -6140,43 +6140,43 @@ Comproveu si hi ha una actualització disponible.</value>
     <value>Observació</value>
   </data>
   <data name="LblCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Ordre</value>
   </data>
   <data name="LblRaw" xml:space="preserve">
     <value>Raw</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
-    <value>Sends a command to the selected device in accordance with the ASCOM SendCommand methods. Any returned output is logged in the main N.I.N.A. log file.</value>
+    <value>Envia una ordre al dispositiu seleccionat d'acord amb els mètodes ASCOM SendCommand. Qualsevol sortida retornada es registra als fitxers de registres del N.I.N.A principal.</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Name" xml:space="preserve">
-    <value>Send Command</value>
+    <value>Enviar Ordre</value>
   </data>
   <data name="LblBoolean" xml:space="preserve">
-    <value>Boolean</value>
+    <value>Booleà</value>
   </data>
   <data name="LblDevice" xml:space="preserve">
-    <value>Device</value>
+    <value>Dispositiu</value>
   </data>
   <data name="LblString" xml:space="preserve">
-    <value>String</value>
+    <value>Cadena</value>
   </data>
   <data name="LblBlind" xml:space="preserve">
-    <value>Blind</value>
+    <value>Cec</value>
   </data>
   <data name="LblAction" xml:space="preserve">
-    <value>Action</value>
+    <value>Acció</value>
   </data>
   <data name="LblParameters" xml:space="preserve">
-    <value>Parameters</value>
+    <value>Paràmetres</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
-    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+    <value>Seleccioneu i executeu qualsevol acció ASCOM (o altres) que pugui estar disponible per al controlador del dispositiu</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
-    <value>Device Action</value>
+    <value>Acció del Dispositiu</value>
   </data>
   <data name="LblNoActionsAvailable" xml:space="preserve">
-    <value>No actions are available</value>
+    <value>No hi ha accions disponibles</value>
   </data>
   <data name="LblSkyGuardPath" xml:space="preserve">
     <value>Ruta SkyGuard</value>
@@ -6243,5 +6243,23 @@ Comproveu si hi ha una actualització disponible.</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
     <value>Això utilitzarà les imatges fora de la memòria cau d'enquadrament i les dibuixarà al mapa del cel fora de línia per emmarcar. Només s'utilitzen imatges que tinguin un camp de visió horitzontal inferior o igual a 10° i superior o igual a 0,1°.</value>
+  </data>
+  <data name="LblAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="LblAnyDuration" xml:space="preserve">
+    <value>Any duration</value>
+  </data>
+  <data name="LblFromTime" xml:space="preserve">
+    <value>from time</value>
+  </data>
+  <data name="LblMinimumDistance" xml:space="preserve">
+    <value>Minimum distance</value>
+  </data>
+  <data name="LblThroughTime" xml:space="preserve">
+    <value>through time</value>
+  </data>
+  <data name="LblVisibleFor" xml:space="preserve">
+    <value>visible for</value>
   </data>
 </root>
