@@ -37,8 +37,11 @@ namespace NINA.Astrometry {
             }
         }
 
+        private List<DataPoint> datapoints;
         public List<DataPoint> DataPoints {
-            get { return Points[_referenceDate]; }
+            get { 
+                return datapoints; 
+            }
         }
 
         private static Dictionary<DateTime, List<DataPoint>> Points = new Dictionary<DateTime, List<DataPoint>>();
@@ -52,6 +55,8 @@ namespace NINA.Astrometry {
             _referenceDate = date;
             if (calculate) {
                 CalculateMoonData();
+            } else {
+                datapoints = null;
             }
             // Calculate separation in the middle of the chart period
             CalculateSeparation(date.AddHours(12));
@@ -86,7 +91,7 @@ namespace NINA.Astrometry {
             set {
                 _displayMoon = value;
                 if(value) {                    
-                    CalculateMoonData();                    
+                    CalculateMoonData();
                 }
                 RaisePropertyChanged();
             }
@@ -118,10 +123,11 @@ namespace NINA.Astrometry {
                         start = start.AddHours(0.1);
                     }
                     Points.Add(_referenceDate, list);
-
-                    MaxAltitude = list.OrderByDescending((x) => x.Y).FirstOrDefault();
-                    RaisePropertyChanged("DataPoints");
                 }
+
+                datapoints = Points[_referenceDate];
+                MaxAltitude = datapoints.OrderByDescending((x) => x.Y).FirstOrDefault();
+                RaisePropertyChanged("DataPoints");
             }
         }
 
