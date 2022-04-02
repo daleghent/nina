@@ -85,6 +85,20 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.WaitForTime_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Hours, StringFormat={}{0:00}}" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Minutes, StringFormat={}{0:00}}" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Seconds, StringFormat={}{0:00}}" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:WaitForTime}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
