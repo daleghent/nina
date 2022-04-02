@@ -27,12 +27,15 @@ namespace NINA.Image.ImageData {
         public bool SaveColorChannels { get; private set; }
         public bool SaveLumChannel { get; private set; }
 
+        public SensorType BayerPattern { get; private set; }
+
         protected DebayeredImage(
             BitmapSource image,
             IImageData rawImageData,
             LRGBArrays debayeredData,
             bool saveColorChannels,
             bool saveLumChannels,
+            SensorType bayerPattern,
             IProfileService profileService,
             IStarDetection starDetection,
             IStarAnnotator starAnnotator) :
@@ -40,6 +43,7 @@ namespace NINA.Image.ImageData {
             this.DebayeredData = debayeredData;
             this.SaveColorChannels = saveColorChannels;
             this.SaveLumChannel = saveLumChannels;
+            this.BayerPattern = bayerPattern;
         }
 
         public static IDebayeredImage Debayer(
@@ -57,6 +61,7 @@ namespace NINA.Image.ImageData {
                 debayeredData: debayeredImage.Data,
                 saveColorChannels: saveColorChannels,
                 saveLumChannels: saveLumChannel,
+                bayerPattern: bayerPattern,
                 profileService: profileService,
                 starDetection: starDetection,
                 starAnnotator: starAnnotator);
@@ -75,6 +80,7 @@ namespace NINA.Image.ImageData {
                 debayeredData: this.DebayeredData,
                 saveColorChannels: this.SaveColorChannels,
                 saveLumChannels: this.SaveLumChannel,
+                bayerPattern: this.BayerPattern,
                 profileService: this.profileService,
                 starDetection: this.starDetection,
                 starAnnotator: this.starAnnotator);

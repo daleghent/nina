@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Image.ImageData;
 
 namespace NINA.Image.Interfaces {
@@ -20,5 +21,6 @@ namespace NINA.Image.Interfaces {
         LRGBArrays DebayeredData { get; }
         bool SaveColorChannels { get; }
         bool SaveLumChannel { get; }
+        SensorType BayerPattern { get; }
     }
 }
