@@ -574,17 +574,17 @@ namespace NINA.ViewModel.FramingAssistant {
         private bool oldUseCachedImages;
         public void UpdateSkyMap() {
             if (Initialized) {
+                var center = ViewportFoV.CenterCoordinates;
+                var fov = ViewportFoV.OriginalHFoV;
+                var needFullRedraw = center != oldCenter || fov != oldFoV || UseCachedImages != oldUseCachedImages || renderTask == null || renderTask.Status < TaskStatus.RanToCompletion;
                 try {
                     renderTimer?.Stop();
                     renderCts?.Cancel();
                     while (renderTask != null && (renderTask.Status < TaskStatus.RanToCompletion)) {
                     }
                 } catch (Exception) {
-                }
-                var center = ViewportFoV.CenterCoordinates;
-                var fov = ViewportFoV.OriginalHFoV;                
+                }                
 
-                var needFullRedraw = center != oldCenter || fov != oldFoV || UseCachedImages != oldUseCachedImages;
                 oldCenter = ViewportFoV.CenterCoordinates;
                 oldFoV = ViewportFoV.OriginalHFoV;
                 oldUseCachedImages = UseCachedImages;
