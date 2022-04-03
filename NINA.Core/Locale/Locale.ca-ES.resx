@@ -2922,7 +2922,7 @@ Aquesta plantilla s'utilitzarà al començament per inicialitzar la seqüència 
     <value>Directori d'Imatges de Sky Atlas</value>
   </data>
   <data name="LblOfflineSkyMap" xml:space="preserve">
-    <value>Offline Sky Map</value>
+    <value>Sky Map fora de línia</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Lluminositat del Cel</value>
@@ -6245,21 +6245,21 @@ Comproveu si hi ha una actualització disponible.</value>
     <value>Això utilitzarà les imatges fora de la memòria cau d'enquadrament i les dibuixarà al mapa del cel fora de línia per emmarcar. Només s'utilitzen imatges que tinguin un camp de visió horitzontal inferior o igual a 10° i superior o igual a 0,1°.</value>
   </data>
   <data name="LblAny" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualsevol</value>
   </data>
   <data name="LblAnyDuration" xml:space="preserve">
-    <value>Any duration</value>
+    <value>Qualsevol durada</value>
   </data>
   <data name="LblFromTime" xml:space="preserve">
-    <value>from time</value>
+    <value>des del temps</value>
   </data>
   <data name="LblMinimumDistance" xml:space="preserve">
-    <value>Minimum distance</value>
+    <value>Distància mínima</value>
   </data>
   <data name="LblThroughTime" xml:space="preserve">
-    <value>through time</value>
+    <value>durant el temps</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
-    <value>visible for</value>
+    <value>visible per</value>
   </data>
 </root>

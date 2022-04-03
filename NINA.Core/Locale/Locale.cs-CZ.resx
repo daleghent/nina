@@ -2187,7 +2187,7 @@ Přeskočit.</value>
     <value>Hvězdokupa s Mlhovinou v Galaxii</value>
   </data>
   <data name="LblObjectType_GALCL" xml:space="preserve">
-    <value>Galaktická Skupina</value>
+    <value>Kupa Galaxií</value>
   </data>
   <data name="LblObjectType_GALXY" xml:space="preserve">
     <value>Galaxie</value>
@@ -2921,7 +2921,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Adresář Atlasu Hvězd</value>
   </data>
   <data name="LblOfflineSkyMap" xml:space="preserve">
-    <value>Offline Sky Map</value>
+    <value>Offline Mapa Oblohy</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Jas Oblohy</value>
@@ -6250,21 +6250,21 @@ Zkontrolujte, zda je k dispozici aktualizace.</value>
     <value>Tím se použijí snímky z mezipaměti pro snímkování a vykreslí se do offline mapy oblohy pro snímkování. Používají se pouze snímky s horizontálním zorným polem menším nebo rovným 10° a větším nebo rovným 0,1°.</value>
   </data>
   <data name="LblAny" xml:space="preserve">
-    <value>Any</value>
+    <value>Jakákoli</value>
   </data>
   <data name="LblAnyDuration" xml:space="preserve">
-    <value>Any duration</value>
+    <value>Jakákoli doba trvání</value>
   </data>
   <data name="LblFromTime" xml:space="preserve">
-    <value>from time</value>
+    <value>od času</value>
   </data>
   <data name="LblMinimumDistance" xml:space="preserve">
-    <value>Minimum distance</value>
+    <value>Minimální vzdálenost</value>
   </data>
   <data name="LblThroughTime" xml:space="preserve">
-    <value>through time</value>
+    <value>v čase</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
-    <value>visible for</value>
+    <value>viditelné pro</value>
   </data>
 </root>

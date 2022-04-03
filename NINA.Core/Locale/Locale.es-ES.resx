@@ -2919,7 +2919,7 @@ Esta plantilla se usará al inicio para iniciar la secuencia en vez de la usada 
     <value>Directorio Imágenes Atlas Celeste</value>
   </data>
   <data name="LblOfflineSkyMap" xml:space="preserve">
-    <value>Offline Sky Map</value>
+    <value>Mapa celeste offline</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Luminosidad del Cielo</value>
@@ -6246,21 +6246,21 @@ Por favor, comprueba si hay disponible actualización.</value>
     <value>Esto usará las imágenes fuera del caché de encuadre y las dibujará en el mapa fuera de línea del cielo para enmarcarlas. Sólo se utilizan imágenes con un campo mayor a 0,1º y menor a 10º horizontales.</value>
   </data>
   <data name="LblAny" xml:space="preserve">
-    <value>Any</value>
+    <value>Cualquier</value>
   </data>
   <data name="LblAnyDuration" xml:space="preserve">
     <value>Any duration</value>
   </data>
   <data name="LblFromTime" xml:space="preserve">
-    <value>from time</value>
+    <value>desde la hora</value>
   </data>
   <data name="LblMinimumDistance" xml:space="preserve">
-    <value>Minimum distance</value>
+    <value>Distancia mínima</value>
   </data>
   <data name="LblThroughTime" xml:space="preserve">
-    <value>through time</value>
+    <value>durante el tiempo</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
-    <value>visible for</value>
+    <value>visible durante</value>
   </data>
 </root>
