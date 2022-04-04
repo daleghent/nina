@@ -202,22 +202,20 @@
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0,0,0,1"
                             Header="{ns:Loc LblObjectType}">
-                            <ScrollViewer Grid.Column="1" MaxHeight="300">
-                                <ItemsControl ItemsSource="{Binding ObjectTypes}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <CheckBox
-                                                    Width="20"
-                                                    Height="20"
-                                                    IsChecked="{Binding Selected}"
-                                                    Style="{StaticResource CheckmarkAndEmptyCheckbox}" />
-                                                <TextBlock Margin="10,0,0,0" Text="{Binding Name, Converter={StaticResource ValueToLocaleConverter}, ConverterParameter=LblObjectType_}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </ScrollViewer>
+                            <ItemsControl ItemsSource="{Binding ObjectTypes}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox
+                                                Width="20"
+                                                Height="20"
+                                                IsChecked="{Binding Selected}"
+                                                Style="{StaticResource CheckmarkAndEmptyCheckbox}" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Name, Converter={StaticResource ValueToLocaleConverter}, ConverterParameter=LblObjectType_}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Expander>
                         <Expander
                             BorderBrush="{StaticResource BorderBrush}"
