@@ -79,10 +79,10 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <Target Name="SignBundleEngine">
-    <Exec Command="signtool.exe sign /t http://timestamp.digicert.com /v /a /fd SHA256 &quot;@(SignBundleEngine)&quot;" />
+    <Exec Command="signtool.exe sign /t http://timestamp.sectigo.com /v /a /fd SHA256 &quot;@(SignBundleEngine)&quot;" />
   </Target>
   <Target Name="SignBundle">
-    <Exec Command="signtool.exe sign /t http://timestamp.digicert.com /v /a /fd SHA256 &quot;@(SignBundle)&quot;" />
+    <Exec Command="signtool.exe sign /t http://timestamp.sectigo.com /v /a /fd SHA256 &quot;@(SignBundle)&quot;" />
   </Target>
   <PropertyGroup>
     <PreBuildEvent>%25LOCALAPPDATA%25\Pandoc\pandoc.exe "$(SolutionDir)RELEASE_NOTES.md" -f markdown -t rtf -s -o "$(SolutionDir)RELEASE_NOTES.rtf"</PreBuildEvent>
