@@ -338,7 +338,13 @@ namespace NINA.Plugin {
                             }
 
                             if(!compatibilityMap.IsCompatible(manifest)) {
-                                throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum plugin version of {compatibilityMap.GetMinimumVersion(manifest)}, but current plugin version is {manifest.Version}");
+                                var deprecatedVersion = new Version(65535, 0, 0, 0);
+                                var minVersion = compatibilityMap.GetMinimumVersion(manifest);
+                                if(minVersion >= deprecatedVersion) {
+                                    throw new Exception($"This plugin is deprecated.");
+                                } else {
+                                    throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum plugin version of {compatibilityMap.GetMinimumVersion(manifest)}, but current plugin version is {manifest.Version}");
+                                }                                
                             }
 
                             Compose(plugin);

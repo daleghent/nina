@@ -66,6 +66,11 @@ namespace NINA.Plugin {
     'name': 'Scope Control',
     'identifier': '0bcbb707-6611-4266-9686-231be457f069',
     'minimumVersion': '1.2.2.0'
+  },
+  {
+    'name': 'Framing Cache Generator',
+    'identifier': 'b71ce4a9-17bd-4152-a372-e9e6e127ddfb',
+    'minimumVersion': '65535.0.0.0'
   }
 ]";
 
