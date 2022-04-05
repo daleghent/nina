@@ -13,6 +13,7 @@
     xmlns:alt="clr-namespace:NINA.WPF.Base.View;assembly=NINA.WPF.Base"
     xmlns:behaviors="clr-namespace:NINA.WPF.Base.Behaviors;assembly=NINA.WPF.Base"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -62,6 +63,122 @@
                             </Border>
 
                             <Grid>
+                                <!--  NASA Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.NASA}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Hyperlink NavigateUri="https://skyview.gsfc.nasa.gov/" RequestNavigate="Hyperlink_RequestNavigate">SkyView</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock Text=" a service of the Astrophysics Science Division at NASA/GSFC" TextWrapping="Wrap" />
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid>
+                                <!--  SkyServer Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.SKYSERVER}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Hyperlink NavigateUri="http://skyserver.sdss.org/dr17/" RequestNavigate="Hyperlink_RequestNavigate">Sloan Digital Sky Survey</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock Text=" a service provided by SkyServer" TextWrapping="Wrap" />
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid>
+                                <!--  ESO Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.ESO}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Hyperlink NavigateUri="http://archive.eso.org/dss/dss" RequestNavigate="Hyperlink_RequestNavigate">ESO Online Digitized Sky Survey</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock Text=" a service provided by the European Southern Observatory" TextWrapping="Wrap" />
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid>
+                                <!--  STSCI Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.STSCI}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Hyperlink NavigateUri="https://archive.stsci.edu/dss/acknowledging.html" RequestNavigate="Hyperlink_RequestNavigate">STScI DSS Search</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock Text=" a service provided by the Space Telescope Science Institude" TextWrapping="Wrap" />
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid>
+                                <!--  Hips2Fits Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.HIPS2FITS}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Hyperlink NavigateUri="https://alasky.u-strasbg.fr/hips-image-services/hips2fits" RequestNavigate="Hyperlink_RequestNavigate">hips2fits</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock Text=" a service provided by CDS" TextWrapping="Wrap" />
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid>
+                                <!--  Cache Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.CACHE}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="40" />
@@ -108,33 +225,6 @@
                                         Text="{ns:Loc LblClearCache}"
                                         TextWrapping="Wrap" />
                                 </Button>
-                                <Grid.Style>
-                                    <Style TargetType="{x:Type Grid}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="0">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="1">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="2">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="3">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="4">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="5">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="6">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Style>
                             </Grid>
                         </StackPanel>
                     </GroupBox>
