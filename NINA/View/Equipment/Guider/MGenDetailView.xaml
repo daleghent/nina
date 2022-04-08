@@ -13,176 +13,170 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <Grid.Resources>
-            <local:IsMGEN2ToVisibilityConverter x:Key="IsMGEN2ToVisibilityConverter" />
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
         <Image Source="{Binding Display}" />
-
-        <DockPanel
-            Grid.Row="1"
-            Width="Auto"
-            Margin="0,5,0,5"
-            LastChildFill="True">
-            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-                <ninactrl:UnitTextBox
-                    MinWidth="50"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Text="{Binding FocalLength}"
-                    Unit="mm" />
-            </StackPanel>
-
-            <StackPanel
-                DockPanel.Dock="Right"
-                Orientation="Horizontal"
-                Visibility="{Binding Converter={StaticResource IsMGEN2ToVisibilityConverter}}">
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
-                <ninactrl:UnitTextBox
-                    MinWidth="50"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Text="{Binding PixelMargin}"
-                    Unit="px" />
-            </StackPanel>
-            <StackPanel />
-        </DockPanel>
-        <DockPanel Grid.Row="2"
-            Width="Auto"
-            Margin="0,5,0,5"
-            LastChildFill="True">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMGENDitherSettleTime}" />
-                <ninactrl:UnitTextBox
-                    MinWidth="50"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Text="{Binding DitherSettlingTime}"
-                    Unit="s" />
-            </StackPanel>
-            <StackPanel />
-            <StackPanel />
-        </DockPanel>
-        <Grid Grid.Row="3">
+        <Grid Grid.Column="1">
+            <Grid.Resources>
+                <local:IsMGEN2ToVisibilityConverter x:Key="IsMGEN2ToVisibilityConverter" />
+            </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Orientation="Vertical">
-                <Button Height="20" Command="{Binding MGenESCCommand}">ESC</Button>
-                <Rectangle
-                    Width="10"
-                    Height="10"
-                    Margin="0,5,0,0"
-                    Fill="{Binding LEDState.TopLeft, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    Stroke="{Binding LEDState.TopLeft, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    StrokeThickness="1" />
-            </StackPanel>
-
-            <StackPanel Grid.Column="2" Orientation="Vertical">
-                <Button Height="20" Command="{Binding MGenSetCommand}">
-                    Set
-                </Button>
-                <Rectangle
-                    Width="10"
-                    Height="10"
-                    Margin="0,5,0,0"
-                    Fill="{Binding LEDState.TopRight, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    Stroke="{Binding LEDState.TopRight, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    StrokeThickness="1" />
-            </StackPanel>
 
             <StackPanel
-                Grid.Row="1"
-                Grid.Column="1"
+                Width="Auto"
+                Margin="0,5,0,5"
                 Orientation="Vertical">
-                <Rectangle
-                    Width="10"
-                    Height="10"
-                    Fill="{Binding LEDState.Up, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    Stroke="{Binding LEDState.Up, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    StrokeThickness="1" />
-                <Button
-                    Height="20"
-                    Margin="0,5,0,0"
-                    Command="{Binding MGenUpCommand}">
-                    🡅
-                </Button>
-            </StackPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
+                    <ninactrl:UnitTextBox
+                        MinWidth="50"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding FocalLength}"
+                        Unit="mm" />
+                </WrapPanel>
 
-            <StackPanel Grid.Row="2" Orientation="Vertical">
-                <Rectangle
-                    Width="10"
-                    Height="10"
-                    Fill="{Binding LEDState.Left, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    Stroke="{Binding LEDState.Left, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    StrokeThickness="1" />
-                <Button
-                    Height="20"
-                    Margin="0,5,0,0"
-                    Command="{Binding MGenLeftCommand}">
-                    🡄
-                </Button>
+                <WrapPanel Orientation="Horizontal" Visibility="{Binding Converter={StaticResource IsMGEN2ToVisibilityConverter}}">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
+                    <ninactrl:UnitTextBox
+                        MinWidth="50"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding PixelMargin}"
+                        TextWrapping="Wrap"
+                        Unit="px" />
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMGENDitherSettleTime}" />
+                    <ninactrl:UnitTextBox
+                        MinWidth="50"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding DitherSettlingTime}"
+                        Unit="s" />
+                </WrapPanel>
             </StackPanel>
+            <Grid Grid.Row="1" VerticalAlignment="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-            <StackPanel
-                Grid.Row="2"
-                Grid.Column="3"
-                Orientation="Vertical">
-                <Rectangle
-                    Width="10"
-                    Height="10"
-                    Fill="{Binding LEDState.Right, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    Stroke="{Binding LEDState.Right, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    StrokeThickness="1" />
-                <Button
-                    Height="20"
-                    Margin="0,5,0,0"
-                    Command="{Binding MGenRightCommand}">
-                    🡆
-                </Button>
-            </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Button Height="30" Command="{Binding MGenESCCommand}">ESC</Button>
+                    <Rectangle
+                        Width="10"
+                        Height="10"
+                        Margin="0,5,0,0"
+                        Fill="{Binding LEDState.TopLeft, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        Stroke="{Binding LEDState.TopLeft, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        StrokeThickness="1" />
+                </StackPanel>
 
-            <StackPanel
-                Grid.Row="3"
-                Grid.Column="1"
-                Orientation="Vertical">
-                <Rectangle
-                    Width="10"
-                    Height="10"
-                    Fill="{Binding LEDState.Down, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    Stroke="{Binding LEDState.Down, Converter={StaticResource DrawingToMediaBrushConverter}}"
-                    StrokeThickness="1" />
-                <Button
-                    Height="20"
-                    Margin="0,5,0,0"
-                    Command="{Binding MGenDownCommand}">
-                    🡇
-                </Button>
-            </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Vertical">
+                    <Button Height="30" Command="{Binding MGenSetCommand}">
+                        Set
+                    </Button>
+                    <Rectangle
+                        Width="10"
+                        Height="10"
+                        Margin="0,5,0,0"
+                        Fill="{Binding LEDState.TopRight, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        Stroke="{Binding LEDState.TopRight, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        StrokeThickness="1" />
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Orientation="Vertical">
+                    <Rectangle
+                        Width="10"
+                        Height="10"
+                        Fill="{Binding LEDState.Up, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        Stroke="{Binding LEDState.Up, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        StrokeThickness="1" />
+                    <Button
+                        Height="30"
+                        Margin="0,5,0,0"
+                        Command="{Binding MGenUpCommand}">
+                        🡅
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Orientation="Vertical">
+                    <Rectangle
+                        Width="10"
+                        Height="10"
+                        Fill="{Binding LEDState.Left, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        Stroke="{Binding LEDState.Left, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        StrokeThickness="1" />
+                    <Button
+                        Height="30"
+                        Margin="0,5,0,0"
+                        Command="{Binding MGenLeftCommand}">
+                        🡄
+                    </Button>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Orientation="Vertical">
+                    <Rectangle
+                        Width="10"
+                        Height="10"
+                        Fill="{Binding LEDState.Right, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        Stroke="{Binding LEDState.Right, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        StrokeThickness="1" />
+                    <Button
+                        Height="30"
+                        Margin="0,5,0,0"
+                        Command="{Binding MGenRightCommand}">
+                        🡆
+                    </Button>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Orientation="Vertical">
+                    <Rectangle
+                        Width="10"
+                        Height="10"
+                        Fill="{Binding LEDState.Down, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        Stroke="{Binding LEDState.Down, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                        StrokeThickness="1" />
+                    <Button
+                        Height="30"
+                        Margin="0,5,0,0"
+                        Command="{Binding MGenDownCommand}">
+                        🡇
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
