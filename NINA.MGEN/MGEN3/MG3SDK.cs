@@ -225,7 +225,7 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3_ESC_control", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_PulseESC(IntPtr handle, int length);
+        private static extern int MG3lib_PulseESC(IntPtr handle, int length, string addr = null, int srvport = 0);
 
         /// <summary>
         /// pulses the RESET line of the MCU. Use it ONLY when nothing else is possible, this is not a normal way to restart MGen-3!
