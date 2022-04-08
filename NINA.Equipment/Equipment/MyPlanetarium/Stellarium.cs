@@ -12,19 +12,19 @@
 
 #endregion "copyright"
 
-using NINA.Core.Utility;
-using NINA.Astrometry;
-using NINA.Profile.Interfaces;
-using System;
-using System.Threading.Tasks;
-using NINA.Core.Utility.Http;
-using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NINA.Astrometry;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
 using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
+using System;
 using System.Net;
-using NINA.Core.Utility.Notification;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyPlanetarium {
 
@@ -45,9 +45,9 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
             string route = "/api/main/status";
 
             try {
-                var request = new HttpGetRequest(this.baseUrl + route);
-
+                var request = new HttpGetRequest(this.baseUrl + route, rethrowOnError: true);
                 var response = await request.Request(new CancellationToken());
+
                 if (string.IsNullOrEmpty(response)) throw new PlanetariumFailedToConnect();
 
                 var jobj = JObject.Parse(response);
@@ -61,18 +61,81 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
 
                 return loc;
             } catch (Exception ex) {
-                Logger.Error($"Stellarium: Failed to import site info: {ex}");
+                Logger.Error($"Stellarium: Failed to import site info: {ex.Message}");
+
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
+                }
+
                 throw;
             }
         }
 
-        private async Task<DeepSkyObject> GetView() {
+        public async Task<DeepSkyObject> GetTarget() {
+            try {
+                var isOcularsCcdEnabled = await IsOcularEnabled();
+
+                // Get the view coordinates if there is a CCD ocular active or if there is no object selected
+                return isOcularsCcdEnabled ? await GetCenterView() : await GetSelectedObjectInfo();
+            } catch (WebException ex) {
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
+                }
+
+                throw;
+            } catch (Exception ex) {
+                Logger.Error($"Stellarium: Failed to import object info: {ex.Message}");
+
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
+                }
+
+                throw;
+            }
+        }
+
+        public async Task<double> GetRotationAngle() {
+            string route = "/api/stelproperty/list?format=json";
+
+            try {
+                var request = new HttpGetRequest(this.baseUrl + route, rethrowOnError: true);
+                var response = await request.Request(new CancellationToken());
+
+                double angle = double.NaN;
+
+                if (string.IsNullOrEmpty(response)) return double.NaN;
+
+                var jobj = JObject.Parse(response);
+
+                // Can do this only if an occular is turned on
+                bool isOcularsCcdEnabled = ParseEnableCCD(jobj);
+
+                if (isOcularsCcdEnabled) {
+                    angle = ParseRotationAngle(jobj);
+
+                    if (angle < 0d) {
+                        angle += 360d;
+                    }
+                }
+
+                return angle;
+            } catch (Exception ex) {
+                Logger.Error($"Stellarium: Failed to import rotation angle: {ex.Message}");
+
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
+                }
+
+                return double.NaN;
+            }
+        }
+
+        private async Task<DeepSkyObject> GetCenterView(bool getName = true) {
             string route = "/api/main/view";
 
-            var request = new HttpGetRequest(this.baseUrl + route);
             try {
+                var request = new HttpGetRequest(this.baseUrl + route, rethrowOnError: true);
                 var response = await request.Request(new CancellationToken());
-                if (string.IsNullOrEmpty(response)) throw new PlanetariumFailedToConnect();
 
                 /* The api returns arrays in an invalid json array format so we need to remove the quotes first */
                 response = response.Replace("\"[", "[").Replace("]\"", "]");
@@ -95,59 +158,24 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 var coordinates = new Coordinates(ra, dec, Epoch.J2000);
                 var dso = new DeepSkyObject(string.Empty, coordinates, string.Empty, null);
 
-                try {
-                    var selectedObject = await GetSelectedObjectInfo();
-                    dso.Name = selectedObject.Name;
-                } catch (PlanetariumObjectNotSelectedException) {
-                    Logger.Info($"An ocular is active but no object is selected. An object name will not be populated.");
+                if (getName) {
+                    try {
+                        var selectedObject = await GetSelectedObjectInfo();
+                        dso.Name = selectedObject.Name;
+                    } catch (PlanetariumObjectNotSelectedException) {
+                        Logger.Info($"An ocular is active but no object is selected. An object name will not be populated.");
+                    }
                 }
 
                 return dso;
             } catch (Exception ex) {
-                Logger.Error($"Stellarium: Failed to import view info: {ex}");
-                throw;
-            }
-        }
+                Logger.Error($"Stellarium: Failed to import view info: {ex.Message}");
 
-        public async Task<DeepSkyObject> GetTarget() {
-            try {
-                var isOcularsCcdEnabled = await IsOcularEnabled();
-
-                // Get the view coordinates there is a CCD ocular active or if there is no object selected
-                return isOcularsCcdEnabled ? await GetView() : await GetSelectedObjectInfo();
-            } catch (Exception ex) {
-                Logger.Error($"Stellarium: Failed to import object info: {ex}");
-                throw;
-            }
-        }
-
-        public async Task<double> GetRotationAngle() {
-            string route = "/api/stelproperty/list?format=json";
-
-            try {
-                var request = new HttpGetRequest(this.baseUrl + route);
-                var response = await request.Request(new CancellationToken());
-
-                double angle = double.NaN;
-
-                if (string.IsNullOrEmpty(response)) return double.NaN;
-
-                var jobj = JObject.Parse(response);
-
-                bool isOcularsCcdEnabled = ParseEnableCCD(jobj);
-
-                if (isOcularsCcdEnabled) {
-                    angle = ParseRotationAngle(jobj);
-
-                    if (angle < 0d) {
-                        angle += 360d;
-                    }
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
                 }
 
-                return angle;
-            } catch (Exception ex) {
-                Logger.Error($"Stellarium: Failed to import rotation angle: {ex}");
-                return double.NaN;
+                throw;
             }
         }
 
@@ -155,10 +183,8 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
             string route = "/api/objects/info?format=json";
 
             try {
-                var request = new HttpGetRequest(this.baseUrl + route);
+                var request = new HttpGetRequest(this.baseUrl + route, rethrowOnError: true);
                 var response = await request.Request(new CancellationToken());
-
-                if (string.IsNullOrEmpty(response)) throw new PlanetariumObjectNotSelectedException();
 
                 var jobj = JObject.Parse(response);
                 var status = jobj.ToObject<StellariumObject>();
@@ -184,8 +210,29 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
                 var dso = new DeepSkyObject(name, coordinates, string.Empty, null);
                 return dso;
+            } catch (WebException ex) {
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
+                }
+
+                if (ex.Status == WebExceptionStatus.ProtocolError) {
+                    var response = ex.Response as HttpWebResponse;
+
+                    // Stellarium API replied with a 404. This means no object was selected.
+                    // Try to get the center view instead.
+                    if (response.StatusCode == HttpStatusCode.NotFound) {
+                        return await GetCenterView(false);
+                    }
+                }
+
+                throw;
             } catch (Exception ex) {
-                Logger.Error($"Stellarium: Failed to import selected object info: {ex}");
+                Logger.Error($"Stellarium: Failed to import selected object info: {ex.Message}");
+
+                if (ex.InnerException is SocketException) {
+                    throw new PlanetariumFailedToConnect();
+                }
+
                 throw;
             }
         }
@@ -193,15 +240,14 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
         private async Task<bool> IsOcularEnabled() {
             string route = "/api/stelproperty/list?format=json";
 
-            var request = new HttpGetRequest(this.baseUrl + route);
             try {
+                var request = new HttpGetRequest(this.baseUrl + route, rethrowOnError: true);
                 var response = await request.Request(new CancellationToken());
-                if (string.IsNullOrEmpty(response)) return false;
 
                 var jobj = JObject.Parse(response);
                 return ParseEnableCCD(jobj);
-            } catch {
-                return false;
+            } catch (Exception ex) {
+                return ex.InnerException is SocketException ? throw new PlanetariumFailedToConnect() : false;
             }
         }
 
