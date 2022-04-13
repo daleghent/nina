@@ -922,11 +922,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         private ImmutableList<TrackingMode> GetTrackingModes() {
-            var trackingRateEnum = device.TrackingRates.GetEnumerator();
             var trackingModes = ImmutableList.CreateBuilder<TrackingMode>();
             trackingModes.Add(TrackingMode.Sidereal);
-            while (!trackingRateEnum.MoveNext()) {
-                var trackingRate = (DriveRates)trackingRateEnum.Current;
+
+            foreach(DriveRates trackingRate in device.TrackingRates) {
                 switch (trackingRate) {
                     case DriveRates.driveKing:
                         trackingModes.Add(TrackingMode.King);
