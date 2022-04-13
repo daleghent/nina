@@ -118,7 +118,7 @@ namespace NINA.Astrometry {
             } else {
                 transit = AstroUtil.GetAzimuth(180, alt180, latitude, Coordinates.Dec);
             }
-            DoesTransitSouth = Convert.ToInt32(transit) == 180;
+            DoesTransitSouth = !double.IsNaN(transit) && Convert.ToInt32(transit) == 180;
         }
     }
 }
