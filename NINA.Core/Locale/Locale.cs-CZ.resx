@@ -5048,7 +5048,7 @@ Příklad:
     <value>Připojit všechna zařízení?</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
-    <value>Ve výchozím nastavení Sbalit Šablony Sekvencí</value>
+    <value>Výchozí Sbalit Šablony Sekvencí</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
     <value>Pokud je tato možnost povolena, přidá šablonu a cíl v sekvencéru ve sbaleném stavu.</value>
