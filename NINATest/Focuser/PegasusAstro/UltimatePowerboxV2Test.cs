@@ -144,6 +144,8 @@ namespace NINATest.Focuser.PegasusAstro {
             _mockSdk.Setup(m => m.SendCommand<StepperMotorMoveToPositionResponse>(It.IsAny<StepperMotorMoveToPositionCommand>()))
                 .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorMoveToPositionResponse { DeviceResponse = $"SM:{position}" }));
+            _mockSdk.Setup(m => m.SendCommand<StepperMotorIsMovingResponse>(It.IsAny<StepperMotorIsMovingCommand>()))
+                .Returns(Task.FromResult(new StepperMotorIsMovingResponse { DeviceResponse = "0" }));
             await _sut.Move(position, new CancellationToken());
             Assert.That(command, Is.EqualTo(expected));
         }

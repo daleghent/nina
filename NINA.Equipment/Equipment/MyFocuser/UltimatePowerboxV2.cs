@@ -206,6 +206,11 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                 var command = new StepperMotorMoveToPositionCommand { Position = position };
                 try {
                     _ = await Sdk.SendCommand<StepperMotorMoveToPositionResponse>(command);
+
+                    while (IsMoving && !ct.IsCancellationRequested) {
+                        await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
+                    }
+
                     return Task.FromResult(true);
                 } catch (InvalidDeviceResponseException ex) {
                     LogAndNotify(command, ex);
