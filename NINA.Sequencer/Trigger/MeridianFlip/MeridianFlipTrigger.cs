@@ -313,15 +313,17 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
         public virtual bool Validate() {
             var i = new List<string>();
+            bool valid = true;
             var meridianFlipSettings = profileService.ActiveProfile.MeridianFlipSettings;
             var telescopeInfo = telescopeMediator.GetInfo();
 
-            if (meridianFlipSettings.Recenter && !cameraMediator.GetInfo().Connected) {
-                i.Add(Loc.Instance["LblCameraNotConnected"]);
-            }
-
             if (!telescopeInfo.Connected) {
                 i.Add(Loc.Instance["LblTelescopeNotConnected"]);
+                valid = false;
+            }
+
+            if (meridianFlipSettings.Recenter && !cameraMediator.GetInfo().Connected) {
+                i.Add(Loc.Instance["LblCameraNotConnected"]);                
             }
 
             if (meridianFlipSettings.AutoFocusAfterFlip) {
@@ -331,7 +333,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
 
             Issues = i;
-            return i.Count == 0;
+            return valid;
         }
     }
 }
