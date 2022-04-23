@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -100,19 +100,18 @@
                     TabStripPlacement="Left">
                     <TabItem>
                         <TabItem.Header>
-                            <Grid>
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Grid>
-                                    <Grid Width="50" Height="50">
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource EquipmentSVG}"
-                                            Stretch="Uniform"
-                                            Style="{StaticResource TabItemPath}" />
-                                    </Grid>
+                                    <Path
+                                        Width="50"
+                                        Margin="7.5"
+                                        Data="{StaticResource EquipmentSVG}"
+                                        Stretch="Uniform"
+                                        Style="{StaticResource TabItemPath}" />
                                 </Grid>
                                 <TextBlock
                                     Grid.Row="1"
@@ -126,13 +125,14 @@
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
 
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource MapSVG}"
                                     Stretch="Uniform"
@@ -151,12 +151,13 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource FocusAssistantSVG}"
                                     Stretch="Uniform"
@@ -174,12 +175,13 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource FlatWizardSVG}"
                                     Stretch="Uniform"
@@ -197,12 +199,13 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource SequenceSVG}"
                                     Stretch="Uniform"
@@ -232,12 +235,13 @@
                             </Style>
                         </TabItem.Style>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource PictureSVG}"
                                     Stretch="Uniform"
@@ -255,12 +259,13 @@
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource SettingsSVG}"
                                     Stretch="Uniform"
@@ -277,12 +282,13 @@
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Height="50">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition Height="10" />
                                 </Grid.RowDefinitions>
                                 <Path
+                                    Width="50"
                                     Margin="5"
                                     Data="{StaticResource PuzzlePieceSVG}"
                                     Stretch="Uniform"
