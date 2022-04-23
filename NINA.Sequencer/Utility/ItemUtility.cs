@@ -256,7 +256,8 @@ namespace NINA.Sequencer.Utility {
             Logger.Info(data.Name + ": CalculateExpectedTime failed after " + ++iterations + " iterations, Custom: " + data.UseCustomHorizon);
             data.ExpectedDateTime = startTime;
             data.ExpectedTime = "--";
-            data.TargetAltitude = double.NaN;
+            // If we fail, we'll just take user's provided value.  Previous usage of NaN was meaningless.
+            data.TargetAltitude = data.Offset;
         }
 
         /*
