@@ -1028,15 +1028,9 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     if (skySurveyImage != null) {
                         skySurveyImage.Image.Freeze();
-                        if (!string.IsNullOrWhiteSpace(DeepSkyObjectSearchVM.TargetName)) {
-                            skySurveyImage.Name = DeepSkyObjectSearchVM.TargetName;
-                        }
 
                         if (FramingAssistantSource == SkySurveySource.FILE) {
                             var fileSkySurveyImage = skySurveyImage as FileSkySurveyImage;
-
-                            DeepSkyObjectSearchVM.SetTargetNameWithoutSearch(fileSkySurveyImage.Name);
-                            DSO.Name = fileSkySurveyImage.Name;
 
                             if (fileSkySurveyImage.Data.MetaData.WorldCoordinateSystem == null) {
                                 skySurveyImage = await PlateSolveSkySurvey(fileSkySurveyImage);
@@ -1044,7 +1038,14 @@ namespace NINA.ViewModel.FramingAssistant {
                                 this.DSO.Coordinates = fileSkySurveyImage.Data.MetaData.WorldCoordinateSystem.Coordinates;
                                 RaiseCoordinatesChanged();
                             }
+
+                            skySurveyImage.Name = fileSkySurveyImage.Name;
+
                             Rectangle = null;
+                        } else {
+                            if (!string.IsNullOrWhiteSpace(DeepSkyObjectSearchVM.TargetName)) {
+                                skySurveyImage.Name = DeepSkyObjectSearchVM.TargetName;
+                            }
                         }
 
                         await _dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
