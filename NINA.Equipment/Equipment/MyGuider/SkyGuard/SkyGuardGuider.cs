@@ -181,15 +181,40 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
         public RelayCommand OpenSkyGuardDiagCommand { get; set; }
 
-        public bool CanSetShiftRate => throw new NotImplementedException();
+        public bool CanSetShiftRate { 
+            get{
+                Logger.Debug("This method is not implemented");
+                return false;
+            }
+        } 
 
-        public bool ShiftEnabled => throw new NotImplementedException();
+        public bool ShiftEnabled {
+            get {
+                Logger.Debug("This method is not implemented");
+                return false;
+            }
+        }
 
-        public double ShiftRateRA => throw new NotImplementedException();
+        public double ShiftRateRA {
+            get {
+                Logger.Debug("This method is not implemented");
+                throw new NotImplementedException();
+            }
+        }
 
-        public double ShiftRateDec => throw new NotImplementedException();
+        public double ShiftRateDec {
+            get {
+                Logger.Debug("This method is not implemented");
+                throw new NotImplementedException();
+            }
+        }
 
-        public SiderealShiftTrackingRate ShiftRate => throw new NotImplementedException();
+        public SiderealShiftTrackingRate ShiftRate {
+            get {
+                Logger.Debug("This method is not implemented");
+                throw new NotImplementedException();
+            }
+        }
 
         public event EventHandler<IGuideStep> GuideEvent;
 
@@ -660,7 +685,6 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
             catch (Exception ex)
             {
                 Logger.Warning(ex.Message);
-                Notification.ShowWarning(Loc.Instance["LblSkyGuardEndpointNotReachable"]);
                 return string.Empty;
             }
 
@@ -785,8 +809,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 Version skyGuardVersion = new Version(version.Data);
                 string versionMajorMinor = $"{skyGuardVersion.Major}.{skyGuardVersion.Minor}";
 
-                if (Convert.ToDouble(versionMajorMinor) < 4.16)
-                {
+                if (float.Parse(versionMajorMinor, System.Globalization.CultureInfo.InvariantCulture) < 4.16) {
                     Logger.Error(msgVersionNotCompatible);
                     Notification.ShowError(Loc.Instance["lblSkyGuardWrongVersion"]);
                     return _connected;
