@@ -6265,6 +6265,6 @@ Zkontrolujte, zda je k dispozici aktualizace.</value>
     <value>v čase</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
-    <value>visible for</value>
+    <value>viditelné po</value>
   </data>
 </root>

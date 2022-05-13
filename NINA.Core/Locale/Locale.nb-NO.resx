@@ -6165,7 +6165,7 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>Velg og utfør ASCOM-handlinger (eller andre) som kan være tilgjengelig fra enhetens driver</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
-    <value>Device Action</value>
+    <value>Enhets-handling</value>
   </data>
   <data name="LblNoActionsAvailable" xml:space="preserve">
     <value>Ingen handlinger er tilgjengelige</value>
@@ -6174,28 +6174,28 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>SkyGuard sti</value>
   </data>
   <data name="LblSkyGuardServerPort" xml:space="preserve">
-    <value>SkyGuard Server Port</value>
+    <value>SkyGuard-port</value>
   </data>
   <data name="LblSkyGuardServerUrl" xml:space="preserve">
-    <value>SkyGuard Server URL</value>
+    <value>SkyGuard-URL</value>
   </data>
   <data name="LblSkyGuardSetup" xml:space="preserve">
-    <value>SkyGuard Setup</value>
+    <value>SkyGuard-innstillinger</value>
   </data>
   <data name="LblSkyGuardCallbackPort" xml:space="preserve">
-    <value>Callback Reservation Port SkyGuard</value>
+    <value>SkyGuard tilbakekoblings-port</value>
   </data>
   <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
-    <value>Guider Settling</value>
+    <value>Følging hviler</value>
   </data>
   <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
-    <value>For a duration of</value>
+    <value>Varighet</value>
   </data>
   <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
-    <value>Start guiding timeout delay</value>
+    <value>Tidsavbrudd ved start av følging</value>
   </data>
   <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
-    <value>Settle at &lt;</value>
+    <value>Hvil ved &lt;</value>
   </data>
   <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
     <value>Dither ble hoppet over fordi følging i SkyGuard ikke var aktiv</value>

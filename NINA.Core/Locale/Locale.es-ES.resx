@@ -6210,7 +6210,7 @@ Por favor, comprueba si hay disponible actualización.</value>
     <value>Dither omitido porque SkyGuard no estaba guiando activamente</value>
   </data>
   <data name="LblSkyGuardNotReady" xml:space="preserve">
-    <value>SkyGuard is not ready for operations. Check logs for details.</value>
+    <value>SkyGuard no está listo. Comprobar los registros para más detalles.</value>
   </data>
   <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
     <value>Operación cancelada.</value>
@@ -6249,7 +6249,7 @@ Por favor, comprueba si hay disponible actualización.</value>
     <value>Cualquier</value>
   </data>
   <data name="LblAnyDuration" xml:space="preserve">
-    <value>Any duration</value>
+    <value>Cualquier duración</value>
   </data>
   <data name="LblFromTime" xml:space="preserve">
     <value>desde la hora</value>

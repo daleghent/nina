@@ -6171,13 +6171,13 @@
     <value>参数</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Description" xml:space="preserve">
-    <value>Select and execute any ASCOM (or other) Actions that may be available by the device's driver</value>
+    <value>选择任意ASCOM（或其他）设备，并执行设备提供的操作。</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_DeviceAction_Name" xml:space="preserve">
-    <value>Device Action</value>
+    <value>设备操作</value>
   </data>
   <data name="LblNoActionsAvailable" xml:space="preserve">
-    <value>No actions are available</value>
+    <value>没有可用的操作</value>
   </data>
   <data name="LblSkyGuardPath" xml:space="preserve">
     <value>SkyGuard 路径</value>
@@ -6195,16 +6195,16 @@
     <value>SkyGuard 回调预留端口</value>
   </data>
   <data name="LblSkyGuardTimeLapsChecked" xml:space="preserve">
-    <value>Guider Settling</value>
+    <value>导星稳定</value>
   </data>
   <data name="LblSkyGuardTimeLapsGuiding" xml:space="preserve">
-    <value>For a duration of</value>
+    <value>持续时间：</value>
   </data>
   <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
     <value>Start guiding timeout delay</value>
   </data>
   <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
-    <value>Settle at &lt;</value>
+    <value>稳定于 &lt;</value>
   </data>
   <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
     <value>Dither was skipped because SkyGuard was not actively guiding</value>
@@ -6243,7 +6243,7 @@
     <value>N.I.N.A.不支持该版本的SkyGuard，查看日志以获取更多详细信息。</value>
   </data>
   <data name="LblUseCachedImages" xml:space="preserve">
-    <value>This will use the images out of the framing cache and draw them in the offline sky map for framing. Only images that are less than or equal to 10° and greater than or equal to 0.1° horizontal field of view are used.</value>
+    <value>这将使用构图助手中缓存的图像，并将它们绘制在离线星图中以便构图。仅可使用水平视场≤10°或≥0.1°的图像。</value>
   </data>
   <data name="LblAny" xml:space="preserve">
     <value>任意</value>
@@ -6252,15 +6252,15 @@
     <value>任意持续时间</value>
   </data>
   <data name="LblFromTime" xml:space="preserve">
-    <value>from time</value>
+    <value>从</value>
   </data>
   <data name="LblMinimumDistance" xml:space="preserve">
     <value>最小距离</value>
   </data>
   <data name="LblThroughTime" xml:space="preserve">
-    <value>through time</value>
+    <value>到</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
-    <value>visible for</value>
+    <value>可见</value>
   </data>
 </root>
