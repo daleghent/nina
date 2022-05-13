@@ -50,7 +50,6 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
             var p = new NINA.Profile.PluginOptionsAccessor(profileService, Guid.Parse("65CA9FD7-8984-4609-B206-86F3F9E8C19D"));
             settings = new Settings(p);
-
         }
 
         private Settings settings;
@@ -81,7 +80,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public double SetCCDTemperature {
             get {
-                return double.NaN;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
             }
 
             set {
@@ -90,7 +89,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public short BinX {
             get {
-                return -1;
+                return (short)(SimulatorImage?.RawImageData?.MetaData?.Camera?.BinX ?? 1);
             }
 
             set {
@@ -99,7 +98,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public short BinY {
             get {
-                return -1;
+                return (short)(SimulatorImage?.RawImageData?.MetaData?.Camera?.BinY ?? 1);
             }
 
             set {
@@ -215,7 +214,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public int Offset {
             get {
-                return -1;
+                return SimulatorImage?.RawImageData?.MetaData?.Camera.Offset ?? -1;
             }
 
             set {
@@ -460,9 +459,16 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         }
 
         public async Task<bool> Connect(CancellationToken token) {
-            return await Task.Run(() => {
+            return await Task.Run(async () => {
                 telescopeMediator.RegisterConsumer(this);
                 Connected = true;
+                try {
+                    // Trigger a download to ensure the the properties from the previously saved image settings are intialized
+                    _ = await this.DownloadExposure(token);
+                } catch (Exception e) {
+                    Logger.Error(e, "Failed to download image on connect");
+                }
+
                 return true;
             }, token);
         }
