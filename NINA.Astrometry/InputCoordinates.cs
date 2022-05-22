@@ -31,6 +31,9 @@ namespace NINA.Astrometry {
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context) {
             deserializing = false;
+            if(NegativeDec && Coordinates.Dec > 0) {
+                Coordinates.Dec = Coordinates.Dec * -1d;
+            }
             RaiseCoordinatesChanged();
         }
 
@@ -93,6 +96,7 @@ namespace NINA.Astrometry {
 
         private bool negativeDec;
 
+        [JsonProperty]
         public bool NegativeDec {
             get => negativeDec;
             set {
@@ -151,6 +155,7 @@ namespace NINA.Astrometry {
         private void RaiseCoordinatesChanged() {
             if(!deserializing) { 
                 if(Coordinates?.RA != 0 || Coordinates?.Dec != 0) {
+                    NegativeDec = Coordinates?.Dec < 0;
                     RaisePropertyChanged(nameof(Coordinates));
                     RaisePropertyChanged(nameof(RAHours));
                     RaisePropertyChanged(nameof(RAMinutes));
@@ -158,7 +163,6 @@ namespace NINA.Astrometry {
                     RaisePropertyChanged(nameof(DecDegrees));
                     RaisePropertyChanged(nameof(DecMinutes));
                     RaisePropertyChanged(nameof(DecSeconds));
-                    NegativeDec = Coordinates?.Dec < 0;
 
                     this.CoordinatesChanged?.Invoke(this, new EventArgs());
                 }
