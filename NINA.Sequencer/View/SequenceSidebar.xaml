@@ -838,10 +838,16 @@
                                                         MinWidth="50"
                                                         Foreground="{StaticResource ButtonForegroundBrush}"
                                                         Text="{ns:Loc LblDec}" />
-                                                    <TextBlock
-                                                        Margin="5,0,0,0"
-                                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                                        Text="{Binding Target.InputCoordinates.DecDegrees}" />
+
+
+                                                    <TextBlock Margin="5,0,0,0" Foreground="{StaticResource ButtonForegroundBrush}">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
+                                                                <Binding Path="Target.InputCoordinates.NegativeDec" />
+                                                                <Binding Path="Target.InputCoordinates.DecDegrees" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecMinutes}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
