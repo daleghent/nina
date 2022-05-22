@@ -282,6 +282,7 @@
     <Compile Include="AngleTest.cs" />
     <Compile Include="AstrometryTest\AstrometryTest.cs" />
     <Compile Include="AstrometryTest\CustomHorizonTest.cs" />
+    <Compile Include="AstrometryTest\InputCoordinatesTest.cs" />
     <Compile Include="Autofocus\AutoFocusReportTest.cs" />
     <Compile Include="Autofocus\AutofocusVMTest.cs" />
     <Compile Include="Autofocus\GaussianFittingTest.cs" />
