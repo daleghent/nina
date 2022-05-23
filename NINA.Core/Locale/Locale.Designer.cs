@@ -12213,6 +12213,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!.
+        /// </summary>
+        internal static string LblPegasusNativeDeprecation {
+            get {
+                return ResourceManager.GetString("LblPegasusNativeDeprecation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugins are pending to be changed on next application start. Should the application be restarted?.
         /// </summary>
         internal static string LblPendingPluginsRestart {

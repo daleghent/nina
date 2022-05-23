@@ -36,6 +36,7 @@
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -43,8 +44,14 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,5"
+            FontWeight="Bold"
+            Text="{ns:Loc LblPegasusNativeDeprecation}" />
+
         <GroupBox
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="0"
             Header="{ns:Loc LblUPBV2PowerPorts}">
             <GroupBox.Resources>
@@ -215,7 +222,7 @@
             </ItemsControl>
         </GroupBox>
         <GroupBox
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             Header="{ns:Loc LblUPBV2UsbPorts}">
             <GroupBox.Resources>
@@ -293,7 +300,7 @@
             </ItemsControl>
         </GroupBox>
         <GroupBox
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             Header="{ns:Loc LblUPBV2DewHeaterPorts}">
             <GroupBox.Resources>
@@ -425,7 +432,7 @@
             </ItemsControl>
         </GroupBox>
         <GroupBox
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             Header="{ns:Loc LblUPBV2DeviceData}">
             <Grid>
