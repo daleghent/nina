@@ -352,8 +352,11 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         {
             if (startedByNina == true)
             {
-                skyGuardProcess.Kill();
-                skyGuardProcess.Dispose();
+                if (!skyGuardProcess.HasExited) 
+                {
+                    skyGuardProcess.Kill();
+                    skyGuardProcess.Dispose();
+                }
             }
         }
 
@@ -845,22 +848,19 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         {
             try
             {
-                string disconnect = ExecuteWebRequest($"{SKSS_Uri}/SKSS_DisconnectCamera");
-                var disconnectStatus = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(disconnect);
+                ExecuteWebRequest($"{SKSS_Uri}/SKSS_DisconnectCamera");
+                StopSkyProcess();
 
-                if (disconnectStatus?.Status == "success")
-                {
-                    StopListener();
-                    StopSkyProcess();
-
-                    Connected = false;
-                }
-
+                Connected = false;
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.Message);
                 Notification.ShowError(Loc.Instance["LblSkyGuardDisonnectError"]);
+            }
+            finally
+            {
+                StopListener();
             }
         }
 
