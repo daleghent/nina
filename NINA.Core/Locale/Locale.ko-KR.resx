@@ -6290,4 +6290,7 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
   <data name="LblVisibleFor" xml:space="preserve">
     <value>볼 수 있는</value>
   </data>
+  <data name="LblPegasusNativeDeprecation" xml:space="preserve">
+    <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
+  </data>
 </root>

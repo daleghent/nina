@@ -5940,7 +5940,7 @@ Consulta o manual da cámara para coñecer a localización desta configuración<
     <value>Anotar Todo</value>
   </data>
   <data name="LblAnnotateUnlimitedStarsTooltip" xml:space="preserve">
-    <value>Por defecto só se anotan 200 estrelas. ó activar isto serán detectadas todas as estrelas.</value>
+    <value>By default, only 200 stars are annotated. If this is enabled, all detected stars are.</value>
   </data>
   <data name="LblStarDetector" xml:space="preserve">
     <value>Detector de Estrelas</value>
@@ -6273,5 +6273,8 @@ Please check if there is an update available.</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
     <value>visible for</value>
+  </data>
+  <data name="LblPegasusNativeDeprecation" xml:space="preserve">
+    <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
   </data>
 </root>

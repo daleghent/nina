@@ -148,7 +148,7 @@
     <value>Ajustes Avanzados</value>
   </data>
   <data name="LblAFContrastDetection" xml:space="preserve">
-    <value>Detección de Contraste (Experimental)</value>
+    <value>Detección por Contraste (Experimental)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
     <value>Auto Enfoque está habilitado pero el enfocador no está conectado</value>
@@ -160,10 +160,10 @@
     <value>Después</value>
   </data>
   <data name="LblAFUseBrightestStars" xml:space="preserve">
-    <value>Usar estrellas n más brillantes</value>
+    <value>Usar las n estrellas más brillantes</value>
   </data>
   <data name="LblAFUseBrightestStarsTooltip" xml:space="preserve">
-    <value>Limitar AE a las estrellas mas brillantes. 0 significa sin límite.</value>
+    <value>Limitar AF a las estrellas más brillantes. 0 significa sin límite.</value>
   </data>
   <data name="LblAllProSpikeAFlatPanel" xml:space="preserve">
     <value>Panel Allpro Spike-a-Flat</value>
@@ -181,7 +181,7 @@
     <value>Altitud</value>
   </data>
   <data name="LblAltitudeErrorMeasurement" xml:space="preserve">
-    <value>Medir Error de Altitud</value>
+    <value>Error en medida de Altitud</value>
   </data>
   <data name="LblAltitudeMeasurement" xml:space="preserve">
     <value>Medición de Altitud</value>
@@ -215,7 +215,7 @@ El error de altitud actual se calculará y se mostrará usando esos dos puntos</
     <value>Anotar Imagen</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
-    <value>Si está marcado y se aplica una detección de estrellas para una imagen, la imagen será anotada con las estrellas encontradas y su respectivo valor HFR</value>
+    <value>Si está marcado y se aplica la detección de estrellas para una imagen, la imagen será anotada con las estrellas encontradas y su respectivo valor HFR</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
     <value>Clave API</value>
@@ -259,7 +259,7 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
     <value>ASPS Ubicacion</value>
   </data>
   <data name="LblASPSNotFound" xml:space="preserve">
-    <value>Archivo ejecutable de ASPS no encontrado</value>
+    <value>ASPS exe no encontrado</value>
   </data>
   <data name="LblASTAP" xml:space="preserve">
     <value>ASTAP, the Astrometric STAcking Program, solucionador astrométrico y visor de FITS</value>
@@ -268,7 +268,7 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
     <value>Ubicación de ASTAP</value>
   </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
-    <value>No se ha encontrado el archivo ejecutable de ASTAP</value>
+    <value>No se ha encontrado el archivo ASTAP exe</value>
   </data>
   <data name="LblASTAPShort" xml:space="preserve">
     <value>ASTAP</value>
@@ -316,7 +316,7 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
     <value>Ratio de recorte interior en el AE</value>
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
-    <value>Si se pone un valor inferior a 1 la detección de estrellas durante el autoenfoque solo se usará un subframe centrado de todo el sensor (si está soportado por la cámara). Si no lo estuviera, las estrellas cercanas al borde se ignorarán durante la detección de estrellas. Si se usa en combinación con un valor de ratio de recorte exterior inferior a 1, se usará un marco rectangular de la imagen (conformado por el rectángulo interno y el externo) para el autoenfoque.</value>
+    <value>Si se pone un valor inferior a 1, la detección de estrellas durante el autoenfoque usará solo un subframe centrado de todo el sensor (si está soportado por la cámara). Si no lo estuviera, las estrellas cercanas al borde se ignorarán durante la detección de estrellas. Si se usa en combinación con un valor de ratio de recorte exterior inferior a 1, se usará un marco rectangular de la imagen (conformado por el rectángulo interno y el externo) para el autoenfoque.</value>
   </data>
   <data name="LblAutoFocusMethod" xml:space="preserve">
     <value>Método de AE</value>
@@ -377,7 +377,7 @@ El método por Detección de Contraste utiliza técnicas de procesamiento de im�
     <value>Factor de Auto Estirado</value>
   </data>
   <data name="LblAutoStretchFactorTooltip" xml:space="preserve">
-    <value>El factor para el algoritmo de autoestirado que se utiliza para mostrar una imagen y detectar estrellas. Debe ser un valor entre 0 y 1. Un valor de 0.2 debería funcionar la mayor parte del tiempo.</value>
+    <value>El factor para el algoritmo de autoestirado que se utiliza para mostrar una imagen y detectar estrellas. Debe ser un valor entre 0 y 1. Un valor de 0.2 debería ser el más adecuado para la mayoría de las veces.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
     <value>Origen de la actualización automática</value>
@@ -392,10 +392,10 @@ El método por Detección de Contraste utiliza técnicas de procesamiento de im�
     <value>Medición de Azimut</value>
   </data>
   <data name="LblAzimuthMeasurementButtonTooltip" xml:space="preserve">
-    <value>Midiendo el error de Azimut en tres pasos.
-1.Toma una imagen y resuélvela para obtener las coordenadas actuales en la posición actual
+    <value>Mide el error de Azimut en tres pasos.
+1. Toma una imagen y la resuelve para obtener las coordenadas actuales en dicha posición
 2. Mueve el telescopio usando el eje de AR 0,5 grados
-3. Toma otra imagen en la nueva posición y resuélvela para obtener la posición actual
+3. Toma otra imagen en la nueva posición y la resuelve para obtener la posición actual
 Usando esos dos puntos se calculará y mostrará el error de azimut actual</value>
   </data>
   <data name="LblAzimuthMeasurementDescription" xml:space="preserve">
@@ -408,13 +408,13 @@ Usando esos dos puntos se calculará y mostrará el error de azimut actual</valu
     <value>Se ha producido una excepción mientras se medía el backlash. Los valores del backlash pueden ser erróneos.</value>
   </data>
   <data name="LblBacklashMeasurements" xml:space="preserve">
-    <value>Los siguientes valores de backlash del enfocador serán grabados. IN: {0}, OUT: {1}</value>
+    <value>Se guardarán los siguientes valores de backlash del enfocador. IN: {0}, OUT: {1}</value>
   </data>
   <data name="LblBeta" xml:space="preserve">
     <value>Beta</value>
   </data>
   <data name="LblBiasMean" xml:space="preserve">
-    <value>Media de BIAS (nativo)</value>
+    <value>Media de los BIAS (en 16 bits)</value>
   </data>
   <data name="LblBiasMedian" xml:space="preserve">
     <value>Valor de la mediana (median) del BIAS (en 16bit)</value>
@@ -432,11 +432,11 @@ Usando esos dos puntos se calculará y mostrará el error de azimut actual</valu
     <value>BitDepth en ADUs</value>
   </data>
   <data name="LblBlackClipping" xml:space="preserve">
-    <value>Recorte de Negros</value>
+    <value>Recorte de tonos negros</value>
   </data>
   <data name="LblBlindSolveAttemptForFraming" xml:space="preserve">
     <value>La imagen tiene que ser resuelta para fotografiarla.
-¿Deberían tomarse coordenadas de referencia?
+¿Deberían tomarse estas coordenadas como referencia?
 RA: {0}
 Dic. {1}</value>
   </data>
@@ -489,13 +489,13 @@ Dic. {1}</value>
     <value>Barajando bytes (Byte shuffling)</value>
   </data>
   <data name="LblCameraConnected" xml:space="preserve">
-    <value>Cámara Conectada</value>
+    <value>Cámara conectada</value>
   </data>
   <data name="LblCameraConnectionLost" xml:space="preserve">
     <value>¡Conexión a la cámara perdida! ¡Por favor, reconecte la cámara!</value>
   </data>
   <data name="LblCameraCoolerNotEnabled" xml:space="preserve">
-    <value>La cámara dispone de refrigerador pero no esta conectado</value>
+    <value>La cámara dispone de enfriador pero no está conectado</value>
   </data>
   <data name="LblCameraDownloadFailed" xml:space="preserve">
     <value>Error al descargar de la cámara.
@@ -505,11 +505,11 @@ Ganancia: {2}
 Filtro: {3}</value>
   </data>
   <data name="LblCameraHighPower" xml:space="preserve">
-    <value>El refrigerador de la cámara se está ejecutando a un {0}% de potencia y puede no ser
+    <value>El enfriador de la cámara se está ejecutando a un {0}% de potencia y puede no ser
 capaz de compensar las variaciones de temperatura ambiente</value>
   </data>
   <data name="LblCameraNotAtTargetTemp" xml:space="preserve">
-    <value>Camara esta a {0}°C aun asi la temperatura objetivo es {1}°C</value>
+    <value>Camara aún está a {0}°C y la temperatura a lograr es {1}°C</value>
   </data>
   <data name="LblCameraOptions" xml:space="preserve">
     <value>Opciones de la cámara</value>
@@ -886,7 +886,7 @@ capaz de compensar las variaciones de temperatura ambiente</value>
     <value>Serpens caput</value>
   </data>
   <data name="LblConstellation_SER2" xml:space="preserve">
-    <value>Serpientes caudales</value>
+    <value>Serpientes cauda</value>
   </data>
   <data name="LblConstellation_SEX" xml:space="preserve">
     <value>Sextante</value>
@@ -1209,7 +1209,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>Azimut</value>
   </data>
   <data name="LblDomeNoSource" xml:space="preserve">
-    <value>Ningún domo seleccionado</value>
+    <value>Ninguna cúpula seleccionada</value>
   </data>
   <data name="LblDomeCannotSlew" xml:space="preserve">
     <value>La cúpula no puede girar</value>
@@ -1491,7 +1491,7 @@ Cuando este disparador está desactivado, la aplicación se saltará "empezar ex
     <value>Usar tiempos de exposición calculados con el asistente de flats</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
-    <value>El ADU medio fue {0}, iniciando el cálculo de tiempo de exposición en {1}</value>
+    <value>El ADU medio fue {0}, calculando tiempo de exposición en {1}</value>
   </data>
   <data name="LblFlatExposureCalcFinished" xml:space="preserve">
     <value>El ADU medio es {0} El tiempo de exposición de objetivo es {1}</value>
@@ -5343,7 +5343,7 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Brillo del panel plano estimado</value>
   </data>
   <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
-    <value>El ADU medio fue {0}, iniciando el cálculo de tiempo de exposición en {1}</value>
+    <value>El ADU medio fue {0}, calculando con el brillo a {1}</value>
   </data>
   <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
     <value>El ADU medio es {0} El tiempo de exposición de objetivo es {1}</value>
@@ -6262,5 +6262,8 @@ Por favor, comprueba si hay disponible actualización.</value>
   </data>
   <data name="LblVisibleFor" xml:space="preserve">
     <value>visible durante</value>
+  </data>
+  <data name="LblPegasusNativeDeprecation" xml:space="preserve">
+    <value>Con la introducción de la Plataforma Pegasus Astro Unity y los posibles cambios en los protocolos de comunicación los drivers nativos quedarán obsoletos en futuras versiones. Por favor, ¡usa los controladores ASCOM en su lugar!</value>
   </data>
 </root>

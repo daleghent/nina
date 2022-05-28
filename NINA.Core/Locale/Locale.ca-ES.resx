@@ -6262,4 +6262,7 @@ Comproveu si hi ha una actualització disponible.</value>
   <data name="LblVisibleFor" xml:space="preserve">
     <value>visible per</value>
   </data>
+  <data name="LblPegasusNativeDeprecation" xml:space="preserve">
+    <value>Amb la introducció de la plataforma Pegasus Astro Unity i els possibles canvis als protocols de comunicació, els controladors natius quedaran obsolets en futures versions. Si us plau, utilitzeu els controladors ASCOM!</value>
+  </data>
 </root>
