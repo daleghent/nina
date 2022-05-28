@@ -27,6 +27,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 {
     public class SkyGuardGuider : BaseINPC, IGuider
     {
+        private readonly Version minimumSkyGuardVersion = new Version("4.16");
 
         #region Fields
         private IProfileService profileService;
@@ -800,7 +801,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 string versionResponse = ExecuteWebRequest($"{SKSS_Uri}/SKSS_Version");
                 var msgVersionNotCompatible = $"{Loc.Instance["lblSkyGuardWrongVersion"]}\n To connect N.I.N.A to SkyGuard you must install at least the version 4.16 or higher. \nYou can download the latest version from https://www.innovationsforesight.com/support/skg_download/";
 
-                if (String.IsNullOrEmpty(versionResponse))
+                if (string.IsNullOrEmpty(versionResponse))
                 {
                     Logger.Error(msgVersionNotCompatible);
                     Notification.ShowError(Loc.Instance["lblSkyGuardWrongVersion"]);
@@ -808,11 +809,9 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 }
 
                 var version = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(versionResponse);
-
                 Version skyGuardVersion = new Version(version.Data);
-                string versionMajorMinor = $"{skyGuardVersion.Major}.{skyGuardVersion.Minor}";
 
-                if (float.Parse(versionMajorMinor, System.Globalization.CultureInfo.InvariantCulture) < 4.16) {
+                if (skyGuardVersion < minimumSkyGuardVersion) {
                     Logger.Error(msgVersionNotCompatible);
                     Notification.ShowError(Loc.Instance["lblSkyGuardWrongVersion"]);
                     return _connected;

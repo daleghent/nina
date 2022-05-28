@@ -176,7 +176,8 @@
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
 			<Custom Action="API_Firewall_listen_ipv6" Before="InstallFinalize">NOT Installed</Custom>
-			<Custom Action="API_Firewall_add_urlacl" Before="InstallFinalize">NOT Installed</Custom>
+			<Custom Action="API_Firewall_add_SGProAPI_urlacl" Before="InstallFinalize">NOT Installed</Custom>
+			<Custom Action="API_Firewall_add_SkyGuardCallback_urlacl" Before="InstallFinalize">NOT Installed</Custom>
 		</InstallExecuteSequence>
 	</Product>
 
@@ -1650,8 +1651,10 @@
 		<CustomAction Id="API_Firewall_listen_ipv6" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
 		<SetProperty Id="API_Firewall_listen_ipv4" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=0.0.0.0" Before="API_Firewall_listen_ipv4" />
 		<CustomAction Id="API_Firewall_listen_ipv4" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
-		<SetProperty Id="API_Firewall_add_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_urlacl" />
-		<CustomAction Id="API_Firewall_add_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+		<SetProperty Id="API_Firewall_add_SGProAPI_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_SGProAPI_urlacl" />
+		<CustomAction Id="API_Firewall_add_SGProAPI_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+		<SetProperty Id="API_Firewall_add_SkyGuardCallback_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:8000/ user=Everyone" Before="API_Firewall_add_SkyGuardCallback_urlacl" />
+		<CustomAction Id="API_Firewall_add_SkyGuardCallback_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
 	</Fragment>
 	<!-- Avalondock localization Start -->
 	<Fragment>
