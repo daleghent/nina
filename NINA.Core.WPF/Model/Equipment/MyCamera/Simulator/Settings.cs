@@ -25,6 +25,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             RandomSettings = new RandomSettings(pluginOptionsAccessor);
             ImageSettings = new ImageSettings(pluginOptionsAccessor);
             SkySurveySettings = new SkySurveySettings(pluginOptionsAccessor);
+            DirectorySettings = new DirectorySettings(pluginOptionsAccessor);
         }
 
         public CameraType Type {
@@ -41,6 +42,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public RandomSettings RandomSettings { get; } 
         public ImageSettings ImageSettings { get;  }
-        public SkySurveySettings SkySurveySettings { get;  } 
+        public SkySurveySettings SkySurveySettings { get;  }
+        public DirectorySettings DirectorySettings { get; }
     }
 }
