@@ -1312,7 +1312,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     if (Math.Abs(Rectangle.OriginalCoordinates.RADegrees - Rectangle.Coordinates.RADegrees) > 0.001 || Math.Abs(Rectangle.OriginalCoordinates.Dec - Rectangle.Coordinates.Dec) > 0.001) {
                         mainRectanglePA = AstroUtil.CalculatePositionAngle(mainRectangleReferenceCenter.RADegrees, Rectangle.Coordinates.RADegrees, mainRectangleReferenceCenter.Dec, Rectangle.Coordinates.Dec) + Rectangle.OriginalOffset;
 
-                        if (accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec >= 0 || accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec < 0) {
+                        if (accumulatedDeltaX < 0 && Rectangle.Coordinates.Dec >= 0 || accumulatedDeltaX >= 0 && Rectangle.Coordinates.Dec < 0) {
                             // When the rectangle is left of center, the PA has to be adjusted by 180°, otherwise it will end upside down
                             mainRectanglePA += 180;
                         }
