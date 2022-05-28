@@ -32,6 +32,7 @@ using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.SkySurvey;
+using System.Windows.Forms;
 
 namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
@@ -44,6 +45,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             this.imageDataFactory = imageDataFactory;
 
             LoadImageCommand = new AsyncCommand<bool>(() => LoadImageDialog()/*, (object o) => Settings.ImageSettings.RAWImageStream == null*/);
+            LoadDirectoryCommand = new RelayCommand((object o) => LoadDirectoryDialog());
             //UnloadImageCommand = new RelayCommand((object o) => Settings.ImageSettings.Image = null);
             //LoadRAWImageCommand = new AsyncCommand<bool>(() => LoadRAWImage(), (object o) => Settings.ImageSettings.Image == null);
             //UnloadRAWImageCommand = new RelayCommand((object o) => { Settings.ImageSettings.RAWImageStream.Dispose(); Settings.ImageSettings.RAWImageStream = null; });
@@ -570,6 +572,30 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                     profileService.ActiveProfile.TelescopeSettings.FocalLength = (int)focalLength;
 
                     return data;
+
+                case CameraType.DIRECTORY:
+                    if (files == null || files.Length == 0) {
+                        files = Directory.GetFiles(settings.DirectorySettings.DirectoryPath);
+                        if (files.Length == 0) {
+                            throw new Exception("No Image found in directory set in Simulator!");
+                        }
+                    }
+
+                    if (currentFile >= files.Length) {
+                        currentFile = 0;
+                    }
+
+                    try {
+                        await LoadImage(files[currentFile]);
+                    } finally {
+                        currentFile++;
+                    }
+
+                    if (SimulatorImage != null) {
+                        return exposureDataFactory.CreateCachedExposureData(SimulatorImage.RawImageData);
+                    }
+
+                    throw new Exception("No Image found in directory set in Simulator!");
             }
             throw new NotSupportedException();
         }
@@ -628,7 +654,24 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
+        private bool LoadDirectoryDialog() {
+            if (settings.DirectorySettings.DirectoryPath == "")
+                settings.DirectorySettings.DirectoryPath = Path.GetDirectoryName(profileService.ActiveProfile.ImageFileSettings.FilePath);
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "Load Image Directory";
+            dialog.SelectedPath = settings.DirectorySettings.DirectoryPath;
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath)) {
+                settings.DirectorySettings.DirectoryPath = dialog.SelectedPath;
+                files = Directory.GetFiles(dialog.SelectedPath);
+                currentFile = 0;
+                return true;
+            }
+            return false;
+        }
+
         public IAsyncCommand LoadImageCommand { get; private set; }
+        public ICommand LoadDirectoryCommand { get; private set; }
         public ICommand UnloadImageCommand { get; private set; }
         public IAsyncCommand LoadRAWImageCommand { get; private set; }
         public ICommand UnloadRAWImageCommand { get; private set; }
@@ -638,6 +681,9 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         private DateTime exposureStart;
         private TimeSpan exposureTime;
+
+        private string[] files;
+        private int currentFile;
 
         public void StartExposure(CaptureSequence captureSequence) {
             exposureStart = DateTime.Now;

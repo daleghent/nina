@@ -149,6 +149,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -215,6 +216,7 @@
     <Compile Include="Mediator\SwitchMediator.cs" />
     <Compile Include="Mediator\TelescopeMediator.cs" />
     <Compile Include="Mediator\WeatherDataMediator.cs" />
+    <Compile Include="Model\Equipment\MyCamera\Simulator\DirectorySettings.cs" />
     <Compile Include="Model\Equipment\MyCamera\Simulator\ImageSettings.cs" />
     <Compile Include="Model\Equipment\MyCamera\Simulator\RandomSettings.cs" />
     <Compile Include="Model\Equipment\MyCamera\Simulator\Settings.cs" />

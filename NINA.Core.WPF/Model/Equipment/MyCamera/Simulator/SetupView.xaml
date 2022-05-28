@@ -66,6 +66,9 @@
                         <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="2">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="3">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
@@ -105,6 +108,9 @@
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="2">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="3">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -149,6 +155,49 @@
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="1">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="3">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+        </Grid>
+        <Grid Grid.Row="1">
+            <GroupBox DataContext="{Binding DirectorySettings}" Header="Load Directory">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Text="Directory Path" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding DirectoryPath}" />
+                    </StackPanel>
+                    <ninactrl:AsyncProcessButton
+                        Grid.Row="2"
+                        Height="40"
+                        Margin="0,5,0,0"
+                        ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
+                        ButtonText="Load Directory"
+                        Command="{Binding DataContext.LoadDirectoryCommand, ElementName=UC}"
+                        LoadingImageBrush="{StaticResource PrimaryBrush}"
+                        Visibility="{Binding Image, Converter={StaticResource InverseNullToVisibilityConverter}}" />
+                </Grid>
+            </GroupBox>
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="1">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=PART_Type, Path=SelectedItem}" Value="2">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>

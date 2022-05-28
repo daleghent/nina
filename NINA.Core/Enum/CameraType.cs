@@ -17,6 +17,7 @@ namespace NINA.Core.Enum {
     public enum CameraType {
         RANDOM,
         IMAGE,
-        SKYSURVEY
+        SKYSURVEY,
+        DIRECTORY
     }
 }
