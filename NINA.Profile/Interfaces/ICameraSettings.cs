@@ -31,6 +31,7 @@ namespace NINA.Profile.Interfaces {
         bool FileCameraIsBayered { get; set; }
         string FileCameraExtension { get; set; }
         bool FileCameraAlwaysListen { get; set; }
+        int FileCameraDownloadDelay { get; set; }
         BayerPatternEnum BayerPattern { get; set; }
         bool FLIEnableFloodFlush { get; set; }
         bool FLIEnableSnapshotFloodFlush { get; set; }

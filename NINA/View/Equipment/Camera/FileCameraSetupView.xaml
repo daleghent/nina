@@ -14,6 +14,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     MinWidth="400"
     MinHeight="150"
     d:DesignHeight="450"
@@ -69,8 +70,15 @@
                 <CheckBox IsChecked="{Binding IsBayered}" />
             </UniformGrid>
             <UniformGrid Margin="0,5,0,0" Columns="2">
-                <TextBlock VerticalAlignment="Center" Text="Always listen to file changes" />
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAlwaysListen}" />
                 <CheckBox IsChecked="{Binding AlwaysListen}" />
+            </UniformGrid>
+            <UniformGrid Margin="0,5,0,0" Columns="2">
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDownloadDelay}" />
+                <ninactrl:UnitTextBox
+                VerticalAlignment="Center"
+                Text="{Binding DownloadDelay}"
+                Unit="s" />
             </UniformGrid>
         </StackPanel>
         <Button

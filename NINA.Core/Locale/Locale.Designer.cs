@@ -19,7 +19,7 @@ namespace NINA.Core.Locale {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Locale {
@@ -2891,6 +2891,15 @@ namespace NINA.Core.Locale {
         internal static string LblAltitudeMeasurementSide {
             get {
                 return ResourceManager.GetString("LblAltitudeMeasurementSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always listen to file changes.
+        /// </summary>
+        internal static string LblAlwaysListen {
+            get {
+                return ResourceManager.GetString("LblAlwaysListen", resourceCulture);
             }
         }
         
@@ -7625,6 +7634,15 @@ namespace NINA.Core.Locale {
         internal static string LblDownload {
             get {
                 return ResourceManager.GetString("LblDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seconds to wait before download.
+        /// </summary>
+        internal static string LblDownloadDelay {
+            get {
+                return ResourceManager.GetString("LblDownloadDelay", resourceCulture);
             }
         }
         

@@ -572,6 +572,19 @@ namespace NINA.Profile {
             }
         }
 
+        private int fileCameraDownloadDelay;
+
+        [DataMember]
+        public int FileCameraDownloadDelay {
+            get => fileCameraDownloadDelay;
+            set {
+                if (fileCameraDownloadDelay != value) {
+                    fileCameraDownloadDelay = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private bool sbigUseExternalCcdTracker;
 
         [DataMember]

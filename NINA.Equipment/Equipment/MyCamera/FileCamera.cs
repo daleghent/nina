@@ -538,6 +538,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     folderWatcher.Suspend();
                 }
 
+                // Delay download for certain DSLR cameras
+                await CoreUtil.Wait(TimeSpan.FromSeconds(DownloadDelay), token);
+
                 CameraState = CameraStates.LoadingFile;
                 var tries = 0;
                 while (true) {
@@ -555,6 +558,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             } finally {
                 CameraState = CameraStates.LoadingFile;
+            }
+        }
+
+        public int DownloadDelay {
+            get => profileService.ActiveProfile.CameraSettings.FileCameraDownloadDelay;
+            set {
+                profileService.ActiveProfile.CameraSettings.FileCameraDownloadDelay = value;
+                RaisePropertyChanged();
             }
         }
 

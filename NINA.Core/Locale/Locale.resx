@@ -6276,4 +6276,10 @@ Please check if there is an update available.</value>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
   </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Always listen to file changes</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Seconds to wait before download</value>
+  </data>
 </root>
