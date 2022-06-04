@@ -117,8 +117,8 @@
 		<NotificationErrorColor Color="#FF700000" />
 		<NotificationWarningTextColor Color="#FFFFFFFF" />
 		<NotificationErrorTextColor Color="#FFFFFFFF" />
-		<SecondaryBackgroundColor Color="#FF000000" />
-		<TertiaryBackgroundColor Color="#FF000000" />
+		<SecondaryBackgroundColor Color="#FF2F090D" />
+		<TertiaryBackgroundColor Color="#FF191919" />
 	</ColorSchema>
 	<ColorSchema Name="Black Coral">
 		<PrimaryColor Color="#FFDEDEE8" />
