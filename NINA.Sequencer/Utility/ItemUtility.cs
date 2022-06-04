@@ -252,8 +252,8 @@ namespace NINA.Sequencer.Utility {
                 }
                 startTime = startTime.AddMinutes(interval);
             }
-            // Log this!
-            Logger.Info(data.Name + ": CalculateExpectedTime failed after " + ++iterations + " iterations, Custom: " + data.UseCustomHorizon);
+            
+            Logger.Debug(data.Name + ": CalculateExpectedTime failed after " + ++iterations + " iterations, Custom: " + data.UseCustomHorizon);
             data.ExpectedDateTime = startTime;
             data.ExpectedTime = "--";
             // If we fail, we'll just take user's provided value.  Previous usage of NaN was meaningless.
