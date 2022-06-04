@@ -99,32 +99,11 @@ namespace NINA.ViewModel {
             }
         }
 
-        private double pixelPeepX;
-
-        public double PixelPeepX {
-            get => pixelPeepX;
+        private PixelPeep pixelPeep;
+        public PixelPeep PixelPeep {
+            get => pixelPeep;
             set {
-                pixelPeepX = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double pixelPeepY;
-
-        public double PixelPeepY {
-            get => pixelPeepY;
-            set {
-                pixelPeepY = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double pixelPeepValue;
-
-        public double PixelPeepValue {
-            get => pixelPeepValue;
-            set {
-                pixelPeepValue = value;
+                pixelPeep = value;
                 RaisePropertyChanged();
             }
         }
@@ -150,10 +129,6 @@ namespace NINA.ViewModel {
                     idx = RenderedImage.RawImageData.Data.FlatArray.Length - 1;
                 }
 
-                PixelPeepX = x;
-                PixelPeepY = y;
-                PixelPeepValue = RenderedImage.RawImageData.Data.FlatArray[idx];
-
                 var rectX = Math.Max(x - 12, 0);
                 var rectY = Math.Max(y - 12, 0);
                 var rectWidth = 25;
@@ -166,8 +141,31 @@ namespace NINA.ViewModel {
                     rectY = height - rectHeight;
                 }
 
-                var rect = new Int32Rect(Math.Max(0, rectX), Math.Max(0, rectY), Math.Min(this.Image.PixelWidth, rectWidth), Math.Min(this.Image.PixelHeight, rectHeight));
-                var crop = new CroppedBitmap(this.Image, rect);
+                rectX = Math.Max(0, rectX);
+                rectY = Math.Max(0, rectY);
+                rectWidth = Math.Min(this.Image.PixelWidth, rectWidth);
+                rectHeight = Math.Min(this.Image.PixelHeight, rectHeight);
+
+                long sum = 0;
+                ushort max = 0;
+                ushort min = ushort.MaxValue;
+                long points = 0;
+                for(var i = rectX; i < rectX + rectWidth; i++) {
+                    for (var j = rectY; j < rectY + rectHeight; j++) {
+                        var pixelIdx = i + j * width;
+                        var point = RenderedImage.RawImageData.Data.FlatArray[pixelIdx];
+                        sum += point;
+                        max = Math.Max(max, point);
+                        min = Math.Min(min, point);
+                        points++;
+                    }
+                }
+                var mean = sum / (double)points;
+
+                PixelPeep = new PixelPeep(rectX, rectY, RenderedImage.RawImageData.Data.FlatArray[idx], min, max, mean);
+
+                var rect = new Int32Rect(rectX, rectY, rectWidth, rectHeight);
+                var crop = new CroppedBitmap(this.Image, rect);                
                 PixelPeepImage = new WriteableBitmap(crop);
             }
         }
@@ -175,9 +173,7 @@ namespace NINA.ViewModel {
         private void PixelPeeperStop(object o) {
             ShowPixelPeeper = false;
 
-            PixelPeepX = 0;
-            PixelPeepY = 0;
-            PixelPeepValue = 0;
+            PixelPeep = new PixelPeep(0, 0, 0, 0, 0, 0);
             PixelPeepImage = null;
         }
 
@@ -651,5 +647,25 @@ namespace NINA.ViewModel {
         public void Dispose() {
             this.cameraMediator.RemoveConsumer(this);
         }
+    }
+
+
+
+    public class PixelPeep {
+        public PixelPeep(double x, double y, ushort center, ushort min, ushort max, double mean) {
+            X = x;
+            Y = y;
+            Center = center;
+            Min = min;
+            Max = max;
+            Mean = mean;
+        }
+
+        public double X { get; }
+        public double Y { get; }
+        public ushort Center { get; }
+        public ushort Min { get; }
+        public ushort Max { get; }
+        public double Mean { get; }
     }
 }

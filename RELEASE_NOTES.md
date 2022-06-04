@@ -227,6 +227,7 @@ To identify what has changed in between beta builds, please refer to the [bitbuc
 - The automatic roll over to a blind solver can now be switched off in the plate solver tab
 - For the first image in an image view control, the image will now be shown as size to fit instead of 1:1 by default
 - Profiles can now store an arbitrary description
+- Pixel inspector on imaging tab (by holding right click on an image) now also includes min, max and mean of the pixel area
 
 ### Subsampling
 - The sub sample button above the image panel has been removed
