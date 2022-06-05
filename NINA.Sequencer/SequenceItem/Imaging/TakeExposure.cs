@@ -264,7 +264,9 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(TakeExposure)}, ExposureTime {ExposureTime}, Gain {Gain}, Offset {Offset}, ImageType {ImageType}, Binning {Binning?.Name}";
+            var currentGain = Gain == -1 ? CameraInfo.DefaultGain : Gain;
+            var currentOffset = Offset == -1 ? CameraInfo.DefaultOffset : Offset;
+            return $"Category: {Category}, Item: {nameof(TakeExposure)}, ExposureTime {ExposureTime}, Gain {currentGain}, Offset {currentOffset}, ImageType {ImageType}, Binning {Binning?.Name}";
         }
     }
 }
