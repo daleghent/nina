@@ -3,12 +3,9 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-### <span style="color:green;">Release Candidate builds are preview builds that contain the full development effort for the next release and are under the final evaluation period for a full release. No major changes will occur in these builds and the focus is on finding and fixing major issues. These builds should already be stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
+# Version 2.0
 
-# Version 2.0 - Release Candidate
-
-The Release Notes below will only mention the changes compared to the last released version.  
-To identify what has changed in between beta builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/release/2.0)
+The changelog contains the most prominent changes of Version 2.0. In summary this version has tons of improvements and almost every aspect of the application has been touched and improved. A big thank you to everyone that participated in this long release cycle!
 
 ## Important change of existing settings and panels
 
