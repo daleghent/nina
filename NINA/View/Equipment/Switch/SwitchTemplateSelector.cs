@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace NINA.View.Equipment.Switch {
         public DataTemplate ReadOnly { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            if (item is Model.MySwitch.IWritableSwitch) {
-                var s = (Model.MySwitch.IWritableSwitch)item;
-                if (s.Minimum == 0 && s.Maximum == 1) {
+            if (item is IWritableSwitch) {
+                var s = (IWritableSwitch)item;
+                if (s.Minimum == 0 && s.Maximum == 1 && s.StepSize == 1) {
                     return WritableBoolean;
                 } else {
                     return Writable;

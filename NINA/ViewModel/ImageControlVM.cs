@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,47 +8,56 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Behaviors;
-using NINA.Utility.Enum;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using NINA.Utility.ImageAnalysis;
-using NINA.Model.ImageData;
-using NINA.Utility.Mediator;
 using NINA.PlateSolving;
+using NINA.ViewModel.Interfaces;
+using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Astrometry;
+using NINA.WPF.Base.Behaviors;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Image.ImageAnalysis;
+using NINA.Core.Utility.WindowService;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel {
 
-    internal class ImageControlVM : DockableVM, ICameraConsumer {
+    internal class ImageControlVM : DockableVM, ICameraConsumer, IImageControlVM {
 
-        public ImageControlVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblImage";
+        public ImageControlVM(
+            IProfileService profileService, 
+            ICameraMediator cameraMediator, 
+            ITelescopeMediator telescopeMediator, 
+            IImagingMediator imagingMediator,
+            IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+            Title = Loc.Instance["LblImage"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PictureSVG"];
 
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
 
             this.telescopeMediator = telescopeMediator;
+            this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             AutoStretch = profileService.ActiveProfile.ImageSettings.AutoStretch;
             DetectStars = profileService.ActiveProfile.ImageSettings.DetectStars;
             ShowCrossHair = false;
             ShowBahtinovAnalyzer = false;
-            ShowSubSampler = false;
 
             _progress = new Progress<ApplicationStatus>(p => Status = p);
 
@@ -59,19 +67,14 @@ namespace NINA.ViewModel {
             DragStartCommand = new RelayCommand(BahtinovDragStart);
             DragStopCommand = new RelayCommand(BahtinovDragStop);
             DragMoveCommand = new RelayCommand(BahtinovDragMove);
-            SubSampleDragStartCommand = new RelayCommand(SubSampleDragStart);
-            SubSampleDragStopCommand = new RelayCommand(SubSampleDragStop);
-            SubSampleDragMoveCommand = new RelayCommand(SubSampleDragMove);
             InspectAberrationCommand = new AsyncCommand<bool>(() => InspectAberration(), (object o) => Image != null);
 
             PixelPeepStartCommand = new RelayCommand(PixelPeeperStart);
             PixelPeepMoveCommand = new RelayCommand(PixelPeeperMove);
             PixelPeepEndCommand = new RelayCommand(PixelPeeperStop);
 
-            BahtinovRectangle = new ObservableRectangle(-1, -1, 200, 200);
-            SubSampleRectangle = new ObservableRectangle(-1, -1, 600, 600);
+            BahtinovRectangle = new ObservableRectangle(0, 0, 200, 200);
             BahtinovRectangle.PropertyChanged += Rectangle_PropertyChanged;
-            SubSampleRectangle.PropertyChanged += SubSampleRectangle_PropertyChanged;
         }
 
         private bool showPixelPeeper;
@@ -96,32 +99,11 @@ namespace NINA.ViewModel {
             }
         }
 
-        private double pixelPeepX;
-
-        public double PixelPeepX {
-            get => pixelPeepX;
+        private PixelPeep pixelPeep;
+        public PixelPeep PixelPeep {
+            get => pixelPeep;
             set {
-                pixelPeepX = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double pixelPeepY;
-
-        public double PixelPeepY {
-            get => pixelPeepY;
-            set {
-                pixelPeepY = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double pixelPeepValue;
-
-        public double PixelPeepValue {
-            get => pixelPeepValue;
-            set {
-                pixelPeepValue = value;
+                pixelPeep = value;
                 RaisePropertyChanged();
             }
         }
@@ -147,10 +129,6 @@ namespace NINA.ViewModel {
                     idx = RenderedImage.RawImageData.Data.FlatArray.Length - 1;
                 }
 
-                PixelPeepX = x;
-                PixelPeepY = y;
-                PixelPeepValue = RenderedImage.RawImageData.Data.FlatArray[idx];
-
                 var rectX = Math.Max(x - 12, 0);
                 var rectY = Math.Max(y - 12, 0);
                 var rectWidth = 25;
@@ -163,8 +141,31 @@ namespace NINA.ViewModel {
                     rectY = height - rectHeight;
                 }
 
+                rectX = Math.Max(0, rectX);
+                rectY = Math.Max(0, rectY);
+                rectWidth = Math.Min(this.Image.PixelWidth, rectWidth);
+                rectHeight = Math.Min(this.Image.PixelHeight, rectHeight);
+
+                long sum = 0;
+                ushort max = 0;
+                ushort min = ushort.MaxValue;
+                long points = 0;
+                for(var i = rectX; i < rectX + rectWidth; i++) {
+                    for (var j = rectY; j < rectY + rectHeight; j++) {
+                        var pixelIdx = i + j * width;
+                        var point = RenderedImage.RawImageData.Data.FlatArray[pixelIdx];
+                        sum += point;
+                        max = Math.Max(max, point);
+                        min = Math.Min(min, point);
+                        points++;
+                    }
+                }
+                var mean = sum / (double)points;
+
+                PixelPeep = new PixelPeep(rectX, rectY, RenderedImage.RawImageData.Data.FlatArray[idx], min, max, mean);
+
                 var rect = new Int32Rect(rectX, rectY, rectWidth, rectHeight);
-                var crop = new CroppedBitmap(this.Image, rect);
+                var crop = new CroppedBitmap(this.Image, rect);                
                 PixelPeepImage = new WriteableBitmap(crop);
             }
         }
@@ -172,9 +173,7 @@ namespace NINA.ViewModel {
         private void PixelPeeperStop(object o) {
             ShowPixelPeeper = false;
 
-            PixelPeepX = 0;
-            PixelPeepY = 0;
-            PixelPeepValue = 0;
+            PixelPeep = new PixelPeep(0, 0, 0, 0, 0, 0);
             PixelPeepImage = null;
         }
 
@@ -183,7 +182,7 @@ namespace NINA.ViewModel {
                 var vm = new AberrationInspectorVM(profileService);
                 await vm.Initialize(Image);
                 var service = WindowServiceFactory.Create();
-                service.Show(vm, Locale.Loc.Instance["LblAberrationInspector"], ResizeMode.CanResize, WindowStyle.ToolWindow);
+                service.Show(vm, Loc.Instance["LblAberrationInspector"], ResizeMode.CanResize, WindowStyle.ToolWindow);
                 return true;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -202,16 +201,6 @@ namespace NINA.ViewModel {
             BahtinovDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
         }
 
-        private void SubSampleRectangle_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (SubSampleRectangle.Width > (Image?.Width * 0.8)) {
-                SubSampleRectangle.Width = Image.Width * 0.8;
-            }
-            if (SubSampleRectangle.Height > (Image?.Height * 0.8)) {
-                SubSampleRectangle.Height = Image.Height * 0.8;
-            }
-            SubSampleDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
-        }
-
         private bool _showBahtinovAnalyzer;
 
         public bool ShowBahtinovAnalyzer {
@@ -221,7 +210,6 @@ namespace NINA.ViewModel {
             set {
                 _showBahtinovAnalyzer = value;
                 if (value) {
-                    ShowSubSampler = false;
                     ShowCrossHair = false;
                     BahtinovDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
                 }
@@ -237,18 +225,6 @@ namespace NINA.ViewModel {
             }
             set {
                 _rectangle = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ObservableRectangle _subSampleRectangle;
-
-        public ObservableRectangle SubSampleRectangle {
-            get {
-                return _subSampleRectangle;
-            }
-            set {
-                _subSampleRectangle = value;
                 RaisePropertyChanged();
             }
         }
@@ -284,35 +260,6 @@ namespace NINA.ViewModel {
             /* Get Pixels */
             var crop = new CroppedBitmap(Image, new Int32Rect((int)BahtinovRectangle.X, (int)BahtinovRectangle.Y, (int)BahtinovRectangle.Width, (int)BahtinovRectangle.Height));
             BahtinovImage = new BahtinovAnalysis(crop, profileService.ActiveProfile.ColorSchemaSettings.ColorSchema.BackgroundColor).GrabBahtinov();
-        }
-
-        private void SubSampleDragStart(object obj) {
-        }
-
-        private void SubSampleDragStop(object obj) {
-        }
-
-        private void SubSampleDragMove(object obj) {
-            if (ShowSubSampler && Image != null) {
-                SubSampleRectangle.PropertyChanged -= SubSampleRectangle_PropertyChanged;
-
-                var dragResult = (DragResult)obj;
-
-                if (dragResult.Mode == DragMode.Move) {
-                    MoveRectangleInBounds(SubSampleRectangle, dragResult.Delta);
-                } else {
-                    ResizeRectangleBounds(SubSampleRectangle, dragResult.Delta, dragResult.Mode);
-                }
-
-                /* set subsample values */
-                cameraMediator.SetSubSampleArea(
-                    (int)SubSampleRectangle.X,
-                    (int)SubSampleRectangle.Y,
-                    (int)SubSampleRectangle.Width,
-                    (int)SubSampleRectangle.Height
-                );
-                SubSampleRectangle.PropertyChanged += SubSampleRectangle_PropertyChanged;
-            }
         }
 
         private void ResizeRectangleBounds(ObservableRectangle rect, Vector vector, DragMode mode) {
@@ -399,9 +346,6 @@ namespace NINA.ViewModel {
         public ICommand DragStartCommand { get; private set; }
         public ICommand DragStopCommand { get; private set; }
         public ICommand DragMoveCommand { get; private set; }
-        public ICommand SubSampleDragStartCommand { get; private set; }
-        public ICommand SubSampleDragStopCommand { get; private set; }
-        public ICommand SubSampleDragMoveCommand { get; private set; }
         public ICommand PixelPeepStartCommand { get; private set; }
         public ICommand PixelPeepEndCommand { get; private set; }
         public ICommand PixelPeepMoveCommand { get; private set; }
@@ -437,6 +381,7 @@ namespace NINA.ViewModel {
                         PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
 
                     var imageSolver = new ImageSolver(plateSolver, blindSolver);
@@ -446,8 +391,12 @@ namespace NINA.ViewModel {
                     service.Show(plateSolveStatusVM, this.Title + " - " + plateSolveStatusVM.Title, ResizeMode.CanResize, WindowStyle.ToolWindow);
 
                     var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, _progress, _plateSolveToken.Token);
+                    if(result.Success && telescopeMediator.GetInfo().Connected) { 
+                        var scopePosition = telescopeMediator.GetCurrentPosition();
+                        var resultCoordinates = result.Coordinates.Transform(scopePosition.Epoch);
 
-                    result.Separation = result.DetermineSeparation(telescopeMediator.GetCurrentPosition());
+                        result.Separation = scopePosition - resultCoordinates;
+                    }
                     plateSolveStatusVM.PlateSolveResult = result;
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
@@ -493,13 +442,6 @@ namespace NINA.ViewModel {
                     if (ShowBahtinovAnalyzer) {
                         ResizeRectangleToImageSize(_image, BahtinovRectangle);
                     }
-                    // when subsampling is enabled and a new image is loaded disable the subsampler
-                    // so it doesn't get resized
-                    if (cameraInfo.IsSubSampleEnabled) {
-                        ShowSubSampler = false;
-                    } else {
-                        ResizeRectangleToImageSize(_image, SubSampleRectangle);
-                    }
                 }
                 RaisePropertyChanged();
             }
@@ -537,7 +479,7 @@ namespace NINA.ViewModel {
             _prepImageCancellationSource?.Dispose();
             _prepImageCancellationSource = new CancellationTokenSource();
             if (RenderedImage != null) {
-                _prepImageTask = ProcessAndUpdateImage(RenderedImage, new PrepareImageParameters(), _prepImageCancellationSource.Token);
+                _prepImageTask = ProcessAndUpdateImage(RenderedImage.ReRender(), new PrepareImageParameters(), _prepImageCancellationSource.Token);
                 await _prepImageTask;
             }
             return true;
@@ -558,7 +500,6 @@ namespace NINA.ViewModel {
                 _showCrossHair = value;
                 if (value) {
                     ShowBahtinovAnalyzer = false;
-                    ShowSubSampler = false;
                 }
                 RaisePropertyChanged();
             }
@@ -597,27 +538,11 @@ namespace NINA.ViewModel {
 
         public ICommand CancelPlateSolveImageCommand { get; private set; }
 
-        private bool _showSubSampler;
-
-        public bool ShowSubSampler {
-            get {
-                return _showSubSampler;
-            }
-            set {
-                _showSubSampler = value;
-                if (value) {
-                    ShowBahtinovAnalyzer = false;
-                    ShowCrossHair = false;
-                    SubSampleDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
-                }
-                RaisePropertyChanged();
-            }
-        }
-
         public bool IsLiveViewEnabled { get; internal set; }
 
         public static SemaphoreSlim ss = new SemaphoreSlim(1, 1);
         private ICameraMediator cameraMediator;
+        private IImagingMediator imagingMediator;
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
@@ -633,17 +558,23 @@ namespace NINA.ViewModel {
                     return null;
                 }
 
-                _progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPrepareImage"] });
+                _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblPrepareImage"] });
 
                 var renderedImage = data.RenderImage();
                 if (data.Properties.IsBayered && profileService.ActiveProfile.ImageSettings.DebayerImage) {
-                    _progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblDebayeringImage"] });
+                    _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDebayeringImage"] });
                     var unlinkedStretch = profileService.ActiveProfile.ImageSettings.UnlinkedStretch;
-                    var starDetection = profileService.ActiveProfile.ImageSettings.DebayeredHFR && DetectStars;
+                    var detectStars = parameters.DetectStars.HasValue ? parameters.DetectStars.Value : DetectStars;
+                    var starDetection = profileService.ActiveProfile.ImageSettings.DebayeredHFR && detectStars;
 
                     var bayerPattern = cameraInfo.SensorType;
                     if (profileService.ActiveProfile.CameraSettings.BayerPattern != BayerPatternEnum.Auto) {
                         bayerPattern = (SensorType)profileService.ActiveProfile.CameraSettings.BayerPattern;
+                    } else if (!cameraInfo.Connected) {
+                        var imageSensorType = data.MetaData?.Camera?.SensorType;
+                        if (imageSensorType.HasValue) {
+                            bayerPattern = imageSensorType.Value;
+                        }
                     }
 
                     renderedImage = renderedImage.Debayer(saveColorChannels: unlinkedStretch, saveLumChannel: starDetection, bayerPattern: bayerPattern);
@@ -661,8 +592,9 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             var processedImage = await ProcessImage(renderedImage, parameters, cancelToken);
+            imagingMediator.OnImagePrepared(new ImagePreparedEventArgs { RenderedImage = renderedImage, Parameters = parameters });
 
-            this.RenderedImage = renderedImage;
+            this.RenderedImage = processedImage;
             this.Image = processedImage.Image;
             GC.Collect();
 
@@ -680,7 +612,7 @@ namespace NINA.ViewModel {
             var autoStretch = detectStars || (parameters.AutoStretch.HasValue ? parameters.AutoStretch.Value : AutoStretch);
             var processedImage = renderedImage;
             if (autoStretch) {
-                _progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblStretchImage"] });
+                _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblStretchImage"] });
                 var unlinkedStretch = renderedImage.RawImageData.Properties.IsBayered && profileService.ActiveProfile.ImageSettings.DebayerImage && profileService.ActiveProfile.ImageSettings.UnlinkedStretch;
                 processedImage = await processedImage.Stretch(
                     factor: profileService.ActiveProfile.ImageSettings.AutoStretchFactor,
@@ -700,12 +632,40 @@ namespace NINA.ViewModel {
             return processedImage;
         }
 
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public void UpdateDeviceInfo(CameraInfo cameraInfo) {
-            this.cameraInfo = cameraInfo;
+            CameraInfo = cameraInfo;
         }
 
         public void Dispose() {
             this.cameraMediator.RemoveConsumer(this);
         }
+    }
+
+
+
+    public class PixelPeep {
+        public PixelPeep(double x, double y, ushort center, ushort min, ushort max, double mean) {
+            X = x;
+            Y = y;
+            Center = center;
+            Min = min;
+            Max = max;
+            Mean = mean;
+        }
+
+        public double X { get; }
+        public double Y { get; }
+        public ushort Center { get; }
+        public ushort Min { get; }
+        public ushort Max { get; }
+        public double Mean { get; }
     }
 }

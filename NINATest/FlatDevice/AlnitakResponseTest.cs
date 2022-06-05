@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,15 +8,14 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model.MyFlatDevice;
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System;
 using FluentAssertions;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.FlatDevice {
 
@@ -31,8 +29,8 @@ namespace NINATest.FlatDevice {
         [TestCase("LightOn", "*L99OOO")]
         [TestCase("LightOff", "*D99OOO")]
         public void TestIsValidResponse(string responseName, string response) {
-            var sut = (AlnitakResponse)Activator.CreateInstance("NINA",
-                $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
+            var sut = (AlnitakResponse)Activator.CreateInstance("NINA.Equipment",
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
             Action act = () => sut.DeviceResponse = response;
             act.Should().NotThrow();
         }
@@ -57,8 +55,8 @@ namespace NINATest.FlatDevice {
         [TestCase("LightOff", null)]
         [TestCase("LightOff", "")]
         public void TestIsInvalidResponse(string responseName, string response) {
-            var sut = (AlnitakResponse)Activator.CreateInstance("NINA",
-                $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
+            var sut = (AlnitakResponse)Activator.CreateInstance("NINA.Equipment",
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
             Action act = () => sut.DeviceResponse = response;
             act.Should().Throw<InvalidDeviceResponseException>();
         }

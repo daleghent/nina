@@ -1,7 +1,6 @@
 ﻿#region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com>
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,12 +8,11 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using Moq;
 using NINA.Profile;
-using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
 
 namespace NINATest.FlatDevice {
@@ -23,7 +21,7 @@ namespace NINATest.FlatDevice {
     public class FilterTimingTest {
         private Mock<IProfileService> _mockProfileService;
         private Mock<IFlatDeviceSettings> _mockSettings;
-        private const double BRIGHTNESS = 1d;
+        private const int BRIGHTNESS = 1;
         private const double TIME = 2d;
         private readonly FlatDeviceFilterSettingsKey _key = new FlatDeviceFilterSettingsKey(null, null, 0);
 
@@ -60,7 +58,7 @@ namespace NINATest.FlatDevice {
                 m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             Assert.That(keyUsed, Is.EqualTo(_key));
             Assert.That(valueUsed.Time, Is.EqualTo(TIME));
-            Assert.That(valueUsed.Brightness, Is.EqualTo(BRIGHTNESS));
+            Assert.That(valueUsed.AbsoluteBrightness, Is.EqualTo(BRIGHTNESS));
         }
 
         [Test]
@@ -84,7 +82,7 @@ namespace NINATest.FlatDevice {
                 m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             Assert.That(keyUsed, Is.EqualTo(_key));
             Assert.That(valueUsed.Time, Is.EqualTo(TIME));
-            Assert.That(valueUsed.Brightness, Is.EqualTo(BRIGHTNESS));
+            Assert.That(valueUsed.AbsoluteBrightness, Is.EqualTo(BRIGHTNESS));
         }
     }
 }

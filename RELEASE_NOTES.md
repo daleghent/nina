@@ -3,6 +3,282 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+### <span style="color:green;">Release Candidate builds are preview builds that contain the full development effort for the next release and are under the final evaluation period for a full release. No major changes will occur in these builds and the focus is on finding and fixing major issues. These builds should already be stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
+
+# Version 2.0 - Release Candidate
+
+The Release Notes below will only mention the changes compared to the last released version.  
+To identify what has changed in between beta builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/release/2.0)
+
+## Important change of existing settings and panels
+
+- Options page tab location is moved to the left instead of the top to be similar to main tabs
+- Sequencer end options have been moved into the simple sequencer tab
+- Sequencer is split into the old style sequencing and a new much more adjustable advanced sequencer
+- Meridian Flip settings show no longer an enabled flag, but must be enabled in the simple sequencer screen or added as a trigger into the advanced sequencer instead
+- Autofocus options have been moved into a separate tab
+- PHD2 specific settings are now available in the equipment guider tab after connection  
+- Sky Atlas altitude search is reworked to specify a duration for a time range instead of needing the target to be above for the whole time frame  
+- Optimal exposure calculator is removed from the core application, but available as a plugin  
+
+## <span style="color:yellow;"> X86 Deprecation</span>
+- The x86 version of N.I.N.A. will be phased out after version 2.0. It is already reduced in capabilities, due to the limitations of the x86 platform, and will be removed completely in future.
+- Parallel saving and processing of images is disabled for x86. They will be processed and then saved sequentially
+- Debayering and related settings are disabled for x86
+- Plugins might not be compatible with x86
+- Nikon offers no more x86 SDK libraries
+- Offline Sky Map Image Cache rendering is not available for x86
+
+
+## Complete Sequencer Rework
+
+### Sequence Tab changed to show a sequence navigation first
+- Old Sequencer has been renamed to "Simple Sequencer"
+- The internal engine for the simple sequencer has been completely revamped. The simple sequencer will use the advanced sequencer framework internally while exposing a similar user interface that was used previously
+- If required a simple sequence can be generated into the advanced sequence for fine tuning
+- Instead of loading an empty target by default, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead or jump directly into the advanced sequencer
+- End of sequence options are moved from the options tab to the sequence tab
+- Introduced new start of sequence options to be used
+- A new toggle to "Rotate Target" to the desired orientation has been added. Previously this was always done when a rotator was connected and skipped when it was not connected. The new approach should be much more intuitive for the user to understand when rotation will be considered or not.
+- Removed external command and flat panel items from the simple sequencer UI, as these are only for advanced usage and not used by the majority that use the simple sequencer
+- Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) and [SkytechX](http://www.skytechx.eu/) planetarium programs
+- Sequence mode loop has been changed sligthly to not define a number of exposures on each row but rather on the whole sequence instead to loop through.
+
+### New Advanced Sequencer
+- In this area a custom sequence can be built completely from scratch by individual small building blocks
+- Each user has a different flow of how a sequence should look like. This advanced planning can serve most requirements that a user might have.
+- The building blocks consist of these categories
+  - *Instruction Sets*
+    - These sets group together different instructions
+    - Templates can be generated out of these sets to be used later with the same parameters
+  - *Instructions*
+    - These are the individual steps to automate the sequence
+    - Each item has a different operation, like switching to a filter or taking an exposure 
+  - *Trigger*
+    - Triggers are part of an instruction set and are evaluated after each instruction is processed
+    - They have certain conditions that are checked and when these are fullfilled the triggers will fire
+    - Examples for these are autofocus after certain parameters, merdian flip or dithering after an amount of exposures
+    - Triggers are always cascading. So a trigger on an instruction set on a higher level than the currently executed instruction set will also be evaluated
+  - *Loop Conditions*
+    - These conditions are attached to an instruction set and drive the behavior of the set
+    - As long as a condition is fullfilled, the instruction set will be looped
+    - Once a condition is not fullfilled anymore, all remaining instructions inside an instruction set will be skipped
+    - Loop conditions are always cascading. So a conditions on an instruction set on a higher level than the currently executed instruction set will also be evaluated
+  - *Templates*
+    - Each instruction set can be saved as a template
+    - These templates store all info that has been set inside the instruction set and can be restored for later usage
+    - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
+    - Sub folders inside the default sequence folder are possible and will group these templates together
+  - *Targets*
+    - Each Deep Sky Object Sequence be saved as a target
+    - These target store all info that has been set inside the deep sky object sequence and can be restored for later usage
+    - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
+- For more details on the usage refer to the documentation
+
+## New Plugin Tab
+- With the introduction of the advanced sequencer, a sequence can be planned with individual building blocks. These blocks have been designed to work like small plugins that will be initialized on startup. This opens up the possibility for specialized custom plugins that can be installed independently on demand.
+- To manage these custom plugins for the advanced sequencer a new application tab page has been introduced. There a user can setup and see all installed plugins as well as having the possiblity to see, install and update plugins from the official online plugin repository.
+- Plugins can currently hook into the advanced sequencer, add new dock panels in the imaging tab or add different behaviors for autofocus, star detection and star annotation. More areas to be pluggable are planned for the future.
+- The main benefit of these plugins are the possibility to create very specialized behavior, that would only benefit by a smaller user base, without cluttering the application with these capabilities for users that do not need this special behavior.
+
+## Framing Tab
+- Instead of sending the current target to the sequencer, the user will be prompted to either choose the simple sequencer or directly send the target to the new advanced sequencer while also being able to choose from different templates
+- Replacing of the complete targets is removed, as this is not necessary. 
+- Possibility to manually enter target rotation 
+- A new multi action button replaces the slew button. This button can either "slew", "slew and center" or "slew, center and rotate" your current framing
+- Improved precision when dragging the rectangle around, especially for longer distances
+- Added a new option to preserve the alignment when being far away from celestial equator where panels won't be perfectly aligned to a rectangle anymore when having the same rotation
+- Visually show the misalignment when having the same rotation for each panel when being further away from the celestial equator
+- Added a new grid showing the mosaic panel coordinates and orientations
+- Added a center dot for the framing rectangle
+- A new toggle is available to toggle the sky background instead of the framing rectangle
+- The Sky Object Annotation will now properly draw elliptical objects when position angle and size information is available instead of always showing them as circular
+- Offline Sky Map can now show images from the cache (x64 only). The "Sky Atlas Image Repository" could unfortunately not be lifted for this, but existing images from the cache in framing will can be used.
+
+## Imaging Tab - Sequence Panel
+- As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore when using the advanced sequencer
+- Instead the sequence panel will show a minimized representation of the advanced sequence, where you can see the instructions with basic details
+- When using the simple sequencer the old style will still be shown instead
+
+## New hardware support
+
+### SkyGuard
+- Integration of SkyGuard in NINA
+- Added of SkyGuard Guider and its setup
+- Implementation of the Connect, Disconnect, StartGuiding, StopGuiding and Dither methods
+
+### MGEN3
+- Full control of the MGEN3 by mirroring the controller display into N.I.N.A.'s user interface
+- Automatic power-on when connecting
+- Starts guiding on sequence start
+- Performs calibration and star auto-selection when required
+- Displays star drift during guiding in a graph
+- Dithering during sequencing
+
+### MetaGuide
+- MetaGuide is now available as an option for a guiding application
+
+### SVBony
+- Added a native driver for SVBony cameras. Currently without temperature control and tested with SVBony 305M Pro.
+
+### SBIG
+- Added a native driver for SBIG cameras.
+
+### MallinCam
+- Added native driver for MallinCam cameras.
+
+### Risingcam
+- Native support for Risingcam added
+
+### Player One
+- Native support for Player One Cameras
+
+### ASCOM Dome
+- ASCOM Domes are supported throughout the application
+  - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
+  - Lateral offsets supported, enabling side-by-side telescope setups
+  - When synchronization is enabled, telescope slews wait for the dome to synchronize before next actions, such as imaging and plate solving
+  - Homes the dome prior to parking, which can improve the reliability of arriving precisely at the park location. This can be important if a shutter motor battery charges in the park position
+ - Dome actions provided in the new sequencer
+  - Enable dome synchronization
+  - Open/Close shutter
+  - Park dome  
+
+### ASCOM CoverCalibrator
+- With the ASCOM Platform Version 6.5 a new type of interface was added called "CoverCalibrator". 
+- These are basically flat panel devices which will now be available to choose from in the application under the flat panel section
+
+### ASCOM SafetyMonitor
+- An ASCOM device to monitor safe conditions for an imaging run
+- These devices can be used inside the sequencer to interrupt an imaging run, when they report unsafe conditions
+- Option to automatically close the dome shutter immediately when the safety monitor reports unsafe conditions
+
+### Native support for Atik EFW2/3 and internal Filterwheels
+- The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported
+- This allows usage of native camera drivers for Atik cameras with integrated filter wheels
+- The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
+
+### Improvements for Altair, Touptek, Omegaon, Mallincam and Risingcam native drivers
+- Native driver implementation unified for a common interface, as the underlying SDKs are similar
+- Additive binning can be turned on
+- Fan speed can be controlled when available
+- Binning info for these cameras are now properly inserted into Metadata
+
+### PHD2
+- Dither will be skipped when not actively guiding or the guide star was lost
+- Settle time will now correctly be considered when starting guiding
+- Guiding start timeout will not consider calibration time and will also be used when "Guiding start retry" is off
+- Guiding start retry will not retry more than three times to prevent an infinite loop
+- A ROI percentage can now be set for PHD2 to be considered during guidestar search
+- Profiles can now be switched from the list of available PHD2 profiles
+
+## Device-related Improvements
+- *Canon*: Automatically send request to increase shutdown time, when camera is about to shutdown
+- *Nikon*: Fixed an issue where cancelling an exposure would lead to unexpected bulb exposure times
+- Flat Device Brightness is no longer expressed in percentage, but rather in the absolute values the flat panel supports
+- Flat Device *trained brightness levels* will be *automatically migrated* from percentage to absolute values *after first flat panel device connection*.
+- Filter Wheel List of Filters are now all using the list from the profile instead of having a mix of filters from the ASCOM driver and those from the profile. De-Sync of these lists can't happen anymore.
+- Some mount drivers have reversed primary and secondary axis implementation for manual movements. Now a reverse flag is available to manually correct this behavior.
+- ASCOM Camera driver can now handle odd sensor width & height for mono sensors. A setting to enable this new behavior is available.
+- ASCOM connection and disconnection logic is now unified between all devices to ensure same bahvior
+- ASCOM connection that is lost without any raised error will now be tried to be reconnected one time. If an error happens due to that the application will disconnect like before.
+- ASCOM get and set methods use a unified logic to ensure same behavior for all devices
+- *FLI*: Background flush is now disabled prior to readout to prevent a hung readout
+- *FLI*: Filter wheel driver now removes any extraneous `/` character from single-filter positions on CenterLine filter wheels
+- *MGEN2* now supports unattended guide star selection and calibration, and automatic meridian flips
+- Altair, MallinCam, Omegon, RisingCam and ToupTek subsampling is now available
+
+## Application Improvements
+### General
+- The application distribution is now code signed
+- Application window will now remember its placing and state
+- Application initialization is utilizing more parallel processing to startup faster.
+- Application logs are vastly improved to log a lot more info of what is happening at the various levels. INFO level will also contain a lot more info of what is happening at a high level.
+- It is now possible to change the application font in the options
+- It is now possible to start, resume and cancel sequences from the preview window
+- Options menu has been restructured to adhere to the Equipment layout
+- Auto-focus is now its own tab in the Options menu
+- Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)
+- Any active field of view or ocular rotation angle is now imported along with coordinates from Stellarium and TheSky X
+- New translation for Czech (Čeština) has been added
+- New translation for Norwegian Bokmal (Norsk bokmål) has been added
+- New translation for Korean (한국어) has been added
+- Can send the sequencer target coordinates to the Framing Wizard
+- Improved Meridian Flip reliability by retrying when changing the pier or slewing close to the meridian fails. NINA now provides a warning suggesting to increase the meridian wait time if this hapens
+- Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider
+- Connect all button now connects all devices in a sequential order to prevent collisions with com port scanning that could happen
+- After hitting connect all button, it will show highlighted and when hit again it will disconnect all devices instead
+- Meridian Flip now allows for a time range instead of a single point in time to allow for less time lost
+- Some areas where the user interface was clipped on lower resolutions (down to 720p) are now showing all details
+- Telescope panel in imaging tab now shows an indicator when the telescope is not unparked
+- Telescope Park action will now wait for the scope to reach park position
+- Profile chooser on startup can now be re-activated in options again once it is disabled
+- Guiding gets stopped before any telescope-moving sequencer command gets executed 
+- Gain/Offset fields will now show the default values as a hint text, rather than being populated inside the textbox itself. Having this approach, a user can directly enter specific values without having to clear the default value first.
+- The imaging tab layout is now saved per profile, instead of one layout for all profiles
+- Most options and values now also display a unit of measure if applicable
+- Weather information in equipment tab now shows correct wind direction.
+- Various layout improvements and redesign of controls
+- Flat Wizard page controls are streamlined with the rest of the application by replacing the sliders with steppers
+- When closing a dock panel in the imaging tab and reopening it again, the position is properly restored
+- Cooling charts in the camera equipment tab have been merged into one single chart with the history size increased from 100 to 1000
+- On web requests the user-agent header is now filled properly
+- An autofocus indicator in the HFR history will no longer change the Y-Axis scale
+- The automatic roll over to a blind solver can now be switched off in the plate solver tab
+- For the first image in an image view control, the image will now be shown as size to fit instead of 1:1 by default
+- Profiles can now store an arbitrary description
+- Pixel inspector on imaging tab (by holding right click on an image) now also includes min, max and mean of the pixel area
+
+### Subsampling
+- The sub sample button above the image panel has been removed
+- In the imaging camera control panel when subsampling is enabled a new control will be visible to adjust the subsampling directly there
+- This should be more intuitive to use and does not require a certain order of operations and an active non sub sampled image to set up
+
+### Local Horizon Display
+- It is now possible to define a custom horizon to be used and displayed in the altitude charts
+- Using these custom horizons will make target planning a lot more convenient when only a portion of the sky is available
+- The horizon file consists of a simple mapping of azimuth to altitude values
+- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified time range
+----
+```markdown
+# Example horizon file content
+# A line starting with # is treated as a comment
+# The horizon file consists of a pair of azimuth and altitude values
+# Azimuth values that are not explicitly defined will interpolate the altitude by using the existing datapoints
+# A minimum of two points have to be defined
+0 10
+100 30
+150 35
+250 30
+300 20
+350 15
+```
+----
+
+### Sky Atlas
+- The sky atlas has a new entry for altitude filter to filter for the object to be above the horizon for the specified duration
+- Filter for time from/through is now only showing time without a day
+- Altitude filter is changed to use a duration instead of a start and end time
+- Moon distance is now shown in the list for each object. Furthermore a new filter is added to filter by moon distance.
+
+### Auto-focus system
+- Auto-focus can now have different settings for gain, offset and binning per filter
+- When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus
+- During an auto-focus run while taking an image, if the download fails it will be automatically retried up to two times to try to recover
+- A new optional setting R² threshold can now be set. When this threshold is non-zero, the autofocus run has to fullfill a minimum required R² - [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) - above this threshold to be considered as successful.
+
+### File name patterns and FITS keywords
+- Keyword list to choose from is now grouped by category
+- Added `CENTALT`, and `CENTAZ` keywords
+- Added `AIRMASS` keyword, calculated from mount altitude using Gueymard 1993
+- Added `$$CAMERA$$` file pattern
+- Added `$$TELESCOPE$$` file pattern
+- Added `$$ROTATEANGLE$$` file pattern
+- Added `$$STARCOUNT$$` file pattern
+- Added `$$TEMPERATURESETPOINT$$` file pattern
+
+#### Included Camera SDK Versions can now be found inside the about page of N.I.N.A.
+
 # Version 1.10 HF3
 
 ## Improvements
@@ -45,6 +321,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Improvements
 - Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
 - Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers
+- QHY: Legacy CCD and A-series cameras can now select Normal or Fast readout speeds when using the native driver
 
 ## Bugfixes
 - The telescope will no longer go on a journey to the celestial pole before going to the park position
@@ -60,6 +337,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - All guiders now report when a successful connection happens
 - Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
 - Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
+- QHY: QHY294M/C Pro is properly handled by the QHY native driver
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.18421.20210202
@@ -68,7 +346,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.2.3000
 - **Omegon:** 39.15325.2019.810
-- **QHY:** 20.8.26.3
+- **QHY:** 21.02.19.19
 - **ToupTek:** 48.18081.2020.1205
 - **ZWO:** 1.16.3
 
@@ -699,3 +977,6 @@ ___
 - ImagePatterns inside options can now be dragged from the list to the textbox
 - Major code refactorings for better maintainability
 - Lots and lots of minor bugfixes and improvements
+- Launch NINA with a specific ProfileId via cmdline
+- Integrated with Windows JumpList feature to launch instance with specific profile loaded
+- Enhanced Altitude Check to permit imaging of targets that are below the configured altitude when they are rising in the sky and display a visual cue to distinguish rising versus setting targets

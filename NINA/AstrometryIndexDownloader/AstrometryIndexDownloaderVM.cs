@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,12 +8,9 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using NINA.Utility;
-using NINA.Utility.Astrometry;
-using NINA.Utility.WindowService;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +18,8 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 
 namespace NINA.AstrometryIndexDownloader {
 
@@ -116,6 +114,7 @@ namespace NINA.AstrometryIndexDownloader {
             var success = false;
             using (var client = new WebClient()) {
                 try {
+                    client.Headers.Add("User-Agent", CoreUtil.UserAgent);
                     await client.DownloadFileTaskAsync(url, _destinationfolder + file.Name);
                     success = true;
                 } catch (WebException ex) {
@@ -277,13 +276,13 @@ namespace NINA.AstrometryIndexDownloader {
 
         public double ArcsecPerPixel {
             get {
-                return Astrometry.ArcsecPerPixel(PixelSize, FocalLength);
+                return AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
             }
         }
 
         public double FieldOfView {
             get {
-                return Astrometry.MaxFieldOfView(ArcsecPerPixel, CamWidth, CamHeight);
+                return AstroUtil.MaxFieldOfView(ArcsecPerPixel, CamWidth, CamHeight);
             }
         }
 

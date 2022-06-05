@@ -1,5 +1,5 @@
 ﻿<!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -26,12 +26,21 @@
             However it depends on various third party libraries which carry their own copyright notices and license terms which are explained below.</TextBlock>
         <Grid Grid.Row="1" Margin="20,20,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="150" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -145,9 +154,9 @@
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="0"
-                Text="WPFToolkit (v3.5.0)" />
+                Text="WpfExToolkit" />
             <TextBlock Grid.Row="8" Grid.Column="1">
-                <Hyperlink NavigateUri="https://github.com/xceedsoftware/wpftoolkit" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/xceedsoftware/wpftoolkit</Hyperlink>
+                <Hyperlink NavigateUri="https://github.com/dotnetprojects/WpfExtendedToolkit" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/dotnetprojects/WpfExtendedToolkit</Hyperlink>
             </TextBlock>
             <TextBlock Grid.Row="8" Grid.Column="2">
                 <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
@@ -244,12 +253,122 @@
             <TextBlock
                 Grid.Row="17"
                 Grid.Column="0"
-                Text="lz4net" />
+                Text="K4os.Compression.LZ4" />
             <TextBlock Grid.Row="17" Grid.Column="1">
-                <Hyperlink NavigateUri="https://github.com/MiloszKrajewski/lz4net" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/MiloszKrajewski/lz4net</Hyperlink>
+                <Hyperlink NavigateUri="https://github.com/MiloszKrajewski/K4os.Compression.LZ4" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/MiloszKrajewski/K4os.Compression.LZ4</Hyperlink>
             </TextBlock>
             <TextBlock Grid.Row="17" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MIT" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="18"
+                Grid.Column="0"
+                Text="ToggleSwitch" />
+            <TextBlock Grid.Row="18" Grid.Column="1">
+                <Hyperlink NavigateUri="https://archive.codeplex.com/?p=toggleswitch" RequestNavigate="Hyperlink_RequestNavigate">https://archive.codeplex.com/?p=toggleswitch</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="18" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="19"
+                Grid.Column="0"
+                Text="Ninject" />
+            <TextBlock Grid.Row="19" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/ninject/Ninject" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/ninject/Ninject</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="19" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="20"
+                Grid.Column="0"
+                Text="Fastenshtein" />
+            <TextBlock Grid.Row="20" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/DanHarltey/Fastenshtein" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/DanHarltey/Fastenshtein</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="20" Grid.Column="2">
+                <Hyperlink NavigateUri="https://github.com/DanHarltey/Fastenshtein/blob/master/LICENSE" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="21"
+                Grid.Column="0"
+                Text="CsvHelper" />
+            <TextBlock Grid.Row="21" Grid.Column="1">
+                <Hyperlink NavigateUri="https://joshclose.github.io/CsvHelper/" RequestNavigate="Hyperlink_RequestNavigate">https://joshclose.github.io/CsvHelper/</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="21" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="22"
+                Grid.Column="0"
+                Text="Avalondock" />
+            <TextBlock Grid.Row="22" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/Dirkster99/AvalonDock" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/Dirkster99/AvalonDock</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="22" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="23"
+                Grid.Column="0"
+                Text="NTFS-Streams" />
+            <TextBlock Grid.Row="23" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/RichardD2/NTFS-Streams" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/RichardD2/NTFS-Streams</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="23" Grid.Column="2">
                 <Hyperlink NavigateUri="https://opensource.org/licenses/BSD-2-Clause" RequestNavigate="Hyperlink_RequestNavigate">The 2-Clause BSD License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="24"
+                Grid.Column="0"
+                Text="MdXaml" />
+            <TextBlock Grid.Row="24" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/whistyun/MdXaml" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/whistyun/MdXaml</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="24" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MIT" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="25"
+                Grid.Column="0"
+                Text="Protocol Buffers" />
+            <TextBlock Grid.Row="25" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/protocolbuffers/protobuf" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/protocolbuffers/protobuf</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="25" Grid.Column="2">
+                <Hyperlink NavigateUri="https://github.com/protocolbuffers/protobuf/blob/master/LICENSE" RequestNavigate="Hyperlink_RequestNavigate">Google Open Source License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="26"
+                Grid.Column="0"
+                Text="gRPC Named Pipes" />
+            <TextBlock Grid.Row="26" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/cyanfish/grpc-dotnet-namedpipes" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/cyanfish/grpc-dotnet-namedpipes</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="26" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="27"
+                Grid.Column="0"
+                Text="Castle Core" />
+            <TextBlock Grid.Row="27" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/castleproject/Core" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/castleproject/Core</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="27" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
             </TextBlock>
         </Grid>
     </Grid>

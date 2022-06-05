@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,8 +12,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     MinWidth="400"
     MinHeight="150"
     d:DesignHeight="450"
@@ -40,14 +41,14 @@
                     Text="{Binding FolderPath, Mode=TwoWay}" />
                 <Button
                     Grid.Column="2"
-                    Width="30"
-                    Height="30"
+                    Width="20"
+                    Height="20"
                     Margin="5,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Command="{Binding OpenFolderDiagCommand}">
                     <Path
-                        Margin="4,17,4,4"
+                        Margin="2,10,2,0"
                         Data="{StaticResource DotsSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
                         Stretch="Uniform" />
@@ -67,6 +68,17 @@
             <UniformGrid Margin="0,5,0,0" Columns="2">
                 <TextBlock Text="{ns:Loc LblIsBayered}" />
                 <CheckBox IsChecked="{Binding IsBayered}" />
+            </UniformGrid>
+            <UniformGrid Margin="0,5,0,0" Columns="2">
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAlwaysListen}" />
+                <CheckBox IsChecked="{Binding AlwaysListen}" />
+            </UniformGrid>
+            <UniformGrid Margin="0,5,0,0" Columns="2">
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDownloadDelay}" />
+                <ninactrl:UnitTextBox
+                VerticalAlignment="Center"
+                Text="{Binding DownloadDelay}"
+                Unit="s" />
             </UniformGrid>
         </StackPanel>
         <Button

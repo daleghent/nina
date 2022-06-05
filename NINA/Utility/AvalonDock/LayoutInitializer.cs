@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,26 +8,28 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using System.IO;
+using AvalonDock.Layout;
 using System.Linq;
-using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NINA.Utility.AvalonDock {
 
-    internal class LayoutInitializer : ILayoutUpdateStrategy {
-        public static string LAYOUTFILEPATH = Path.Combine(Utility.APPLICATIONTEMPPATH, "avalondock.config");
+    public class LayoutInitializer : ILayoutUpdateStrategy {
 
         public bool BeforeInsertAnchorable(LayoutRoot layout, LayoutAnchorable anchorableToShow, ILayoutContainer destinationContainer) {
             //AD wants to add the anchorable into destinationContainer
-            //just for test provide a new anchorablepane
             //if the pane is floating let the manager go ahead
             LayoutAnchorablePane destPane = destinationContainer as LayoutAnchorablePane;
             if (destinationContainer != null &&
-                destinationContainer.FindParent<LayoutFloatingWindow>() != null)
+                destinationContainer.FindParent<LayoutFloatingWindow>() != null) {
                 return false;
+            }
+
+            if (destPane != null) {
+                destPane.Children.Add(anchorableToShow);
+                anchorableToShow.IsSelected = true;
+                return true;
+            }
 
             var toolsPane = layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(d => d.Name == "ToolsPane");
             if (toolsPane != null) {

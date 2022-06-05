@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,15 +8,17 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NINA.Core.Enum;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
 using NINA.Utility;
-using NINA.Utility.Enum;
-using NINA.Utility.Http;
-using NINA.Utility.WindowService;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -31,7 +32,7 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
-    internal class VersionCheckVM : BaseINPC {
+    public class VersionCheckVM : BaseINPC, IVersionCheckVM {
         private const string BASEURL = "https://nighttime-imaging.eu/";
         private const string VERSIONSURL = BASEURL + "index.php/wp-json/nina/v1/versioninfo/{0}";
 
@@ -40,8 +41,10 @@ namespace NINA.ViewModel {
             DownloadCommand = new AsyncCommand<bool>(Download);
             CancelDownloadCommand = new RelayCommand(CancelDownload);
             UpdateCommand = new RelayCommand(Update);
+            CheckUpdateCommand = new AsyncCommand<bool>(() => CheckUpdate());
         }
 
+        public ICommand CheckUpdateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand CancelDownloadCommand { get; set; }
         public IAsyncCommand DownloadCommand { get; set; }
@@ -67,29 +70,31 @@ namespace NINA.ViewModel {
         }
 
         public async Task<bool> CheckUpdate() {
-            if (NetworkInterface.GetIsNetworkAvailable() == false) {
-                Logger.Info("Network is not available. Skipping version check.");
-                return false;
-            }
-
-            checkCts?.Dispose();
-            checkCts = new CancellationTokenSource();
-            try {
-                versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
-                if (versionInfo?.IsNewer() == true) {
-                    UpdateAvailable = true;
-                    var projectVersion = new ProjectVersion(versionInfo.Version);
-                    UpdateAvailableText = string.Format(Locale.Loc.Instance["LblNewUpdateAvailable"], projectVersion);
-                    Changelog = await GetChangelog(versionInfo, checkCts.Token);
-                } else {
+            return await Task.Run(async () => {
+                if (NetworkInterface.GetIsNetworkAvailable() == false) {
+                    Logger.Info("Network is not available. Skipping version check.");
                     return false;
                 }
-            } catch (OperationCanceledException) {
-            } catch (Exception ex) {
-                versionInfo = null;
-                Logger.Error(ex);
-            }
-            return true;
+
+                checkCts?.Dispose();
+                checkCts = new CancellationTokenSource();
+                try {
+                    versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
+                    if (versionInfo?.IsNewer() == true) {
+                        UpdateAvailable = true;
+                        var projectVersion = new ProjectVersion(versionInfo.Version);
+                        UpdateAvailableText = string.Format(Loc.Instance["LblNewUpdateAvailable"], projectVersion);
+                        Changelog = await GetChangelog(versionInfo, checkCts.Token);
+                    } else {
+                        return false;
+                    }
+                } catch (OperationCanceledException) {
+                } catch (Exception ex) {
+                    versionInfo = null;
+                    Logger.Error(ex);
+                }
+                return true;
+            });
         }
 
         private bool ValidateChecksum(VersionInfo versionInfo, string file) {
@@ -128,7 +133,7 @@ namespace NINA.ViewModel {
                         UpdateReady = true;
                     }
                 } else {
-                    Utility.Notification.Notification.ShowError(Locale.Loc.Instance["LblChecksumError"]);
+                    Notification.ShowError(Loc.Instance["LblChecksumError"]);
                     UpdateReady = false;
                 }
                 return UpdateReady;
@@ -248,7 +253,7 @@ namespace NINA.ViewModel {
                         break;
                 }
 
-                var request = new Utility.Http.HttpGetRequest(url);
+                var request = new HttpGetRequest(url);
                 var response = await request.Request(ct);
 
                 //Validate the returned json against the schema
@@ -381,7 +386,7 @@ namespace NINA.ViewModel {
             }
 
             private Version GetApplicationVersion() {
-                return new Version(Utility.Utility.Version);
+                return new Version(NINA.Core.Utility.CoreUtil.Version);
             }
         }
     }

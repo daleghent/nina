@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,13 +14,13 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding CameraInfo.Connected}">
                 <StackPanel IsEnabled="{Binding Cam.CanSetTemperature}" Orientation="Vertical">
                     <Border
@@ -80,7 +80,7 @@
                         Margin="0,5,0,0"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
-                        Visibility="{Binding Cam.HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                        Visibility="{Binding CameraInfo.HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDewHeaterShort}" />
                             <CheckBox
@@ -131,7 +131,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="5,0,0,0"
-                                    Text="{Binding CameraInfo.Temperature, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}"
+                                    Text="{Binding CameraInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}"
                                     Visibility="{Binding CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                                 <TextBlock Text=" / ">
                                     <TextBlock.Visibility>
@@ -142,10 +142,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBlock
-                                    MinWidth="20"
-                                    Margin="5,0,0,0"
-                                    Text="{Binding Cam.TemperatureSetPoint, StringFormat=\{0:0.00\}}">
+                                <TextBlock MinWidth="20" Text="{Binding Cam.TemperatureSetPoint, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}">
                                     <TextBlock.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                             <Binding Path="CameraInfo.Connected" />
@@ -188,12 +185,21 @@
                                     Text="{ns:Loc LblTargetTemp}" />
                                 <ninactrl:StepperControl
                                     Grid.Column="1"
-                                    MinWidth="100"
+                                    MinWidth="120"
                                     IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                     MaxValue="50"
                                     MinValue="-50"
                                     StepSize="1"
-                                    Value="{Binding TargetTemp, Mode=TwoWay}" />
+                                    Value="{Binding TargetTemp, Mode=TwoWay}">
+
+                                    <ninactrl:StepperControl.InnerContent>
+                                        <ninactrl:UnitTextBox
+                                            VerticalContentAlignment="Center"
+                                            Text="{Binding TargetTemp, Mode=TwoWay}"
+                                            TextAlignment="Center"
+                                            Unit="°C" />
+                                    </ninactrl:StepperControl.InnerContent>
+                                </ninactrl:StepperControl>
                             </Grid>
 
                             <Grid Grid.Row="1" Margin="0,2,0,0">
@@ -206,12 +212,19 @@
 
                                 <ninactrl:StepperControl
                                     Grid.Column="1"
-                                    MinWidth="100"
+                                    MinWidth="120"
                                     IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                     MaxValue="30"
                                     MinValue="0"
                                     StepSize="1"
-                                    Value="{Binding CoolingDuration, Mode=TwoWay}" />
+                                    Value="{Binding CoolingDuration, Mode=TwoWay}">
+                                    <ninactrl:StepperControl.InnerContent>
+                                        <ninactrl:UnitTextBox
+                                            Text="{Binding CoolingDuration, Mode=TwoWay}"
+                                            TextAlignment="Center"
+                                            Unit="min" />
+                                    </ninactrl:StepperControl.InnerContent>
+                                </ninactrl:StepperControl>
                             </Grid>
 
                             <ninactrl:CancellableButton
@@ -222,6 +235,7 @@
                                 ButtonImage="{StaticResource SnowflakeSVG}"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding CancelCoolCamCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding CoolCamCommand}"
                                 IsEnabled="{Binding WarmCamCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                 ToolTip="{ns:Loc LblCoolCamBtnTooltip}" />
@@ -253,12 +267,19 @@
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
                                 <ninactrl:StepperControl
                                     Grid.Column="1"
-                                    MinWidth="100"
+                                    MinWidth="120"
                                     IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                     MaxValue="30"
                                     MinValue="0"
                                     StepSize="1"
-                                    Value="{Binding WarmingDuration, Mode=TwoWay}" />
+                                    Value="{Binding WarmingDuration, Mode=TwoWay}">
+                                    <ninactrl:StepperControl.InnerContent>
+                                        <ninactrl:UnitTextBox
+                                            Text="{Binding WarmingDuration, Mode=TwoWay}"
+                                            TextAlignment="Center"
+                                            Unit="min" />
+                                    </ninactrl:StepperControl.InnerContent>
+                                </ninactrl:StepperControl>
                             </Grid>
                             <ninactrl:CancellableButton
                                 Grid.Row="1"
@@ -268,6 +289,7 @@
                                 ButtonImage="{StaticResource FireSVG}"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding CancelCoolCamCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding WarmCamCommand}"
                                 IsEnabled="{Binding CoolCamCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                 ToolTip="{ns:Loc LblWarmCamBtnTooltip}" />

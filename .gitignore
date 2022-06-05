@@ -2,6 +2,8 @@
 NINA/External/*/Altair
 NINA/External/*/Canon
 NINA/External/*/Nikon
+NINA/External/**/*.lib
+NINA/External/**/*.exe
 
 # Exclude nuget.exe
 /publish/nuget.exe
@@ -97,3 +99,5 @@ orleans.codegen.cs
 /NINA/Resources/SVG/ArrowRight.ai
 /NINA/Resources/StaticResources/ArrowRight.xaml
 /NINA/Resources/StaticResources/ArrowLeft.xaml
+hooks/
+lfs/

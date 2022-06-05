@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,19 +8,17 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NINA.Locale;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
+using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
 
 namespace NINATest.FlatDevice {
 
@@ -90,7 +87,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<OnOffResponse>(It.IsAny<OnOffCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new OnOffResponse { DeviceResponse = response }));
             await _sut.Connect(new CancellationToken());
 
@@ -121,7 +118,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<OnOffResponse>(It.IsAny<OnOffCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             await _sut.Connect(new CancellationToken());
 
@@ -132,11 +129,13 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(1d, 1d, "L:020", "L:020\n")]
-        [TestCase(0d, 0d, "L:220", "L:220\n")]
-        [TestCase(1d, 2d, "L:020", "L:020\n")]
-        [TestCase(0d, -2d, "L:220", "L:220\n")]
-        public async Task TestBrightness(double expected, double brightness, string response = null, string expectedCommand = null) {
+        [TestCase(20, 0, "L:220", "L:220\n")]
+        [TestCase(220, 300, "L:020", "L:020\n")]
+        [TestCase(20, 20, "L:220", "L:220\n")]
+        [TestCase(220, 220, "L:020", "L:020\n")]
+        [TestCase(50, 50, "L:190", "L:190\n")]
+        [TestCase(100, 100, "L:140", "L:140\n")]
+        public async Task TestBrightness(int expected, int brightness, string response = null, string expectedCommand = null) {
             string actual = null;
             _mockSdk.Setup(m => m.InitializeSerialPort(It.IsAny<string>(), It.IsAny<object>())).Returns(true);
             _mockSdk.Setup(m => m.SendCommand<StatusResponse>(It.IsAny<StatusCommand>()))
@@ -144,7 +143,7 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new SetBrightnessResponse { DeviceResponse = response }));
             await _sut.Connect(new CancellationToken());
 
@@ -165,16 +164,16 @@ namespace NINATest.FlatDevice {
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "V:1.3" }));
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             await _sut.Connect(new CancellationToken());
 
-            _sut.Brightness = 1d;
+            _sut.Brightness = 20;
 
             var result = _sut.Brightness;
 
-            Assert.That(result, Is.EqualTo(1d));
-            Assert.That(actual, Is.EqualTo("L:020\n"));
+            Assert.That(result, Is.EqualTo(20));
+            Assert.That(actual, Is.EqualTo("L:220\n"));
         }
     }
 }

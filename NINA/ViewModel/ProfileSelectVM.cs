@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,31 +8,30 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using NINA.Utility;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Profile.Interfaces;
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Collections.Generic;
-using NINA.Utility.Notification;
 using System.Linq;
+using NINA.Core.Utility.WindowService;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile;
 
 namespace NINA.ViewModel {
 
-    internal class ProfileSelectVM : BaseINPC {
+    public class ProfileSelectVM : BaseINPC {
         private CancellationTokenSource _cancelTokenSource;
         private IProfile _defaultProfile;
-        private IProfile _tempProfile;
 
         public ProfileSelectVM(IProfileService profileService) {
             this.profileService = profileService;
             Profiles = profileService.Profiles;
             selectedProfileMeta = profileService.Profiles.Where(x => x.Id == profileService.ActiveProfile.Id).First();
-            _tempProfile = profileService.ActiveProfile;
             _defaultProfile = ActiveProfile;
         }
 
@@ -55,7 +53,7 @@ namespace NINA.ViewModel {
                     RaisePropertyChanged(nameof(FocalLength));
                     RaisePropertyChanged(nameof(Focuser));
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblSelectProfileInUseWarning"]);
+                    Notification.ShowWarning(Loc.Instance["LblSelectProfileInUseWarning"]);
                 }
                 RaisePropertyChanged();
             }
@@ -79,9 +77,9 @@ namespace NINA.ViewModel {
             }
         }
 
-        public string FocalLength {
+        public double FocalLength {
             get {
-                return ActiveProfile.TelescopeSettings.FocalLength.ToString(CultureInfo.InvariantCulture);
+                return ActiveProfile.TelescopeSettings.FocalLength;
             }
         }
 
@@ -117,21 +115,21 @@ namespace NINA.ViewModel {
             _cancelTokenSource?.Dispose();
             _cancelTokenSource = new CancellationTokenSource();
             try {
-                if (!UseSavedProfile) {
+                if (!UseSavedProfile && !profileService.ProfileWasSpecifiedFromCommandLineArgs) {
                     var ws = WindowServiceFactory.Create();
                     ws.OnDialogResultChanged += (s, e) => {
                         var dialogResult = (DialogResultEventArgs)e;
                         if (dialogResult.DialogResult != true) {
                             _cancelTokenSource.Cancel();
-                            profileService.SelectProfile(new ProfileMeta() { Id = _defaultProfile.Id, Name = _defaultProfile.Name, Location = _defaultProfile.Location });
+                            profileService.SelectProfile(new ProfileMeta() { Id = _defaultProfile.Id, Name = _defaultProfile.Name, Location = _defaultProfile.Location, Description = _defaultProfile.Description });
                         } else {
                             if (UseSavedProfile == true) {
                                 Properties.Settings.Default.UseSavedProfileSelection = true;
-                                Properties.Settings.Default.Save();
+                                CoreUtil.SaveSettings(Properties.Settings.Default);
                             }
                         }
                     };
-                    ws.ShowDialog(this, Locale.Loc.Instance["LblChooseProfile"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.SingleBorderWindow);
+                    ws.ShowDialog(this, Loc.Instance["LblChooseProfile"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.SingleBorderWindow);
                 }
             } catch (OperationCanceledException) {
             } catch (Exception ex) {

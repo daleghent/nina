@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,10 +15,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LoadingControl}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="Storyboard">
+                        <Storyboard x:Key="Storyboard" Timeline.DesiredFrameRate="15">
                             <DoubleAnimation
                                 RepeatBehavior="Forever"
-                                Timeline.DesiredFrameRate="20"
                                 Storyboard.TargetName="PART_Grid"
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                 From="0"

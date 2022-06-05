@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Model.MySwitch.PegasusAstro;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 
 namespace NINATest.Switch.PegasusAstro {
 
@@ -61,6 +61,24 @@ namespace NINATest.Switch.PegasusAstro {
         }
 
         [Test]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0", 1d, 0d, false)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1011:111111:0:0:0:0:480:0:0:0:0:0:0100000:0", 0d, 1d, true)]
+        public async Task TestPollV14(string deviceResponse, double expected, double amps, bool overCurrent) {
+            _sut = new PegasusAstroPowerSwitch(1) { Sdk = _mockSdk.Object };
+
+            var response = new StatusResponseV14 { DeviceResponse = deviceResponse };
+            _mockSdk.Setup(m => m.SendCommand<StatusResponseV14>(It.IsAny<StatusCommand>()))
+                .Returns(Task.FromResult(response));
+            _sut.FirmwareVersion = 1.4;
+
+            var result = await _sut.Poll();
+            Assert.That(result, Is.True);
+            Assert.That(_sut.Value, Is.EqualTo(expected));
+            Assert.That(_sut.CurrentAmps, Is.EqualTo(amps));
+            Assert.That(_sut.ExcessCurrent, Is.EqualTo(overCurrent));
+        }
+
+        [Test]
         public async Task TestPollInvalidResponse() {
             _sut = new PegasusAstroPowerSwitch(1) { Sdk = _mockSdk.Object };
             _mockSdk.Setup(m => m.SendCommand<StatusResponse>(It.IsAny<StatusCommand>()))
@@ -85,7 +103,7 @@ namespace NINATest.Switch.PegasusAstro {
             _sut = new PegasusAstroPowerSwitch(1) { Sdk = _mockSdk.Object };
             var command = string.Empty;
             _mockSdk.Setup(m => m.SendCommand<SetPowerResponse>(It.IsAny<SetPowerCommand>()))
-                .Callback<ICommand>(arg => { command = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { command = arg.CommandString; });
             _sut.TargetValue = value;
             await _sut.SetValue();
             Assert.That(command, Is.EqualTo(expectedCommand));
@@ -126,6 +144,21 @@ namespace NINATest.Switch.PegasusAstro {
         }
 
         [Test]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0", 1d)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:101111:0:0:0:0:480:0:0:0:0:0:0100000:0", 0d)]
+        public async Task TestPollV14(string deviceResponse, double expected) {
+            _sut = new PegasusAstroUsbSwitch(1) { Sdk = _mockSdk.Object };
+            var response = new StatusResponseV14 { DeviceResponse = deviceResponse };
+            _mockSdk.Setup(m => m.SendCommand<StatusResponseV14>(It.IsAny<StatusCommand>()))
+                .Returns(Task.FromResult(response));
+            _sut.FirmwareVersion = 1.4;
+
+            var result = await _sut.Poll();
+            Assert.That(result, Is.True);
+            Assert.That(_sut.Value, Is.EqualTo(expected));
+        }
+
+        [Test]
         public async Task TestPollInvalidResponse() {
             _sut = new PegasusAstroUsbSwitch(1) { Sdk = _mockSdk.Object };
             _mockSdk.Setup(m => m.SendCommand<StatusResponse>(It.IsAny<StatusCommand>()))
@@ -150,7 +183,7 @@ namespace NINATest.Switch.PegasusAstro {
             _sut = new PegasusAstroUsbSwitch(1) { Sdk = _mockSdk.Object };
             var command = string.Empty;
             _mockSdk.Setup(m => m.SendCommand<SetUsbPowerResponse>(It.IsAny<SetUsbPowerCommand>()))
-                .Callback<ICommand>(arg => { command = arg.CommandString; });
+                .Callback<ISerialCommand>(arg => { command = arg.CommandString; });
             _sut.TargetValue = value;
             await _sut.SetValue();
             Assert.That(command, Is.EqualTo(expectedCommand));

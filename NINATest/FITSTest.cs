@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,21 +8,19 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using FluentAssertions;
-using NINA.Model.ImageData;
-using NINA.Utility;
-using NINA.Utility.Astrometry;
-using NINA.Utility.FileFormat.FITS;
-using NINA.Utility.FileFormat.FITS.DataConverter;
+using NINA.Image.ImageData;
+using NINA.Core.Utility;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using NINA.Image.FileFormat.FITS;
+using NINA.Image.FileFormat.FITS.DataConverter;
 
 namespace NINATest {
 
@@ -74,7 +71,7 @@ namespace NINATest {
                 new FITSHeaderCard("YBINNING",1, "Y axis binning factor"),
                 new FITSHeaderCard("ROWORDER","TOP-DOWN", "FITS Image Orientation"),
                 new FITSHeaderCard("EQUINOX", 2000d, "Equinox of celestial coordinate system"),
-                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
+                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", NINA.Core.Utility.CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
             };
 
             //Act
@@ -182,7 +179,7 @@ namespace NINATest {
             metaData.Telescope.Name = "TEST";
             metaData.Telescope.FocalLength = 200;
             metaData.Telescope.FocalRatio = 5;
-            metaData.Telescope.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Telescope.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedHeaderCards = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("TELESCOP", metaData.Telescope.Name, "Name of telescope"),
@@ -247,12 +244,12 @@ namespace NINATest {
             var now = DateTime.Now;
             var metaData = new ImageMetaData();
             metaData.Target.Name = "TEST";
-            metaData.Target.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Target.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedHeaderCards = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("OBJECT", metaData.Target.Name, "Name of the object of interest"),
-                new FITSHeaderCard("OBJCTRA", Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
-                new FITSHeaderCard("OBJCTDEC", Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
+                new FITSHeaderCard("OBJCTRA", AstroUtil.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
+                new FITSHeaderCard("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
             };
 
             var sut = new FITS(new ushort[] { 1, 2 }, 1, 1);
@@ -268,14 +265,14 @@ namespace NINATest {
             var now = DateTime.Now;
             var metaData = new ImageMetaData();
             metaData.Focuser.Name = "TEST";
-            metaData.Focuser.Position = 123.11;
+            metaData.Focuser.Position = 123;
             metaData.Focuser.StepSize = 10.23;
             metaData.Focuser.Temperature = 125.12;
 
             var expectedHeaderCards = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("FOCNAME", metaData.Focuser.Name, "Focusing equipment name"),
-                new FITSHeaderCard("FOCPOS", metaData.Focuser.Position, "[step] Focuser position"),
-                new FITSHeaderCard("FOCUSPOS", metaData.Focuser.Position, "[step] Focuser position"),
+                new FITSHeaderCard("FOCPOS", metaData.Focuser.Position.Value, "[step] Focuser position"),
+                new FITSHeaderCard("FOCUSPOS", metaData.Focuser.Position.Value, "[step] Focuser position"),
                 new FITSHeaderCard("FOCUSSZ", metaData.Focuser.StepSize, "[um] Focuser step size"),
                 new FITSHeaderCard("FOCTEMP", metaData.Focuser.Temperature, "[degC] Focuser temperature"),
                 new FITSHeaderCard("FOCUSTEM", metaData.Focuser.Temperature, "[degC] Focuser temperature"),
@@ -462,8 +459,8 @@ namespace NINATest {
 
             var sut = new FITSHeaderCard(key, value, comment);
 
-            var expectedValue = "'QXuUfwRN6t5OumSP9f'";
-            var expectedComment = "QXuUfwRN6t5OumSP9fFoWki4vUIvBXwFVYIDKROyCscAZ";
+            var expectedValue = "'QXuUfwRN6t5OumSP9fFo'";
+            var expectedComment = "QXuUfwRN6t5OumSP9fFoWki4vUIvBXwFVYIDKROyCsc";
 
             sut.Key.Should().Be(key);
             sut.Value.Should().Be(expectedValue);

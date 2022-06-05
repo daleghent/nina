@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
+using NINA.Equipment.Equipment.MyCamera;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,17 +20,20 @@ namespace NINA.View.Equipment {
 
     internal class CameraTemplateSelector : DataTemplateSelector {
         public DataTemplate Default { get; set; }
-        public DataTemplate Touptek { get; set; }
         public DataTemplate QhyCcd { get; set; }
-        public DataTemplate Altair { get; set; }
+        public DataTemplate Touptek { get; set; }
+        public DataTemplate LegacySbig { get; set; }
+        public DataTemplate Canon { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            if (item is AltairCamera) {
-                return Altair;
-            } else if (item is OmegonCamera || item is ToupTekCamera) {
+            if (item is ToupTekAlikeCamera) {
                 return Touptek;
             } else if (item is QHYCamera) {
                 return QhyCcd;
+            } else if (item is SBIGCamera) {
+                return LegacySbig;
+            } else if (item is EDCamera) {
+                return Canon;
             } else {
                 return Default;
             }

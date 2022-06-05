@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com>
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using System.Windows;
 using System.Windows.Controls;
 

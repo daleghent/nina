@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,10 +8,12 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model.ImageData;
+using Moq;
+using NINA.Image.ImageAnalysis;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using NUnit.Framework;
 
 namespace NINATest {
@@ -23,6 +24,12 @@ namespace NINATest {
         private ushort[] arr = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 };
         private ushort width = 4;
         private ushort height = 5;
+        private ImageDataFactoryTestUtility dataFactoryUtility;
+
+        [SetUp]
+        public void Setup() {
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+        }
 
         [Test]
         public void StringFilePattern() {
@@ -32,7 +39,7 @@ namespace NINATest {
             string expectedResult = "C-2020 F3 NEOWISE _--_---A Comet";
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, metaData);
+            BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
             //Assert
@@ -47,7 +54,7 @@ namespace NINATest {
             string expectedResult = "20.00";
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, metaData);
+            BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
             //Assert
@@ -62,7 +69,7 @@ namespace NINATest {
             string expectedResult = "139";
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, metaData);
+            BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
             //Assert

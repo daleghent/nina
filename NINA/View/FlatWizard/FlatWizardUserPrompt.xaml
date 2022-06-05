@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,8 +13,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -28,11 +28,12 @@
         <TextBlock
             Grid.Row="0"
             Margin="10"
-            Text="{Binding Text}" />
+            Text="{Binding Message}" />
 
         <GroupBox Grid.Row="1" Header="{ns:Loc LblFlatUserCurrentExposureCalculation}">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -48,7 +49,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
-                    Text="{Binding CurrentMean}" />
+                    Text="{Binding CurrentMean, StringFormat={}{0:N0}}" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
@@ -60,16 +61,26 @@
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="0"
-                    Text="{ns:Loc LblEstimatedExposureTime}" />
+                    Text="{ns:Loc LblEstimatedExposureTime, StringFormat={}{0:N5}}" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="1"
-                    Text="{Binding ExpectedExposureTime}" />
+                    Text="{Binding ExpectedExposureTime, StringFormat={}{0:N5}}" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=False}"
+                    Text="{ns:Loc LblEstimatedFlatPanelBrightness}" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=False}"
+                    Text="{Binding ExpectedBrightness}" />
             </Grid>
         </GroupBox>
 
         <GroupBox Grid.Row="2" Header="{ns:Loc LblFlatUserFlatSettings}">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" x:Name="SettingsHost">
                 <ContentControl Content="{Binding Settings, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </ScrollViewer>
         </GroupBox>

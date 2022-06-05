@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:equip="clr-namespace:NINA.View.Equipment"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -105,6 +105,7 @@
                     <UniformGrid Margin="0,5,0,0" Columns="2">
                         <ComboBox
                             Name="PART_FilterComboBox"
+                            Margin="0,0,2.5,0"
                             IsEnabled="{Binding FilterWheelInfo.IsMoving, Converter={StaticResource InverseBooleanConverter}}"
                             ItemsSource="{Binding FW.Filters}"
                             SelectedValue="{Binding TargetFilter}">
@@ -114,30 +115,40 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Command="{Binding ChangeFilterCommand}">
+                        <Button Margin="2.5,0,0,0" Command="{Binding ChangeFilterCommand}">
                             <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblChange}" />
                         </Button>
                     </UniformGrid>
                 </StackPanel>
             </Grid>
         </GroupBox>
-        <ListView
-            Name="PART_FilterListView"
-            Grid.Column="1"
-            MinHeight="200"
-            Margin="0,10,0,0"
-            IsEnabled="{Binding FilterWheelInfo.IsMoving, Converter={StaticResource InverseBooleanConverter}}"
-            IsHitTestVisible="False"
-            ItemsSource="{Binding FW.Filters}"
-            SelectedItem="{Binding FilterWheelInfo.SelectedFilter}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn
-                        Width="Auto"
-                        DisplayMemberBinding="{Binding Name}"
-                        Header="{ns:Loc LblFilterName}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <GroupBox Grid.Column="1" IsEnabled="{Binding FilterWheelInfo.Connected}">
+            <GroupBox.Header>
+                <Grid Height="40" Margin="5">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblFilters}" />
+                </Grid>
+            </GroupBox.Header>
+            <ListView
+                Name="PART_FilterListView"
+                Grid.Column="1"
+                MinHeight="200"
+                Margin="0,10,0,0"
+                IsEnabled="{Binding FilterWheelInfo.IsMoving, Converter={StaticResource InverseBooleanConverter}}"
+                IsHitTestVisible="False"
+                ItemsSource="{Binding FW.Filters}"
+                SelectedItem="{Binding FilterWheelInfo.SelectedFilter}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Width="Auto"
+                            DisplayMemberBinding="{Binding Name}"
+                            Header="{ns:Loc LblFilterName}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
     </Grid>
 </UserControl>

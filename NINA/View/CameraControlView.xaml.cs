@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,9 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.Utility;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -118,11 +121,11 @@ namespace NINA.View {
         }
 
         public static readonly DependencyProperty MyFiltersProperty =
-            DependencyProperty.Register(nameof(MyFilters), typeof(ObservableCollection<Model.MyFilterWheel.FilterInfo>), typeof(CameraControlView), new UIPropertyMetadata(null));
+            DependencyProperty.Register(nameof(MyFilters), typeof(ObservableCollection<FilterInfo>), typeof(CameraControlView), new UIPropertyMetadata(null));
 
-        public ObservableCollection<Model.MyFilterWheel.FilterInfo> MyFilters {
+        public IEnumerable<FilterInfo> MyFilters {
             get {
-                return (ObservableCollection<Model.MyFilterWheel.FilterInfo>)GetValue(MyFiltersProperty);
+                return (IEnumerable<FilterInfo>)GetValue(MyFiltersProperty);
             }
             set {
                 SetValue(MyFiltersProperty, value);
@@ -130,11 +133,11 @@ namespace NINA.View {
         }
 
         public static readonly DependencyProperty MySelectedFilterProperty =
-            DependencyProperty.Register(nameof(MySelectedFilter), typeof(Model.MyFilterWheel.FilterInfo), typeof(CameraControlView), new UIPropertyMetadata(null));
+            DependencyProperty.Register(nameof(MySelectedFilter), typeof(FilterInfo), typeof(CameraControlView), new UIPropertyMetadata(null));
 
-        public Model.MyFilterWheel.FilterInfo MySelectedFilter {
+        public FilterInfo MySelectedFilter {
             get {
-                return (Model.MyFilterWheel.FilterInfo)GetValue(MySelectedFilterProperty);
+                return (FilterInfo)GetValue(MySelectedFilterProperty);
             }
             set {
                 SetValue(MySelectedFilterProperty, value);
@@ -246,6 +249,18 @@ namespace NINA.View {
             }
             set {
                 SetValue(MySelectedGainProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty MyDefaultGainProperty =
+    DependencyProperty.Register(nameof(MyDefaultGain), typeof(int), typeof(CameraControlView), new UIPropertyMetadata((int)-1));
+
+        public int MyDefaultGain {
+            get {
+                return (int)GetValue(MyDefaultGainProperty);
+            }
+            set {
+                SetValue(MyDefaultGainProperty, value);
             }
         }
     }

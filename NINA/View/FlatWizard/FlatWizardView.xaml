@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -11,19 +11,35 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enum="clr-namespace:NINA.Utility.Enum"
-    xmlns:filter="clr-namespace:NINA.Model.MyFilterWheel"
+    xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
+    xmlns:filter="clr-namespace:NINA.Core.Model;assembly=NINA.Core"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
-    xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:wpfbase="clr-namespace:NINA.WPF.Base.View;assembly=NINA.WPF.Base"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
+    x:Name="UC"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
+            <ResourceDictionary.MergedDictionaries>
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/ProfileService.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/SVGDictionary.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Brushes.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBlock.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -31,7 +47,6 @@
         </Grid.ColumnDefinitions>
         <GroupBox
             Grid.Row="0"
-            Grid.RowSpan="2"
             Grid.Column="0"
             Header="{ns:Loc LblFlatWizard}">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -118,154 +133,128 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 DisplayMemberPath="Name"
-                                IsSynchronizedWithCurrentItem="True"
-                                ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}"
+                                ItemsSource="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
                                 SelectedItem="{Binding BinningMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath="Name" />
                         </Grid>
                     </Border>
                     <Border
-                        Margin="0,0,0,5"
+                        Margin="0,0,0,10"
                         BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0,0,0,0">
-                        <Border.Visibility>
-                            <PriorityBinding>
-                                <Binding
-                                    Converter="{StaticResource CollectionContainsItemsToVisibilityConverter}"
-                                    Path="CameraVM.Cam.Gains"
-                                    Source="{StaticResource AppVM}" />
-                                <Binding
-                                    Converter="{StaticResource NullToVisibilityCollapsedConverter}"
-                                    Path="CameraVM.Cam"
-                                    Source="{StaticResource AppVM}" />
-                            </PriorityBinding>
-                        </Border.Visibility>
-                        <Grid VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblGain}" />
-
-                            <ComboBox
-                                Grid.Column="1"
-                                DisplayMemberPath="Text"
-                                IsSynchronizedWithCurrentItem="True"
-                                SelectedValuePath="Text">
-                                <ComboBox.ItemsSource>
-                                    <CompositeCollection>
-                                        <TextBlock Text="{Binding Source={StaticResource AppVM}, Path=CameraVM.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
-                                        <CollectionContainer Collection="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
-                                    </CompositeCollection>
-                                </ComboBox.ItemsSource>
-                                <ComboBox.SelectedValue>
-                                    <MultiBinding
-                                        Converter="{StaticResource MinusOneToBaseValueConverter}"
-                                        Mode="TwoWay"
-                                        UpdateSourceTrigger="PropertyChanged">
+                        BorderThickness="0"
+                        Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.CanGetGain, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged}">
+                        <UniformGrid VerticalAlignment="Center" Columns="2">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
+                            <Grid Margin="5,0,0,0">
+                                <ninactrl:HintTextBox
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Right"
+                                    VerticalContentAlignment="Center"
+                                    Foreground="{StaticResource PrimaryBrush}"
+                                    IsEnabled="{Binding Source={StaticResource CameraInfo}, Path=Data.CanSetGain}"
+                                    TextAlignment="Right"
+                                    Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                    <ninactrl:HintTextBox.HintText>
                                         <Binding
+                                            Converter="{StaticResource CameraDefaultValueConverter}"
+                                            Mode="OneWay"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}"
+                                            UpdateSourceTrigger="PropertyChanged" />
+                                    </ninactrl:HintTextBox.HintText>
+                                    <ninactrl:HintTextBox.Text>
+                                        <Binding
+                                            Converter="{StaticResource MinusOneToEmptyStringConverter}"
                                             Mode="TwoWay"
                                             Path="Gain"
-                                            UpdateSourceTrigger="PropertyChanged" />
-                                        <Binding
-                                            Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}"
-                                            UpdateSourceTrigger="PropertyChanged" />
-                                    </MultiBinding>
-                                </ComboBox.SelectedValue>
-                                <ComboBox.Visibility>
-                                    <PriorityBinding>
-                                        <Binding
-                                            Converter="{StaticResource CollectionContainsItemsToVisibilityConverter}"
-                                            Path="CameraVM.Cam.Gains"
-                                            Source="{StaticResource AppVM}" />
-                                        <Binding
-                                            Converter="{StaticResource NullToVisibilityConverter}"
-                                            Path="CameraVM.Cam"
-                                            Source="{StaticResource AppVM}" />
-                                    </PriorityBinding>
-                                </ComboBox.Visibility>
-                            </ComboBox>
-                        </Grid>
+                                            UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:IntRangeRuleWithDefault>
+                                                    <rules:IntRangeRuleWithDefault.ValidRange>
+                                                        <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                                    </rules:IntRangeRuleWithDefault.ValidRange>
+                                                </rules:IntRangeRuleWithDefault>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ninactrl:HintTextBox.Text>
+                                </ninactrl:HintTextBox>
+                                <ComboBox
+                                    DisplayMemberPath="Text"
+                                    IsSynchronizedWithCurrentItem="True"
+                                    SelectedValuePath="Text"
+                                    Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                                    <ComboBox.ItemsSource>
+                                        <CompositeCollection>
+                                            <TextBlock Text="{Binding Source={StaticResource CameraInfo}, Path=Data.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
+                                            <CollectionContainer Collection="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
+                                        </CompositeCollection>
+                                    </ComboBox.ItemsSource>
+                                    <ComboBox.SelectedValue>
+                                        <MultiBinding
+                                            Converter="{StaticResource MinusOneToBaseValueConverter}"
+                                            Mode="TwoWay"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            <Binding
+                                                Mode="TwoWay"
+                                                Path="Gain"
+                                                UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding
+                                                Mode="OneWay"
+                                                Path="Data.DefaultGain"
+                                                Source="{StaticResource CameraInfo}"
+                                                UpdateSourceTrigger="PropertyChanged" />
+                                        </MultiBinding>
+                                    </ComboBox.SelectedValue>
+                                </ComboBox>
+                            </Grid>
+                        </UniformGrid>
                     </Border>
+
                     <Border
                         Margin="0,0,0,5"
                         BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0,0,0,1">
-                        <Border.Visibility>
-                            <PriorityBinding>
-                                <Binding
-                                    Converter="{StaticResource InverseCollectionContainsItemsToVisibilityConverter}"
-                                    Path="CameraVM.Cam.Gains"
-                                    Source="{StaticResource AppVM}" />
-                                <Binding
-                                    Converter="{StaticResource NullToVisibilityCollapsedConverter}"
-                                    Path="CameraVM.Cam"
-                                    Source="{StaticResource AppVM}" />
-                            </PriorityBinding>
-                        </Border.Visibility>
-                        <Grid Margin="0,0,0,5" VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                        BorderThickness="0,0,0,0">
+                        <UniformGrid Margin="0,0,0,5" Columns="2">
+                            <ComboBox ItemsSource="{util:EnumBindingSource {x:Type enum:AltitudeSite}}" SelectedItem="{Binding AltitudeSite}" />
+                            <Button
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Stretch"
+                                ToolTip="{Binding SlewToZenithTooltip}"
+                                ToolTipService.ShowOnDisabled="true"
+                                ToolTipService.IsEnabled="{Binding SlewToZenithTooltipEnabled}"
+                                Command="{Binding SlewToZenithCommand}">
+                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlewToZenith}" />
+                            </Button>
+                        </UniformGrid>
+                    </Border>
+                    <Border
+                        Margin="0,0,0,15"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,0">
+                        <UniformGrid Margin="0,0,0,5" Columns="2">
                             <TextBlock
-                                Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblGain}" />
-
-                            <!--  Free Gain Setting  -->
-                            <TextBox Grid.Column="1">
-                                <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                                        <Binding
-                                            Mode="TwoWay"
-                                            Path="Gain"
-                                            UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <rules:IntRangeRule>
-                                                    <rules:IntRangeRule.ValidRange>
-                                                        <rules:IntRangeChecker Maximum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMax}" Minimum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMin}" />
-                                                    </rules:IntRangeRule.ValidRange>
-                                                </rules:IntRangeRule>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                        <Binding
-                                            Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}"
-                                            UpdateSourceTrigger="PropertyChanged" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </Grid>
+                                Text="{ns:Loc LblWizardOperationMode}"
+                                TextWrapping="WrapWithOverflow" />
+                            <ComboBox
+                                Margin="5,0,0,0"
+                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:FlatWizardMode}}}"
+                                SelectedItem="{Binding FlatWizardMode}" />
+                        </UniformGrid>
                     </Border>
 
-                    <UniformGrid Margin="0,0,0,5" Columns="2">
-                        <ComboBox ItemsSource="{util:EnumBindingSource {x:Type enum:AltitudeSite}}" SelectedItem="{Binding AltitudeSite}" />
-                        <Button
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Stretch"
-                            Command="{Binding SlewToZenithCommand}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlewToZenith}" />
-                        </Button>
-                    </UniformGrid>
-                    <TabControl>
+                    <TabControl x:Name="SettingsHost">
                         <TabItem Header="Single Mode">
                             <StackPanel Orientation="Vertical">
                                 <Border
-                                    Margin="0,0,0,5"
+                                    Margin="0,5,0,5"
                                     BorderBrush="{StaticResource BorderBrush}"
                                     BorderThickness="0,0,0,1"
                                     Visibility="{Binding Filters, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
-                                    <Grid Margin="0,0,0,5" VerticalAlignment="Center">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="120" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock
                                             Grid.Column="0"
@@ -273,6 +262,8 @@
                                             Text="{ns:Loc LblFilter}" />
                                         <ComboBox
                                             Grid.Column="1"
+                                            Margin="0,2.5,0,2.5"
+                                            VerticalAlignment="Center"
                                             DisplayMemberPath="Name"
                                             SelectedItem="{Binding SelectedFilter, Mode=TwoWay, Converter={StaticResource FilterWheelFilterConverter}}"
                                             SelectedValuePath="Name">
@@ -296,15 +287,19 @@
                                         ButtonImage="{StaticResource PlaySVG}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelFlatExposureSequenceCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding StartFlatSequenceCommand}"
                                         IsEnabled="{Binding CameraConnected}"
                                         IsPaused="{Binding IsPaused}"
                                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                                         PauseButtonImage="{StaticResource PauseSVG}"
                                         PauseCommand="{Binding PauseFlatExposureSequenceCommand}"
+                                        PauseToolTip="{ns:Loc LblPause}"
                                         ResumeButtonImage="{StaticResource PlaySVG}"
                                         ResumeCommand="{Binding ResumeFlatExposureSequenceCommand}"
-                                        ToolTip="{ns:Loc LblTooltipStartSequence}" />
+                                        ResumeToolTip="{ns:Loc LblResume}"
+                                        ToolTipService.ShowOnDisabled="true"
+                                        ToolTip="{Binding StartFlatExposureTooltip}" />
                                 </Grid>
                             </StackPanel>
                         </TabItem>
@@ -360,7 +355,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
                                         Grid.Column="0"
@@ -369,6 +364,7 @@
                                         TextWrapping="WrapWithOverflow" />
                                     <CheckBox
                                         Grid.Column="1"
+                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         IsChecked="{Binding PauseBetweenFilters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </Grid>
@@ -378,15 +374,19 @@
                                         ButtonImage="{StaticResource PlaySVG}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelFlatExposureSequenceCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding StartMultiFlatSequenceCommand}"
                                         IsEnabled="{Binding CameraConnected}"
                                         IsPaused="{Binding IsPaused}"
                                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                                         PauseButtonImage="{StaticResource PauseSVG}"
                                         PauseCommand="{Binding PauseFlatExposureSequenceCommand}"
+                                        PauseToolTip="{ns:Loc LblPause}"
                                         ResumeButtonImage="{StaticResource PlaySVG}"
                                         ResumeCommand="{Binding ResumeFlatExposureSequenceCommand}"
-                                        ToolTip="{ns:Loc LblTooltipStartSequence}" />
+                                        ResumeToolTip="{ns:Loc LblResume}"
+                                        ToolTipService.ShowOnDisabled="true"
+                                        ToolTip="{Binding StartFlatExposureMultiTooltip}" />
                                 </Grid>
                             </StackPanel>
                         </TabItem>
@@ -404,10 +404,10 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <local:ImageView
+            <wpfbase:ImageView
                 Grid.Row="0"
                 Grid.Column="0"
-                Grid.ColumnSpan="3"
+                Grid.ColumnSpan="2"
                 Image="{Binding Image}" />
             <Border
                 Grid.Row="1"
@@ -450,7 +450,7 @@
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         IsEnabled="False"
-                        Text="{Binding CalculatedHistogramMean, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} ADU}" />
+                        Text="{Binding CalculatedHistogramMean, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} ADU}" />
                 </Grid>
             </Border>
         </Grid>

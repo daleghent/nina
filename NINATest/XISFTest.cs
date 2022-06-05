@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,26 +12,33 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using FluentAssertions;
+using NINA.Image.ImageData;
+using NINA.Core.Utility;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using FluentAssertions;
-using Moq;
-using NINA.Model.ImageData;
 using System.Globalization;
-using NINA.Utility.Astrometry;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.FileFormat.FITS;
-using NINA.Utility.FileFormat.XISF;
+using System.Xml.Linq;
+using NINA.Image.FileFormat.FITS;
+using NINA.Image.FileFormat.XISF;
+using NINA.Image.FileFormat;
 
 namespace NINATest {
 
     [TestFixture]
     public class XISFTest {
+        private ImageDataFactoryTestUtility dataFactoryUtility;
+
+        [SetUp]
+        public void Setup() {
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
+        }
 
         #region "XISF"
 
@@ -41,7 +48,7 @@ namespace NINATest {
 
             var sut = new XISF(header);
 
-            sut.Header.Should().Equals(header);
+            sut.Header.Should().Be(header);
             sut.PaddedBlockSize.Should().Be(1024);
         }
 
@@ -53,7 +60,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = "TestFile",
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             Action act = () => sut.AddAttachedImage(new ushort[] { }, fileSaveInfo);
@@ -63,7 +70,7 @@ namespace NINATest {
         [Test]
         public void XISFAddAttachedImageTest() {
             var props = new ImageProperties(width: 3, height: 3, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
+            const string imageType = "LIGHT";
             var data = new ushort[] {
                 1,1,1,
                 2,3,4,
@@ -74,7 +81,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = "TestFile",
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var header = new XISFHeader();
@@ -84,9 +91,9 @@ namespace NINATest {
 
             sut.Header.Image.Should().HaveAttribute("location", $"attachment:{sut.PaddedBlockSize}:{length}");
 
-            ushort[] outarray = new ushort[sut.Data.Data.Length / 2];
-            Buffer.BlockCopy(sut.Data.Data, 0, outarray, 0, sut.Data.Data.Length);
-            outarray.Should().Equal(data);
+            var outArray = new ushort[sut.Data.Data.Length / 2];
+            Buffer.BlockCopy(sut.Data.Data, 0, outArray, 0, sut.Data.Data.Length);
+            outArray.Should().Equal(data);
         }
 
         [Test]
@@ -94,23 +101,22 @@ namespace NINATest {
         [TestCase("00000000000000000000000", "6144")]
         public async Task XISFAddAttachedImage_Special_Test(string value, string expectedAttachmentLocation) {
             var props = new ImageProperties(width: 3, height: 3, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
+            const string imageType = "LIGHT";
             var data = new ushort[] {
                 1,1,1,
                 2,3,4,
                 1,1,1
             };
-            var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = "TestFile",
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var header = new XISFHeader();
             header.AddImageMetaData(props, imageType);
-            for (int i = 0; i < 50; i++) {
+            for (var i = 0; i < 50; i++) {
                 header.AddImageFITSKeyword("test", "00000000000000000000000000000000000000000000000000");
             }
             header.AddImageFITSKeyword("t", value);
@@ -123,26 +129,27 @@ namespace NINATest {
                 sut.Save(s);
             }
 
-            var x = await XISF.Load(new Uri(file), false);
+            var x = await XISF.Load(new Uri(file), false, dataFactoryUtility.ImageDataFactory, new CancellationToken());
 
-            sut.Header.Image.Attribute("location").Value.Split(':')[1].Should().Be(expectedAttachmentLocation);
+            sut.Header.Image.Attribute("location").Should().NotBeNull();
+            sut.Header.Image.Attribute("location")?.Value.Split(':')[1].Should().Be(expectedAttachmentLocation);
             x.Data.FlatArray.Should().BeEquivalentTo(data);
             File.Delete(file);
         }
 
         [Test]
         public void XISFCompressLZ4Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -160,17 +167,17 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressLZ4ShuffledTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4,
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4,
                 XISFByteShuffling = true
             };
 
@@ -189,17 +196,17 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressLZ4HCTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4HC
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4HC
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -217,17 +224,17 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressLZ4HCShuffledTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4HC,
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4HC,
                 XISFByteShuffling = true
             };
 
@@ -246,17 +253,17 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressZLibTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.ZLIB
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.ZLIB
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -274,17 +281,17 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressZLibShuffledTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.ZLIB,
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.ZLIB,
                 XISFByteShuffling = true
             };
 
@@ -303,17 +310,17 @@ namespace NINATest {
 
         [Test]
         public void XISFChecksumSHA1Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "ca711c69165e1fa5be72993b9a7870ef6d485249";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "ca711c69165e1fa5be72993b9a7870ef6d485249";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA1
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA1
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -325,22 +332,22 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-1:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-1:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA256Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "2d864c0b789a43214eee8524d3182075125e5ca2cd527f3582ec87ffd94076bc";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "2d864c0b789a43214eee8524d3182075125e5ca2cd527f3582ec87ffd94076bc";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA256
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA256
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -352,22 +359,22 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-256:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-256:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA512Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "b0dbd95e5dbe70819049ae5f10340a2c29fa630ac3afd6b3cbf97865cea418dbecf718ea6e15a596c7e8a40b9372b85ac82f602092438570247afc418650db0b";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "b0dbd95e5dbe70819049ae5f10340a2c29fa630ac3afd6b3cbf97865cea418dbecf718ea6e15a596c7e8a40b9372b85ac82f602092438570247afc418650db0b";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA512
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA512
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -379,22 +386,22 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-512:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-512:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA3_256Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "1454fca9a69b7c15209d52a7474b3b80cfc4b80c5e1720d24c13a24d9d832c0e";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "1454fca9a69b7c15209d52a7474b3b80cfc4b80c5e1720d24c13a24d9d832c0e";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA3_256
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA3_256
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -406,22 +413,22 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-256:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-256:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA3_512Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "9934ce6c44048d54302b025f71ddbb44ad49da730600b60821798892c1f51b19a91b0dc9c578ed4baa4b9e7506e966100532f9b70e264aaef6ee76eda074ab57";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "9934ce6c44048d54302b025f71ddbb44ad49da730600b60821798892c1f51b19a91b0dc9c578ed4baa4b9e7506e966100532f9b70e264aaef6ee76eda074ab57";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA3_512
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA3_512
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -433,7 +440,7 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-512:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-512:{checksum}");
         }
 
         #endregion "XISF"
@@ -704,7 +711,7 @@ namespace NINATest {
                 new FITSHeaderCard("XBINNING",1, "X axis binning factor"),
                 new FITSHeaderCard("YBINNING",1, "Y axis binning factor"),
                 new FITSHeaderCard("EQUINOX", 2000, "Equinox of celestial coordinate system"),
-                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
+                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", NINA.Core.Utility.CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
             };
 
             //Act
@@ -740,7 +747,7 @@ namespace NINATest {
 
             sut.Image.Elements(ns + "FITSKeyword").First(x => x.Attribute("name").Value == "SWCREATE")
                 .Should().HaveAttribute("name", "SWCREATE")
-                .And.HaveAttribute("value", string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"))
+                .And.HaveAttribute("value", string.Format("N.I.N.A. {0} ({1})", NINA.Core.Utility.CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"))
                 .And.HaveAttribute("comment", "Software that created this file");
         }
 
@@ -924,7 +931,7 @@ namespace NINATest {
             metaData.Telescope.Name = "TEST";
             metaData.Telescope.FocalLength = 200;
             metaData.Telescope.FocalRatio = 5;
-            metaData.Telescope.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Telescope.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("TELESCOP", metaData.Telescope.Name, "Name of telescope"),
@@ -1025,12 +1032,12 @@ namespace NINATest {
             //Arrange
             var metaData = new ImageMetaData();
             metaData.Target.Name = "TEST";
-            metaData.Target.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Target.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("OBJECT", metaData.Target.Name, "Name of the object of interest"),
-                new FITSHeaderCard("OBJCTRA", Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
-                new FITSHeaderCard("OBJCTDEC", Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
+                new FITSHeaderCard("OBJCTRA", AstroUtil.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
+                new FITSHeaderCard("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
             };
 
             var expectedProperties = new[] {
@@ -1075,14 +1082,14 @@ namespace NINATest {
             //Arrange
             var metaData = new ImageMetaData();
             metaData.Focuser.Name = "TEST";
-            metaData.Focuser.Position = 123.11;
+            metaData.Focuser.Position = 123;
             metaData.Focuser.StepSize = 10.23;
             metaData.Focuser.Temperature = 125.12;
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("FOCNAME", metaData.Focuser.Name, "Focusing equipment name"),
-                new FITSHeaderCard("FOCPOS", metaData.Focuser.Position, "[step] Focuser position"),
-                new FITSHeaderCard("FOCUSPOS", metaData.Focuser.Position, "[step] Focuser position"),
+                new FITSHeaderCard("FOCPOS", metaData.Focuser.Position.Value, "[step] Focuser position"),
+                new FITSHeaderCard("FOCUSPOS", metaData.Focuser.Position.Value, "[step] Focuser position"),
                 new FITSHeaderCard("FOCUSSZ", metaData.Focuser.StepSize, "[um] Focuser step size"),
                 new FITSHeaderCard("FOCTEMP", metaData.Focuser.Temperature, "[degC] Focuser temperature"),
                 new FITSHeaderCard("FOCUSTEM", metaData.Focuser.Temperature, "[degC] Focuser temperature"),
@@ -1139,8 +1146,6 @@ namespace NINATest {
                 new FITSHeaderCard("ROTATANG", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle"),
                 new FITSHeaderCard("ROTSTPSZ", metaData.Rotator.StepSize, "[deg] Rotator step size"),
             };
-
-            float expectedFocusDistance = (float)((metaData.Focuser.Position * metaData.Focuser.StepSize) / 1000.0);
 
             //Act
             var sut = new XISFHeader();

@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,19 +8,14 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.ViewModel.Equipment.Focuser;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,8 +35,8 @@ namespace NINATest.Focuser {
             focuserMock.SetupGet(x => x.MaxStep).Returns(50000);
 
             // Move commands set position to input value
-            focuserMock.Setup(x => x.Move(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                 .Callback((int position, CancellationToken ct) => {
+            focuserMock.Setup(x => x.Move(It.IsAny<int>(), It.IsAny<CancellationToken>(), It.IsAny<int>()))
+                 .Callback((int position, CancellationToken ct, int waitInMs) => {
                      focuserMock.SetupGet(x => x.Position).Returns(position);
                  });
         }

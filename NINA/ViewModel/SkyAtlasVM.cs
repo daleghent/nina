@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,14 +8,10 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Astrometry;
+using NINA.Profile.Interfaces;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;
@@ -27,46 +22,213 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using NINA.Database;
+using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.FramingAssistant;
+using NINA.ViewModel.Sequencer;
+using NINA.Sequencer.Container;
+using NINA.Core.Database;
+using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Astrometry.Interfaces;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
-    internal class SkyAtlasVM : BaseVM {
+    internal partial class SkyAtlasVM : BaseVM, ISkyAtlasVM {
 
-        public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator) : base(profileService) {
-            // Not required to register to the mediator, as we don't need updates
-            this.telescopeMediator = telescopeMediator;
-
-            ResetFilters(null);
+        public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
+            IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
+            this.nighttimeCalculator = nighttimeCalculator;
 
             SearchCommand = new AsyncCommand<bool>(() => Search());
             CancelSearchCommand = new RelayCommand(CancelSearch);
             ResetFiltersCommand = new RelayCommand(ResetFilters);
-            SetSequenceCoordinatesCommand = new AsyncCommand<bool>(() => SetSequenceCoordinates());
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
-                return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates);
+            GetDSOTemplatesCommand = new RelayCommand((object o) => {
+                DSOTemplates = sequenceMediator.GetDeepSkyObjectContainerTemplates();
+                RaisePropertyChanged(nameof(DSOTemplates));
             });
-            SetFramingAssistantCoordinatesCommand = new AsyncCommand<bool>(() => SetFramingAssistantCoordinates());
+            SetOldSequencerTargetCommand = new RelayCommand((object o) => {
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
-            InitializeFilters();
-            PageSize = 50;
+                sequenceMediator.AddSimpleTarget(SearchResult.SelectedItem);
+            });
+            SetSequencerTargetCommand = new RelayCommand((object o) => {
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
+
+                var template = o as IDeepSkyObjectContainer;
+
+                var container = (IDeepSkyObjectContainer)template.Clone();
+                container.Name = SearchResult.SelectedItem.Name;
+                container.Target.TargetName = SearchResult.SelectedItem.Name;
+                container.Target.Rotation = 0;
+                container.Target.InputCoordinates.Coordinates = SearchResult.SelectedItem.Coordinates;
+
+                sequenceMediator.AddAdvancedTarget(container);
+            });
+            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
+                return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates, CancellationToken.None);
+            });
+            SetFramingAssistantCoordinatesCommand = new AsyncCommand<bool>(async () => {
+                applicationMediator.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
+                return await framingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
+            });
+
+            Task.Run(() => { NighttimeData = this.nighttimeCalculator.Calculate();  InitializeFilters(); ResetFilters(null); });
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
-                _nightDuration = null; //Clear cache
+                NighttimeData = this.nighttimeCalculator.Calculate();
                 InitializeElevationFilters();
-                ResetRiseAndSetTimes();
             };
 
             profileService.LocaleChanged += (object sender, EventArgs e) => {
                 InitializeFilters();
+                ResetFilters(null);
             };
+        }
 
-            Ticker = new Ticker(TimeSpan.FromSeconds(30));
+        private NighttimeData nighttimeData;
+
+        public NighttimeData NighttimeData {
+            get {
+                return nighttimeData;
+            }
+            set {
+                if (nighttimeData != value) {
+                    nighttimeData = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public IList<IDeepSkyObjectContainer> DSOTemplates { get; private set; }
+
+        private DateTime filterDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+
+        public DateTime FilterDate {
+            get => filterDate;
+            set {
+                value = NighttimeCalculator.GetReferenceDate(value);
+                if (filterDate != value) {
+                    filterDate = value;
+
+                    var doSearch = SearchResult != null;
+                    SearchResult = null;
+
+                    SoftResetFilters();
+                    RaisePropertyChanged();
+
+                    if(doSearch) {
+                        // The date was changed and a search result was already there. Do a search again with the adjusted date.
+                        SearchCommand.Execute(null);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Re-evaluate items when FilterDate changes
+        /// </summary>
+        private void SoftResetFilters() {
+            var prevAlt = SelectedMinimumAltitudeDegrees;
+            var prevDuration = SelectedAltitudeDuration;
+            var prevTimeFrom = SelectedAltitudeTimeFrom;
+            var prevTimeThrough = SelectedAltitudeTimeThrough;
+ 
+            var oldDusk = NighttimeData.SunRiseAndSet.Set.HasValue ? NighttimeData.SunRiseAndSet.Set.Value : DateTime.MinValue;
+            var oldDawn = NighttimeData.SunRiseAndSet.Rise.HasValue ? NighttimeData.SunRiseAndSet.Rise.Value : DateTime.MinValue;
+            var oldNauticalDusk = NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue ? NighttimeData.NauticalTwilightRiseAndSet.Set.Value : DateTime.MinValue;
+            var oldNauticalDawn = NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue ? NighttimeData.NauticalTwilightRiseAndSet.Rise.Value : DateTime.MinValue;
+            var oldAstroDusk = NighttimeData.TwilightRiseAndSet.Set.HasValue ? NighttimeData.TwilightRiseAndSet.Set.Value : DateTime.MinValue;
+            var oldAstroDawn = NighttimeData.TwilightRiseAndSet.Rise.HasValue ? NighttimeData.TwilightRiseAndSet.Rise.Value : DateTime.MinValue;
+
+
+            NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
+            
+            InitializeElevationFilters();
+            SelectedMinimumAltitudeDegrees = prevAlt;
+            SelectedAltitudeDuration = prevDuration;
+
+            if(prevTimeFrom == oldDusk) {
+                if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                } else {
+                    SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                }
+            } else if(prevTimeFrom == oldNauticalDusk) {
+                if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.NauticalTwilightRiseAndSet.Set.Value;
+                } else {
+                    if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                        SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                    } else {
+                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                    }
+                }
+            } else if(prevTimeFrom == oldAstroDusk) {
+                if (NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.TwilightRiseAndSet.Set.Value;
+                } else {
+                    if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                        SelectedAltitudeTimeFrom = NighttimeData.NauticalTwilightRiseAndSet.Set.Value;
+                    } else {
+                        if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                            SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                        } else {
+                            SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                        }
+                    }
+                }
+            } else {
+                SelectedAltitudeTimeFrom = prevTimeFrom;
+            }
+
+            if (prevTimeThrough == oldDawn) {
+                if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                } else {
+                    SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                }
+            } else if(prevTimeThrough == oldNauticalDawn) {
+                if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.NauticalTwilightRiseAndSet.Rise.Value;
+                } else {
+                    if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                        SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                    } else {
+                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                    }
+                }
+            } else if(prevTimeThrough == oldAstroDawn) {
+                if (NighttimeData.TwilightRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.TwilightRiseAndSet.Rise.Value;
+                } else {
+                    if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                        SelectedAltitudeTimeThrough = NighttimeData.NauticalTwilightRiseAndSet.Rise.Value;
+                    } else {
+                        if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                            SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                        } else {
+                            SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                        }
+                    }
+                }
+            } else {
+                SelectedAltitudeTimeThrough = prevTimeThrough;
+            }
         }
 
         private void ResetFilters(object obj) {
-            SelectedDate = DateTime.Now;
-            ResetRiseAndSetTimes();
+            if(obj is DateTime d) {
+                FilterDate = NighttimeCalculator.GetReferenceDate(d);
+            } else {
+                FilterDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+            }            
 
             SearchObjectName = string.Empty;
 
@@ -74,8 +236,8 @@ namespace NINA.ViewModel {
                 objecttype.Selected = false;
             }
 
-            SelectedAltitudeTimeFrom = DateTime.MinValue;
-            SelectedAltitudeTimeThrough = DateTime.MaxValue;
+            ResetAltitudeTimeFilters();
+            SelectedAltitudeDuration = 1;
             SelectedMinimumAltitudeDegrees = 0;
 
             SelectedBrightnessFrom = null;
@@ -89,30 +251,45 @@ namespace NINA.ViewModel {
             SelectedMagnitudeFrom = null;
             SelectedMagnitudeThrough = null;
 
-            SelectedMinimumAltitudeDegrees = 0;
-
             SelectedRAFrom = null;
             SelectedRAThrough = null;
 
             SelectedSizeFrom = null;
             SelectedSizeThrough = null;
 
+            SelectedMinimumMoonDistanceDegrees = 0;
+
             OrderByField = SkyAtlasOrderByFieldsEnum.SIZEMAX;
             OrderByDirection = SkyAtlasOrderByDirectionEnum.DESC;
         }
 
-        public void ResetRiseAndSetTimes() {
-            MoonPhase = Astrometry.MoonPhase.Unknown;
-            Illumination = null;
-            MoonRiseAndSet = null;
-            SunRiseAndSet = null;
-            TwilightRiseAndSet = null;
-            _nightDuration = null;
-            _twilightDuration = null;
-
-            InitializeElevationFilters();
-            RaisePropertyChanged(nameof(NightDuration));
-            RaisePropertyChanged(nameof(TwilightDuration));
+        private void ResetAltitudeTimeFilters() {
+            if (NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+                SelectedAltitudeTimeFrom = NighttimeData.TwilightRiseAndSet.Set.Value;
+            } else {
+                if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                    SelectedAltitudeTimeFrom = NighttimeData.NauticalTwilightRiseAndSet.Set.Value;
+                } else {
+                    if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                        SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
+                    } else {
+                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                    }
+                }
+            }
+            if (NighttimeData.TwilightRiseAndSet.Rise.HasValue) {
+                SelectedAltitudeTimeThrough = NighttimeData.TwilightRiseAndSet.Rise.Value;
+            } else {
+                if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                    SelectedAltitudeTimeThrough = NighttimeData.NauticalTwilightRiseAndSet.Rise.Value;
+                } else {
+                    if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                        SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
+                    } else {
+                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                    }
+                }
+            }
         }
 
         private CancellationTokenSource _searchTokenSource;
@@ -121,178 +298,7 @@ namespace NINA.ViewModel {
             _searchTokenSource?.Cancel();
         }
 
-        private async Task<bool> SetSequenceCoordinates() {
-            // todo
-            var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-            vm.ChangeTab(ApplicationTab.SEQUENCE);
-            return await vm.SeqVM.SetSequenceCoordiantes(SearchResult.SelectedItem);
-        }
-
-        private async Task<bool> SetFramingAssistantCoordinates() {
-            // todo
-            var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-            vm.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
-            return await vm.FramingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
-        }
-
-        public Ticker Ticker { get; }
-
-        private AsyncObservableCollection<DataPoint> _nightDuration;
-
-        public AsyncObservableCollection<DataPoint> NightDuration {
-            get {
-                if (_nightDuration == null) {
-                    var twilight = TwilightRiseAndSet;
-                    if (twilight != null && twilight.Rise.HasValue && twilight.Set.HasValue) {
-                        var rise = twilight.Rise;
-                        var set = twilight.Set;
-
-                        _nightDuration = new AsyncObservableCollection<DataPoint>() {
-                        new DataPoint(DateTimeAxis.ToDouble(rise), 90),
-                        new DataPoint(DateTimeAxis.ToDouble(set), 90) };
-                    } else {
-                        _nightDuration = new AsyncObservableCollection<DataPoint>();
-                    }
-                }
-                return _nightDuration;
-            }
-        }
-
-        private AsyncObservableCollection<DataPoint> _twilightDuration;
-
-        public AsyncObservableCollection<DataPoint> TwilightDuration {
-            get {
-                if (_twilightDuration == null) {
-                    var twilight = SunRiseAndSet;
-                    var night = TwilightRiseAndSet;
-                    if (twilight != null && twilight.Rise.HasValue && twilight.Set.HasValue) {
-                        var twilightRise = twilight.Rise;
-                        var twilightSet = twilight.Set;
-                        var rise = night.Rise;
-                        var set = night.Set;
-
-                        _twilightDuration = new AsyncObservableCollection<DataPoint>();
-                        _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(twilightSet), 90));
-
-                        if (night != null && night.Rise.HasValue && night.Set.HasValue) {
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(set), 90));
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(set), 0));
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(rise), 0));
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(rise), 90));
-                        }
-
-                        _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(twilightRise), 90));
-                    } else {
-                        _twilightDuration = new AsyncObservableCollection<DataPoint>();
-                    }
-                }
-                return _twilightDuration;
-            }
-        }
-
-        private RiseAndSetEvent _twilightRiseAndSet;
-
-        public RiseAndSetEvent TwilightRiseAndSet {
-            get {
-                if (_twilightRiseAndSet == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _twilightRiseAndSet = Astrometry.GetNightTimes(d, profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                }
-                return _twilightRiseAndSet;
-            }
-            private set {
-                _twilightRiseAndSet = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private RiseAndSetEvent _moonRiseAndSet;
-
-        public RiseAndSetEvent MoonRiseAndSet {
-            get {
-                if (_moonRiseAndSet == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _moonRiseAndSet = Astrometry.GetMoonRiseAndSet(d, profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                }
-                return _moonRiseAndSet;
-            }
-            private set {
-                _moonRiseAndSet = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double? _illumination;
-
-        public double? Illumination {
-            get {
-                if (_illumination == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _illumination = Astrometry.GetMoonIllumination(d);
-                }
-                return _illumination.Value;
-            }
-            private set {
-                _illumination = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Astrometry.MoonPhase _moonPhase;
-
-        public Astrometry.MoonPhase MoonPhase {
-            get {
-                if (_moonPhase == Astrometry.MoonPhase.Unknown) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _moonPhase = Astrometry.GetMoonPhase(d);
-                }
-                return _moonPhase;
-            }
-            private set {
-                _moonPhase = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private RiseAndSetEvent _sunRiseAndSet;
-
-        public RiseAndSetEvent SunRiseAndSet {
-            get {
-                if (_sunRiseAndSet == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _sunRiseAndSet = Astrometry.GetSunRiseAndSet(d, profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                }
-                return _sunRiseAndSet;
-            }
-            private set {
-                _sunRiseAndSet = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private DateTime _selectedDate;
-        private ITelescopeMediator telescopeMediator;
-
-        public DateTime SelectedDate {
-            get {
-                return _selectedDate;
-            }
-            set {
-                _selectedDate = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public static DateTime GetReferenceDate(DateTime reference) {
-            DateTime d = reference;
-            if (d.Hour > 12) {
-                d = new DateTime(d.Year, d.Month, d.Day, 12, 0, 0, reference.Kind);
-            } else {
-                var tmp = d.AddDays(-1);
-                d = new DateTime(tmp.Year, tmp.Month, tmp.Day, 12, 0, 0, reference.Kind);
-            }
-            return d;
-        }
+        private readonly INighttimeCalculator nighttimeCalculator;
 
         private async Task<bool> Search() {
             _searchTokenSource?.Dispose();
@@ -320,39 +326,81 @@ namespace NINA.ViewModel {
                     searchParams.SearchOrder.Field = OrderByField.ToString().ToLower();
                     searchParams.SearchOrder.Direction = OrderByDirection.ToString();
 
-                    var result = await db.GetDeepSkyObjects(
+                    IEnumerable<DeepSkyObject> result = await db.GetDeepSkyObjects(
                         profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository,
+                        profileService.ActiveProfile.AstrometrySettings.Horizon,
                         searchParams,
                         _searchTokenSource.Token
                     );
 
                     var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
                     var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
-                    ResetRiseAndSetTimes();
-                    DateTime d = GetReferenceDate(SelectedDate);
+
+                    NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
+                    DateTime d = NighttimeData.ReferenceDate;
 
                     Parallel.ForEach(result, (obj) => {
                         var cloneDate = d;
                         obj.SetDateAndPosition(cloneDate, latitude, longitude);
                         _searchTokenSource.Token.ThrowIfCancellationRequested();
-                    });
+                    });       
+                    
+                    if(SelectedMinimumAltitudeDegrees > 0 && SelectedAltitudeDuration > 0) {
+                        Func<DeepSkyObject, bool> filterFunction;
+                        var fromDate = GetDateFromReferenceDate(SelectedAltitudeTimeFrom, NighttimeData.ReferenceDate);
+                        var throughDate = GetDateFromReferenceDate(SelectedAltitudeTimeThrough, NighttimeData.ReferenceDate);
+                        var fullDuration = throughDate - fromDate;
 
-                    /* Check if Altitude Filter is not default */
-                    if (!(SelectedAltitudeTimeFrom == DateTime.MinValue && SelectedAltitudeTimeThrough == DateTime.MaxValue && SelectedMinimumAltitudeDegrees == 0)) {
-                        var filteredList = result.Where((x) => {
-                            return x.Altitudes.Where((y) => {
-                                return (y.X > DateTimeAxis.ToDouble(SelectedAltitudeTimeFrom) && y.X < DateTimeAxis.ToDouble(SelectedAltitudeTimeThrough));
-                            }).All((z) => {
-                                return z.Y > SelectedMinimumAltitudeDegrees;
-                            });
-                        });
+                        var minimumDuration = TimeSpan.FromHours(SelectedAltitudeDuration) > fullDuration ? Math.Floor(fullDuration.TotalHours) : SelectedAltitudeDuration;
 
-                        var count = filteredList.Count();
-                        /* Apply Altitude Filter */
-                        SearchResult = new PagedList<DeepSkyObject>(PageSize, filteredList);
-                    } else {
-                        SearchResult = new PagedList<DeepSkyObject>(PageSize, result);
+                        if (SelectedMinimumAltitudeDegrees == ALTITUDEABOVEHORIZONFILTER) {
+                            filterFunction = (dso) => {
+                                var altitudesBetweenDates = dso.Altitudes
+                                    .Where((y) => { return y.X > DateTimeAxis.ToDouble(fromDate) && y.X < DateTimeAxis.ToDouble(throughDate); })
+                                    .ToList();
+                                
+                                if(altitudesBetweenDates.Count > 1) {                                    
+                                    var duration = TimeSpan.Zero;
+                                    var firstAboveHorizon = altitudesBetweenDates.First();                                    
+
+                                    for(var i = 0; i < altitudesBetweenDates.Count; i++) {
+                                        var item = altitudesBetweenDates[i];
+                                        if (item.Y < (dso.Horizon.Count > 0 ? dso.Horizon.First(h => h.X == item.X).Y : 0)) {
+                                            // current point is below the horizon. Reset duration and set current item to be first item
+                                            duration = TimeSpan.Zero;
+                                            firstAboveHorizon = item;
+                                            continue;
+                                        } else {
+                                            // current point is above the horizon. Add the accumulated duration since the first point
+                                            duration = TimeSpan.FromDays(item.X - firstAboveHorizon.X);
+                                            if(duration > TimeSpan.FromHours(minimumDuration)) {
+                                                // The duration exceeds the minimum desired duration. break out and return success
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                }
+                                return false;                               
+                            };
+                        } else {
+                            filterFunction = (x) => {
+                                var aggregate = x.Altitudes.Where((y) => { return y.X > DateTimeAxis.ToDouble(fromDate) && y.X < DateTimeAxis.ToDouble(throughDate); })                                
+                                    .Where((y) => y.Y > SelectedMinimumAltitudeDegrees)
+                                    .Aggregate(new { min = double.MaxValue, max = double.MinValue }, (accumulator, o) => new { min = Math.Min(o.X, accumulator.min), max = o.X > accumulator.max ? o.X : accumulator.max });
+                                if(aggregate.min != double.MaxValue) {
+                                    return TimeSpan.FromDays(aggregate.max - aggregate.min) > TimeSpan.FromHours(minimumDuration);
+                                }
+                                return false;                                
+                            };
+                        }
+                        result = result.Where(filterFunction);
                     }
+
+                    if(SelectedMinimumMoonDistanceDegrees > 0) {
+                        result = result.Where(x => x.Altitudes.Count > 0 && x.Moon.Separation > SelectedMinimumMoonDistanceDegrees);
+                    }
+
+                    SearchResult = new PagedList<DeepSkyObject>(PageSize, result);
                 } catch (OperationCanceledException) {
                 }
                 return true;
@@ -360,6 +408,7 @@ namespace NINA.ViewModel {
         }
 
         private void InitializeFilters() {
+            NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
             InitializeRADecFilters();
             InitializeConstellationFilters();
             InitializeObjectTypeFilters();
@@ -367,26 +416,56 @@ namespace NINA.ViewModel {
             InitializeBrightnessFilters();
             InitializeSizeFilters();
             InitializeElevationFilters();
+            InitializeMoonDistanceDegreesFilter();
         }
 
+        private const double ALTITUDEABOVEHORIZONFILTER = 999;
+
         private void InitializeElevationFilters() {
-            AltitudeTimesFrom = new AsyncObservableCollection<DateTime>();
-            AltitudeTimesThrough = new AsyncObservableCollection<DateTime>();
+            AltitudeTimesFrom = new AsyncObservableCollection<KeyValuePair<DateTime, string>>();
+            AltitudeTimesThrough = new AsyncObservableCollection<KeyValuePair<DateTime, string>>();
             MinimumAltitudeDegrees = new AsyncObservableCollection<KeyValuePair<double, string>>();
+            AltitudeDurations = new AsyncObservableCollection<KeyValuePair<double, string>>();
 
-            var d = GetReferenceDate(SelectedDate);
+            var d = NighttimeData.ReferenceDate;
 
-            AltitudeTimesFrom.Add(DateTime.MinValue);
-            AltitudeTimesThrough.Add(DateTime.MaxValue);
-
-            for (int i = 0; i <= 24; i++) {
-                AltitudeTimesFrom.Add(d);
-                AltitudeTimesThrough.Add(d);
+            var dates = new List<KeyValuePair<DateTime, string>>();
+            for (int i = 0; i < 24; i++) {
+                dates.Add(new KeyValuePair<DateTime, string>(d, d.ToString("HH:mm")));
                 d = d.AddHours(1);
             }
+            if (NighttimeData.SunRiseAndSet.Set.HasValue) {
+                dates.Add(new KeyValuePair<DateTime, string>(NighttimeData.SunRiseAndSet.Set.Value, $"{NighttimeData.SunRiseAndSet.Set.Value.ToString("HH:mm")} ({Loc.Instance["LblSunSet"]})"));
+            }
+            if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
+                dates.Add(new KeyValuePair<DateTime, string>(NighttimeData.SunRiseAndSet.Rise.Value, $"{NighttimeData.SunRiseAndSet.Rise.Value.ToString("HH:mm")} ({Loc.Instance["LblSunRise"]})"));
+            }
+            if (NighttimeData.TwilightRiseAndSet.Set.HasValue) {
+                dates.Add(new KeyValuePair<DateTime, string>(NighttimeData.TwilightRiseAndSet.Set.Value, $"{NighttimeData.TwilightRiseAndSet.Set.Value.ToString("HH:mm")} ({Loc.Instance["LblAstronomicalDusk"]})"));                
+            }
+            if (NighttimeData.TwilightRiseAndSet.Rise.HasValue) {
+                dates.Add(new KeyValuePair<DateTime, string>(NighttimeData.TwilightRiseAndSet.Rise.Value, $"{NighttimeData.TwilightRiseAndSet.Rise.Value.ToString("HH:mm")} ({Loc.Instance["LblAstronomicalDawn"]})"));
+            }
+            if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
+                dates.Add(new KeyValuePair<DateTime, string>(NighttimeData.NauticalTwilightRiseAndSet.Set.Value, $"{NighttimeData.NauticalTwilightRiseAndSet.Set.Value.ToString("HH:mm")} ({Loc.Instance["LblNauticalDusk"]})"));
+            }
+            if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
+                dates.Add(new KeyValuePair<DateTime, string>(NighttimeData.NauticalTwilightRiseAndSet.Rise.Value, $"{NighttimeData.NauticalTwilightRiseAndSet.Rise.Value.ToString("HH:mm")} ({Loc.Instance["LblNauticalDawn"]})"));
+            }
+            AltitudeTimesFrom = new AsyncObservableCollection<KeyValuePair<DateTime, string>>(dates.OrderBy(x => x.Key));
+            AltitudeTimesThrough = new AsyncObservableCollection<KeyValuePair<DateTime, string>>(dates.OrderBy(x => x.Key));
 
-            for (int i = 0; i <= 90; i += 10) {
+
+
+            MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(0, Loc.Instance["LblAny"]));
+            for (int i = 10; i <= 90; i += 10) {
                 MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(i, i + "°"));
+            }
+            MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(ALTITUDEABOVEHORIZONFILTER, Loc.Instance["LblAboveHorizon"]));
+
+            AltitudeDurations.Add(new KeyValuePair<double, string>(0, Loc.Instance["LblAnyDuration"]));
+            for (double i = 1; i <= 12; i++) {
+                AltitudeDurations.Add(new KeyValuePair<double, string>(i, i + "h"));
             }
         }
 
@@ -397,17 +476,17 @@ namespace NINA.ViewModel {
             SizesFrom.Add(new KeyValuePair<string, string>(string.Empty, string.Empty));
             SizesThrough.Add(new KeyValuePair<string, string>(string.Empty, string.Empty));
 
-            SizesFrom.Add(new KeyValuePair<string, string>("1", "1 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("5", "5 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("10", "10 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("30", "30 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("60", "1 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("300", "5 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("600", "10 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("1800", "30 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("3600", "1 " + Locale.Loc.Instance["LblDegree"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("18000", "5 " + Locale.Loc.Instance["LblDegree"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("36000", "10 " + Locale.Loc.Instance["LblDegree"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("1", "1 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("5", "5 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("10", "10 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("30", "30 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("60", "1 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("300", "5 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("600", "10 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("1800", "30 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("3600", "1 " + Loc.Instance["LblDegree"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("18000", "5 " + Loc.Instance["LblDegree"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("36000", "10 " + Loc.Instance["LblDegree"]));
 
             SizesThrough = new AsyncObservableCollection<KeyValuePair<string, string>>(SizesFrom);
         }
@@ -465,14 +544,29 @@ namespace NINA.ViewModel {
             DecThrough.Add(new KeyValuePair<double?, string>(null, string.Empty));
 
             for (int i = 0; i < 25; i++) {
-                Astrometry.HoursToDegrees(i);
+                AstroUtil.HoursToDegrees(i);
 
-                RAFrom.Add(new KeyValuePair<double?, string>(Astrometry.HoursToDegrees(i), i.ToString()));
-                RAThrough.Add(new KeyValuePair<double?, string>(Astrometry.HoursToDegrees(i), i.ToString()));
+                RAFrom.Add(new KeyValuePair<double?, string>(AstroUtil.HoursToDegrees(i), i.ToString()));
+                RAThrough.Add(new KeyValuePair<double?, string>(AstroUtil.HoursToDegrees(i), i.ToString()));
             }
             for (int i = -90; i < 91; i = i + 5) {
                 DecFrom.Add(new KeyValuePair<double?, string>(i, i.ToString()));
                 DecThrough.Add(new KeyValuePair<double?, string>(i, i.ToString()));
+            }
+        }
+
+        private void InitializeMoonDistanceDegreesFilter() {
+            MoonDistanceDegrees = new AsyncObservableCollection<double>();
+            for (double i = 0; i < 180; i+=5) {
+                MoonDistanceDegrees.Add(i);
+            }
+        }
+
+        private DateTime GetDateFromReferenceDate(DateTime date, DateTime referenceDate) {
+            if (date.Hour >= 12) {
+                return new DateTime(referenceDate.Year, referenceDate.Month, referenceDate.Day, date.Hour, date.Minute, date.Second);
+            } else {
+                return new DateTime(referenceDate.Year, referenceDate.Month, referenceDate.Day, date.Hour, date.Minute, date.Second) + TimeSpan.FromDays(1);
             }
         }
 
@@ -501,14 +595,18 @@ namespace NINA.ViewModel {
         private double? _selectedMagnitudeFrom;
         private double? _selectedMagnitudeThrough;
         private PagedList<DeepSkyObject> _searchResult;
-        private AsyncObservableCollection<DateTime> _altitudeTimesFrom;
-        private AsyncObservableCollection<DateTime> _altitudeTimesThrough;
+        private AsyncObservableCollection<KeyValuePair<DateTime, string>> _altitudeTimesFrom;
+        private AsyncObservableCollection<KeyValuePair<DateTime, string>> _altitudeTimesThrough;
         private AsyncObservableCollection<KeyValuePair<double, string>> _minimumAltitudeDegrees;
+        private AsyncObservableCollection<KeyValuePair<double, string>> _altitudeDurations;
+        private double _selectedAltitudeDuration;
         private DateTime _selectedAltitudeTimeFrom;
         private DateTime _selectedAltitudeTimeThrough;
         private double _selectedMinimumAltitudeDegrees;
+        private AsyncObservableCollection<double> _moonDistanceDegrees;
+        private double _selectedMinimumMoonDistanceDegrees;
 
-        public AsyncObservableCollection<DateTime> AltitudeTimesFrom {
+        public AsyncObservableCollection<KeyValuePair<DateTime, string>> AltitudeTimesFrom {
             get {
                 return _altitudeTimesFrom;
             }
@@ -518,7 +616,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        public AsyncObservableCollection<DateTime> AltitudeTimesThrough {
+        public AsyncObservableCollection<KeyValuePair<DateTime, string>> AltitudeTimesThrough {
             get {
                 return _altitudeTimesThrough;
             }
@@ -527,7 +625,6 @@ namespace NINA.ViewModel {
                 RaisePropertyChanged();
             }
         }
-
         public AsyncObservableCollection<KeyValuePair<double, string>> MinimumAltitudeDegrees {
             get {
                 return _minimumAltitudeDegrees;
@@ -538,23 +635,46 @@ namespace NINA.ViewModel {
             }
         }
 
+        public AsyncObservableCollection<KeyValuePair<double, string>> AltitudeDurations {
+            get => _altitudeDurations;
+            set {
+                _altitudeDurations = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double SelectedAltitudeDuration {
+            get {
+                return _selectedAltitudeDuration;
+            }
+            set {
+                _selectedAltitudeDuration = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public DateTime SelectedAltitudeTimeFrom {
             get {
                 return _selectedAltitudeTimeFrom;
             }
             set {
-                _selectedAltitudeTimeFrom = value;
-                RaisePropertyChanged();
+                if (value != _selectedAltitudeTimeThrough) {
+                    _selectedAltitudeTimeFrom = value;
+                    RaisePropertyChanged();
+                }
             }
         }
+
 
         public DateTime SelectedAltitudeTimeThrough {
             get {
                 return _selectedAltitudeTimeThrough;
             }
             set {
-                _selectedAltitudeTimeThrough = value;
-                RaisePropertyChanged();
+                if(value != _selectedAltitudeTimeThrough) { 
+                    _selectedAltitudeTimeThrough = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -564,6 +684,26 @@ namespace NINA.ViewModel {
             }
             set {
                 _selectedMinimumAltitudeDegrees = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public AsyncObservableCollection<double> MoonDistanceDegrees {
+            get => _moonDistanceDegrees;
+            set {
+                _moonDistanceDegrees = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double SelectedMinimumMoonDistanceDegrees {
+            get {
+                return _selectedMinimumMoonDistanceDegrees;
+            }
+            set {
+                if(value < 0) { value = 0; }
+                if(value > 180) { value = 180; }
+                _selectedMinimumMoonDistanceDegrees = value;
                 RaisePropertyChanged();
             }
         }
@@ -840,20 +980,20 @@ namespace NINA.ViewModel {
 
         public ICommand CancelSearchCommand { get; private set; }
 
-        public ICommand SetSequenceCoordinatesCommand { get; private set; }
+        public ICommand SetOldSequencerTargetCommand { get; private set; }
+        public ICommand SetSequencerTargetCommand { get; private set; }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 
         public ICommand SetFramingAssistantCoordinatesCommand { get; private set; }
-
-        private int _pageSize;
+        public ICommand GetDSOTemplatesCommand { get; private set; }
 
         public int PageSize {
             get {
-                return _pageSize;
+                return profileService.ActiveProfile.ApplicationSettings.PageSize;
             }
             set {
-                _pageSize = value;
+                profileService.ActiveProfile.ApplicationSettings.PageSize = value;
                 RaisePropertyChanged();
             }
         }
@@ -892,227 +1032,5 @@ namespace NINA.ViewModel {
                 RaisePropertyChanged();
             }
         }
-
-        public class DSOObjectType : BaseINPC {
-
-            public DSOObjectType(string s) {
-                Name = s;
-                Selected = false;
-            }
-
-            private bool _selected;
-
-            public bool Selected {
-                get {
-                    return _selected;
-                }
-                set {
-                    _selected = value;
-                    RaisePropertyChanged();
-                }
-            }
-
-            private string _name;
-
-            public string Name {
-                get {
-                    return _name;
-                }
-                set {
-                    _name = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    }
-
-    public class PagedList<T> : BaseINPC {
-
-        public PagedList(int pageSize, IEnumerable<T> items) {
-            _items = new List<T>(items);
-            PageSize = pageSize;
-
-            var counter = 1;
-            for (int i = 0; i < _items.Count; i += PageSize) {
-                Pages.Add(counter++);
-            }
-
-            LoadFirstPage().Wait();
-
-            FirstPageCommand = new AsyncCommand<bool>(LoadFirstPage, (object o) => { return CurrentPage > 1; });
-            PrevPageCommand = new AsyncCommand<bool>(LoadPrevPage, (object o) => { return CurrentPage > 1; });
-            NextPageCommand = new AsyncCommand<bool>(LoadNextPage, (object o) => { return CurrentPage < Pages.Count; });
-            LastPageCommand = new AsyncCommand<bool>(LoadLastPage, (object o) => { return CurrentPage < Pages.Count; });
-            PageByNumberCommand = new AsyncCommand<bool>(async () => await LoadPage(CurrentPage));
-        }
-
-        private List<T> _items;
-
-        private T _selectedItem;
-
-        public T SelectedItem {
-            get {
-                return _selectedItem;
-            }
-            set {
-                _selectedItem = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private async Task<bool> LoadFirstPage() {
-            return await LoadPage(Pages.FirstOrDefault());
-        }
-
-        private async Task<bool> LoadNextPage() {
-            return await LoadPage(CurrentPage + 1);
-        }
-
-        private async Task<bool> LoadPrevPage() {
-            return await LoadPage(CurrentPage - 1);
-        }
-
-        private async Task<bool> LoadLastPage() {
-            return await LoadPage(Pages.Count);
-        }
-
-        private async Task<bool> LoadPage(int page) {
-            var idx = page - 1;
-            if (idx < 0) {
-                return false;
-            } else if (idx > (Count / (double)PageSize)) {
-                return false;
-            }
-
-            var itemChunk = await Task.Run(() => {
-                var offset = Math.Min(_items.Count - (idx * PageSize), PageSize);
-                return _items.GetRange(idx * PageSize, offset);
-            });
-
-            ItemPage = new AsyncObservableCollection<T>(itemChunk);
-
-            CurrentPage = page;
-            RaisePropertyChanged(nameof(Count));
-            RaisePropertyChanged(nameof(PageStartIndex));
-            RaisePropertyChanged(nameof(PageEndIndex));
-            return true;
-        }
-
-        private AsyncObservableCollection<T> _itemPage = new AsyncObservableCollection<T>();
-
-        public AsyncObservableCollection<T> ItemPage {
-            get {
-                return _itemPage;
-            }
-            private set {
-                _itemPage = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public int PageStartIndex {
-            get {
-                if (_items.Count == 0) {
-                    return 0;
-                } else {
-                    return PageSize * (CurrentPage - 1) + 1;
-                }
-            }
-        }
-
-        public int PageEndIndex {
-            get {
-                if (PageSize * CurrentPage > _items.Count) {
-                    return _items.Count;
-                } else {
-                    return PageSize * CurrentPage;
-                }
-            }
-        }
-
-        private int _pageSize;
-
-        public int PageSize {
-            get {
-                return _pageSize;
-            }
-            set {
-                _pageSize = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private int _currentPage;
-
-        public int CurrentPage {
-            get {
-                return _currentPage;
-            }
-            set {
-                if (value >= Pages.FirstOrDefault() && value <= Pages.LastOrDefault()) {
-                    _currentPage = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private AsyncObservableCollection<int> _pages = new AsyncObservableCollection<int>();
-
-        public AsyncObservableCollection<int> Pages {
-            get {
-                return _pages;
-            }
-            private set {
-                _pages = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public int Count {
-            get {
-                return _items.Count;
-            }
-        }
-
-        public ICommand FirstPageCommand { get; private set; }
-        public ICommand PrevPageCommand { get; private set; }
-        public ICommand NextPageCommand { get; private set; }
-        public ICommand LastPageCommand { get; private set; }
-        public ICommand PageByNumberCommand { get; private set; }
-    }
-
-    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
-    public enum SkyAtlasOrderByFieldsEnum {
-
-        [Description("LblSize")]
-        SIZEMAX,
-
-        [Description("LblApparentMagnitude")]
-        MAGNITUDE,
-
-        [Description("LblConstellation")]
-        CONSTELLATION,
-
-        [Description("LblRA")]
-        RA,
-
-        [Description("LblDec")]
-        DEC,
-
-        [Description("LblSurfaceBrightness")]
-        SURFACEBRIGHTNESS,
-
-        [Description("LblObjectType")]
-        DSOTYPE
-    }
-
-    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
-    public enum SkyAtlasOrderByDirectionEnum {
-
-        [Description("LblDescending")]
-        DESC,
-
-        [Description("LblAscending")]
-        ASC
     }
 }

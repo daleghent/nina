@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,12 +8,10 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Database;
+using NINA.Core.Database;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINACustomControlLibrary;
 using Nito.AsyncEx;
 using Nito.Mvvm;
@@ -22,10 +19,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Interfaces;
+using NINA.Core.Utility;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
-    internal class DeepSkyObjectSearchVM : BaseINPC {
+    internal class DeepSkyObjectSearchVM : BaseINPC, IDeepSkyObjectSearchVM {
 
         public DeepSkyObjectSearchVM() : base() {
         }
@@ -109,8 +109,8 @@ namespace NINA.ViewModel {
                 if (selectedTargetSearchResult != null) {
                     this.SetTargetNameWithoutSearch(selectedTargetSearchResult.Column1);
                     Coordinates = new Coordinates(
-                        Astrometry.HMSToDegrees(value.Column2),
-                        Astrometry.DMSToDegrees(value.Column3),
+                        AstroUtil.HMSToDegrees(value.Column2),
+                        AstroUtil.DMSToDegrees(value.Column3),
                         Epoch.J2000,
                         Coordinates.RAType.Degrees);
                 }
@@ -145,7 +145,7 @@ namespace NINA.ViewModel {
                 var searchParams = new DatabaseInteraction.DeepSkyObjectSearchParams();
                 searchParams.ObjectName = searchString;
                 searchParams.Limit = Limit;
-                var result = await db.GetDeepSkyObjects(string.Empty, searchParams, ct);
+                var result = await db.GetDeepSkyObjects(string.Empty, null, searchParams, ct);
                 var list = new List<IAutoCompleteItem>();
                 foreach (var item in result) {
                     list.Add(new DSOAutoCompleteItem() { Column1 = item.Name, Column2 = item.Coordinates.RAString, Column3 = item.Coordinates.DecString });

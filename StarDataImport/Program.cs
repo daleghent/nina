@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2019 Stefan Berg <isbeorn86+NINA@googlemail.com>
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -100,13 +100,13 @@ namespace StarDataImport {
             //UpdateStarData();
         }
 
-        public async static Task UpdateEarthRotationParameters() {
+        public static async Task UpdateEarthRotationParameters() {
             var path = Environment.ExpandEnvironmentVariables(@"%localappdata%\nina\NINA.sqlite");
             var connectionString = string.Format(@"Data Source={0};foreign keys=true;", path);
             var db = new DatabaseInteraction(connectionString);
 
             double availableDataTimeStamp = double.MinValue;
-            using (var context = new NINA.Database.NINADbContext(connectionString)) {
+            using (var context = new NINA.Core.Database.NINADbContext(connectionString)) {
                 availableDataTimeStamp = (await context.EarthRotationParameterSet.Where(x => x.lod > 0).OrderByDescending(x => x.date).FirstAsync()).date;
             }
 

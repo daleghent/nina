@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,288 +15,305 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <GroupBox>
-        <GroupBox.Header>
+    <UniformGrid Columns="2">
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblFocuser}" />
+                    <equip:Connector
+                        Grid.Column="1"
+                        CancelCommand="{Binding CancelChooseFocuserCommand}"
+                        ConnectCommand="{Binding ChooseFocuserCommand}"
+                        Connected="{Binding FocuserInfo.Connected}"
+                        Devices="{Binding FocuserChooserVM.Devices}"
+                        DisconnectCommand="{Binding DisconnectCommand}"
+                        HasSetupDialog="{Binding FocuserChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RefreshFocuserListCommand}"
+                        SelectedDevice="{Binding FocuserChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding FocuserChooserVM.SetupDialogCommand}" />
+                </Grid>
+            </GroupBox.Header>
+
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    Text="{ns:Loc LblFocuser}" />
-                <equip:Connector
-                    Grid.Column="1"
-                    CancelCommand="{Binding CancelChooseFocuserCommand}"
-                    ConnectCommand="{Binding ChooseFocuserCommand}"
-                    Connected="{Binding FocuserInfo.Connected}"
-                    Devices="{Binding FocuserChooserVM.Devices}"
-                    DisconnectCommand="{Binding DisconnectCommand}"
-                    HasSetupDialog="{Binding FocuserChooserVM.SelectedDevice.HasSetupDialog}"
-                    RefreshCommand="{Binding RefreshFocuserListCommand}"
-                    SelectedDevice="{Binding FocuserChooserVM.SelectedDevice, Mode=TwoWay}"
-                    SetupCommand="{Binding FocuserChooserVM.SetupDialogCommand}" />
-            </Grid>
-        </GroupBox.Header>
-
-        <Grid>
-            <StackPanel>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblName}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding FocuserInfo.Name}"
-                                TextWrapping="WrapWithOverflow" />
+                <StackPanel>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblName}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding FocuserInfo.Name}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDescription}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding Focuser.Description}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDescription}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding Focuser.Description}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDriverInfo}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding Focuser.DriverInfo}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDriverInfo}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding Focuser.DriverInfo}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDriverVersion}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Focuser.DriverVersion}" />
+                            </UniformGrid>
                         </UniformGrid>
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDriverVersion}" />
-                            <TextBlock Margin="5,0,0,0" Text="{Binding Focuser.DriverVersion}" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblIsMoving}" />
+                                <CheckBox
+                                    Width="20"
+                                    Height="20"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Transparent"
+                                    IsChecked="{Binding FocuserInfo.IsMoving, FallbackValue=False, Mode=OneWay}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblIsMoving}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding FocuserInfo.IsMoving}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblIsSettling}" />
+                                <CheckBox
+                                    Width="20"
+                                    Height="20"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Transparent"
+                                    IsChecked="{Binding FocuserInfo.IsSettling, FallbackValue=False, Mode=OneWay}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblIsSettling}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding FocuserInfo.IsSettling}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblMaxIncrement}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding Focuser.MaxIncrement}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblMaxIncrement}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding Focuser.MaxIncrement}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblMaxStep}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding Focuser.MaxStep}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblMaxStep}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding Focuser.MaxStep}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblPosition}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding FocuserInfo.Position}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblPosition}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding FocuserInfo.Position}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border
-                    BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="0"
-                    IsEnabled="{Binding Focuser.TempCompAvailable, FallbackValue=False}">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTemperatureCompensation}" />
-                            <CheckBox
-                                Width="120"
-                                Height="25"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                Command="{Binding ToggleTempCompCommand}"
-                                CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
-                                IsChecked="{Binding FocuserInfo.TempComp}" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblTemperature}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding FocuserInfo.Temperature, StringFormat=\{0:0.00\}}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        IsEnabled="{Binding Focuser.TempCompAvailable, FallbackValue=False}">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTemperatureCompensation}" />
+                                <CheckBox
                                     Height="25"
-                                    MinWidth="90"
-                                    Margin="5,0,0,0">
-                                    <TextBox.Text>
-                                        <Binding Path="TargetPosition">
-                                            <Binding.ValidationRules>
-                                                <rules:GreaterZeroRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Command="{Binding ToggleTempCompCommand}"
+                                    CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
+                                    IsChecked="{Binding FocuserInfo.TempComp}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblTemperature}" />
+
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding FocuserInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Height="25"
+                                        MinWidth="90"
+                                        Margin="5,0,0,0">
+                                        <TextBox.Text>
+                                            <Binding Path="TargetPosition">
+                                                <Binding.ValidationRules>
+                                                    <rules:GreaterZeroRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                        <ninactrl:CancellableButton
+                                            Width="50"
+                                            Height="25"
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            HorizontalContentAlignment="Center"
+                                            ButtonText="{ns:Loc LblMove}"
+                                            CancelButtonImage="{StaticResource CancelSVG}"
+                                            CancelCommand="{Binding HaltFocuserCommand}"
+                                            CancelToolTip="{ns:Loc LblCancel}"
+                                            Command="{Binding MoveFocuserCommand}"
+                                            ToolTip="{ns:Loc LblMoveFocuserTooltip}" />
+                                    </Grid>
+                                </StackPanel>
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="4">
                                 <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
-                                        Width="50"
                                         Height="25"
-                                        Margin="5"
-                                        HorizontalAlignment="Left"
+                                        Margin="5,0,5,0"
+                                        HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Center"
-                                        ButtonText="{ns:Loc LblMove}"
+                                        ButtonText="&lt;&lt; "
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding HaltFocuserCommand}"
-                                        Command="{Binding MoveFocuserCommand}"
-                                        ToolTip="{ns:Loc LblMoveFocuserTooltip}" />
+                                        CancelToolTip="{ns:Loc LblCancel}"
+                                        Command="{Binding MoveFocuserInLargeCommand}"
+                                        ToolTip="{ns:Loc LblFocuserMoveLargeTooltip}" />
                                 </Grid>
-                            </StackPanel>
+                                <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <ninactrl:CancellableButton
+                                        Height="25"
+                                        Margin="5,0,5,0"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center"
+                                        ButtonText="&lt; "
+                                        CancelButtonImage="{StaticResource CancelSVG}"
+                                        CancelCommand="{Binding HaltFocuserCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
+                                        Command="{Binding MoveFocuserInSmallCommand}"
+                                        ToolTip="{ns:Loc LblFocuserMoveSmallTooltip}" />
+                                </Grid>
+                                <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <ninactrl:CancellableButton
+                                        Height="25"
+                                        Margin="5,0,5,0"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center"
+                                        ButtonText="&gt;"
+                                        CancelButtonImage="{StaticResource CancelSVG}"
+                                        CancelCommand="{Binding HaltFocuserCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
+                                        Command="{Binding MoveFocuserOutSmallCommand}"
+                                        ToolTip="{ns:Loc LblFocuserMoveSmallTooltip}" />
+                                </Grid>
+                                <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <ninactrl:CancellableButton
+                                        Height="25"
+                                        Margin="5,0,5,0"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center"
+                                        ButtonText="&gt;&gt;"
+                                        CancelButtonImage="{StaticResource CancelSVG}"
+                                        CancelCommand="{Binding HaltFocuserCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
+                                        Command="{Binding MoveFocuserOutLargeCommand}"
+                                        ToolTip="{ns:Loc LblFocuserMoveLargeTooltip}" />
+                                </Grid>
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="4">
-                            <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                <ninactrl:CancellableButton
-                                    Height="25"
-                                    Margin="5,0,5,0"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    ButtonText="&lt;&lt; "
-                                    CancelButtonImage="{StaticResource CancelSVG}"
-                                    CancelCommand="{Binding HaltFocuserCommand}"
-                                    Command="{Binding MoveFocuserInLargeCommand}"
-                                    ToolTip="{ns:Loc LblFocuserMoveLargeTooltip}" />
-                            </Grid>
-                            <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                <ninactrl:CancellableButton
-                                    Height="25"
-                                    Margin="5,0,5,0"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    ButtonText="&lt; "
-                                    CancelButtonImage="{StaticResource CancelSVG}"
-                                    CancelCommand="{Binding HaltFocuserCommand}"
-                                    Command="{Binding MoveFocuserInSmallCommand}"
-                                    ToolTip="{ns:Loc LblFocuserMoveSmallTooltip}" />
-                            </Grid>
-                            <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                <ninactrl:CancellableButton
-                                    Height="25"
-                                    Margin="5,0,5,0"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    ButtonText="&gt;"
-                                    CancelButtonImage="{StaticResource CancelSVG}"
-                                    CancelCommand="{Binding HaltFocuserCommand}"
-                                    Command="{Binding MoveFocuserOutSmallCommand}"
-                                    ToolTip="{ns:Loc LblFocuserMoveSmallTooltip}" />
-                            </Grid>
-                            <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                <ninactrl:CancellableButton
-                                    Height="25"
-                                    Margin="5,0,5,0"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    ButtonText="&gt;&gt;"
-                                    CancelButtonImage="{StaticResource CancelSVG}"
-                                    CancelCommand="{Binding HaltFocuserCommand}"
-                                    Command="{Binding MoveFocuserOutLargeCommand}"
-                                    ToolTip="{ns:Loc LblFocuserMoveLargeTooltip}" />
-                            </Grid>
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-            </StackPanel>
-        </Grid>
-    </GroupBox>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </UniformGrid>
 </UserControl>

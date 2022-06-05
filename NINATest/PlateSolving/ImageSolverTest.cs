@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,10 +14,9 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NINA.PlateSolving;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -25,6 +24,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
+using NINA.Core.Model;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINATest.PlateSolving {
 
@@ -55,7 +58,7 @@ namespace NINATest.PlateSolving {
             var parameter = new PlateSolveParameter() { };
             Func<Task> f = () => sut.Solve(default, parameter, default, default);
 
-            return f.Should().ThrowAsync<Exception>(NINA.Locale.Loc.Instance["LblPlateSolveNoFocalLength"]);
+            return f.Should().ThrowAsync<Exception>(Loc.Instance["LblPlateSolveNoFocalLength"]);
         }
 
         [Test]

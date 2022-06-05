@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,13 +8,14 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using FluentAssertions;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
+using System.IO;
+using System.Text;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace NINATest {
 
@@ -33,7 +33,7 @@ namespace NINATest {
             var epoch = Epoch.J2000;
             var coordinates = new Coordinates(ra, dec, epoch, Coordinates.RAType.Degrees);
 
-            Assert.AreEqual(Astrometry.DegreesToHours(ra), coordinates.RA, 0.0001);
+            Assert.AreEqual(AstroUtil.DegreesToHours(ra), coordinates.RA, 0.0001);
             Assert.AreEqual(ra, coordinates.RADegrees, 0.0001);
             Assert.AreEqual(dec, coordinates.Dec, 0.0001);
             Assert.AreEqual(epoch, coordinates.Epoch);
@@ -50,7 +50,7 @@ namespace NINATest {
             var coordinates = new Coordinates(ra, dec, epoch, Coordinates.RAType.Hours);
 
             Assert.AreEqual(ra, coordinates.RA, 0.0001);
-            Assert.AreEqual(Astrometry.HoursToDegrees(ra), coordinates.RADegrees, 0.0001);
+            Assert.AreEqual(AstroUtil.HoursToDegrees(ra), coordinates.RADegrees, 0.0001);
             Assert.AreEqual(dec, coordinates.Dec, 0.0001);
             Assert.AreEqual(epoch, coordinates.Epoch);
         }
@@ -414,6 +414,23 @@ namespace NINATest {
 
             sut.RADegrees.Should().Be(expectedRA);
             sut.Dec.Should().Be(expectedDec);
+        }
+
+        [Test]
+        public void DeserializationTest() {
+            string xml = "<Coordinates><RA>12</RA><Dec>13</Dec><Epoch>JNOW</Epoch></Coordinates>";
+
+            byte[] byteArray = Encoding.ASCII.GetBytes(xml);
+            using (var stream = new MemoryStream(byteArray)) {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Coordinates));
+
+                var sut = (Coordinates)xmlSerializer.Deserialize(stream);
+
+                sut.DateTime.Should().NotBeNull();
+                sut.RA.Should().Be(12);
+                sut.Dec.Should().Be(13);
+                sut.Epoch.Should().Be(Epoch.JNOW);
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,6 +33,11 @@
                                     Fill="{TemplateBinding ButtonForegroundBrush}"
                                     RenderTransformOrigin="0.5,0.5"
                                     Stretch="Uniform" />
+                                <Button.ToolTip>
+                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                        <TextBlock Text="{TemplateBinding CancelToolTip}" />
+                                    </ToolTip>
+                                </Button.ToolTip>
                             </Button>
                         </Grid>
                         <Button
@@ -53,7 +58,7 @@
                                     RenderTransformOrigin="0.5,0.5"
                                     Stretch="Uniform" />
                                 <TextBlock
-                                    Padding="3,0,3,0"
+                                    Padding="{TemplateBinding Padding}"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     Foreground="{TemplateBinding ButtonForegroundBrush}"
                                     Text="{TemplateBinding ButtonText}" />

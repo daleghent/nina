@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,12 +14,30 @@
     xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:local="clr-namespace:NINA.View.Equipment.Switch"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:switch="clr-namespace:NINA.View.Equipment.Switch"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <util:BindingProxy x:Key="SwitchProxy" Data="{Binding}" />
+            <ResourceDictionary.MergedDictionaries>
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/ProfileService.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/SVGDictionary.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Brushes.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.Sequencer;component/Resources/Styles/ProgressStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -49,7 +67,7 @@
                 </Grid>
             </GroupBox.Header>
         </GroupBox>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.Resources>
                 <DataTemplate x:Key="Eagle">
                     <switch:Eagle />

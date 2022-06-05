@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,31 +8,35 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
 using System;
-using System.Collections.Async;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using static NINA.Model.CaptureSequence;
-using NINA.Model.ImageData;
-using NINA.Model.MyTelescope;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyRotator;
-using NINA.Model.MyWeatherData;
-using NINA.Utility.Mediator;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MyWeatherData;
+using Dasync.Collections;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Image.Interfaces;
+using NINA.Image.ImageData;
+using NINA.Equipment.Model;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Equipment.Exceptions;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -42,7 +45,7 @@ namespace NINA.ViewModel {
         //Instantiate a Singleton of the Semaphore with a value of 1. This means that only 1 thread can be granted access at a time.
         private static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        private ImageControlVM _imageControl;
+        private IImageControlVM _imageControl;
 
         private Task<IRenderedImage> _imageProcessingTask;
 
@@ -66,8 +69,6 @@ namespace NINA.ViewModel {
 
         private IImagingMediator imagingMediator;
 
-        private ImageStatisticsVM imgStatisticsVM;
-
         private IProgress<ApplicationStatus> progress;
 
         private RotatorInfo rotatorInfo;
@@ -82,8 +83,9 @@ namespace NINA.ViewModel {
 
         private IWeatherDataMediator weatherDataMediator;
 
-        public ImagingVM(
-                                                                                                                                                                                        IProfileService profileService,
+        private static int _exposuerId = 0;
+
+        public ImagingVM(IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
@@ -92,7 +94,9 @@ namespace NINA.ViewModel {
                 IRotatorMediator rotatorMediator,
                 IGuiderMediator guiderMediator,
                 IWeatherDataMediator weatherDataMediator,
-                IApplicationStatusMediator applicationStatusMediator
+                IApplicationStatusMediator applicationStatusMediator,
+                IImageControlVM imageControlVM,
+                IImageStatisticsVM imageStatisticsVM
         ) : base(profileService) {
             this.imagingMediator = imagingMediator;
             this.imagingMediator.RegisterHandler(this);
@@ -114,13 +118,13 @@ namespace NINA.ViewModel {
 
             this.guiderMediator = guiderMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-
             this.weatherDataMediator = weatherDataMediator;
             this.weatherDataMediator.RegisterConsumer(this);
 
             progress = new Progress<ApplicationStatus>(p => Status = p);
 
-            ImageControl = new ImageControlVM(profileService, cameraMediator, telescopeMediator, applicationStatusMediator);
+            ImageControl = imageControlVM;
+            ImgStatisticsVM = imageStatisticsVM;
         }
 
         public CameraInfo CameraInfo {
@@ -133,23 +137,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        public ImageControlVM ImageControl {
+        public IImageControlVM ImageControl {
             get { return _imageControl; }
             set { _imageControl = value; RaisePropertyChanged(); }
         }
 
-        public ImageStatisticsVM ImgStatisticsVM {
-            get {
-                if (imgStatisticsVM == null) {
-                    imgStatisticsVM = new ImageStatisticsVM(profileService);
-                }
-                return imgStatisticsVM;
-            }
-            set {
-                imgStatisticsVM = value;
-                RaisePropertyChanged();
-            }
-        }
+        public IImageStatisticsVM ImgStatisticsVM { get; }
 
         public ApplicationStatus Status {
             get {
@@ -157,7 +150,7 @@ namespace NINA.ViewModel {
             }
             set {
                 _status = value;
-                _status.Source = Locale.Loc.Instance["LblImaging"]; ;
+                _status.Source = Loc.Instance["LblImaging"]; ;
                 RaisePropertyChanged();
 
                 applicationStatusMediator.StatusUpdate(_status);
@@ -165,11 +158,12 @@ namespace NINA.ViewModel {
         }
 
         private void AddMetaData(
-            ImageMetaData metaData,
-            CaptureSequence sequence,
-            DateTime start,
-            RMS rms,
-            string targetName) {
+                ImageMetaData metaData,
+                CaptureSequence sequence,
+                DateTime start,
+                RMS rms,
+                string targetName) {
+            metaData.Image.Id = this.ExposureId;
             metaData.Image.ExposureStart = start;
             metaData.Image.Binning = sequence.Binning.Name;
             metaData.Image.ExposureNumber = sequence.ProgressExposureCount;
@@ -200,12 +194,12 @@ namespace NINA.ViewModel {
                 try {
                     IExposureData data = null;
                     //Asynchronously wait to enter the Semaphore. If no-one has been granted access to the Semaphore, code execution will proceed, otherwise this thread waits here until the semaphore is released
-                    progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblWaitingForCamera"] });
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblWaitingForCamera"] });
                     await semaphoreSlim.WaitAsync(token);
 
                     try {
                         if (CameraInfo.Connected != true) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblNoCameraConnected"]);
+                            Notification.ShowWarning(Loc.Instance["LblNoCameraConnected"]);
                             throw new CameraConnectionLostException();
                         }
 
@@ -229,7 +223,7 @@ namespace NINA.ViewModel {
 
                         if (data == null) {
                             Logger.Error(new CameraDownloadFailedException(sequence));
-                            Notification.ShowError(string.Format(Locale.Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
+                            Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
                             return null;
                         }
 
@@ -238,24 +232,28 @@ namespace NINA.ViewModel {
                         if (!skipProcessing) {
                             //Wait for previous prepare image task to complete
                             if (_imageProcessingTask != null && !_imageProcessingTask.IsCompleted) {
-                                progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblWaitForImageProcessing"] });
+                                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblWaitForImageProcessing"] });
                                 await _imageProcessingTask;
                             }
 
                             _imageProcessingTask = PrepareImage(data, parameters, token);
                         }
-                    } catch (System.OperationCanceledException ex) {
+                    } catch (OperationCanceledException) {
                         cameraMediator.AbortExposure();
-                        throw ex;
+                        throw;
+                    } catch (CameraExposureFailedException ex) {
+                        Logger.Error(ex.Message);
+                        Notification.ShowError(ex.Message);
+                        throw;
                     } catch (CameraConnectionLostException ex) {
                         Logger.Error(ex);
-                        Notification.ShowError(Locale.Loc.Instance["LblCameraConnectionLost"]);
-                        throw ex;
+                        Notification.ShowError(Loc.Instance["LblCameraConnectionLost"]);
+                        throw;
                     } catch (Exception ex) {
-                        Notification.ShowError(Locale.Loc.Instance["LblUnexpectedError"] + Environment.NewLine + ex.Message);
+                        Notification.ShowError(Loc.Instance["LblUnexpectedError"] + Environment.NewLine + ex.Message);
                         Logger.Error(ex);
                         cameraMediator.AbortExposure();
-                        throw ex;
+                        throw;
                     } finally {
                         progress.Report(new ApplicationStatus() { Status = "" });
                         semaphoreSlim.Release();
@@ -263,9 +261,6 @@ namespace NINA.ViewModel {
                     return data;
                 } finally {
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
-                    if (ImageControl.ShowSubSampler) {
-                        ImageControl.ShowSubSampler = false;
-                    }
                 }
             });
         }
@@ -277,7 +272,7 @@ namespace NINA.ViewModel {
         }
 
         private Task<IExposureData> Download(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblDownloading"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDownloading"] });
             return cameraMediator.Download(token);
         }
 
@@ -294,8 +289,8 @@ namespace NINA.ViewModel {
             }
         }
 
-        public Task<IExposureData> CaptureImage(CaptureSequence sequence, CancellationToken token, IProgress<ApplicationStatus> progress) {
-            return CaptureImage(sequence, new PrepareImageParameters(), token, string.Empty, true);
+        public Task<IExposureData> CaptureImage(CaptureSequence sequence, CancellationToken token, IProgress<ApplicationStatus> progress, string targetName = "") {
+            return CaptureImage(sequence, new PrepareImageParameters(), token, targetName, true);
         }
 
         public void DestroyImage() {
@@ -317,7 +312,7 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             _imageProcessingTask = Task.Run(async () => {
-                var imageData = await data.ToImageData();
+                var imageData = await data.ToImageData(progress, cancelToken);
                 var processedData = await ImageControl.PrepareImage(imageData, parameters, cancelToken);
                 await ImgStatisticsVM.UpdateStatistics(imageData);
                 return processedData;
@@ -330,9 +325,17 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             _imageProcessingTask = Task.Run(async () => {
-                var processedData = await ImageControl.PrepareImage(data, parameters, cancelToken);
-                await ImgStatisticsVM.UpdateStatistics(data);
-                return processedData;
+                try {
+                    var processedData = await ImageControl.PrepareImage(data, parameters, cancelToken);
+                    await ImgStatisticsVM.UpdateStatistics(data);
+                    return processedData;
+                } catch (OperationCanceledException) {
+                    throw;
+                } catch (Exception e) {
+                    Logger.Error(e, "Failed to prepare image");
+                    Notification.ShowError($"Failed to prepare image for display: {e.Message}");
+                    throw;
+                }
             }, cancelToken);
             return _imageProcessingTask;
         }
@@ -341,17 +344,18 @@ namespace NINA.ViewModel {
             ImageControl.Image = img;
         }
 
-        public async Task<bool> StartLiveView(CancellationToken ct) {
-            ImageControl.IsLiveViewEnabled = true;
+        public async Task<bool> StartLiveView(CaptureSequence sequence, CancellationToken ct) {
+            //todo: see if this is necessary
+            //ImageControl.IsLiveViewEnabled = true;
             try {
-                var liveViewEnumerable = cameraMediator.LiveView(ct);
+                var liveViewEnumerable = cameraMediator.LiveView(sequence, ct);
                 await liveViewEnumerable.ForEachAsync(async exposureData => {
-                    var imageData = await exposureData.ToImageData(ct);
+                    var imageData = await exposureData.ToImageData(progress, ct);
                     await ImageControl.PrepareImage(imageData, new PrepareImageParameters(), ct);
                 });
             } catch (OperationCanceledException) {
             } finally {
-                ImageControl.IsLiveViewEnabled = false;
+                //ImageControl.IsLiveViewEnabled = false;
             }
 
             return true;
@@ -380,5 +384,15 @@ namespace NINA.ViewModel {
         public void UpdateDeviceInfo(WeatherDataInfo deviceInfo) {
             this.weatherDataInfo = deviceInfo;
         }
+
+        public void UpdateEndAutoFocusRun(AutoFocusInfo info) {
+            ;
+        }
+
+        public void UpdateUserFocused(FocuserInfo info) {
+            ;
+        }
+
+        private int ExposureId { get { return Interlocked.Increment(ref _exposuerId); } }
     }
 }

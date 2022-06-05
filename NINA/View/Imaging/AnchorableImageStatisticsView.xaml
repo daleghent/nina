@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,12 +13,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid>
+        <Grid Margin="5,0,5,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
@@ -167,15 +167,28 @@
                     <UniformGrid Columns="2">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock
-                            Width="55"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblBitDepth}" />
+                                Width="55"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblBitDepth}" />
                             <TextBlock
-                            Width="70"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Text="{Binding ImageProperties.BitDepth}" />
+                                Width="70"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding ImageProperties.BitDepth}" />
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Width="55"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblHFRStDev}" />
+                            <TextBlock
+                                Width="70"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding StarDetectionAnalysis.HFRStDev, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                        </StackPanel>
+                    </UniformGrid>
+                    <UniformGrid Columns="2">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock
                                 Width="55"

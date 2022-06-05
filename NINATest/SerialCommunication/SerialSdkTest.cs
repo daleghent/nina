@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -33,11 +33,11 @@ namespace NINATest.SerialCommunication {
     public class SerialSdkTest {
         private TestSdk _sut;
         private Mock<ISerialPort> _mockSerialPort;
-        private Mock<ICommand> _mockCommand;
+        private Mock<ISerialCommand> _mockCommand;
 
         [OneTimeSetUp]
         public void OneTimeSetup() {
-            _mockCommand = new Mock<ICommand>();
+            _mockCommand = new Mock<ISerialCommand>();
             _mockSerialPort = new Mock<ISerialPort>();
         }
 

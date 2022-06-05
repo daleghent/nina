@@ -19,6 +19,11 @@
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'SignedRelease|x86' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <SignOutput>True</SignOutput>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
@@ -28,9 +33,13 @@
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'SignedRelease|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <SignOutput>True</SignOutput>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bundle.wxs" />
-    <Compile Include="DotNetCheck.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixNetFxExtension">
@@ -63,39 +72,61 @@
     <Content Include="NINASetupBundle.wax" />
     <Content Include="ninasplash-small.png" />
     <Content Include="RtfTheme.xml" />
-    <Content Include="vcredist_x64.exe" />
-    <Content Include="vcredist_x86.exe" />
-    <Content Include="vc_redist2017.x64.exe" />
-    <Content Include="vc_redist2017.x86.exe" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DefineConstants>Debug</DefineConstants>
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
-  </PropertyGroup>
+  <Target Name="SignBundleEngine">
+    <Exec Command="signtool.exe sign /t http://timestamp.sectigo.com /v /a /fd SHA256 &quot;@(SignBundleEngine)&quot;" />
+  </Target>
+  <Target Name="SignBundle">
+    <Exec Command="signtool.exe sign /t http://timestamp.sectigo.com /v /a /fd SHA256 &quot;@(SignBundle)&quot;" />
+  </Target>
   <PropertyGroup>
     <PreBuildEvent>%25LOCALAPPDATA%25\Pandoc\pandoc.exe "$(SolutionDir)RELEASE_NOTES.md" -f markdown -t rtf -s -o "$(SolutionDir)RELEASE_NOTES.rtf"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>del $(SolutionDir)RELEASE_NOTES.rtf
+    <PostBuildEvent>
+      del $(SolutionDir)RELEASE_NOTES.rtf
 
-echo "Copy NINA.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.pdb" "$(TargetDir)NINA.pdb" /Y
+      echo "Copy NINA.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.pdb" "$(TargetDir)NINA.pdb" /Y
 
-echo "Copy NINACustomControlLibrary.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
+      echo "Copy NINA.Astrometry.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Astrometry.pdb" "$(TargetDir)NINA.Astrometry.pdb" /Y
 
-echo "Copy NINA.MGEN.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.MGEN.pdb" "$(TargetDir)NINA.MGEN.pdb" /Y</PostBuildEvent>
+      echo "Copy NINA.Core.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Core.pdb" "$(TargetDir)NINA.Core.pdb" /Y
+
+      echo "Copy NINA.Equipment.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Equipment.pdb" "$(TargetDir)NINA.Equipment.pdb" /Y
+
+      echo "Copy NINA.Image.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Image.pdb" "$(TargetDir)NINA.Image.pdb" /Y
+
+      echo "Copy NINA.MGEN.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.MGEN.pdb" "$(TargetDir)NINA.MGEN.pdb" /Y
+
+      echo "Copy NINA.Platesolving.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Platesolving.pdb" "$(TargetDir)NINA.Platesolving.pdb" /Y
+
+      echo "Copy NINA.Profile.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Profile.pdb" "$(TargetDir)NINA.Profile.pdb" /Y
+
+      echo "Copy NINA.Sequencer.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Sequencer.pdb" "$(TargetDir)NINA.Sequencer.pdb" /Y
+
+      echo "Copy NINA.WPF.Base.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.WPF.Base.pdb" "$(TargetDir)NINA.WPF.Base.pdb" /Y
+
+      echo "Copy NINACustomControlLibrary.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
+
+      echo "Copy NINA.Plugin.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Plugin.pdb" "$(TargetDir)NINA.Plugin.pdb" /Y
+    </PostBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

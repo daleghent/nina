@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -18,7 +18,7 @@ using System.Windows.Media;
 
 namespace NINACustomControlLibrary {
 
-    [TemplatePart(Name = "PART_TextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_TextBox", Type = typeof(UnitTextBox))]
     [TemplatePart(Name = "PART_Decrement", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Increment", Type = typeof(Button))]
     public class IntStepperControl : UserControl {
@@ -111,6 +111,18 @@ namespace NINACustomControlLibrary {
             }
         }
 
+        public static readonly DependencyProperty UnitProperty =
+           DependencyProperty.Register(nameof(Unit), typeof(string), typeof(IntStepperControl), new UIPropertyMetadata(string.Empty));
+
+        public string Unit {
+            get {
+                return (string)GetValue(UnitProperty);
+            }
+            set {
+                SetValue(UnitProperty, value);
+            }
+        }
+
         public override void OnApplyTemplate() {
             base.OnApplyTemplate();
             var button = GetTemplateChild("PART_Increment") as Button;
@@ -123,7 +135,7 @@ namespace NINACustomControlLibrary {
                 button.Click += Button_PART_Decrement_Click;
             }
 
-            var tb = GetTemplateChild("PART_Textbox") as TextBox;
+            var tb = GetTemplateChild("PART_Textbox") as UnitTextBox;
             if (tb != null) {
                 tb.LostFocus += PART_TextBox_LostFocus;
             }

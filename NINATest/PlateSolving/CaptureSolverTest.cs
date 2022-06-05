@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,11 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyFilterWheel;
 using NINA.PlateSolving;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -26,6 +25,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINATest.PlateSolving {
 
@@ -35,6 +40,7 @@ namespace NINATest.PlateSolving {
         private Mock<IPlateSolver> blindSolverMock;
         private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<IImageSolver> imageSolverMock;
+        private Mock<IFilterWheelMediator> filterMediatorMock;
 
         [SetUp]
         public void Setup() {
@@ -42,6 +48,7 @@ namespace NINATest.PlateSolving {
             blindSolverMock = new Mock<IPlateSolver>();
             imagingMediatorMock = new Mock<IImagingMediator>();
             imageSolverMock = new Mock<IImageSolver>();
+            filterMediatorMock = new Mock<IFilterWheelMediator>();
         }
 
         [Test]
@@ -58,7 +65,7 @@ namespace NINATest.PlateSolving {
             imagingMediatorMock.Setup(x => x.CaptureAndPrepareImage(seq, It.IsAny<PrepareImageParameters>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>())).ReturnsAsync(renderedImageMock.Object);
             imageSolverMock.Setup(x => x.Solve(imageDataMock.Object, It.IsAny<PlateSolveParameter>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(testResult);
 
-            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object);
+            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object, filterMediatorMock.Object);
             sut.ImageSolver = imageSolverMock.Object;
 
             var result = await sut.Solve(seq, parameter, default, default, default);
@@ -73,6 +80,8 @@ namespace NINATest.PlateSolving {
             var imageDataMock = new Mock<IImageData>();
             var renderedImageMock = new Mock<IRenderedImage>();
             renderedImageMock.SetupGet(x => x.RawImageData).Returns(imageDataMock.Object);
+            var initialFilter = new FilterInfo() { Name = "L", Position = 1 };
+            filterMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = initialFilter });
             var failedResult = new PlateSolveResult() {
                 Success = false
             };
@@ -89,7 +98,7 @@ namespace NINATest.PlateSolving {
                 .ReturnsAsync(failedResult)
                 .ReturnsAsync(testResult);
 
-            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object);
+            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object, filterMediatorMock.Object);
             sut.ImageSolver = imageSolverMock.Object;
 
             var result = await sut.Solve(seq, parameter, default, default, default);
@@ -97,6 +106,7 @@ namespace NINATest.PlateSolving {
             result.Success.Should().BeTrue();
             imagingMediatorMock.Verify(x => x.CaptureAndPrepareImage(seq, It.IsAny<PrepareImageParameters>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>()), Times.Exactly(3));
             imageSolverMock.Verify(x => x.Solve(imageDataMock.Object, It.IsAny<PlateSolveParameter>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
+            filterMediatorMock.Verify(x => x.ChangeFilter(It.Is<FilterInfo>(f => f == initialFilter), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>()), Times.AtLeastOnce());
         }
 
         [Test]
@@ -120,7 +130,7 @@ namespace NINATest.PlateSolving {
                 .ReturnsAsync(failedResult)
                 .ReturnsAsync(failedResult);
 
-            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object);
+            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object, filterMediatorMock.Object);
             sut.ImageSolver = imageSolverMock.Object;
 
             var result = await sut.Solve(seq, parameter, default, default, default);
@@ -148,7 +158,7 @@ namespace NINATest.PlateSolving {
                 .Setup(x => x.Solve(imageDataMock.Object, It.IsAny<PlateSolveParameter>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(testResult);
 
-            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object);
+            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object, filterMediatorMock.Object);
             sut.ImageSolver = imageSolverMock.Object;
 
             var result = await sut.Solve(seq, parameter, default, default, default);
@@ -178,7 +188,7 @@ namespace NINATest.PlateSolving {
                 .Setup(x => x.Solve(imageDataMock.Object, It.IsAny<PlateSolveParameter>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(testResult);
 
-            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object);
+            var sut = new CaptureSolver(plateSolverMock.Object, blindSolverMock.Object, imagingMediatorMock.Object, filterMediatorMock.Object);
             sut.ImageSolver = imageSolverMock.Object;
 
             var result = await sut.Solve(seq, parameter, default, default, default);

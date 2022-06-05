@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,9 +15,9 @@
     xmlns:local="clr-namespace:NINA.View.Equipment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
-    xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -61,9 +61,11 @@
                 </GroupBox.Header>
                 <Grid>
                     <StackPanel>
-                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                            <UniformGrid
-                                Columns="2">
+                        <Border
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0"
+                            Visibility="{Binding CameraInfo.CameraState, Converter={StaticResource CameraStateToVisibilityConverter}, FallbackValue=Collapsed}">
+                            <UniformGrid Columns="2">
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
@@ -213,14 +215,14 @@
                                     VerticalAlignment="Center"
                                     Columns="2">
                                     <TextBlock Text="{ns:Loc LblPixelSizeX}" />
-                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeX, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeX, Converter={StaticResource UnitConverter}, ConverterParameter=' µm'}" />
                                 </UniformGrid>
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
                                     Columns="2">
                                     <TextBlock Text="{ns:Loc LblPixelSizeY}" />
-                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeY, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeY, Converter={StaticResource UnitConverter}, ConverterParameter=' µm'}" />
                                 </UniformGrid>
                             </UniformGrid>
                         </Border>
@@ -269,50 +271,50 @@
                                     <StackPanel>
                                         <UniformGrid Columns="2">
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblSDKVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhySdkVersion}" />
                                             </UniformGrid>
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblUsbDriverVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhyUsbDriverVersion}" />
                                             </UniformGrid>
                                         </UniformGrid>
                                         <UniformGrid Columns="2">
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblFirmwareVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhyFirmwareVersion}" />
                                             </UniformGrid>
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblFPGAVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhyFPGAVersion}" />
                                             </UniformGrid>
                                         </UniformGrid>
                                         <UniformGrid Columns="2">
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2"
-                                            Visibility="{Binding QhyHasSensorAirPressure, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2"
+                                                Visibility="{Binding QhyHasSensorAirPressure, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                                                 <TextBlock Text="{ns:Loc LblSensorAirPressure}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhySensorAirPressure, StringFormat=\{0:0.00\} hPa, Converter={StaticResource NaNToDoubleDashConverter}}" />
                                             </UniformGrid>
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2"
-                                            Visibility="{Binding QhyHasSensorHumidity, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2"
+                                                Visibility="{Binding QhyHasSensorHumidity, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                                                 <TextBlock Text="{ns:Loc LblSensorHumidity}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhySensorHumidity, StringFormat=\{0:0.00\}%, Converter={StaticResource NaNToDoubleDashConverter}}" />
                                             </UniformGrid>
@@ -321,8 +323,11 @@
                                 </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
+                                    Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
-                                    QhyCcd="{StaticResource QhyCcd}" />
+                                    LegacySbig="{StaticResource Default}"
+                                    QhyCcd="{StaticResource QhyCcd}"
+                                    Touptek="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -335,16 +340,33 @@
         </Grid>
 
         <Grid Grid.Row="2" IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
-            <GroupBox
-                Grid.Column="1"
-                Header="{ns:Loc LblCamSettings}"
-                IsEnabled="{Binding CameraInfo.Connected}">
+            <GroupBox Grid.Column="1" IsEnabled="{Binding CameraInfo.Connected}">
+                <GroupBox.Header>
+                    <Grid Height="40" Margin="5">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="20"
+                            Text="{ns:Loc LblCamSettings}" />
+                    </Grid>
+                </GroupBox.Header>
                 <StackPanel Visibility="{Binding Cam, Converter={StaticResource NullToVisibilityConverter}}">
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanGetGain, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock
-                            MinWidth="100"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDefaultGain}" />
+                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDefaultGain}" />
+                            <StackPanel
+                                Opacity="0.4"
+                                Orientation="Horizontal"
+                                Visibility="{Binding Cam.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="(" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.GainMin}" />
+                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.GainMax}" />
+                                <TextBlock VerticalAlignment="Center" Text=")" />
+                            </StackPanel>
+                        </StackPanel>
                         <Grid>
                             <ninactrl:IntStepperControl
                                 Width="200"
@@ -367,10 +389,20 @@
                         </DockPanel.ToolTip>
                     </DockPanel>
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanSetOffset, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock
-                            MinWidth="100"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDefaultOffset}" />
+
+                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDefaultOffset}" />
+                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="(" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.OffsetMin}" />
+                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.OffsetMax}" />
+                                <TextBlock VerticalAlignment="Center" Text=")" />
+                            </StackPanel>
+                        </StackPanel>
                         <ninactrl:IntStepperControl
                             Width="200"
                             HorizontalAlignment="Right"
@@ -384,10 +416,19 @@
                         </DockPanel.ToolTip>
                     </DockPanel>
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanSetUSBLimit, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock
-                            MinWidth="100"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblUSBLimit}" />
+                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblUSBLimit}" />
+                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="(" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.USBLimitMin}" />
+                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.USBLimitMax}" />
+                                <TextBlock VerticalAlignment="Center" Text=")" />
+                            </StackPanel>
+                        </StackPanel>
                         <ninactrl:IntStepperControl
                             Width="200"
                             HorizontalAlignment="Right"
@@ -461,25 +502,45 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblBinAverageEnabled}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding BinAverageEnabled}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblBinAverageEnabledTooltop}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding MaxFanSpeed, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFanSpeed}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="0" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding MaxFanSpeed}" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="{Binding MaxFanSpeed}"
+                                            MinValue="0"
+                                            StepSize="1"
+                                            Value="{Binding FanSpeed, Mode=TwoWay}" />
+                                    </DockPanel>
                                 </StackPanel>
-                            </DataTemplate>
-                            <DataTemplate x:Key="Touptek">
-                                <DockPanel Margin="0,0,0,6" Visibility="{Binding HasHighGain, Converter={StaticResource VisibilityConverter}}">
-                                    <TextBlock
-                                        MinWidth="100"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblHighGainMode}" />
-                                    <CheckBox
-                                        Width="200"
-                                        HorizontalAlignment="Right"
-                                        IsChecked="{Binding HighGainMode}">
-                                        <CheckBox.ToolTip>
-                                            <ToolTip ToolTipService.ShowOnDisabled="False">
-                                                <TextBlock Text="{ns:Loc LblHighGainModeTooltip}" />
-                                            </ToolTip>
-                                        </CheckBox.ToolTip>
-                                    </CheckBox>
-                                </DockPanel>
                             </DataTemplate>
                             <DataTemplate x:Key="QhyCcd">
                                 <DockPanel Margin="0,0,0,6">
@@ -499,12 +560,105 @@
                                     </CheckBox>
                                 </DockPanel>
                             </DataTemplate>
+
+                            <DataTemplate x:Key="Canon">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6">
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMirrorLockupDelay}" />
+                                        <ninactrl:UnitTextBox
+                                            Width="200"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            VerticalContentAlignment="Center"
+                                            Unit="s">
+                                            <TextBox.Text>
+                                                <Binding Mode="TwoWay" Path="MirrorLockupDelay">
+                                                    <Binding.ValidationRules>
+                                                        <util:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                            <TextBox.ToolTip>
+                                                <ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblMirrorLockupDelayTooltip}" />
+                                                </ToolTip>
+                                            </TextBox.ToolTip>
+                                        </ninactrl:UnitTextBox>
+                                    </DockPanel>
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        FontStyle="Italic"
+                                        Text="{ns:Loc LblMirrorLockupDelayTooltip}"
+                                        TextAlignment="Right" />
+                                </StackPanel>
+                            </DataTemplate>
+
+                            <DataTemplate x:Key="LegacySbig">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblTrackingASCOMServerEnabled}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding TrackingCcdAscomServerEnabled}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblTrackingASCOMServerEnabledTooltip}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblTrackingASCOMServerPipeName}" />
+                                        <TextBox
+                                            Width="250"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center">
+                                            <TextBox.Text>
+                                                <Binding
+                                                    Path="ActiveProfile.CameraSettings.TrackingCameraASCOMServerPipeName"
+                                                    Source="{StaticResource ProfileService}"
+                                                    UpdateSourceTrigger="LostFocus" />
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDualTracking, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblSBIGUseExternalTrackingCCD}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding UseExternalTrackingCcd}">
+                                        </CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding TrackingCcdAscomServerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblTrackingASCOMServerLoggingEnabled}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding TrackingCcdAscomServerLoggingEnabled}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
+
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
-                                Altair="{StaticResource Altair}"
+                                Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
+                                LegacySbig="{StaticResource LegacySbig}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Touptek}" />
+                                Touptek="{StaticResource Altair}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"
@@ -519,10 +673,18 @@
             Grid.Column="1"
             IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding CameraInfo.Connected}">
-                <GroupBox Header="{ns:Loc LblTempControl}">
+                <GroupBox>
+                    <GroupBox.Header>
+                        <Grid Height="40" Margin="5">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Text="{ns:Loc LblTempControl}" />
+                        </Grid>
+                    </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
+                            <RowDefinition Height="2*" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Vertical">
@@ -530,7 +692,7 @@
                             <Border
                                 BorderBrush="{StaticResource BorderBrush}"
                                 BorderThickness="0"
-                                Visibility="{Binding Cam.HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                Visibility="{Binding CameraInfo.HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                                 <UniformGrid Columns="2">
                                     <UniformGrid
                                         Margin="0,6,0,6"
@@ -598,11 +760,11 @@
                                         Columns="2">
                                         <TextBlock Text="{ns:Loc LblChipTemp}" />
                                         <StackPanel Orientation="Horizontal">
+
                                             <TextBlock
                                                 Margin="5,0,0,0"
-                                                Text="{Binding CameraInfo.Temperature, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}"
+                                                Text="{Binding CameraInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}"
                                                 Visibility="{Binding CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
-
                                             <TextBlock Text=" / ">
                                                 <TextBlock.Visibility>
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
@@ -615,7 +777,7 @@
                                             <TextBlock
                                                 MinWidth="20"
                                                 Margin="5,0,0,0"
-                                                Text="{Binding Cam.TemperatureSetPoint, StringFormat=\{0:0.00\}}">
+                                                Text="{Binding Cam.TemperatureSetPoint, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}">
                                                 <TextBlock.Visibility>
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
@@ -659,12 +821,20 @@
                                             Text="{ns:Loc LblTargetTemp}" />
                                         <ninactrl:StepperControl
                                             Grid.Column="1"
-                                            MinWidth="100"
+                                            MinWidth="120"
                                             IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                             MaxValue="50"
                                             MinValue="-50"
                                             StepSize="1"
-                                            Value="{Binding TargetTemp, Mode=TwoWay}" />
+                                            Value="{Binding TargetTemp, Mode=TwoWay}">
+                                            <ninactrl:StepperControl.InnerContent>
+                                                <ninactrl:UnitTextBox
+                                                    VerticalContentAlignment="Center"
+                                                    Text="{Binding TargetTemp}"
+                                                    TextAlignment="Center"
+                                                    Unit="°C" />
+                                            </ninactrl:StepperControl.InnerContent>
+                                        </ninactrl:StepperControl>
                                     </Grid>
 
                                     <Grid Grid.Row="1" Margin="0,2,0,0">
@@ -677,12 +847,20 @@
 
                                         <ninactrl:StepperControl
                                             Grid.Column="1"
-                                            MinWidth="100"
+                                            MinWidth="120"
                                             IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                             MaxValue="30"
                                             MinValue="0"
                                             StepSize="1"
-                                            Value="{Binding CoolingDuration, Mode=TwoWay}" />
+                                            Value="{Binding CoolingDuration, Mode=TwoWay}">
+                                            <ninactrl:StepperControl.InnerContent>
+                                                <ninactrl:UnitTextBox
+                                                    VerticalContentAlignment="Center"
+                                                    Text="{Binding CoolingDuration}"
+                                                    TextAlignment="Center"
+                                                    Unit="min" />
+                                            </ninactrl:StepperControl.InnerContent>
+                                        </ninactrl:StepperControl>
                                     </Grid>
 
                                     <ninactrl:CancellableButton
@@ -694,6 +872,7 @@
                                         ButtonImage="{StaticResource SnowflakeSVG}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelCoolCamCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding CoolCamCommand}"
                                         IsEnabled="{Binding WarmCamCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                         ToolTip="{ns:Loc LblCoolCamBtnTooltip}" />
@@ -721,12 +900,20 @@
                                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
                                         <ninactrl:StepperControl
                                             Grid.Column="1"
-                                            MinWidth="100"
+                                            MinWidth="120"
                                             IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                             MaxValue="30"
                                             MinValue="0"
                                             StepSize="1"
-                                            Value="{Binding WarmingDuration, Mode=TwoWay}" />
+                                            Value="{Binding WarmingDuration, Mode=TwoWay}">
+                                            <ninactrl:StepperControl.InnerContent>
+                                                <ninactrl:UnitTextBox
+                                                    VerticalContentAlignment="Center"
+                                                    Text="{Binding WarmingDuration}"
+                                                    TextAlignment="Center"
+                                                    Unit="min" />
+                                            </ninactrl:StepperControl.InnerContent>
+                                        </ninactrl:StepperControl>
                                     </Grid>
                                     <ninactrl:CancellableButton
                                         Grid.Column="1"
@@ -736,6 +923,7 @@
                                         ButtonImage="{StaticResource FireSVG}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelCoolCamCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding WarmCamCommand}"
                                         IsEnabled="{Binding CoolCamCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                         ToolTip="{ns:Loc LblWarmCamBtnTooltip}" />
@@ -745,8 +933,7 @@
 
                         <local:CameraCoolingChartsView
                             Grid.Row="1"
-                            Margin="5"
-                            DataContext="{Binding}" />
+                            Margin="5" />
                     </Grid>
                 </GroupBox>
             </Grid>

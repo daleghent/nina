@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,20 +8,18 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NINA.Locale;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 
 namespace NINATest.Focuser.PegasusAstro {
 
@@ -145,8 +142,10 @@ namespace NINATest.Focuser.PegasusAstro {
         public async Task TestMove(int position, string expected) {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorMoveToPositionResponse>(It.IsAny<StepperMotorMoveToPositionCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorMoveToPositionResponse { DeviceResponse = $"SM:{position}" }));
+            _mockSdk.Setup(m => m.SendCommand<StepperMotorIsMovingResponse>(It.IsAny<StepperMotorIsMovingCommand>()))
+                .Returns(Task.FromResult(new StepperMotorIsMovingResponse { DeviceResponse = "0" }));
             await _sut.Move(position, new CancellationToken());
             Assert.That(command, Is.EqualTo(expected));
         }
@@ -155,7 +154,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public async Task TestMoveInvalidResponse() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorMoveToPositionResponse>(It.IsAny<StepperMotorMoveToPositionCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             await _sut.Move(0, new CancellationToken());
             Assert.That(command, Is.EqualTo("SM:0\n"));
@@ -165,7 +164,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestHalt() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorHaltResponse>(It.IsAny<StepperMotorHaltCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorHaltResponse { DeviceResponse = "SH" }));
             _sut.Halt();
             Assert.That(command, Is.EqualTo("SH\n"));
@@ -175,7 +174,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestHaltInvalidResponse() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorHaltResponse>(It.IsAny<StepperMotorHaltCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             _sut.Halt();
             Assert.That(command, Is.EqualTo("SH\n"));
@@ -194,7 +193,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetMotorDirection(string direction, string expected, string deviceResponse) {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorDirectionResponse>(It.IsAny<StepperMotorDirectionCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorDirectionResponse { DeviceResponse = deviceResponse }));
             _sut.SetMotorDirection(direction);
             Assert.That(command, Is.EqualTo(expected));
@@ -204,7 +203,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetMotorDirectionInvalidResponse() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorDirectionResponse>(It.IsAny<StepperMotorDirectionCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             _sut.SetMotorDirection("antiClockWise");
             Assert.That(command, Is.EqualTo("SR:1\n"));
@@ -217,7 +216,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetCurrentPosition(string position, string expected, string deviceResponse) {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorSetCurrentPositionResponse>(It.IsAny<StepperMotorSetCurrentPositionCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorSetCurrentPositionResponse { DeviceResponse = deviceResponse }));
             _sut.SetCurrentPosition(position);
             Assert.That(command, Is.EqualTo(expected));
@@ -227,7 +226,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetCurrentPositionInvalidResponse() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorSetCurrentPositionResponse>(It.IsAny<StepperMotorSetCurrentPositionCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             _sut.SetCurrentPosition("450000");
             Assert.That(command, Is.EqualTo("SC:450000\n"));
@@ -240,7 +239,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetMaximumSpeed(string speed, string expected) {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorSetMaximumSpeedResponse>(It.IsAny<StepperMotorSetMaximumSpeedCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorSetMaximumSpeedResponse()));
             _sut.SetMaximumSpeed(speed);
             Assert.That(command, Is.EqualTo(expected));
@@ -250,7 +249,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetMaximumSpeedInvalidResponse() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorSetMaximumSpeedResponse>(It.IsAny<StepperMotorSetMaximumSpeedCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult((StepperMotorSetMaximumSpeedResponse)null));
             _sut.SetMaximumSpeed("0");
             Assert.That(command, Is.EqualTo("SS:0\n"));
@@ -263,7 +262,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetBacklashSteps(string steps, string expected, string deviceResponse) {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorSetBacklashStepsResponse>(It.IsAny<StepperMotorSetBacklashStepsCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Returns(Task.FromResult(new StepperMotorSetBacklashStepsResponse { DeviceResponse = deviceResponse }));
             _sut.SetBacklashSteps(steps);
             Assert.That(command, Is.EqualTo(expected));
@@ -273,7 +272,7 @@ namespace NINATest.Focuser.PegasusAstro {
         public void TestSetBacklashStepsInvalidResponse() {
             string command = null;
             _mockSdk.Setup(m => m.SendCommand<StepperMotorSetBacklashStepsResponse>(It.IsAny<StepperMotorSetBacklashStepsCommand>()))
-                .Callback<ICommand>(arg => command = arg.CommandString)
+                .Callback<ISerialCommand>(arg => command = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             _sut.SetBacklashSteps("450000");
             Assert.That(command, Is.EqualTo("SB:450000\n"));

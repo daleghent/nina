@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,16 +14,17 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding RotatorInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding RotatorInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding RotatorInfo.Connected}">
-                <StackPanel Orientation="Vertical">
+                <Grid>
                     <Border
                         Margin="0,5,0,0"
+                        VerticalAlignment="Top"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
                         Visibility="{Binding RotatorInfo.Connected, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
@@ -40,89 +41,94 @@
                                 Style="{StaticResource CheckmarkCheckbox}" />
                         </UniformGrid>
                     </Border>
-                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                        <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsMoving}" />
-                            <CheckBox
-                                Width="20"
-                                Height="20"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                BorderBrush="Transparent"
-                                IsChecked="{Binding RotatorInfo.IsMoving, FallbackValue=False, Mode=OneWay}"
-                                IsEnabled="False"
-                                Style="{StaticResource CheckmarkCheckbox}" />
-                        </UniformGrid>
-                    </Border>
-                    <Border
-                        Margin="0,5,0,0"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0">
-                        <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock Text="{ns:Loc LblMechanicalPosition}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.MechanicalPosition}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </Border>
-                    <Border
-                        Margin="0,5,0,0"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0"
-                        Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
-                        <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock Text="{ns:Loc LblSkyPosition}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.Position}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </Border>
-                    <Border
-                        Margin="0,5,0,0"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0">
-                        <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Height="25"
-                                    MinWidth="90"
+                    <StackPanel Orientation="Vertical" Visibility="{Binding RotatorInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                            <UniformGrid VerticalAlignment="Center" Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsMoving}" />
+                                <CheckBox
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
-                                    VerticalContentAlignment="Center"
-                                    Text="{Binding TargetPosition, StringFormat={}{0:0.##}°}" />
-                            </StackPanel>
-                        </UniformGrid>
-                    </Border>
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Transparent"
+                                    IsChecked="{Binding RotatorInfo.IsMoving, FallbackValue=False, Mode=OneWay}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource InvertedCheckmarkCheckbox}" />
+                            </UniformGrid>
+                        </Border>
+                        <Border
+                            Margin="0,5,0,0"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0">
+                            <UniformGrid VerticalAlignment="Center" Columns="2">
+                                <TextBlock Text="{ns:Loc LblMechanicalPosition}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding RotatorInfo.MechanicalPosition}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                        </Border>
+                        <Border
+                            Margin="0,5,0,0"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0"
+                            Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
+                            <UniformGrid VerticalAlignment="Center" Columns="2">
+                                <TextBlock Text="{ns:Loc LblSkyPosition}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding RotatorInfo.Position}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                        </Border>
+                        <Border
+                            Margin="0,5,0,0"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0">
+                            <UniformGrid VerticalAlignment="Center" Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <ninactrl:UnitTextBox
+                                        Height="25"
+                                        MinWidth="90"
+                                        Margin="5,0,0,0"
+                                        VerticalContentAlignment="Center"
+                                        Text="{Binding TargetPosition, StringFormat={}{0:0.##}}"
+                                        Unit="°" />
+                                </StackPanel>
+                            </UniformGrid>
+                        </Border>
 
-                    <Grid Margin="0,5,0,0" IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
-                        <ninactrl:CancellableButton
-                            Height="25"
-                            Margin="10,10,10,0"
-                            HorizontalContentAlignment="Center"
-                            ButtonText="{ns:Loc LblMoveMechanicalPosition}"
-                            CancelButtonImage="{StaticResource CancelSVG}"
-                            CancelCommand="{Binding HaltCommand}"
-                            Command="{Binding MoveMechanicalCommand}"
-                            ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
-                    </Grid>
+                        <Grid Margin="0,5,0,0" IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
+                            <ninactrl:CancellableButton
+                                Height="25"
+                                Margin="10,10,10,0"
+                                HorizontalContentAlignment="Center"
+                                ButtonText="{ns:Loc LblMoveMechanicalPosition}"
+                                CancelButtonImage="{StaticResource CancelSVG}"
+                                CancelCommand="{Binding HaltCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
+                                Command="{Binding MoveMechanicalCommand}"
+                                ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
+                        </Grid>
 
-                    <Grid
-                        Margin="0,5,0,0"
-                        IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}"
-                        Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
-                        <ninactrl:CancellableButton
-                            Height="25"
-                            Margin="10,10,10,0"
-                            HorizontalContentAlignment="Center"
-                            ButtonText="{ns:Loc LblMoveSkyPosition}"
-                            CancelButtonImage="{StaticResource CancelSVG}"
-                            CancelCommand="{Binding HaltCommand}"
-                            Command="{Binding MoveCommand}"
-                            ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
-                    </Grid>
-                </StackPanel>
+                        <Grid
+                            Margin="0,5,0,0"
+                            IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}"
+                            Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
+                            <ninactrl:CancellableButton
+                                Height="25"
+                                Margin="10,10,10,0"
+                                HorizontalContentAlignment="Center"
+                                ButtonText="{ns:Loc LblMoveSkyPosition}"
+                                CancelButtonImage="{StaticResource CancelSVG}"
+                                CancelCommand="{Binding HaltCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
+                                Command="{Binding MoveCommand}"
+                                ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </ScrollViewer>

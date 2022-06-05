@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,38 +8,44 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyTelescope;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Model;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.PlateSolving;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.ViewModel.Imaging {
 
-    internal class AnchorablePlateSolverVM : DockableVM, ICameraConsumer, ITelescopeConsumer {
+    internal class AnchorablePlateSolverVM : DockableVM, ICameraConsumer, ITelescopeConsumer, IAnchorablePlateSolverVM {
         private PlateSolveResult _plateSolveResult;
 
         private ObservableCollection<PlateSolveResult> _plateSolveResultList;
 
         private double _repeatThreshold;
 
-        private BinningMode _snapBin;
+        private BinningMode _snapBin = new BinningMode(1, 1);
 
         private double _snapExposureDuration;
 
-        private Model.MyFilterWheel.FilterInfo _snapFilter;
+        private FilterInfo _snapFilter;
 
         private int _snapGain = -1;
 
@@ -49,7 +54,7 @@ namespace NINA.ViewModel.Imaging {
         private ApplicationStatus _status;
 
         private IApplicationStatusMediator applicationStatusMediator;
-
+        private IFilterWheelMediator filterWheelMediator;
         private CameraInfo cameraInfo;
 
         private ICameraMediator cameraMediator;
@@ -58,24 +63,41 @@ namespace NINA.ViewModel.Imaging {
         private TelescopeInfo telescopeInfo;
 
         private ITelescopeMediator telescopeMediator;
+        private IDomeMediator domeMediator;
+        private IDomeFollower domeFollower;
 
         public AnchorablePlateSolverVM(IProfileService profileService,
                 ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
+                IDomeMediator domeMediator,
+                IDomeFollower domeFollower,
                 IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblPlateSolving";
+                IApplicationStatusMediator applicationStatusMediator,
+                IFilterWheelMediator filterWheelMediator) : base(profileService) {
+            Title = Loc.Instance["LblPlateSolving"];
 
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
+            this.domeMediator = domeMediator;
+            this.domeFollower = domeFollower;
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
+            this.filterWheelMediator = filterWheelMediator;
 
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PlatesolveSVG"];
 
-            SolveCommand = new AsyncCommand<bool>(() => CaptureSolveSyncAndReslew(new Progress<ApplicationStatus>(p => Status = p)));
+            SolveCommand = new AsyncCommand<bool>(async () => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await CaptureSolveSyncAndReslew(new Progress<ApplicationStatus>(p => Status = p));
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            },
+            (o) => cameraMediator.IsFreeToCapture(this));
             CancelSolveCommand = new RelayCommand(CancelSolve);
 
             SnapExposureDuration = profileService.ActiveProfile.PlateSolveSettings.ExposureTime;
@@ -199,7 +221,7 @@ namespace NINA.ViewModel.Imaging {
             }
         }
 
-        public Model.MyFilterWheel.FilterInfo SnapFilter {
+        public FilterInfo SnapFilter {
             get {
                 return _snapFilter;
             }
@@ -268,8 +290,11 @@ namespace NINA.ViewModel.Imaging {
             _solveCancelToken = new CancellationTokenSource();
             try {
                 if ((this.Sync || this.SlewToTarget) && !telescopeInfo.Connected) {
-                    throw new Exception(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                    throw new Exception(Loc.Instance["LblTelescopeNotConnected"]);
                 }
+
+                await telescopeMediator.WaitForSlew(_solveCancelToken.Token);
+                await domeMediator.WaitForDomeSynchronization(_solveCancelToken.Token);
 
                 var seq = new CaptureSequence(SnapExposureDuration, CaptureSequence.ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
                 seq.Gain = SnapGain;
@@ -283,7 +308,7 @@ namespace NINA.ViewModel.Imaging {
                 });
 
                 if (this.SlewToTarget) {
-                    var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator);
+                    var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator, domeMediator, domeFollower);
                     var parameter = new CenterSolveParameter() {
                         Attempts = 1,
                         Binning = SnapBin?.X ?? CameraInfo.BinX,
@@ -296,11 +321,12 @@ namespace NINA.ViewModel.Imaging {
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
                         Threshold = RepeatThreshold,
-                        NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync
+                        NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync,
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
                     _ = await solver.Center(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
                 } else {
-                    var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator);
+                    var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
                     var parameter = new CaptureSolverParameter() {
                         Attempts = 1,
                         Binning = SnapBin?.X ?? CameraInfo.BinX,
@@ -311,23 +337,31 @@ namespace NINA.ViewModel.Imaging {
                         ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
                         Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                         SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
-                        Coordinates = telescopeMediator.GetCurrentPosition()
+                        Coordinates = telescopeMediator.GetCurrentPosition(),
+                        BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
                     };
                     var result = await solver.Solve(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
+                    if (result.Success) {
+                        if (telescopeInfo.Connected) {
+                            var epoch = telescopeInfo.EquatorialSystem;
+                            var resultCoordinates = result.Coordinates.Transform(epoch);
+                            var position = parameter.Coordinates.Transform(epoch);
+                            result.Separation = position - resultCoordinates;
 
-                    if (telescopeInfo.Connected) {
-                        var position = parameter.Coordinates.Transform(result.Coordinates.Epoch);
-                        result.Separation = result.DetermineSeparation(position);
-                    }
-
-                    if (!profileService.ActiveProfile.TelescopeSettings.NoSync && Sync) {
-                        await telescopeMediator.Sync(result.Coordinates);
+                            if (!profileService.ActiveProfile.TelescopeSettings.NoSync && Sync) {
+                                await telescopeMediator.Sync(resultCoordinates);
+                            }
+                        }
+                    } else {
+                        Notification.ShowError(Loc.Instance["LblPlatesolveFailed"]);
+                        return false;
                     }
                 }
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
+                return false;
             }
 
             return true;

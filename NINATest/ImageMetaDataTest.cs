@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,21 +8,23 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyRotator;
-using NINA.Model.MyTelescope;
-using NINA.Model.MyWeatherData;
-using NINA.Profile;
-using NINA.Utility.Astrometry;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Profile.Interfaces;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using NINA.Equipment.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Profile;
+using NINA.Core.Enum;
 
 namespace NINATest {
 
@@ -58,7 +59,7 @@ namespace NINATest {
             Assert.AreEqual(null, sut.Telescope.Coordinates);
 
             Assert.AreEqual(string.Empty, sut.Focuser.Name);
-            Assert.AreEqual(double.NaN, sut.Focuser.Position);
+            Assert.AreEqual(null, sut.Focuser.Position);
             Assert.AreEqual(double.NaN, sut.Focuser.StepSize);
             Assert.AreEqual(double.NaN, sut.Focuser.Temperature);
 
@@ -202,12 +203,13 @@ namespace NINATest {
 
         [Test]
         public void FromTelescopeInfoConnectedTest() {
-            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, new DateTime(2020, 06, 16));
+            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, DateTime.ParseExact("20200615T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             var telescopeInfo = new TelescopeInfo() {
                 Connected = true,
                 Name = "TestName",
                 SiteElevation = 120.3,
-                Coordinates = coordinates
+                Coordinates = coordinates,
+                SideOfPier = PierSide.pierWest
             };
             var sut = new ImageMetaData();
             sut.FromTelescopeInfo(telescopeInfo);
@@ -220,6 +222,7 @@ namespace NINATest {
             Assert.AreEqual(Epoch.J2000, sut.Telescope.Coordinates.Epoch);
             Assert.AreEqual(59.694545025696307d, sut.Telescope.Coordinates.RADegrees);
             Assert.AreEqual(28.945185789035015d, sut.Telescope.Coordinates.Dec);
+            Assert.AreEqual(PierSide.pierWest, sut.Telescope.SideOfPier);
         }
 
         [Test]
@@ -239,7 +242,7 @@ namespace NINATest {
 
         [Test]
         public void TargetCoordinateTransformTest() {
-            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, new DateTime(2020, 06, 16));
+            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, DateTime.ParseExact("20200615T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
 
             var sut = new ImageMetaData() {
                 Target = new TargetParameter() {
@@ -311,7 +314,7 @@ namespace NINATest {
             sut.FromFocuserInfo(info);
 
             Assert.AreEqual(string.Empty, sut.Focuser.Name);
-            Assert.AreEqual(double.NaN, sut.Focuser.Position);
+            Assert.AreEqual(null, sut.Focuser.Position);
             Assert.AreEqual(double.NaN, sut.Focuser.StepSize);
             Assert.AreEqual(double.NaN, sut.Focuser.Temperature);
         }

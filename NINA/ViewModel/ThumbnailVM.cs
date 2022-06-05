@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,64 +8,92 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Utility;
-using NINA.Utility.Enum;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using NINA.Model.ImageData;
-using NINA.Utility.Mediator;
-using NINA.Model.MyCamera;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Image;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
+using System.Threading;
 
 namespace NINA.ViewModel {
 
-    internal class ThumbnailVM : DockableVM {
+    internal class ThumbnailVM : DockableVM, IThumbnailVM {
 
-        public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator) : base(profileService) {
-            Title = "LblImageHistory";
+        public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageDataFactory imageDataFactory) : base(profileService) {
+            Title = Loc.Instance["LblImageHistory"];
             CanClose = false;
             ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"];
 
             this.imagingMediator = imagingMediator;
+            this.imageSaveMediator = imageSaveMediator;
+            this.imageDataFactory = imageDataFactory;
 
-            this.imagingMediator.ImageSaved += ImagingMediator_ImageSaved;
+            this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
+            this.imagingMediator.ImagePrepared += ImagingMediator_ImagePrepared;
 
             SelectCommand = new AsyncCommand<bool>((object o) => {
                 return SelectImage((Thumbnail)o);
             });
+            GradeImageCommand = new AsyncCommand<bool>(GradeImage);
         }
 
-        private void ImagingMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
+        private void ImagingMediator_ImagePrepared(object sender, ImagePreparedEventArgs e) {
+            // When images that aren't saved are taken, they replace the the image shown. This unselects whatever is currently highlighted.
+            // If the file is saved, it'll be captured later in the AddThumbnail callback
+            SelectedThumbnail = null;
+        }
+
+        private Task<bool> GradeImage(object arg) {
+            return Task.Run(async () => {
+                if (arg is Thumbnail) {
+                    var selected = arg as Thumbnail;
+                    //Order is from "" -> "BAD" -> ""
+                    switch (selected.Grade) {
+                        case "": {
+                                return await selected.ChangeGrade("BAD");
+                            }
+                        case "BAD": {
+                                return await selected.ChangeGrade("");
+                            }
+                    }
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
             AddThumbnail(e);
         }
 
         private Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
         private Task<bool> AddThumbnail(ImageSavedEventArgs msg) {
-            return Task<bool>.Run(async () => {
+            return Task.Run(async () => {
                 var factor = 100 / msg.Image.Width;
 
                 var scaledBitmap = CreateResizedImage(msg.Image, (int)(msg.Image.Width * factor), (int)(msg.Image.Height * factor), 0);
                 scaledBitmap.Freeze();
 
                 await _dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    var thumbnail = new Thumbnail() {
+                    var thumbnail = new Thumbnail(imageDataFactory) {
                         ThumbnailImage = scaledBitmap,
                         ImagePath = msg.PathToImage,
                         FileType = msg.FileType,
                         Duration = msg.Duration,
-                        Mean = msg.Mean,
-                        HFR = msg.HFR,
+                        ImageStatistics = msg.Statistics,
+                        StarDetectionAnalysis = msg.StarDetectionAnalysis,
                         Filter = msg.Filter,
                         IsBayered = msg.IsBayered
                     };
@@ -113,12 +140,20 @@ namespace NINA.ViewModel {
 
         private ObservableLimitedSizedStack<Thumbnail> _thumbnails;
         private IImagingMediator imagingMediator;
+        private IImageSaveMediator imageSaveMediator;
+        private readonly IImageDataFactory imageDataFactory;
+
         public ICommand SelectCommand { get; set; }
+        public ICommand GradeImageCommand { get; set; }
 
         private async Task<bool> SelectImage(Thumbnail thumbnail) {
             var iarr = await thumbnail.LoadOriginalImage(profileService);
             if (iarr != null) {
-                await imagingMediator.PrepareImage(iarr, new PrepareImageParameters(), new System.Threading.CancellationToken());
+                iarr.SetImageStatistics(thumbnail.ImageStatistics);
+                iarr.StarDetectionAnalysis = thumbnail.StarDetectionAnalysis;
+
+                await imagingMediator.PrepareImage(iarr, new PrepareImageParameters(detectStars: false), CancellationToken.None);
+                SelectedThumbnail = thumbnail;
                 return true;
             } else {
                 return false;
@@ -137,44 +172,5 @@ namespace NINA.ViewModel {
                 RaisePropertyChanged();
             }
         }
-    }
-
-    public class Thumbnail : BaseINPC {
-
-        public Thumbnail() {
-        }
-
-        public async Task<IImageData> LoadOriginalImage(IProfileService profileService) {
-            try {
-                if (File.Exists(ImagePath.LocalPath)) {
-                    return await ImageData.FromFile(ImagePath.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
-                } else {
-                    Notification.ShowError($"File ${ImagePath.LocalPath} does not exist");
-                }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(ex.Message);
-            }
-
-            return null;
-        }
-
-        public BitmapSource ThumbnailImage { get; set; }
-
-        public double Mean { get; set; }
-
-        public double HFR { get; set; }
-
-        public bool IsBayered { get; set; }
-
-        public Uri ImagePath { get; set; }
-
-        public FileTypeEnum FileType { get; set; }
-
-        public DateTime Date { get; set; } = DateTime.Now;
-
-        public string Filter { get; set; }
-
-        public double Duration { get; set; }
     }
 }

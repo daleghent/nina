@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyGuider;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Equipment.Equipment.MyGuider.PHD2;
+using NINA.Equipment.Equipment.MyGuider.SkyGuard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,9 @@ namespace NINA.View.Equipment.Guider {
     internal class GuiderTemplateSelector : DataTemplateSelector {
         public DataTemplate MGen { get; set; }
         public DataTemplate PHD2 { get; set; }
+        public DataTemplate MetaGuide { get; set; }
+        public DataTemplate DirectGuider { get; set; }
+        public DataTemplate SkyGuardGuider { get; set; }
         public DataTemplate Default { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
@@ -33,6 +38,12 @@ namespace NINA.View.Equipment.Guider {
                 return MGen;
             } else if (item is PHD2Guider) {
                 return PHD2;
+            } else if (item is MetaGuideGuider) {
+                return MetaGuide;
+            } else if (item is DirectGuider) {
+                return DirectGuider;
+            } else if (item is SkyGuardGuider) {
+                return SkyGuardGuider;
             } else {
                 return Default;
             }

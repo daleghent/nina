@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,19 +8,14 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.ViewModel.Equipment.Focuser;
+using NINA.Core.Enum;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,7 +31,7 @@ namespace NINATest.Focuser {
             public TestableOvershootBacklashCompensationDecorator(IProfileService profileService, IFocuser focuser) : base(profileService, focuser) {
             }
 
-            public Direction LastDirection { get => base.lastDirection; }
+            public OvershootDirection LastDirection { get => base.lastDirection; }
         }
 
         [SetUp]
@@ -46,20 +40,20 @@ namespace NINATest.Focuser {
             focuserMock.Reset();
 
             // Move commands set position to input value
-            focuserMock.Setup(x => x.Move(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                 .Callback((int position, CancellationToken ct) => {
+            focuserMock.Setup(x => x.Move(It.IsAny<int>(), It.IsAny<CancellationToken>(), It.IsAny<int>()))
+                 .Callback((int position, CancellationToken ct, int waitInMs) => {
                      focuserMock.SetupGet(x => x.Position).Returns(position);
                  });
         }
 
         [Test]
-        [TestCase(1000, 50000, 500, 0, 1200, 1400, 1400, FocuserDecorator.Direction.OUT)]
-        [TestCase(1000, 50000, 0, 500, 800, 400, 400, FocuserDecorator.Direction.IN)]
-        [TestCase(1000, 50000, 200, 0, 1500, 400, 400, FocuserDecorator.Direction.OUT)]
-        [TestCase(1000, 50000, 0, 500, 500, 1500, 1500, FocuserDecorator.Direction.IN)]
-        [TestCase(1000, 50000, 500, 0, 1500, 0, 0, FocuserDecorator.Direction.IN)]
-        [TestCase(1000, 50000, 0, 500, 1500, 50000, 50000, FocuserDecorator.Direction.OUT)]
-        public async Task Move_TwoTimes(int initialPosition, int maxStep, int backlashIn, int backlashOut, int firstMove, int secondMove, int expectedPosition, FocuserDecorator.Direction expectedLastDirection) {
+        [TestCase(1000, 50000, 500, 0, 1200, 1400, 1400, OvershootDirection.OUT)]
+        [TestCase(1000, 50000, 0, 500, 800, 400, 400, OvershootDirection.IN)]
+        [TestCase(1000, 50000, 200, 0, 1500, 400, 400, OvershootDirection.OUT)]
+        [TestCase(1000, 50000, 0, 500, 500, 1500, 1500, OvershootDirection.IN)]
+        [TestCase(1000, 50000, 500, 0, 1500, 0, 0, OvershootDirection.IN)]
+        [TestCase(1000, 50000, 0, 500, 1500, 50000, 50000, OvershootDirection.OUT)]
+        public async Task Move_TwoTimes(int initialPosition, int maxStep, int backlashIn, int backlashOut, int firstMove, int secondMove, int expectedPosition, OvershootDirection expectedLastDirection) {
             focuserMock.SetupGet(x => x.Position).Returns(initialPosition);
             focuserMock.SetupGet(x => x.MaxStep).Returns(maxStep);
 

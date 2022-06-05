@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,8 +14,8 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -29,9 +29,9 @@
     </UserControl.Resources>
     <ScrollViewer
         x:Name="grid"
-        HorizontalScrollBarVisibility="Auto"
+        HorizontalScrollBarVisibility="Disabled"
         VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding CameraInfo.Connected}">
                 <StackPanel Orientation="Vertical">
                     <Border
@@ -115,11 +115,10 @@
                         Margin="0,5,0,0"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
-                        Visibility="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.TelescopeSettings.NoSync, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        Visibility="{Binding Path=ActiveProfile.TelescopeSettings.NoSync, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSync}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -133,7 +132,6 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblReslewToTarget}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -141,38 +139,41 @@
                         </UniformGrid>
                     </Border>
                     <Border
-                        MinHeight="60"
+                        Margin="0,5,0,0"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0">
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblErrorLT}" />
                             <UniformGrid Columns="2">
-                                <TextBox
+                                <ninactrl:UnitTextBox
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center">
-                                    <TextBox.Text>
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Unit="arcmin">
+                                    <ninactrl:UnitTextBox.Text>
                                         <Binding Mode="TwoWay" Path="RepeatThreshold">
                                             <Binding.ValidationRules>
                                                 <rules:GreaterZeroRule />
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblArcmin}" />
+                                    </ninactrl:UnitTextBox.Text>
+                                </ninactrl:UnitTextBox>
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
 
                     <local:CameraControlView
-                        MyBinningModes="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}"
-                        MyCanGetGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanGetGain}"
-                        MyCanSetGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanSetGain}"
+                        Margin="0,5,0,0"
+                        MyBinningModes="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
+                        MyCanGetGain="{Binding CameraInfo.CanGetGain}"
+                        MyCanSetGain="{Binding CameraInfo.CanSetGain}"
+                        MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                         MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
-                        MyFilters="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
-                        MyGains="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains}"
-                        MyMaxGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMax}"
-                        MyMinGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMin}"
+                        MyFilters="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
+                        MyGains="{Binding CameraInfo.Gains}"
+                        MyMaxGain="{Binding CameraInfo.GainMax}"
+                        MyMinGain="{Binding CameraInfo.GainMin}"
                         MyOrientation="Vertical"
                         MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
                         MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"
@@ -184,8 +185,9 @@
                         ButtonImage="{StaticResource PlaySVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSolveCommand}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding SolveCommand}"
-                        IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
+                        IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                         ToolTip="{ns:Loc LblCaptureImageAndPlatesolve}" />
 
                     <DataGrid

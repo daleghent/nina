@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,9 @@
 
 #endregion "copyright"
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
 using System.Windows;
 using System.Windows.Controls;
-using NINA.Model.MySwitch;
 
 namespace NINA.View.Equipment.Switch {
 
@@ -30,10 +25,10 @@ namespace NINA.View.Equipment.Switch {
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             switch (item) {
-                case Model.MySwitch.Eagle _:
+                case Eagle _:
                     return Eagle;
 
-                case Model.MySwitch.UltimatePowerBoxV2 _:
+                case UltimatePowerBoxV2 _:
                     return UltimatePowerBoxV2;
 
                 default:

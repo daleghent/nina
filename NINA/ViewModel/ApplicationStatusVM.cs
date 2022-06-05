@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,25 +8,26 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using NINA.Core.Model;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
+using NINA.Core.Locale;
 
 namespace NINA.ViewModel {
 
     internal class ApplicationStatusVM : DockableVM, IApplicationStatusVM {
 
         public ApplicationStatusVM(IProfileService profileService, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblApplicationStatus";
+            Title = Loc.Instance["LblApplicationStatus"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ApplicationStatusSVG"];
 
             this.applicationStatusMediator = applicationStatusMediator;

@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,11 +8,9 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
 using NUnit.Framework;
 using System;
 
@@ -27,8 +24,8 @@ namespace NINATest.FlatDevice {
         [TestCase("OnOff", "E:1")]
         [TestCase("SetBrightness", "L:20")]
         public void TestValidResponse(string responseName, string response) {
-            var sut = (Response)Activator.CreateInstance("NINA",
-                $"NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
+            var sut = (Response)Activator.CreateInstance("NINA.Equipment",
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
             sut.DeviceResponse = response;
         }
 
@@ -43,8 +40,8 @@ namespace NINATest.FlatDevice {
         [TestCase("SetBrightness", null)]
         [TestCase("SetBrightness", "")]
         public void TestInvalidResponse(string responseName, string response) {
-            var sut = (Response)Activator.CreateInstance("NINA",
-                $"NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
+            var sut = (Response)Activator.CreateInstance("NINA.Equipment",
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
             Assert.That(() => sut.DeviceResponse = response, Throws.TypeOf<InvalidDeviceResponseException>());
         }
 

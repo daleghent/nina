@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,25 +8,28 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using FluentAssertions;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
+using NINA.Image.Interfaces;
+using NINA.Image.FileFormat;
+using NINA.Core.Model;
+using Moq;
 
 namespace NINATest {
 
     [TestFixture]
     public class ImageDataTest {
         private ImageMetaData MetaData;
+        private ImageDataFactoryTestUtility dataFactoryUtility;
 
         [SetUp]
         public void Setup() {
@@ -38,7 +40,7 @@ namespace NINATest {
                     ImageType  = "LIGHT",
                     Binning  = "1x1",
                     ExposureTime  = 300,
-                    RecordedRMS  = new NINA.Model.RMS() {
+                    RecordedRMS  = new RMS() {
                         Total = 10,
                     }
                 },
@@ -85,6 +87,7 @@ namespace NINATest {
                 }
             };
             MetaData.Image.RecordedRMS.SetScale(5);
+            dataFactoryUtility = new ImageDataFactoryTestUtility();
         }
 
         [Test]
@@ -102,7 +105,7 @@ namespace NINATest {
             ushort[] expFlatArr = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 };
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
 
             //Assert
             Assert.AreEqual(expX, result.Properties.Width);
@@ -122,7 +125,7 @@ namespace NINATest {
             ushort[] expFlatArr = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 };
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, new ImageMetaData());
+            BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, new ImageMetaData());
 
             //Assert
             Assert.AreEqual(expX, result.Properties.Width);
@@ -136,7 +139,7 @@ namespace NINATest {
                 //Arrange
                 var arr = new Int32[5, 5, 5];
                 //Act
-                IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+                IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             }
             );
         }
@@ -171,7 +174,7 @@ namespace NINATest {
             double mean = 4116;
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -209,7 +212,7 @@ namespace NINATest {
             double mean = 32767.5;
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -231,7 +234,7 @@ namespace NINATest {
             }
 
             //Act
-            IImageData result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            IImageData result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -251,7 +254,7 @@ namespace NINATest {
             }
 
             //Act
-            var imgData = await new ImageArrayExposureData(arr, width, height, bitDepth, isBayered, new ImageMetaData()).ToImageData();
+            var imgData = await dataFactoryUtility.ExposureDataFactory.CreateImageArrayExposureData(arr, width, height, bitDepth, isBayered, new ImageMetaData()).ToImageData();
 
             //Assert
             Assert.AreEqual(width, imgData.Properties.Width);
@@ -274,7 +277,7 @@ namespace NINATest {
             }
 
             //Act
-            var imgData = await new Flipped2DExposureData(arr, bitDepth, isBayered, new ImageMetaData()).ToImageData();
+            var imgData = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, bitDepth, isBayered, new ImageMetaData()).ToImageData();
 
             //Assert
             Assert.AreEqual(width, imgData.Properties.Width);
@@ -310,7 +313,7 @@ namespace NINATest {
             arr[3, 4] = 5;
 
             //Act
-            var result = await new Flipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
+            var result = await dataFactoryUtility.ExposureDataFactory.CreateFlipped2DExposureData(arr, 16, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             //Assert
@@ -328,7 +331,7 @@ namespace NINATest {
         [TestCase(new ushort[] { 10, 10, 10, 10, 10, 10, 10, 10, 15, 20, 20, 20, 20, 20, 50, 50, 50, 50 }, 10, 17.5, 7.5)]
         [TestCase(new ushort[] { 0, 0, 65535, 65535 }, 16, 32767.5, 32767.5)]
         public async Task MedianTest(ushort[] arr, int bitDepth, double expectedMedian, double expectedMAD) {
-            var result = await new ImageArrayExposureData(arr, arr.Length / 2, 2, bitDepth, false, new ImageMetaData()).ToImageData();
+            var result = await dataFactoryUtility.ExposureDataFactory.CreateImageArrayExposureData(arr, arr.Length / 2, 2, bitDepth, false, new ImageMetaData()).ToImageData();
             var resultStatistics = await result.Statistics.Task;
 
             Assert.AreEqual(expectedMedian, resultStatistics.Median);
@@ -336,10 +339,10 @@ namespace NINATest {
         }
 
         [Test]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.XISF, ".xisf")]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.FITS, ".fits")]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.TIFF, ".tif")]
-        public async Task SaveToDiskXISFSimpleTest(NINA.Utility.Enum.FileTypeEnum fileType, string extension) {
+        [TestCase(NINA.Core.Enum.FileTypeEnum.XISF, ".xisf")]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.FITS, ".fits")]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.TIFF, ".tif")]
+        public async Task SaveToDiskSimpleTest(NINA.Core.Enum.FileTypeEnum fileType, string extension) {
             var data = new ushort[] {
                 3,1,1,
                 3,4,5,
@@ -352,8 +355,35 @@ namespace NINATest {
                 FileType = fileType
             };
 
-            //var sut = await new ImageArrayExposureData(data, 3, 3, 16, false, new ImageMetaData()).ToImageData();
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
+
+            var file = await sut.SaveToDisk(fileSaveInfo, default);
+
+            File.Exists(file).Should().BeTrue();
+            File.Delete(file);
+            Path.GetFileName(file).Should().Be($"{fileSaveInfo.FilePattern}{extension}");
+        }
+
+        [Test]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.XISF)]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.FITS)]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.TIFF)]
+        public async Task SaveToDiskForceExtensionTest(NINA.Core.Enum.FileTypeEnum fileType) {
+            var data = new ushort[] {
+                3,1,1,
+                3,4,5,
+                3,2,3
+            };
+
+            var extension = ".bar";
+            var fileSaveInfo = new FileSaveInfo {
+                FilePath = TestContext.CurrentContext.TestDirectory,
+                FilePattern = "TestFile",
+                ForceExtension = extension,
+                FileType = fileType
+            };
+
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
 
             var file = await sut.SaveToDisk(fileSaveInfo, default);
 
@@ -391,10 +421,10 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
@@ -413,8 +443,8 @@ namespace NINATest {
                 $"#{string.Format("{0:0}", MetaData.Camera.Offset)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
-                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Focuser.Position)}" +
-                $"#{Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
+                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
+                $"#{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
         }
@@ -448,15 +478,15 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.TIFF,
-                TIFFCompressionType = NINA.Utility.Enum.TIFFCompressionTypeEnum.LZW
+                FileType = NINA.Core.Enum.FileTypeEnum.TIFF,
+                TIFFCompressionType = NINA.Core.Enum.TIFFCompressionTypeEnum.LZW
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, new ImageMetaData());
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, new ImageMetaData());
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
-            var expectedPattern = $"#0001-01-01##0001-01-01_00-00-00#00-00-00#-0001##1x1#########{Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}.tif";
+            var expectedPattern = $"#0001-01-01##0001-01-01_00-00-00#00-00-00#-0001##1x1#########{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}.tif";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}");
         }
@@ -490,10 +520,10 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.PrepareSave(fileSaveInfo, default);
             file = sut.FinalizeSave(file, pattern);
             File.Delete(file);
@@ -513,8 +543,8 @@ namespace NINATest {
                 $"#{string.Format("{0:0}", MetaData.Camera.Offset)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
-                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Focuser.Position)}" +
-                $"#{Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
+                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
+                $"#{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
         }
@@ -548,13 +578,13 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var invalidChars = Path.GetInvalidPathChars();
             MetaData.Target.Name = string.Join("", invalidChars);
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.PrepareSave(fileSaveInfo, default);
             file = sut.FinalizeSave(file, pattern);
             File.Delete(file);
@@ -574,8 +604,8 @@ namespace NINATest {
                 $"#{string.Format("{0:0}", MetaData.Camera.Offset)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
-                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Focuser.Position)}" +
-                $"#{Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
+                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
+                $"#{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
         }
@@ -583,7 +613,7 @@ namespace NINATest {
         //[Test]
         //public async Task SaveToDiskXISFDeepMetaDataTest() {
         //    Uncomment once xisf loading knows to extract meta data
-        //    var fileType = NINA.Utility.Enum.FileTypeEnum.XISF;
+        //    var fileType = NINA.Core.Enum.FileTypeEnum.XISF;
         //    var data = new ushort[] {
         //        3,1,1,
         //        3,4,5,

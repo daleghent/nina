@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,122 +8,88 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Profile;
+using NINA.Core.Enum;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Equipment.FilterWheel;
-using NINA.ViewModel.Equipment.FlatDevice;
-using NINA.ViewModel.Equipment.Focuser;
-using NINA.ViewModel.Equipment.Guider;
-using NINA.ViewModel.Equipment.Rotator;
-using NINA.ViewModel.Equipment.Switch;
-using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Equipment.WeatherData;
-using NINA.ViewModel.FlatWizard;
-using NINA.ViewModel.FramingAssistant;
-using NINA.ViewModel.Imaging;
+using NINA.View.About;
+using NINA.WPF.Base.Interfaces.Mediator;
 using System;
-using System.Threading.Tasks;
+using System.Management;
 using System.Windows;
 using System.Windows.Input;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using System.IO;
+using System.Linq;
+using NINA.Plugin.Interfaces;
+using Nito.AsyncEx;
 
 namespace NINA.ViewModel {
 
-    internal class ApplicationVM : BaseVM {
+    internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
 
-        public ApplicationVM() : this(new ProfileService()) {
-        }
+        public ApplicationVM(IProfileService profileService, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator, IImageSaveMediator imageSaveMediator, IPluginLoader pluginProvider) : base(profileService) {
+            applicationMediator.RegisterHandler(this);
+            this.projectVersion = projectVersion;
+            this.cameraMediator = cameraMediator;
+            this.imageSaveMediator = imageSaveMediator;
+            this.pluginProvider = pluginProvider;
+            cameraMediator.RegisterConsumer(this);
 
-        public ApplicationVM(IProfileService profileService) : base(profileService) {
-            try {
-                if (NINA.Properties.Settings.Default.UpdateSettings) {
-                    NINA.Properties.Settings.Default.Upgrade();
-                    NINA.Properties.Settings.Default.UpdateSettings = false;
-                    NINA.Properties.Settings.Default.Save();
-                }
+            ExitCommand = new RelayCommand(ExitApplication);
+            ClosingCommand = new RelayCommand(ClosingApplication);
+            MinimizeWindowCommand = new RelayCommand(MinimizeWindow);
+            MaximizeWindowCommand = new RelayCommand(MaximizeWindow);
+            CheckProfileCommand = new RelayCommand(LoadProfile);
+            OpenManualCommand = new RelayCommand(OpenManual);
+            OpenAboutCommand = new RelayCommand(OpenAbout);
+            CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
+            CheckWindowsVersionCommand = new RelayCommand(CheckWindowsVersion);
 
-                Logger.SetLogLevel(profileService.ActiveProfile.ApplicationSettings.LogLevel);
-                cameraMediator = new CameraMediator();
-                telescopeMediator = new TelescopeMediator();
-                focuserMediator = new FocuserMediator();
-                filterWheelMediator = new FilterWheelMediator();
-                rotatorMediator = new RotatorMediator();
-                flatDeviceMediator = new FlatDeviceMediator();
-                guiderMediator = new GuiderMediator();
-                imagingMediator = new ImagingMediator();
-                applicationStatusMediator = new ApplicationStatusMediator();
-
-                switchMediator = new SwitchMediator();
-                weatherDataMediator = new WeatherDataMediator();
-
-                SwitchVM = new SwitchVM(profileService, applicationStatusMediator, switchMediator);
-
-                ExitCommand = new RelayCommand(ExitApplication);
-                ClosingCommand = new RelayCommand(ClosingApplication);
-                MinimizeWindowCommand = new RelayCommand(MinimizeWindow);
-                MaximizeWindowCommand = new RelayCommand(MaximizeWindow);
-                CheckProfileCommand = new RelayCommand(LoadProfile);
-                CheckUpdateCommand = new AsyncCommand<bool>(() => CheckUpdate());
-                OpenManualCommand = new RelayCommand(OpenManual);
-                CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
-                ConnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
-                    var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblReconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
-                    if (diag == MessageBoxResult.OK) {
-                        return await Task<bool>.Run(async () => {
-                            var cam = cameraMediator.Connect();
-                            var fw = filterWheelMediator.Connect();
-                            var telescope = telescopeMediator.Connect();
-                            var focuser = focuserMediator.Connect();
-                            var rotator = rotatorMediator.Connect();
-                            var flatdevice = flatDeviceMediator.Connect();
-                            var guider = guiderMediator.Connect();
-                            var weather = weatherDataMediator.Connect();
-                            var swtch = switchMediator.Connect();
-                            await Task.WhenAll(cam, fw, telescope, focuser, rotator, flatdevice, guider, weather, swtch);
-                            return true;
-                        });
-                    } else {
-                        return false;
-                    }
-                });
-                DisconnectAllDevicesCommand = new RelayCommand((object o) => {
-                    var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
-                    if (diag == MessageBoxResult.OK) {
-                        DisconnectEquipment();
-                    }
-                });
-
-                InitAvalonDockLayout();
-
-                OptionsVM.PropertyChanged += OptionsVM_PropertyChanged;
-
-                profileService.ProfileChanged += ProfileService_ProfileChanged;
-            } catch (Exception e) {
-                Logger.Error(e);
-                throw e;
-            }
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
         }
 
         private void CheckASCOMPlatformVersion(object obj) {
             try {
                 var version = ASCOMInteraction.GetPlatformVersion();
-                if ((version.Major < 6) || (version.Major == 6 && version.Minor < 4)) {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblASCOMPlatformOutdated"]);
+                Logger.Info($"ASCOM Platform {version} installed");
+                if ((version.Major < 6) || (version.Major == 6 && version.Minor < 5) || (version.Major == 6 && version.Minor == 5 && version.Build < 1) || (version.Major == 6 && version.Minor == 5 && version.Build == 1 && version.Revision < 3234)) {
+                    Logger.Error($"Outdated ASCOM Platform detected. Current: {version} - Minimum Required: 6.5.1.3234");
+                    Notification.ShowWarning(Loc.Instance["LblASCOMPlatformOutdated"]);
                 }
             } catch (Exception) {
+                Logger.Info($"No ASCOM Platform installed");
             }
         }
 
-        public IProfile ActiveProfile {
-            get {
-                return profileService.ActiveProfile;
+        private void CheckWindowsVersion(object obj) {
+            // Minimum support Windows version is (curently) Windows 8 (6.2)
+            var minimumVersion = new Version(6, 2);
+            string friendlyName = "Windows";
+
+            if (Environment.OSVersion.Version < minimumVersion) {
+                try {
+                    var searcher = new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem");
+
+                    foreach (ManagementObject os in searcher.Get()) {
+                        friendlyName = os["Caption"].ToString().Trim();
+                        break;
+                    }
+                } catch (Exception ex) {
+                    Logger.Info($"Error getting Windows name: {ex.Message}");
+                } finally {
+                    Notification.ShowError(string.Format(Loc.Instance["LblYourWindowsIsTooOld"], friendlyName));
+                }
             }
         }
 
@@ -132,103 +97,41 @@ namespace NINA.ViewModel {
             RaisePropertyChanged(nameof(ActiveProfile));
         }
 
-        private async void OptionsVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == nameof(OptionsVM.AutoUpdateSource)) {
-                await CheckUpdate();
-            }
-        }
-
-        private ICameraMediator cameraMediator;
-        private ITelescopeMediator telescopeMediator;
-        private IFocuserMediator focuserMediator;
-        private IFilterWheelMediator filterWheelMediator;
-        private RotatorMediator rotatorMediator;
-        private IFlatDeviceMediator flatDeviceMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
-        private SwitchMediator switchMediator;
-        private IWeatherDataMediator weatherDataMediator;
-
         private void LoadProfile(object obj) {
             if (profileService.Profiles.Count > 1) {
                 new ProfileSelectVM(profileService).SelectProfile();
             }
         }
 
-        private Task<bool> CheckUpdate() {
-            return VersionCheckVM.CheckUpdate();
-        }
-
         private void OpenManual(object o) {
-            System.Diagnostics.Process.Start("https://nighttime-imaging.eu/docs/master/site/");
+            System.Diagnostics.Process.Start(CoreUtil.DocumentationPage);
         }
 
-        public void InitAvalonDockLayout() {
-            DockManagerVM.Anchorables.Add(ImagingVM.ImageControl);
-            DockManagerVM.Anchorables.Add(CameraVM);
-            DockManagerVM.Anchorables.Add(FilterWheelVM);
-            DockManagerVM.Anchorables.Add(FocuserVM);
-            DockManagerVM.Anchorables.Add(RotatorVM);
-            DockManagerVM.Anchorables.Add(TelescopeVM);
-            DockManagerVM.Anchorables.Add(GuiderVM);
-            DockManagerVM.Anchorables.Add(SwitchVM);
-            DockManagerVM.Anchorables.Add(FlatDeviceVM);
-            DockManagerVM.Anchorables.Add(WeatherDataVM);
-
-            DockManagerVM.Anchorables.Add(SeqVM);
-            DockManagerVM.Anchorables.Add(ImagingVM.ImgStatisticsVM);
-            DockManagerVM.Anchorables.Add(SeqVM.ImgHistoryVM);
-
-            DockManagerVM.Anchorables.Add(AnchorableSnapshotVM);
-            DockManagerVM.Anchorables.Add(ThumbnailVM);
-            DockManagerVM.Anchorables.Add(WeatherDataVM);
-            DockManagerVM.Anchorables.Add(PlatesolveVM);
-            DockManagerVM.Anchorables.Add(PolarAlignVM);
-            DockManagerVM.Anchorables.Add(AutoFocusVM);
-            DockManagerVM.Anchorables.Add(FocusTargetsVM);
-            DockManagerVM.Anchorables.Add(ExposureCalculatorVM);
-
-            DockManagerVM.AnchorableInfoPanels.Add(ImagingVM.ImageControl);
-            DockManagerVM.AnchorableInfoPanels.Add(CameraVM);
-            DockManagerVM.AnchorableInfoPanels.Add(FilterWheelVM);
-            DockManagerVM.AnchorableInfoPanels.Add(FocuserVM);
-            DockManagerVM.AnchorableInfoPanels.Add(RotatorVM);
-            DockManagerVM.AnchorableInfoPanels.Add(TelescopeVM);
-            DockManagerVM.AnchorableInfoPanels.Add(GuiderVM);
-            DockManagerVM.AnchorableInfoPanels.Add(SeqVM);
-            DockManagerVM.AnchorableInfoPanels.Add(SwitchVM);
-            DockManagerVM.AnchorableInfoPanels.Add(FlatDeviceVM);
-            DockManagerVM.AnchorableInfoPanels.Add(WeatherDataVM);
-            DockManagerVM.AnchorableInfoPanels.Add(ImagingVM.ImgStatisticsVM);
-            DockManagerVM.AnchorableInfoPanels.Add(SeqVM.ImgHistoryVM);
-
-            DockManagerVM.AnchorableTools.Add(AnchorableSnapshotVM);
-            DockManagerVM.AnchorableTools.Add(ThumbnailVM);
-            DockManagerVM.AnchorableTools.Add(PlatesolveVM);
-            DockManagerVM.AnchorableTools.Add(PolarAlignVM);
-            DockManagerVM.AnchorableTools.Add(AutoFocusVM);
-            DockManagerVM.AnchorableTools.Add(FocusTargetsVM);
-            DockManagerVM.AnchorableTools.Add(ExposureCalculatorVM);
+        private void OpenAbout(object o) {
+            AboutPageView window = new AboutPageView();
+            window.Width = 1280;
+            window.Height = 720;
+            var service = new WindowServiceFactory().Create();
+            service.Show(window, Title + " - " + Loc.Instance["LblAbout"], ResizeMode.NoResize, WindowStyle.ToolWindow);
         }
 
         public void ChangeTab(ApplicationTab tab) {
             TabIndex = (int)tab;
         }
 
-        public string Version {
-            get {
-                return new ProjectVersion(Utility.Utility.Version).ToString();
-            }
-        }
+        public string Version => projectVersion.ToString();
 
         public string Title {
             get {
-                return Utility.Utility.Title;
+                return NINA.Core.Utility.CoreUtil.Title;
             }
         }
 
         private int _tabIndex;
+        private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
+        private readonly ICameraMediator cameraMediator;
+        private readonly IImageSaveMediator imageSaveMediator;
+        private readonly IPluginLoader pluginProvider;
 
         public int TabIndex {
             get {
@@ -236,23 +139,6 @@ namespace NINA.ViewModel {
             }
             set {
                 _tabIndex = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public VersionCheckVM VersionCheckVM { get; private set; } = new VersionCheckVM();
-
-        private ApplicationStatusVM _applicationStatusVM;
-
-        public ApplicationStatusVM ApplicationStatusVM {
-            get {
-                if (_applicationStatusVM == null) {
-                    _applicationStatusVM = new ApplicationStatusVM(profileService, applicationStatusMediator);
-                }
-                return _applicationStatusVM;
-            }
-            set {
-                _applicationStatusVM = value;
                 RaisePropertyChanged();
             }
         }
@@ -270,429 +156,76 @@ namespace NINA.ViewModel {
         }
 
         private void ExitApplication(object obj) {
-            if (SeqVM?.OKtoExit() == false)
-                return;
-            if (CameraVM?.Cam?.Connected == true) {
-                var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
-                if (diag != MessageBoxResult.OK) {
+            Sequencer.ISequenceNavigationVM vm = ((Interfaces.IMainWindowVM)Application.Current.MainWindow.DataContext).SequenceNavigationVM;
+            if (vm.Initialized) {
+                if (vm.Sequence2VM.Sequencer.MainContainer.AskHasChanged(vm.Sequence2VM.Sequencer.MainContainer.Name)) {
                     return;
                 }
+                if (((SimpleSequenceVM)vm.SimpleSequenceVM).AskHasChanged()) {
+                    return;
+                }
+                if (cameraInfo.Connected) {
+                    var diag = MyMessageBox.Show(Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
+                    if (diag != MessageBoxResult.OK) {
+                        return;
+                    }
+                }
             }
-
-            try {
-                Utility.AtikSDK.AtikCameraDll.Shutdown();
-            } catch (Exception) { }
 
             Application.Current.Shutdown();
         }
 
         private void ClosingApplication(object o) {
             try {
-                DockManagerVM.SaveAvalonDockLayout();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
+                Logger.Debug("Releasing profile");
+                profileService.Release();
+            } catch (Exception) { }
+            try {
+                Logger.Debug("Saving user.settings");
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+            } catch (Exception) { }
 
-            DisconnectEquipment();
+            try {
+                Logger.Debug("Shutting down ImageSaveMediator");
+                imageSaveMediator.Shutdown();
+            } catch (Exception) { }
 
+            try {
+                foreach (var plugin in pluginProvider.Plugins) {
+                    if (plugin.Value) {
+                        try {
+                            Logger.Debug($"Tearing down plugin {plugin.Key.Name}");
+                            AsyncContext.Run(plugin.Key.Teardown);
+                        } catch (Exception ex) {
+                            Logger.Error($"Failed to teardown plugin {plugin.Key.Name}", ex);
+                        }
+                    }
+                }
+            } catch (Exception) { }
+
+            Logger.CloseAndFlush();
             Notification.Dispose();
         }
 
-        public void DisconnectEquipment() {
-            try {
-                cameraMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                telescopeMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                filterWheelMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                focuserMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                rotatorMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                flatDeviceMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                guiderMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                weatherDataMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
+        public void UpdateDeviceInfo(CameraInfo deviceInfo) {
+            cameraInfo = deviceInfo;
         }
 
-        private DockManagerVM _dockManagerVM;
-
-        public DockManagerVM DockManagerVM {
-            get {
-                if (_dockManagerVM == null) {
-                    _dockManagerVM = new DockManagerVM(profileService);
-                }
-                return _dockManagerVM;
-            }
-            set {
-                _dockManagerVM = value;
-                RaisePropertyChanged();
-            }
+        public void Dispose() {
+            cameraMediator.RemoveConsumer(this);
         }
 
-        private ThumbnailVM _thumbnailVM;
-
-        public ThumbnailVM ThumbnailVM {
-            get {
-                if (_thumbnailVM == null) {
-                    _thumbnailVM = new ThumbnailVM(profileService, imagingMediator);
-                }
-                return _thumbnailVM;
-            }
-            set {
-                _thumbnailVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private CameraVM _cameraVM;
-
-        public CameraVM CameraVM {
-            get {
-                if (_cameraVM == null) {
-                    _cameraVM = new CameraVM(profileService, cameraMediator, telescopeMediator, applicationStatusMediator);
-                }
-                return _cameraVM;
-            }
-            set {
-                _cameraVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public SwitchVM SwitchVM { get; private set; }
-
-        private FilterWheelVM _filterWheelVM;
-
-        public FilterWheelVM FilterWheelVM {
-            get {
-                if (_filterWheelVM == null) {
-                    _filterWheelVM = new FilterWheelVM(profileService, filterWheelMediator, focuserMediator, applicationStatusMediator);
-                }
-                return _filterWheelVM;
-            }
-            set {
-                _filterWheelVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FocuserVM _focuserVM;
-
-        public FocuserVM FocuserVM {
-            get {
-                if (_focuserVM == null) {
-                    _focuserVM = new FocuserVM(profileService, focuserMediator, applicationStatusMediator);
-                }
-                return _focuserVM;
-            }
-            set {
-                _focuserVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private RotatorVM rotatorVM;
-
-        public RotatorVM RotatorVM {
-            get {
-                if (rotatorVM == null) {
-                    rotatorVM = new RotatorVM(profileService, rotatorMediator, applicationStatusMediator);
-                }
-                return rotatorVM;
-            }
-            set {
-                rotatorVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FlatDeviceVM _flatDeviceVm;
-
-        public FlatDeviceVM FlatDeviceVM {
-            get => _flatDeviceVm ?? (_flatDeviceVm = new FlatDeviceVM(profileService, flatDeviceMediator, applicationStatusMediator, new ImageGeometryProvider()));
-            set {
-                _flatDeviceVm = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private WeatherDataVM _weatherDataVM;
-
-        public WeatherDataVM WeatherDataVM {
-            get {
-                if (_weatherDataVM == null) {
-                    _weatherDataVM = new WeatherDataVM(profileService, weatherDataMediator, applicationStatusMediator);
-                }
-                return _weatherDataVM;
-            }
-            set {
-                _weatherDataVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FlatWizardVM _flatWizardVM;
-
-        public FlatWizardVM FlatWizardVM {
-            get =>
-                _flatWizardVM ?? (_flatWizardVM = new FlatWizardVM(profileService,
-                    new ImagingVM(profileService, new ImagingMediator(), cameraMediator, telescopeMediator,
-                        filterWheelMediator, focuserMediator, rotatorMediator, guiderMediator,
-                        weatherDataMediator, applicationStatusMediator),
-                    cameraMediator,
-                    filterWheelMediator,
-                    telescopeMediator,
-                    flatDeviceMediator,
-                    new ApplicationResourceDictionary(),
-                    applicationStatusMediator));
-            set {
-                _flatWizardVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private SequenceVM _seqVM;
-
-        public SequenceVM SeqVM {
-            get => _seqVM ?? (_seqVM = new SequenceVM(profileService, cameraMediator, telescopeMediator,
-                    focuserMediator, filterWheelMediator, guiderMediator, rotatorMediator, flatDeviceMediator,
-                    weatherDataMediator, imagingMediator, applicationStatusMediator));
-            set {
-                _seqVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ImagingVM _imagingVM;
-
-        public ImagingVM ImagingVM {
-            get {
-                if (_imagingVM == null) {
-                    _imagingVM = new ImagingVM(profileService, imagingMediator, cameraMediator, telescopeMediator, filterWheelMediator, focuserMediator, rotatorMediator, guiderMediator, weatherDataMediator, applicationStatusMediator);
-                }
-                return _imagingVM;
-            }
-            set {
-                _imagingVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private AnchorableSnapshotVM _anchorableSnapshotVM;
-
-        public AnchorableSnapshotVM AnchorableSnapshotVM {
-            get {
-                if (_anchorableSnapshotVM == null) {
-                    _anchorableSnapshotVM = new AnchorableSnapshotVM(profileService, imagingMediator, cameraMediator, applicationStatusMediator);
-                }
-                return _anchorableSnapshotVM;
-            }
-            set {
-                _anchorableSnapshotVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private PolarAlignmentVM _polarAlignVM;
-
-        public PolarAlignmentVM PolarAlignVM {
-            get {
-                if (_polarAlignVM == null) {
-                    _polarAlignVM = new PolarAlignmentVM(profileService, cameraMediator, telescopeMediator, imagingMediator, applicationStatusMediator);
-                }
-                return _polarAlignVM;
-            }
-            set {
-                _polarAlignVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private AnchorablePlateSolverVM _platesolveVM;
-
-        public AnchorablePlateSolverVM PlatesolveVM {
-            get {
-                if (_platesolveVM == null) {
-                    _platesolveVM = new AnchorablePlateSolverVM(profileService, cameraMediator, telescopeMediator, imagingMediator, applicationStatusMediator);
-                }
-                return _platesolveVM;
-            }
-            set {
-                _platesolveVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private TelescopeVM _telescopeVM;
-
-        public TelescopeVM TelescopeVM {
-            get {
-                if (_telescopeVM == null) {
-                    _telescopeVM = new TelescopeVM(profileService, telescopeMediator, applicationStatusMediator);
-                }
-                return _telescopeVM;
-            }
-            set {
-                _telescopeVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private GuiderVM _guiderVM;
-
-        public GuiderVM GuiderVM {
-            get {
-                if (_guiderVM == null) {
-                    _guiderVM = new
-                        GuiderVM(profileService, guiderMediator, cameraMediator, applicationStatusMediator, telescopeMediator);
-                }
-                return _guiderVM;
-            }
-            set {
-                _guiderVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private OptionsVM _optionsVM;
-
-        public OptionsVM OptionsVM {
-            get {
-                if (_optionsVM == null) {
-                    _optionsVM = new OptionsVM(profileService, filterWheelMediator);
-                }
-                return _optionsVM;
-            }
-            set {
-                _optionsVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FocusTargetsVM focusTargetsVM;
-
-        public FocusTargetsVM FocusTargetsVM {
-            get => focusTargetsVM ?? (focusTargetsVM = new FocusTargetsVM(profileService, telescopeMediator, new ApplicationResourceDictionary()));
-            set {
-                focusTargetsVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private AutoFocusVM _autoFocusVM;
-
-        public AutoFocusVM AutoFocusVM {
-            get {
-                if (_autoFocusVM == null) {
-                    _autoFocusVM = new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator);
-                }
-                return _autoFocusVM;
-            }
-            set {
-                _autoFocusVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FramingAssistantVM _framingAssistantVM;
-
-        public FramingAssistantVM FramingAssistantVM {
-            get {
-                if (_framingAssistantVM == null) {
-                    _framingAssistantVM = new FramingAssistantVM(profileService, cameraMediator, telescopeMediator, applicationStatusMediator);
-                }
-                return _framingAssistantVM;
-            }
-            set {
-                _framingAssistantVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private SkyAtlasVM _skyAtlasVM;
-
-        public SkyAtlasVM SkyAtlasVM {
-            get {
-                if (_skyAtlasVM == null) {
-                    _skyAtlasVM = new SkyAtlasVM(profileService, telescopeMediator);
-                }
-                return _skyAtlasVM;
-            }
-            set {
-                _skyAtlasVM = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ExposureCalculatorVM exposureCalculatorVM;
-
-        public ExposureCalculatorVM ExposureCalculatorVM {
-            get {
-                if (exposureCalculatorVM == null) {
-                    exposureCalculatorVM = new ExposureCalculatorVM(profileService, imagingMediator, new DefaultSharpCapSensorAnalysisReader());
-                }
-                return exposureCalculatorVM;
-            }
-            set {
-                exposureCalculatorVM = value;
-                RaisePropertyChanged();
-            }
-        }
+        private readonly ProjectVersion projectVersion;
 
         public ICommand MinimizeWindowCommand { get; private set; }
-
         public ICommand MaximizeWindowCommand { get; private set; }
         public ICommand CheckProfileCommand { get; }
         public ICommand CheckUpdateCommand { get; private set; }
         public ICommand OpenManualCommand { get; private set; }
+        public ICommand OpenAboutCommand { get; private set; }
         public ICommand ExitCommand { get; private set; }
         public ICommand ClosingCommand { get; private set; }
-        public ICommand ConnectAllDevicesCommand { get; private set; }
-        public ICommand DisconnectAllDevicesCommand { get; private set; }
         public ICommand CheckASCOMPlatformVersionCommand { get; private set; }
-    }
-
-    public enum ApplicationTab {
-        EQUIPMENT,
-        SKYATLAS,
-        FRAMINGASSISTANT,
-        FLATWIZARD,
-        SEQUENCE,
-        IMAGING,
-        OPTIONS
+        public ICommand CheckWindowsVersionCommand { get; private set; }
     }
 }

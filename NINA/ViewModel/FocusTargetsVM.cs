@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,47 +8,51 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
-using NINA.Model;
-using NINA.Model.MyTelescope;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using NINA.Database;
+using NINA.Core.Database;
 using Nito.AsyncEx;
+using NINA.ViewModel.Interfaces;
+using System.Threading;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Astrometry;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Core.Locale;
 
 namespace NINA.ViewModel {
 
-    public class FocusTargetsVM : DockableVM, ITelescopeConsumer {
+    public class FocusTargetsVM : DockableVM, ITelescopeConsumer, IFocusTargetsVM {
         private ObservableCollection<FocusTarget> focusTargets;
         private FocusTarget selectedFocusTarget;
         private bool telescopeConnected;
-        private readonly Timer updateTimer;
+        private readonly System.Timers.Timer updateTimer;
 
         public FocusTargetsVM(IProfileService profileService, ITelescopeMediator telescopeMediator, IApplicationResourceDictionary resourceDictionary) : base(profileService) {
-            Title = "LblManualFocusTargets";
+            Title = Loc.Instance["LblManualFocusTargets"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["FocusTargetsSVG"];
 
             this.telescopeMediator = telescopeMediator;
             telescopeMediator.RegisterConsumer(this);
 
-            AsyncContext.Run(LoadFocusTargets);
+            _ = LoadFocusTargets();
 
-            updateTimer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds) { AutoReset = true };
+            updateTimer = new System.Timers.Timer(TimeSpan.FromMinutes(1).TotalMilliseconds) { AutoReset = true };
             updateTimer.Elapsed += (sender, args) => CalculateVisibleStars();
             if (IsVisible) {
                 updateTimer.Start();
             }
 
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => await telescopeMediator.SlewToCoordinatesAsync(SelectedFocusTarget.Coordinates));
+            SlewToCoordinatesCommand = new AsyncCommand<bool>(
+                async () => await telescopeMediator.SlewToCoordinatesAsync(SelectedFocusTarget.Coordinates, CancellationToken.None));
         }
 
         public bool TelescopeConnected {
@@ -81,14 +84,16 @@ namespace NINA.ViewModel {
 
         public IAsyncCommand SlewToCoordinatesCommand { get; }
 
-        private async Task LoadFocusTargets() {
-            try {
-                var db = new DatabaseInteraction();
-                allFocusTargets = await db.GetBrightStars();
-                CalculateVisibleStars();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
+        private Task LoadFocusTargets() {
+            return Task.Run(async () => {
+                try {
+                    var db = new DatabaseInteraction();
+                    allFocusTargets = await db.GetBrightStars();
+                    CalculateVisibleStars();
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+            });
         }
 
         private void CalculateVisibleStars() {

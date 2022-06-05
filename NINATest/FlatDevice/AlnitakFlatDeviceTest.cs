@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,18 +8,17 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using Moq;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.FlatDevice {
 
@@ -91,10 +89,10 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(0.0, "*J99000")]
-        [TestCase(1.0, "*J99255")]
-        [TestCase(0.502, "*J99128")]
-        public async Task TestGetBrightness(double brightness, string deviceResponse) {
+        [TestCase(0, "*J99000")]
+        [TestCase(255, "*J99255")]
+        [TestCase(128, "*J99128")]
+        public async Task TestGetBrightness(int brightness, string deviceResponse) {
             Assert.That(await _sut.Connect(new CancellationToken()), Is.True);
 
             _mockSdk.Setup(m => m.SendCommand<GetBrightnessResponse>(It.IsAny<GetBrightnessCommand>()))
@@ -122,17 +120,17 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(0.0, ">B000\r", "*B99000")]
-        [TestCase(1.0, ">B255\r", "*B99255")]
-        [TestCase(0.5, ">B128\r", "*B99128")]
-        [TestCase(-1.0, ">B000\r", "*B99000")]
-        [TestCase(2.0, ">B255\r", "*B99255")]
-        public async Task TestSetBrightness(double brightness, string command, string response) {
+        [TestCase(0, ">B000\r", "*B99000")]
+        [TestCase(255, ">B255\r", "*B99255")]
+        [TestCase(128, ">B128\r", "*B99128")]
+        [TestCase(-1, ">B000\r", "*B99000")]
+        [TestCase(300, ">B255\r", "*B99255")]
+        public async Task TestSetBrightness(int brightness, string command, string response) {
             Assert.That(await _sut.Connect(new CancellationToken()), Is.True);
             string actual = null;
 
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new SetBrightnessResponse { DeviceResponse = response }));
             _sut.Brightness = brightness;
             Assert.That(actual, Is.EqualTo(command));
@@ -148,7 +146,7 @@ namespace NINATest.FlatDevice {
         public void TestSetBrightnessDisconnected(int brightness, string command) {
             string actual = null;
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString);
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString);
 
             _sut.Brightness = brightness;
             Assert.That(actual, Is.EqualTo(command));
@@ -203,7 +201,7 @@ namespace NINATest.FlatDevice {
 
             string actual = null;
             _mockSdk.Setup(m => m.SendCommand<LightOnResponse>(It.IsAny<LightOnCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new LightOnResponse { DeviceResponse = "*L99OOO" }));
             _sut.LightOn = true;
             Assert.That(actual, Is.EqualTo(">LOOO\r"));
@@ -215,7 +213,7 @@ namespace NINATest.FlatDevice {
 
             string actual = null;
             _mockSdk.Setup(m => m.SendCommand<LightOnResponse>(It.IsAny<LightOnCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             _sut.LightOn = true;
             Assert.That(actual, Is.EqualTo(">LOOO\r"));
@@ -227,7 +225,7 @@ namespace NINATest.FlatDevice {
 
             string actual = null;
             _mockSdk.Setup(m => m.SendCommand<LightOffResponse>(It.IsAny<LightOffCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Returns(Task.FromResult(new LightOffResponse { DeviceResponse = "*D99OOO" }));
             _sut.LightOn = false;
             Assert.That(actual, Is.EqualTo(">DOOO\r"));
@@ -239,7 +237,7 @@ namespace NINATest.FlatDevice {
 
             string actual = null;
             _mockSdk.Setup(m => m.SendCommand<LightOffResponse>(It.IsAny<LightOffCommand>()))
-                .Callback<ICommand>(arg => actual = arg.CommandString)
+                .Callback<ISerialCommand>(arg => actual = arg.CommandString)
                 .Throws(new InvalidDeviceResponseException());
             _sut.LightOn = false;
             Assert.That(actual, Is.EqualTo(">DOOO\r"));

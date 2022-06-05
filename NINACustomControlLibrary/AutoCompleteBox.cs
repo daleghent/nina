@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Interfaces;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,12 +20,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 namespace NINACustomControlLibrary {
-
-    public interface IAutoCompleteItem {
-        string Column1 { get; }
-        string Column2 { get; }
-        string Column3 { get; }
-    }
 
     public class AutoCompleteBox : HintTextBox {
 

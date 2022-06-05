@@ -1,7 +1,6 @@
 #region "copyright"
-
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,15 +8,13 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #endregion "copyright"
-
 using FluentAssertions;
 using FTD2XX_NET;
 using Moq;
 using NINA.MGEN;
-using NINA.MGEN.Commands.AppMode;
-using NINA.MGEN.Exceptions;
+using NINA.MGEN2.Commands.AppMode;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -47,9 +44,9 @@ namespace NINATest.MGEN.Commands {
         [TestCase(LEDS.BLUE | LEDS.DOWN_RED)]
         [TestCase(LEDS.UP_RED | LEDS.GREEN | LEDS.RIGHT_RED)]
         [TestCase(LEDS.UP_RED)]
-        public void Successful_Scenario_Test(byte expectedLEDs) {
+        public void Successful_Scenario_Test(LEDS expectedLEDs) {
             SetupWrite(ftdiMock, new byte[] { 0x5d }, new byte[] { 0x0a }, new byte[] { 1 });
-            SetupRead(ftdiMock, new byte[] { 0x5d }, new byte[] { expectedLEDs });
+            SetupRead(ftdiMock, new byte[] { 0x5d }, new byte[] { (byte)expectedLEDs });
 
             var sut = new GetLEDStatesCommand();
             var result = sut.Execute(ftdiMock.Object);
