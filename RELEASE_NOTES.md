@@ -116,7 +116,7 @@ The changelog contains the most prominent changes of Version 2.0. In summary thi
 - MetaGuide is now available as an option for a guiding application
 
 ### SVBony
-- Added a native driver for SVBony cameras. Currently without temperature control and tested with SVBony 305M Pro.
+- Added a native driver for SVBony cameras. Tested with SV305M Pro and SV405CC.
 
 ### SBIG
 - Added a native driver for SBIG cameras.
