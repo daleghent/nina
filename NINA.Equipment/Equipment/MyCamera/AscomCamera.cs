@@ -142,19 +142,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short BayerOffsetX {
             get {
-                return GetProperty<short>(nameof(Camera.BayerOffsetX), -1);
+                return GetProperty<short>(nameof(Camera.BayerOffsetX), 0);
             }
         }
 
         public short BayerOffsetY {
             get {
-                return GetProperty<short>(nameof(Camera.BayerOffsetY), -1);
+                return GetProperty<short>(nameof(Camera.BayerOffsetY), 0);
             }
         }
 
         public short BinX {
             get {
-                return GetProperty<short>(nameof(Camera.BinX), -1);
+                return GetProperty<short>(nameof(Camera.BinX), 1);
             }
             set {
                 SetProperty(nameof(Camera.BinX), value);
@@ -163,7 +163,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short BinY {
             get {
-                return GetProperty<short>(nameof(Camera.BinY), -1);
+                return GetProperty<short>(nameof(Camera.BinY), 1);
             }
             set {
                 SetProperty(nameof(Camera.BinY), value);
@@ -588,13 +588,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short MaxBinX {
             get {
-                return GetProperty<short>(nameof(Camera.MaxBinX), -1);
+                return GetProperty<short>(nameof(Camera.MaxBinX), 1);
             }
         }
 
         public short MaxBinY {
             get {
-                return GetProperty<short>(nameof(Camera.MaxBinY), -1);
+                return GetProperty<short>(nameof(Camera.MaxBinY), 1);
             }
         }
 
