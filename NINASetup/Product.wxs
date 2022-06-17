@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright Â© 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -57,6 +57,7 @@
 			<ComponentGroupRef Id="External_x64_AllPro_files" />
 			<ComponentGroupRef Id="External_x64_ASI_files" />
 			<ComponentGroupRef Id="External_x64_Atik_files" />
+			<ComponentGroupRef Id="External_x64_Cfitsio_files" />
 			<ComponentGroupRef Id="External_x64_QHYCCD_files" />
 			<ComponentGroupRef Id="External_x64_FLI_files" />
 			<ComponentGroupRef Id="External_x64_FreeImage_files" />
@@ -110,6 +111,7 @@
 			<ComponentGroupRef Id="External_x86_AllPro_files" />
 			<ComponentGroupRef Id="External_x86_ASI_files" />
 			<ComponentGroupRef Id="External_x86_Atik_files" />
+			<ComponentGroupRef Id="External_x86_Cfitsio_files" />
 			<ComponentGroupRef Id="External_x86_QHYCCD_files" />
 			<ComponentGroupRef Id="External_x86_Canon_files" />
 			<ComponentGroupRef Id="External_x86_FLI_files" />
@@ -176,8 +178,7 @@
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
 			<Custom Action="API_Firewall_listen_ipv6" Before="InstallFinalize">NOT Installed</Custom>
-			<Custom Action="API_Firewall_add_SGProAPI_urlacl" Before="InstallFinalize">NOT Installed</Custom>
-			<Custom Action="API_Firewall_add_SkyGuardCallback_urlacl" Before="InstallFinalize">NOT Installed</Custom>
+			<Custom Action="API_Firewall_add_urlacl" Before="InstallFinalize">NOT Installed</Custom>
 		</InstallExecuteSequence>
 	</Product>
 
@@ -204,6 +205,7 @@
 							<Directory Id="External_x64_AllPro" Name="AllPro" />
 							<Directory Id="External_x64_ASI" Name="ASI" />
 							<Directory Id="External_x64_Atik" Name="Atik" />
+							<Directory Id="External_x64_Cfitsio" Name="Cfitsio" />
 							<Directory Id="External_x64_QHYCCD" Name="QHYCCD" />
 							<Directory Id="External_x64_Canon" Name="Canon" />
 							<Directory Id="External_x64_FLI" Name="FLI" />
@@ -260,6 +262,7 @@
 							<Directory Id="External_x86_FreeImage" Name="FreeImage" />
 							<Directory Id="External_x86_Canon" Name="Canon" />
 							<Directory Id="External_x86_Atik" Name="Atik" />
+							<Directory Id="External_x86_Cfitsio" Name="Cfitsio" />
 							<Directory Id="External_x86_QHYCCD" Name="QHYCCD" />
 							<Directory Id="External_x86_FLI" Name="FLI" />
 							<Directory Id="External_x86_ASI" Name="ASI" />
@@ -697,7 +700,7 @@
 				<File Id="Database_Migration_5.sql" Name="5.sql" Source="$(var.NINA_TargetDir)Database\Migration\5.sql" />
 			</Component>
 			<Component Id="Database_Migration_6.sql" Guid="5bdcdd4a-5ba9-4842-b4e7-aea3cc1448ac">
-			  <File Id="Database_Migration_6.sql" Name="6.sql" Source="$(var.NINA_TargetDir)Database\Migration\6.sql" />
+				<File Id="Database_Migration_6.sql" Name="6.sql" Source="$(var.NINA_TargetDir)Database\Migration\6.sql" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
@@ -898,11 +901,11 @@
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
-	  <ComponentGroup Id="ko_KR_files" Directory="ko_KR">
-	    <Component Id="ko_KR_NINA.Core.resources.dll" Guid="ebf93db4-7346-4646-95c4-b912b2627d5f">
-	      <File Id="ko_KR_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)ko-KR\NINA.Core.resources.dll" />
-	    </Component>
-	  </ComponentGroup>
+		<ComponentGroup Id="ko_KR_files" Directory="ko_KR">
+			<Component Id="ko_KR_NINA.Core.resources.dll" Guid="ebf93db4-7346-4646-95c4-b912b2627d5f">
+				<File Id="ko_KR_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)ko-KR\NINA.Core.resources.dll" />
+			</Component>
+		</ComponentGroup>
 	</Fragment>
 
 	<!-- x64 Dependencies -->
@@ -967,6 +970,14 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x64_Atik_libiomp5md.dll" Guid="54989fa0-5e1a-4fb6-84f7-bdab8db7b5af">
 				<File Id="External_x64_Atik_libiomp5md.dll" Name="libiomp5md.dll" Source="$(var.NINA_TargetDir)External\x64\Atik\libiomp5md.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="External_x64_Cfitsio_files" Directory="External_x64_Cfitsio">
+			<Component Win64="$(var.Win64)" Id="External_x64_Cfitsio_cfitsio.dll" Guid="BF1295A6-5DF8-436D-ABAD-C7EAF02A054A">
+				<File Id="External_x64_Cfitsio_cfitsio.dll" Name="cfitsio.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\cfitsio.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
@@ -1428,7 +1439,7 @@
 			</Component>
 		</ComponentGroup>
 	</Fragment>
-	
+
 	<Fragment>
 		<ComponentGroup Id="External_x64_PlayerOne_files" Directory="External_x64_PlayerOne">
 			<Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524">
@@ -1495,6 +1506,14 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_Atik_libiomp5md.dll" Guid="836443c5-cb40-4662-98f4-b918187e9f22">
 				<File Id="External_x86_Atik_libiomp5md.dll" Name="libiomp5md.dll" Source="$(var.NINA_TargetDir)External\x86\Atik\libiomp5md.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="External_x86_Cfitsio_files" Directory="External_x86_Cfitsio">
+			<Component Win64="$(var.Win64)" Id="External_x86_Cfitsio_cfitsio.dll" Guid="BA95537F-86DD-4952-BFD0-32A70CEA5687">
+				<File Id="External_x86_Cfitsio_cfitsio.dll" Name="cfitsio.dll" Source="$(var.NINA_ProjectDir)External\x86\Cfitsio\cfitsio.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
@@ -1635,7 +1654,7 @@
 			</Component>
 		</ComponentGroup>
 	</Fragment>
-	
+
 	<Fragment>
 		<ComponentGroup Id="External_x86_PlayerOne_files" Directory="External_x86_PlayerOne">
 			<Component Win64="$(var.Win64)" Id="External_x86_PlayerOne_PlayerOneCamera.dll" Guid="857fda00-6a08-4ae8-82e3-f69cb0c46e32">
@@ -1651,10 +1670,8 @@
 		<CustomAction Id="API_Firewall_listen_ipv6" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
 		<SetProperty Id="API_Firewall_listen_ipv4" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=0.0.0.0" Before="API_Firewall_listen_ipv4" />
 		<CustomAction Id="API_Firewall_listen_ipv4" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
-		<SetProperty Id="API_Firewall_add_SGProAPI_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_SGProAPI_urlacl" />
-		<CustomAction Id="API_Firewall_add_SGProAPI_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
-		<SetProperty Id="API_Firewall_add_SkyGuardCallback_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:8000/ user=Everyone" Before="API_Firewall_add_SkyGuardCallback_urlacl" />
-		<CustomAction Id="API_Firewall_add_SkyGuardCallback_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+		<SetProperty Id="API_Firewall_add_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_urlacl" />
+		<CustomAction Id="API_Firewall_add_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
 	</Fragment>
 	<!-- Avalondock localization Start -->
 	<Fragment>
@@ -1756,11 +1773,11 @@
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
-	  <ComponentGroup Id="pt_files" Directory="pt">
-	    <Component Id="pt_AvalonDock.resources.dll" Guid="5333970e-2607-4707-81f5-bcc6f6395a4b">
-	      <File Id="pt_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt\AvalonDock.resources.dll" />
-	    </Component>
-	  </ComponentGroup>
+		<ComponentGroup Id="pt_files" Directory="pt">
+			<Component Id="pt_AvalonDock.resources.dll" Guid="5333970e-2607-4707-81f5-bcc6f6395a4b">
+				<File Id="pt_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt\AvalonDock.resources.dll" />
+			</Component>
+		</ComponentGroup>
 	</Fragment>
 	<!-- Avalondock localization End -->
 </Wix>
