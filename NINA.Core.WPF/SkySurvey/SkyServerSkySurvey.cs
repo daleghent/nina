@@ -14,9 +14,11 @@
 
 using NINA.Astrometry;
 using NINA.Core.Utility.Http;
+using NINA.WPF.Base.Exceptions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace NINA.WPF.Base.SkySurvey {
 
@@ -32,14 +34,21 @@ namespace NINA.WPF.Base.SkySurvey {
                 arcSecPerPixel = targetFoVInArcSec / 2048;
             }
 
-            var request = new HttpDownloadImageRequest(
-                Url,
-                coordinates.RADegrees,
-                coordinates.Dec,
-                pixels,
-                pixels,
-                arcSecPerPixel);
-            var image = await request.Request(ct, progress);
+            BitmapSource image;
+
+            try {
+                var request = new HttpDownloadImageRequest(
+                    Url,
+                    coordinates.RADegrees,
+                    coordinates.Dec,
+                    pixels,
+                    pixels,
+                    arcSecPerPixel);
+
+                image = await request.Request(ct, progress);
+            } catch (Exception ex) {
+                throw new SkySurveyUnavailableException(ex.Message);
+            }
 
             image.Freeze();
             return new SkySurveyImage() {

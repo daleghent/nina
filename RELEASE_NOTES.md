@@ -9,6 +9,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver
 
 ## Improvements
+- Improved error message presentation if the selected sky survey image serivce fails to accept a request
 
 ## Features
 

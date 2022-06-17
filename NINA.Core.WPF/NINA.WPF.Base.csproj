@@ -172,6 +172,7 @@
     <Compile Include="Behaviors\MouseCommandBehavior.cs" />
     <Compile Include="Behaviors\MouseFollowBehavior.cs" />
     <Compile Include="Behaviors\MouseWheelCommandBehavior.cs" />
+    <Compile Include="Exceptions\SkySurveyUnavailableException.cs" />
     <Compile Include="Interfaces\IAutoFocusVMFactory.cs" />
     <Compile Include="Interfaces\IMeridianFlipVMFactory.cs" />
     <Compile Include="Interfaces\Mediator\IApplicationMediator.cs" />

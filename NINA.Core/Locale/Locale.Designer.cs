@@ -19,7 +19,7 @@ namespace NINA.Core.Locale {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Locale {
@@ -10003,6 +10003,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image source error.
+        /// </summary>
+        internal static string LblImageSourceError {
+            get {
+                return ResourceManager.GetString("LblImageSourceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light, Flat, Dark, Bias, Snapshot.
         /// </summary>
         internal static string LblImageTypeDescription {
@@ -15180,6 +15189,17 @@ namespace NINA.Core.Locale {
         internal static string LblSkySurveyCacheDirectory {
             get {
                 return ResourceManager.GetString("LblSkySurveyCacheDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is unavailable. Please select an alternative image source.
+        ///
+        ///Reason: {1}.
+        /// </summary>
+        internal static string LblSkySurveyUnavailable {
+            get {
+                return ResourceManager.GetString("LblSkySurveyUnavailable", resourceCulture);
             }
         }
         

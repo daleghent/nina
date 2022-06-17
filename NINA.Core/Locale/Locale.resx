@@ -6282,4 +6282,12 @@ Please check if there is an update available.</value>
   <data name="LblDownloadDelay" xml:space="preserve">
     <value>Seconds to wait before download</value>
   </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} is unavailable. Please select an alternative image source.
+
+Reason: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Image source error</value>
+  </data>
 </root>

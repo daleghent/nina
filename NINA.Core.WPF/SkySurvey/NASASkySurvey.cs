@@ -21,6 +21,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Utility;
 using NINA.Astrometry;
+using NINA.WPF.Base.Exceptions;
+using System.Windows.Media.Imaging;
 
 namespace NINA.WPF.Base.SkySurvey {
 
@@ -33,14 +35,22 @@ namespace NINA.WPF.Base.SkySurvey {
             fieldOfView = Math.Round(fieldOfView, 2);
             var pixels = Math.Ceiling(Math.Min(AstroUtil.ArcminToArcsec(fieldOfView) / arcSecPerPixel, 5000));
 
-            var request = new HttpDownloadImageRequest(
-               Url,
-               coordinates.RADegrees,
-               coordinates.Dec,
-               AstroUtil.ArcminToDegree(fieldOfView),
-               pixels
-           );
-            var image = await request.Request(ct, progress);
+            BitmapSource image;
+
+            try {
+                var request = new HttpDownloadImageRequest(
+                    Url,
+                    coordinates.RADegrees,
+                    coordinates.Dec,
+                    AstroUtil.ArcminToDegree(fieldOfView),
+                    pixels
+                );
+
+                image = await request.Request(ct, progress);
+            } catch (Exception ex) {
+                throw new SkySurveyUnavailableException(ex.Message);
+            }
+
             image.Freeze();
 
             using (var bmp = Image.ImageAnalysis.ImageUtility.BitmapFromSource(image, System.Drawing.Imaging.PixelFormat.Format8bppIndexed)) {

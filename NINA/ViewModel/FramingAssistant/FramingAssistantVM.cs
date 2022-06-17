@@ -33,6 +33,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.Interfaces.Mediator;
 using NINA.Sequencer.SequenceItem.Platesolving;
 using NINA.WPF.Base.Behaviors;
+using NINA.WPF.Base.Exceptions;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.SkySurvey;
@@ -1068,8 +1069,14 @@ namespace NINA.ViewModel.FramingAssistant {
                     Logger.Info("Loading image for framing has been cancelled");
                 } catch (Exception ex) {
                     Logger.Error($"Failed to load image from source {FramingAssistantSource} with field of view {FieldOfView}° for coordinates {DSO?.Coordinates}.", ex);
-                    Notification.ShowError(ex.Message);
+
+                    if (ex is SkySurveyUnavailableException) {
+                        Notification.ShowExternalError(string.Format(Loc.Instance["LblSkySurveyUnavailable"], FramingAssistantSource.GetDescription(), ex.Message), Loc.Instance["LblImageSourceError"]);
+                    } else {
+                        Notification.ShowError(ex.Message);
+                    }
                 }
+
                 return true;
             }
         }
