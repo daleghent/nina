@@ -13,8 +13,11 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Model;
 using NINA.Image.FileFormat;
 using NINA.Image.ImageData;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -41,8 +44,9 @@ namespace NINA.Image.Interfaces {
         Task<string> SaveToDisk(FileSaveInfo fileSaveInfo, CancellationToken cancelToken = default, bool forceFileType = false);
 
         Task<string> PrepareSave(FileSaveInfo fileSaveInfo, CancellationToken cancelToken = default);
-
+        [Obsolete]
         string FinalizeSave(string file, string pattern);
+        string FinalizeSave(string file, string pattern, IList<ImagePattern> customPatterns);
     }
 
     public interface IImageDataFactory {

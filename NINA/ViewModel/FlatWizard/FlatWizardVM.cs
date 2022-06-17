@@ -55,6 +55,7 @@ using NINA.WPF.Base.Utility.AutoFocus;
 namespace NINA.ViewModel.FlatWizard {
 
     internal class FlatWizardVM : DockableVM, IFlatWizardVM {
+        private readonly IImageSaveMediator imageSaveMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IFlatDeviceMediator flatDeviceMediator;
         private readonly IImagingVM imagingVM;
@@ -79,7 +80,8 @@ namespace NINA.ViewModel.FlatWizard {
                             IImageGeometryProvider imageGeometryProvider,
                             IApplicationStatusMediator applicationStatusMediator,
                             IMyMessageBoxVM messageBox,
-                            ITwilightCalculator twilightCalculator) : base(profileService) {
+                            ITwilightCalculator twilightCalculator,
+                            IImageSaveMediator imageSaveMediator) : base(profileService) {
             Title = Loc.Instance["LblFlatWizard"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("FlatWizardSVG");
 
@@ -124,6 +126,7 @@ namespace NINA.ViewModel.FlatWizard {
             this.telescopeMediator.RegisterConsumer(this);
             this.flatDeviceMediator = flatDeviceMediator;
             this.flatDeviceMediator.RegisterConsumer(this);
+            this.imageSaveMediator = imageSaveMediator;
 
             this.applicationStatusMediator = applicationStatusMediator;
             this.imagingVM = imagingVM;
@@ -849,12 +852,20 @@ namespace NINA.ViewModel.FlatWizard {
                 }
 
                 await TakeDarkFlats(regularTimes, skyFlatTimes, pt);
+            } catch (OperationCanceledException) { 
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
                 return false;
             } finally {
-                if (flatDeviceInfo?.Connected == true) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
+                if (flatDeviceInfo?.Connected == true && !flatSequenceCts.Token.IsCancellationRequested) {
+                    try {
+                        await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token);
+                    } catch(OperationCanceledException) { 
+                    } catch(Exception ex) {
+                        Logger.Error(ex);
+                    }                    
+                }
                 imagingVM.DestroyImage();
                 Image = null;
                 GC.Collect();
@@ -911,7 +922,6 @@ namespace NINA.ViewModel.FlatWizard {
             var exposureTimes = new List<double>();
 
             Task showImageTask = null;
-            Task saveTask = null;
             var time = firstExposureTime;
             for (var i = 0; i < FlatCount; i++) {
                 progress.Report(new ApplicationStatus {
@@ -935,8 +945,10 @@ namespace NINA.ViewModel.FlatWizard {
 
                 var imageData = await captureImageTask.Result.ToImageData(progress, flatSequenceCts.Token);
                 imageData.MetaData.Target.Name = TargetName;
-                showImageTask = Task.Run(() => {
-                    Image = imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token).Result.Image;
+
+                var prepTask = imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token);
+                showImageTask = Task.Run(async () => {
+                    Image = (await prepTask).Image;
                 }, flatSequenceCts.Token);
 
                 var imageStatistics = await imageData.Statistics.Task;
@@ -975,12 +987,8 @@ namespace NINA.ViewModel.FlatWizard {
                 }
 
                 exposureTimes.Add(time);
-                if (saveTask != null && !saveTask.IsCompleted) {
-                    progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
-                    await saveTask;
-                }
 
-                saveTask = imageData.SaveToDisk(new FileSaveInfo(profileService), flatSequenceCts.Token);
+                await imageSaveMediator.Enqueue(imageData, prepTask, progress, flatSequenceCts.Token);
 
                 progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
                 var trot = stopWatch.Elapsed - ti - TimeSpan.FromMilliseconds(time * 1000d);
@@ -1054,7 +1062,6 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         private async Task CaptureImages(CaptureSequence sequence, PauseToken pt) {
-            Task saveTask = null;
             Task showImageTask = null;
             while (sequence.ProgressExposureCount < sequence.TotalExposureCount) {
                 progress.Report(new ApplicationStatus {
@@ -1076,16 +1083,13 @@ namespace NINA.ViewModel.FlatWizard {
 
                 var imageData = await (await captureImageTask).ToImageData(progress, flatSequenceCts.Token);
                 imageData.MetaData.Target.Name = TargetName;
+
+                var prepTask = imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token);
                 showImageTask = Task.Run(async () => {
-                    Image = (await imagingVM.PrepareImage(imageData, new PrepareImageParameters(true, false), flatSequenceCts.Token)).Image;
+                    Image = (await prepTask).Image;
                 }, flatSequenceCts.Token);
 
-                if (saveTask != null && !saveTask.IsCompleted) {
-                    progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
-                    await saveTask;
-                }
-
-                saveTask = imageData.SaveToDisk(new FileSaveInfo(profileService), flatSequenceCts.Token);
+                await imageSaveMediator.Enqueue(imageData, prepTask, progress, flatSequenceCts.Token);
 
                 sequence.ProgressExposureCount++;
 
@@ -1094,9 +1098,8 @@ namespace NINA.ViewModel.FlatWizard {
                 flatSequenceCts.Token.ThrowIfCancellationRequested();
             }
 
-            if (saveTask == null || saveTask.IsCompleted) return;
             progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
-            await Task.WhenAll(saveTask, showImageTask);
+            await showImageTask;
         }
 
         public IWindowService WindowService { get; set; } = new WindowService();

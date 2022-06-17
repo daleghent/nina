@@ -93,7 +93,8 @@ namespace NINA.Plugin {
                               IImageControlVM imageControlVM,
                               IImageStatisticsVM imageStatisticsVM,
                               IDomeSynchronization domeSynchronization,
-                              ISequenceMediator sequenceMediator) {
+                              ISequenceMediator sequenceMediator,
+                              IOptionsVM optionsVM) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -128,6 +129,7 @@ namespace NINA.Plugin {
             this.imageStatisticsVM = imageStatisticsVM;
             this.domeSynchronization = domeSynchronization;
             this.sequenceMediator = sequenceMediator;
+            this.optionsVM = optionsVM;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -482,6 +484,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(imageStatisticsVM);
             container.ComposeExportedValue(domeSynchronization);
             container.ComposeExportedValue(sequenceMediator);
+            container.ComposeExportedValue(optionsVM);            
 
             return container;
         }
@@ -532,6 +535,7 @@ namespace NINA.Plugin {
         private readonly IImageStatisticsVM imageStatisticsVM;
         private readonly IDomeSynchronization domeSynchronization;
         private readonly ISequenceMediator sequenceMediator;
+        private readonly IOptionsVM optionsVM;
         private readonly Dictionary<string, string> assemblyReferencePathMap;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {

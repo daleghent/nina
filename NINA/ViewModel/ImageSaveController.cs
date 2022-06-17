@@ -63,12 +63,19 @@ namespace NINA.ViewModel {
                     // NOTE: Consider whether this should be configurable. 5 minutes for writing files should be exceptionally conservative
                     writeTimeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = Loc.Instance["LblSavingImage"] });
+
+                    await imageSaveMediator.OnBeforeImageSaved(new BeforeImageSavedEventArgs(item.Data, item.PrepareTask));
+
                     var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), writeTimeoutCts.Token);
                     writeTimeoutCts.Token.ThrowIfCancellationRequested();
 
                     var preparedData = await item.PrepareTask;
 
-                    path = preparedData.RawImageData.FinalizeSave(path, profileService.ActiveProfile.ImageFileSettings.FilePattern);
+                    var beforeFinalizeArgs = new BeforeFinalizeImageSavedEventArgs(preparedData);
+                    await imageSaveMediator.OnBeforeFinalizeImageSaved(beforeFinalizeArgs);
+                    var customPatterns = beforeFinalizeArgs.Patterns;
+
+                    path = preparedData.RawImageData.FinalizeSave(path, profileService.ActiveProfile.ImageFileSettings.FilePattern, customPatterns);
                     var stats = await preparedData.RawImageData.Statistics;
 
                     // Run this in a separate task to limit risk of deadlocks

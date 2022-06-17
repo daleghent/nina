@@ -75,6 +75,7 @@ namespace NINATest.FlatWizard {
         private Mock<IMyMessageBoxVM> messageBoxVMMock;
         private Mock<IDispatcherOperationWrapper> dispatcherOperationWrapperMock;
         private Mock<ITwilightCalculator> twilightCalculatorMock;
+        private Mock<IImageSaveMediator> imageSaveMediatorMock;
         private FlatDeviceInfo flatDeviceInfo;
 
         [OneTimeSetUp]
@@ -98,6 +99,7 @@ namespace NINATest.FlatWizard {
             messageBoxVMMock = new Mock<IMyMessageBoxVM>();
             dispatcherOperationWrapperMock = new Mock<IDispatcherOperationWrapper>();
             twilightCalculatorMock = new Mock<ITwilightCalculator>();
+            imageSaveMediatorMock = new Mock<IImageSaveMediator>();
         }
 
         [SetUp]
@@ -173,7 +175,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
 
             // assert
             sut.StartFlatSequenceCommand.Should().NotBeNull();
@@ -212,7 +214,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
 
             var cameraInfo = new CameraInfo {
                 Connected = true,
@@ -239,7 +241,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
 
             var selectedFilter = filters[0];
             sut.SelectedFilter = selectedFilter;
@@ -279,7 +281,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
 
             sut.StartFlatSequenceCommand.Execute(new object());
             flatDeviceMediatorMock.Verify(m => m.CloseCover(It.IsAny<CancellationToken>()), Times.Never);
@@ -300,7 +302,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.Setup(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -332,7 +334,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -357,7 +359,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -393,7 +395,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -432,7 +434,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -467,7 +469,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -506,7 +508,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.Setup(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -539,7 +541,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object);
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -565,7 +567,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -600,7 +602,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -635,7 +637,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -677,7 +679,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
             exposureMock.SetupSequence(m => m.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
@@ -717,7 +719,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) { WindowService = windowServiceMock.Object };
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) { WindowService = windowServiceMock.Object };
             flatDeviceInfo.Connected = false;
             sut.UpdateDeviceInfo(flatDeviceInfo);
 
@@ -757,7 +759,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) {
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) {
                 SingleFlatWizardFilterSettings = settings,
                 FlatCount = 1,
                 DarkFlatCount = 1
@@ -800,7 +802,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) {
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) {
                 SingleFlatWizardFilterSettings = settings,
                 FlatCount = 1,
                 DarkFlatCount = 1
@@ -837,7 +839,7 @@ namespace NINATest.FlatWizard {
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
                 cameraMediatorMock.Object, filterWheelMediatorMock.Object, telescopeMediatorMock.Object,
                 flatDeviceMediatorMock.Object, imageGeometryProviderMock.Object,
-                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object) {
+                applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object, imageSaveMediatorMock.Object) {
                 SingleFlatWizardFilterSettings = settings,
                 FlatCount = 1,
                 DarkFlatCount = 1

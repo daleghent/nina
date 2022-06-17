@@ -12,8 +12,6 @@
 
 #endregion "copyright"
 
-using NINA.Image.ImageData;
-using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +24,7 @@ using NINA.Image.FileFormat;
 using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.Mediator {
 
@@ -43,6 +42,18 @@ namespace NINA.WPF.Base.Mediator {
             this.handler = handler;
         }
 
+        public event Func<object, BeforeImageSavedEventArgs, Task> BeforeImageSaved;
+
+        public async Task OnBeforeImageSaved(BeforeImageSavedEventArgs e) {
+            await BeforeImageSaved?.InvokeAsync(this, e);
+        }
+
+        public event Func<object, BeforeFinalizeImageSavedEventArgs, Task> BeforeFinalizeImageSaved;
+
+        public async Task OnBeforeFinalizeImageSaved(BeforeFinalizeImageSavedEventArgs e) {
+            await BeforeFinalizeImageSaved?.InvokeAsync(this, e);
+        }
+
         public event EventHandler<ImageSavedEventArgs> ImageSaved;
 
         public void OnImageSaved(ImageSavedEventArgs e) {
@@ -53,6 +64,7 @@ namespace NINA.WPF.Base.Mediator {
             this.handler?.Shutdown();
         }
     }
+    
 
     public class ImageSaveMediatorX86 : IImageSaveMediator {
         private IProfileService profileService;
@@ -66,6 +78,18 @@ namespace NINA.WPF.Base.Mediator {
         }
 
         public void RegisterHandler(IImageSaveController handler) {
+        }
+
+        public event Func<object, BeforeImageSavedEventArgs, Task> BeforeImageSaved;
+
+        public async Task OnBeforeImageSaved(BeforeImageSavedEventArgs e) {
+            await BeforeImageSaved?.InvokeAsync(this, e);
+        }
+
+        public event Func<object, BeforeFinalizeImageSavedEventArgs, Task> BeforeFinalizeImageSaved;
+
+        public async Task OnBeforeFinalizeImageSaved(BeforeFinalizeImageSavedEventArgs e) {
+            await BeforeFinalizeImageSaved?.InvokeAsync(this, e);
         }
 
         public event EventHandler<ImageSavedEventArgs> ImageSaved;
@@ -88,8 +112,12 @@ namespace NINA.WPF.Base.Mediator {
         /// <returns></returns>
         private async Task SequentialSaveAndPostProcessingForX86(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
             try {
+                
                 var preparedData = await prepareTask;
                 var stats = await preparedData.RawImageData.Statistics;
+                
+                await OnBeforeImageSaved(new BeforeImageSavedEventArgs(imageData, prepareTask));
+                await OnBeforeFinalizeImageSaved(new BeforeFinalizeImageSavedEventArgs(preparedData));
 
                 progress?.Report(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = Loc.Instance["LblSavingImage"] });
                 var path = await imageData.SaveToDisk(new FileSaveInfo(profileService), token);

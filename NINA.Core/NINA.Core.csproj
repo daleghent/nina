@@ -248,6 +248,7 @@
     <Compile Include="Utility\BindingProxy.cs" />
     <Compile Include="Utility\Blittable.cs" />
     <Compile Include="Utility\ButtonHelper.cs" />
+    <Compile Include="Utility\Extensions\DelegateExtension.cs" />
     <Compile Include="Utility\TextEncoding.cs" />
     <Compile Include="Utility\ColorSchema\ColorSchema.cs" />
     <Compile Include="Utility\Converters\AddToNumberConverter.cs" />
@@ -282,7 +283,6 @@
     <Compile Include="Utility\Converters\EnumTooltipConverter.cs" />
     <Compile Include="Utility\Converters\FilenameConverter.cs" />
     <Compile Include="Utility\Converters\FilterWheelFilterConverter.cs" />
-    <Compile Include="Utility\Converters\ImagePatternToTextConverter.cs" />
     <Compile Include="Utility\Converters\IntListToTextBlockListConverter.cs" />
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\InverseBooleanConverter.cs" />

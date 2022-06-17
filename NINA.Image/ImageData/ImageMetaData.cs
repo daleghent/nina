@@ -18,6 +18,7 @@ using NINA.Astrometry;
 using System;
 using System.Linq;
 using NINA.Core.Model;
+using System.Collections.Generic;
 
 namespace NINA.Image.ImageData {
 
@@ -33,6 +34,7 @@ namespace NINA.Image.ImageData {
         public WeatherDataParameter WeatherData { get; set; } = new WeatherDataParameter();
         public WorldCoordinateSystem WorldCoordinateSystem = null;
         public SequenceParameter Sequence = new SequenceParameter();
+        public List<IGenericMetaDataHeader> GenericHeaders { get; set; } = new List<IGenericMetaDataHeader>();
 
         /// <summary>
         /// Fill relevant info from a Profile
@@ -52,6 +54,73 @@ namespace NINA.Image.ImageData {
 
         public SensorType StringToSensorType(string pattern) {
             return Enum.TryParse(pattern, out SensorType sensor) ? sensor : SensorType.Monochrome;
+        }
+    }
+
+    public interface IGenericMetaDataHeader {
+        string Key { get; }
+        string Comment { get; }
+    }
+
+    public interface IGenericMetaDataHeader<T> : IGenericMetaDataHeader {
+        T Value { get; }
+    }
+
+    public class StringMetaDataHeader : IGenericMetaDataHeader<string> {
+        public string Key { get; }
+        public string Value { get; }
+        public string Comment { get; }
+
+        public StringMetaDataHeader(string key, string value, string comment = "") {
+            Key = key;
+            Value = value;
+            Comment = comment;
+        }
+    }
+
+    public class IntMetaDataHeader : IGenericMetaDataHeader<int> {
+        public string Key { get; }
+        public int Value { get; }
+        public string Comment { get; }
+
+        public IntMetaDataHeader(string key, int value, string comment = "") {
+            Key = key;
+            Value = value;
+            Comment = comment;
+        }
+    }
+
+    public class DoubleMetaDataHeader : IGenericMetaDataHeader<double> {
+        public string Key { get; }
+        public double Value { get; }
+        public string Comment { get; }
+
+        public DoubleMetaDataHeader(string key, double value, string comment = "") {
+            Key = key;
+            Value = value;
+            Comment = comment;
+        }
+    }
+    public class BoolMetaDataHeader : IGenericMetaDataHeader<bool> {
+        public string Key { get; }
+        public bool Value { get; }
+        public string Comment { get; }
+
+        public BoolMetaDataHeader(string key, bool value, string comment = "") {
+            Key = key;
+            Value = value;
+            Comment = comment;
+        }
+    }
+    public class DateTimeMetaDataHeader : IGenericMetaDataHeader<DateTime> {
+        public string Key { get; }
+        public DateTime Value { get; }
+        public string Comment { get; }
+
+        public DateTimeMetaDataHeader(string key, DateTime value, string comment = "") {
+            Key = key;
+            Value = value;
+            Comment = comment;
         }
     }
 

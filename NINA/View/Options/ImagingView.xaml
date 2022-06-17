@@ -13,6 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nina="clr-namespace:NINA"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
@@ -220,7 +221,7 @@
                     DragEnter="TextBox_DragEnter"
                     Drop="TextBox_Drop"
                     PreviewDragOver="TextBox_PreviewDragOver"
-                    Text="{Binding FilePattern, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap" />
 
                 <TextBlock
@@ -237,7 +238,7 @@
                     Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     IsReadOnly="True"
-                    Text="{Binding ElementName=ImageFilePatternTextBox, Path=Text, Converter={StaticResource ImagePatternToTextConverter}}"
+                    Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreview, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap" />
 
                 <Grid
@@ -875,7 +876,7 @@
                             Width="75"
                             Height="30"
                             HorizontalAlignment="Left"
-                            Command="{Binding ElementName=UC, Path=DataContext.DockManagerVM.ResetDockLayoutCommand}"
+                            Command="{Binding DataContext.DockManagerVM.ResetDockLayoutCommand, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type nina:MainWindow}, Mode=FindAncestor}}"
                             ToolTip="{ns:Loc LblResetDockLayout}">
                             <Path
                                 Margin="5"

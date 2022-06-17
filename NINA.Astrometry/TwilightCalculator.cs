@@ -20,7 +20,13 @@ namespace NINA.Astrometry {
     public class TwilightCalculator : ITwilightCalculator {
 
         public TimeSpan GetTwilightDuration(DateTime date, double latitude, double longitude) {
-            return AstroUtil.GetSunRiseAndSet(date, latitude, longitude).Rise - AstroUtil.GetNightTimes(date, latitude, longitude).Rise ?? TimeSpan.Zero;
+            var nightRise = AstroUtil.GetNightTimes(date, latitude, longitude).Rise;
+            var sunRiseAndSet = AstroUtil.GetSunRiseAndSet(date, latitude, longitude);
+            if (nightRise == null) {
+                return sunRiseAndSet.Rise - sunRiseAndSet.Set ?? TimeSpan.Zero;
+            }            
+
+            return sunRiseAndSet.Rise - nightRise ?? TimeSpan.Zero;
         }
     }
 }

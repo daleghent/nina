@@ -12,6 +12,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Improved error message presentation if the selected sky survey image serivce fails to accept a request
 
 ## Features
+- Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
 
 # Version 2.0
 

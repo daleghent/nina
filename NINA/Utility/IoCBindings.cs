@@ -137,18 +137,6 @@ namespace NINA.Utility {
                     Bind<IMeridianFlipVMFactory>().To<MeridianFlipVMFactory>().InSingletonScope();
                     Bind<IPluggableBehaviorManager>().To<PluggableBehaviorManager>().InSingletonScope();
 
-                    Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),
-                        new ImagingVM(
-                            f.Kernel.Get<IProfileService>(), new ImagingMediator(), f.Kernel.Get<ICameraMediator>(),
-                            f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<IFocuserMediator>(),
-                            f.Kernel.Get<IRotatorMediator>(), f.Kernel.Get<IGuiderMediator>(), f.Kernel.Get<IWeatherDataMediator>(),
-                            f.Kernel.Get<IApplicationStatusMediator>(),
-                            new ImageControlVM(f.Kernel.Get<IProfileService>(), f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IImagingMediator>(), f.Kernel.Get<IApplicationStatusMediator>()),
-                            new ImageStatisticsVM(f.Kernel.Get<IProfileService>())), f.Kernel.Get<IFlatWizardUserPromptVM>(),
-                        f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<ITelescopeMediator>(),
-                        f.Kernel.Get<IFlatDeviceMediator>(), f.Kernel.Get<IImageGeometryProvider>(), f.Kernel.Get<IApplicationStatusMediator>(), f.Kernel.Get<IMyMessageBoxVM>(),
-                        f.Kernel.Get<ITwilightCalculator>())).InSingletonScope();
-
                     Bind<IAnchorablePlateSolverVM>().To<AnchorablePlateSolverVM>().InSingletonScope();
                     Bind<IAnchorableSnapshotVM>().To<AnchorableSnapshotVM>().InSingletonScope();
 
@@ -188,6 +176,19 @@ namespace NINA.Utility {
                     } else {
                         Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
                     }
+
+                    Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),
+                        new ImagingVM(
+                            f.Kernel.Get<IProfileService>(), new ImagingMediator(), f.Kernel.Get<ICameraMediator>(),
+                            f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<IFocuserMediator>(),
+                            f.Kernel.Get<IRotatorMediator>(), f.Kernel.Get<IGuiderMediator>(), f.Kernel.Get<IWeatherDataMediator>(),
+                            f.Kernel.Get<IApplicationStatusMediator>(),
+                            new ImageControlVM(f.Kernel.Get<IProfileService>(), f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IImagingMediator>(), f.Kernel.Get<IApplicationStatusMediator>()),
+                            new ImageStatisticsVM(f.Kernel.Get<IProfileService>())), f.Kernel.Get<IFlatWizardUserPromptVM>(),
+                        f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<ITelescopeMediator>(),
+                        f.Kernel.Get<IFlatDeviceMediator>(), f.Kernel.Get<IImageGeometryProvider>(), f.Kernel.Get<IApplicationStatusMediator>(), f.Kernel.Get<IMyMessageBoxVM>(),
+                        f.Kernel.Get<ITwilightCalculator>(),
+                        f.Kernel.Get<IImageSaveMediator>())).InSingletonScope();
 
                     Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
                     Bind<ISGPServiceHost>().To<SGPServiceHost>().InSingletonScope();

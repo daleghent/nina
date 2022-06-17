@@ -45,6 +45,7 @@ using NINA.Plugin.Interfaces;
 using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
 using NINA.WPF.Base.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel {
 
@@ -56,7 +57,6 @@ namespace NINA.ViewModel {
                          IVersionCheckVM versionCheckVM,
                          ProjectVersion projectVersion,
                          IPlanetariumFactory planetariumFactory,
-                         IDockManagerVM dockManagerVM,
                          ISGPServiceHost sgpServiceHost,
                          IPluggableBehaviorSelector<IStarDetection> starDetectionSelector,
                          IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector,
@@ -66,6 +66,7 @@ namespace NINA.ViewModel {
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
 
             DeviceConsumer = deviceConsumer;
+            customPatterns = new List<ImagePattern>();
             this.versionCheckVM = versionCheckVM;
             this.projectVersion = projectVersion;
             this.planetariumFactory = planetariumFactory;
@@ -74,7 +75,6 @@ namespace NINA.ViewModel {
             this.PluggableStarDetection = starDetectionSelector;
             this.PluggableStarAnnotator = starAnnotatorSelector;
             this.PluggableAutoFocusVMFactory = autoFocusVMFactorySelector;
-            DockManagerVM = dockManagerVM;
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
             OpenSequenceTemplateDiagCommand = new RelayCommand(OpenSequenceTemplateDiag);
@@ -106,12 +106,12 @@ namespace NINA.ViewModel {
             CopyToAlternativeCustomSchemaCommand = new RelayCommand(CopyToAlternativeCustomSchema, (object o) => ActiveProfile.ColorSchemaSettings.ColorSchema?.Name != "Alternative Custom");
             SiteFromGPSCommand = new AsyncCommand<bool>(() => Task.Run(SiteFromGPS));
             SiteFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(SiteFromPlanetarium));
-            ImagePatterns = ImagePatterns.CreateExample();
+            RecreatePatterns();
 
             ScanForIndexFiles();
 
             profileService.LocaleChanged += (object sender, EventArgs e) => {
-                ImagePatterns = ImagePatterns.CreateExample();
+                RecreatePatterns();
                 RaisePropertyChanged(nameof(FileTypes));
             };
 
@@ -132,6 +132,35 @@ namespace NINA.ViewModel {
         public bool IsX64 {
             get => !DllLoader.IsX86();
         }
+
+        public void AddImagePattern(ImagePattern pattern) {
+            customPatterns.Add(pattern);
+            RecreatePatterns();
+        }
+
+        private void RecreatePatterns() {
+            var patterns = ImagePatterns.CreateExample();
+            foreach(var cp in customPatterns) {
+                patterns.Add(cp);
+            }
+            ImagePatterns = patterns;
+            RaisePropertyChanged(nameof(FilePatternPreview));
+        }
+
+        public string FilePattern {
+            get => profileService.ActiveProfile.ImageFileSettings.FilePattern;
+            set {
+                profileService.ActiveProfile.ImageFileSettings.FilePattern = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FilePatternPreview));
+            }
+        }
+
+        public string FilePatternPreview {
+            get => ImagePatterns.GetImageFileString(FilePattern).Replace("\\", " › ");
+        }
+
+        private List<ImagePattern> customPatterns;
 
         private void OpenHorizonFilePathDiag(object obj) {
             var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz;*.hzn;*.txt|MountWizzard4 Horizon File|*.hpts");
@@ -334,8 +363,6 @@ namespace NINA.ViewModel {
                 }
             }
         }
-
-        public IDockManagerVM DockManagerVM { get; }
 
         private void OpenSequenceTemplateDiag(object o) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
