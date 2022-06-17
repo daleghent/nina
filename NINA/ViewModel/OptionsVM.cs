@@ -52,7 +52,6 @@ namespace NINA.ViewModel {
     internal class OptionsVM : DockableVM, IOptionsVM {
 
         public OptionsVM(IProfileService profileService,
-                         IFilterWheelMediator filterWheelMediator,
                          IAllDeviceConsumer deviceConsumer,
                          IVersionCheckVM versionCheckVM,
                          ProjectVersion projectVersion,
@@ -70,7 +69,6 @@ namespace NINA.ViewModel {
             this.versionCheckVM = versionCheckVM;
             this.projectVersion = projectVersion;
             this.planetariumFactory = planetariumFactory;
-            this.filterWheelMediator = filterWheelMediator;
             this.sgpServiceHost = sgpServiceHost;
             this.PluggableStarDetection = starDetectionSelector;
             this.PluggableStarAnnotator = starAnnotatorSelector;
@@ -748,6 +746,31 @@ namespace NINA.ViewModel {
             }
         }
 
+        public int SaveQueueSize {
+            get {
+                return Properties.Settings.Default.SaveQueueSize;
+            }
+            set {
+                if(value < 1) { value = 1; }
+                if(value != SaveQueueSize) {
+                    NINA.Properties.Settings.Default.SaveQueueSize = value;
+                    CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+                    RaisePropertyChanged();
+                    RequiresRestart = true;
+                }                
+            }
+        }
+
+        public bool RequiresRestart {
+            get {
+                return requiresRestart;
+            }
+            set {
+                requiresRestart = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public LogLevelEnum LogLevel {
             get {
                 return profileService.ActiveProfile.ApplicationSettings.LogLevel;
@@ -771,8 +794,8 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ProfileMeta _selectedProfile;
-        private IFilterWheelMediator filterWheelMediator;
+        private ProfileMeta _selectedProfile;        
+        private bool requiresRestart = false;
         private readonly IVersionCheckVM versionCheckVM;
         private readonly ProjectVersion projectVersion;
         private readonly IPlanetariumFactory planetariumFactory;

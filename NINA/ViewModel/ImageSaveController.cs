@@ -38,7 +38,7 @@ namespace NINA.ViewModel {
             this.applicationStatusMediator = applicationStatusMediator;
 
             // This queue size could be adjustable for systems with lots of memory available
-            queue = new AsyncProducerConsumerQueue<PrepareSaveItem>(1);
+            queue = new AsyncProducerConsumerQueue<PrepareSaveItem>(Properties.Settings.Default.SaveQueueSize);
             workerCTS = new CancellationTokenSource();
             worker = Task.Run(DoWork);
         }

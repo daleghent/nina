@@ -14166,6 +14166,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image Save Queue Size.
+        /// </summary>
+        internal static string LblSaveImageQueueSize {
+            get {
+                return ResourceManager.GetString("LblSaveImageQueueSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption..
+        /// </summary>
+        internal static string LblSaveImageQueueSizeTooltip {
+            get {
+                return ResourceManager.GetString("LblSaveImageQueueSizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save selected profile and don&apos;t ask again next time.
         /// </summary>
         internal static string LblSaveSelectedProfileAndDontAskAgain {

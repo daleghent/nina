@@ -6290,4 +6290,10 @@ Reason: {1}</value>
   <data name="LblImageSourceError" xml:space="preserve">
     <value>Image source error</value>
   </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Image Save Queue Size</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+  </data>
 </root>

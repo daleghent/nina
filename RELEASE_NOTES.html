@@ -32,6 +32,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver</li>
 </ul>
 <h2 id="improvements">Improvements</h2>
+<ul>
+<li>The image save queue size can now be adjusted to allow for more concurrent image processing and save operations. Do be careful when changing this, as it will increase overall system resource usage during fast image captures.</li>
+</ul>
 <h2 id="features">Features</h2>
 <ul>
 <li>Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns</li>

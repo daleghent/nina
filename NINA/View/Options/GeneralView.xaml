@@ -253,18 +253,6 @@
                         </ComboBox>
                     </StackPanel>
 
-                    <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblAutoUpdateSource}" />
-                        <ComboBox
-                            MinWidth="120"
-                            Margin="10,0,0,0"
-                            ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:AutoUpdateSourceEnum}}}"
-                            SelectedItem="{Binding AutoUpdateSource}" />
-                    </StackPanel>
-
                     <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150" />
@@ -347,72 +335,129 @@
                         <TextBlock
                             Width="150"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblLogLevel}" />
-                        <ComboBox
-                            MinWidth="120"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:LogLevelEnum}}}"
-                            SelectedItem="{Binding LogLevel}" />
-                        <Button
-                            Width="40"
-                            Height="20"
-                            Margin="5,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Command="{Binding OpenLogFolderCommand}">
-                            <Path
-                                Margin="2"
-                                Data="{StaticResource PreviewSVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
-                        </Button>
-                    </StackPanel>
-
-                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDevicePollingInterval}" />
-                        <ninactrl:UnitTextBox
-                            MinWidth="120"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Unit="s">
-                            <TextBox.Text>
-                                <Binding Path="ActiveProfile.ApplicationSettings.DevicePollingInterval" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <rules:GreaterZeroRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </ninactrl:UnitTextBox>
-                    </StackPanel>
-
-                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblServerEnabled}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblServerEnabledTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <CheckBox
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            IsChecked="{Binding SGPServerEnabled}" />
-                    </StackPanel>
-
-                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                        <TextBlock
-                            Width="150"
-                            VerticalAlignment="Center"
                             Text="{ns:Loc LblProfileChooserOnStartup}" />
                         <CheckBox Margin="10,0,0,0" IsChecked="{Binding UseSavedProfileSelection, Converter={StaticResource InverseBooleanConverter}}" />
                     </StackPanel>
+
+                    <Border
+                        Margin="0,10,0,0"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,1,0,1">
+                        <Expander Header="{ns:Loc LblAdvancedSettings}">
+                            <StackPanel Orientation="Vertical">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblAutoUpdateSource}" />
+                                    <ComboBox
+                                        MinWidth="120"
+                                        Margin="10,0,0,0"
+                                        ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:AutoUpdateSourceEnum}}}"
+                                        SelectedItem="{Binding AutoUpdateSource}" />
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblLogLevel}" />
+                                    <ComboBox
+                                        MinWidth="120"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:LogLevelEnum}}}"
+                                        SelectedItem="{Binding LogLevel}" />
+                                    <Button
+                                        Width="40"
+                                        Height="20"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding OpenLogFolderCommand}">
+                                        <Path
+                                            Margin="2"
+                                            Data="{StaticResource PreviewSVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                    </Button>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblDevicePollingInterval}" />
+                                    <ninactrl:UnitTextBox
+                                        MinWidth="120"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Unit="s">
+                                        <TextBox.Text>
+                                            <Binding Path="ActiveProfile.ApplicationSettings.DevicePollingInterval" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:GreaterZeroRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </ninactrl:UnitTextBox>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblServerEnabled}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblServerEnabledTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding SGPServerEnabled}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Margin="0,5,0,5"
+                                    IsEnabled="{Binding IsX64}"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblSaveImageQueueSize}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblSaveImageQueueSizeTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <TextBox
+                                        MinWidth="120"
+                                        Margin="10,0,0,0"
+                                        Text="{Binding SaveQueueSize}">
+                                        <TextBox.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblSaveImageQueueSizeTooltip}" />
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblUnavailableForX86}"
+                                        Visibility="{Binding IsX64, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    Margin="0,0,0,5"
+                                    FontStyle="Italic"
+                                    FontWeight="Bold"
+                                    Text="{ns:Loc LblRequiresRestart}"
+                                    Visibility="{Binding RequiresRestart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            </StackPanel>
+                        </Expander>
+                    </Border>
                 </StackPanel>
             </GroupBox>
             <GroupBox
