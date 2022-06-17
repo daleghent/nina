@@ -3,6 +3,15 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.0 HF 1
+
+## Bugfixes
+- Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver
+
+## Improvements
+
+## Features
+
 # Version 2.0
 
 The changelog contains the most prominent changes of Version 2.0. In summary this version has tons of improvements and almost every aspect of the application has been touched and improved. A big thank you to everyone that participated in this long release cycle!

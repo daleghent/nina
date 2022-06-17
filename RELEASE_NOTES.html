@@ -26,6 +26,13 @@
     <h1 id="n.i.n.a-nighttime-imaging-n-astronomy-changelog">N.I.N.A. - Nighttime Imaging 'N' Astronomy Changelog</h1>
 <p>If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.<br />
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a></p>
+<h1 id="version-2.0-hf-1">Version 2.0 HF 1</h1>
+<h2 id="bugfixes">Bugfixes</h2>
+<ul>
+<li>Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<h2 id="features">Features</h2>
 <h1 id="version-2.0">Version 2.0</h1>
 <p>The changelog contains the most prominent changes of Version 2.0. In summary this version has tons of improvements and almost every aspect of the application has been touched and improved. A big thank you to everyone that participated in this long release cycle!</p>
 <h2 id="important-change-of-existing-settings-and-panels">Important change of existing settings and panels</h2>
@@ -344,7 +351,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 <h4 id="included-camera-sdk-versions-can-now-be-found-inside-the-about-page-of-n.i.n.a">Included Camera SDK Versions can now be found inside the about page of N.I.N.A.</h4>
 <h1 id="version-1.10-hf3">Version 1.10 HF3</h1>
-<h2 id="improvements">Improvements</h2>
+<h2 id="improvements-1">Improvements</h2>
 <ul>
 <li>The camera temperature setpoint is now displayed <em>only</em> when the cooler is active</li>
 <li>A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available</li>
@@ -384,13 +391,13 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li><strong>ZWO:</strong> 1.16.3</li>
 </ul>
 <h1 id="version-1.10-hf2">Version 1.10 HF2</h1>
-<h2 id="improvements-1">Improvements</h2>
+<h2 id="improvements-2">Improvements</h2>
 <ul>
 <li>Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.</li>
 <li>Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers</li>
 <li>QHY: Legacy CCD and A-series cameras can now select Normal or Fast readout speeds when using the native driver</li>
 </ul>
-<h2 id="bugfixes">Bugfixes</h2>
+<h2 id="bugfixes-1">Bugfixes</h2>
 <ul>
 <li>The telescope will no longer go on a journey to the celestial pole before going to the park position</li>
 <li>Parking the telescope from the Equipment &gt; Telescope screen will no longer cause the UI to freeze while the telescope is in the process of parking</li>
@@ -420,7 +427,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li><strong>ZWO:</strong> 1.16.3</li>
 </ul>
 <h1 id="version-1.10-hf1">Version 1.10 HF1</h1>
-<h2 id="features">Features</h2>
+<h2 id="features-1">Features</h2>
 <ul>
 <li>Ability to inspect pixel area and pixel values in detail by holding right click</li>
 <li>Relative Focusers can now be connected and will be simulated to behave like absolute focusers</li>
@@ -429,7 +436,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>New translation for Greek (Ελληνικά) has been added</li>
 <li>Added a new sky survey <a href="http://alasky.u-strasbg.fr/hips-image-services/hips2fits" target="_blank">Hips 2 Fits</a> as an option in framing assistant. This survey seems to provide a much faster image compared to the other surveys.</li>
 </ul>
-<h2 id="improvements-2">Improvements</h2>
+<h2 id="improvements-3">Improvements</h2>
 <ul>
 <li>Canon CR3 image format is now supported (use FreeImage as your RAW converter)</li>
 <li>Adding support for the EOS R5 and EOS R6</li>
@@ -444,7 +451,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Rotators will now display the sky angle as the current position, when rotation via plate solving was invoked</li>
 <li>Added toggle to reverse direction for rotators</li>
 </ul>
-<h2 id="bugfixes-1">Bugfixes</h2>
+<h2 id="bugfixes-2">Bugfixes</h2>
 <ul>
 <li>When using a DSLR and Astrometry.net the uploaded file is now correctly sent as FITS instead of raw format</li>
 <li>Log files now show correct operating system version</li>
@@ -738,7 +745,7 @@ Thank you for your support!</p>
 <li><strong>ZWO:</strong> 1.15.6.17</li>
 </ul>
 <h1 id="version-1.9">Version 1.9</h1>
-<h2 id="features-1">Features</h2>
+<h2 id="features-2">Features</h2>
 <h3 id="camera-control">Camera Control</h3>
 <ul>
 <li>Native support for Finger Lakes Instrumentation ProLine/MicroLine cameras and color filter wheels</li>
@@ -888,7 +895,7 @@ Thank you for your support!</p>
 </ul>
 </li>
 </ul>
-<h2 id="bugfixes-2">Bugfixes</h2>
+<h2 id="bugfixes-3">Bugfixes</h2>
 <ul>
 <li>Fixed when FramingAssistant was not opened before and a DSO was selected from the SkyAtlas as Framing Source an error could occur</li>
 <li>Fixed scrolling through Framing Assistant Offline Sky Map while cursor was inside Rectangle ignored zooming</li>
@@ -906,7 +913,7 @@ Thank you for your support!</p>
 <li>Some Sky Surveys did not work in some locales due to decimal pointer settings</li>
 <li>Fixed race condition when using DCRaw when the previous temp image was not finished processed and the new image tried to replace the previous temp image</li>
 </ul>
-<h2 id="improvements-3">Improvements</h2>
+<h2 id="improvements-4">Improvements</h2>
 <ul>
 <li>When EOS Utility is running in the background, the x64 N.I.N.A. client will scan for this app and prevent a crash due to the EOS utility being open. Instead a notification will show up to close the EOS Utility.</li>
 <li>N.I.N.A. SQLite Database will be created on demand and migrated to new versions on application startup instead of just being overwritten by the installer.</li>
@@ -947,7 +954,7 @@ Thank you for your support!</p>
 <li>Profiles where always saved after a sequence exposure, which slows down the image saving process. During sequence capture the profile saving is disabled now.</li>
 </ul>
 <h1 id="version-1.8">Version 1.8</h1>
-<h2 id="features-2">Features</h2>
+<h2 id="features-3">Features</h2>
 <h3 id="sequence">Sequence</h3>
 <ul>
 <li>Enable/Disable sequence entries</li>
@@ -996,7 +1003,7 @@ the background itself will be moved like in an orrery</li>
 <li>Previously the auto update was always just looking for released versions. Now multiple sources (Release, Beta and Nightly) can be selected and the auto updater updates to the respective version accordingls.</li>
 <li>Additionally the changelog for the new version will now be displayed prior to updating, too.</li>
 </ul>
-<h2 id="bugfixes-3">Bugfixes</h2>
+<h2 id="bugfixes-4">Bugfixes</h2>
 <ul>
 <li>Corrected Max Binning level for ASI Cameras</li>
 <li>Focuser move command fixed where lots of move commands where sent by accident</li>
@@ -1014,7 +1021,7 @@ the background itself will be moved like in an orrery</li>
 <li>Fixed Platesolve result reporting wrong Dec Error.</li>
 <li>Platesolve recenter now considers proper angular distance calculation instead of relying just on Right Ascension.</li>
 </ul>
-<h2 id="improvements-4">Improvements</h2>
+<h2 id="improvements-5">Improvements</h2>
 <ul>
 <li>Clear button for PHD2 Graph</li>
 <li>Hide camera cooler controls when not available for current camera model</li>
@@ -1084,7 +1091,7 @@ the background itself will be moved like in an orrery</li>
 Thank you for your support!</p>
 <hr />
 <h1 id="version-1.7">Version 1.7</h1>
-<h2 id="features-3">Features</h2>
+<h2 id="features-4">Features</h2>
 <h3 id="framing-assistant-1">Framing Assistant</h3>
 <ul>
 <li>Mosaic planning for framing assistant</li>
@@ -1117,12 +1124,12 @@ Thank you for your support!</p>
 <li>Latitude and Longitude can now be synced from application to telescope and vica versa (when supported).</li>
 <li>Serial Relay (via USB) interaction for Nikon Bulb</li>
 </ul>
-<h2 id="bugfixes-4">Bugfixes</h2>
+<h2 id="bugfixes-5">Bugfixes</h2>
 <ul>
 <li>Fixed Canon issue that a second exposure is accidentally triggered, causing the camera to be stuck</li>
 <li>Fixed memory leak when using Free Image RAW Converter</li>
 </ul>
-<h2 id="improvements-5">Improvements</h2>
+<h2 id="improvements-6">Improvements</h2>
 <ul>
 <li>Guider is also connected when pushing &quot;Connect All&quot;</li>
 <li>Changed FilterWheel UI for switching filters</li>
