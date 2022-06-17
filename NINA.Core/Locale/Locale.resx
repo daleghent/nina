@@ -6296,4 +6296,7 @@ Reason: {1}</value>
   <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
     <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
   </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+  </data>
 </root>

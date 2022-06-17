@@ -14373,6 +14373,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selected time source could not determine a valid time. Please select a different source..
+        /// </summary>
+        internal static string LblSelectedTimeSourceInvalid {
+            get {
+                return ResourceManager.GetString("LblSelectedTimeSourceInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select new Guidestar.
         /// </summary>
         internal static string LblSelectGuidestar {

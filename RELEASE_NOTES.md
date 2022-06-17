@@ -11,6 +11,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Improvements
 - Improved error message presentation if the selected sky survey image serivce fails to accept a request
 - The image save queue size can now be adjusted to allow for more concurrent image processing and save operations. Do be careful when changing this, as it will increase overall system resource usage during fast image captures.
+- *Wait For Time* | *Loop Until Time* - When no dusk/dawn is available at the current date the instructions will now show an error instead of falling back to the current time
+- *Wait For Time* | *Loop Until Time* - When the date changes (at noon) the instructions will now automatically redetermine the times
 
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
