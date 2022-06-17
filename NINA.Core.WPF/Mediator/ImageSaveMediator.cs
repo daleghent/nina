@@ -45,13 +45,13 @@ namespace NINA.WPF.Base.Mediator {
         public event Func<object, BeforeImageSavedEventArgs, Task> BeforeImageSaved;
 
         public async Task OnBeforeImageSaved(BeforeImageSavedEventArgs e) {
-            await BeforeImageSaved?.InvokeAsync(this, e);
+            await (BeforeImageSaved?.InvokeAsync(this, e) ?? Task.CompletedTask);
         }
 
         public event Func<object, BeforeFinalizeImageSavedEventArgs, Task> BeforeFinalizeImageSaved;
 
         public async Task OnBeforeFinalizeImageSaved(BeforeFinalizeImageSavedEventArgs e) {
-            await BeforeFinalizeImageSaved?.InvokeAsync(this, e);
+            await (BeforeFinalizeImageSaved?.InvokeAsync(this, e) ?? Task.CompletedTask);
         }
 
         public event EventHandler<ImageSavedEventArgs> ImageSaved;
@@ -83,13 +83,13 @@ namespace NINA.WPF.Base.Mediator {
         public event Func<object, BeforeImageSavedEventArgs, Task> BeforeImageSaved;
 
         public async Task OnBeforeImageSaved(BeforeImageSavedEventArgs e) {
-            await BeforeImageSaved?.InvokeAsync(this, e);
+            await (BeforeImageSaved?.InvokeAsync(this, e) ?? Task.CompletedTask);
         }
 
         public event Func<object, BeforeFinalizeImageSavedEventArgs, Task> BeforeFinalizeImageSaved;
 
         public async Task OnBeforeFinalizeImageSaved(BeforeFinalizeImageSavedEventArgs e) {
-            await BeforeFinalizeImageSaved?.InvokeAsync(this, e);
+            await (BeforeFinalizeImageSaved?.InvokeAsync(this, e) ?? Task.CompletedTask);
         }
 
         public event EventHandler<ImageSavedEventArgs> ImageSaved;
