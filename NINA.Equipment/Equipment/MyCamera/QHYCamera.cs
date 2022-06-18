@@ -1221,6 +1221,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        private uint QHYCCDMemLength = 0;
+
         private void ReconnectForLiveView() {
             // Steps documented as required when changing live view:
             // CloseQHYCCD
@@ -1285,6 +1287,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
              */
             ImageSize = (uint)((sizex * sizey * BitDepth) + (8 - 1)) / 8;
 
+            QHYCCDMemLength = Sdk.GetQHYCCDMemLength();
+
             if (Sdk.BeginQHYCCDLive() != QhySdk.QHYCCD_SUCCESS) {
                 Logger.Warning("QHYCCD: Failed to start live view");
                 CameraState = CameraStates.Error;
@@ -1330,17 +1334,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 /*
                  * Size the image data byte array for the image
                  */
-                uint size = Sdk.GetQHYCCDMemLength();
+                uint size = QHYCCDMemLength;
                 byte[] ImgData = new byte[size];
                 
-                var loop = 1;
                 while (!ct.IsCancellationRequested) {
                     rv = Sdk.GetQHYCCDLiveFrame(ref width, ref height, ref bpp, ref channels, ImgData);
                     if (rv == uint.MaxValue) {
                         await Task.Yield();
                         // GetQHYCCDLiveFrame returns -1 when the data isn't available yet, requiring looping.
-                        await Task.Delay(1, ct);
-                        loop++;
                         continue;
                     } else if (rv > size) {
                         // rv returns how many bytes have been downloaded if there is still more to do. 0 indicates completion
@@ -1350,7 +1351,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         break;
                     }
                 }
-                Logger.Debug("Wait for liveFrame " + loop + " ms.");
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
 
                 /*

@@ -44,6 +44,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private IProfileService profileService;
         private readonly IExposureDataFactory exposureDataFactory;
         private int _cameraId;
+        private bool _liveViewEnabled = false;
 
         public string Category { get; } = "ZWOptical";
         public string Id => $"{Name} #{_cameraId}";
@@ -766,11 +767,64 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StartLiveView(CaptureSequence sequence) {
-            throw new System.NotImplementedException();
+            int exposureMs = (int)(sequence.ExposureTime * 1000000);
+            var exposureSettings = GetControl(ASICameraDll.ASI_CONTROL_TYPE.ASI_EXPOSURE);
+            exposureSettings.Value = exposureMs;
+            exposureSettings.IsAuto = false;
+
+            if (EnableSubSample) {
+                CaptureAreaInfo = new CaptureAreaInfo(
+                    new Point(SubSampleX / BinX, SubSampleY / BinY),
+                    new Size(SubSampleWidth / BinX - (SubSampleWidth / BinX % 8),
+                             SubSampleHeight / BinY - (SubSampleHeight / BinY % 2)
+                    ),
+                    BinX,
+                    ASICameraDll.ASI_IMG_TYPE.ASI_IMG_RAW16
+                );
+            } else {
+                CaptureAreaInfo = new CaptureAreaInfo(
+                    new Point(0, 0),
+                    new Size((Resolution.Width / BinX) - (Resolution.Width / BinX % 8),
+                              Resolution.Height / BinY - (Resolution.Height / BinY % 2)
+                    ),
+                    BinX,
+                    ASICameraDll.ASI_IMG_TYPE.ASI_IMG_RAW16
+                );
+            }
+
+            ASICameraDll.StartVideoCapture(_cameraId);
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            throw new System.NotImplementedException();
+            return Task.Run<IExposureData>(() => {
+                try {
+                    var width = CaptureAreaInfo.Size.Width;
+                    var height = CaptureAreaInfo.Size.Height;
+
+                    int size = width * height;
+
+                    ushort[] arr = new ushort[size];
+                    int buffersize = width * height * 2;
+                    if (!GetVideoData(arr, buffersize)) {
+                        throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
+                    }
+
+                    return exposureDataFactory.CreateImageArrayExposureData(
+                        input: arr,
+                        width: width,
+                        height: height,
+                        bitDepth: BitDepth,
+                        isBayered: SensorType != SensorType.Monochrome,
+                        metaData: new ImageMetaData());
+                } catch (OperationCanceledException) {
+                } catch (CameraDownloadFailedException ex) {
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
+                }
+                return null;
+            });
         }
 
         private bool GetVideoData(ushort[] buffer, int bufferSize) {
@@ -778,10 +832,18 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StopLiveView() {
-            throw new System.NotImplementedException();
+            ASICameraDll.StopVideoCapture(_cameraId);
         }
 
-        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
+        public bool LiveViewEnabled {
+            get => _liveViewEnabled;
+            set {
+                if (_liveViewEnabled != value) {
+                    _liveViewEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public bool HasBattery => false;
 
