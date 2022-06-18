@@ -90,6 +90,12 @@ namespace NINA.ViewModel {
                 InitializeFilters();
                 ResetFilters(null);
             };
+            nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         private NighttimeData nighttimeData;

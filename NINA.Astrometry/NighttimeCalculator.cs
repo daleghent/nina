@@ -12,26 +12,44 @@
 
 #endregion "copyright"
 
-using NINA.Profile.Interfaces;
+using NINA.Astrometry.Interfaces;
 using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
-using NINA.Astrometry.Interfaces;
 using System.Globalization;
+using System.Timers;
 
 namespace NINA.Astrometry {
 
     public class NighttimeCalculator : BaseINPC, INighttimeCalculator {
         private readonly IProfileService profileService;
+        private Timer ReferenceDateTimer = null;
+        private DateTime LastReferenceDate;
 
         public NighttimeCalculator(IProfileService profile) {
             profileService = profile;
             Cache = new Dictionary<string, NighttimeData>();
+
+            LastReferenceDate = GetReferenceDate(DateTime.Now);
+            ReferenceDateTimer = new Timer(10 * 60 * 1000);
+            ReferenceDateTimer.Elapsed += OnTimedEvent;
+            ReferenceDateTimer.AutoReset = true;
+            ReferenceDateTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e) {
+            DateTime referenceDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+            if(LastReferenceDate != referenceDate) {
+                OnReferenceDayChanged?.Invoke(this, null);
+            }
         }
 
         private IDictionary<string, NighttimeData> Cache;
 
         private object lockObj = new object();
+
+        public event EventHandler OnReferenceDayChanged;
 
         public NighttimeData Calculate(DateTime? date = null) {
             lock (lockObj) {

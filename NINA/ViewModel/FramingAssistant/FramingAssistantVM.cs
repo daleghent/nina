@@ -143,8 +143,14 @@ namespace NINA.ViewModel.FramingAssistant {
             InitializeCommands();
             Task.Run(() => {
                 this.NighttimeData = this.nighttimeCalculator.Calculate();
+                nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
                 InitializeCache();
             });
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         public bool IsX64 {

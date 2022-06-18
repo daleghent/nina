@@ -73,6 +73,7 @@ namespace NINA.Sequencer.Container {
 
             WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.LocationChanged), ProfileService_LocationChanged);
             WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.HorizonChanged), ProfileService_HorizonChanged);
+            WeakEventManager<INighttimeCalculator, EventArgs>.AddHandler(nighttimeCalculator, nameof(nighttimeCalculator.OnReferenceDayChanged), NighttimeCalculator_OnReferenceDayChanged);
         }
 
         private void SendCoordinatesToFraming() {
@@ -81,6 +82,11 @@ namespace NINA.Sequencer.Container {
 
         private void GetCoordsFromPlanetarium() {
             _ = CoordsFromPlanetarium();
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         private void ProfileService_HorizonChanged(object sender, EventArgs e) {

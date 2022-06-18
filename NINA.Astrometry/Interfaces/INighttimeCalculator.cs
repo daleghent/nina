@@ -19,5 +19,6 @@ namespace NINA.Astrometry.Interfaces {
     public interface INighttimeCalculator {
 
         NighttimeData Calculate(DateTime? selectedDate = null);
+        event EventHandler OnReferenceDayChanged;
     }
 }

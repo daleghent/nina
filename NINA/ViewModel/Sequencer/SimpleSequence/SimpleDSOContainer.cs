@@ -126,6 +126,7 @@ namespace NINA.Sequencer.Container {
 
             this.rotateLoopCondition = factory.GetCondition<LoopCondition>();
             this.rotateLoopCondition.Iterations = 1;
+            WeakEventManager<INighttimeCalculator, EventArgs>.AddHandler(nighttimeCalculator, nameof(nighttimeCalculator.OnReferenceDayChanged), NighttimeCalculator_OnReferenceDayChanged);
         }
 
         public override ICommand ResetProgressCommand => new RelayCommand(
@@ -506,6 +507,11 @@ namespace NINA.Sequencer.Container {
                 }
                 RaisePropertyChanged();
             }
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         public NighttimeData NighttimeData { get; private set; }

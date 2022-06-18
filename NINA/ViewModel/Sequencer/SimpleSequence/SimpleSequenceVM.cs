@@ -120,6 +120,12 @@ namespace NINA.ViewModel {
                     target.Target.DeepSkyObject = dso;
                 }
             };
+            nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         private string savePath = string.Empty;
