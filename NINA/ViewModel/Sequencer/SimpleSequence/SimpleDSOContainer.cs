@@ -51,6 +51,7 @@ using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Core.MyMessageBox;
+using System.Windows;
 
 namespace NINA.Sequencer.Container {
 
