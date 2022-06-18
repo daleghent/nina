@@ -193,7 +193,8 @@ namespace EDSDKLib {
         public const uint PropID_MovieCardExtension = 0x01000472;
         public const uint PropID_StillCurrentMedia = 0x01000473;
         public const uint PropID_MovieCurrentMedia = 0x01000474;
-
+        public const uint PropID_MovieHFRSetting = 0x0100045d;
+        public const uint PropID_FocusShiftSetting = 0x01000457;
 
 
         #endregion
@@ -216,6 +217,7 @@ namespace EDSDKLib {
         public const uint CameraCommand_PressShutterButton = 0x00000004;
         public const uint CameraCommand_SetRemoteShootingMode = 0x0000010f;
         public const uint CameraCommand_RequestRollPitchLevel = 0x00000109;
+        public const uint CameraCommand_RequestSensorCleaning = 0x00000112;
 
         public enum EdsEvfAf : uint {
             CameraCommand_EvfAf_OFF = 0,
@@ -1209,6 +1211,16 @@ namespace EDSDKLib {
             uint err = EdsGetPropertyData(inRef, inPropertyID, inParam, size, ptr);
 
             outPropertyData = (EDSDK.EdsCameraPos)Marshal.PtrToStructure(ptr, typeof(EDSDK.EdsCameraPos));
+            Marshal.FreeHGlobal(ptr);
+            return err;
+        }
+
+        public static uint EdsGetPropertyData(IntPtr inRef, uint inPropertyID, int inParam, out EDSDK.FocusShiftSetting outPropertyData) {
+            int size = Marshal.SizeOf(typeof(EDSDK.FocusShiftSetting));
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+            uint err = EdsGetPropertyData(inRef, inPropertyID, inParam, size, ptr);
+
+            outPropertyData = (EDSDK.FocusShiftSetting)Marshal.PtrToStructure(ptr, typeof(EDSDK.FocusShiftSetting));
             Marshal.FreeHGlobal(ptr);
             return err;
         }
@@ -2390,6 +2402,17 @@ namespace EDSDKLib {
             public int pitching;
         }
 
+        /*-----------------------------------------------------------------------------
+        FocusBractingSetting
+       -----------------------------------------------------------------------------*/
+        [StructLayout(LayoutKind.Sequential)]
+        public struct FocusShiftSetting {
+            public uint Version;
+            public uint FocusShiftFunction;
+            public uint ShootingNumber;
+            public uint StepWidth;
+            public uint ExposureSmoothing;
+        }
         /*-----------------------------------------------------------------------------
          Manual WhiteBalance Data
         -----------------------------------------------------------------------------*/
