@@ -117,7 +117,7 @@ namespace NINATest {
             var header = new XISFHeader();
             header.AddImageMetaData(props, imageType);
             for (var i = 0; i < 50; i++) {
-                header.AddImageFITSKeyword("test", "00000000000000000000000000000000000000000000000000");
+                header.AddImageFITSKeyword($"test{i:00}", "000000000000000000000000000000000000000000000000");
             }
             header.AddImageFITSKeyword("t", value);
             var sut = new XISF(header);
