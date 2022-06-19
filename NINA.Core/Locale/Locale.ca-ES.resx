@@ -6265,4 +6265,27 @@ Comproveu si hi ha una actualització disponible.</value>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>Amb la introducció de la plataforma Pegasus Astro Unity i els possibles canvis als protocols de comunicació, els controladors natius quedaran obsolets en futures versions. Si us plau, utilitzeu els controladors ASCOM!</value>
   </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Always listen to file changes</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Seconds to wait before download</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} is unavailable. Please select an alternative image source.
+
+Reason: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Image source error</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Image Save Queue Size</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+  </data>
 </root>

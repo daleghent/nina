@@ -6266,4 +6266,27 @@ Por favor, comprueba si hay disponible actualización.</value>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>Con la introducción de la Plataforma Pegasus Astro Unity y los posibles cambios en los protocolos de comunicación los drivers nativos quedarán obsoletos en futuras versiones. Por favor, ¡usa los controladores ASCOM en su lugar!</value>
   </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Escucha siempre los cambios de archivo</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Segundos a esperar antes de descargar</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} no está disponible. Por favor, seleccione otra imagen.
+
+Razón: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Error en imagen seleccionada</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Tamaño de la cola de guardado de imagen</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Incrementarlo permite a la aplicación poner más de una imagen en la cola de procesamiento y guardado. Esto es útil para aumentar la velocidad de exposiciones cortas durante una secuencia a costa de un mayor consumo de memoria.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>La fuente de tiempo seleccionada no pudo determinar una hora válida. Por favor, seleccione una diferente.</value>
+  </data>
 </root>

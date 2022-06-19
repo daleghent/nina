@@ -6268,6 +6268,29 @@ Zkontrolujte, zda je k dispozici aktualizace.</value>
     <value>viditelné po</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
-    <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
+    <value>Se zavedením platformy Pegasus Astro Unity a možnými změnami komunikačních protokolů budou nativní ovladače v budoucích verzích vyřazeny. Místo nich používejte ovladače ASCOM!</value>
+  </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Vždy naslouchat změnám souboru</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Sekund čekání před stažením</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} není k dispozici. Vyberte prosím jiný zdroj obrázků.
+
+Důvod: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Chyba zdroje obrázku</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Velikost Fronty pro Uložení Obrázku</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Zvýšení této hodnoty umožňuje aplikaci zařadit do fronty ke zpracování a uložení více než jeden obrázek. To je praktické pro zvýšení rychlosti krátkých expozic během sekvence za cenu zvýšené spotřeby paměti.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>Vybraný zdroj času nedokázal určit správný čas. Vyberte jiný zdroj.</value>
   </data>
 </root>
