@@ -17,6 +17,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - *Wait For Time* | *Loop Until Time* - When the date changes (at noon) the instructions will now automatically redetermine the times
 - Altitude charts across the app should now automatically update on a new date (at noon with a maximum of ~10 minutes delay)
 - Replaced old FITS library for reading FITS files with CFITSIO. Opening FITS files should now be much faster. 
+- Plugin initialization now shows a status in the application status bar
 
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns

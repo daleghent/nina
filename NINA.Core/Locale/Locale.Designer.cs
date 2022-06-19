@@ -10381,6 +10381,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading plugin {0} version {1} created by {2}.
+        /// </summary>
+        internal static string LblLoadingPlugin {
+            get {
+                return ResourceManager.GetString("LblLoadingPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load Profile.
         /// </summary>
         internal static string LblLoadProfile {
