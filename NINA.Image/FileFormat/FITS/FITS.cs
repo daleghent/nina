@@ -40,7 +40,7 @@ namespace NINA.Image.FileFormat.FITS {
                 IntPtr fitsPtr = IntPtr.Zero;
                 try {
 
-                    CfitsioNative.fits_open_file(out fitsPtr, filePath.AbsolutePath, CfitsioNative.IOMODE.READONLY, out var status);
+                    CfitsioNative.fits_open_file(out fitsPtr, filePath.LocalPath, CfitsioNative.IOMODE.READONLY, out var status);
                     CfitsioNative.CheckStatus("fits_open_file", status);
 
                     var dimensions = CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS");
