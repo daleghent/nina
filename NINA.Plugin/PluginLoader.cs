@@ -241,10 +241,6 @@ namespace NINA.Plugin {
                                 files.AddRange(Directory.GetFiles(Constants.CoreExtensionsFolder, "*.dll"));
                             }
 
-                            foreach (var file in files) {
-                                AsyncContext.Run(() => LoadPlugin(file));
-                            }
-
                             // Enumerate only 1 level deep, where we'd expect plugin dlls to be in the root of the plugin folder
                             var userExtensionsDirectory = new DirectoryInfo(Constants.UserExtensionsFolder);
                             if (userExtensionsDirectory.Exists) {
@@ -254,8 +250,9 @@ namespace NINA.Plugin {
                                 }
                             }
 
-                            foreach (var file in files) {
-                                AsyncContext.Run(() => LoadPlugin(file));
+                            for(int i = 0; i < files.Count; i++) {
+                                var file = files[i];
+                                AsyncContext.Run(() => LoadPlugin(file, (i + 1) / (double)files.Count));
                             }
 
                             initialized = true;
@@ -263,7 +260,7 @@ namespace NINA.Plugin {
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         } finally {
-                            applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblPlugin"] });
+                            applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblPlugins"] });
                         }
                     }
                 }
@@ -279,7 +276,7 @@ namespace NINA.Plugin {
             }
         }
 
-        private async Task LoadPlugin(string file) {
+        private async Task LoadPlugin(string file, double progress) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
                 var applicationVersion = new Version(CoreUtil.Version);
@@ -355,7 +352,13 @@ namespace NINA.Plugin {
                                 }
                             }
 
-                            applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblPlugin"], Status = string.Format(Loc.Instance["LblLoadingPlugin"], manifest.Name, manifest.Version, manifest.Author) });
+                            applicationStatusMediator.StatusUpdate(new ApplicationStatus() { 
+                                Source = Loc.Instance["LblPlugins"], 
+                                Status = Loc.Instance["LblInitializingPlugins"],
+                                Status2 = string.Format(Loc.Instance["LblLoadingPlugin"], manifest.Name, manifest.Version, manifest.Author),
+                                Progress = progress,
+                                ProgressType = ApplicationStatus.StatusProgressType.Percent
+                            });
 
                             Compose(plugin);
 
