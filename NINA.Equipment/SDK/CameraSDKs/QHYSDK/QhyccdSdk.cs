@@ -350,7 +350,7 @@ namespace QHYCCD {
 
         public uint GetQHYCCDLiveFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] ushort[] rawArray) {
             lock (lockobj) {
-                return GetQHYCCDSingleFrame(handle, ref sizeX, ref sizeY, ref bpp, ref channels, rawArray);
+                return GetQHYCCDLiveFrame(handle, ref sizeX, ref sizeY, ref bpp, ref channels, rawArray);
             }
         }
 
