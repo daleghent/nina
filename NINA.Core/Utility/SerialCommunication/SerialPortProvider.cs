@@ -42,9 +42,11 @@ namespace NINA.Core.Utility.SerialCommunication {
             var searcher = new ManagementObjectSearcher(ALL_SERIAL_PORTS_QUERY);
             foreach (var entry in searcher.Get()) {
                 var com = Regex.Match((string)entry["Name"], @"COM\d+");
-                var leonardoMatch = Regex.Match((string)entry["DeviceID"], @"USB\\VID_2341&PID_8036&MI_00");
-                dtrEnableValue.Add(com.Value, leonardoMatch.Length > 0);
-                Logger.Debug($"Found {entry} on {entry["Name"]}");
+                if(com.Success && !dtrEnableValue.ContainsKey(com.Value)) {
+                    var leonardoMatch = Regex.Match((string)entry["DeviceID"], @"USB\\VID_2341&PID_8036&MI_00");
+                    dtrEnableValue.Add(com.Value, leonardoMatch.Length > 0);
+                    Logger.Debug($"Found {entry} on {entry["Name"]}");
+                }                
             }
         }
 
