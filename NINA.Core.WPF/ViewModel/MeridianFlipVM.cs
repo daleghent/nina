@@ -180,26 +180,26 @@ namespace NINA.WPF.Base.ViewModel {
 
                 await Steps.Process();
             } catch (OperationCanceledException) {
-                Logger.Trace("Meridian Flip - Cancelled by user");
+                Logger.Info("Meridian Flip - Cancelled by user");
             } catch (Exception ex) {
                 Logger.Error("Meridian Flip failed", ex);
                 Notification.ShowError(Loc.Instance["LblMeridianFlipFailed"] + Environment.NewLine + ex.Message);
 
                 try {
-                    Logger.Trace("Meridian Flip - Resuming Autoguider after meridian flip error");
+                    Logger.Info("Meridian Flip - Resuming Autoguider after meridian flip error");
                     await ResumeAutoguider(cancellationToken, _progress);
                 } catch (Exception ex2) {
                     Logger.Error(ex2);
                     Notification.ShowError(Loc.Instance["GuiderResumeFailed"]);
                 }
 
-                Logger.Trace("Meridian Flip - Re-enable Tracking after meridian flip error");
+                Logger.Info("Meridian Flip - Re-enable Tracking after meridian flip error");
                 telescopeMediator.SetTrackingEnabled(true);
                 return false;
             } finally {
                 _progress.Report(new ApplicationStatus() { Status = "" });
             }
-            Logger.Trace("Meridian Flip - Exiting meridian flip");
+            Logger.Info("Meridian Flip - Exiting meridian flip");
             return true;
         }
 
