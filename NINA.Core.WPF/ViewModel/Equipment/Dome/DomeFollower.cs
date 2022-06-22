@@ -72,7 +72,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 try {
                     do {
                         if (!this.IsSynchronized) {
-                            this.TriggerTelescopeSync();
+                            await this.TriggerTelescopeSync();
                         }
 
                         await Task.Delay(TimeSpan.FromSeconds(2), domeFollowerTaskCTS.Token);
