@@ -3010,7 +3010,7 @@
     <value>启动导星失败</value>
   </data>
   <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
-    <value>Restarting guiding failed after lost shift lock</value>
+    <value>在丢失锁定星点后，重新启动导星失败</value>
   </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>启动 向内 回差测量</value>
@@ -6098,7 +6098,7 @@
     <value>可以漂移跟踪</value>
   </data>
   <data name="LblGuiderShiftEnabled" xml:space="preserve">
-    <value>Shift Enabled</value>
+    <value>漂移已启用</value>
   </data>
   <data name="LblGuiderRAShiftRate" xml:space="preserve">
     <value>赤经漂移速率</value>
@@ -6107,7 +6107,7 @@
     <value>赤纬漂移速率</value>
   </data>
   <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
-    <value>Shift Axis</value>
+    <value>偏移轴</value>
   </data>
   <data name="LblGuiderSetShiftRate" xml:space="preserve">
     <value>设置漂移</value>
@@ -6116,10 +6116,10 @@
     <value>停止漂移</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
-    <value>Setting shift rate after losing shift lock failed</value>
+    <value>设定偏移锁定失败后的移动速率</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
-    <value>Restored shift rate after losing shift lock</value>
+    <value>重置偏移锁定失败后的移动速率</value>
   </data>
   <data name="LblDisplayMoonChart" xml:space="preserve">
     <value>显示月球高度曲线</value>
@@ -6201,16 +6201,16 @@
     <value>持续时间：</value>
   </data>
   <data name="LblSkyGuardTimeOutGuiding" xml:space="preserve">
-    <value>Start guiding timeout delay</value>
+    <value>开始导星超时延迟</value>
   </data>
   <data name="LblSkyGuardValueMaxGuiding" xml:space="preserve">
     <value>稳定于 &lt;</value>
   </data>
   <data name="LblDitherSkyGuardSkippedBecauseNotGuiding" xml:space="preserve">
-    <value>Dither was skipped because SkyGuard was not actively guiding</value>
+    <value>抖动被跳过，因为SkyGuard没有激活导星</value>
   </data>
   <data name="LblSkyGuardNotReady" xml:space="preserve">
-    <value>SkyGuard is not ready for operations. Check logs for details.</value>
+    <value>SkyGuard没有准备好执行此操作。详细信息请查看日志。</value>
   </data>
   <data name="LblSkyGuardOperationCancelled" xml:space="preserve">
     <value>操作已取消。</value>
@@ -6231,7 +6231,7 @@
     <value>执行抖动时发生错误，查看日志以获取更多详细信息。</value>
   </data>
   <data name="LblSkyGuardEndpointNotReachable" xml:space="preserve">
-    <value>SkyGuard enpoint not reachable. View logs for more details.</value>
+    <value>SkyGuard端点无法访问，查看日志以获取更多详细信息。</value>
   </data>
   <data name="LblSkyGuardGuidingError" xml:space="preserve">
     <value>启动导星时发生错误，查看日志以获取更多详细信息。</value>
@@ -6264,29 +6264,32 @@
     <value>可见</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
-    <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
+    <value>随着 Pegasus Astro Unity Platform 的引入和可能的通讯协议修改，原生驱动程序将在未来版本中被废弃。请使用ASCOM驱动程序！</value>
   </data>
   <data name="LblAlwaysListen" xml:space="preserve">
-    <value>Always listen to file changes</value>
+    <value>始终监测文件改动</value>
   </data>
   <data name="LblDownloadDelay" xml:space="preserve">
-    <value>Seconds to wait before download</value>
+    <value>下载前等待秒数</value>
   </data>
   <data name="LblSkySurveyUnavailable" xml:space="preserve">
-    <value>{0} is unavailable. Please select an alternative image source.
+    <value>{0} 不可用。请更换另一个图像源。
 
-Reason: {1}</value>
+原因：{1}</value>
   </data>
   <data name="LblImageSourceError" xml:space="preserve">
-    <value>Image source error</value>
+    <value>图像源错误</value>
   </data>
   <data name="LblSaveImageQueueSize" xml:space="preserve">
-    <value>Image Save Queue Size</value>
+    <value>图像保存队列大小</value>
   </data>
   <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
-    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+    <value>增加该值允许应用程序将多个图像排入处理和保存队列。这将提高序列内短曝光的速度，同时增加内存占用。</value>
   </data>
   <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
-    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+    <value>所选的时间源无法提供有效的时间。请选择另一个源。</value>
+  </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>加载  插件 {0} 版本 {1} 作者 {2}</value>
   </data>
 </root>

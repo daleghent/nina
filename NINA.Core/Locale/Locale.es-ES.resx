@@ -6289,4 +6289,7 @@ Razón: {1}</value>
   <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
     <value>La fuente de tiempo seleccionada no pudo determinar una hora válida. Por favor, seleccione una diferente.</value>
   </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>Cargando plugin {0} versión {1} creado por {2}</value>
+  </data>
 </root>

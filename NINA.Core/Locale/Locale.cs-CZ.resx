@@ -6293,4 +6293,7 @@ Důvod: {1}</value>
   <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
     <value>Vybraný zdroj času nedokázal určit správný čas. Vyberte jiný zdroj.</value>
   </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>Načítání pluginu {0} verze {1} vytvořeného {2}</value>
+  </data>
 </root>

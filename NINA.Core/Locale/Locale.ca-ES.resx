@@ -6288,4 +6288,7 @@ Raó: {1}</value>
   <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
     <value>La font de temps seleccionada no ha pogut determinar una hora vàlida. Seleccioneu una font diferent, si us plau.</value>
   </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>S'està carregant el connector {0} versió {1} creat per {2}</value>
+  </data>
 </root>
