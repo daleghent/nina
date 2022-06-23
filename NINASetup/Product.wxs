@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright Â© 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -178,7 +178,8 @@
 		<InstallExecuteSequence>
 			<Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
 			<Custom Action="API_Firewall_listen_ipv6" Before="InstallFinalize">NOT Installed</Custom>
-			<Custom Action="API_Firewall_add_urlacl" Before="InstallFinalize">NOT Installed</Custom>
+			<Custom Action="API_Firewall_add_SGProAPI_urlacl" Before="InstallFinalize">NOT Installed</Custom>
+			<Custom Action="API_Firewall_add_SkyGuardCallback_urlacl" Before="InstallFinalize">NOT Installed</Custom>
 		</InstallExecuteSequence>
 	</Product>
 
