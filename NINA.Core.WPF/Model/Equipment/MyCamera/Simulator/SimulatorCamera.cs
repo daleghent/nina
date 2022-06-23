@@ -468,7 +468,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                     // Trigger a download to ensure the the properties from the previously saved image settings are intialized
                     _ = await this.DownloadExposure(token);
                 } catch (Exception e) {
-                    Logger.Error(e, "Failed to download image on connect");
+                    Logger.Error("Failed to download image on connect", e);
                 }
 
                 return true;

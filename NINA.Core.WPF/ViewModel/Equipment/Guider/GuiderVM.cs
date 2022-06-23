@@ -392,7 +392,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     return await SetShiftRate(shiftRate, CancellationToken.None);
                 } catch (Exception e) {
                     Notification.ShowError($"Set shift rate failed. {e.Message}");
-                    Logger.Error(e, "Failed to set shift rate");
+                    Logger.Error("Failed to set shift rate", e);
                     return false;
                 }
             });
@@ -404,7 +404,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     return await StopShifting(CancellationToken.None);
                 } catch (Exception e) {
                     Notification.ShowError($"Stop shifting failed. {e.Message}");
-                    Logger.Error(e, "Failed to stop shifting");
+                    Logger.Error("Failed to stop shifting", e);
                     return false;
                 }
             });

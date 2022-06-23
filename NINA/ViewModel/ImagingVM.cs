@@ -332,7 +332,7 @@ namespace NINA.ViewModel {
                 } catch (OperationCanceledException) {
                     throw;
                 } catch (Exception e) {
-                    Logger.Error(e, "Failed to prepare image");
+                    Logger.Error("Failed to prepare image", e);
                     Notification.ShowError($"Failed to prepare image for display: {e.Message}");
                     throw;
                 }

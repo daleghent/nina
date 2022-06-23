@@ -822,7 +822,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 _ = TryRefreshShiftLockParams();
                 return true;
             } catch (Exception e) {
-                Logger.Error(e, "Failed to set shift rate");
+                Logger.Error("Failed to set shift rate", e);
                 return false;
             }
         }
@@ -846,7 +846,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 _ = TryRefreshShiftLockParams();
                 return true;
             } catch (Exception e) {
-                Logger.Error(e, "Failed to disable shift");
+                Logger.Error("Failed to disable shift", e);
                 return false;
             }
         }
