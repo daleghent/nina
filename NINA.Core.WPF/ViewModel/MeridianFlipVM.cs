@@ -144,12 +144,12 @@ namespace NINA.WPF.Base.ViewModel {
                             Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringMeridianFlip"]);
                             Logger.Warning("Meridian Flip - Synchronize dome operation didn't complete successfully. Moving on");
                         }
-                    } catch (Exception e) {
+                    }
+                } catch (Exception e) {
                     Notification.ShowWarning(Loc.Instance["LblDomeSyncFailureDuringMeridianFlip"]);
                     Logger.Error("Meridian Flip - Synchronize dome operation didn't complete successfully. Moving on", e);
                 }
-            }
-        }
+            }       
 
             return flipsuccess;
         }
