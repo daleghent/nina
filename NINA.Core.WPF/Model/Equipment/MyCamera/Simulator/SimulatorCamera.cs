@@ -484,7 +484,9 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
                 var remaining = exposureTime - (DateTime.Now - exposureStart);
-                await Task.Delay(remaining, token);
+                if (remaining > TimeSpan.Zero) {
+                    await Task.Delay(remaining, token);
+                }
             }
         }
 

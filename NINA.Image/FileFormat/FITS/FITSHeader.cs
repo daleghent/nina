@@ -160,7 +160,9 @@ namespace NINA.Image.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("BAYERPAT", out card)) {
-                metaData.Camera.SensorType = metaData.StringToSensorType(card.OriginalValue);
+                // FITS Bayer Patterns seem to include single quotes and extra spaces
+                var originalValue = card.OriginalValue.Trim('\'').Trim();
+                metaData.Camera.SensorType = metaData.StringToSensorType(originalValue);
             }
 
             if (_headerCards.TryGetValue("XBAYROFF", out card)) {
@@ -437,7 +439,7 @@ namespace NINA.Image.FileFormat.FITS {
                 var key = elem.Key;
                 if (key == null) { continue; }
 
-                var value = elem.Value.OriginalValue;
+                var value = elem.Value.OriginalValue.Trim();
                 l.Add(new StringMetaDataHeader(key, value, elem.Value.Comment));
             }
             return l;
