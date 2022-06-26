@@ -82,6 +82,9 @@ namespace NINA.Image.FileFormat.FITS {
                 throw new cfitsioException(op, statusCode);
             }
         }
+        // int CFITS_API ffomem(itsfile **fptr, const char* name, int mode, void** buffptr, size_t *buffsize, size_t deltasize, void* (* mem_realloc) (void* p, size_t newsize), int* status);
+        [DllImport(DLLNAME, EntryPoint = "ffomem", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int fits_open_memory(out IntPtr fptr, string filename, IOMODE iomode, ref IntPtr buffer, ref UIntPtr size, ref UIntPtr deltaSize, IntPtr fnMemRealloc, out int status);
 
         // int CFITS_API ffopen(fitsfile **fptr, const char *filename, int iomode, int *status);
         [DllImport(DLLNAME, EntryPoint = "ffopen", CallingConvention = CallingConvention.Cdecl)]

@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
-using NINA.Image.Interfaces;
 using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using System;
 using System.Globalization;
 using System.IO;
@@ -35,60 +35,68 @@ namespace NINA.Image.FileFormat.FITS {
             this.Data = new FITSData(data);
         }
 
-        public static Task<IImageData> Load(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
+        public static unsafe Task<IImageData> Load(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
             return Task.Run<IImageData>(() => {
                 IntPtr fitsPtr = IntPtr.Zero;
                 try {
+                    var bytes = File.ReadAllBytes(filePath.LocalPath);
 
-                    CfitsioNative.fits_open_file(out fitsPtr, filePath.LocalPath, CfitsioNative.IOMODE.READONLY, out var status);
-                    CfitsioNative.CheckStatus("fits_open_file", status);
+                    fixed (byte* p = bytes) {
 
-                    var dimensions = CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS");
-                    if (dimensions > 2) {
-                        Logger.Warning("Reading debayered FITS images not supported. Reading the first 2 axes to get a monochrome image");
-                    }
+                        IntPtr buffer = (IntPtr)p;
+                        UIntPtr size = new UIntPtr((uint)bytes.Length);
+                        UIntPtr deltaSize = UIntPtr.Zero;
 
-                    var width = (int)CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS1");
-                    var height = (int)CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS2");
-                    var bitPix = (CfitsioNative.BITPIX)(int)CfitsioNative.fits_read_key_long(fitsPtr, "BITPIX");
-                    var pixels = CfitsioNative.read_ushort_pixels(fitsPtr, bitPix, 2, width * height);
+                        CfitsioNative.fits_open_memory(out fitsPtr, string.Empty, CfitsioNative.IOMODE.READONLY, ref buffer, ref size, ref deltaSize, IntPtr.Zero, out var status);                        
+                        CfitsioNative.CheckStatus("fits_open_memory", status);
 
-                    //Translate nom.tam.fits into N.I.N.A. FITSHeader
-                    FITSHeader header = new FITSHeader(width, height);
-                    CfitsioNative.fits_get_hdrspace(fitsPtr, out var numKeywords, out var numMoreKeywords, out status);
-                    CfitsioNative.CheckStatus("fits_get_hdrspace", status);
-                    for (int headerIdx = 1; headerIdx <= numKeywords; ++headerIdx) {
-                        CfitsioNative.fits_read_keyn(fitsPtr, headerIdx, out var keyName, out var keyValue, out var keyComment);
-
-                        if (string.IsNullOrEmpty(keyValue) || keyName.Equals("COMMENT") || keyName.Equals("HISTORY")) {
-                            continue;
+                        var dimensions = CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS");
+                        if (dimensions > 2) {
+                            Logger.Warning("Reading debayered FITS images not supported. Reading the first 2 axes to get a monochrome image");
                         }
 
-                        if (keyValue.Equals("T")) {
-                            header.Add(keyName, true, keyComment);
-                        } else if (keyValue.Equals("F")) {
-                            header.Add(keyName, false, keyComment);
-                        } else if (keyValue.Contains(".")) {
-                            if (double.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
-                                header.Add(keyName, value, keyComment);
+                        var width = (int)CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS1");
+                        var height = (int)CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS2");
+                        var bitPix = (CfitsioNative.BITPIX)(int)CfitsioNative.fits_read_key_long(fitsPtr, "BITPIX");
+                        var pixels = CfitsioNative.read_ushort_pixels(fitsPtr, bitPix, 2, width * height);
+
+                        //Translate nom.tam.fits into N.I.N.A. FITSHeader
+                        FITSHeader header = new FITSHeader(width, height);
+                        CfitsioNative.fits_get_hdrspace(fitsPtr, out var numKeywords, out var numMoreKeywords, out status);
+                        CfitsioNative.CheckStatus("fits_get_hdrspace", status);
+                        for (int headerIdx = 1; headerIdx <= numKeywords; ++headerIdx) {
+                            CfitsioNative.fits_read_keyn(fitsPtr, headerIdx, out var keyName, out var keyValue, out var keyComment);
+
+                            if (string.IsNullOrEmpty(keyValue) || keyName.Equals("COMMENT") || keyName.Equals("HISTORY")) {
+                                continue;
                             }
-                        } else {
-                            if (int.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
-                                header.Add(keyName, value, keyComment);
+
+                            if (keyValue.Equals("T")) {
+                                header.Add(keyName, true, keyComment);
+                            } else if (keyValue.Equals("F")) {
+                                header.Add(keyName, false, keyComment);
+                            } else if (keyValue.Contains(".")) {
+                                if (double.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                                    header.Add(keyName, value, keyComment);
+                                }
                             } else {
-                                // Treat as a string
-                                header.Add(keyName, keyValue, keyComment);
+                                if (int.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                                    header.Add(keyName, value, keyComment);
+                                } else {
+                                    // Treat as a string
+                                    header.Add(keyName, keyValue, keyComment);
+                                }
                             }
                         }
-                    }
 
-                    var metaData = new ImageMetaData();
-                    try {
-                        metaData = header.ExtractMetaData();
-                    } catch (Exception ex) {
-                        Logger.Error(ex.Message);
+                        var metaData = new ImageMetaData();
+                        try {
+                            metaData = header.ExtractMetaData();
+                        } catch (Exception ex) {
+                            Logger.Error(ex.Message);
+                        }
+                        return imageDataFactory.CreateBaseImageData(pixels, width, height, 16, isBayered, metaData);
                     }
-                    return imageDataFactory.CreateBaseImageData(pixels, width, height, 16, isBayered, metaData);
                 } finally {
                     if (fitsPtr != IntPtr.Zero) {
                         CfitsioNative.fits_close_file(fitsPtr, out var status);
