@@ -1,7 +1,9 @@
 ﻿using NINA.Core.Utility;
 using System;
 using System.IO;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 
 namespace ZWOptical.EFWSDK {
@@ -66,38 +68,47 @@ namespace ZWOptical.EFWSDK {
         [DllImport(DLLNAME, EntryPoint = "EFWGetDirection", CallingConvention = CallingConvention.Cdecl)]
         private static extern EFW_ERROR_CODE EFWGetDirection(int ID, [MarshalAs(UnmanagedType.I1)] out bool bUnidirectional);
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static int GetNum() {
             return EFWGetNum();
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE GetID(int index, out int ID) {
             return EFWGetID(index, out ID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE GetProperty(int ID, out EFW_INFO pInfo) {
             return EFWGetProperty(ID, out pInfo);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE Open(int index) {
             return EFWOpen(index);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE Close(int ID) {
             return EFWClose(ID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE GetPosition(int ID, out int pPosition) {
             return EFWGetPosition(ID, out pPosition);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE SetPosition(int ID, int Position) {
             return EFWSetPosition(ID, Position);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE GetDirection(int ID, out bool bUnidirectional) {
             return EFWGetDirection(ID, out bUnidirectional);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static EFW_ERROR_CODE SetDirection(int ID, bool bUnidirectional) {
             return EFWSetDirection(ID, bUnidirectional);
         }

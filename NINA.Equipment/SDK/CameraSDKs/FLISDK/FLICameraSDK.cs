@@ -18,7 +18,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 
 namespace FLI {
@@ -414,6 +416,7 @@ namespace FLI {
         [DllImport(DLLNAME, EntryPoint = "FLIWriteUserEEPROM", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern unsafe uint FLIWriteUserEEPROM(uint dev, uint loc, uint address, uint length, byte[] wbuf);
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static List<string> N_FLIList(uint domain) {
             List<string> cameralist = new List<string>();
             IntPtr p1;
