@@ -24,6 +24,8 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -155,6 +157,7 @@ namespace NINA {
             }
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             Logger.Error($"An unhandled exception has occurred of type {e.Exception.GetType()}");
             if (e.Exception.InnerException != null) {
