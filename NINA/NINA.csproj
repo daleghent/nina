@@ -1161,6 +1161,8 @@
     <Content Include="Database\Migration\6.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\7.sql" />
+    <Content Include="Database\Migration\8.sql" />
     <Content Include="External\x64\Cfitsio\cfitsio.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
