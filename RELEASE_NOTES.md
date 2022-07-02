@@ -9,6 +9,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Bugfixes
 - Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver
+- Corrections made to assorted entries in the NINA object database
 
 ## Improvements
 - Improved error message presentation if the selected sky survey image serivce fails to accept a request
@@ -21,6 +22,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
+- Added missing Sharpless, LBN, Collinder, and Caldwell designations to existing entries in NINA's object database
 
 # Version 2.0
 
