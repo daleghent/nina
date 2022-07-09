@@ -33,6 +33,7 @@ using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Image.Interfaces;
 using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
+using NINA.Equipment.SDK.CameraSDKs.ASTPANSDK;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -214,6 +215,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     var sbigCameras = provider.GetEquipment();
                     Logger.Info($"Found {sbigCameras?.Count} SBIG Cameras");
                     devices.AddRange(sbigCameras);
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /* ASTPAN */
+                try {
+                    var provider = new ASTPANProvider(profileService, exposureDataFactory);
+                    var astpanCameras = provider.GetEquipment();
+                    Logger.Info($"Found {astpanCameras?.Count} ASTPAN Cameras");
+                    devices.AddRange(astpanCameras );
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }

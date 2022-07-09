@@ -1167,6 +1167,9 @@
     <Content Include="Database\Migration\8.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x64\ASTPAN\ASTPANCamera.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\Cfitsio\cfitsio.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1211,6 +1214,9 @@
       <TargetPath>vcomp140.dll</TargetPath>
     </ContentWithTargetPath>
     <Content Include="External\x64\SVBony\SVBCameraSDK.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x86\ASTPAN\ASTPANCamera.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x86\Cfitsio\cfitsio.dll">

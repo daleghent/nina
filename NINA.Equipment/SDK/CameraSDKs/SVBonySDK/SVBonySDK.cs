@@ -182,8 +182,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         }
 
         public async Task<ushort[]> StartExposure(double exposureTime, int width, int height, CancellationToken ct) {
-            var transformedExposureTime = (int)(exposureTime * 1000000d);
-            SetControlValue(SVB_CONTROL_TYPE.SVB_EXPOSURE, transformedExposureTime);
+            var transformedExposureTime = (long)(exposureTime * 1000000d);
+            if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
+            SetControlValue(SVB_CONTROL_TYPE.SVB_EXPOSURE, (int)transformedExposureTime);
 
             CheckAndThrowError(sVBonyPInvoke.SVBSendSoftTrigger(id));
 

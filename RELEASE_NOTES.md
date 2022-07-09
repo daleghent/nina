@@ -23,6 +23,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
 - Added missing Sharpless, LBN, Collinder, and Caldwell designations to existing entries in NINA's object database
+- AstcamPan cameras can now be controlled via a native driver implementation
 
 # Version 2.0
 
