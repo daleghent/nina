@@ -19,6 +19,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Altitude charts across the app should now automatically update on a new date (at noon with a maximum of ~10 minutes delay)
 - Replaced old FITS library for reading FITS files with CFITSIO. Opening FITS files should now be much faster. 
 - Plugin initialization now shows a status in the application status bar
+- Framing mosaics can now also be done with overlapping pixel count instead of an overlap percentage
 
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
