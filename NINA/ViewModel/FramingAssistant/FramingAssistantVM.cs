@@ -146,6 +146,9 @@ namespace NINA.ViewModel.FramingAssistant {
                 nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
                 InitializeCache();
             });
+
+            this.OverlapUnits = new List<string> { "%", "px" };
+            this.SelectedOverlapUnit = this.overlapUnits[0];
         }
 
         private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
@@ -837,6 +840,8 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraWidth = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(MaxOverlapValue));
+                RaisePropertyChanged(nameof(OverlapValueStepSize));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -848,6 +853,8 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraHeight = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(MaxOverlapValue));
+                RaisePropertyChanged(nameof(OverlapValueStepSize));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -937,6 +944,79 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 overlapPercentage = value;
                 RaisePropertyChanged();
+                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+            }
+        }
+
+        private double overlapPixels = 500;
+
+        public double OverlapPixels {
+            get {
+                return overlapPixels;
+            }
+            set {
+                overlapPixels = value;
+                RaisePropertyChanged();
+                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+            }
+        }
+
+        public double OverlapValue {
+            get {
+                if (SelectedOverlapUnit == "%") {
+                    return OverlapPercentage;
+                } else { // px
+                    return OverlapPixels;
+                }
+            }
+            set {
+                if (SelectedOverlapUnit == "%") {
+                    OverlapPercentage = value;
+                } else { // px
+                    OverlapPixels = value;
+                }
+            }
+        }
+
+        public int OverlapValueStepSize {
+            get {
+                if (SelectedOverlapUnit == "%") {
+                    return 5;
+                } else { // px
+                    return (int)((Math.Round(MaxOverlapValue / 20.0) / 100) * 100);
+                }
+            }
+        }
+
+        public int MaxOverlapValue {
+            get {
+                if (SelectedOverlapUnit == "%") {
+                    return 100;
+                } else { // px
+                    return Math.Min(CameraWidth, CameraHeight);
+                }
+            }
+        }
+
+        private List<string> overlapUnits;
+
+        public List<string> OverlapUnits {
+            get => overlapUnits;
+            set {
+                overlapUnits = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string selectedOverlapUnit;
+
+        public string SelectedOverlapUnit {
+            get => selectedOverlapUnit;
+            set {
+                selectedOverlapUnit = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(MaxOverlapValue));
+                RaisePropertyChanged(nameof(OverlapValueStepSize));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -1209,8 +1289,16 @@ namespace NINA.ViewModel.FramingAssistant {
                     var panelWidth = CameraWidth * conversion;
                     var panelHeight = CameraHeight * conversion;
 
-                    var panelOverlapWidth = CameraWidth * OverlapPercentage * conversion;
-                    var panelOverlapHeight = CameraHeight * OverlapPercentage * conversion;
+                    double panelOverlapWidth;
+                    double panelOverlapHeight;
+                    if (SelectedOverlapUnit == "%") {
+                        panelOverlapWidth = CameraWidth * OverlapPercentage * conversion;
+                        panelOverlapHeight = CameraHeight * OverlapPercentage * conversion;
+                    }
+                    else { // px
+                        panelOverlapWidth = OverlapPixels * conversion;
+                        panelOverlapHeight = OverlapPixels * conversion;
+                    }
 
                     width = HorizontalPanels * panelWidth - (HorizontalPanels - 1) * panelOverlapWidth;
                     height = VerticalPanels * panelHeight - (VerticalPanels - 1) * panelOverlapHeight;

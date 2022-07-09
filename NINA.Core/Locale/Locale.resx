@@ -2295,8 +2295,8 @@ Calculated HFR: {2}
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientation</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>Overlap percentage</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>Panel overlap</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panel</value>

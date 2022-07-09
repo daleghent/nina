@@ -19,7 +19,7 @@ namespace NINA.Core.Locale {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Locale {
@@ -12087,15 +12087,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overlap percentage.
-        /// </summary>
-        internal static string LblOverlapPercentage {
-            get {
-                return ResourceManager.GetString("LblOverlapPercentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Overshoot.
         /// </summary>
         internal static string LblOvershoot {
@@ -12110,6 +12101,15 @@ namespace NINA.Core.Locale {
         internal static string LblPanel {
             get {
                 return ResourceManager.GetString("LblPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Panel overlap.
+        /// </summary>
+        internal static string LblPanelOverlap {
+            get {
+                return ResourceManager.GetString("LblPanelOverlap", resourceCulture);
             }
         }
         

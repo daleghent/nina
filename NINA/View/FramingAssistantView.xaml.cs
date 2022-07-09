@@ -12,9 +12,12 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility.Converters;
+using NINACustomControlLibrary;
+using System;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Navigation;
 
 namespace NINA.View {
@@ -26,6 +29,14 @@ namespace NINA.View {
 
         public FramingAssistantView() {
             InitializeComponent();
+        }
+
+        public void OverlapUnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            Binding binding = new Binding("OverlapValue") { Mode = BindingMode.TwoWay };
+            if ((string)e.AddedItems[0] == "%") {
+                binding.Converter = new PercentageConverter();
+            }
+            OverlapValueStepperControl.SetBinding(IntStepperControl.ValueProperty, binding);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {

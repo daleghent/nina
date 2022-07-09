@@ -21,6 +21,7 @@ using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Astrometry;
 using NINA.WPF.Base.SkySurvey;
+using System.Collections.Generic;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
@@ -57,6 +58,10 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         bool NegativeDec { get; set; }
         double Opacity { get; set; }
         double OverlapPercentage { get; set; }
+        double OverlapPixels { get; set; }
+        double OverlapValue { get; set; }
+        List<string> OverlapUnits { get; set; }
+        string SelectedOverlapUnit { get; set; }
         int RAHours { get; set; }
         int RAMinutes { get; set; }
         int RASeconds { get; set; }
