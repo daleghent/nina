@@ -106,6 +106,7 @@
 			<ComponentGroupRef Id="External_x64_SBIG_files" />
 			<ComponentGroupRef Id="External_x64_MallinCam_files" />
 			<ComponentGroupRef Id="External_x64_PlayerOne_files" />
+			<ComponentGroupRef Id="External_x64_ASTPAN_files" />
 			<?else?>
 			<ComponentGroupRef Id="External_x86_FTDI_files" />
 			<ComponentGroupRef Id="External_x86_AllPro_files" />
@@ -129,6 +130,7 @@
 			<ComponentGroupRef Id="External_x86_SBIG_files" />
 			<ComponentGroupRef Id="External_x86_MallinCam_files" />
 			<ComponentGroupRef Id="External_x86_PlayerOne_files" />
+			<ComponentGroupRef Id="External_x86_ASTPAN_files" />
 			<?endif?>
 			<ComponentGroupRef Id="Utility_ColorSchema_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -257,6 +259,7 @@
 							<Directory Id="External_x64_SBIG" Name="SBIG" />
 							<Directory Id="External_x64_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x64_PlayerOne" Name="PlayerOne" />
+							<Directory Id="External_x64_ASTPAN" Name="ASTPAN" />
 						</Directory>
 						<Directory Id="External_x86" Name="x86">
 							<Directory Id="External_x86_AllPro" Name="AllPro" />
@@ -281,6 +284,7 @@
 							<Directory Id="External_x86_SBIG" Name="SBIG" />
 							<Directory Id="External_x86_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x86_PlayerOne" Name="PlayerOne" />
+							<Directory Id="External_x86_ASTPAN" Name="ASTPAN" />
 						</Directory>
 					</Directory>
 					<Directory Id="Utility" Name="Utility">
@@ -1455,6 +1459,14 @@
 		</ComponentGroup>
 	</Fragment>
 
+	<Fragment>
+	  <ComponentGroup Id="External_x64_ASTPAN_files" Directory="External_x64_ASTPAN">
+	    <Component Win64="$(var.Win64)" Id="External_x64_ASTPAN_ASTPANCamera.dll" Guid="e40be9b9-5232-4a19-a39e-a01a80490bb2">
+			<File DefaultVersion="65535.0.0.0" Id="External_x64_ASTPAN_ASTPANCamera.dll" Name="ASTPANCamera.dll" Source="$(var.NINA_TargetDir)External\x64\ASTPAN\ASTPANCamera.dll" />
+	    </Component>
+	  </ComponentGroup>
+	</Fragment>
+
 	<?else?>
 
 	<!-- x86 Dependencies -->
@@ -1668,6 +1680,14 @@
 				<File Id="External_x86_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x86\PlayerOne\PlayerOneCamera.dll" />
 			</Component>
 		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+	  <ComponentGroup Id="External_x86_ASTPAN_files" Directory="External_x86_ASTPAN">
+	    <Component Win64="$(var.Win64)" Id="External_x86_ASTPAN_ASTPANCamera.dll" Guid="89b93ed1-9a76-484b-ac79-d4230a398109">
+			<File DefaultVersion="65535.0.0.0" Id="External_x86_ASTPAN_ASTPANCamera.dll" Name="ASTPANCamera.dll" Source="$(var.NINA_TargetDir)External\x86\ASTPAN\ASTPANCamera.dll" />
+	    </Component>
+	  </ComponentGroup>
 	</Fragment>
 
 	<?endif?>
