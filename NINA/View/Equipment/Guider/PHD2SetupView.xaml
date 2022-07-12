@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:utility="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -20,13 +21,16 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Grid Margin="5,5,0,0">
+        <StackPanel
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            <Grid Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition />
@@ -39,7 +43,10 @@
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center">
                     <TextBox.Text>
-                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.GuiderSettings.PHD2Path" UpdateSourceTrigger="LostFocus">
+                        <Binding
+                            Path="ActiveProfile.GuiderSettings.PHD2Path"
+                            Source="{StaticResource ProfileService}"
+                            UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <rules:FileExistsRule />
                             </Binding.ValidationRules>
@@ -62,7 +69,7 @@
                 </Button>
             </Grid>
             <UniformGrid
-                Margin="5,5,0,0"
+                Margin="0,5,0,0"
                 VerticalAlignment="Center"
                 Columns="2">
                 <TextBlock
@@ -75,7 +82,7 @@
                     Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.PHD2ServerUrl}" />
             </UniformGrid>
             <UniformGrid
-                Margin="5,5,0,0"
+                Margin="0,5,0,0"
                 VerticalAlignment="Center"
                 Columns="2">
                 <TextBlock
@@ -87,6 +94,178 @@
                     VerticalAlignment="Center"
                     Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.PHD2ServerPort}" />
             </UniformGrid>
+
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblDitherPixels}" />
+                <ninactrl:UnitTextBox
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Unit="px">
+                    <TextBox.Text>
+                        <Binding Path="DitherPixels" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <rules:GreaterZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </ninactrl:UnitTextBox>
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblDitherRAOnly}" />
+                <CheckBox
+                    Height="25"
+                    HorizontalAlignment="Left"
+                    IsChecked="{Binding DitherRAOnly}" />
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblSettlePixelTolerance}" />
+                <ninactrl:UnitTextBox
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Unit="px">
+
+                    <ninactrl:UnitTextBox.Text>
+                        <Binding Path="SettlePixels" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <rules:GreaterZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ninactrl:UnitTextBox.Text>
+                </ninactrl:UnitTextBox>
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblMinimumSettleTime}" />
+                <ninactrl:UnitTextBox
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Unit="s">
+                    <TextBox.Text>
+                        <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <rules:GreaterZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </ninactrl:UnitTextBox>
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblSettleTimeout}" />
+                <ninactrl:UnitTextBox
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Unit="s">
+                    <TextBox.Text>
+                        <Binding Path="SettleTimeout" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <rules:GreaterZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </ninactrl:UnitTextBox>
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblAutoRetryStartGuiding}"
+                    ToolTip="{ns:Loc LblAutoRetryStartGuidingTooltip}" />
+                <CheckBox
+                    Height="25"
+                    HorizontalAlignment="Left"
+                    IsChecked="{Binding AutoRetryStartGuiding}" />
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblAutoRetryStartGuidingTimeout}"
+                    TextWrapping="Wrap"
+                    ToolTip="{ns:Loc LblAutoRetryStartGuidingTimeoutTooltip}" />
+                <ninactrl:UnitTextBox
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Unit="s">
+                    <TextBox.Text>
+                        <Binding Path="AutoRetryStartGuidingTimeoutSeconds" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <rules:GreaterZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </ninactrl:UnitTextBox>
+            </UniformGrid>
+            <UniformGrid
+                Margin="0,5,0,0"
+                VerticalAlignment="Center"
+                Columns="2"
+                DataContext="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings}">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{ns:Loc LblPHD2ROIPct}"
+                    TextWrapping="Wrap"
+                    ToolTip="{ns:Loc LblPHD2ROIPctTooltip}" />
+                <ninactrl:UnitTextBox
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Unit="%">
+                    <TextBox.Text>
+                        <Binding Path="PHD2ROIPct" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <rules:GreaterThanZeroRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </ninactrl:UnitTextBox>
+            </UniformGrid>
+
             <Button
                 Grid.Row="1"
                 Grid.Column="0"

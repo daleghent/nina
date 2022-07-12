@@ -89,6 +89,10 @@
         <equip:MetaGuideSetupView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type guider:MGENGuider}">
+        <equip:MGenSetupView />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type eagle:Eagle}">
         <switchview:EagleSetupView />
     </DataTemplate>

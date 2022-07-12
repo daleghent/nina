@@ -20,6 +20,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Replaced old FITS library for reading FITS files with CFITSIO. Opening FITS files should now be much faster. 
 - Plugin initialization now shows a status in the application status bar
 - Framing mosaics can now also be done with overlapping pixel count instead of an overlap percentage
+- Guider settings could only be set when being connected. Now these settings are also available in the setup screen of each guider without requiring a connection.
 
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
