@@ -72,7 +72,7 @@ namespace NINA.PlateSolving.Solvers {
 
                 var filePrefix = FAILED_FILENAME;
                 if(!string.IsNullOrWhiteSpace(source?.MetaData?.Target?.Name)) {
-                    filePrefix += $".{source.MetaData.Target.Name}";
+                    filePrefix += $".{CoreUtil.ReplaceAllInvalidFilenameChars(source.MetaData.Target.Name)}";
                 }
                 if(parameter.Coordinates == null) {
                     filePrefix += ".blind";
