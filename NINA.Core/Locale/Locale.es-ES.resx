@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2287,8 +2287,8 @@ Calculado HFR: {2}
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientación</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>Porcentaje de superposición</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>Superposición del panel</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panel</value>
