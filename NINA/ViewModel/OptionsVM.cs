@@ -253,6 +253,21 @@ namespace NINA.ViewModel {
         private void CloneProfile(object obj) {
             if (!profileService.Clone(SelectedProfile)) {
                 Notification.ShowWarning(Loc.Instance["LblLoadProfileInUseWarning"]);
+            } else {                
+                try {
+                    var currentProfileId = profileService.ActiveProfile.Id;
+                    var dockPath = DockManagerVM.GetDockConfigPath(currentProfileId);
+
+                    var newProfile = profileService.Profiles.Last();
+
+                    if (File.Exists(dockPath)) {
+                        File.Copy(dockPath, Path.Combine(Path.GetDirectoryName(dockPath), $"{newProfile.Id}.dock.config"));
+                    }
+
+                } catch(Exception e) {
+                    Logger.Error("Failed to clone dock config", e);
+                }
+                
             }
         }
 

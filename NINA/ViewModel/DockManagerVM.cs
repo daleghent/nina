@@ -240,6 +240,10 @@ namespace NINA.ViewModel {
         private object lockObj = new object();
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
+        public static string GetDockConfigPath(Guid profileId) {
+            return Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+        }
+
         public async Task<bool> InitializeAvalonDockLayout(object o) {
             lock (lockObj) {
                 if (Initialized && _dockloaded) { return true; }
@@ -288,7 +292,7 @@ namespace NINA.ViewModel {
                         };
 
                         var profileId = profileService.ActiveProfile.Id;
-                        var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+                        var profilePath = GetDockConfigPath(profileId);
                         if (File.Exists(profilePath)) {
                             try {
                                 Logger.Info($"Initializing imaging tab layout from {profilePath}");
