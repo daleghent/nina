@@ -6291,4 +6291,7 @@ Raó: {1}</value>
   <data name="LblLoadingPlugin" xml:space="preserve">
     <value>S'està carregant el connector {0} versió {1} creat per {2}</value>
   </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>Configuració MGEN</value>
+  </data>
 </root>

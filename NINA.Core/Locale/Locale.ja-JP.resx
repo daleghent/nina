@@ -6274,4 +6274,7 @@ Reason: {1}</value>
   <data name="LblLoadingPlugin" xml:space="preserve">
     <value>プラグイン{0}バージョン{1}（作成者{2}）をロード中</value>
   </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>MGEN Setup</value>
+  </data>
 </root>

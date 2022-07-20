@@ -2285,7 +2285,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>방향</value>
   </data>
   <data name="LblPanelOverlap" xml:space="preserve">
-    <value>Panel overlap</value>
+    <value>패널 오버랩</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>패널</value>
@@ -6294,29 +6294,32 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
     <value>Pegasus Astro Unity Platform이 도입되어 통신 프로토콜이 변경될 수 있기 때문에 네이티브 드라이버는 향후 버전에서 더 이상 사용되지 않습니다. 대신 ASCOM 드라이버를 사용하십시오!</value>
   </data>
   <data name="LblAlwaysListen" xml:space="preserve">
-    <value>Always listen to file changes</value>
+    <value>파일 변경 모니터링(항상)</value>
   </data>
   <data name="LblDownloadDelay" xml:space="preserve">
-    <value>Seconds to wait before download</value>
+    <value>다운로드 대기 시간(초)</value>
   </data>
   <data name="LblSkySurveyUnavailable" xml:space="preserve">
-    <value>{0} is unavailable. Please select an alternative image source.
+    <value>{0} 을 이용할 수 없습니다. 다른 이미지 소스를 선택해주세요.
 
-Reason: {1}</value>
+이유: {1}</value>
   </data>
   <data name="LblImageSourceError" xml:space="preserve">
-    <value>Image source error</value>
+    <value>이미지 소스 오류</value>
   </data>
   <data name="LblSaveImageQueueSize" xml:space="preserve">
-    <value>Image Save Queue Size</value>
+    <value>이미지 저장 큐 크기</value>
   </data>
   <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
-    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+    <value>이 것을 늘리면 처리 및 저장을 위한 대기열에 여러 이미지를 추가합니다. 시퀀스 동안 단시간 노출의 속도를 향상시키는데 도움이 되지만, 메모리 사용량은 증가합니다.</value>
   </data>
   <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
-    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+    <value>선택한 시간의 소스가 유효한 시간을 결정할 수 없습니다. 다른 시간의 소스를 선택하세요.</value>
   </data>
   <data name="LblLoadingPlugin" xml:space="preserve">
-    <value>Loading plugin {0} version {1} created by {2}</value>
+    <value>플러그인 {0}버전{1}(작성자{2}) 로드 중</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>MGEN 설정</value>
   </data>
 </root>

@@ -6294,4 +6294,7 @@ Reason: {1}</value>
   <data name="LblLoadingPlugin" xml:space="preserve">
     <value>Loading plugin {0} version {1} created by {2}</value>
   </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>MGEN Setup</value>
+  </data>
 </root>

@@ -6292,4 +6292,7 @@
   <data name="LblLoadingPlugin" xml:space="preserve">
     <value>加载  插件 {0} 版本 {1} 作者 {2}</value>
   </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>MGEN Setup</value>
+  </data>
 </root>

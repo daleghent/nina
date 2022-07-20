@@ -2290,7 +2290,7 @@ Přeskočit.</value>
     <value>Orientace</value>
   </data>
   <data name="LblPanelOverlap" xml:space="preserve">
-    <value>Panel overlap</value>
+    <value>Překrytí panelu</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panel</value>
@@ -6295,5 +6295,8 @@ Důvod: {1}</value>
   </data>
   <data name="LblLoadingPlugin" xml:space="preserve">
     <value>Načítání pluginu {0} verze {1} vytvořeného {2}</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>Nastavení MGEN</value>
   </data>
 </root>

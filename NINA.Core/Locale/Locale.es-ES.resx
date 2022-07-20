@@ -6292,4 +6292,7 @@ Razón: {1}</value>
   <data name="LblLoadingPlugin" xml:space="preserve">
     <value>Cargando plugin {0} versión {1} creado por {2}</value>
   </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>Configuración MGEN</value>
+  </data>
 </root>
