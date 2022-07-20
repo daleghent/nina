@@ -241,7 +241,12 @@ namespace NINA.ViewModel {
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
         public static string GetDockConfigPath(Guid profileId) {
-            return Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+            if(Properties.Settings.Default.SingleDockLayout) {
+                return Path.Combine(ProfileService.PROFILEFOLDER, $"GLOBAL.dock.config");
+            } else {
+                return Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+            }
+            
         }
 
         public async Task<bool> InitializeAvalonDockLayout(object o) {
@@ -336,7 +341,7 @@ namespace NINA.ViewModel {
                                 Logger.Error("Failed to load imaging tab layout. Loading default Layout!", ex);
                                 LoadDefaultLayout(serializer);
                             }
-                        } else if (File.Exists(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
+                        } else if (!Properties.Settings.Default.SingleDockLayout && File.Exists(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
                             try {
                                 Logger.Info("Migrating imaging tab layout from old path");
                                 serializer.Deserialize(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"));
@@ -367,7 +372,7 @@ namespace NINA.ViewModel {
                     var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
 
                     var profileId = profileService.ActiveProfile.Id;
-                    var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+                    var profilePath = GetDockConfigPath(profileId);
                     serializer.Serialize(profilePath);
                 }
             }

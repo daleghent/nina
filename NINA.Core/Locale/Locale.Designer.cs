@@ -14923,6 +14923,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Single imaging tab layout.
+        /// </summary>
+        internal static string LblSingleImagingLayout {
+            get {
+                return ResourceManager.GetString("LblSingleImagingLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent.
+        /// </summary>
+        internal static string LblSingleImagingLayoutTooltip {
+            get {
+                return ResourceManager.GetString("LblSingleImagingLayoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site Elevation.
         /// </summary>
         internal static string LblSiteElevation {

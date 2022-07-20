@@ -362,6 +362,29 @@
                                     <TextBlock
                                         Width="150"
                                         VerticalAlignment="Center"
+                                        Text="{ns:Loc LblSingleImagingLayout}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblSingleImagingLayoutTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding SingleDockLayout}" />
+
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontStyle="Italic"
+                                        FontWeight="Bold"
+                                        Text="{ns:Loc LblRequiresRestart}"
+                                        Visibility="{Binding RequiresRestart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
                                         Text="{ns:Loc LblLogLevel}" />
                                     <ComboBox
                                         MinWidth="120"

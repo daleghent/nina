@@ -202,5 +202,17 @@ namespace NINA.Properties {
                 this["SaveQueueSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SingleDockLayout {
+            get {
+                return ((bool)(this["SingleDockLayout"]));
+            }
+            set {
+                this["SingleDockLayout"] = value;
+            }
+        }
     }
 }

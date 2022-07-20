@@ -6305,4 +6305,10 @@ Reason: {1}</value>
   <data name="LblMGENSetup" xml:space="preserve">
     <value>MGEN Setup</value>
   </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Single imaging tab layout</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
+  </data>
 </root>

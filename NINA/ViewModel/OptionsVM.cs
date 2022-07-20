@@ -253,21 +253,22 @@ namespace NINA.ViewModel {
         private void CloneProfile(object obj) {
             if (!profileService.Clone(SelectedProfile)) {
                 Notification.ShowWarning(Loc.Instance["LblLoadProfileInUseWarning"]);
-            } else {                
-                try {
-                    var currentProfileId = profileService.ActiveProfile.Id;
-                    var dockPath = DockManagerVM.GetDockConfigPath(currentProfileId);
+            } else {    
+                if(!Properties.Settings.Default.SingleDockLayout) {
+                    try {
+                        var currentProfileId = profileService.ActiveProfile.Id;
+                        var dockPath = DockManagerVM.GetDockConfigPath(currentProfileId);
 
-                    var newProfile = profileService.Profiles.Last();
+                        var newProfile = profileService.Profiles.Last();
 
-                    if (File.Exists(dockPath)) {
-                        File.Copy(dockPath, Path.Combine(Path.GetDirectoryName(dockPath), $"{newProfile.Id}.dock.config"));
+                        if (File.Exists(dockPath)) {
+                            File.Copy(dockPath, Path.Combine(Path.GetDirectoryName(dockPath), $"{newProfile.Id}.dock.config"));
+                        }
+
+                    } catch (Exception e) {
+                        Logger.Error("Failed to clone dock config", e);
                     }
-
-                } catch(Exception e) {
-                    Logger.Error("Failed to clone dock config", e);
                 }
-                
             }
         }
 
@@ -609,6 +610,18 @@ namespace NINA.ViewModel {
                 FontWeight = familyTypeface.Weight;
 
                 RaisePropertyChanged();
+            }
+        }
+
+        public bool SingleDockLayout {
+            get {
+                return NINA.Properties.Settings.Default.SingleDockLayout;
+            }
+            set {
+                NINA.Properties.Settings.Default.SingleDockLayout = value;
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+                RaisePropertyChanged();
+                RequiresRestart = true;
             }
         }
 
