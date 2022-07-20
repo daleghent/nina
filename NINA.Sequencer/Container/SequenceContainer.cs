@@ -48,7 +48,7 @@ namespace NINA.Sequencer.Container {
         }
 
         private bool isExpanded = true;
-        private object lockObj = new object();
+        private static object lockObj = new object();
 
         [JsonProperty]
         public IExecutionStrategy Strategy { get; }
