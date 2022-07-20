@@ -12786,6 +12786,42 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Platesolve3.
+        /// </summary>
+        internal static string LblPlatesolve3 {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platesolve3 Location.
+        /// </summary>
+        internal static string LblPlatesolve3Directory {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No coordinates available. Platesolve3 requires coordinates to solve!.
+        /// </summary>
+        internal static string LblPlatesolve3NoCoordinates {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3NoCoordinates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platesolve3 exe not found.
+        /// </summary>
+        internal static string LblPlatesolve3NotFound {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plate Solved Polar Alignment.
         /// </summary>
         internal static string LblPlateSolvedPolarAlignment {

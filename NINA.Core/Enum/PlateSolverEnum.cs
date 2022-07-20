@@ -29,6 +29,9 @@ namespace NINA.Core.Enum {
         [Description("LblPlatesolve2")]
         PLATESOLVE2,
 
+        [Description("LblPlatesolve3")]
+        PLATESOLVE3,
+
         [Description("LblASPS")]
         ASPS,
 

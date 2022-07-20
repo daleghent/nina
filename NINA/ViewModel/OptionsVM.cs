@@ -82,6 +82,7 @@ namespace NINA.ViewModel {
             OpenSequenceTemplateFolderDiagCommand = new RelayCommand(OpenSequenceTemplateFolderDiag);
             OpenCygwinFileDiagCommand = new RelayCommand(OpenCygwinFileDiag);
             OpenPS2FileDiagCommand = new RelayCommand(OpenPS2FileDiag);
+            OpenPS3FileDiagCommand = new RelayCommand(OpenPS3FileDiag);
             OpenASPSFileDiagCommand = new RelayCommand(OpenASPSFileDiag);
             OpenASTAPFileDiagCommand = new RelayCommand(OpenASTAPFileDiag);
             OpenHorizonFilePathDiagCommand = new RelayCommand(OpenHorizonFilePathDiag);
@@ -437,6 +438,13 @@ namespace NINA.ViewModel {
             }
         }
 
+        private void OpenPS3FileDiag(object o) {
+            var dialog = GetFilteredFileDialog(profileService.ActiveProfile.PlateSolveSettings.PS3Location, "PlateSolve3.exe", "PlateSolve3|PlateSolve3*.exe");
+            if (dialog.ShowDialog() == true) {
+                ActiveProfile.PlateSolveSettings.PS3Location = dialog.FileName;
+            }
+        }
+
         private void OpenASPSFileDiag(object o) {
             var dialog = GetFilteredFileDialog(profileService.ActiveProfile.PlateSolveSettings.AspsLocation, "PlateSolver.exe", "ASPS|PlateSolver.exe");
             if (dialog.ShowDialog() == true) {
@@ -496,6 +504,8 @@ namespace NINA.ViewModel {
         public ICommand OpenCygwinFileDiagCommand { get; private set; }
 
         public ICommand OpenPS2FileDiagCommand { get; private set; }
+
+        public ICommand OpenPS3FileDiagCommand { get; private set; }
 
         public ICommand OpenASPSFileDiagCommand { get; private set; }
 

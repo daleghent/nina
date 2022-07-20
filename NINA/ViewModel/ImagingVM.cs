@@ -181,6 +181,8 @@ namespace NINA.ViewModel {
             metaData.FromWeatherDataInfo(weatherDataInfo);
 
             metaData.FilterWheel.Filter = sequence.FilterType?.Name ?? metaData.FilterWheel.Filter;
+            if (metaData.Target.Coordinates == null || double.IsNaN(metaData.Target.Coordinates.RA))
+                metaData.Target.Coordinates = metaData.Telescope.Coordinates;
         }
 
         private Task<IExposureData> CaptureImage(

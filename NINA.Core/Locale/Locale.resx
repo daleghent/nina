@@ -6311,4 +6311,16 @@ Reason: {1}</value>
   <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
     <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
   </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Platesolve3 Location</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Platesolve3 exe not found</value>
+  </data>
 </root>

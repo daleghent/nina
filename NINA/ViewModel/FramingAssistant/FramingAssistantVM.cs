@@ -1191,11 +1191,17 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private async Task<FileSkySurveyImage> PlateSolveSkySurvey(FileSkySurveyImage skySurveyImage) {
             var referenceCoordinates = skySurveyImage.Coordinates != null ? skySurveyImage.Coordinates : DSO.Coordinates;
+            if (referenceCoordinates != null) {
+                skySurveyImage.Data.MetaData.Target.Coordinates = referenceCoordinates;
+            } else {
+                skySurveyImage.Data.MetaData.Target.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+            }
 
             var diagResult = MyMessageBox.Show(string.Format(Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
 
             if (diagResult == MessageBoxResult.No) {
                 referenceCoordinates = null;
+                skySurveyImage.Data.MetaData.Target.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
             }
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);

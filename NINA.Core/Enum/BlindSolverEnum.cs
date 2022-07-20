@@ -30,6 +30,9 @@ namespace NINA.Core.Enum {
         ASPS,
 
         [Description("LblASTAPShort")]
-        ASTAP
+        ASTAP,
+
+        [Description("LblPlatesolve3")]
+        PLATESOLVE3
     }
 }

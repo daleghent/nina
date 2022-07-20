@@ -41,6 +41,7 @@ namespace NINA.Profile {
             cygwinLocation = string.Empty;
             searchRadius = 30;
             pS2Location = string.Empty;
+            pS3Location = string.Empty;
             regions = 5000;
             exposureTime = 2.0d;
             threshold = 1.0d;
@@ -172,6 +173,21 @@ namespace NINA.Profile {
             set {
                 if (pS2Location != value) {
                     pS2Location = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string pS3Location;
+
+        [DataMember]
+        public string PS3Location {
+            get {
+                return Environment.ExpandEnvironmentVariables(pS3Location);
+            }
+            set {
+                if (pS3Location != value) {
+                    pS3Location = value;
                     RaisePropertyChanged();
                 }
             }
