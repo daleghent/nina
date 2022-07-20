@@ -10,6 +10,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Bugfixes
 - Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver
 - Corrections made to assorted entries in the NINA object database
+- Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues
 
 ## Improvements
 - Improved error message presentation if the selected sky survey image serivce fails to accept a request

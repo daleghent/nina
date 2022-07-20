@@ -724,7 +724,14 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int RAMinutes {
             get {
-                return (int)(Math.Floor(DSO.Coordinates.RA * 60.0d) % 60);
+                var minutes = (Math.Abs(DSO.Coordinates.RA * 60.0d) % 60);
+
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    minutes += 1;
+                }
+
+                return (int)Math.Floor(minutes);
             }
             set {
                 if (value >= 0) {
@@ -736,7 +743,11 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int RASeconds {
             get {
-                return (int)(Math.Floor(DSO.Coordinates.RA * 60.0d * 60.0d) % 60);
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    seconds = 0;
+                }
+                return seconds;
             }
             set {
                 if (value >= 0) {
@@ -772,10 +783,17 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int DecMinutes {
             get {
-                return (int)Math.Floor((Math.Abs(DSO.Coordinates.Dec * 60.0d) % 60));
+                var minutes = (Math.Abs(DSO.Coordinates.Dec * 60.0d) % 60);
+
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    minutes += 1;
+                }
+
+                return (int)Math.Floor(minutes);
             }
             set {
-                if (DSO.Coordinates.Dec < 0) {
+                if (NegativeDec) {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec + DecMinutes / 60.0d - value / 60.0d;
                 } else {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec - DecMinutes / 60.0d + value / 60.0d;
@@ -787,10 +805,14 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int DecSeconds {
             get {
-                return (int)Math.Floor((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    seconds = 0;
+                }
+                return seconds;
             }
             set {
-                if (DSO.Coordinates.Dec < 0) {
+                if (NegativeDec) {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec + DecSeconds / (60.0d * 60.0d) - value / (60.0d * 60.0d);
                 } else {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec - DecSeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);

@@ -32,6 +32,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <ul>
 <li>Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver</li>
 <li>Corrections made to assorted entries in the NINA object database</li>
+<li>Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues</li>
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
