@@ -934,6 +934,9 @@
 			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcr100.dll" Guid="02CB55BE-6D62-47AA-8D05-F6A626D1D8C3">
 				<File Id="External_x64_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr100.dll" />
 			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcr120.dll" Guid="ABD36695-F2E3-417D-A862-32B04E905E98">
+				<File Id="External_x64_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr120.dll" />
+			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcruntime140.dll" Guid="27F9ADDA-59DB-4ABE-AB7B-4DC74DBF128B">
 				<File Id="External_x64_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140.dll" />
 			</Component>
@@ -1480,6 +1483,9 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_msvcr100.dll" Guid="0E286812-0EC4-4DE4-B8E0-3A940E0FC94D">
 				<File Id="External_x86_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\msvcr100.dll" />
+			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_msvcr120.dll" Guid="25828C87-CAF0-4BC7-BAAF-54623C52445F">
+				<File Id="External_x86_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\msvcr120.dll" />
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_vcruntime140.dll" Guid="583EAF30-DAE3-47E3-AB18-35B2DB9E22D2">
 				<File Id="External_x86_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\vcruntime140.dll" />

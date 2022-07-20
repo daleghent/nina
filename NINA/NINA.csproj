@@ -1200,6 +1200,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp100.dll</TargetPath>
     </ContentWithTargetPath>
+	<ContentWithTargetPath Include="External\x64\VCRedis\msvcr120.dll" Condition="'$(Platform)' == 'x64'">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <TargetPath>msvcr120.dll</TargetPath>
+	  </ContentWithTargetPath>
     <ContentWithTargetPath Include="External\x64\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x64'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp140.dll</TargetPath>
@@ -1248,6 +1252,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp100.dll</TargetPath>
     </ContentWithTargetPath>
+	<ContentWithTargetPath Include="External\x86\VCRedis\msvcr120.dll" Condition="'$(Platform)' == 'x86'">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<TargetPath>msvcr120.dll</TargetPath>
+	</ContentWithTargetPath>
     <ContentWithTargetPath Include="External\x86\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x86'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp140.dll</TargetPath>
