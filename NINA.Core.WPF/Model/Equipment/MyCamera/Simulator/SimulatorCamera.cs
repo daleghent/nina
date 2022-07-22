@@ -401,16 +401,17 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public bool HasDewHeater {
             get {
-                return false;
+                return true;
             }
         }
 
+        private bool dewHeaterOn;
         public bool DewHeaterOn {
-            get {
-                return false;
-            }
+            get => dewHeaterOn;
 
             set {
+                dewHeaterOn = value;
+                RaisePropertyChanged();
             }
         }
 

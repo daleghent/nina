@@ -11,6 +11,7 @@
 #endregion "copyright"
 using Newtonsoft.Json;
 using NINA.Core.Model;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
@@ -28,9 +29,14 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
     public class SimpleEndContainer : ParallelContainer {
         private WarmCamera warmInstruction;
         private ParkScope parkInstruction;
+        private DewHeater dewHeaterInstruction;
         private IProfileService profileService;
+        private ICameraMediator cameraMediator;
 
-        public SimpleEndContainer(ISequencerFactory factory, IProfileService profileService) {
+        public SimpleEndContainer(ISequencerFactory factory, IProfileService profileService, ICameraMediator cameraMediator) {
+            this.cameraMediator = cameraMediator;
+            this.dewHeaterInstruction = factory.GetItem<DewHeater>();
+            this.dewHeaterInstruction.OnOff = false;
             this.warmInstruction = factory.GetItem<WarmCamera>();
             warmInstruction.Duration = profileService.ActiveProfile.CameraSettings.WarmingDuration;
             this.parkInstruction = factory.GetItem<ParkScope>();
@@ -39,9 +45,13 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
             ParkMountAtSequenceEnd = profileService.ActiveProfile.SequenceSettings.ParkMountAtSequenceEnd;
         }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            if(WarmCamAtSequenceEnd && cameraMediator.GetInfo().HasDewHeater) {
+                this.dewHeaterInstruction.ResetProgress();
+                await this.dewHeaterInstruction.Run(progress, token);
+            }
             warmInstruction.Duration = profileService.ActiveProfile.CameraSettings.WarmingDuration;
-            return base.Execute(progress, token);
+            await base.Execute(progress, token);
         }
 
         [JsonProperty]

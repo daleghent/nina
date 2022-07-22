@@ -11,6 +11,7 @@
 #endregion "copyright"
 using Newtonsoft.Json;
 using NINA.Core.Model;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
@@ -28,9 +29,14 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
     public class SimpleStartContainer : SequentialContainer {
         private CoolCamera coolInstruction;
         private UnparkScope unparkInstruction;
+        private DewHeater dewHeaterInstruction;
         private IProfileService profileService;
+        private ICameraMediator cameraMediator;
 
-        public SimpleStartContainer(ISequencerFactory factory, IProfileService profileService) {
+        public SimpleStartContainer(ISequencerFactory factory, IProfileService profileService, ICameraMediator cameraMediator) {
+            this.cameraMediator = cameraMediator;
+            this.dewHeaterInstruction = factory.GetItem<DewHeater>();
+            this.dewHeaterInstruction.OnOff = true;
             this.coolInstruction = factory.GetItem<CoolCamera>();
             coolInstruction.Temperature = profileService.ActiveProfile.CameraSettings.Temperature ?? 0;
             coolInstruction.Duration = profileService.ActiveProfile.CameraSettings.CoolingDuration;
@@ -40,10 +46,14 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
             UnparkMountAtSequenceStart = profileService.ActiveProfile.SequenceSettings.UnparMountAtSequenceStart;
         }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            if (CoolCameraAtSequenceStart && cameraMediator.GetInfo().HasDewHeater) {
+                this.dewHeaterInstruction.ResetProgress();
+                await this.dewHeaterInstruction.Run(progress, token);
+            }
             coolInstruction.Temperature = profileService.ActiveProfile.CameraSettings.Temperature ?? 0;
             coolInstruction.Duration = profileService.ActiveProfile.CameraSettings.CoolingDuration;
-            return base.Execute(progress, token);
+            await base.Execute(progress, token);
         }
 
         [JsonProperty]

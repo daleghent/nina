@@ -120,7 +120,15 @@ namespace NINA.ViewModel {
                     target.Target.DeepSkyObject = dso;
                 }
             };
+
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
+
             nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
+        }
+
+        private void ProfileService_ProfileChanged(object sender, EventArgs e) {
+            DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
+            EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
         }
 
         private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
@@ -161,9 +169,9 @@ namespace NINA.ViewModel {
                     var targetArea = factory.GetContainer<TargetAreaContainer>();
                     var rootContainer = factory.GetContainer<SequenceRootContainer>();
                     rootContainer.Name = Loc.Instance["LblTargetSetTitle"];
-                    rootContainer.Add(new SimpleStartContainer(factory, profileService));
+                    rootContainer.Add(new SimpleStartContainer(factory, profileService, cameraMediator));
                     rootContainer.Add(targetArea);
-                    rootContainer.Add(new SimpleEndContainer(factory, profileService));
+                    rootContainer.Add(new SimpleEndContainer(factory, profileService, cameraMediator));
                     (targetArea.Items as ObservableCollection<ISequenceItem>).CollectionChanged += SimpleSequenceVM_CollectionChanged;
                     rootContainer.ClearHasChanged();
                     Sequencer = new NINA.Sequencer.Sequencer(
