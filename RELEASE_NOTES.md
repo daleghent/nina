@@ -32,6 +32,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - AstcamPan cameras can now be controlled via a native driver implementation
 - The last plate solve failure in each session, target and solver type will now be kept for further error analysis and automatically cleaned up after seven days
 - Added a toggle in Options > General > Advanced to only have one imaging tab layout for all profiles instead of it being profile dependent
+- In Options > Imaging > Layout two new buttons have been added to backup and restore the imaging tab layout
 
 # Version 2.0
 

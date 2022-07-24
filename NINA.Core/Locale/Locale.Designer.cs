@@ -19,7 +19,7 @@ namespace NINA.Core.Locale {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Locale {
@@ -3816,6 +3816,42 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup Layout.
+        /// </summary>
+        internal static string LblBackupDockLayout {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup layout failed.
+        /// </summary>
+        internal static string LblBackupDockLayoutFailed {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayoutFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imaging tab layout backed up.
+        /// </summary>
+        internal static string LblBackupDockLayoutSuccessful {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayoutSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup the imaging tab layout to a file, so it can be restored at a later point.
+        /// </summary>
+        internal static string LblBackupDockLayoutTooltip {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bayer Pattern.
         /// </summary>
         internal static string LblBayerPattern {
@@ -6833,6 +6869,24 @@ namespace NINA.Core.Locale {
         internal static string LblDitherSkyGuardSkippedBecauseNotGuiding {
             get {
                 return ResourceManager.GetString("LblDitherSkyGuardSkippedBecauseNotGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imaging tab layout reset.
+        /// </summary>
+        internal static string LblDockLayoutReset {
+            get {
+                return ResourceManager.GetString("LblDockLayoutReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imaging tab layout restored.
+        /// </summary>
+        internal static string LblDockLayoutRestored {
+            get {
+                return ResourceManager.GetString("LblDockLayoutRestored", resourceCulture);
             }
         }
         
@@ -13784,6 +13838,33 @@ namespace NINA.Core.Locale {
         internal static string LblRestartGuidingAfterLostShiftLockFailed {
             get {
                 return ResourceManager.GetString("LblRestartGuidingAfterLostShiftLockFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore Layout.
+        /// </summary>
+        internal static string LblRestoreDockLayoutFromFile {
+            get {
+                return ResourceManager.GetString("LblRestoreDockLayoutFromFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore layout failed.
+        /// </summary>
+        internal static string LblRestoreDockLayoutFromFileFailed {
+            get {
+                return ResourceManager.GetString("LblRestoreDockLayoutFromFileFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore imaging tab layout from a backup.
+        /// </summary>
+        internal static string LblRestoreDockLayoutFromFileTooltip {
+            get {
+                return ResourceManager.GetString("LblRestoreDockLayoutFromFileTooltip", resourceCulture);
             }
         }
         
