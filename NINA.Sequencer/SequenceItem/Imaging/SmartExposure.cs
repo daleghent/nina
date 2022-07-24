@@ -32,6 +32,8 @@ using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Sequencer.Utility;
+using System.Windows;
+using System.ComponentModel;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 
@@ -83,10 +85,21 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             this.Add(loopCondition);
             this.Add(ditherAfterExposures);
 
+            WeakEventManager<SwitchFilter, PropertyChangedEventArgs>.AddHandler(switchFilter, nameof(switchFilter.PropertyChanged), SwitchFilter_PropertyChanged);
+
             IsExpanded = false;
 
             if (cloneMe != null) {
                 CopyMetaData(cloneMe);
+            }
+        }
+        private void SwitchFilter_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if(e.PropertyName == nameof(SwitchFilter.Filter)) {
+                if(this.Status == Core.Enum.SequenceEntityStatus.CREATED || this.Status == Core.Enum.SequenceEntityStatus.RUNNING) { 
+                    try {
+                        GetSwitchFilter().ResetProgress();
+                    } catch(Exception) { }                    
+                }
             }
         }
 

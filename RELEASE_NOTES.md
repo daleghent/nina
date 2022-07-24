@@ -12,6 +12,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Corrections made to assorted entries in the NINA object database
 - Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues
 - Touch input is now working properly when dragging the rectangle in framing assistant
+- When the filter is changed while the Smart Exposure or Simple Sequencer Exposure is already running, the first exposure afterwards no longer uses the previous filter but switches to the expected new filter
 
 ## Improvements
 - Improved error message presentation if the selected sky survey image serivce fails to accept a request
