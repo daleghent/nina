@@ -91,7 +91,7 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
 
                 token.ThrowIfCancellationRequested();
                 if (report == null) {
-                    throw new SequenceEntityFailedException();
+                    throw new SequenceEntityFailedException("Autofocus failed to run");
                 } else {
                     history.AppendAutoFocusPoint(report);
                 }

@@ -42,7 +42,7 @@ namespace NINA.Sequencer.Container {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            throw new SequenceItemSkippedException();
+            throw new SequenceItemSkippedException($"Unknown instruction set will be skipped - ${Name}");
         }
 
         public override object Clone() {

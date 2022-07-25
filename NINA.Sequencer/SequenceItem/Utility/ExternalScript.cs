@@ -89,7 +89,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             ExternalCommandExecutor externalCommandExecutor = new ExternalCommandExecutor(progress);
             var success = await externalCommandExecutor.RunSequenceCompleteCommandTask(sequenceCompleteCommand, token);
             if (!success) {
-                throw new SequenceEntityFailedException();
+                throw new SequenceEntityFailedException("External script was unable to run successfully");
             }
         }
 

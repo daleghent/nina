@@ -28,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Trigger {
 
@@ -107,6 +108,8 @@ namespace NINA.Sequencer.Trigger {
             if (this.Status == SequenceEntityStatus.DISABLED) { return; }
 
             Status = SequenceEntityStatus.RUNNING;
+
+            var root = ItemUtility.GetRootContainer(this.Parent);
             try {
                 Logger.Info($"Starting {this}");
                 this.TriggerRunner.ResetAll();
@@ -121,21 +124,24 @@ namespace NINA.Sequencer.Trigger {
                 await this.Execute(context, progress, token);
                 foreach (var instruction in TriggerRunner.GetItemsSnapshot()) {
                     if (instruction.Status == SequenceEntityStatus.FAILED) {
-                        throw new SequenceItemSkippedException($"{instruction} failed to exectue");
+                        throw new SequenceEntityFailedException($"{instruction} failed to exectue");
                     }
                 }
                 Status = SequenceEntityStatus.FINISHED;
             } catch (SequenceEntityFailedException ex) {
                 Logger.Error($"Failed: {this} - " + ex.Message);
                 Status = SequenceEntityStatus.FAILED;
+                root?.RaiseFailureEvent(this, ex);
             } catch (SequenceEntityFailedValidationException ex) {
                 Status = SequenceEntityStatus.FAILED;
                 Logger.Error($"Failed validation: {this} - " + ex.Message);
+                root?.RaiseFailureEvent(this, ex);
             } catch (OperationCanceledException) {
                 Status = SequenceEntityStatus.CREATED;
             } catch (Exception ex) {
                 Status = SequenceEntityStatus.FAILED;
                 Logger.Error(ex);
+                root?.RaiseFailureEvent(this, ex);
                 //Todo Error policy - e.g. Continue; Throw and cancel; Retry;
             }
         }

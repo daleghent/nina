@@ -34,6 +34,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The last plate solve failure in each session, target and solver type will now be kept for further error analysis and automatically cleaned up after seven days
 - Added a toggle in Options > General > Advanced to only have one imaging tab layout for all profiles instead of it being profile dependent
 - In Options > Imaging > Layout two new buttons have been added to backup and restore the imaging tab layout
+- Added interfaces for plugins to register to FailureEvents inside the SequenceRootContainer to react on all failures that are raised during a sequence
 
 # Version 2.0
 

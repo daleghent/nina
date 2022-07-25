@@ -29,6 +29,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Core.MyMessageBox;
 using NINA.Core.Locale;
+using NINA.Sequencer.Utility;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.Sequencer.Container {
 
@@ -98,6 +100,15 @@ namespace NINA.Sequencer.Container {
                 foreach (var item in runningItems) {
                     item.Skip();
                 }
+            }
+        }
+        public event Func<object, SequenceEntityFailureEventArgs, Task> FailureEvent;
+
+        public async Task RaiseFailureEvent(ISequenceEntity sender, Exception ex) {
+            try {                
+                await FailureEvent?.InvokeAsync(sender, new SequenceEntityFailureEventArgs(sender, ex));
+            } catch(Exception eventException) {
+                Logger.Error(eventException);
             }
         }
 

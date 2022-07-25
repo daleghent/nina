@@ -51,7 +51,7 @@ namespace NINA.Sequencer.Trigger {
         }
 
         public override Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
-            throw new SequenceItemSkippedException();
+            throw new SequenceItemSkippedException($"Unknown trigger will be skipped - ${Name}");
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {

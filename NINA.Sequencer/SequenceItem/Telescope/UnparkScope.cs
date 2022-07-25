@@ -64,7 +64,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             bool success = await telescopeMediator.UnparkTelescope(progress, token);
 
             if (!success) {
-                throw new SequenceEntityFailedException();
+                throw new SequenceEntityFailedException("Failed to unpark telescope");
             }
         }
 
