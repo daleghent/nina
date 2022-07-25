@@ -416,36 +416,39 @@ namespace FLI {
         [DllImport(DLLNAME, EntryPoint = "FLIWriteUserEEPROM", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern unsafe uint FLIWriteUserEEPROM(uint dev, uint loc, uint address, uint length, byte[] wbuf);
 
+        private static object lockObj = new object();
         [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public static List<string> N_FLIList(uint domain) {
-            List<string> cameralist = new List<string>();
-            IntPtr p1;
-            string s;
-            Int64 n;
+            lock(lockObj) { 
+                List<string> cameralist = new List<string>();
+                IntPtr p1;
+                string s;
+                Int64 n;
 
-            CheckReturn(FLIList(domain, out IntPtr names), MethodBase.GetCurrentMethod(), domain, new object[] { names });
+                CheckReturn(FLIList(domain, out IntPtr names), MethodBase.GetCurrentMethod(), domain, new object[] { names });
 
-            unsafe {
-                if (names != IntPtr.Zero) {
-                    for (int i = 0; i < 64; i++) {
-                        p1 = *((IntPtr*)names.ToPointer());
-                        s = Marshal.PtrToStringAnsi(p1);
+                unsafe {
+                    if (names != IntPtr.Zero) {
+                        for (int i = 0; i < 64; i++) {
+                            p1 = *((IntPtr*)names.ToPointer());
+                            s = Marshal.PtrToStringAnsi(p1);
 
-                        if (string.IsNullOrEmpty(s)) {
-                            break;
+                            if (string.IsNullOrEmpty(s)) {
+                                break;
+                            }
+
+                            cameralist.Add(s);
+
+                            n = names.ToInt64() + Marshal.SizeOf(typeof(IntPtr));
+                            names = (IntPtr)n;
                         }
-
-                        cameralist.Add(s);
-
-                        n = names.ToInt64() + Marshal.SizeOf(typeof(IntPtr));
-                        names = (IntPtr)n;
                     }
                 }
+
+                FLIFreeList(names);
+
+                return cameralist;
             }
-
-            FLIFreeList(names);
-
-            return cameralist;
         }
 
         #endregion "FLI SDK prototypes"
