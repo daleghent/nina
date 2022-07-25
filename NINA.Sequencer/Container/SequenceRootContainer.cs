@@ -106,7 +106,7 @@ namespace NINA.Sequencer.Container {
 
         public async Task RaiseFailureEvent(ISequenceEntity sender, Exception ex) {
             try {                
-                await FailureEvent?.InvokeAsync(sender, new SequenceEntityFailureEventArgs(sender, ex));
+                await (FailureEvent?.InvokeAsync(sender, new SequenceEntityFailureEventArgs(sender, ex)) ?? Task.CompletedTask);
             } catch(Exception eventException) {
                 Logger.Error(eventException);
             }
