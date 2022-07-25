@@ -6285,7 +6285,7 @@ Důvod: {1}</value>
     <value>Chyba zdroje obrázku</value>
   </data>
   <data name="LblSaveImageQueueSize" xml:space="preserve">
-    <value>Velikost Fronty pro Uložení Obrázku</value>
+    <value>Fronta Uložení Obrázku</value>
   </data>
   <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
     <value>Zvýšení této hodnoty umožňuje aplikaci zařadit do fronty ke zpracování a uložení více než jeden obrázek. To je praktické pro zvýšení rychlosti krátkých expozic během sekvence za cenu zvýšené spotřeby paměti.</value>
@@ -6298,5 +6298,50 @@ Důvod: {1}</value>
   </data>
   <data name="LblMGENSetup" xml:space="preserve">
     <value>Nastavení MGEN</value>
+  </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Rozvržení jedné zobrazovací karty</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>Pokud je tato možnost povolena, bude mít karta zobrazování pouze jedno rozvržení pro všechny profily, místo aby byla závislá na profilu</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Umístění Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>Souřadnice nejsou k dispozici. Platesolve3 vyžaduje k řešení souřadnice!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Platesolve3 exe nalezen</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Rozvržení Zálohy</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>Rozvržení zálohy selhalo</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>Záloha rozvržení zobrazování</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Záloha rozvržení zobrazování do souboru, aby bylo možné jej později obnovit</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Resetovat rozvržení zobrazování</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>Obnovení rozvržení zobrazování</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Resetovat Rozvržení</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>Obnova rozvržení selhala</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Obnovení rozvržení ze zálohy</value>
   </data>
 </root>

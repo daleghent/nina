@@ -6295,4 +6295,49 @@ Razón: {1}</value>
   <data name="LblMGENSetup" xml:space="preserve">
     <value>Configuración MGEN</value>
   </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Single imaging tab layout</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>Cuando se activa, la pestaña de fotografía tendrá un diseño único para todos los perfiles en lugar de depender del perfil.</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Localización del Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No hay coordenadas disponibles. ¡El Platesolve3 las necesita para poder realizarse!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Archivo ejecutable del Platesolve3 no encontraado</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Guardar diseño</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>Falló la carga de la copia del diseño</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>Diseño de la pestaña de fotografíado guardada</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Guardar la copia de la pestaña de fotografíado como archivo para poder ser restaurada posteriomente</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Restablecer diseño de pestaña de fotografiado</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>Diseño de pestaña de fotografiado restaurado</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Restore Layout</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>Error al restaurar diseño</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Restaurar el diseño de la pestaña de fotografía desde una copia de seguridad</value>
+  </data>
 </root>

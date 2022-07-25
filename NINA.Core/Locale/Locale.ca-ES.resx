@@ -6294,4 +6294,49 @@ Raó: {1}</value>
   <data name="LblMGENSetup" xml:space="preserve">
     <value>Configuració MGEN</value>
   </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Disseny de pestanya d'imatge única</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>Quan està activada, la pestanya d'imatge només tindrà un disseny per a tots els perfils en lloc de dependre de cada perfil</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Localització Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No hi ha coordenades disponibles. Platesolve3 requereix coordenades per poder resoldre!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>No s'ha trobat Platesolve3</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Disseny de còpia de seguretat</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>La disposició de còpia de seguretat ha fallat</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>S'ha creat una còpia de seguretat del disseny de la pestanya d'imatge</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Fer una còpia de seguretat del disseny de la pestanya d'imatge en un fitxer, de manera que es pugui restaurar més endavant</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Restableix el disseny de la pestanya d'imatge</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>S'ha restaurat el disseny de la pestanya d'imatge</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Restaura la disposició</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>No s'ha pogut restaurar el disseny</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Restaura la disposició de la pestanya d'imatge des d'una còpia de seguretat</value>
+  </data>
 </root>

@@ -6306,4 +6306,49 @@ Reason: {1}</value>
   <data name="LblMGENSetup" xml:space="preserve">
     <value>MGEN Setup</value>
   </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Single imaging tab layout</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Platesolve3 Location</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Platesolve3 exe not found</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Backup Layout</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>Backup layout failed</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>Imaging tab layout backed up</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Backup the imaging tab layout to a file, so it can be restored at a later point</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Imaging tab layout reset</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>Imaging tab layout restored</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Restore Layout</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>Restore layout failed</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Restore imaging tab layout from a backup</value>
+  </data>
 </root>
