@@ -6278,48 +6278,48 @@ Reason: {1}</value>
     <value>MGEN Setup</value>
   </data>
   <data name="LblSingleImagingLayout" xml:space="preserve">
-    <value>Single imaging tab layout</value>
+    <value>単一の画像タブレイアウト</value>
   </data>
   <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
-    <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
+    <value>有効にすると、画像タブのレイアウトは、すべてのプロファイルに対して一つだけになり、プロファイルに依存しなくなります</value>
   </data>
   <data name="LblPlatesolve3" xml:space="preserve">
     <value>Platesolve3</value>
   </data>
   <data name="LblPlatesolve3Directory" xml:space="preserve">
-    <value>Platesolve3 Location</value>
+    <value>Platesolve3の場所</value>
   </data>
   <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
     <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
   </data>
   <data name="LblPlatesolve3NotFound" xml:space="preserve">
-    <value>Platesolve3 exe not found</value>
+    <value>Platesolve3 exeが見つかりません</value>
   </data>
   <data name="LblBackupDockLayout" xml:space="preserve">
     <value>Backup Layout</value>
   </data>
   <data name="LblBackupDockLayoutFailed" xml:space="preserve">
-    <value>Backup layout failed</value>
+    <value>レイアウトのバックアップに失敗しました</value>
   </data>
   <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
-    <value>Imaging tab layout backed up</value>
+    <value>画像タブのレイアウトをバックアップしました</value>
   </data>
   <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
-    <value>Backup the imaging tab layout to a file, so it can be restored at a later point</value>
+    <value>後で復元できるように、画像タブのレイアウトをファイルにバックアップ</value>
   </data>
   <data name="LblDockLayoutReset" xml:space="preserve">
-    <value>Imaging tab layout reset</value>
+    <value>画像タブのレイアウトをリセットしました</value>
   </data>
   <data name="LblDockLayoutRestored" xml:space="preserve">
-    <value>Imaging tab layout restored</value>
+    <value>画像タブのレイアウトを復元しました</value>
   </data>
   <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
-    <value>Restore Layout</value>
+    <value>レイアウトを復元</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
-    <value>Restore layout failed</value>
+    <value>レイアウトの復元に失敗しました</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
-    <value>Restore imaging tab layout from a backup</value>
+    <value>画像タブのレイアウトをバックアップから復元</value>
   </data>
 </root>

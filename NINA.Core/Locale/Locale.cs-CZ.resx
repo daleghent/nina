@@ -6300,7 +6300,7 @@ Důvod: {1}</value>
     <value>Nastavení MGEN</value>
   </data>
   <data name="LblSingleImagingLayout" xml:space="preserve">
-    <value>Rozvržení jedné zobrazovací karty</value>
+    <value>Rozvržení zobrazovaní</value>
   </data>
   <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
     <value>Pokud je tato možnost povolena, bude mít karta zobrazování pouze jedno rozvržení pro všechny profily, místo aby byla závislá na profilu</value>
