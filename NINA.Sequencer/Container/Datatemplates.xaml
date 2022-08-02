@@ -19,7 +19,8 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
-    xmlns:view="clr-namespace:NINA.View.Sequencer">
+    xmlns:view="clr-namespace:NINA.View.Sequencer"
+    xmlns:wpfbehaviors="clr-namespace:NINA.WPF.Base.Behaviors;assembly=NINA.WPF.Base">
     <Style x:Key="DSOHeaderExpanderStyle" TargetType="ToggleButton">
         <Setter Property="Template">
             <Setter.Value>
@@ -111,6 +112,126 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource DSOHeaderExpanderStyle}" />
+                            <ContentPresenter
+                                x:Name="ExpandSite"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="false"
+                                Visibility="Collapsed" />
+                        </DockPanel>
+                        <i:Interaction.Behaviors>
+                            <behaviors:DragOverBehavior
+                                DragAboveSize="0"
+                                DragBelowSize="0"
+                                DragOverCenterText="{ns:Loc Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget}" />
+                            <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropTargetCommand" />
+                        </i:Interaction.Behaviors>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ExposureInfoHeaderExpanderStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <StackPanel>
+                        <Border Height="10" BorderBrush="Transparent" />
+                        <Border x:Name="topBorder" BorderBrush="{StaticResource SecondaryBackgroundBrush}">
+                            <Grid
+                                x:Name="Head"
+                                Background="{StaticResource TertiaryBackgroundBrush}"
+                                SnapsToDevicePixels="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Path
+                                    x:Name="iconarrow"
+                                    Grid.Column="0"
+                                    Width="10"
+                                    Height="10"
+                                    Margin="10,0,10,0"
+                                    Data="{StaticResource ArrowRightSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                                <Path
+                                    x:Name="icon"
+                                    Grid.Column="1"
+                                    Width="15"
+                                    Height="15"
+                                    Data="{StaticResource CameraSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                                <ContentPresenter
+                                    Grid.Column="2"
+                                    Margin="4,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    RecognizesAccessKey="True"
+                                    SnapsToDevicePixels="True">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DragDropBehavior />
+                                    </i:Interaction.Behaviors>
+                                </ContentPresenter>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="iconarrow" Property="Data" Value="{StaticResource ArrowDownSVG}" />
+                            <Setter TargetName="iconarrow" Property="Margin" Value="5,0,10,0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Head" Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExposureInfoExpander" TargetType="ninactrl:DetachingExpander">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ninactrl:DetachingExpander">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Focusable="False"
+                        SnapsToDevicePixels="true">
+                        <DockPanel>
+                            <ToggleButton
+                                x:Name="HeaderSite"
+                                MinWidth="0"
+                                MinHeight="0"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                DockPanel.Dock="Top"
+                                FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontStretch="{TemplateBinding FontStretch}"
+                                FontStyle="{TemplateBinding FontStyle}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                Style="{StaticResource ExposureInfoHeaderExpanderStyle}" />
                             <StackPanel DockPanel.Dock="Bottom">
                                 <Border
                                     Height="10"
@@ -126,10 +247,6 @@
                                 Focusable="false"
                                 Visibility="Collapsed" />
                         </DockPanel>
-                        <i:Interaction.Behaviors>
-                            <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                            <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropTargetCommand" />
-                        </i:Interaction.Behaviors>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">
@@ -160,301 +277,516 @@
         <view:SequenceContainerView>
             <view:SequenceContainerView.SequenceContainerContent>
                 <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,2">
-                    <ninactrl:DetachingExpander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
-                        <ninactrl:DetachingExpander.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Border MinHeight="25">
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="{ns:Loc LblTarget}" />
-                                </Border>
-                                <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="{Binding Target.TargetName}" />
-                                    <TextBlock
-                                        Margin="5,0,5,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="|" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="{Binding Target.InputCoordinates.Coordinates.RAString}" />
-                                    <TextBlock
-                                        Margin="5,0,5,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="|" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="{Binding Target.InputCoordinates.Coordinates.DecString}" />
-                                    <TextBlock
-                                        Margin="5,0,5,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="|" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="{Binding Target.Rotation}" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="°" />
-                                    <StackPanel.Style>
-                                        <Style TargetType="StackPanel">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ninactrl:DetachingExpander}, Path=IsExpanded}" Value="True">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </StackPanel.Style>
-                                </StackPanel>
-                            </StackPanel>
-                        </ninactrl:DetachingExpander.Header>
-                        <Grid>
-                            <Grid.Resources>
-                                <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
 
-                            <Grid Grid.Row="0" Margin="0,5,0,0">
+                        </Grid.RowDefinitions>
+
+                        <ninactrl:DetachingExpander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
+                            <ninactrl:DetachingExpander.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border MinHeight="25">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{ns:Loc LblTarget}" />
+                                    </Border>
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding Target.TargetName}" />
+                                        <TextBlock
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="|" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding Target.InputCoordinates.Coordinates.RAString}" />
+                                        <TextBlock
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="|" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding Target.InputCoordinates.Coordinates.DecString}" />
+                                        <TextBlock
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="|" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding Target.Rotation}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="°" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ninactrl:DetachingExpander}, Path=IsExpanded}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ninactrl:DetachingExpander.Header>
+                            <Grid>
+                                <Grid.Resources>
+                                    <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
+                                </Grid.Resources>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    Width="50"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblName}"
-                                    TextWrapping="Wrap" />
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
 
-                                <ninactrl:HintTextBox
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    VerticalContentAlignment="Center"
-                                    Foreground="{StaticResource PrimaryBrush}"
-                                    HintText="{ns:Loc LblObjectNameHint}"
-                                    Text="{Binding Target.TargetName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Grid Grid.Row="0" Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Width="50"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblName}"
+                                        TextWrapping="Wrap" />
+
+                                    <ninactrl:HintTextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Foreground="{StaticResource PrimaryBrush}"
+                                        HintText="{ns:Loc LblObjectNameHint}"
+                                        Text="{Binding Target.TargetName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Margin="5,0,0,0"
+                                        Orientation="Horizontal">
+                                        <Button
+                                            Width="25"
+                                            Height="25"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Right"
+                                            Command="{Binding CoordsToFramingCommand}"
+                                            IsEnabled="{Binding Target.InputCoordinates, Converter={StaticResource InverseNullToBooleanConverter}}"
+                                            Style="{StaticResource TertiaryBackgroundButton}">
+                                            <Button.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblCoordinatesToFramingTooltip}" />
+                                                </ToolTip>
+                                            </Button.ToolTip>
+                                            <Grid>
+                                                <Path
+                                                    Margin="5"
+                                                    Data="{StaticResource FocusAssistantSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                            </Grid>
+                                        </Button>
+                                        <Button
+                                            Width="25"
+                                            Height="25"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Right"
+                                            Command="{Binding CoordsFromPlanetariumCommand}"
+                                            IsEnabled="{Binding Target.InputCoordinates, Converter={StaticResource InverseNullToBooleanConverter}}"
+                                            Style="{StaticResource TertiaryBackgroundButton}">
+                                            <Button.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblPlanetariumTooltip}" />
+                                                </ToolTip>
+                                            </Button.ToolTip>
+                                            <Grid>
+                                                <Path
+                                                    Margin="5"
+                                                    Data="{StaticResource GetCoordsSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+
                                 <StackPanel
-                                    Grid.Column="2"
-                                    Margin="5,0,0,0"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,5,0,0"
+                                    DataContext="{Binding Target.InputCoordinates}"
                                     Orientation="Horizontal">
-                                    <Button
-                                        Width="25"
-                                        Height="25"
-                                        Margin="5,0,5,0"
+                                    <TextBlock
+                                        Width="50"
                                         VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Right"
-                                        Command="{Binding CoordsToFramingCommand}"
-                                        IsEnabled="{Binding Target.InputCoordinates, Converter={StaticResource InverseNullToBooleanConverter}}"
-                                        Style="{StaticResource TertiaryBackgroundButton}">
-                                        <Button.ToolTip>
-                                            <ToolTip ToolTipService.ShowOnDisabled="False">
-                                                <TextBlock Text="{ns:Loc LblCoordinatesToFramingTooltip}" />
-                                            </ToolTip>
-                                        </Button.ToolTip>
-                                        <Grid>
-                                            <Path
-                                                Margin="5"
-                                                Data="{StaticResource FocusAssistantSVG}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                        </Grid>
-                                    </Button>
-                                    <Button
-                                        Width="25"
-                                        Height="25"
-                                        Margin="5,0,5,0"
+                                        Text="{ns:Loc LblRA}" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
                                         VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Right"
-                                        Command="{Binding CoordsFromPlanetariumCommand}"
-                                        IsEnabled="{Binding Target.InputCoordinates, Converter={StaticResource InverseNullToBooleanConverter}}"
-                                        Style="{StaticResource TertiaryBackgroundButton}">
-                                        <Button.ToolTip>
-                                            <ToolTip ToolTipService.ShowOnDisabled="False">
-                                                <TextBlock Text="{ns:Loc LblPlanetariumTooltip}" />
-                                            </ToolTip>
-                                        </Button.ToolTip>
-                                        <Grid>
-                                            <Path
-                                                Margin="5"
-                                                Data="{StaticResource GetCoordsSVG}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                        </Grid>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-
-                            <StackPanel
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="0,5,0,0"
-                                DataContext="{Binding Target.InputCoordinates}"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Width="50"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblRA}" />
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <Binding Path="RAHours" UpdateSourceTrigger="LostFocus">
-                                            <Binding.ValidationRules>
-                                                <rules:HoursRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">h</TextBlock>
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <Binding Path="RAMinutes" UpdateSourceTrigger="LostFocus">
-                                            <Binding.ValidationRules>
-                                                <rules:MinutesRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">m</TextBlock>
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <Binding Path="RASeconds" UpdateSourceTrigger="LostFocus">
-                                            <Binding.ValidationRules>
-                                                <rules:SecondsRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">s</TextBlock>
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Margin="0,5,0,0"
-                                VerticalAlignment="Center"
-                                DataContext="{Binding Target.InputCoordinates}"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Width="50"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblDec}" />
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
-                                            <Binding Path="NegativeDec" />
-                                            <Binding Path="DecDegrees">
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <Binding Path="RAHours" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <rules:DegreesRule />
+                                                    <rules:HoursRule />
                                                 </Binding.ValidationRules>
                                             </Binding>
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">d</TextBlock>
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">h</TextBlock>
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <Binding Path="RAMinutes" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:MinutesRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">m</TextBlock>
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <Binding Path="RASeconds" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:SecondsRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">s</TextBlock>
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="0,5,0,0"
                                     VerticalAlignment="Center"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <Binding Path="DecMinutes" UpdateSourceTrigger="LostFocus">
-                                            <Binding.ValidationRules>
-                                                <rules:MinutesRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">m</TextBlock>
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
+                                    DataContext="{Binding Target.InputCoordinates}"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="50"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblDec}" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
+                                                <Binding Path="NegativeDec" />
+                                                <Binding Path="DecDegrees">
+                                                    <Binding.ValidationRules>
+                                                        <rules:DegreesRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </MultiBinding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">d</TextBlock>
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <Binding Path="DecMinutes" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:MinutesRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">m</TextBlock>
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <Binding Path="DecSeconds" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:SecondsRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">s</TextBlock>
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Margin="0,5,0,0"
                                     VerticalAlignment="Center"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <Binding Path="DecSeconds" UpdateSourceTrigger="LostFocus">
-                                            <Binding.ValidationRules>
-                                                <rules:SecondsRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">s</TextBlock>
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Margin="0,5,0,0"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Width="50"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblRotation}" />
-                                <TextBox
-                                    Width="40"
-                                    Margin="5,0,0,0"
-                                    DataContext="{Binding Target}"
-                                    TextAlignment="Right">
-                                    <TextBox.Text>
-                                        <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
-                                            <Binding.ValidationRules>
-                                                <rules:FullCircleDegreesRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center">°</TextBlock>
-                            </StackPanel>
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="50"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblRotation}" />
+                                    <TextBox
+                                        Width="40"
+                                        Margin="5,0,0,0"
+                                        DataContext="{Binding Target}"
+                                        TextAlignment="Right">
+                                        <TextBox.Text>
+                                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:FullCircleDegreesRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock VerticalAlignment="Center">°</TextBlock>
+                                </StackPanel>
 
-                            <alt:AltitudeChart
-                                Grid.Row="0"
-                                Grid.RowSpan="5"
-                                Grid.Column="1"
-                                MinWidth="400"
-                                MinHeight="120"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                AnnotateAltitudeAxis="False"
-                                DataContext="{Binding Target.DeepSkyObject}"
-                                NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
-                        </Grid>
-                    </ninactrl:DetachingExpander>
+                                <alt:AltitudeChart
+                                    Grid.Row="0"
+                                    Grid.RowSpan="5"
+                                    Grid.Column="1"
+                                    MinWidth="400"
+                                    MinHeight="120"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    AnnotateAltitudeAxis="False"
+                                    DataContext="{Binding Target.DeepSkyObject}"
+                                    NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                            </Grid>
+                        </ninactrl:DetachingExpander>
+
+                        <ninactrl:DetachingExpander
+                            Grid.Row="1"
+                            IsExpanded="{Binding ExposureInfoListExpanded}"
+                            Style="{StaticResource ExposureInfoExpander}">
+                            <ninactrl:DetachingExpander.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border MinHeight="25">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{ns:Loc Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo}" />
+                                    </Border>
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding ExposureInfoSummary}" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ninactrl:DetachingExpander}, Path=IsExpanded}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ninactrl:DetachingExpander.Header>
+                            <DataGrid
+                                Grid.ColumnSpan="2"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                ItemsSource="{Binding ExposureInfoList}">
+                                <i:Interaction.Behaviors>
+                                    <wpfbehaviors:BubbleScrollEvent />
+                                </i:Interaction.Behaviors>
+                                <DataGrid.Columns>
+
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblFilter}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Filter, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblTotalNo}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Count, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblTotal}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding TotalTime, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblTime}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding ExposureTime, Mode=OneWay}" />
+                                                    <TextBlock Text=" s" />
+                                                </StackPanel>
+
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblType}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding ImageType, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblBinning}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding BinningX, Mode=OneWay}" />
+                                                    <TextBlock Text="x" />
+                                                    <TextBlock Text="{Binding BinningY, Mode=OneWay}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblGain}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Gain, Converter={StaticResource MinusOneToEmptyStringConverter}, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblOffset}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Offset, Converter={StaticResource MinusOneToEmptyStringConverter}, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="{ns:Loc LblROI}"
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding ROI, Converter={StaticResource PercentageConverter}, Mode=OneWay}" />
+                                                    <TextBlock Text="%" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="30"
+                                        Header=""
+                                        IsReadOnly="True"
+                                        SortDirection="Ascending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Width="25"
+                                                    Height="25"
+                                                    Margin="5,0,5,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding DataContext.DeleteExposureInfoCommand, RelativeSource={RelativeSource AncestorType={x:Type view:SequenceContainerView}}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{StaticResource BackgroundButton}">
+                                                    <Grid>
+                                                        <Path
+                                                            Margin="5"
+                                                            Data="{StaticResource TrashCanSVG}"
+                                                            Fill="{StaticResource PrimaryBrush}"
+                                                            Stretch="Uniform" />
+                                                    </Grid>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ninactrl:DetachingExpander>
+                    </Grid>
                 </Border>
             </view:SequenceContainerView.SequenceContainerContent>
         </view:SequenceContainerView>

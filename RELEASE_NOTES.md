@@ -35,6 +35,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added a toggle in Options > General > Advanced to only have one imaging tab layout for all profiles instead of it being profile dependent
 - In Options > Imaging > Layout two new buttons have been added to backup and restore the imaging tab layout
 - Added interfaces for plugins to register to FailureEvents inside the SequenceRootContainer to react on all failures that are raised during a sequence
+- Deep Sky Object Containers now also show a section with exposure times done on that particular target. 
+    - When a target is saved these recorded exposure times are also stored with it to be reloaded at a later point
+    - Furthermore this info will also be used to set the `$$FRAMENR$$` for exposures in the context of that target to have a continuous increment
+    - Rows can manually be removed and the counter will reset
 
 # Version 2.0
 

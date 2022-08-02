@@ -181,6 +181,13 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            var count = ExposureCount;
+            var dsoContainer = RetrieveTarget(this.Parent);
+            var specificDSOContainer = dsoContainer as DeepSkyObjectContainer;
+            if (specificDSOContainer != null) {
+                count = specificDSOContainer.GetOrCreateExposureCountForItemAndCurrentFilter(this, 1)?.Count ?? ExposureCount;
+            }
+
             var info = cameraMediator.GetInfo();
             ObservableRectangle rect = null;
             if(info.CanSubSample && ROI < 1) {
@@ -202,8 +209,8 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 Gain = Gain,
                 Offset = Offset,
                 ImageType = ImageType,
-                ProgressExposureCount = ExposureCount,
-                TotalExposureCount = ExposureCount + 1,
+                ProgressExposureCount = count,
+                TotalExposureCount = count + 1,
                 EnableSubSample = rect != null,
                 SubSambleRectangle = rect
             };
@@ -213,18 +220,19 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 imageParams = new PrepareImageParameters(true, true);
             }
 
-            var target = RetrieveTarget(this.Parent);
-
             var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
             var imageData = await exposureData.ToImageData(progress, token);
 
             var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
 
-            if (target != null) {
-                imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
-                imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
-                imageData.MetaData.Target.Rotation = target.Rotation;
+            if (dsoContainer != null) {
+                var target = dsoContainer.Target;
+                if (target != null) {
+                    imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
+                    imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
+                    imageData.MetaData.Target.Rotation = target.Rotation;
+                }
             }
 
             ISequenceContainer parent = Parent;
@@ -241,6 +249,9 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
             }
 
+            if (specificDSOContainer != null) {
+                specificDSOContainer.IncrementExposureCountForItemAndCurrentFilter(this, 1);
+            }
             ExposureCount++;
         }
 
@@ -252,11 +263,11 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             Validate();
         }
 
-        private InputTarget RetrieveTarget(ISequenceContainer parent) {
+        private IDeepSkyObjectContainer RetrieveTarget(ISequenceContainer parent) {
             if (parent != null) {
                 var container = parent as IDeepSkyObjectContainer;
                 if (container != null) {
-                    return container.Target;
+                    return container;
                 } else {
                     return RetrieveTarget(parent.Parent);
                 }

@@ -613,11 +613,29 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exposure Info.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deep Sky Object Sequence.
         /// </summary>
         internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE TARGET.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget", resourceCulture);
             }
         }
         
@@ -11448,6 +11466,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Filter.
+        /// </summary>
+        internal static string LblNoFilter {
+            get {
+                return ResourceManager.GetString("LblNoFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Filterwheel.
         /// </summary>
         internal static string LblNoFilterwheel {
@@ -17008,6 +17035,15 @@ namespace NINA.Core.Locale {
         internal static string LblTooltipTargetSaveSet {
             get {
                 return ResourceManager.GetString("LblTooltipTargetSaveSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        internal static string LblTotal {
+            get {
+                return ResourceManager.GetString("LblTotal", resourceCulture);
             }
         }
         

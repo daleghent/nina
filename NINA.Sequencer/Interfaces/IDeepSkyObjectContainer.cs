@@ -13,11 +13,17 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Core.Model.Equipment;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Container {
 
     public interface IDeepSkyObjectContainer : ISequenceContainer {
         InputTarget Target { get; set; }
         NighttimeData NighttimeData { get; }
+
+        // This should be part of the interface, however for plugin compatibiltiy this is only part of DSO Container Implementation for now
+        // int GetOrCreateExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, double roi);
+        // void IncrementExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, int roi)
     }
 }
