@@ -121,8 +121,8 @@ namespace NINA.Sequencer.Container {
                 if (con != null) {
                     var dropTarget = con.Container.Target;
                     if (dropTarget != null) {
-                        if(con.Container is DeepSkyObjectContainer dsoContainer) {                            
-                            this.ExposureInfoList = new AsyncObservableCollection<ExposureInfo>(dsoContainer.ExposureInfoList);                            
+                        if (con.Container is DeepSkyObjectContainer dsoContainer) {
+                            this.ExposureInfoList = new AsyncObservableCollection<ExposureInfo>(dsoContainer.ExposureInfoList);
                         }
                         this.Name = dropTarget.TargetName;
                         this.Target.TargetName = dropTarget.TargetName;
@@ -256,7 +256,7 @@ namespace NINA.Sequencer.Container {
 
         public string ExposureInfoSummary {
             get {
-                lock(ExposureInfoList) {
+                lock (ExposureInfoList) {
                     var exposureByFilter = ExposureInfoList
                         .GroupBy(x => x.Filter)
                         .Select(y => {
@@ -281,12 +281,12 @@ namespace NINA.Sequencer.Container {
         }
 
         public ExposureInfo GetOrCreateExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, double roi) {
-            lock(ExposureInfoList) {
+            lock (ExposureInfoList) {
                 // Check for Gain and Offset when they are below zero if there is a default value available
                 var gain = exposureItem.Gain;
-                if(gain < 0) {
+                if (gain < 0) {
                     var cameraInfo = cameraMediator.GetInfo();
-                    if(cameraInfo.Connected && cameraInfo.CanSetGain) {
+                    if (cameraInfo.Connected && cameraInfo.CanSetGain) {
                         gain = cameraInfo.DefaultGain;
                     }
                 }
@@ -299,6 +299,11 @@ namespace NINA.Sequencer.Container {
                     }
                 }
 
+                var binning = exposureItem.Binning;
+                if (binning == null) {
+                    binning = new BinningMode(1, 1);
+                }
+
                 var filterInfo = filterWheelMediator.GetInfo();
                 var filterName = filterInfo.Connected ? filterInfo.SelectedFilter?.Name ?? Loc.Instance["LblNoFilter"] : Loc.Instance["LblNoFilter"];
 
@@ -308,13 +313,13 @@ namespace NINA.Sequencer.Container {
                          && x.Gain == gain
                          && x.Offset == offset
                          && x.ImageType == exposureItem.ImageType
-                         && x.BinningX == exposureItem.Binning.X
-                         && x.BinningY == exposureItem.Binning.Y
+                         && x.BinningX == binning.X
+                         && x.BinningY == binning.Y
                          && x.ROI == roi
                 );
 
-                if(count == null) {
-                    count = new ExposureInfo(filterName, exposureItem.ExposureTime, gain, offset, exposureItem.ImageType, exposureItem.Binning.X, exposureItem.Binning.Y, roi);
+                if (count == null) {
+                    count = new ExposureInfo(filterName, exposureItem.ExposureTime, gain, offset, exposureItem.ImageType, binning.X, binning.Y, roi);
                     ExposureInfoList.Add(count);
                 }
 
@@ -323,14 +328,14 @@ namespace NINA.Sequencer.Container {
         }
 
         private void DeleteExposureInfo(ExposureInfo obj) {
-            lock(ExposureInfoList) {
+            lock (ExposureInfoList) {
                 ExposureInfoList.Remove(obj);
             }
             RaisePropertyChanged(nameof(ExposureInfoSummary));
         }
 
         public void IncrementExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, int roi) {
-            var count = GetOrCreateExposureCountForItemAndCurrentFilter(exposureItem, roi);            
+            var count = GetOrCreateExposureCountForItemAndCurrentFilter(exposureItem, roi);
             count?.Increment();
             RaisePropertyChanged(nameof(ExposureInfoSummary));
         }

@@ -309,7 +309,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         public override string ToString() {
             var currentGain = Gain == -1 ? CameraInfo.DefaultGain : Gain;
             var currentOffset = Offset == -1 ? CameraInfo.DefaultOffset : Offset;
-            return $"Category: {Category}, Item: {nameof(TakeSubframeExposure)}, ExposureTime {ExposureTime}, Gain {currentGain}, Offset {currentOffset}, ImageType {ImageType}, Binning {Binning?.Name}, ROI {ROI}";
+            return $"Category: {Category}, Item: {nameof(TakeSubframeExposure)}, ExposureTime {ExposureTime}, Gain {currentGain}, Offset {currentOffset}, ImageType {ImageType}, Binning {Binning?.Name ?? "1x1"}, ROI {ROI}";
         }
     }
 }
