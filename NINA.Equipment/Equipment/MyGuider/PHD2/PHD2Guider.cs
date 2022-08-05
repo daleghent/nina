@@ -624,13 +624,13 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 var result = getShiftLockParamsResponse.result;
                 if (result.Enabled) {
                     if (result.Units == "pixels/hr") {
-                        var raShiftRate = result.Rate[0] * PixelScale;
-                        var decShiftRate = result.Rate[1] * PixelScale;
+                        var raShiftRate = result.Rate[0] * PixelScale / 3600.0d;
+                        var decShiftRate = result.Rate[1] * PixelScale / 3600.0d;
                         ShiftRate = SiderealShiftTrackingRate.Create(raShiftRate, decShiftRate);
                     } else {
-                        // already arcsec/hr
-                        var raShiftRate = result.Rate[0];
-                        var decShiftRate = result.Rate[1];
+                        // already arcsec/hr, convert to deg/hr
+                        var raShiftRate = result.Rate[0] / 3600.0d;
+                        var decShiftRate = result.Rate[1] / 3600.0d;
                         ShiftRate = SiderealShiftTrackingRate.Create(raShiftRate, decShiftRate);
                     }
                     ShiftRateAxis = result.Axes;
@@ -793,6 +793,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 return await StopShifting(ct);
             }
 
+            ShiftRate = shiftTrackingRate;
             double raArcsecPerHour = shiftTrackingRate.RAArcsecsPerHour;
             double decArcsecPerHour = shiftTrackingRate.DecArcsecsPerHour;
             Logger.Info($"Setting shift rate to RA={raArcsecPerHour}, Dec={decArcsecPerHour}");
