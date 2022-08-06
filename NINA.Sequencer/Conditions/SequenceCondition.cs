@@ -87,7 +87,7 @@ namespace NINA.Sequencer.Conditions {
                 if (ItemUtility.IsInRootContainer(Parent)) {
                     ConditionWatchdog.Start();
                 } else {
-                    ConditionWatchdog.Cancel();
+                    try { ConditionWatchdog?.Cancel(); } catch { }
                 }
             }
         }

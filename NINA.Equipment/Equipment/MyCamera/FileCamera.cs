@@ -661,7 +661,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if (!AlwaysListen) {
                 try {
                     folderWatcher.Suspend();
-                    bulbCompletionCTS?.Cancel();
+                    try { bulbCompletionCTS?.Cancel(); } catch { }
                 } catch (Exception) { };
             }
         }
@@ -673,7 +673,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             capture();
 
             /**Stop Exposure after exposure time or upon cancellation*/
-            bulbCompletionCTS?.Cancel();
+            try { bulbCompletionCTS?.Cancel(); } catch { }
             bulbCompletionCTS = new CancellationTokenSource();
             Task.Run(async () => {
                 await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);

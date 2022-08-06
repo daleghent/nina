@@ -198,7 +198,7 @@ namespace NINA.Imaging.ViewModel.Imaging {
         }
 
         private void CancelAutoFocus(object obj) {
-            _autoFocusCancelToken?.Cancel();
+            try { _autoFocusCancelToken?.Cancel(); } catch { }
         }
 
         private FilterInfo CommandInitialization() {

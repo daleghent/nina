@@ -364,7 +364,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         }
 
         private void CancelConnectGuider(object o) {
-            _cancelConnectGuiderSource?.Cancel();
+            try { _cancelConnectGuiderSource?.Cancel(); } catch { }
         }
 
         public string Action(string actionName, string actionParameters = "") {

@@ -258,7 +258,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         }
 
         private void CancelCoolCamera(object o) {
-            _cancelChangeTemperatureCts?.Cancel();
+            try { _cancelChangeTemperatureCts?.Cancel(); } catch { }
         }
 
         private double _targetTemp;
@@ -493,7 +493,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         }
 
         private void CancelConnectCamera(object o) {
-            _cancelConnectCameraSource?.Cancel();
+            try { _cancelConnectCameraSource?.Cancel(); } catch { }
         }
 
         private void UpdateCameraValues(Dictionary<string, object> cameraValues) {
@@ -624,7 +624,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             if (updateTimer != null) {
                 await updateTimer.Stop();
             }
-            _cancelChangeTemperatureCts?.Cancel();
+            try { _cancelChangeTemperatureCts?.Cancel(); } catch { }
             TempChangeRunning = false;
             Cam?.Disconnect();
             Cam = null;
@@ -759,7 +759,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                                 Notification.ShowError(string.Format(Loc.Instance["LblCameraTimeout"], profileService.ActiveProfile.CameraSettings.Timeout));
                             }
                         } finally {
-                            progressCountCts.Cancel();
+                            try { progressCountCts?.Cancel(); } catch { }
                             progress.Report(new ApplicationStatus() {
                                 Status = Loc.Instance["LblExposureFinished"]
                             });

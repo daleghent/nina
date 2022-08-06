@@ -65,7 +65,7 @@ namespace NINA.Sequencer.Conditions {
             lock (lockObj) {
                 try {
                     watchdogCTS?.Cancel();
-                } catch (Exception) { }
+                } catch { }
 
                 watchdogCTS = null;
                 watchdogTask = null;

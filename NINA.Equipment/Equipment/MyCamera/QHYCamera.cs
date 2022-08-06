@@ -645,8 +645,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug("QHYCCD: Terminating CoolerWorker task");
 
             CoolerOn = false;
-            coolerWorkerCts.Cancel();
-            coolerWorkerCts.Dispose();
+            try {
+                coolerWorkerCts?.Cancel();
+                coolerWorkerCts?.Dispose();
+            } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
                     coolerTask?.Wait(timeoutSource.Token);
@@ -670,8 +672,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             Logger.Debug("QHYCCD: Terminating SensorStatsWorker task");
 
-            sensorStatsCts.Cancel();
-            sensorStatsCts.Dispose();
+            try {
+                sensorStatsCts?.Cancel();
+                sensorStatsCts?.Dispose();
+            } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
                     sensorStatsTask?.Wait(timeoutSource.Token);

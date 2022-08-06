@@ -506,7 +506,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                             }
                             return true;
                         }
-                        cancelOnTimeoutOrParent.Cancel();
+                        try { cancelOnTimeoutOrParent?.Cancel(); } catch { }
                     }
                 }
                 retries += 1;
@@ -855,7 +855,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
 
         public void Disconnect() {
-            _clientCTS?.Cancel();
+            try { _clientCTS?.Cancel(); } catch { }
         }
 
         private void ProcessEvent(string phdevent, JObject message) {

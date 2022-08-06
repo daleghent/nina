@@ -60,7 +60,7 @@ namespace NINA.Core.Utility {
         public double Interval { get; set; }
 
         public async Task Stop() {
-            cts?.Cancel();
+            try { cts?.Cancel(); } catch { }
             while (!task?.IsCompleted == true) {
                 await Task.Delay(100);
             }

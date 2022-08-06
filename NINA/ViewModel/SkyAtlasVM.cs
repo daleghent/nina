@@ -301,7 +301,7 @@ namespace NINA.ViewModel {
         private CancellationTokenSource _searchTokenSource;
 
         private void CancelSearch(object obj) {
-            _searchTokenSource?.Cancel();
+            try { _searchTokenSource?.Cancel(); } catch { }
         }
 
         private readonly INighttimeCalculator nighttimeCalculator;

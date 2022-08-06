@@ -188,7 +188,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Empty request,
             ServerCallContext context) {
             this.camera.AbortExposure();
-            this.exposeAndDownloadCts?.Cancel();
+            try { this.exposeAndDownloadCts?.Cancel(); } catch { }
             this.exposeAndDownloadCts = new CancellationTokenSource();
             return new Empty();
         }
@@ -209,7 +209,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             this.latestExposureDuration = request.Duration;
             this.latestExposureStart = DateTime.Now;
-            this.exposeAndDownloadCts?.Cancel();
+            try { this.exposeAndDownloadCts?.Cancel(); } catch { }
             this.exposeAndDownloadCts = new CancellationTokenSource();
             var ct = this.exposeAndDownloadCts.Token;
             this.camera.StartExposure(captureParams);
@@ -231,7 +231,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Empty request,
             ServerCallContext context) {
             this.camera.StopExposure();
-            this.exposeAndDownloadCts?.Cancel();
+            try { this.exposeAndDownloadCts?.Cancel(); this.exposeAndDownloadCts?.Dispose(); } catch { }
             this.exposeAndDownloadCts = null;
             return new Empty();
         }

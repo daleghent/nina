@@ -102,7 +102,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void SequenceBlockTeardown() {
-            ConditionWatchdog?.Cancel();
+            try { ConditionWatchdog?.Cancel(); } catch { }
         }
 
         public override void SequenceBlockInitialize() {

@@ -119,7 +119,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         private void Cancel(object obj) {
-            internalCancellationToken?.Cancel();
+            try { internalCancellationToken?.Cancel(); } catch { }
         }
 
         private async Task<bool> DoFlip(CancellationToken token, IProgress<ApplicationStatus> progress) {

@@ -252,7 +252,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         private void CancelConnectFlatDevice(object o) {
-            connectFlatDeviceCts?.Cancel();
+            try { connectFlatDeviceCts?.Cancel(); } catch { }
         }
 
         public async Task Disconnect() {

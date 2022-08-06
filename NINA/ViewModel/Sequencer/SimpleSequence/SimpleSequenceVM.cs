@@ -290,7 +290,7 @@ namespace NINA.ViewModel {
         }
 
         private void CancelSequence(object obj) {
-            cts?.Cancel();
+            try { cts?.Cancel(); } catch { }
         }
 
         private MeridianFlipTrigger flipTrigger;

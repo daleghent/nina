@@ -57,7 +57,7 @@ namespace NINA.ViewModel {
                 targetName = value;
                 if (!SkipSearch) {
                     if (TargetName.Length > 1) {
-                        targetSearchCts?.Cancel();
+                        try { targetSearchCts?.Cancel(); } catch { }
                         targetSearchCts?.Dispose();
                         targetSearchCts = new CancellationTokenSource();
 

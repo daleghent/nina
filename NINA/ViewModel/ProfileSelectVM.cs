@@ -120,7 +120,7 @@ namespace NINA.ViewModel {
                     ws.OnDialogResultChanged += (s, e) => {
                         var dialogResult = (DialogResultEventArgs)e;
                         if (dialogResult.DialogResult != true) {
-                            _cancelTokenSource.Cancel();
+                            try { _cancelTokenSource?.Cancel(); } catch { }
                             profileService.SelectProfile(new ProfileMeta() { Id = _defaultProfile.Id, Name = _defaultProfile.Name, Location = _defaultProfile.Location, Description = _defaultProfile.Description });
                         } else {
                             if (UseSavedProfile == true) {

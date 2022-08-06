@@ -395,7 +395,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         }
 
         private void CancelConnectRotator(object o) {
-            _connectRotatorCts?.Cancel();
+            try { _connectRotatorCts?.Cancel(); } catch { }
         }
 
         public async Task Disconnect() {

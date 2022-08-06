@@ -549,7 +549,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 _connected = value;
                 if (!_connected) {
-                    coolerPowerReadoutCts?.Cancel();
+                    try { coolerPowerReadoutCts?.Cancel(); } catch { }
                 }
 
                 RaisePropertyChanged();
@@ -872,7 +872,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void Disconnect() {
-            coolerPowerReadoutCts?.Cancel();
+            try { coolerPowerReadoutCts?.Cancel(); } catch { }
             Connected = false;
             sdk.Close();
         }

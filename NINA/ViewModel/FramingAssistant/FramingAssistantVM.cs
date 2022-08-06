@@ -185,7 +185,7 @@ namespace NINA.ViewModel.FramingAssistant {
             RefreshSkyMapAnnotationCommand = new RelayCommand((object o) => SkyMapAnnotator.UpdateSkyMap(), (object o) => SkyMapAnnotator.Initialized);
             MouseWheelCommand = new RelayCommand(MouseWheel);
             GetRotationFromCameraCommand = new AsyncCommand<bool>(GetRotationFromCamera, (object o) => RectangleCalculated && cameraMediator.GetInfo().Connected && cameraMediator.IsFreeToCapture(this));
-            CancelGetRotationFromCameraCommand = new RelayCommand(o => { try { getRotationTokenSource?.Cancel(); } catch (Exception) { } });
+            CancelGetRotationFromCameraCommand = new RelayCommand(o => { try { getRotationTokenSource?.Cancel(); } catch { } });
 
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
             CoordsFromScopeCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromScope));
@@ -262,7 +262,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
 
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async (object o) => {
-                slewTokenSource?.Cancel();
+                try { slewTokenSource?.Cancel(); } catch { }
                 slewTokenSource?.Dispose();
                 slewTokenSource = new CancellationTokenSource();
                 bool result;
@@ -300,7 +300,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
                 return result;
             }, (object o) => RectangleCalculated && cameraMediator.IsFreeToCapture(this));
-            CancelSlewToCoordinatesCommand = new RelayCommand((object o) => slewTokenSource?.Cancel());
+            CancelSlewToCoordinatesCommand = new RelayCommand((object o) => { try { slewTokenSource?.Cancel(); } catch { } });
 
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {
                 resizeTimer.Stop();
@@ -651,7 +651,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private void CancelLoadImage() {
-            _loadImageSource?.Cancel();
+            try { _loadImageSource?.Cancel(); } catch { }
         }
 
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;

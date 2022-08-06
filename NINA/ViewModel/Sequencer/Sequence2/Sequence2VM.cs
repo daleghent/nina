@@ -436,7 +436,7 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         private void CancelSequence(object obj) {
-            cts?.Cancel();
+            try { cts?.Cancel(); } catch { }
         }
 
         public IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates() {

@@ -451,7 +451,7 @@ namespace NINA.ViewModel.FlatWizard {
         private CancellationTokenSource flatSequenceCts = new CancellationTokenSource();
 
         private void CancelFindExposureTime(object obj) {
-            flatSequenceCts?.Cancel();
+            try { flatSequenceCts?.Cancel(); } catch { }
         }
 
         public async Task<double> FindFlatExposureTime(PauseToken pt, FlatWizardFilterSettingsWrapper filter) {
@@ -585,7 +585,7 @@ namespace NINA.ViewModel.FlatWizard {
                             break;
 
                         case FlatWizardUserPromptResult.Cancel:
-                            flatSequenceCts.Cancel();
+                            try { flatSequenceCts?.Cancel(); } catch { }
                             break;
 
                         default:
@@ -740,7 +740,7 @@ namespace NINA.ViewModel.FlatWizard {
                             break;
 
                         case FlatWizardUserPromptResult.Cancel:
-                            flatSequenceCts.Cancel();
+                            try { flatSequenceCts?.Cancel(); } catch { }
                             break;
 
                         default:

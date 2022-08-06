@@ -413,7 +413,7 @@ namespace NINA.ViewModel {
         private IProgress<ApplicationStatus> _progress;
 
         private void CancelPlateSolveImage(object o) {
-            _plateSolveToken?.Cancel();
+            try { _plateSolveToken?.Cancel(); } catch { }
         }
 
         private CancellationTokenSource _plateSolveToken;
@@ -471,7 +471,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> ProcessImageHelper() {
-            _prepImageCancellationSource?.Cancel();
+            try { _prepImageCancellationSource?.Cancel(); } catch { }
             try {
                 _prepImageTask?.Wait(_prepImageCancellationSource.Token);
             } catch (OperationCanceledException) {

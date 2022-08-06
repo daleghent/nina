@@ -184,7 +184,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
         }
 
         private void CancelConnect() {
-            connectSwitchCts?.Cancel();
+            try { connectSwitchCts?.Cancel(); } catch { }
         }
 
         public SwitchChooserVM SwitchChooserVM { get; set; }

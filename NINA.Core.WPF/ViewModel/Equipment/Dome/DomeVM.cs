@@ -204,7 +204,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         private void CancelChooseDome(object o) {
-            cancelChooseDomeSource?.Cancel();
+            try { cancelChooseDomeSource?.Cancel(); } catch { }
         }
 
         private Dictionary<string, object> GetDomeValues() {

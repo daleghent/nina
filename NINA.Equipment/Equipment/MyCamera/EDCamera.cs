@@ -338,7 +338,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             if (inEvent == EDSDK.ObjectEvent_DirItemRequestTransfer) {
                 this.DirectoryItem = inRef;
-                bulbCompletionCTS?.Cancel();
+                try { bulbCompletionCTS?.Cancel(); } catch { }
                 downloadExposure?.TrySetResult(true);
             }
             return EDSDK.EDS_ERR_OK;
@@ -579,7 +579,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private void CancelDownloadExposure() {
             EDSDK.EdsDownloadCancel(this.DirectoryItem);
-            bulbCompletionCTS?.Cancel();
+            try { bulbCompletionCTS?.Cancel(); } catch { }
             downloadExposure.TrySetCanceled();
         }
 
@@ -704,7 +704,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             // Finish exposure
             if (useBulb) {
                 /* Stop Exposure after exposure time */
-                bulbCompletionCTS?.Cancel();
+                try { bulbCompletionCTS?.Cancel(); } catch { }
                 bulbCompletionCTS = new CancellationTokenSource();
                 bulbCompletionTask = Task.Run(async () => {
                     await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);

@@ -250,8 +250,10 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             if (Connected == false)
                 return;
 
-            TWCUpdateWorkerCts.Cancel();
-            TWCUpdateWorkerCts.Dispose();
+            try {
+                TWCUpdateWorkerCts?.Cancel();
+                TWCUpdateWorkerCts?.Dispose();
+            } catch { }
 
             Connected = false;
         }

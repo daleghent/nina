@@ -90,8 +90,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         public async Task Stop() {
-            domeFollowerTaskCTS?.Cancel();
-            domeRotationCTS?.Cancel();
+            try { domeFollowerTaskCTS?.Cancel(); } catch { }
+            try { domeRotationCTS?.Cancel(); } catch { }
             while (domeFollowerTask?.IsCompleted == false) {
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
             }

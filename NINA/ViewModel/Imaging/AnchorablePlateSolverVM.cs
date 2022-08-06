@@ -282,7 +282,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         private void CancelSolve(object o) {
-            _solveCancelToken?.Cancel();
+            try { _solveCancelToken?.Cancel(); } catch { }
         }
 
         private async Task<bool> CaptureSolveSyncAndReslew(IProgress<ApplicationStatus> progress) {

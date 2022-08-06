@@ -107,7 +107,7 @@ namespace NINA.ViewModel {
         }
 
         public void Shutdown() {
-            workerCTS.Cancel();
+            try { workerCTS?.Cancel(); } catch { }
             // Give the worker at most 1 minute to shutdown cleanly, writing any files remaining in the queue
             if (!worker.Wait(TimeSpan.FromMinutes(1))) {
                 Logger.Error("Image save worker failed to cleanly shutdown");

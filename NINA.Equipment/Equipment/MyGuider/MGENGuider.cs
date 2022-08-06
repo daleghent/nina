@@ -288,7 +288,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public void Disconnect() {
-            refreshCts?.Cancel();
+            try { this.refreshCts?.Cancel(); } catch { }
             MGen.Disconnect();
             Display = null;
             Connected = false;
@@ -489,8 +489,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public async Task<bool> Connect(CancellationToken token) {
             try {
-                refreshCts?.Cancel();
-                refreshCts?.Dispose();
+                try { 
+                    refreshCts?.Cancel();
+                    refreshCts?.Dispose();
+                } catch { }
                 refreshCts = new CancellationTokenSource();
 
                 await MGen.DetectAndOpen();
@@ -503,7 +505,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
-                refreshCts?.Cancel();
+                try { refreshCts?.Cancel(); } catch { }
                 return false;
             }
             return true;

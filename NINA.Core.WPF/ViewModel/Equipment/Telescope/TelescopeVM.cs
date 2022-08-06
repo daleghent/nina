@@ -694,7 +694,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private void CancelChooseTelescope(object o) {
-            _cancelChooseTelescopeSource?.Cancel();
+            try { _cancelChooseTelescopeSource?.Cancel(); } catch { }
         }
 
         private CancellationTokenSource _cancelChooseTelescopeSource;
@@ -707,7 +707,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private void CancelSlewTelescope() {
-            _cancelSlewTelescopeSource?.Cancel();
+            try { _cancelSlewTelescopeSource?.Cancel(); } catch { }
         }
 
         private async Task<bool> DisconnectTelescope() {

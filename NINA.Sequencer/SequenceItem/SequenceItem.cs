@@ -287,7 +287,7 @@ namespace NINA.Sequencer.SequenceItem {
                 this.Status = SequenceEntityStatus.SKIPPED;
                 try {
                     localCts?.Cancel();
-                } catch (Exception) { }
+                } catch { }
             }
         }
 

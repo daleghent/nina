@@ -344,7 +344,7 @@ namespace NINA.ViewModel.Imaging {
         public ICommand StopLiveViewCommand { get; private set; }
 
         private void CancelSnapImage(object o) {
-            _captureImageToken?.Cancel();
+            try { _captureImageToken?.Cancel(); } catch { }
         }
 
         private async Task<bool> StartLiveView() {
@@ -367,7 +367,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         private void StopLiveView(object o) {
-            _liveViewCts?.Cancel();
+            try { _liveViewCts?.Cancel(); } catch { }
             LiveViewEnabled = false;
         }
 
