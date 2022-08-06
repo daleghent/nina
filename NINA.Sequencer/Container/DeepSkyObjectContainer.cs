@@ -282,6 +282,10 @@ namespace NINA.Sequencer.Container {
 
         public ExposureInfo GetOrCreateExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, double roi) {
             lock (ExposureInfoList) {
+                if(exposureItem.ImageType != Equipment.Model.CaptureSequence.ImageTypes.LIGHT) {
+                    return null;
+                }
+
                 // Check for Gain and Offset when they are below zero if there is a default value available
                 var gain = exposureItem.Gain;
                 if (gain < 0) {
