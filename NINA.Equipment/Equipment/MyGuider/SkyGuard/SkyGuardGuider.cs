@@ -892,11 +892,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
         #region IGuider Implementation
 
-        /// <summary>
-        /// Implementation of the Dither method
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /*
         public async Task<bool> Dither(CancellationToken token)
         {
             try
@@ -959,6 +955,71 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
             }
             catch (Exception ex)
             {
+                Logger.Warning(ex.Message);
+                Notification.ShowError(Loc.Instance["LblSkyGuardDitheringError"]);
+                return false;
+
+            }
+        }
+        */
+
+        /// <summary>
+        /// Implementation of the Dither method
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            try {
+                string isDitheringInProgress;
+                SkyGuardStatusMessage isDitheringInProgressStatus = new SkyGuardStatusMessage();
+
+                string guidingStatusResponse = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetGuidingStatus");
+                var guidingStatus = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(guidingStatusResponse);
+
+                if (!guidingStatus.Data.Equals("guiding") && !guidingStatus.Data.Equals("looping")) {
+                    Notification.ShowWarning(Loc.Instance["LblDitherSkyGuardSkippedBecauseNotGuiding"]);
+                    return false;
+                }
+
+                //TODO : Add this funtionnality in the future
+                string isDithering = ExecuteWebRequest($"{SKSS_Uri}/SKSS_IsDitheringEnabled");
+                var ditheringStatus = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(isDithering);
+
+                if (ditheringStatus.Data.Equals("false")) {
+                    ExecuteWebRequest($"{SKSS_Uri}/SKSS_StartDithering");
+                    await Task.Delay(5000, token);
+                }
+
+                ExecuteWebRequest($"{SKSS_Uri}/SKSS_CalculateDitheringOffsets");
+
+                string ditheringOffsetX = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetDitheringOffsetX");
+                string ditheringOffsetY = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetDitheringOffsetY");
+                var getX = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(ditheringOffsetX);
+                var getY = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(ditheringOffsetY);
+
+                double ditherX = Convert.ToDouble(getX.Data);
+                double ditherY = Convert.ToDouble(getY.Data);
+
+                ExecuteWebRequest($"{SKSS_Uri}/SKSS_SetDitheringOffsets?X={ditherX}&Y={ditherY}");
+
+                await StatusLoop("SKSS_IsDitheringInProgress", "true", true, token);
+                await StatusLoop("SKSS_IsDitheringInProgress", "true", false, token);
+
+                return true;
+
+            } catch (OperationCanceledException) {
+                var msg = $"Operation cancelled.";
+                Logger.Warning(msg);
+                Notification.ShowWarning(Loc.Instance["LblSkyGuardOperationCancelled"]);
+                StopSkyProcess();
+                return false;
+
+            } catch (TimeoutException) {
+                Logger.Error("TimeOut for Dithering");
+                Notification.ShowError(Loc.Instance["LblSkyGuardDitheringError"]);
+                return false;
+
+            } catch (Exception ex) {
                 Logger.Warning(ex.Message);
                 Notification.ShowError(Loc.Instance["LblSkyGuardDitheringError"]);
                 return false;
@@ -1120,11 +1181,6 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         public Task<bool> AutoSelectGuideStar()
         {
             return Task.FromResult(true);
-        }
-
-        public Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<bool> SetShiftRate(double raArcsecPerHour, double decArcsecPerHour, CancellationToken ct)
