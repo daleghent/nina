@@ -240,6 +240,13 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
         #region Private Methods
 
+        private void NewTimeOut() {
+            double timeOut = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeOutGuiding * 60;
+            DateTime dateNow = DateTime.Now;
+
+            dateTimeOut = dateNow.AddSeconds(timeOut);
+        }
+
         /// <summary>
         /// Method that launches SkyGuard
         /// </summary>
@@ -891,78 +898,6 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         #endregion
 
         #region IGuider Implementation
-
-        /*
-        public async Task<bool> Dither(CancellationToken token)
-        {
-            try
-            {
-                string isDitheringInProgress;
-                SkyGuardStatusMessage isDitheringInProgressStatus = new SkyGuardStatusMessage();
-
-                string guidingStatusResponse = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetGuidingStatus");
-                var guidingStatus = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(guidingStatusResponse);
-
-                if (!guidingStatus.Data.Equals("guiding") && !guidingStatus.Data.Equals("looping"))
-                {
-                    Notification.ShowWarning(Loc.Instance["LblDitherSkyGuardSkippedBecauseNotGuiding"]);
-                    return false;
-                }
-
-                //TODO : Add this funtionnality in the future
-                string isDithering = ExecuteWebRequest($"{SKSS_Uri}/SKSS_IsDitheringEnabled");
-                var ditheringStatus = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(isDithering);
-
-                if (ditheringStatus.Data.Equals("false"))
-                {
-                    ExecuteWebRequest($"{SKSS_Uri}/SKSS_StartDithering");
-                    await Task.Delay(5000, token);
-                }
-
-                ExecuteWebRequest($"{SKSS_Uri}/SKSS_CalculateDitheringOffsets");
-
-                string ditheringOffsetX = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetDitheringOffsetX");
-                string ditheringOffsetY = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetDitheringOffsetY");
-                var getX = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(ditheringOffsetX);
-                var getY = JsonConvert.DeserializeObject<SkyGuardStatusMessage>(ditheringOffsetY);
-
-                double ditherX = Convert.ToDouble(getX.Data);
-                double ditherY = Convert.ToDouble(getY.Data);
-
-                ExecuteWebRequest($"{SKSS_Uri}/SKSS_SetDitheringOffsets?X={ditherX}&Y={ditherY}");
-
-                await StatusLoop("SKSS_IsDitheringInProgress", "true", true, token);
-                await StatusLoop("SKSS_IsDitheringInProgress", "true", false, token);
-
-                return true;
-
-            }
-            catch (OperationCanceledException)
-            {
-                var msg = $"Operation cancelled.";
-                Logger.Warning(msg);
-                Notification.ShowWarning(Loc.Instance["LblSkyGuardOperationCancelled"]);
-                StopSkyProcess();
-                return false;
-
-            }
-            catch (TimeoutException)
-            {
-                Logger.Error("TimeOut for Dithering");
-                Notification.ShowError(Loc.Instance["LblSkyGuardDitheringError"]);
-                return false;
-
-            }
-            catch (Exception ex)
-            {
-                Logger.Warning(ex.Message);
-                Notification.ShowError(Loc.Instance["LblSkyGuardDitheringError"]);
-                return false;
-
-            }
-        }
-        */
-
         /// <summary>
         /// Implementation of the Dither method
         /// </summary>
@@ -970,6 +905,8 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         /// <returns></returns>
         public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken token) {
             try {
+                NewTimeOut();
+
                 string isDitheringInProgress;
                 SkyGuardStatusMessage isDitheringInProgressStatus = new SkyGuardStatusMessage();
 
@@ -1048,12 +985,10 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                 // Variable declaration:
                 double maxValueGuiding = profileService.ActiveProfile.GuiderSettings.SkyGuardValueMaxGuiding;
-                double timeOut = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeOutGuiding * 60;
                 double timeLaps = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsGuiding;
                 bool settleChecked = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsChecked;
 
-                DateTime dateNow = DateTime.Now;
-                dateTimeOut = dateNow.AddSeconds(timeOut);
+                NewTimeOut();
 
                 if (SKSS_StartGuiderCameraExposure())
                 {
