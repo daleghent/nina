@@ -896,7 +896,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     await Telescope.SlewToCoordinates(coords, token);
                     BroadcastTelescopeInfo();
                     await Task.WhenAll(
-                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Loc.Instance["LblSettle"]),
+                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), true, token, progress, Loc.Instance["LblSettle"]),
                         domeSyncTask);
                     return true;
                 } else {

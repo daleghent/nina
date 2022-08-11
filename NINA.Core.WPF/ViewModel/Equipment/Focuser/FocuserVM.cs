@@ -214,7 +214,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                         //Wait for focuser to settle
                         if (profileService.ActiveProfile.FocuserSettings.FocuserSettleTime > 0) {
                             FocuserInfo.IsSettling = true;
-                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), ct, progress, Loc.Instance["LblSettle"]);
+                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), true, ct, progress, Loc.Instance["LblSettle"]);
                         }
                     }
                 } catch (OperationCanceledException) {

@@ -173,7 +173,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 }
 
                 Logger.Debug("Waiting to turn cooler off");
-                await CoreUtil.Wait(TimeSpan.FromSeconds(20), ct, progress, Loc.Instance["LblWaitingToTurnCoolerOff"]);
+                await CoreUtil.Wait(TimeSpan.FromSeconds(20), true, ct, progress, Loc.Instance["LblWaitingToTurnCoolerOff"]);
                 Logger.Info("Turning cooler off");
                 Cam.CoolerOn = false;
                 return true;

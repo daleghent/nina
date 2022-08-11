@@ -58,7 +58,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), token, progress);
+            return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), true, token, progress, "");
         }
 
         public override TimeSpan GetEstimatedDuration() {

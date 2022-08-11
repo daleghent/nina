@@ -82,7 +82,7 @@ namespace NINA.PlateSolving {
                     await filterChangeTask;
 
                     if (!plateSolveResult.Success && remainingAttempts > 0) {
-                        await CoreUtil.Wait(parameter.ReattemptDelay, ct, progress);
+                        await CoreUtil.Wait(parameter.ReattemptDelay, true, ct, progress, "");
                     }
                 }
             } while (!plateSolveResult.Success && remainingAttempts > 0);
