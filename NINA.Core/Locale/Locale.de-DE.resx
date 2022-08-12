@@ -2296,7 +2296,7 @@ Berechneter HFR: {2}
     <value>Orientierung</value>
   </data>
   <data name="LblPanelOverlap" xml:space="preserve">
-    <value>Panel overlap</value>
+    <value>Panel-Überlappung</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Feld</value>
@@ -2752,7 +2752,7 @@ Berechneter HFR: {2}
     <value>Bild speichrn unter</value>
   </data>
   <data name="LblSaveImageAsDSLRNote" xml:space="preserve">
-    <value>This setting is ignored for DSLRs when using the native driver. The camera's RAW format will be saved instead!</value>
+    <value>Diese Einstellung wird bei DSLRs ignoriert, wenn der native Treiber verwendet wird. Das RAW-Format der Kamera wird stattdessen gespeichert!</value>
   </data>
   <data name="LblSaveSelectedProfileAndDontAskAgain" xml:space="preserve">
     <value>Gewähltes Profil speichern und nicht nochmal fragen</value>
@@ -2927,7 +2927,7 @@ Diese Vorlage wird beim Starten der Applikation geladen, statt der Standard Sequ
     <value>Sternatlasbilder Ordner</value>
   </data>
   <data name="LblOfflineSkyMap" xml:space="preserve">
-    <value>Offline Sky Map</value>
+    <value>Offline-Himmelskarte</value>
   </data>
   <data name="LblSkyBrightness" xml:space="preserve">
     <value>Himmelshelligkeit</value>
@@ -3347,7 +3347,7 @@ Das Rechteck über einen Teil des Bildes bewegen das Sie fotografieren wollen un
     <value>Benutzerdefiniert</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Custom ({0:0.####}, {1:0.####})</value>
+    <value>Benutzerdefiniert ({0:0.####}, {1:0.####})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit Nord</value>
@@ -3940,7 +3940,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Länge der Lateralen Achse</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
+    <value>In einer Parallel-Konfiguration ist dies der Abstand (seitlich, in mm) zwischen dem Sattel und der Mitte des OTA. Positiv ist nach rechts entlang der Achse des OTA.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>Kuppelradius</value>
@@ -4857,7 +4857,7 @@ Wenn die nächste Position ein nicht aufgeklappter Befehlssatz ist, wird die Anw
     <value>Eine Bedingung, die eine Anweisungsfolge wiederholt bis sich das Ziel unterhalb der angegebenen Horizonthöhe befindet und dann die Anweisungsfolge beendet</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Altitude Below</value>
+    <value>Wiederholen bis Höhe unter</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kuppel</value>
@@ -5160,13 +5160,13 @@ Dort kann die Sequenz mit sehr viel detaillierteren Anweisungen, Auslösern und 
     <value>Verlässt die Schleife, wenn die angegebene Mondhöhe erreicht ist.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Moon Altitude</value>
+    <value>Wiederholen bis Mondhöhe</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
     <value>Verlässt die Schleife, wenn die angegebene Sonnenhöhe erreicht ist.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Loop until Sun Altitude</value>
+    <value>Wiederholen bis Sonnenhöhe</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5472,7 +5472,7 @@ Wenn dieser auf 0 gesetzt wird, wird der Schwellenwert nicht berücksichtigt. Ei
     <value>Warten auf sichere Bedingungen</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>Kamera Zieltemperatur</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
     <value>ASCOM erlaube ungerade Pixel Dimension</value>
@@ -5540,10 +5540,10 @@ Nur relevant bei Verwendung eines ASCOM-Kamera-Treibers!</value>
     <value>Die Kuppel meldete nach Abschluss der Anfrage weder eine Verschlussbewegung noch einen Fehler. Dies ist ein nicht Ascom-konformes und gefährliches Verhalten. Bitte melden Sie dies ihrem Kuppel Hersteller.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>Öffnen des Verschlusses ist fehlgeschlagen, der Verschlussstatus wird nach dem Start des offenen Verschlussvorgangs immer noch als geschlossen gemeldet.</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>Schließen des Verschlusses ist fehlgeschlagen. Der Verschlussstatus wird nach dem Einleiten des Verschlussvorgangs weiterhin als offen gemeldet. </value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
     <value>Autor</value>
@@ -6076,25 +6076,25 @@ Dieser Button ist im Mosaik-Modus nicht sichtbar.</value>
     <value>ZWO Driver Error</value>
   </data>
   <data name="LblASTAPWarning" xml:space="preserve">
-    <value>ASTAP Warning</value>
+    <value>ASTAP Warnung</value>
   </data>
   <data name="LblPhd2Warning" xml:space="preserve">
-    <value>PHD2 Warning</value>
+    <value>PHD2 Warnung</value>
   </data>
   <data name="Lbl_SequenceItem_Disable_Tooltip" xml:space="preserve">
-    <value>Disables the current instruction. A disabled instruction will not run during sequence execution.</value>
+    <value>Deaktiviert die aktuelle Anweisung. Eine deaktivierte Anweisung wird nicht innerhalb der Sequenz ausgeführt.</value>
   </data>
   <data name="Lbl_SequenceItem_Enable_Tooltip" xml:space="preserve">
-    <value>Enables the current instruction, to be considered again to run during sequence execution.</value>
+    <value>Aktiviert die aktuelle Anweisung, um diese innerhalb der Sequenz auszuführen.</value>
   </data>
   <data name="Lbl_SequenceContainer_DisableEnable_Tooltip" xml:space="preserve">
-    <value>Disables or enables the current instruction set and all its content.</value>
+    <value>Deaktiviert oder aktiviert den aktuellen Befehlssatz und den gesamten Inhalt.</value>
   </data>
   <data name="LblDateUTCFormatDescription" xml:space="preserve">
-    <value>UTC date with format YYYY-MM-DD</value>
+    <value>UTC-Datum im Format JJJJ-MM-TT</value>
   </data>
   <data name="LblTimeUTCFormatDescription" xml:space="preserve">
-    <value>UTC time with format HH-mm-ss</value>
+    <value>UTC-Zeit im Format HH-mm-ss</value>
   </data>
   <data name="LblGuiderCanSetShift" xml:space="preserve">
     <value>Can Shift Tracking</value>
@@ -6106,16 +6106,16 @@ Dieser Button ist im Mosaik-Modus nicht sichtbar.</value>
     <value>RA Shift Rate</value>
   </data>
   <data name="LblGuiderDecShiftRate" xml:space="preserve">
-    <value>Dec Shift Rate</value>
+    <value>Dek Shift Rate</value>
   </data>
   <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
-    <value>Shift Axis</value>
+    <value>Shift Achse</value>
   </data>
   <data name="LblGuiderSetShiftRate" xml:space="preserve">
-    <value>Set Shift</value>
+    <value>Shift setzen</value>
   </data>
   <data name="LblGuiderStopShift" xml:space="preserve">
-    <value>Stop Shift</value>
+    <value>Shift stoppen</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
     <value>Setting shift rate after losing shift lock failed</value>
@@ -6124,26 +6124,26 @@ Dieser Button ist im Mosaik-Modus nicht sichtbar.</value>
     <value>Restored shift rate after losing shift lock</value>
   </data>
   <data name="LblDisplayMoonChart" xml:space="preserve">
-    <value>Display moon chart</value>
+    <value>Monddiagramm anzeigen</value>
   </data>
   <data name="LblMoonSeparation" xml:space="preserve">
-    <value>Angular separation between moon and target</value>
+    <value>Winkelabstand zwischen Mond und Ziel</value>
   </data>
   <data name="LblPluginFailedToLoad" xml:space="preserve">
-    <value>Failed to load plugin {0} version {1}.
-Please check if there is an update available.</value>
+    <value>Konnte Plugin {0} Version {1} nicht laden.
+Bitte prüfen, ob ein Update verfügbar ist.</value>
   </data>
   <data name="LblMoon" xml:space="preserve">
-    <value>Moon</value>
+    <value>Mond</value>
   </data>
   <data name="LblDate" xml:space="preserve">
-    <value>Date</value>
+    <value>Datum</value>
   </data>
   <data name="LblObservation" xml:space="preserve">
-    <value>Observation</value>
+    <value>Beobachtung</value>
   </data>
   <data name="LblCommand" xml:space="preserve">
-    <value>Command</value>
+    <value>Befehl</value>
   </data>
   <data name="LblRaw" xml:space="preserve">
     <value>Raw</value>
@@ -6269,30 +6269,30 @@ Please check if there is an update available.</value>
     <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
   </data>
   <data name="LblAlwaysListen" xml:space="preserve">
-    <value>Always listen to file changes</value>
+    <value>Immer auf Dateiänderungen prüfen</value>
   </data>
   <data name="LblDownloadDelay" xml:space="preserve">
-    <value>Seconds to wait before download</value>
+    <value>Sekunden vor dem Download warten</value>
   </data>
   <data name="LblSkySurveyUnavailable" xml:space="preserve">
-    <value>{0} is unavailable. Please select an alternative image source.
+    <value>{0} ist nicht verfügbar. Bitte eine alternative Bildquelle wählen.
 
-Reason: {1}</value>
+Grund: {1}</value>
   </data>
   <data name="LblImageSourceError" xml:space="preserve">
-    <value>Image source error</value>
+    <value>Bilddateifehler</value>
   </data>
   <data name="LblSaveImageQueueSize" xml:space="preserve">
     <value>Image Save Queue Size</value>
   </data>
   <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
-    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+    <value>Dies erhöht die Anzahl der Bilder in der Warteschlange zur Verarbeitung und zum Speichern. Bei kurzen Belichtungen ist dies sinnvoll, um die Abarbeitung der Sequenz bei kurzen Belichtungszeiten auf Kosten eines erhöhten Speicherbedarfs zu beschleunigen.</value>
   </data>
   <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
-    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+    <value>Die ausgewählte Quelle zur Zeitermittlung konnte keine gültige Zeit liefern. Bitte wählen Sie eine andere Quelle.</value>
   </data>
   <data name="LblLoadingPlugin" xml:space="preserve">
-    <value>Loading plugin {0} version {1} created by {2}</value>
+    <value>Lade Plugin {0} Version {1} erstellt von {2}</value>
   </data>
   <data name="LblMGENSetup" xml:space="preserve">
     <value>MGEN Setup</value>
@@ -6307,13 +6307,13 @@ Reason: {1}</value>
     <value>Platesolve3</value>
   </data>
   <data name="LblPlatesolve3Directory" xml:space="preserve">
-    <value>Platesolve3 Location</value>
+    <value>Platesolve3 Ort</value>
   </data>
   <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
-    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+    <value>Keine Koordinaten verfügbar. Platesolve3 erfordert Koordinaten zum Lösen!</value>
   </data>
   <data name="LblPlatesolve3NotFound" xml:space="preserve">
-    <value>Platesolve3 exe not found</value>
+    <value>Platesolve3 exe nicht gefunden</value>
   </data>
   <data name="LblBackupDockLayout" xml:space="preserve">
     <value>Backup Layout</value>
@@ -6322,24 +6322,45 @@ Reason: {1}</value>
     <value>Backup layout failed</value>
   </data>
   <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
-    <value>Imaging tab layout backed up</value>
+    <value>Aufnahme Tab Layout gesichert</value>
   </data>
   <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
     <value>Backup the imaging tab layout to a file, so it can be restored at a later point</value>
   </data>
   <data name="LblDockLayoutReset" xml:space="preserve">
-    <value>Imaging tab layout reset</value>
+    <value>Aufnahme Tab Layout zurücksetzen</value>
   </data>
   <data name="LblDockLayoutRestored" xml:space="preserve">
-    <value>Imaging tab layout restored</value>
+    <value>Aufnahme Tab Layout wiederhergestellt</value>
   </data>
   <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
-    <value>Restore Layout</value>
+    <value>Layout wiederherstellen</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
-    <value>Restore layout failed</value>
+    <value>Layout Wiederherstellung fehlgeschlagen</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
-    <value>Restore imaging tab layout from a backup</value>
+    <value>Aufnahme Tab Layout aus Backup wiederherstellen</value>
+  </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Exposure Info</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>UPDATE TARGET</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>No Filter</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Dither Settling</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
   </data>
 </root>

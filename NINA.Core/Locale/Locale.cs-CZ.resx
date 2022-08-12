@@ -6344,4 +6344,25 @@ Důvod: {1}</value>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
     <value>Obnovení rozvržení ze zálohy</value>
   </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Celkem</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Info o Expozici</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>AKTUALIZOVAT CÍL</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>Žádný Filtr</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Nastavení Ditheringu</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>Automatické zaostření se nepodařilo dokončit. Dosažen maximální počet měřicích bodů.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>Automatické zaostření se nepodařilo dokončit. Pozice zaostření dosáhla hodnoty 0.</value>
+  </data>
 </root>

@@ -6322,4 +6322,25 @@ Reason: {1}</value>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
     <value>画像タブのレイアウトをバックアップから復元</value>
   </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>合計</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>露出情報</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>UPDATE TARGET</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>フィルターなし</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>ディザリング設定</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>オートフォーカスが完了できませんでした。測定ポイント数が最大になりました。</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>オートフォーカスが完了できませんでした。フォーカス位置は0になりました。</value>
+  </data>
 </root>

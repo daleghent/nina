@@ -6339,4 +6339,25 @@ Raó: {1}</value>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
     <value>Restaura la disposició de la pestanya d'imatge des d'una còpia de seguretat</value>
   </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Exposure Info</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>UPDATE TARGET</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>No Filter</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Dither Settling</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+  </data>
 </root>
