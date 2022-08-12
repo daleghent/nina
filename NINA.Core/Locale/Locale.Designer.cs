@@ -3578,6 +3578,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autofocus failed to complete. Maximum number of measurement points reached..
+        /// </summary>
+        internal static string LblAutoFocusPointLimitReached {
+            get {
+                return ResourceManager.GetString("LblAutoFocusPointLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect..
         /// </summary>
         internal static string LblAutoFocusPointOutsideOfBounds {
@@ -3655,6 +3664,15 @@ namespace NINA.Core.Locale {
         internal static string LblAutoFocusTrendCorrelationCoefficientLow {
             get {
                 return ResourceManager.GetString("LblAutoFocusTrendCorrelationCoefficientLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autofocus failed to complete. Focuser Position reached 0..
+        /// </summary>
+        internal static string LblAutoFocusZeroPositionReached {
+            get {
+                return ResourceManager.GetString("LblAutoFocusZeroPositionReached", resourceCulture);
             }
         }
         

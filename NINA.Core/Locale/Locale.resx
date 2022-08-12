@@ -6362,4 +6362,10 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>No Filter</value>
   </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+  </data>
 </root>

@@ -597,6 +597,9 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
             AutoFocusReport report = null;
 
+            // Restrict upper limit of points in case of unexpected scenario that would not be interrupted otherwise. E.g. a zigzag pattern would lead to that
+            var maximumFocusPoints = profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint * profileService.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps * 10;
+
             int numberOfAttempts = 0;
             System.Drawing.Rectangle oldSubSample = new System.Drawing.Rectangle();
             int initialFocusPosition = focuserMediator.GetInfo().Position;
@@ -670,6 +673,19 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                             leftcount = TrendlineFitting.LeftTrend.DataPoints.Count();
                             rightcount = TrendlineFitting.RightTrend.DataPoints.Count();
+
+                            if(maximumFocusPoints < FocusPoints.Count) {
+                                // Break out when the maximum limit of focus points is reached
+                                Notification.ShowError(Loc.Instance["LblAutoFocusPointLimitReached"]);
+                                Logger.Error($"Autofocus failed to complete. Maximum number of focus points exceeded ({maximumFocusPoints}).");
+                                break;
+                            }
+                            if(focuserMediator.GetInfo().Position == 0) {
+                                // Break out when the focuser hits the zero position. It can't continue from there
+                                Notification.ShowError(Loc.Instance["LblAutoFocusZeroPositionReached"]);
+                                Logger.Error("Autofocus failed to complete. Focuser Position reached 0.");
+                                break;
+                            }
 
                             token.ThrowIfCancellationRequested();
                         } while (rightcount + FocusPoints.Where(dp => dp.X > TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps || leftcount + FocusPoints.Where(dp => dp.X < TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps);
