@@ -23,6 +23,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Improved layout of plate solve pop up during centering and added a status indicator inside the window as well
 - Plate solve pop out from solve button above the image inside the imaging tab now shows the thumbnail and also keeps the solve history
 - Aberration inspector no longer pops up a new window but is instead a toggleable button and replaces the image itself. This also allows for looping exposures and keeping the inspector updated.
+- Atik native driver improvements:
+    - Full support for Apx26/Apx60 exposure speeds and presets
+    - Fast readout/preview mode may be selected on CCD models that support them
+    - Window heater may now be controlled on models that are equipped with one
+    - 16bit output is now explicitly configured on CMOS models that support both 12bit and 16bit output
+    - Many thanks to [Atik Cameras, Ltd.](https://www.atik-cameras.com/) for loaning a 428ex camera for use in the testing and improvement of the native driver
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
