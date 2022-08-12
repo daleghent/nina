@@ -6362,6 +6362,9 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>No Filter</value>
   </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Dither Settling</value>
+  </data>
   <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
     <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
   </data>

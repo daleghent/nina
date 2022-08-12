@@ -52,8 +52,11 @@ namespace NINA.Profile {
             skyGuardCallbackPort = 8000;
             skyGuardTimeLapsChecked = false;
             skyGuardValueMaxGuiding = 1;
-            skyGuardTimeOutGuiding = 5;
             skyGuardTimeLapsGuiding = 60;
+            skyGuardTimeLapsDitherChecked = false;
+            skyGuardValueMaxDithering = 1;
+            skyGuardTimeLapsDithering = 60;
+            skyGuardTimeOutGuiding = 5;
 
             var defaultPHD2Path = Environment.ExpandEnvironmentVariables(@"%programfiles(x86)%\PHDGuiding2\phd2.exe");
 
@@ -377,6 +380,9 @@ namespace NINA.Profile {
         bool skyGuardTimeLapsChecked;
         double skyGuardValueMaxGuiding;
         double skyGuardTimeLapsGuiding;
+        bool skyGuardTimeLapsDitherChecked;
+        double skyGuardValueMaxDithering;
+        double skyGuardTimeLapsDithering;
         double skyGuardTimeOutGuiding;
 
         /// <summary>
@@ -487,6 +493,39 @@ namespace NINA.Profile {
                 if (skyGuardTimeLapsGuiding != value)
                 {
                     skyGuardTimeLapsGuiding = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        public bool SkyGuardTimeLapsDitherChecked {
+            get => skyGuardTimeLapsDitherChecked;
+            set {
+                if (skyGuardTimeLapsDitherChecked != value) {
+                    skyGuardTimeLapsDitherChecked = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        public double SkyGuardValueMaxDithering {
+            get => skyGuardValueMaxDithering;
+            set {
+                if (skyGuardValueMaxDithering != value) {
+                    skyGuardValueMaxDithering = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [DataMember]
+        public double SkyGuardTimeLapsDithering {
+            get => skyGuardTimeLapsDithering;
+            set {
+                if (skyGuardTimeLapsDithering != value) {
+                    skyGuardTimeLapsDithering = value;
                     RaisePropertyChanged();
                 }
             }

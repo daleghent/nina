@@ -905,6 +905,11 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         /// <returns></returns>
         public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken token) {
             try {
+                // Variable declaration:
+                double maxValueDithering = profileService.ActiveProfile.GuiderSettings.SkyGuardValueMaxDithering;
+                double timeLaps = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsDithering;
+                bool settleChecked = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsDitherChecked;
+
                 NewTimeOut();
 
                 string isDitheringInProgress;
@@ -941,6 +946,25 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                 await StatusLoop("SKSS_IsDitheringInProgress", "true", true, token);
                 await StatusLoop("SKSS_IsDitheringInProgress", "true", false, token);
+
+                if (settleChecked) {
+                    do {
+                        await Task.Delay(1000, token);
+
+                        if (DateTime.Now >= dateTimeOut)
+                            throw new TimeoutException();
+
+                        if (token.IsCancellationRequested)
+                            throw new OperationCanceledException(token);
+
+                        timeLaps--;
+
+                        if (Math.Sqrt((errorX * errorX) + (errorY * errorY)) >= maxValueDithering) {
+                            timeLaps = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsDithering;
+                        }
+
+                    } while (timeLaps > 0);
+                }
 
                 return true;
 

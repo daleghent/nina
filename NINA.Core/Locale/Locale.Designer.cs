@@ -15346,6 +15346,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dither Settling.
+        /// </summary>
+        internal static string LblSkyGuardTimeLapsDitherChecked {
+            get {
+                return ResourceManager.GetString("LblSkyGuardTimeLapsDitherChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to For a duration of.
         /// </summary>
         internal static string LblSkyGuardTimeLapsGuiding {
