@@ -327,7 +327,8 @@
                                     Default="{StaticResource Default}"
                                     LegacySbig="{StaticResource Default}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}"
+                                    Atik="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -542,6 +543,7 @@
                                     </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
+
                             <DataTemplate x:Key="QhyCcd">
                                 <DockPanel Margin="0,0,0,6">
                                     <TextBlock
@@ -652,13 +654,60 @@
                                 </StackPanel>
                             </DataTemplate>
 
+                            <DataTemplate x:Key="Atik">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasGainPresets, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAtikGainPreset}" />
+                                        <ComboBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            SelectedIndex="{Binding GainPreset}"
+                                            ItemsSource="{Binding GainPresets}" />
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasExposureSpeed, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAtikExposureSpeed}" />
+                                        <ComboBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            SelectedIndex="{Binding ExposureSpeed}"
+                                            ItemsSource="{Binding ExposureSpeeds}" />
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAtikWindowHeaterPowerLevel}" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="(1 - 255)" />
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="255"
+                                            MinValue="1"
+                                            StepSize="1"
+                                            Value="{Binding WindowHeaterPowerLevel, Mode=TwoWay}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
+
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
                                 Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
                                 LegacySbig="{StaticResource LegacySbig}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}" />
+                                Touptek="{StaticResource Altair}"
+                                Atik="{StaticResource Atik}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

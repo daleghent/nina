@@ -3260,6 +3260,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exposure speed.
+        /// </summary>
+        internal static string LblAtikExposureSpeed {
+            get {
+                return ResourceManager.GetString("LblAtikExposureSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gain preset.
+        /// </summary>
+        internal static string LblAtikGainPreset {
+            get {
+                return ResourceManager.GetString("LblAtikGainPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heater power level.
+        /// </summary>
+        internal static string LblAtikWindowHeaterPowerLevel {
+            get {
+                return ResourceManager.GetString("LblAtikWindowHeaterPowerLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
         internal static string LblAuthor {
