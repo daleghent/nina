@@ -27,6 +27,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - When cloning a profile, the dock config for that profile will be cloned too
 - Simple Sequencer - "Cool Camera" toggled to on will also turn on dew heater when available as well as "Warm Camera" toggled to on will turn off the dew heater when enabled
 - "Wait For Time", "Wait for Timespan" and Settle reports now count down instead of up in the progress report
+- Standard Autofocus: Break out of autofocus when a large number of points were taken without success or when the focuser hits the zero position
 
 ## Features
 - Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
