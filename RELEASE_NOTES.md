@@ -42,6 +42,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
     - When a target is saved these recorded exposure times are also stored with it to be reloaded at a later point
     - Furthermore this info will also be used to set the `$$FRAMENR$$` for exposures in the context of that target to have a continuous increment
     - Rows can manually be removed and the counter will reset
+- In the Imaging Tab above the image preview, a new button to rotate an image by 90° per click is added. Each following image will then also be rotated. This rotation is for display only and doesn't affect the data.
 
 # Version 2.0
 

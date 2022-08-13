@@ -6365,10 +6365,10 @@ Reason: {1}</value>
   <data name="LblAtikExposureSpeed" xml:space="preserve">
     <value>Exposure speed</value>
   </data>
-	<data name="LblAtikGainPreset" xml:space="preserve">
+  <data name="LblAtikGainPreset" xml:space="preserve">
     <value>Gain preset</value>
   </data>
-	<data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
     <value>Heater power level</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
@@ -6379,5 +6379,8 @@ Reason: {1}</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
     <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won't affect the image data.</value>
   </data>
 </root>

@@ -14085,6 +14085,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won&apos;t affect the image data..
+        /// </summary>
+        internal static string LblRotateImageTooltip {
+            get {
+                return ResourceManager.GetString("LblRotateImageTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When enabled, the sky background will be rotated instead of the rectangle..
         /// </summary>
         internal static string LblRotateSkyTooltip {

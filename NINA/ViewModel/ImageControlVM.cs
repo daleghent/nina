@@ -68,6 +68,7 @@ namespace NINA.ViewModel {
             DragStopCommand = new RelayCommand(BahtinovDragStop);
             DragMoveCommand = new RelayCommand(BahtinovDragMove);
             InspectAberrationCommand = new AsyncCommand<bool>(() => InspectAberration(), (object o) => Image != null);
+            RotateImageCommand = new RelayCommand((object o) => ImageRotation += 90);
 
             PixelPeepStartCommand = new RelayCommand(PixelPeeperStart);
             PixelPeepMoveCommand = new RelayCommand(PixelPeeperMove);
@@ -342,6 +343,7 @@ namespace NINA.ViewModel {
             }
         }
 
+        public ICommand RotateImageCommand { get; private set; }
         public IAsyncCommand InspectAberrationCommand { get; private set; }
         public ICommand DragStartCommand { get; private set; }
         public ICommand DragStopCommand { get; private set; }
@@ -426,6 +428,15 @@ namespace NINA.ViewModel {
             }
             set {
                 _renderedImage = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int imageRotation;
+        public int ImageRotation {
+            get => imageRotation;
+            set {
+                imageRotation = (int)AstroUtil.EuclidianModulus(value, 360);
                 RaisePropertyChanged();
             }
         }
