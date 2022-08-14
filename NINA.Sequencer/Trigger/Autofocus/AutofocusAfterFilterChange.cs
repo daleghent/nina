@@ -102,6 +102,10 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             LastAutoFocusFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
         }
 
+        public override void SequenceBlockInitialize() {
+            LastAutoFocusFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
+        }
+
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
             if (!(nextItem is IExposureItem)) { return false; }
