@@ -72,7 +72,8 @@ namespace NINA.ViewModel.FramingAssistant {
                                   IRotatorMediator rotatorMediator,
                                   IDomeMediator domeMediator,
                                   IDomeFollower domeFollower,
-                                  IImageDataFactory imageDataFactory) : base(profileService) {
+                                  IImageDataFactory imageDataFactory,
+                                  IWindowServiceFactory windowServiceFactory) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -88,6 +89,7 @@ namespace NINA.ViewModel.FramingAssistant {
             this.domeMediator = domeMediator;
             this.domeFollower = domeFollower;
             this.imageDataFactory = imageDataFactory;
+            this.windowServiceFactory = windowServiceFactory;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
 
@@ -697,6 +699,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private IDomeFollower domeFollower;
         private NighttimeData nighttimeData;
         private IImageDataFactory imageDataFactory;
+        private IWindowServiceFactory windowServiceFactory;
 
         public NighttimeData NighttimeData {
             get => nighttimeData;
@@ -1190,35 +1193,44 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private async Task<FileSkySurveyImage> PlateSolveSkySurvey(FileSkySurveyImage skySurveyImage) {
-            var referenceCoordinates = skySurveyImage.Coordinates != null ? skySurveyImage.Coordinates : DSO.Coordinates;
-            if (referenceCoordinates != null) {
-                skySurveyImage.Data.MetaData.Target.Coordinates = referenceCoordinates;
-            } else {
-                skySurveyImage.Data.MetaData.Target.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
-            }
+            var referenceCoordinates = skySurveyImage.Coordinates != null ? skySurveyImage.Coordinates : DSO.Coordinates ?? new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+            skySurveyImage.Data.MetaData.Target.Coordinates = referenceCoordinates;
 
-            var diagResult = MyMessageBox.Show(string.Format(Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
+            var focalLength = double.IsNaN(skySurveyImage.Data.MetaData.Telescope.FocalLength) ? this.FocalLength : skySurveyImage.Data.MetaData.Telescope.FocalLength;
+            var pixelSize = double.IsNaN(skySurveyImage.Data.MetaData.Camera.PixelSize) ? this.CameraPixelSize : skySurveyImage.Data.MetaData.Camera.PixelSize;
 
-            if (diagResult == MessageBoxResult.No) {
-                referenceCoordinates = null;
+            var framingPlateSolveParameter = new FramingPlateSolveParameter(
+                referenceCoordinates,
+                focalLength,
+                pixelSize,
+                skySurveyImage.Data.MetaData.Camera.BinX
+            );
+
+            var diag = windowServiceFactory.Create();
+            await diag.ShowDialog(framingPlateSolveParameter, Loc.Instance["LblPlateSolveRequired"]);
+
+            if(framingPlateSolveParameter.DoBlindSolve == null) { throw new OperationCanceledException(); }
+            //var diagResult = MyMessageBox.Show(string.Format(Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
+            
+            if (framingPlateSolveParameter.DoBlindSolve == true) {
+                framingPlateSolveParameter.Coordinates = null;
                 skySurveyImage.Data.MetaData.Target.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
             }
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
-            var focalLength = double.IsNaN(skySurveyImage.Data.MetaData.Telescope.FocalLength) ? this.FocalLength : skySurveyImage.Data.MetaData.Telescope.FocalLength;
-            var pixelSize = double.IsNaN(skySurveyImage.Data.MetaData.Camera.PixelSize) ? this.CameraPixelSize : skySurveyImage.Data.MetaData.Camera.PixelSize;
+            
 
             var parameter = new PlateSolveParameter() {
-                Binning = skySurveyImage.Data.MetaData.Camera.BinX,
-                Coordinates = referenceCoordinates,
+                Binning = framingPlateSolveParameter.Binning,
+                Coordinates = framingPlateSolveParameter.Coordinates?.Coordinates,
                 DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
-                FocalLength = focalLength,
+                FocalLength = framingPlateSolveParameter.FocalLength,
                 MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
-                PixelSize = pixelSize,
+                PixelSize = framingPlateSolveParameter.PixelSize,
                 Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                 SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
-                BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
+                BlindFailoverEnabled = false
             };
 
             var imageSolver = new ImageSolver(plateSolver, blindSolver);

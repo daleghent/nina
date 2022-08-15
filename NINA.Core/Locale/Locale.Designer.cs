@@ -9436,6 +9436,35 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image needs to be solved for framing.
+        ///Please confirm the meta data to use for solving.
+        ///Once confirmed choose which solver should be used..
+        /// </summary>
+        internal static string LblFramingPlateSolvePromptText {
+            get {
+                return ResourceManager.GetString("LblFramingPlateSolvePromptText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When blind solver is selected, the coordinates will be ignored and the blind solver that is set up in the options will be used..
+        /// </summary>
+        internal static string LblFramingSolveWithBlindSolver {
+            get {
+                return ResourceManager.GetString("LblFramingSolveWithBlindSolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options..
+        /// </summary>
+        internal static string LblFramingSolveWithPlateSolver {
+            get {
+                return ResourceManager.GetString("LblFramingSolveWithPlateSolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to {0} from the framing wizard.
         /// </summary>
         internal static string LblFramingWizardSlewFailed {
@@ -13088,6 +13117,15 @@ namespace NINA.Core.Locale {
         internal static string LblPlateSolveReattemptDelay {
             get {
                 return ResourceManager.GetString("LblPlateSolveReattemptDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platesolve required.
+        /// </summary>
+        internal static string LblPlateSolveRequired {
+            get {
+                return ResourceManager.GetString("LblPlateSolveRequired", resourceCulture);
             }
         }
         
