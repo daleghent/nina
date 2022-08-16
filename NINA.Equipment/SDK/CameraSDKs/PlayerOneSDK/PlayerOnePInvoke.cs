@@ -409,7 +409,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
     public enum POAImgFormat  // Image Data Format Definition
     {
-        POA_RAW8,       // 8bit raw data, 1 pixel 1 byte, value range[0, 255]
+        POA_RAW8 = 0,       // 8bit raw data, 1 pixel 1 byte, value range[0, 255]
         POA_RAW16,      // 16bit raw data, 1 pixel 2 bytes, value range[0, 65535]
         POA_RGB24,      // RGB888 color data, 1 pixel 3 bytes, value range[0, 255] (only color camera)
         POA_MONO8,      // 8bit monochrome data, convert the Bayer Filter Array to monochrome data. 1 pixel 1 byte, value range[0, 255] (only color camera)
@@ -449,40 +449,42 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
     {
         VAL_INT = 0,                        // integer(int)
         VAL_FLOAT,                          // float(double)
-        VAL_BOOL,                           // bool(POABool)
+        VAL_BOOL                            // bool(POABool)
     }
 
     public enum POAConfig                 // Camera Config Definition
     {
-        POA_EXPOSURE = 0,                   // exposure time(unit: us), valueType == VAL_INT
-        POA_GAIN,                           // gain, valueType == VAL_INT
-        POA_HARDWARE_BIN,                   // hardware bin, valueType == VAL_BOOL
-        POA_TEMPERATURE,                    // camera temperature(uint: C), valueType == VAL_FLOAT
-        POA_WB_R,                           // red pixels coefficient of white balance, valueType == VAL_INT
-        POA_WB_G,                           // green pixels coefficient of white balance, valueType == VAL_INT
-        POA_WB_B,                           // blue pixels coefficient of white balance, valueType == VAL_INT
-        POA_OFFSET,                         // camera offset, valueType == VAL_INT
-        POA_AUTOEXPO_MAX_GAIN,              // maximum gain when auto-adjust, valueType == VAL_INT
-        POA_AUTOEXPO_MAX_EXPOSURE,          // maximum exposure when auto-adjust(uint: ms), valueType == VAL_INT
-        POA_AUTOEXPO_BRIGHTNESS,            // target brightness when auto-adjust, valueType == VAL_INT
-        POA_GUIDE_NORTH,                    // ST4 guide north, generally,it's DEC+ on the mount, valueType == VAL_BOOL
-        POA_GUIDE_SOUTH,                    // ST4 guide south, generally,it's DEC- on the mount, valueType == VAL_BOOL
-        POA_GUIDE_EAST,                     // ST4 guide east, generally,it's RA- on the mount, valueType == VAL_BOOL
-        POA_GUIDE_WEST,                     // ST4 guide west, generally,it's RA+ on the mount, valueType == VAL_BOOL
-        POA_EGAIN,                          // e/ADU, This value will change with gain, valueType == VAL_FLOAT
-        POA_COOLER_POWER,                   // cooler power percentage(only cool camera), valueType == VAL_INT
-        POA_TARGET_TEMP,                    // camera target temperature(uint: C), valueType == VAL_INT
-        POA_COOLER,                         // turn cooler on or off, valueType == VAL_BOOL
-        POA_HEATER,                         // turn lens heater on or off, valueType == VAL_BOOL
-        POA_FLIP_NONE,                      // no flip, note: when set this config, the parameter value will be ignored, valueType == VAL_BOOL
-        POA_FLIP_HORI,                      // flip the image horizontally, note: when set this config, the parameter value will be ignored, valueType == VAL_BOOL
-        POA_FLIP_VERT,                      // flip the image vertically, note: when set this config, the parameter value will be ignored, valueType == VAL_BOOL
-        POA_FLIP_BOTH,                      // flip the image horizontally and vertically, note: when set this config, the parameter value will be ignored, valueType == VAL_BOOL
-        POA_FRAME_LIMIT,                    // Frame rate limit, the range:[0, 2000], 0 means no limit, valueType == VAL_INT
+        POA_EXPOSURE = 0,                   // exposure time(unit: us), read-write, valueType == VAL_INT
+        POA_GAIN,                           // gain, read-write, valueType == VAL_INT
+        POA_HARDWARE_BIN,                   // hardware bin, read-write, valueType == VAL_BOOL
+        POA_TEMPERATURE,                    // camera temperature(uint: C), read-only, valueType == VAL_FLOAT
+        POA_WB_R,                           // red pixels coefficient of white balance, read-write, valueType == VAL_INT
+        POA_WB_G,                           // green pixels coefficient of white balance, read-write, valueType == VAL_INT
+        POA_WB_B,                           // blue pixels coefficient of white balance, read-write, valueType == VAL_INT
+        POA_OFFSET,                         // camera offset, read-write, valueType == VAL_INT
+        POA_AUTOEXPO_MAX_GAIN,              // maximum gain when auto-adjust, read-write, valueType == VAL_INT
+        POA_AUTOEXPO_MAX_EXPOSURE,          // maximum exposure when auto-adjust(uint: ms), read-write, valueType == VAL_INT
+        POA_AUTOEXPO_BRIGHTNESS,            // target brightness when auto-adjust, read-write, valueType == VAL_INT
+        POA_GUIDE_NORTH,                    // ST4 guide north, generally,it's DEC+ on the mount, read-write, valueType == VAL_BOOL
+        POA_GUIDE_SOUTH,                    // ST4 guide south, generally,it's DEC- on the mount, read-write, valueType == VAL_BOOL
+        POA_GUIDE_EAST,                     // ST4 guide east, generally,it's RA- on the mount, read-write, valueType == VAL_BOOL
+        POA_GUIDE_WEST,                     // ST4 guide west, generally,it's RA+ on the mount, read-write, valueType == VAL_BOOL
+        POA_EGAIN,                          // e/ADU, This value will change with gain, read-only, valueType == VAL_FLOAT
+        POA_COOLER_POWER,                   // cooler power percentage[0-100%](only cool camera), read-only, valueType == VAL_INT
+        POA_TARGET_TEMP,                    // camera target temperature(uint: C), read-write, valueType == VAL_INT
+        POA_COOLER,                         // turn cooler(and fan) on or off, read-write, valueType == VAL_BOOL
+        POA_HEATER,                         // turn lens heater on or off, read-write, valueType == VAL_BOOL
+        POA_HEATER_POWER,                   // lens heater power percentage[0-100%], read-write, valueType == VAL_INT
+        POA_FAN_POWER,                      // radiator fan power percentage[0-100%], read-write, valueType == VAL_INT
+        POA_FLIP_NONE,                      // no flip, Note: set this config(POASetConfig), the 'confValue' will be ignored, read-write, valueType == VAL_BOOL
+        POA_FLIP_HORI,                      // flip the image horizontally, Note: set this config(POASetConfig), the 'confValue' will be ignored, read-write, valueType == VAL_BOOL
+        POA_FLIP_VERT,                      // flip the image vertically, Note: set this config(POASetConfig), the 'confValue' will be ignored, read-write, valueType == VAL_BOOL
+        POA_FLIP_BOTH,                      // flip the image horizontally and vertically, Note: set this config(POASetConfig), the 'confValue' will be ignored, read-write, valueType == VAL_BOOL
+        POA_FRAME_LIMIT,                    // Frame rate limit, the range:[0, 2000], 0 means no limit, read-write, valueType == VAL_INT
         POA_HQI,                            // High quality image, for those without DDR camera(guide camera), if set POA_TRUE, this will reduce the waviness and stripe of the image,
-
-        // but frame rate may go down, note: this config has no effect on those cameras that with DDR. valueType == VAL_BOOL
-        POA_USB_BANDWIDTH_LIMIT,            // USB bandwidth limit, valueType == VAL_INT
+                                            // but frame rate may go down, note: this config has no effect on those cameras that with DDR. read-write, valueType == VAL_BOOL
+        POA_USB_BANDWIDTH_LIMIT,            // USB bandwidth limit, read-write, valueType == VAL_INT
+        POA_PIXEL_BIN_SUM                   // take the sum of pixels after binning, POA_TRUE is sum and POA_FLASE is average, default is POA_FLASE, read-write, valueType == VAL_BOOL
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -504,7 +506,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         public POABool isUSB3Speed;                // is usb3.0 speed
         public POABayerPattern bayerPattern;       // the bayer filter pattern of camera
         public double pixelSize;                   // camera pixel size(unit: um)
-
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 64)]
         public byte[] serialNumber;                        // the serial number of camera,it's unique
 
@@ -549,16 +550,16 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
     [StructLayout(LayoutKind.Explicit)]
     public struct POAConfigValue           // Config Value Definition
     {
-        //The "FieldOffset:" means that this Integer starts
-        //Offset 0, in bytes, (with sizeof(long) = 4 bytes length):
+        //The "FieldOffset:" means that this Integer starts 
+        //Offset 0, in bytes, (with sizeof(long) = 4 bytes length): 
         [FieldOffset(0)]
         public int intValue;                      // int
 
-        //Offset 0, (length sizeof(double) = 8 bytes)...
+        //Offset 0, (length sizeof(double) = 8 bytes)...   
         [FieldOffset(0)]
         public double floatValue;                  // double
 
-        //Offset 0, (length sizeof(enum) = 4 bytes)...
+        //Offset 0, (length sizeof(enum) = 4 bytes)...   
         [FieldOffset(0)]
         public POABool boolValue;                  // POABool
     }
@@ -574,10 +575,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         public POAConfigValue maxValue;            // maximum value
         public POAConfigValue minValue;            // minimum value
         public POAConfigValue defaultValue;        // default value
-
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 64)]
         public byte[] configName;                // POAConfig name, eg: POA_EXPOSURE: "Exposure", POA_TARGET_TEMP: "TargetTemp"
-
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 128)]
         public byte[] configDescription;            // a brief introduction about this one POAConfig
 
@@ -592,4 +591,23 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             get { return Encoding.ASCII.GetString(configDescription).TrimEnd((Char)0); }
         }
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POASensorModeInfo         //The information of sensor mode 
+    {
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 64)]
+        public byte[] modeName;                        //name of sensor mode that can be displayed on the UI, eg: combobox
+
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 128)]
+        public byte[] modeDesc;                        //description of sensor mode, which can be used for tooltips 
+
+        public string name {
+            get { return Encoding.ASCII.GetString(modeName).TrimEnd((Char)0); }
+        }
+
+        public string desc {
+            get { return Encoding.ASCII.GetString(modeDesc).TrimEnd((Char)0); }
+        }
+    }
+
 }
