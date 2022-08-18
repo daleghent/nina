@@ -38,12 +38,21 @@ namespace NINA.ViewModel {
 
     internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
 
-        public ApplicationVM(IProfileService profileService, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator, IImageSaveMediator imageSaveMediator, IPluginLoader pluginProvider) : base(profileService) {
+        public ApplicationVM(IProfileService profileService,
+                             ProjectVersion projectVersion,
+                             ICameraMediator cameraMediator,
+                             IApplicationMediator applicationMediator,
+                             IImageSaveMediator imageSaveMediator,
+                             IPluginLoader pluginProvider,
+                             IDockManagerVM dockManagerVM,
+                             IApplicationDeviceConnectionVM applicationDeviceConnectionVM) : base(profileService) {
             applicationMediator.RegisterHandler(this);
             this.projectVersion = projectVersion;
             this.cameraMediator = cameraMediator;
             this.imageSaveMediator = imageSaveMediator;
             this.pluginProvider = pluginProvider;
+            this.dockManager = dockManagerVM;
+            this.applicationDeviceConnectionVM = applicationDeviceConnectionVM;
             cameraMediator.RegisterConsumer(this);
 
             ExitCommand = new RelayCommand(ExitApplication);
@@ -132,6 +141,8 @@ namespace NINA.ViewModel {
         private readonly ICameraMediator cameraMediator;
         private readonly IImageSaveMediator imageSaveMediator;
         private readonly IPluginLoader pluginProvider;
+        private readonly IDockManagerVM dockManager;
+        private readonly IApplicationDeviceConnectionVM applicationDeviceConnectionVM;
 
         public int TabIndex {
             get {
@@ -177,18 +188,26 @@ namespace NINA.ViewModel {
 
         private void ClosingApplication(object o) {
             try {
+                Logger.Debug("Saving dock layout");
+                dockManager.SaveAvalonDockLayout();
+            } catch { }
+            try {
+                Logger.Debug("Disconnecting equipment");
+                applicationDeviceConnectionVM.Shutdown();
+            } catch { }
+            try {
                 Logger.Debug("Releasing profile");
                 profileService.Release();
-            } catch (Exception) { }
+            } catch { }
             try {
                 Logger.Debug("Saving user.settings");
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
-            } catch (Exception) { }
+            } catch { }
 
             try {
                 Logger.Debug("Shutting down ImageSaveMediator");
                 imageSaveMediator.Shutdown();
-            } catch (Exception) { }
+            } catch { }
 
             try {
                 foreach (var plugin in pluginProvider.Plugins) {
@@ -201,10 +220,12 @@ namespace NINA.ViewModel {
                         }
                     }
                 }
-            } catch (Exception) { }
+            } catch { }
 
             Logger.CloseAndFlush();
             Notification.Dispose();
+
+            Environment.Exit(0);
         }
 
         public void UpdateDeviceInfo(CameraInfo deviceInfo) {

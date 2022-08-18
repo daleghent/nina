@@ -127,8 +127,6 @@ namespace NINA.ViewModel {
             initAnchorableTools.Add(autoFocusToolVM);
             initAnchorableTools.Add(focusTargetsVM);
 
-            ClosingCommand = new RelayCommand(ClosingApplication);
-
             profileService.ProfileChanged += ProfileService_ProfileChanged;
 
             Task.Run(async () => {
@@ -426,17 +424,8 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void ClosingApplication(object o) {
-            try {
-                SaveAvalonDockLayout();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-        }
-
         public IAsyncCommand LoadAvalonDockLayoutCommand { get; private set; }
         public ICommand ResetDockLayoutCommand { get; }
-        public ICommand ClosingCommand { get; private set; }
         public ICommand BackupDockLayoutCommand { get; private set; }
         public ICommand RestoreDockLayoutFromFileCommand { get; private set; }        
     }

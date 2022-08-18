@@ -18,10 +18,9 @@ using System.Windows.Input;
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IApplicationDeviceConnectionVM {
-        ICommand ClosingCommand { get; }
         ICommand ConnectAllDevicesCommand { get; }
         ICommand DisconnectAllDevicesCommand { get; }
 
-        Task DisconnectEquipment();
+        void Shutdown();
     }
 }

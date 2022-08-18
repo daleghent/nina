@@ -83,8 +83,6 @@
         </i:EventTrigger>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding AppVM.ClosingCommand}" />
-            <i:InvokeCommandAction Command="{Binding ApplicationDeviceConnectionVM.ClosingCommand}" />
-            <i:InvokeCommandAction Command="{Binding DockManagerVM.ClosingCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">

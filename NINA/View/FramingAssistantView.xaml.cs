@@ -32,11 +32,14 @@ namespace NINA.View {
         }
 
         public void OverlapUnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            Binding binding = new Binding("OverlapValue") { Mode = BindingMode.TwoWay };
-            if ((string)e.AddedItems[0] == "%") {
-                binding.Converter = new PercentageConverter();
+            Binding binding = new Binding("OverlapValue") { Mode = BindingMode.TwoWay };            
+
+            if(e.AddedItems.Count > 0) { 
+                if ((string)e.AddedItems[0] == "%") {
+                    binding.Converter = new PercentageConverter();
+                }
+                OverlapValueStepperControl.SetBinding(IntStepperControl.ValueProperty, binding);
             }
-            OverlapValueStepperControl.SetBinding(IntStepperControl.ValueProperty, binding);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
