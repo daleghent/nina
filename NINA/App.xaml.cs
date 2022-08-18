@@ -196,15 +196,6 @@ namespace NINA {
                 if (result == MessageBoxResult.Yes) {
                     e.Handled = true;
                 } else {
-                    try {
-                        if (_mainWindowViewModel != null) {
-                            if (_mainWindowViewModel.ApplicationDeviceConnectionVM != null) {
-                                AsyncContext.Run(_mainWindowViewModel.ApplicationDeviceConnectionVM.DisconnectEquipment);
-                            }
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                    }
                     e.Handled = true;
                     Current.Shutdown();
                 }
