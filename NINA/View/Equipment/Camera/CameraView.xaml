@@ -323,12 +323,12 @@
                                 </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
+                                    Atik="{StaticResource Default}"
                                     Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
                                     LegacySbig="{StaticResource Default}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}"
-                                    Atik="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -638,8 +638,7 @@
                                         <CheckBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            IsChecked="{Binding UseExternalTrackingCcd}">
-                                        </CheckBox>
+                                            IsChecked="{Binding UseExternalTrackingCcd}" />
                                     </DockPanel>
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding TrackingCcdAscomServerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                         <TextBlock
@@ -664,8 +663,8 @@
                                         <ComboBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            SelectedIndex="{Binding GainPreset}"
-                                            ItemsSource="{Binding GainPresets}" />
+                                            ItemsSource="{Binding GainPresets}"
+                                            SelectedIndex="{Binding GainPreset}" />
                                     </DockPanel>
 
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasExposureSpeed, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
@@ -676,8 +675,8 @@
                                         <ComboBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            SelectedIndex="{Binding ExposureSpeed}"
-                                            ItemsSource="{Binding ExposureSpeeds}" />
+                                            ItemsSource="{Binding ExposureSpeeds}"
+                                            SelectedIndex="{Binding ExposureSpeed}" />
                                     </DockPanel>
 
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
@@ -702,12 +701,12 @@
 
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
+                                Atik="{StaticResource Atik}"
                                 Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
                                 LegacySbig="{StaticResource LegacySbig}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}"
-                                Atik="{StaticResource Atik}" />
+                                Touptek="{StaticResource Altair}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"
@@ -982,7 +981,8 @@
 
                         <local:CameraCoolingChartsView
                             Grid.Row="1"
-                            Margin="5" />
+                            Margin="5"
+                            DataContext="{Binding}" />
                     </Grid>
                 </GroupBox>
             </Grid>
