@@ -96,11 +96,13 @@ namespace NINA.PlateSolving.Solvers {
         private void MoveOrDeleteFile(PlateSolveResult result, string file, string movedFilePrefix, CancellationToken cancelToken) {
             try {
                 if (!result.Success && !cancelToken.IsCancellationRequested) {
-                    var destination = Path.Combine(FAILED_DIRECTORY, $"{movedFilePrefix}.{Path.GetExtension(file)}");
-                    if(File.Exists(destination)) {
-                        File.Delete(destination);
-                    }
-                    File.Move(file, destination);
+                    if(File.Exists(file)) {
+                        var destination = Path.Combine(FAILED_DIRECTORY, $"{movedFilePrefix}.{Path.GetExtension(file)}");
+                        if (File.Exists(destination)) {
+                            File.Delete(destination);
+                        }
+                        File.Move(file, destination);
+                    }                    
                 } else {
                     File.Delete(file);
                 }
