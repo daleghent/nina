@@ -17,6 +17,7 @@ using NINA.Core.Database;
 using NINA.Core.Utility;
 using Nito.AsyncEx;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -149,7 +150,7 @@ namespace NINA.Astrometry {
         private static double DeltaUTToday = 0.0;
         private static double DeltaUTYesterday = 0.0;
         private static double DeltaUTTomorrow = 0.0;
-        private static Dictionary<DateTime, double> DeltaUTCache = new Dictionary<DateTime, double>();
+        private static ConcurrentDictionary<DateTime, double> DeltaUTCache = new ConcurrentDictionary<DateTime, double>();
         private static DateTime DeltaUTReference;
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace NINA.Astrometry {
 
             try {
                 if (!DeltaUTCache.ContainsKey(utcDate.Date)) {
-                    DeltaUTCache.Add(utcDate.Date, deltaUT);
+                    DeltaUTCache.AddOrUpdate(utcDate.Date, deltaUT, (a, b) => b);
                 }                
             } catch(Exception) { }
             
