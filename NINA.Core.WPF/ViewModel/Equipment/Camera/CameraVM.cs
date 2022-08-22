@@ -72,8 +72,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !CameraInfo.Connected);
 
             TempChangeRunning = false;
-            CoolerPowerHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);
-            CCDTemperatureHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);
+            CoolerHistory = new AsyncObservableLimitedSizedStack<CameraCoolingStep>(100);
             ToggleDewHeaterOnCommand = new RelayCommand(ToggleDewHeaterOn);
 
             updateTimer = new DeviceUpdateTimer(
@@ -327,7 +326,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 if (updateTimer != null) {
                     await updateTimer.Stop();
                 }
-
                 if (CameraChooserVM.SelectedDevice.Id == "No_Device") {
                     profileService.ActiveProfile.CameraSettings.Id = CameraChooserVM.SelectedDevice.Id;
                     return false;
@@ -349,6 +347,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                         _cancelConnectCameraSource.Token.ThrowIfCancellationRequested();
                         if (connected) {
+                            CoolerHistory.Clear();
                             this.Cam = cam;
 
                             if (DefaultGain == -1) {
@@ -561,9 +560,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             cameraValues.TryGetValue(nameof(CameraInfo.PixelSize), out o);
             CameraInfo.PixelSize = (double)(o ?? 0.0d);
 
-            DateTime x = DateTime.Now;
-            CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.CoolerPower));
-            CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.Temperature));
+            CoolerHistory.Add(new CameraCoolingStep(OxyPlot.Axes.DateTimeAxis.ToDouble(DateTime.Now), CameraInfo.Temperature, CameraInfo.CoolerPower));
 
             BroadcastCameraInfo();
         }
@@ -966,8 +963,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
-        public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CoolerPowerHistory { get; private set; }
-        public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CCDTemperatureHistory { get; private set; }
+        public AsyncObservableLimitedSizedStack<CameraCoolingStep> CoolerHistory { get; private set; }
         public IAsyncCommand CoolCamCommand { get; private set; }
         public IAsyncCommand WarmCamCommand { get; private set; }
         public ICommand ToggleDewHeaterOnCommand { get; private set; }
@@ -983,5 +979,19 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
         public ICommand RefreshCameraListCommand { get; private set; }
         public ICommand CancelConnectCameraCommand { get; private set; }
+    }
+
+    public class CameraCoolingStep { 
+
+        public CameraCoolingStep(double date, double temperature, double power) {
+            Date = date;
+            Temperature = temperature;
+            Power = power;
+        }
+        public double Date { get; }
+
+        public double Power { get; }
+
+        public double Temperature { get; }
     }
 }

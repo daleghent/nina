@@ -31,6 +31,7 @@
     <oxy:Plot
         HorizontalAlignment="Stretch"
         Background="{StaticResource BackgroundBrush}"
+        DataContext="{Binding}"
         LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
         LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
         LegendOrientation="Vertical"
@@ -79,15 +80,15 @@
         <oxy:Plot.Series>
             <oxy:LineSeries
                 Title="{ns:Loc LblChipTemp}"
-                DataFieldX="Key"
-                DataFieldY="Value"
-                ItemsSource="{Binding CCDTemperatureHistory}"
+                DataFieldX="Date"
+                DataFieldY="Temperature"
+                ItemsSource="{Binding CoolerHistory}"
                 YAxisKey="Temperature" />
             <oxy:LineSeries
                 Title="{ns:Loc LblCoolerPower}"
-                DataFieldX="Key"
-                DataFieldY="Value"
-                ItemsSource="{Binding CoolerPowerHistory}"
+                DataFieldX="Date"
+                DataFieldY="Power"
+                ItemsSource="{Binding CoolerHistory}"
                 Visibility="{Binding Cam.CanSetTemperature, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}"
                 YAxisKey="CoolingPower" />
         </oxy:Plot.Series>
