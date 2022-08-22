@@ -6343,21 +6343,47 @@ Raó: {1}</value>
     <value>Total</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
-    <value>Exposure Info</value>
+    <value>Infomació d'exposició</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
-    <value>UPDATE TARGET</value>
+    <value>ACTUALITZACIÓ OBJECTIU</value>
   </data>
   <data name="LblNoFilter" xml:space="preserve">
-    <value>No Filter</value>
+    <value>Sense Filtre</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Velocitat d'exposició</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Guany preestablert</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Nivell de potència del calefactor</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
-    <value>Dither Settling</value>
+    <value>Estabilització del Dither</value>
   </data>
   <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+    <value>No s'ha pogut completar l'enfocament automàtic. Nombre màxim de punts de mesura assolit.</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+    <value>No s'ha pogut completar l'enfocament automàtic. La posició de l'enfocador ha arribat a 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Gira la imatge 90° en sentit horari. Les imatges següents també es giraran en la mateixa quantitat. Això només té finalitats de visualització i no afectarà les dades de la imatge.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>La imatge s'ha de resoldre per emmarcar.
+Si us plau, confirmeu les metadades que voleu utilitzar per resoldre-la.
+Un cop confirmat, trieu quin solucionador s'ha d'utilitzar.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Es necessària l'astrometria (Platesolve)</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>Quan se selecciona el solucionador d'astrometria cega, s'ignoraran les coordenades i s'utilitzarà el solucionador cec configurat a les opcions.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>Quan se selecciona el solucionador de plaques, les coordenades s'utilitzaran com a coordenades de referència i s'utilitzaran per al solucionador de plaques configurat a les opcions.</value>
   </data>
 </root>

@@ -6360,6 +6360,15 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>No Filter</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Exposure speed</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Gain preset</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Heater power level</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Dither Settling</value>
   </data>
@@ -6368,5 +6377,22 @@ Reason: {1}</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
     <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won't affect the image data.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>Image needs to be solved for framing.
+Please confirm the meta data to use for solving.
+Once confirmed choose which solver should be used.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Platesolve required</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>When blind solver is selected, the coordinates will be ignored and the blind solver that is set up in the options will be used.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
   </data>
 </root>

@@ -6334,6 +6334,15 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>フィルターなし</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>露出速度</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>ゲインのプリセット</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>ヒーターの電力レベル</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>ディザリング設定</value>
   </data>
@@ -6342,5 +6351,20 @@ Reason: {1}</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
     <value>オートフォーカスが完了できませんでした。フォーカス位置は0になりました。</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won't affect the image data.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>フレーミングをするために、画像をプレートソルブする必要があります。プレートソルブに使われるメタデータを確認して下さい。確認できたら、使うソルバーを選択して下さい。</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>プレートソルブが必要です</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>ブラインドソルバーを選択すると、座標は無視され、オプションで設定されたブラインドソルバーが使用されます。</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>プレートソルバーを選択した場合、この座標が参照座標となり、オプションで設定されたプレートソルバーで使われます。</value>
   </data>
 </root>

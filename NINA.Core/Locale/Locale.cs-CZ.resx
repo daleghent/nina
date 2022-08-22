@@ -2870,7 +2870,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Stabilizace</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Nastavte Toleranci Pixelů</value>
+    <value>Tolerance Pixelů</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>Stabilizace po přejezdu</value>
@@ -6356,6 +6356,15 @@ Důvod: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Žádný Filtr</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Rychlost expozice</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Předvolba zisku</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Úroveň výkonu topení</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Nastavení Ditheringu</value>
   </data>
@@ -6364,5 +6373,22 @@ Důvod: {1}</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
     <value>Automatické zaostření se nepodařilo dokončit. Pozice zaostření dosáhla hodnoty 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Otočí snímek o 90° ve směru hodinových ručiček. Následující snímky se pak také otočí o stejnou hodnotu. Toto je určeno pouze pro účely zobrazení a neovlivní data snímku.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>Na snímek je nutné aplikovat astrometrii.
+Potvrďte metadata, která se mají použít pro astrometrii.
+Po potvrzení vyberte, která astrometrie se má použít.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Vyžaduje se astrometrie</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>Pokud je vybráno řešení naslepo, budou souřadnice ignorovány a použije se řešení naslepo, které je nastaveno v možnostech.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>Pokud je vybrána astrometrie, souřadnice se použijí jako referenční souřadnice a použijí se pro astrometrii, která je nastavena v možnostech.</value>
   </data>
 </root>

@@ -6344,21 +6344,47 @@ Razón: {1}</value>
     <value>Total</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
-    <value>Exposure Info</value>
+    <value>Información de exposición</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
-    <value>UPDATE TARGET</value>
+    <value>Actualizar objetivo</value>
   </data>
   <data name="LblNoFilter" xml:space="preserve">
-    <value>No Filter</value>
+    <value>Sin filtro</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Velocidad de exposición</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Ganancia preestablecida</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Nivel de potencia del calefactor</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
-    <value>Dither Settling</value>
+    <value>Estabilizando dither</value>
   </data>
   <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+    <value>No se pudo completar el autoenfoque. Alcanzado el número máximo de puntos de medición.</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+    <value>No se ha podido completar el autoenfoque. La posición del enfocador ha llegado a 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rota la imagen 90° en sentido horario. Las siguientes imágenes también rotarán de igual forma. Solo es para verlas así en pantalla y no afectarán a los datos de la imagen.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>La imagen debe ser resuelta para el fotografiarla.
+Por favor, confirme los metadatos a usar para astrometría.
+Una vez confirmados elija qué programa de astrometría usará.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Se requiere astrometría (platesolve)</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>Cuando se selecciona resolución astrométrica ciega, se ignorarán las coordenadas y se utilizará la astrometría ciega que esté configurada en las opciones.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>Cuando se seleccione el programa de astrometría, las coordenadas se usarán como coordenadas de referencia y se usarán por el resolutor astrométrico configurado en las opciones.</value>
   </data>
 </root>
