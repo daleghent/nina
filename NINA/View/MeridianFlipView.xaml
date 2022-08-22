@@ -27,17 +27,14 @@
         </CollectionViewSource>
 
         <DataTemplate x:Key="RecenterTemplate">
-            <StackPanel
-                Margin="5"
-                DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
-                Orientation="Horizontal">
+            <Grid Margin="5" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="36"
                     Text="{Binding Status.Status}"
                     TextWrapping="Wrap" />
-            </StackPanel>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="PassMeridianTemplate">

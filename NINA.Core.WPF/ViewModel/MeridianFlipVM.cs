@@ -371,7 +371,7 @@ namespace NINA.WPF.Base.ViewModel {
         this._progress = new Progress<ApplicationStatus>(p => Status = p);
         var flip = DoMeridianFlip(targetCoordinates, timeToFlip, cancellationToken);
 
-        var serviceTask = service.ShowDialog(this, Loc.Instance["LblAutoMeridianFlip"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.None, CancelCommand);
+        var serviceTask = service.ShowDialog(this, Loc.Instance["LblMeridianFlipInit"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.None, CancelCommand);
         var flipResult = await flip;
 
         await service.Close();
