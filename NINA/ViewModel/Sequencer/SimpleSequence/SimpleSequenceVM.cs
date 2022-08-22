@@ -727,6 +727,24 @@ namespace NINA.ViewModel {
             private set {
                 overallDuration = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(OverallDurationFormatted));
+            }
+        }
+
+        public string OverallDurationFormatted {
+            get {
+                if(OverallDuration.TotalDays > 1) {
+                    return OverallDuration.ToString(@"dd\d\ hh\h\ mm\m\ ss\s");
+
+                } else if(OverallDuration.TotalHours > 1) {
+                    return OverallDuration.ToString(@"hh\h\ mm\m\ ss\s");
+
+                } else if(OverallDuration.TotalMinutes > 1) {
+                    return OverallDuration.ToString(@"mm\m\ ss\s");
+
+                } else {
+                    return OverallDuration.ToString(@"ss\s");
+                }                
             }
         }
 

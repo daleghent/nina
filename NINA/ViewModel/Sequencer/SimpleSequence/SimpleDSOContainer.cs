@@ -197,6 +197,23 @@ namespace NINA.Sequencer.Container {
             set {
                 estimatedDuration = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(EstimatedDurationFormatted));
+            }
+        }
+        public string EstimatedDurationFormatted {
+            get {
+                if (EstimatedDuration.TotalDays > 1) {
+                    return EstimatedDuration.ToString(@"dd\d\ hh\h\ mm\m\ ss\s");
+
+                } else if (EstimatedDuration.TotalHours > 1) {
+                    return EstimatedDuration.ToString(@"hh\h\ mm\m\ ss\s");
+
+                } else if (EstimatedDuration.TotalMinutes > 1) {
+                    return EstimatedDuration.ToString(@"mm\m\ ss\s");
+
+                } else {
+                    return EstimatedDuration.ToString(@"ss\s");
+                }
             }
         }
 

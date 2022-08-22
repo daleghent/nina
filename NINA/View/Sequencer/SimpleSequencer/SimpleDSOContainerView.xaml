@@ -195,7 +195,7 @@
                                         Margin="5,0,0,0"
                                         HorizontalAlignment="Stretch"
                                         IsReadOnly="True"
-                                        Text="{Binding OverallDuration, StringFormat=hh\\:mm\\:ss, Mode=OneWay}" />
+                                        Text="{Binding OverallDurationFormatted, Mode=OneWay}" />
                                 </UniformGrid>
                             </UniformGrid>
                         </StackPanel>
@@ -259,7 +259,7 @@
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Stretch"
                                     IsReadOnly="True"
-                                    Text="{Binding EstimatedDuration, StringFormat=hh\\:mm\\:ss, Mode=OneWay}" />
+                                    Text="{Binding EstimatedDurationFormatted, Mode=OneWay}" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
