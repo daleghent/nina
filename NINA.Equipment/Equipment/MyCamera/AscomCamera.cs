@@ -321,7 +321,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get {
                 bool val = false;
                 if (CanFastReadout) {
-                    return GetProperty(nameof(Camera.ExposureResolution), false);
+                    return GetProperty(nameof(Camera.FastReadout), false);
                 }
                 return val;
             }
