@@ -114,11 +114,9 @@
 			<ComponentGroupRef Id="External_x86_Atik_files" />
 			<ComponentGroupRef Id="External_x86_Cfitsio_files" />
 			<ComponentGroupRef Id="External_x86_QHYCCD_files" />
-			<ComponentGroupRef Id="External_x86_Canon_files" />
 			<ComponentGroupRef Id="External_x86_FLI_files" />
 			<ComponentGroupRef Id="External_x86_FreeImage_files" />
 			<ComponentGroupRef Id="External_x86_SQLite_files" />
-			<ComponentGroupRef Id="External_x86_Altair_files" />
 			<ComponentGroupRef Id="External_x86_ToupTek_files" />
 			<ComponentGroupRef Id="External_x86_Omegon_files" />
 			<ComponentGroupRef Id="External_x86_NOVAS_files" />
@@ -1566,14 +1564,6 @@
 	</Fragment>
 
 	<Fragment>
-		<ComponentGroup Id="External_x86_Canon_files" Directory="External_x86_Canon">
-			<Component Win64="$(var.Win64)" Id="External_x86_Canon_EDSDK.dll" Guid="3ece4cf6-7d5a-4c39-87b4-8cd08ac4f128">
-				<File Id="External_x86_Canon_EDSDK.dll" Name="EDSDK.dll" Source="$(var.NINA_ProjectDir)External\x86\Canon\EDSDK.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-
-	<Fragment>
 		<ComponentGroup Id="External_x86_FreeImage_files" Directory="External_x86_FreeImage">
 			<Component Win64="$(var.Win64)" Id="External_x86_FreeImage_FreeImage.dll" Guid="88399dd6-7fb4-4139-bde9-01106f07e2db">
 				<File Id="External_x86_FreeImage_FreeImage.dll" Name="FreeImage.dll" Source="$(var.NINA_TargetDir)External\x86\FreeImage\FreeImage.dll" />
@@ -1636,14 +1626,6 @@
 		<ComponentGroup Id="External_x86_ToupTek_files" Directory="External_x86_ToupTek">
 			<Component Win64="$(var.Win64)" Id="External_x86_ToupTek_toupcam.dll" Guid="c6eb2a4b-8c5c-4459-9a4b-8d76a1fff868">
 				<File Id="External_x86_ToupTek_toupcam.dll" Name="toupcam.dll" Source="$(var.NINA_ProjectDir)External\x86\ToupTek\toupcam.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="External_x86_Altair_files" Directory="External_x86_Altair">
-			<Component Win64="$(var.Win64)" Id="External_x86_Altair_altaircam.dll" Guid="5fc243e4-9305-47ca-9033-3c35857b79e6">
-				<File Id="External_x86_Altair_altaircam.dll" Name="altaircam.dll" Source="$(var.NINA_ProjectDir)External\x86\Altair\altaircam.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
