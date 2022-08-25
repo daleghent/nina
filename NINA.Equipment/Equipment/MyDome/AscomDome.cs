@@ -101,7 +101,7 @@ namespace NINA.Equipment.Equipment.MyDome {
 
         public bool AtPark => GetProperty(nameof(Dome.AtPark), false);
 
-        public bool AtHome => GetProperty(nameof(Dome.AtPark), false);
+        public bool AtHome => GetProperty(nameof(Dome.AtHome), false);
 
         public bool DriverFollowing {
             get {
