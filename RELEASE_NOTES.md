@@ -26,7 +26,6 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Guider settings could only be set when being connected. Now these settings are also available in the setup screen of each guider without requiring a connection
 - When cloning a profile, the dock config for that profile will be cloned too
 - Simple Sequencer - "Cool Camera" toggled to on will also turn on dew heater when available as well as "Warm Camera" toggled to on will turn off the dew heater when enabled
-- Atik native driver updated to use SDK [v2022.07.14.1005](https://www.atik-cameras.com/sdk-beta-changelog/). Native driver now supports APX60 exposure speeds and presets. Camera window heater may now be controlled on models that are equipped with one
 - "Wait For Time", "Wait for Timespan" and Settle reports now count down instead of up in the progress report
 - Standard Autofocus: Break out of autofocus when a large number of points were taken without success or when the focuser hits the zero position
 - When loading a file for framing that needs to be platesolved the prompt that shows up now has more details and values can be adjusted if required. This should make it more clear of what is happening.

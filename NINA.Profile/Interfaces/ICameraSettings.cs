@@ -60,8 +60,5 @@ namespace NINA.Profile.Interfaces {
         string TrackingCameraASCOMServerPipeName { get; set; }
         bool? TrackingCameraASCOMServerLoggingEnabled { get; set; }
         bool SBIGUseExternalCcdTracker { get; set; }
-        ushort? AtikGainPreset { get; set; }
-        ushort? AtikExposureSpeed { get; set; }
-        int? AtikWindowHeaterPowerLevel { get; set; }
     }
 }

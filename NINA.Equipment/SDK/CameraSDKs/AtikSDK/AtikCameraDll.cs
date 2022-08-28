@@ -35,10 +35,13 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         }
 
         public static int GetDevicesCount() {
-            _ = ArtemisRefreshDevicesCount();
             int x = ArtemisDeviceCount();
             Logger.Trace($"Number of Atik Cameras: {x}");
             return x;
+        }
+
+        public static int RefreshDevicesCount() {
+            return ArtemisRefreshDevicesCount();
         }
 
         public static IntPtr Connect(int id) {
@@ -98,6 +101,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             } else {
                 throw new Exception("Atik Camera not connected");
             }
+        }
+
+        public static bool HasCooler(IntPtr camera) {
+            var hasCooler = false;
+            try {
+                CheckError(ArtemisTemperatureSensorInfo(camera, 0, out var sensors), MethodBase.GetCurrentMethod(), camera);
+                return sensors > 0;
+            } catch (Exception) { }
+            return hasCooler;
         }
 
         public static double CoolerPower(IntPtr camera) {
@@ -178,15 +190,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             return setPoint / 100.0d;
         }
 
-        public static int GetCoolingFlags(IntPtr camera) {
-            CheckError(ArtemisCoolingInfo(camera, out var flags, out var level, out var minLevel, out var maxLevel, out var setPoint), MethodBase.GetCurrentMethod(), camera);
-            return flags;
-        }
-
-        public static void SetWindowHeaterPower(IntPtr camera, int windowHeaterPower) {
-            CheckError(ArtemisSetWindowHeaterPower(camera, windowHeaterPower), MethodBase.GetCurrentMethod(), camera);
-        }
-
         public static int GetSerialNumber(IntPtr camera) {
             CheckError(ArtemisCameraSerial(camera, out var flags, out int serial), MethodBase.GetCurrentMethod(), camera);
             return serial;
@@ -215,23 +218,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             ArtemisPropertiesStruct outstruct = GetCameraProperties(handle);
             Disconnect(handle);
             return outstruct;
-        }
-
-        public static bool HasCameraSpecificOption(IntPtr camera, ushort id) {
-            return ArtemisHasCameraSpecificOption(camera, id);
-        }
-
-        public static void SetAmplifierSwitched(IntPtr camera, bool isOn) {
-            CheckError(ArtemisSetAmplifierSwitched(camera, isOn), MethodBase.GetCurrentMethod(), camera);
-        }
-
-        public static void CameraSpecificOptionGetData(IntPtr camera, ushort id, ref byte[] data) {
-            int length = 0;
-            CheckError(ArtemisCameraSpecificOptionGetData(camera, id, data, data.Length, ref length), MethodBase.GetCurrentMethod(), camera);
-        }
-
-        public static void CameraSpecificOptionSetData(IntPtr camera, ushort id, byte[] data) {
-            CheckError(ArtemisCameraSpecificOptionSetData(camera, id, data, data.Length), MethodBase.GetCurrentMethod(), camera);
         }
 
         public static IntPtr ConnectEfw(int id) {
@@ -476,7 +462,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         private static extern int ArtemisRefreshDevicesCount();
 
         /// <summary>
-        /// Returns the number of connected and recognised devices. The count does not include misconfigured devices (E.G. if drivers are missing). 
+        /// The refresh devices count tells you how many times the camera list has changed on the
+        /// service. The camera list changes every time a USB device is connected or removed.
+        /// Therefore, the purpose of this method is to tell the user that the cameras have changed
+        /// and that it's worth checking to make sure their camera(s) are still connected.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisDeviceCount", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int ArtemisDeviceCount();
@@ -648,7 +637,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// Gives the current state of the cooling.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisCoolingInfo", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern ArtemisErrorCode ArtemisCoolingInfo(IntPtr camera, out int flags, out int level, out int minlvl, out int maxlvl, out int setPoint);
+        private static extern ArtemisErrorCode ArtemisCoolingInfo(IntPtr camera, out int flags, out int level, out int minlvl, out int maxlvl, out int setPoint);
 
         /// <summary>
         /// Tells the camera to start warming up.
@@ -658,65 +647,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisCoolerWarmUp", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern ArtemisErrorCode ArtemisCoolerWarmUp(IntPtr camera);
-
-        /// <summary>
-        /// Returns whether the specified option is available.
-        /// </summary>
-        /// <param name="camera">the connected Atik device handle.</param>
-        /// <param name="id">the camera specific option</param>
-        /// <returns>true if supported, false if not.</returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisHasCameraSpecificOption", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern bool ArtemisHasCameraSpecificOption(IntPtr camera, ushort id);
-
-        /// <summary>
-        /// Used to get the specified option's current value. Please check that the current camera has this option using ArtemisHasCameraSpecificOption()
-        /// </summary>
-        /// <param name="camera">the connected Atik device handle.</param>
-        /// <param name="id"></param>
-        /// <param name="data"></param>
-        /// <param name="dataLength"></param>
-        /// <param name="actualLength"></param>
-        /// <returns>ARTEMIS_OK on success, ARTEMIS_INVALID_PARAM if the opton is not available or ARTEMISERROR on failure</returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisCameraSpecificOptionGetData", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern ArtemisErrorCode ArtemisCameraSpecificOptionGetData(IntPtr camera, ushort id, [In, Out] byte[] data, int dataLength, ref int actualLength);
-
-        /// <summary>
-        /// Used to set the specified option's value. Please check that the current camera has this option using ArtemisHasCameraSpecificOption()
-        /// </summary>
-        /// <param name="camera">the connected Atik device handle.</param>
-        /// <param name="id"></param>
-        /// <param name="data"></param>
-        /// <param name="dataLength"></param>
-        /// <returns>ARTEMIS_OK on success, ARTEMIS_INVALID_PARAM if the opton is not available or ARTEMISERROR on failure</returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisCameraSpecificOptionSetData", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern ArtemisErrorCode ArtemisCameraSpecificOptionSetData(IntPtr camera, ushort id, [In, Out] byte[] data, int dataLength);
-
-        /// <summary>
-        /// Gets the window heater power.
-        /// </summary>
-        /// <param name="camera">the connected Atik device handle</param>
-        /// <param name="windowHeaterPower">a pointer to an integer, which will be set to the current window heater power, between 0 and 255.</param>
-        /// <returns>ARTEMIS_OK on success, ARTEMARTEMIS_INVALID_PARAMETER if the device does not have a window heater, or ARTEMISERROR enumeration on failure</returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisGetWindowHeaterPower", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern ArtemisErrorCode ArtemisGetWindowHeaterPower(IntPtr camera, [Out] int windowHeaterPower);
-
-        /// <summary>
-        /// Sets the window heater power.
-        /// </summary>
-        /// <param name="camera">the connected Atik device handle</param>
-        /// <param name="windowHeaterPower">A value between 0 and 255 specifying the power to the window heater</param>
-        /// <returns>ARTEMIS_OK on success, ARTEMARTEMIS_INVALID_PARAMETER if the device does not have a window heater, or ARTEMISERROR enumeration on failure</returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisSetWindowHeaterPower", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern ArtemisErrorCode ArtemisSetWindowHeaterPower(IntPtr camera, int windowHeaterPower);
-
-        /// <summary>
-        /// Sets amplifier state
-        /// </summary>
-        /// <param name="camera">the connected Atik device handle</param>
-        /// <param name="isOn"><see langword="true"/> for on, <see langword="false"/> for off</param>
-        /// <returns>ARTEMIS_OK on success, ARTEMARTEMIS_INVALID_PARAMETER if the device does not have a window heater, or ARTEMISERROR enumeration on failure</returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisSetAmplifierSwitched", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern ArtemisErrorCode ArtemisSetAmplifierSwitched(IntPtr camera, bool isOn);
 
         /*
          * Not yet added: Internal and External Filter Wheel and Guiding Methods.
@@ -920,12 +850,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             /// <summary>
             /// Returned if a function couldn't complete for any other reason
             /// </summary>
-            ARTEMIS_OPERATION_FAILED,
-
-            /// <summary>
-            /// Returned if a function login in
-            /// </summary>
-            ARTEMIS_INVALID_PASSWORD,
+            ARTEMIS_OPERATION_FAILED
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 188)]
@@ -957,14 +882,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             public float PixelMicronsY;
 
             /// <summary>
-            /// Represents the properties of the CCD
-            /// <seealso cref="ArtemisPropertiesCcdFlags"/>
+            /// Represents the properties of the camera: 1 = Has FIFO 2 = Has External Trigger 4 =
+            /// Can return preview data 8 = Camera can subsample 16 = Has Mechanical Shutter 32 = Has
+            /// Guide Port 64 = Has GPIO capabilities 128 = Has Window Heater 256 = Can download
+            /// 8-bit image 512 = Can Overlap exposure 1024 = Has Filter Wheel
             /// </summary>
             public int ccdflags;
 
             /// <summary>
-            /// Represents the properties of the camera
-            /// <seealso cref="ArtemisPropertiesCameraFlags"/>
+            /// The value is '1' if the sensor is interlaced. 0 otherwise
             /// </summary>
             public int cameraflags;
 
@@ -983,125 +909,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             public char[] Manufacturer;
         }
 
-        [Flags]
-        public enum ArtemisPropertiesCcdFlags {
-            /// CCD is interlaced type
-            Interlaced = 1,
-        }
-
-        [Flags]
-        public enum ArtemisPropertiesCameraFlags {
-            /// Camera has readout FIFO fitted
-            Fifo = 1,
-
-            /// Camera has external trigger capabilities
-            ExtTrigger = 2,
-
-            /// Camera can return preview data
-            Preview = 4,
-
-            /// Camera can return subsampled data
-            Subsample = 8,
-
-            /// Camera has a mechanical shutter
-            HasShutter = 16,
-
-            /// Camera has a guide port
-            HasGuidePort = 32,
-
-            /// Camera has GPIO capability
-            HasGpio = 64,
-
-            /// Camera has a window heater
-            HasWindowHeater = 128,
-
-            /// Camera can download 8-bit images
-            HasEightBitMode = 256,
-
-            /// Camera can overlap
-            HasOverlapMode = 512,
-
-            /// Camera has internal filterwheel
-            HasFilterWheel = 1024,
-        }
-
-        [Flags]
-        public enum ArtemisCoolingInfoFlags {
-            /// Camera can be cooled. 0= No cooling ability 1= Has cooling
-            HasCooling = 1,
-
-            /// Cooling is always on or can be controlled. 0= Always on 1= Controllable
-            Controllable = 2,
-
-            /// Cooling can be switched On/Off. 0= On/Off control not available 1= On/Off control available
-            OnOffCoolingControl = 4,
-
-            /// Cooling can be set via ArtemisSetCoolingPower()
-            powerLeveLControl = 8,
-
-            /// Cooling can be set via ArtemisSetCooling()
-            SetpointControl = 16,
-
-            /// Currently warming up. 0= Normal control 1= Warming Up
-            WarmingUp = 32,
-
-            /// Currently cooling. 0= Cooling off 1= Cooling on
-            CoolingOn = 64,
-
-            /// Currently under setpoint control 0= No set point control 1= Set point control
-            SetpointControlOn = 128,
-        }
-
         public enum ArtemisEfwType {
-            NONE = 0,
-            EFW1,
-            EFW2,
-            IFW,
-        }
-
-        public enum AtikCameraSpecificOptions {
-            ID_GOPresetMode = 1,
-            ID_GOPresetLow,
-            ID_GOPresetMed,
-            ID_GOPresetHigh,
-            ID_GOCustomGain,
-            ID_GOCustomOffset,
-
-            ID_EvenIllumination = 12,
-            ID_PadData,
-            ID_ExposureSpeed,
-            ID_BitSendMode,
-
-            ID_FX3Version = 200,
-            ID_FPGAVersion,
-        }
-
-        public enum ArtemisCoolingStatus {
-            Off = 0,
-            Cooling,
-            WarmingUp,
-            Error,
-            Unknown
-        }
-
-        public enum ArtemisCoolingType {
-            None = 0,
-            OnOff,
-            Power,
-            SetPoint,
-            Unknown
-        }
-
-        public enum ArtemisPrechargeMode {
-            None = 0,
-            ICPS,
-            Full,
-        }
-
-        public enum HotPixelSensitivity {
-            HPS_HIGH = 0,
-            HPS_MEDIUM,
-            HPS_LOW
+            EFW1 = 1,
+            EFW2 = 2
         }
 
         private static void CheckError(ArtemisErrorCode code, MethodBase callingMethod, params object[] parameters) {
@@ -1123,9 +933,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
                     throw new AtikCameraException("Atik Camera invalid method", callingMethod, parameters);
                 case ArtemisErrorCode.ARTEMIS_NOT_INITIALISED:
                     throw new AtikCameraException("Atik Camera method not initialized", callingMethod, parameters);
-                case ArtemisErrorCode.ARTEMIS_INVALID_PASSWORD:
-                    throw new AtikCameraException("Atik Camera password failure", callingMethod, parameters);
-
                 default:
                     throw new ArgumentOutOfRangeException("Atik Camera method error code");
             }

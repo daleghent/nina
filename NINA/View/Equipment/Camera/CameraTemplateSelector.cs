@@ -24,8 +24,6 @@ namespace NINA.View.Equipment {
         public DataTemplate Touptek { get; set; }
         public DataTemplate LegacySbig { get; set; }
         public DataTemplate Canon { get; set; }
-        public DataTemplate Atik { get; set; }
-
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             if (item is ToupTekAlikeCamera) {
@@ -36,8 +34,6 @@ namespace NINA.View.Equipment {
                 return LegacySbig;
             } else if (item is EDCamera) {
                 return Canon;
-            } else if (item is AtikCamera) {
-                return Atik;
             } else {
                 return Default;
             }

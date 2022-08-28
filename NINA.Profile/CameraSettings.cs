@@ -54,10 +54,6 @@ namespace NINA.Profile {
             ascomAllowUnevenPixelSize = true;
             mirrorLockupDelay = 0;
 
-            atikGainPreset = 0;
-            atikExposureSpeed = 0;
-            atikWindowHeaterPowerLevel = 0;
-
             binAverageEnabled = false;
             trackingCameraASCOMServerEnabled = false;
             trackingCameraASCOMServerPipeName = "NINA.ASCOM.Camera.SBIG.Tracker";
@@ -519,45 +515,6 @@ namespace NINA.Profile {
             set {
                 if (mirrorLockupDelay != value) {
                     mirrorLockupDelay = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private ushort? atikGainPreset;
-
-        [DataMember]
-        public ushort? AtikGainPreset {
-            get => atikGainPreset;
-            set {
-                if (atikGainPreset != value) {
-                    atikGainPreset = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private ushort? atikExposureSpeed;
-
-        [DataMember]
-        public ushort? AtikExposureSpeed {
-            get => atikExposureSpeed;
-            set {
-                if (atikExposureSpeed != value) {
-                    atikExposureSpeed = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private int? atikWindowHeaterPowerLevel;
-
-        [DataMember]
-        public int? AtikWindowHeaterPowerLevel {
-            get => atikWindowHeaterPowerLevel;
-            set {
-                if (atikWindowHeaterPowerLevel != value) {
-                    atikWindowHeaterPowerLevel = value;
                     RaisePropertyChanged();
                 }
             }
