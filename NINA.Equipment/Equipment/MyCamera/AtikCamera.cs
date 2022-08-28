@@ -41,28 +41,37 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private int _cameraId;
         private IntPtr _cameraP = IntPtr.Zero;
 
-        public string Category => "Atik";
+        public string Category { get; } = "Atik";
 
         private AtikCameraDll.ArtemisPropertiesStruct _info;
 
-        private AtikCameraDll.ArtemisPropertiesStruct Info => _info;
-
-        private bool _hasShutter = false;
-
-        public bool HasShutter {
-            get => _hasShutter;
-            private set {
-                _hasShutter = value;
-                Logger.Trace($"HasShutter = {_hasShutter}");
-                RaisePropertyChanged();
+        private AtikCameraDll.ArtemisPropertiesStruct Info {
+            get {
+                return _info;
             }
         }
 
-        public bool Connected => _cameraP == IntPtr.Zero ? false : AtikCameraDll.IsConnected(_cameraP);
+        public bool HasShutter {
+            get {
+                var bitNumber = 5;
+                var bit = (Info.cameraflags & (1 << bitNumber - 1)) != 0;
+                return bit;
+            }
+        }
 
-        public double Temperature => AtikCameraDll.GetTemperature(_cameraP);
+        public bool Connected {
+            get {
+                return _cameraP == IntPtr.Zero ? false : AtikCameraDll.IsConnected(_cameraP);
+            }
+        }
 
-        public bool CanShowLiveView => false;
+        public double Temperature {
+            get {
+                return AtikCameraDll.GetTemperature(_cameraP);
+            }
+        }
+
+        public bool CanShowLiveView { get => false; }
 
         private double _temperature;
 
@@ -83,14 +92,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private bool _canSubSample = false;
-
         public bool CanSubSample {
-            get => _canSubSample;
-            private set {
-                _canSubSample = value;
-                Logger.Trace($"CanSubSample = {_canSubSample}");
-                RaisePropertyChanged();
+            get {
+                var bitNumber = 5;
+                var bit = (Info.cameraflags & (1 << bitNumber - 1)) != 0;
+                return bit;
             }
         }
 
@@ -105,7 +111,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool _coolerOn;
 
         public bool CoolerOn {
-            get => _coolerOn;
+            get {
+                return _coolerOn;
+            }
             set {
                 try {
                     if (Connected) {
@@ -153,35 +161,63 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string Description => CleanedUpString(Info.Manufacturer) + " " + Name + " (SerialNo: " + AtikCameraDll.GetSerialNumber(_cameraP) + ")";
+        public string Description {
+            get {
+                return CleanedUpString(Info.Manufacturer) + " " + Name + " (SerialNo: " + AtikCameraDll.GetSerialNumber(_cameraP) + ")";
+            }
+        }
 
-        public string DriverInfo => AtikCameraDll.DriverName;
+        public string DriverInfo {
+            get {
+                return AtikCameraDll.DriverName;
+            }
+        }
 
-        public string DriverVersion => AtikCameraDll.DriverVersion;
+        public string DriverVersion {
+            get {
+                return AtikCameraDll.DriverVersion;
+            }
+        }
 
-        public string SensorName => string.Empty;
+        public string SensorName {
+            get {
+                return string.Empty;
+            }
+        }
 
-        public SensorType SensorType => AtikCameraDll.GetColorInformation(_cameraP);
+        public SensorType SensorType {
+            get {
+                return AtikCameraDll.GetColorInformation(_cameraP);
+            }
+        }
 
         public short BayerOffsetX => 0;
 
         public short BayerOffsetY => 0;
 
-        public int CameraXSize => Info.nPixelsX;
-
-        public int CameraYSize => Info.nPixelsY;
-
-        private double _exposureMin = 0d;
-        public double ExposureMin {
-            get => _exposureMin;
-            private set {
-                _exposureMin = value;
-                Logger.Debug($"ExposureMin = {_exposureMin}");
-                RaisePropertyChanged();
+        public int CameraXSize {
+            get {
+                return Info.nPixelsX;
             }
         }
 
-        public double ExposureMax => 3600d;
+        public int CameraYSize {
+            get {
+                return Info.nPixelsY;
+            }
+        }
+
+        public double ExposureMin {
+            get {
+                return 0;
+            }
+        }
+
+        public double ExposureMax {
+            get {
+                return double.PositiveInfinity;
+            }
+        }
 
         public double ElectronsPerADU => double.NaN;
 
@@ -199,47 +235,45 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public double PixelSizeX => Info.PixelMicronsX;
+        public double PixelSizeX {
+            get {
+                return Info.PixelMicronsX;
+            }
+        }
 
-        public double PixelSizeY => Info.PixelMicronsY;
-
-        public bool canSetTemperature = false;
+        public double PixelSizeY {
+            get {
+                return Info.PixelMicronsY;
+            }
+        }
 
         public bool CanSetTemperature {
-            get => canSetTemperature;
-            private set {
-                canSetTemperature = value;
-                RaisePropertyChanged();
+            get {
+                return AtikCameraDll.HasCooler(_cameraP);
             }
         }
 
-        public double CoolerPower => CanSetTemperature ? AtikCameraDll.CoolerPower(_cameraP) : double.NaN;
-
-        private bool _hasDewHeater = false;
+        public double CoolerPower {
+            get {
+                if (CanSetTemperature) {
+                    return AtikCameraDll.CoolerPower(_cameraP);
+                } else {
+                    return double.NaN;
+                }
+            }
+        }
 
         public bool HasDewHeater {
-            get => _hasDewHeater;
-            private set {
-                _hasDewHeater = value;
-                Logger.Trace($"HasDewHeater = {_hasDewHeater}");
-                RaisePropertyChanged();
+            get {
+                return false;
             }
         }
 
-        private bool _dewHeaterOn = false;
-
         public bool DewHeaterOn {
-            get => _dewHeaterOn;
+            get {
+                return false;
+            }
             set {
-                if (_dewHeaterOn != value) {
-                    if (value) {
-                        SetWindowHeaterPower(WindowHeaterPowerLevel);
-                    } else {
-                        SetWindowHeaterPower(0);
-                    }
-
-                    _dewHeaterOn = value;
-                }
             }
         }
 
@@ -270,108 +304,88 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private bool _canSetOffset = false;
-
         public bool CanSetOffset {
-            get => _canSetOffset;
-            private set {
-                _canSetOffset = value;
-                RaisePropertyChanged();
+            get {
+                return false;
             }
         }
 
-        private int _offsetMax = -1;
+        public int OffsetMin {
+            get {
+                return 0;
+            }
+        }
 
         public int OffsetMax {
-            get => _offsetMax;
-            private set {
-                _offsetMax = value;
-                RaisePropertyChanged();
+            get {
+                return 0;
             }
         }
 
-        public int OffsetMin => 0;
+        public bool CanSetUSBLimit {
+            get {
+                return false;
+            }
+        }
 
         public int Offset {
             get {
-                var offset = new byte[6];
-                AtikCameraDll.CameraSpecificOptionGetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomOffset, ref offset);
-                return (offset[5] << 8) + offset[4];
+                return -1;
             }
             set {
-                var offset = new byte[2];
-                offset[0] = (byte)value;
-                AtikCameraDll.CameraSpecificOptionSetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomOffset, offset);
-                RaisePropertyChanged();
             }
         }
 
-        public bool CanSetUSBLimit => false;
-
         public int USBLimit {
-            get => -1;
-            set { }
+            get {
+                return -1;
+            }
+            set {
+            }
         }
 
         public int USBLimitMax => -1;
         public int USBLimitMin => -1;
         public int USBLimitStep => -1;
 
-        private bool _canGetGain = false;
-
         public bool CanGetGain {
-            get => _canGetGain;
-            private set {
-                _canGetGain = value;
-                RaisePropertyChanged();
+            get {
+                return false;
             }
         }
-
-        private bool _canSetGain = false;
 
         public bool CanSetGain {
-            get => _canSetGain;
-            private set {
-                _canSetGain = value;
-                RaisePropertyChanged();
+            get {
+                return false;
             }
         }
-
-        private int _gainMax = -1;
 
         public int GainMax {
-            get => _gainMax;
-            private set {
-                _gainMax = value;
-                RaisePropertyChanged();
+            get {
+                return -1;
             }
         }
 
-        private int _gainMin = -1;
-
         public int GainMin {
-            get => _gainMin;
-            private set {
-                _gainMin = value;
-                RaisePropertyChanged();
+            get {
+                return -1;
             }
         }
 
         public int Gain {
             get {
-                var gain = new byte[6];
-                AtikCameraDll.CameraSpecificOptionGetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomGain, ref gain);
-                return (gain[5] << 8) + gain[4];
+                return -1;
             }
+
             set {
-                var gain = new byte[2];
-                gain[0] = (byte)value;
-                AtikCameraDll.CameraSpecificOptionSetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomGain, gain);
-                RaisePropertyChanged();
             }
         }
 
-        public IList<int> Gains => new List<int>();
+        public IList<int> Gains {
+            get {
+                return new List<int>();
+            }
+        }
 
         public IList<string> ReadoutModes => new List<string> { "Default" };
 
@@ -400,7 +414,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int BitDepth => 16;
+        public int BitDepth {
+            get {
+                //currently unknown if the values are stretched to 16 bit or not. Take profile value
+                return (int)profileService.ActiveProfile.CameraSettings.BitDepth;
+            }
+        }
 
         private AsyncObservableCollection<BinningMode> _binningModes;
 
@@ -416,69 +435,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasExposureSpeed { get; private set; }
-
-        public List<string> ExposureSpeeds { get; } = new List<string>() {
-            "Power Save",
-            "Normal",
-        };
-
-        public ushort ExposureSpeed {
-            get => (ushort)profileService.ActiveProfile.CameraSettings.AtikExposureSpeed;
-            set {
-                var data = new byte[2] { (byte)value, 0 };
-                AtikCameraDll.CameraSpecificOptionSetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_ExposureSpeed, data);
-                profileService.ActiveProfile.CameraSettings.AtikExposureSpeed = value;
-                RaisePropertyChanged();
+        public bool HasSetupDialog {
+            get {
+                return false;
             }
         }
-
-        public bool HasGainPresets { get; private set; }
-
-        private bool CanCustomGain { get; set; }
-        private bool CanCustomOffset { get; set; }
-
-        public List<string> GainPresets { get; private set; } = new List<string>();
-
-        public ushort GainPreset {
-            get => (ushort)profileService.ActiveProfile.CameraSettings.AtikGainPreset;
-            set {
-                var data = new byte[2] { (byte)value, 0 };
-                AtikCameraDll.CameraSpecificOptionSetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOPresetMode, data);
-                profileService.ActiveProfile.CameraSettings.AtikGainPreset = value;
-
-                // Custom gain/offset
-                if (value == 0) {
-                    Gain = (int)profileService.ActiveProfile.CameraSettings.Gain;
-                    Offset = (int)profileService.ActiveProfile.CameraSettings.Offset;
-                    CanSetGain = CanGetGain = CanSetOffset = true;
-                } else {
-                    CanSetGain = CanGetGain = CanSetOffset = false;
-                }
-
-                RaisePropertyChanged();
-            }
-        }
-
-        public int WindowHeaterPowerLevel {
-            get => (int)profileService.ActiveProfile.CameraSettings.AtikWindowHeaterPowerLevel;
-            set {
-                if (value != profileService.ActiveProfile.CameraSettings.AtikWindowHeaterPowerLevel) {
-                    if (DewHeaterOn) {
-                        SetWindowHeaterPower(value);
-                    }
-                    profileService.ActiveProfile.CameraSettings.AtikWindowHeaterPowerLevel = value;
-                    RaisePropertyChanged();
-                }
-            }
-
-        }
-
-        private void SetWindowHeaterPower(int level) {
-            AtikCameraDll.SetWindowHeaterPower(_cameraP, level);
-        }
-
-        public bool HasSetupDialog => false;
 
         public string Id => Name;
 
@@ -495,71 +456,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public async Task<bool> Connect(CancellationToken token) {
             return await Task.Run(() => {
                 var success = false;
-
                 try {
                     _cameraP = AtikCameraDll.Connect(_cameraId);
                     _info = AtikCameraDll.GetCameraProperties(_cameraP);
-
-                    HasShutter = (Info.cameraflags & (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasShutter) != 0;
-                    HasDewHeater = (Info.cameraflags & (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasWindowHeater) != 0;
-                    CanSubSample = (Info.cameraflags & (int)AtikCameraDll.ArtemisPropertiesCameraFlags.Subsample) != 0;
-                    CanSetTemperature = (AtikCameraDll.GetCoolingFlags(_cameraP) & (int)AtikCameraDll.ArtemisCoolingInfoFlags.SetpointControl) != 0;
-                    HasExposureSpeed = AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_ExposureSpeed);
-
-                    ExposureMin = HasShutter ? 0.2 : 0.001;
-
-                    if (HasExposureSpeed) {
-                        ExposureSpeed = ExposureSpeed;
-                    }
-
-                    HasGainPresets = AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOPresetMode);
-
-                    // The items in the GainPresets list must have exact ordering.
-                    if (HasGainPresets) {
-                        CanCustomGain = AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomGain);
-                        CanCustomOffset = AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomOffset);
-
-                        if (CanCustomGain && CanCustomOffset) {
-                            var data = new byte[6];
-
-                            AtikCameraDll.CameraSpecificOptionGetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomGain, ref data);
-                            GainMin = 0;
-                            GainMax = (data[3] << 8) + data[2];
-
-                            AtikCameraDll.CameraSpecificOptionGetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOCustomOffset, ref data);
-                            OffsetMax = (data[3] << 8) + data[2];
-
-                            GainPresets.Add("Custom");
-                        }
-
-                        if (AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOPresetLow)) {
-                            GainPresets.Add("Low");
-                        }
-
-                        if (AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOPresetMed)) {
-                            GainPresets.Add("Medium");
-                        }
-
-                        if (AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_GOPresetHigh)) {
-                            GainPresets.Add("High");
-                        }
-
-                        if (GainPreset < GainPresets.Count) {
-                            GainPreset = GainPreset;
-                        }
-                    }
-
-                    // Set camera to send 16bit data if it supports setting BitsSendMode
-                    if (AtikCameraDll.HasCameraSpecificOption(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_BitSendMode)) {
-                        var mode = new byte[2] { 0, 0 };
-                        AtikCameraDll.CameraSpecificOptionSetData(_cameraP, (ushort)AtikCameraDll.AtikCameraSpecificOptions.ID_BitSendMode, mode);
-                    }
 
                     if (CanSetTemperature) {
                         TemperatureSetPoint = 20;
                     }
 
-                    RaiseAllPropertiesChanged();
+                    RaisePropertyChanged(nameof(BinningModes));
+                    RaisePropertyChanged(nameof(Connected));
                     success = true;
                 } catch (Exception e) {
                     Logger.Error(e);
@@ -616,10 +522,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public void StartExposure(CaptureSequence sequence) {
             do {
-                Thread.Sleep(100);
+                System.Threading.Thread.Sleep(100);
             } while (AtikCameraDll.CameraState(_cameraP) != AtikCameraDll.ArtemisCameraStateEnum.CAMERA_IDLE);
-
-            if (EnableSubSample && CanSubSample) {
+            if (EnableSubSample) {
                 AtikCameraDll.SetSubFrame(_cameraP, SubSampleX, SubSampleY, SubSampleWidth, SubSampleHeight);
             } else {
                 AtikCameraDll.SetSubFrame(_cameraP, 0, 0, CameraXSize, CameraYSize);
@@ -628,8 +533,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             var isLightFrame = !(sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
                   sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
                   sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT);
-
-            AtikCameraDll.SetAmplifierSwitched(_cameraP, sequence.ExposureTime > 2.5);
 
             if (HasShutter) {
                 AtikCameraDll.SetDarkMode(_cameraP, !isLightFrame);

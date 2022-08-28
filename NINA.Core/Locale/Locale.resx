@@ -6362,15 +6362,6 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>No Filter</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Exposure speed</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Gain preset</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Heater power level</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Dither Settling</value>
   </data>
