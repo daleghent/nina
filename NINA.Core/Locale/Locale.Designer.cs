@@ -9582,6 +9582,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guide Graph Dec Color.
+        /// </summary>
+        internal static string LblGuideGraphDeclinationColor {
+            get {
+                return ResourceManager.GetString("LblGuideGraphDeclinationColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guide Graph RA Color.
+        /// </summary>
+        internal static string LblGuideGraphRightAscensionColor {
+            get {
+                return ResourceManager.GetString("LblGuideGraphRightAscensionColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guide Graph Show Corrections.
+        /// </summary>
+        internal static string LblGuideGraphShowCorrections {
+            get {
+                return ResourceManager.GetString("LblGuideGraphShowCorrections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guider.
         /// </summary>
         internal static string LblGuider {

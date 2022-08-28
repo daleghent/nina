@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using System.Windows.Media;
 
 namespace NINA.Profile.Interfaces {
 
@@ -51,5 +52,8 @@ namespace NINA.Profile.Interfaces {
         double SkyGuardValueMaxDithering { get; set; }
         double SkyGuardTimeLapsDithering { get; set; }
         double SkyGuardTimeOutGuiding { get; set; }
+        Color GuideChartRightAscensionColor { get; set; }
+        Color GuideChartDeclinationColor { get; set; }
+        bool GuideChartShowCorrections { get; set; }
     }
 }

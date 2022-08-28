@@ -6388,4 +6388,13 @@ Once confirmed choose which solver should be used.</value>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
   </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Guide Graph Dec Color</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Guide Graph RA Color</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Guide Graph Show Corrections</value>
+  </data>
 </root>

@@ -13,10 +13,13 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Utility.ColorSchema;
 using NINA.Profile.Interfaces;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace NINA.Profile {
 
@@ -71,6 +74,10 @@ namespace NINA.Profile {
 
             var defaultSkyGuardPath = Environment.ExpandEnvironmentVariables(@"%PROGRAMFILES%\SkyGuard\SkyGuard.exe");
             skyGuardPath = File.Exists(defaultSkyGuardPath) ? defaultSkyGuardPath : string.Empty;
+
+            guideChartRightAscensionColor = Colors.Blue;
+            guideChartDeclinationColor = Colors.Red;
+            guideChartShowCorrections = true;
         }
 
         private double ditherPixels;
@@ -545,5 +552,51 @@ namespace NINA.Profile {
             }
         }
         #endregion
+
+
+        private Color guideChartRightAscensionColor;
+        [XmlElement(Type = typeof(XmlColor))]
+        [DataMember]
+        public Color GuideChartRightAscensionColor {
+            get {
+                return guideChartRightAscensionColor;
+            }
+            set {
+                if (guideChartRightAscensionColor != value) {
+                    guideChartRightAscensionColor = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private Color guideChartDeclinationColor;
+        [XmlElement(Type = typeof(XmlColor))]
+        [DataMember]
+        public Color GuideChartDeclinationColor {
+            get {
+                return guideChartDeclinationColor;
+            }
+            set {
+                if (guideChartDeclinationColor != value) {
+                    guideChartDeclinationColor = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool guideChartShowCorrections;
+        [DataMember]
+        public bool GuideChartShowCorrections {
+            get {
+                return guideChartShowCorrections;
+            }
+            set {
+                if(guideChartShowCorrections != value) {
+                    guideChartShowCorrections = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+        }
     }
 }

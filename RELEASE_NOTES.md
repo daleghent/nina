@@ -10,6 +10,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Bugfixes
 
 ## Improvements
+- Guide Chart Colors can now be customized in the guider tab
 
 ## Features
 
