@@ -6397,4 +6397,10 @@ Once confirmed choose which solver should be used.</value>
   <data name="LblGuideGraphShowCorrections" xml:space="preserve">
     <value>Guide Graph Show Corrections</value>
   </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Rotate image after flip</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
+  </data>
 </root>

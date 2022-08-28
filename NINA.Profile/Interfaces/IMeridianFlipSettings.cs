@@ -31,5 +31,6 @@ namespace NINA.Profile.Interfaces {
         int SettleTime { get; set; }
         bool UseSideOfPier { get; set; }
         bool AutoFocusAfterFlip { get; set; }
+        bool RotateImageAfterFlip { get; set; }
     }
 }

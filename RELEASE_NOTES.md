@@ -13,6 +13,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Guide Chart Colors can now be customized in the guider tab
 
 ## Features
+- Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
 
 # Version 2.0 HF 1
 

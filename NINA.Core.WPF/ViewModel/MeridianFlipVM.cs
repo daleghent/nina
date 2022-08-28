@@ -189,7 +189,12 @@ namespace NINA.WPF.Base.ViewModel {
 
             Steps.Add(new WorkflowStep("Settle", Loc.Instance["LblSettle"], () => Settle(cancellationToken, _progress)));
 
+            if (profileService.ActiveProfile.MeridianFlipSettings.RotateImageAfterFlip) {
+                Steps.Add(new WorkflowStep("RotateImageAfterFlip", Loc.Instance["LblRotateImageAfterFlip"], () => RotateImageAfterFlip()));
+            }
+
             await Steps.Process();
+            
         } catch (OperationCanceledException) {
             Logger.Info("Meridian Flip - Cancelled by user");
         } catch (Exception ex) {
@@ -214,7 +219,12 @@ namespace NINA.WPF.Base.ViewModel {
         return true;
     }
 
-    private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
+        private async Task<bool> RotateImageAfterFlip() {
+            imagingMediator.SetImageRotation(imagingMediator.GetImageRotation() + 180); 
+            return true;
+        }
+
+        private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
         Logger.Info($"Meridian Flip - Running Autofocus");
         var autoFocus = this.autoFocusVMFactory.Create();
         progress.Report(new ApplicationStatus { Status = Loc.Instance["LblAutoFocus"] });

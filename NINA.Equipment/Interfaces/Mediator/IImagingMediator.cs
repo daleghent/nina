@@ -56,6 +56,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void DestroyImage();
 
         void SetImage(BitmapSource img);
+        int GetImageRotation();
+        void SetImageRotation(int rotation);        
 
         event EventHandler<ImagePreparedEventArgs> ImagePrepared;
 

@@ -14123,6 +14123,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotate image after flip.
+        /// </summary>
+        internal static string LblRotateImageAfterFlip {
+            get {
+                return ResourceManager.GetString("LblRotateImageAfterFlip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won&apos;t affect the image data..
+        /// </summary>
+        internal static string LblRotateImageAfterFlipTooltip {
+            get {
+                return ResourceManager.GetString("LblRotateImageAfterFlipTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won&apos;t affect the image data..
         /// </summary>
         internal static string LblRotateImageTooltip {

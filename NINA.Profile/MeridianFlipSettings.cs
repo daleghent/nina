@@ -35,6 +35,7 @@ namespace NINA.Profile {
             settleTime = 30;
             pauseTimeBeforeMeridian = 0;
             autoFocusAfterFlip = false;
+            rotateImageAfterFlip = false;
         }
 
         private bool recenter;
@@ -153,5 +154,22 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        private bool rotateImageAfterFlip;
+
+        [DataMember]
+        public bool RotateImageAfterFlip {
+            get {
+                return rotateImageAfterFlip;
+            }
+            set {
+                if (rotateImageAfterFlip != value) {
+                    rotateImageAfterFlip = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        
     }
 }
