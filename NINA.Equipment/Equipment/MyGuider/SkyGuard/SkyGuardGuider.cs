@@ -245,6 +245,8 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
             DateTime dateNow = DateTime.Now;
 
             dateTimeOut = dateNow.AddSeconds(timeOut);
+
+            Logger.Info("A new timeout has been instantiated");
         }
 
         /// <summary>
@@ -959,8 +961,9 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                         timeLaps--;
 
-                        if (Math.Sqrt((errorX * errorX) + (errorY * errorY)) >= maxValueDithering) {
+                        if (Math.Sqrt((errorX * errorX) + (errorY * errorY)) > maxValueDithering) {
                             timeLaps = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsDithering;
+                            Logger.Warning("An error has occurred, the timeout is reset");
                         }
 
                     } while (timeLaps > 0);
@@ -1047,9 +1050,10 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                             timeLaps--;
 
-                            if (Math.Sqrt((errorX * errorX) + (errorY * errorY)) >= maxValueGuiding)
+                            if (Math.Sqrt((errorX * errorX) + (errorY * errorY)) > maxValueGuiding)
                             {
                                 timeLaps = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsGuiding;
+                                Logger.Warning("An error has occurred, the timeout is reset");
                             }
 
                         } while (timeLaps > 0);
