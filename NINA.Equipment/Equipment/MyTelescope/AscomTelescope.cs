@@ -917,7 +917,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     Notification.ShowWarning(string.Format(Loc.Instance["LblMountTimeDifferenceTooLarge"], timeDiff));
                 }
             } catch (Exception e) {
-                Logger.Error(e, "Failed to retrieve the UTC Date from the mount");
+                Logger.Error("Failed to retrieve the UTC Date from the mount", e);
             }
         }
 

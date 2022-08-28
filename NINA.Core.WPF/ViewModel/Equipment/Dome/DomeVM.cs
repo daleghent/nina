@@ -204,7 +204,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         private void CancelChooseDome(object o) {
-            cancelChooseDomeSource?.Cancel();
+            try { cancelChooseDomeSource?.Cancel(); } catch { }
         }
 
         private Dictionary<string, object> GetDomeValues() {
@@ -353,7 +353,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterOpen"] });
                     await Dome.OpenShutter(cancellationToken);
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), cancellationToken, progress, Loc.Instance["LblSettle"]);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
                     Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
                     return true;
                 } finally {
@@ -375,7 +375,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterClose"] });
                     await Dome.CloseShutter(cancellationToken);
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), cancellationToken, progress, Loc.Instance["LblSettle"]);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
                     Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
                     return true;
                 } finally {
@@ -473,7 +473,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     Logger.Info($"Slewing dome to azimuth {degrees}°");
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
                     await Dome?.SlewToAzimuth(degrees, token);
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), token, progress, Loc.Instance["LblSettle"]);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, token, progress, Loc.Instance["LblSettle"]);
                     return true;
                 } finally {
                     progress.Report(new ApplicationStatus() { Status = string.Empty });

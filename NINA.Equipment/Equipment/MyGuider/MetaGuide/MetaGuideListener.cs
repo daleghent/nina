@@ -173,7 +173,7 @@ namespace NINA.Equipment.Equipment.MyGuider.MetaGuide {
                     throw;
                 } finally {
                     socket?.Close();
-                    consumerTokenSource?.Cancel();
+                    try { consumerTokenSource?.Cancel(); } catch { }
                     consumerTask?.WaitWithoutException(new CancellationTokenSource(METAGUIDE_QUEUE_TIMEOUT_MS).Token);
                     this.OnDisconnected?.Invoke();
                 }

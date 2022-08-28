@@ -192,6 +192,7 @@
     <Compile Include="Equipment\MyCamera\AscomCamera.cs" />
     <Compile Include="Equipment\MyCamera\ASICamera.cs" />
     <Compile Include="Equipment\MyCamera\ASICameras.cs" />
+    <Compile Include="Equipment\MyCamera\ASTPANCamera.cs" />
     <Compile Include="Equipment\MyCamera\AtikCamera.cs" />
     <Compile Include="Equipment\MyCamera\CameraInfo.cs" />
     <Compile Include="Equipment\MyCamera\EDCamera.cs" />
@@ -214,6 +215,13 @@
     <Compile Include="Equipment\MySwitch\Eagle4\EagleWritableSwitch.cs" />
     <Compile Include="Exceptions\CameraExposureFailedException.cs" />
     <Compile Include="Interfaces\IDeviceDispatcher.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\ASTPANCameraDLL.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\AstpanControl.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\ASTPANPInvoke.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\ASTPANProvider.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\ASTPANSDK.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\IASTPANPInvokeProxy.cs" />
+    <Compile Include="SDK\CameraSDKs\ASTPANSDK\IASTPANSDK.cs" />
     <Compile Include="SDK\CameraSDKs\MallinCamSDK\mallincam.cs" />
     <Compile Include="SDK\CameraSDKs\PlayerOneSDK\IPlayerOnePInvokeProxy.cs" />
     <Compile Include="SDK\CameraSDKs\PlayerOneSDK\IPlayerOneSDK.cs" />

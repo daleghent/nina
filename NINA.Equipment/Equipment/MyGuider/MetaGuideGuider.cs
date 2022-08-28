@@ -312,7 +312,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             lock (this.lockobj) {
                 this.Connected = false;
                 this.connecting = false;
-                this.clientCTS?.Cancel();
+                try { this.clientCTS?.Cancel(); this.clientCTS?.Dispose(); } catch { }
                 this.clientCTS = null;
                 this.latestStatus = null;
                 this.IsGuiding = false;

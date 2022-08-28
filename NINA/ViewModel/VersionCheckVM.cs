@@ -144,7 +144,7 @@ namespace NINA.ViewModel {
         }
 
         private void CancelDownload(object o) {
-            downloadCts?.Cancel();
+            try { downloadCts?.Cancel(); } catch { }
         }
 
         private string Unzip(string zipLocation) {

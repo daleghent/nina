@@ -158,23 +158,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int CameraXSize {
-            get => unchecked((int)Info.CurImage.SizeX);
-            private set {
-                Logger.Debug($"QHYCCD: Setting CameraXSize to {value}");
-                Info.CurImage.SizeX = unchecked((uint)value);
-                RaisePropertyChanged();
-            }
-        }
-
-        public int CameraYSize {
-            get => unchecked((int)Info.CurImage.SizeY);
-            private set {
-                Logger.Debug($"QHYCCD: Setting CameraYSize to {value}");
-                Info.CurImage.SizeY = unchecked((uint)value);
-                RaisePropertyChanged();
-            }
-        }
+        public int CameraXSize { get; private set; }
+        public int CameraYSize { get; private set; }
 
         public bool CanGetGain {
             get {
@@ -660,8 +645,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug("QHYCCD: Terminating CoolerWorker task");
 
             CoolerOn = false;
-            coolerWorkerCts.Cancel();
-            coolerWorkerCts.Dispose();
+            try {
+                coolerWorkerCts?.Cancel();
+                coolerWorkerCts?.Dispose();
+            } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
                     coolerTask?.Wait(timeoutSource.Token);
@@ -685,8 +672,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             Logger.Debug("QHYCCD: Terminating SensorStatsWorker task");
 
-            sensorStatsCts.Cancel();
-            sensorStatsCts.Dispose();
+            try {
+                sensorStatsCts?.Cancel();
+                sensorStatsCts?.Dispose();
+            } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
                     sensorStatsTask?.Wait(timeoutSource.Token);
@@ -750,7 +739,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return false;
                 }
 
-                SetImageResolution();
+                if (!reconnect)
+                    SetImageResolution();
 
                 /*
                  * Is this a color sensor or not?
@@ -1221,6 +1211,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        private uint QHYCCDMemLength = 0;
+
         private void ReconnectForLiveView() {
             // Steps documented as required when changing live view:
             // CloseQHYCCD
@@ -1285,6 +1277,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
              */
             ImageSize = (uint)((sizex * sizey * BitDepth) + (8 - 1)) / 8;
 
+            QHYCCDMemLength = Sdk.GetQHYCCDMemLength();
+
             if (Sdk.BeginQHYCCDLive() != QhySdk.QHYCCD_SUCCESS) {
                 Logger.Warning("QHYCCD: Failed to start live view");
                 CameraState = CameraStates.Error;
@@ -1325,24 +1319,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 uint bpp = 0;
                 uint channels = 0;
 
-                Logger.Debug("QHYCCD: Downloading exposure...");
+                Logger.Trace("QHYCCD: Downloading exposure...");
 
                 /*
                  * Size the image data byte array for the image
                  */
-                uint size = Sdk.GetQHYCCDMemLength();
-                byte[] ImgData = new byte[size];
-                
-                var loop = 1;
+                bool is16bit = Info.Bpp > 8;
+                uint numPixels = is16bit ? ImageSize / 2U : ImageSize;
+                ushort[] ImgData = new ushort[numPixels];
+
                 while (!ct.IsCancellationRequested) {
                     rv = Sdk.GetQHYCCDLiveFrame(ref width, ref height, ref bpp, ref channels, ImgData);
                     if (rv == uint.MaxValue) {
                         await Task.Yield();
                         // GetQHYCCDLiveFrame returns -1 when the data isn't available yet, requiring looping.
-                        await Task.Delay(1, ct);
-                        loop++;
                         continue;
-                    } else if (rv > size) {
+                    } else if (rv > numPixels) {
                         // rv returns how many bytes have been downloaded if there is still more to do. 0 indicates completion
                         Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv}");
                         throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
@@ -1350,24 +1342,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         break;
                     }
                 }
-                Logger.Debug("Wait for liveFrame " + loop + " ms.");
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
-
-                /*
-                 * Copy the image byte array to an allocated buffer
-                 */
-                IntPtr buf = Marshal.AllocHGlobal(ImgData.Length);
-                Marshal.Copy(ImgData, 0, buf, ImgData.Length);
-                var cameraDataToManaged = new CameraDataToManaged(buf, (int)width, (int)height, (int)bpp, bitScaling: bpp != 16);
-                var arr = cameraDataToManaged.GetData();
-                ImgData = null;
-                Marshal.FreeHGlobal(buf);
 
                 CameraState = CameraStates.Idle;
 
-                Logger.Debug("QHYCCD: Downloading exposure finished.");
                 return exposureDataFactory.CreateImageArrayExposureData(
-                    input: arr,
+                    input: ImgData,
                     width: (int)width,
                     height: (int)height,
                     bitDepth: BitDepth,

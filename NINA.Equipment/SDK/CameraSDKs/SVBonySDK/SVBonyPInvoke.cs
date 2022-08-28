@@ -16,7 +16,9 @@ using NINA.Core.Utility;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 
 namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
@@ -25,95 +27,118 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
     [ExcludeFromCodeCoverage]
     public class SVBonyPInvokeProxy : ISVBonyPInvokeProxy {
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public int SVBGetNumOfConnectedCameras() {
             return SVBonyPInvoke.SVBGetNumOfConnectedCameras();
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetCameraInfo(out SVB_CAMERA_INFO info, int index) {
             return SVBonyPInvoke.SVBGetCameraInfo(out info, index);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetCameraProperty(int iCameraID, out SVB_CAMERA_PROPERTY pCameraProperty) {
             return SVBonyPInvoke.SVBGetCameraProperty(iCameraID, out pCameraProperty);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetCameraPropertyEx(int iCameraID, out SVB_CAMERA_PROPERTY_EX pCameraProperty) {
             return SVBonyPInvoke.SVBGetCameraPropertyEx(iCameraID, out pCameraProperty);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBOpenCamera(int iCameraID) {
             return SVBonyPInvoke.SVBOpenCamera(iCameraID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBCloseCamera(int iCameraID) {
             return SVBonyPInvoke.SVBCloseCamera(iCameraID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetNumOfControls(int iCameraID, out int piNumberOfControls) {
             return SVBonyPInvoke.SVBGetNumOfControls(iCameraID, out piNumberOfControls);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetControlCaps(int iCameraID, int iControlIndex, out SVB_CONTROL_CAPS pControlCaps) {
             return SVBonyPInvoke.SVBGetControlCaps(iCameraID, iControlIndex, out pControlCaps);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetControlValue(int iCameraID, SVB_CONTROL_TYPE ControlType, out int value, out SVB_BOOL pbAuto) {
             return SVBonyPInvoke.SVBGetControlValue(iCameraID, ControlType, out value, out pbAuto);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBSetControlValue(int iCameraID, SVB_CONTROL_TYPE ControlType, int value, SVB_BOOL pbAuto) {
             return SVBonyPInvoke.SVBSetControlValue(iCameraID, ControlType, value, pbAuto);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetSensorPixelSize(int iCameraID, out float fPixelSize) {
             return SVBonyPInvoke.SVBGetSensorPixelSize(iCameraID, out fPixelSize);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBSetCameraMode(int iCameraID, SVB_CAMERA_MODE mode) {
             return SVBonyPInvoke.SVBSetCameraMode(iCameraID, mode);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBSendSoftTrigger(int iCameraID) {
             return SVBonyPInvoke.SVBSendSoftTrigger(iCameraID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBSetOutputImageType(int iCameraID, SVB_IMG_TYPE ImageType) {
             return SVBonyPInvoke.SVBSetOutputImageType(iCameraID, ImageType);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetVideoDataMono8(int iCameraID, [Out] byte[] pBuffer, int lBuffSize, int iWaitms) {
             return SVBonyPInvoke.SVBGetVideoDataMono8(iCameraID, pBuffer, lBuffSize, iWaitms);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetVideoDataMono16(int iCameraID, [Out] ushort[] pBuffer, int lBuffSize, int iWaitms) {
             return SVBonyPInvoke.SVBGetVideoDataMono16(iCameraID, pBuffer, lBuffSize, iWaitms);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBStartVideoCapture(int iCameraID) {
             return SVBonyPInvoke.SVBStartVideoCapture(iCameraID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBStopVideoCapture(int iCameraID) {
             return SVBonyPInvoke.SVBStopVideoCapture(iCameraID);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBSetROIFormat(int iCameraID, int iStartX, int iStartY, int iWidth, int iHeight, int iBi) {
             return SVBonyPInvoke.SVBSetROIFormat(iCameraID, iStartX, iStartY, iWidth, iHeight, iBi);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_ERROR_CODE SVBGetROIFormat(int iCameraID, out int iStartX, out int iStartY, out int iWidth, out int iHeight, out int iBi) {
             return SVBonyPInvoke.SVBGetROIFormat(iCameraID, out iStartX, out iStartY, out iWidth, out iHeight, out iBi);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         private IntPtr SVBGetSDKVersion() {
             return SVBonyPInvoke.SVBGetSDKVersion();
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public string GetSDKVersion() {
             IntPtr p = SVBGetSDKVersion();
             return Marshal.PtrToStringAnsi(p);
         }
 
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
         public SVB_CAMERA_INFO GetCameraInfo(int id) {
             SVBonyPInvoke.SVBGetCameraInfo(out var info, id);
             return info;

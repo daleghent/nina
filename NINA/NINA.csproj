@@ -341,6 +341,7 @@
     <Compile Include="Utility\ProjectVersion.cs" />
     <Compile Include="ViewModel\AboutSDKsVM.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
+    <Compile Include="ViewModel\FramingAssistant\FramingPlateSolveParameter.cs" />
     <Compile Include="ViewModel\ImageControlVM.cs" />
     <Compile Include="Interfaces\IPluginsVM.cs" />
     <Compile Include="ViewModel\Imaging\AutoFocusToolVM.cs" />
@@ -363,11 +364,17 @@
       <DependentUpon>CameraControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Guider\IsMGEN2ToVisibilityConverter.cs" />
+    <Compile Include="View\Equipment\Guider\MGenSetupView.xaml.cs">
+      <DependentUpon>MGenSetupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Equipment\Guider\SkyGuardDetailView.xaml.cs">
       <DependentUpon>SkyGuardDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Guider\SkyGuardSetupView.xaml.cs">
       <DependentUpon>SkyGuardSetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FramingPlateSolvePromptView.xaml.cs">
+      <DependentUpon>FramingPlateSolvePromptView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
       <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
@@ -774,6 +781,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Equipment\Guider\MGenSetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Equipment\Guider\SkyGuardDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -855,6 +866,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Equipment\WeatherData\WeatherDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FramingPlateSolvePromptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1161,6 +1176,19 @@
     <Content Include="Database\Migration\6.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\7.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Database\Migration\8.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x64\ASTPAN\ASTPANCamera.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x64\Cfitsio\cfitsio.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="External\x64\Cfitsio\README.txt" />
     <Content Include="External\x64\MallinCam\mallincam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1179,6 +1207,10 @@
     <ContentWithTargetPath Include="External\x64\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x64'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp100.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x64\VCRedis\msvcr120.dll" Condition="'$(Platform)' == 'x64'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcr120.dll</TargetPath>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="External\x64\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x64'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1203,6 +1235,12 @@
     <Content Include="External\x64\SVBony\SVBCameraSDK.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x86\ASTPAN\ASTPANCamera.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x86\Cfitsio\cfitsio.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x86\MallinCam\mallincam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1221,6 +1259,10 @@
     <ContentWithTargetPath Include="External\x86\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x86'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp100.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x86\VCRedis\msvcr120.dll" Condition="'$(Platform)' == 'x86'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcr120.dll</TargetPath>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="External\x86\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x86'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

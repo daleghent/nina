@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2290,8 +2290,8 @@ HFR calculat: {2}    </value>
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientació</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>Percentatge de superposició</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>Superposició de Panells</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panell</value>
@@ -6264,5 +6264,126 @@ Comproveu si hi ha una actualització disponible.</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>Amb la introducció de la plataforma Pegasus Astro Unity i els possibles canvis als protocols de comunicació, els controladors natius quedaran obsolets en futures versions. Si us plau, utilitzeu els controladors ASCOM!</value>
+  </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Escolta sempre els canvis dels fitxers</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Segons d'espera abans de descarregar</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} no està disponible. Seleccioneu una font d'imatge alternativa.
+
+Raó: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Error de la imatge seleccionada</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Mida de la cua de desament d'imatges</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Augmentar-ho permet a l'aplicació posar més d'una imatge a la cua de processament i desat. Això és útil per augmentar la velocitat de les exposicions curtes durant una seqüència augmentant el consum de memòria.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>La font de temps seleccionada no ha pogut determinar una hora vàlida. Seleccioneu una font diferent, si us plau.</value>
+  </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>S'està carregant el connector {0} versió {1} creat per {2}</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>Configuració MGEN</value>
+  </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Disseny de pestanya d'imatge única</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>Quan està activada, la pestanya d'imatge només tindrà un disseny per a tots els perfils en lloc de dependre de cada perfil</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Localització Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No hi ha coordenades disponibles. Platesolve3 requereix coordenades per poder resoldre!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>No s'ha trobat Platesolve3</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Disseny de còpia de seguretat</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>La disposició de còpia de seguretat ha fallat</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>S'ha creat una còpia de seguretat del disseny de la pestanya d'imatge</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Fer una còpia de seguretat del disseny de la pestanya d'imatge en un fitxer, de manera que es pugui restaurar més endavant</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Restableix el disseny de la pestanya d'imatge</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>S'ha restaurat el disseny de la pestanya d'imatge</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Restaura la disposició</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>No s'ha pogut restaurar el disseny</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Restaura la disposició de la pestanya d'imatge des d'una còpia de seguretat</value>
+  </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Infomació d'exposició</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>ACTUALITZACIÓ OBJECTIU</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>Sense Filtre</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Velocitat d'exposició</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Guany preestablert</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Nivell de potència del calefactor</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Estabilització del Dither</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>No s'ha pogut completar l'enfocament automàtic. Nombre màxim de punts de mesura assolit.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>No s'ha pogut completar l'enfocament automàtic. La posició de l'enfocador ha arribat a 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Gira la imatge 90° en sentit horari. Les imatges següents també es giraran en la mateixa quantitat. Això només té finalitats de visualització i no afectarà les dades de la imatge.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>La imatge s'ha de resoldre per emmarcar.
+Si us plau, confirmeu les metadades que voleu utilitzar per resoldre-la.
+Un cop confirmat, trieu quin solucionador s'ha d'utilitzar.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Es necessària l'astrometria (Platesolve)</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>Quan se selecciona el solucionador d'astrometria cega, s'ignoraran les coordenades i s'utilitzarà el solucionador cec configurat a les opcions.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>Quan se selecciona el solucionador de plaques, les coordenades s'utilitzaran com a coordenades de referència i s'utilitzaran per al solucionador de plaques configurat a les opcions.</value>
   </data>
 </root>

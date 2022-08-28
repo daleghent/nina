@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2289,8 +2289,8 @@ Přeskočit.</value>
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientace</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>Procento překrytí</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>Překrytí panelu</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panel</value>
@@ -2870,7 +2870,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Stabilizace</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Nastavte Toleranci Pixelů</value>
+    <value>Tolerance Pixelů</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>Stabilizace po přejezdu</value>
@@ -6268,6 +6268,127 @@ Zkontrolujte, zda je k dispozici aktualizace.</value>
     <value>viditelné po</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
-    <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
+    <value>Se zavedením platformy Pegasus Astro Unity a možnými změnami komunikačních protokolů budou nativní ovladače v budoucích verzích vyřazeny. Místo nich používejte ovladače ASCOM!</value>
+  </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Vždy naslouchat změnám souboru</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Sekund čekání před stažením</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} není k dispozici. Vyberte prosím jiný zdroj obrázků.
+
+Důvod: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Chyba zdroje obrázku</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Fronta Uložení Obrázku</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Zvýšení této hodnoty umožňuje aplikaci zařadit do fronty ke zpracování a uložení více než jeden obrázek. To je praktické pro zvýšení rychlosti krátkých expozic během sekvence za cenu zvýšené spotřeby paměti.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>Vybraný zdroj času nedokázal určit správný čas. Vyberte jiný zdroj.</value>
+  </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>Načítání pluginu {0} verze {1} vytvořeného {2}</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>Nastavení MGEN</value>
+  </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Rozvržení zobrazovaní</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>Pokud je tato možnost povolena, bude mít karta zobrazování pouze jedno rozvržení pro všechny profily, místo aby byla závislá na profilu</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Umístění Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>Souřadnice nejsou k dispozici. Platesolve3 vyžaduje k řešení souřadnice!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Platesolve3 exe nalezen</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Rozvržení Zálohy</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>Rozvržení zálohy selhalo</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>Záloha rozvržení zobrazování</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Záloha rozvržení zobrazování do souboru, aby bylo možné jej později obnovit</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Resetovat rozvržení zobrazování</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>Obnovení rozvržení zobrazování</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Resetovat Rozvržení</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>Obnova rozvržení selhala</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Obnovení rozvržení ze zálohy</value>
+  </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Celkem</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Info o Expozici</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>AKTUALIZOVAT CÍL</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>Žádný Filtr</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Rychlost expozice</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Předvolba zisku</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Úroveň výkonu topení</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Nastavení Ditheringu</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>Automatické zaostření se nepodařilo dokončit. Dosažen maximální počet měřicích bodů.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>Automatické zaostření se nepodařilo dokončit. Pozice zaostření dosáhla hodnoty 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Otočí snímek o 90° ve směru hodinových ručiček. Následující snímky se pak také otočí o stejnou hodnotu. Toto je určeno pouze pro účely zobrazení a neovlivní data snímku.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>Na snímek je nutné aplikovat astrometrii.
+Potvrďte metadata, která se mají použít pro astrometrii.
+Po potvrzení vyberte, která astrometrie se má použít.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Vyžaduje se astrometrie</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>Pokud je vybráno řešení naslepo, budou souřadnice ignorovány a použije se řešení naslepo, které je nastaveno v možnostech.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>Pokud je vybrána astrometrie, souřadnice se použijí jako referenční souřadnice a použijí se pro astrometrii, která je nastavena v možnostech.</value>
   </data>
 </root>

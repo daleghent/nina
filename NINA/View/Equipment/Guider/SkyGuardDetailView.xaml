@@ -30,28 +30,12 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Orientation="Vertical">
-      <UniformGrid Columns="2">
-        <UniformGrid
-                    Margin="0,5,0,0"
-                    VerticalAlignment="Center"
-                    Columns="2"
-                    DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
-          <TextBlock
-                        MinWidth="200"
-                        VerticalAlignment="Center"
-                        Text="{ns:Loc LblSkyGuardPath}" />
-          <TextBox
-                        IsEnabled="False"
-                        Margin="-50,0,0,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Text="{Binding SkyGuardPath}" />
-        </UniformGrid>
+      <UniformGrid Columns="2" FlowDirection="RightToLeft">
         <UniformGrid
                     Margin="5,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         MinWidth="200"
@@ -67,23 +51,26 @@
                     Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         MinWidth="200"
                         VerticalAlignment="Center"
-                        Text="{ns:Loc LblSkyGuardServerUrl}" />
+                        Text="{ns:Loc LblSkyGuardPath}" />
           <TextBox
                         IsEnabled="False"
+                        Margin="-50,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Text="{Binding SkyGuardServerUrl}"/>
+                        Text="{Binding SkyGuardPath}" />
         </UniformGrid>
         <UniformGrid
                     IsEnabled="{Binding ElementName=cbxTimeLaps, Path=IsChecked}"
                     Margin="5,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         MinWidth="200"
@@ -107,23 +94,25 @@
                     Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         MinWidth="200"
                         VerticalAlignment="Center"
-                        Text="{ns:Loc LblSkyGuardServerPort}" />
+                        Text="{ns:Loc LblSkyGuardServerUrl}" />
           <TextBox
                         IsEnabled="False"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Text="{Binding SkyGuardServerPort}"/>
+                        Text="{Binding SkyGuardServerUrl}"/>
         </UniformGrid>
         <UniformGrid
                     IsEnabled="{Binding ElementName=cbxTimeLaps, Path=IsChecked}"
                     Margin="5,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         VerticalAlignment="Center"
@@ -147,23 +136,110 @@
                     Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
+                    DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
+          <TextBlock
+                        MinWidth="200"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblSkyGuardServerPort}" />
+          <TextBox
+                        IsEnabled="False"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding SkyGuardServerPort}"/>
+        </UniformGrid>
+        <UniformGrid
+                    Margin="5,5,0,0"
+                    VerticalAlignment="Center"
+                    Columns="2"
+                    FlowDirection="LeftToRight"
+                    DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
+          <TextBlock
+                        MinWidth="200"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblSkyGuardTimeLapsDitherChecked}" />
+          <CheckBox
+                        x:Name="cbxTimeLapsDither"
+                        Height="25"
+                        HorizontalAlignment="Left"
+                        IsChecked="{Binding SkyGuardTimeLapsDitherChecked}" />
+        </UniformGrid>
+        <UniformGrid
+                    Margin="0,5,0,0"
+                    VerticalAlignment="Center"
+                    Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblSkyGuardCallbackPort}"
                         TextWrapping="Wrap" />
           <TextBox
-                        IsEnabled="False"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
+                        IsEnabled="False"
                         Text="{Binding SkyGuardCallbackPort}" />
 
         </UniformGrid>
         <UniformGrid
+                    IsEnabled="{Binding ElementName=cbxTimeLapsDither, Path=IsChecked}"
                     Margin="5,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2"
+                    FlowDirection="LeftToRight"
+                    DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
+          <TextBlock
+                        MinWidth="200"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblSkyGuardValueMaxGuiding}" />
+          <ninactrl:UnitTextBox
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Unit="in plot unit">
+            <TextBox.Text>
+              <Binding Path="SkyGuardValueMaxDithering" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                  <rules:GreaterZeroRule />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </ninactrl:UnitTextBox>
+        </UniformGrid>
+        <UniformGrid />
+        <UniformGrid
+                    IsEnabled="{Binding ElementName=cbxTimeLapsDither, Path=IsChecked}"
+                    Margin="5,5,0,0"
+                    VerticalAlignment="Center"
+                    Columns="2"
+                    FlowDirection="LeftToRight"
+                    DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
+          <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblSkyGuardTimeLapsGuiding}"
+                        TextWrapping="Wrap" />
+          <ninactrl:UnitTextBox
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Unit="s">
+            <TextBox.Text>
+              <Binding Path="SkyGuardTimeLapsDithering" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                  <rules:GreaterThanZeroRule />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </ninactrl:UnitTextBox>
+        </UniformGrid>
+        <UniformGrid />
+        <UniformGrid
+                    Margin="5,5,0,0"
+                    VerticalAlignment="Center"
+                    Columns="2"
+                    FlowDirection="LeftToRight"
                     DataContext="{Binding DataContext.ActiveProfile.GuiderSettings, RelativeSource={RelativeSource AncestorType=local:GuiderView}}">
           <TextBlock
                         MinWidth="200"

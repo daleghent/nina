@@ -35,6 +35,12 @@ using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using System.Windows;
+using System.Collections.Generic;
+using NINA.Sequencer.Interfaces;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Sequencer.SequenceItem.Imaging;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Container {
 
@@ -49,8 +55,13 @@ namespace NINA.Sequencer.Container {
         private readonly IProfileService profileService;
         private readonly IFramingAssistantVM framingAssistantVM;
         private readonly IPlanetariumFactory planetariumFactory;
+        private readonly ICameraMediator cameraMediator;
+        private readonly IFilterWheelMediator filterWheelMediator;
         private readonly IApplicationMediator applicationMediator;
         private INighttimeCalculator nighttimeCalculator;
+        private bool exposureInfoListExpanded;
+        private AsyncObservableCollection<ExposureInfo> exposureInfoList;
+
         private InputTarget target;
 
         [ImportingConstructor]
@@ -59,20 +70,27 @@ namespace NINA.Sequencer.Container {
                 INighttimeCalculator nighttimeCalculator,
                 IFramingAssistantVM framingAssistantVM,
                 IApplicationMediator applicationMediator,
-                IPlanetariumFactory planetariumFactory) : base(new SequentialStrategy()) {
+                IPlanetariumFactory planetariumFactory,
+                ICameraMediator cameraMediator,
+                IFilterWheelMediator filterWheelMediator) : base(new SequentialStrategy()) {
             this.profileService = profileService;
             this.nighttimeCalculator = nighttimeCalculator;
             this.applicationMediator = applicationMediator;
             this.framingAssistantVM = framingAssistantVM;
             this.planetariumFactory = planetariumFactory;
+            this.cameraMediator = cameraMediator;
+            this.filterWheelMediator = filterWheelMediator;
             Task.Run(() => NighttimeData = nighttimeCalculator.Calculate());
+            ExposureInfoList = new AsyncObservableCollection<ExposureInfo>();
             Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon);
             CoordsToFramingCommand = new GalaSoft.MvvmLight.Command.RelayCommand(SendCoordinatesToFraming);
             CoordsFromPlanetariumCommand = new GalaSoft.MvvmLight.Command.RelayCommand(GetCoordsFromPlanetarium);
             DropTargetCommand = new GalaSoft.MvvmLight.Command.RelayCommand<object>(DropTarget);
+            DeleteExposureInfoCommand = new GalaSoft.MvvmLight.Command.RelayCommand<ExposureInfo>(DeleteExposureInfo);
 
             WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.LocationChanged), ProfileService_LocationChanged);
             WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.HorizonChanged), ProfileService_HorizonChanged);
+            WeakEventManager<INighttimeCalculator, EventArgs>.AddHandler(nighttimeCalculator, nameof(nighttimeCalculator.OnReferenceDayChanged), NighttimeCalculator_OnReferenceDayChanged);
         }
 
         private void SendCoordinatesToFraming() {
@@ -81,6 +99,11 @@ namespace NINA.Sequencer.Container {
 
         private void GetCoordsFromPlanetarium() {
             _ = CoordsFromPlanetarium();
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         private void ProfileService_HorizonChanged(object sender, EventArgs e) {
@@ -98,6 +121,9 @@ namespace NINA.Sequencer.Container {
                 if (con != null) {
                     var dropTarget = con.Container.Target;
                     if (dropTarget != null) {
+                        if (con.Container is DeepSkyObjectContainer dsoContainer) {
+                            this.ExposureInfoList = new AsyncObservableCollection<ExposureInfo>(dsoContainer.ExposureInfoList);
+                        }
                         this.Name = dropTarget.TargetName;
                         this.Target.TargetName = dropTarget.TargetName;
                         this.Target.InputCoordinates = dropTarget.InputCoordinates?.Clone();
@@ -112,6 +138,7 @@ namespace NINA.Sequencer.Container {
         public ICommand CoordsToFramingCommand { get; set; }
         public ICommand CoordsFromPlanetariumCommand { get; set; }
         public ICommand DropTargetCommand { get; set; }
+        public ICommand DeleteExposureInfoCommand { get; set; }
 
         [JsonProperty]
         public InputTarget Target {
@@ -133,7 +160,7 @@ namespace NINA.Sequencer.Container {
         }
 
         public override object Clone() {
-            var clone = new DeepSkyObjectContainer(profileService, nighttimeCalculator, framingAssistantVM, applicationMediator, planetariumFactory) {
+            var clone = new DeepSkyObjectContainer(profileService, nighttimeCalculator, framingAssistantVM, applicationMediator, planetariumFactory, cameraMediator, filterWheelMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
@@ -141,7 +168,9 @@ namespace NINA.Sequencer.Container {
                 Items = new ObservableCollection<ISequenceItem>(Items.Select(i => i.Clone() as ISequenceItem)),
                 Triggers = new ObservableCollection<ISequenceTrigger>(Triggers.Select(t => t.Clone() as ISequenceTrigger)),
                 Conditions = new ObservableCollection<ISequenceCondition>(Conditions.Select(t => t.Clone() as ISequenceCondition)),
-                Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon)
+                Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon),
+                ExposureInfoListExpanded = ExposureInfoListExpanded,
+                ExposureInfoList = new AsyncObservableCollection<ExposureInfo>(ExposureInfoList)
             };
 
             clone.Target.TargetName = this.Target.TargetName;
@@ -215,5 +244,105 @@ namespace NINA.Sequencer.Container {
 
             return (resp != null);
         }
+
+        [JsonProperty]
+        public bool ExposureInfoListExpanded {
+            get => exposureInfoListExpanded;
+            set {
+                exposureInfoListExpanded = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string ExposureInfoSummary {
+            get {
+                lock (ExposureInfoList) {
+                    var exposureByFilter = ExposureInfoList
+                        .GroupBy(x => x.Filter)
+                        .Select(y => {
+                            var filterName = y.Key;
+                            var total = TimeSpan.FromSeconds(y.Sum(s => s.ExposureTime * s.Count));
+                            return $"{filterName} - {total.Hours:D2}:{total.Minutes:D2}:{total.Seconds:D2}";
+                        });
+
+                    return string.Join(" | ", exposureByFilter);
+                }
+            }
+        }
+
+        [JsonProperty]
+        public AsyncObservableCollection<ExposureInfo> ExposureInfoList {
+            get => exposureInfoList;
+            set {
+                exposureInfoList = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ExposureInfoSummary));
+            }
+        }
+
+        public ExposureInfo GetOrCreateExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, double roi) {
+            lock (ExposureInfoList) {
+                if(exposureItem.ImageType != Equipment.Model.CaptureSequence.ImageTypes.LIGHT) {
+                    return null;
+                }
+
+                // Check for Gain and Offset when they are below zero if there is a default value available
+                var gain = exposureItem.Gain;
+                if (gain < 0) {
+                    var cameraInfo = cameraMediator.GetInfo();
+                    if (cameraInfo.Connected && cameraInfo.CanSetGain) {
+                        gain = cameraInfo.DefaultGain;
+                    }
+                }
+
+                var offset = exposureItem.Offset;
+                if (offset < 0) {
+                    var cameraInfo = cameraMediator.GetInfo();
+                    if (cameraInfo.Connected && cameraInfo.CanSetOffset) {
+                        offset = cameraInfo.DefaultOffset;
+                    }
+                }
+
+                var binning = exposureItem.Binning;
+                if (binning == null) {
+                    binning = new BinningMode(1, 1);
+                }
+
+                var filterInfo = filterWheelMediator.GetInfo();
+                var filterName = filterInfo.Connected ? filterInfo.SelectedFilter?.Name ?? Loc.Instance["LblNoFilter"] : Loc.Instance["LblNoFilter"];
+
+                var count = ExposureInfoList.FirstOrDefault(
+                    x => x.Filter == filterName
+                         && x.ExposureTime == exposureItem.ExposureTime
+                         && x.Gain == gain
+                         && x.Offset == offset
+                         && x.ImageType == exposureItem.ImageType
+                         && x.BinningX == binning.X
+                         && x.BinningY == binning.Y
+                         && x.ROI == roi
+                );
+
+                if (count == null) {
+                    count = new ExposureInfo(filterName, exposureItem.ExposureTime, gain, offset, exposureItem.ImageType, binning.X, binning.Y, roi);
+                    ExposureInfoList.Add(count);
+                }
+
+                return count;
+            }
+        }
+
+        private void DeleteExposureInfo(ExposureInfo obj) {
+            lock (ExposureInfoList) {
+                ExposureInfoList.Remove(obj);
+            }
+            RaisePropertyChanged(nameof(ExposureInfoSummary));
+        }
+
+        public void IncrementExposureCountForItemAndCurrentFilter(IExposureItem exposureItem, int roi) {
+            var count = GetOrCreateExposureCountForItemAndCurrentFilter(exposureItem, roi);
+            count?.Increment();
+            RaisePropertyChanged(nameof(ExposureInfoSummary));
+        }
+
     }
 }

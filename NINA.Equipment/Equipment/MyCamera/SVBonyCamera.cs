@@ -313,13 +313,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public void StopExposure() {
             try {
                 exposureCts?.Cancel();
-            } catch (Exception) { }
+            } catch { }
         }
 
         public void AbortExposure() {
             try {
                 exposureCts?.Cancel();
-            } catch (Exception) { }
+            } catch { }
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {

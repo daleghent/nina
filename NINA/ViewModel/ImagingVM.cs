@@ -181,6 +181,8 @@ namespace NINA.ViewModel {
             metaData.FromWeatherDataInfo(weatherDataInfo);
 
             metaData.FilterWheel.Filter = sequence.FilterType?.Name ?? metaData.FilterWheel.Filter;
+            if (metaData.Target.Coordinates == null || double.IsNaN(metaData.Target.Coordinates.RA))
+                metaData.Target.Coordinates = metaData.Telescope.Coordinates;
         }
 
         private Task<IExposureData> CaptureImage(
@@ -332,7 +334,7 @@ namespace NINA.ViewModel {
                 } catch (OperationCanceledException) {
                     throw;
                 } catch (Exception e) {
-                    Logger.Error(e, "Failed to prepare image");
+                    Logger.Error("Failed to prepare image", e);
                     Notification.ShowError($"Failed to prepare image for display: {e.Message}");
                     throw;
                 }

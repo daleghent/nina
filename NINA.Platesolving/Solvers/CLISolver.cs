@@ -69,32 +69,46 @@ namespace NINA.PlateSolving.Solvers {
                 result = ReadResult(outputPath, parameter, imageProperties);
             } finally {
                 progress?.Report(new ApplicationStatus() { Status = string.Empty });
-                if (imagePath != null && File.Exists(imagePath)) {
-                    try { 
-                        File.Delete(imagePath);
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                    }
+
+                var filePrefix = FAILED_FILENAME;
+                if(!string.IsNullOrWhiteSpace(source?.MetaData?.Target?.Name)) {
+                    filePrefix += $".{CoreUtil.ReplaceAllInvalidFilenameChars(source.MetaData.Target.Name)}";
                 }
+                if(parameter.Coordinates == null) {
+                    filePrefix += ".blind";
+                }
+
+                if (imagePath != null && File.Exists(imagePath)) {
+                    MoveOrDeleteFile(result, imagePath, filePrefix, cancelToken);
+                }
+
                 if (outputPath != null && File.Exists(outputPath)) {
-                    try {
-                        File.Delete(outputPath);
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                    }
+                    MoveOrDeleteFile(result, outputPath, filePrefix, cancelToken);
                 }
 
                 foreach (var file in GetSideCarFilePaths(imagePath)) {
-                    try {
-                        if (File.Exists(file)) {
-                            File.Delete(file);
-                        }
-                    } catch(Exception ex) {
-                        Logger.Error(ex);
-                    }                    
+                    MoveOrDeleteFile(result, file, filePrefix, cancelToken);
                 }
             }
             return result;
+        }
+
+        private void MoveOrDeleteFile(PlateSolveResult result, string file, string movedFilePrefix, CancellationToken cancelToken) {
+            try {
+                if (!result.Success && !cancelToken.IsCancellationRequested) {
+                    if(File.Exists(file)) {
+                        var destination = Path.Combine(FAILED_DIRECTORY, $"{movedFilePrefix}.{Path.GetExtension(file)}");
+                        if (File.Exists(destination)) {
+                            File.Delete(destination);
+                        }
+                        File.Move(file, destination);
+                    }                    
+                } else {
+                    File.Delete(file);
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
         }
 
         protected async Task<string> PrepareAndSaveImage(IImageData source, CancellationToken cancelToken) {

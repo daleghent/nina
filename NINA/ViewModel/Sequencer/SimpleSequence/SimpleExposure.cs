@@ -24,12 +24,14 @@ using NINA.ViewModel.ImageHistory;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
@@ -59,10 +61,21 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
             this.Add(takeExposure);
             this.Add(loopCondition);
 
+            WeakEventManager<SwitchFilter, PropertyChangedEventArgs>.AddHandler(switchFilter, nameof(switchFilter.PropertyChanged), SwitchFilter_PropertyChanged);
+
             loopCondition.PropertyChanged += LoopCondition_PropertyChanged;
 
             IsExpanded = false;
             Enabled = true;
+        }
+        private void SwitchFilter_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(SwitchFilter.Filter)) {
+                if (this.Status == Core.Enum.SequenceEntityStatus.CREATED || this.Status == Core.Enum.SequenceEntityStatus.RUNNING) {
+                    try {
+                        GetSwitchFilter().ResetProgress();
+                    } catch (Exception) { }
+                }
+            }
         }
 
         [JsonProperty]

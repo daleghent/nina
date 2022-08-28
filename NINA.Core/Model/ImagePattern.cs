@@ -156,6 +156,13 @@ namespace NINA.Core.Model {
             return this.Set(key, string.Format("{0:0}", value));
         }
 
+        public bool Add(ImagePattern pattern) {
+            if(!patterns.ContainsKey(pattern.Key)) {
+                patterns.Add(pattern.Key, pattern);
+            }
+            return false;
+        }
+
         /// <summary>
         /// Replaces macros from Settings.ImageFilePattern into actual values based on input e.g.:
         /// $$Filter$$ -&gt; "Red"

@@ -28,69 +28,71 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <oxy:Plot
-        HorizontalAlignment="Stretch"
-        Background="{StaticResource BackgroundBrush}"
-        LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
-        LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
-        LegendOrientation="Vertical"
-        LegendPosition="BottomLeft"
-        LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
-        PlotAreaBackground="{StaticResource BackgroundBrush}"
-        PlotAreaBorderColor="{Binding Path=Color, Source={StaticResource BorderBrush}}">
-        <oxy:Plot.Axes>
-            <oxy:LinearAxis
-                Key="Temperature"
-                AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
-                IntervalLength="50"
-                IsPanEnabled="False"
-                IsZoomEnabled="False"
-                MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=100}"
-                MajorGridlineStyle="LongDash"
-                Maximum="50"
-                Minimum="-50"
-                MinorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=50}"
-                MinorGridlineStyle="Dash"
-                Position="Left"
-                TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
-            <oxy:LinearAxis
-                Key="CoolingPower"
-                AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
-                IntervalLength="50"
-                IsPanEnabled="False"
-                IsZoomEnabled="False"
-                MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=100}"
-                MajorGridlineStyle="LongDash"
-                Maximum="100"
-                Minimum="0"
-                MinorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=50}"
-                MinorGridlineStyle="Dash"
-                Position="Right"
-                TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
-                TicklineColor="{Binding Path=Color, Source={StaticResource SecondaryBrush}}"
-                Visibility="{Binding Cam.CanSetTemperature, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}" />
-            <oxy:DateTimeAxis
-                IsPanEnabled="False"
-                IsZoomEnabled="False"
-                Position="Bottom"
-                TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
-                TicklineColor="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
-        </oxy:Plot.Axes>
-        <oxy:Plot.Series>
-            <oxy:LineSeries
-                Title="{ns:Loc LblChipTemp}"
-                DataFieldX="Key"
-                DataFieldY="Value"
-                ItemsSource="{Binding CCDTemperatureHistory}"
-                YAxisKey="Temperature" />
-            <oxy:LineSeries
-                Title="{ns:Loc LblCoolerPower}"
-                DataFieldX="Key"
-                DataFieldY="Value"
-                ItemsSource="{Binding CoolerPowerHistory}"
-                Visibility="{Binding Cam.CanSetTemperature, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}"
-                YAxisKey="CoolingPower" />
-        </oxy:Plot.Series>
-    </oxy:Plot>
-
+    <Grid>
+        <oxy:Plot
+            HorizontalAlignment="Stretch"
+            Background="{StaticResource BackgroundBrush}"
+            DataContext="{Binding}"
+            LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
+            LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
+            LegendOrientation="Vertical"
+            LegendPosition="BottomLeft"
+            LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
+            PlotAreaBackground="{StaticResource BackgroundBrush}"
+            PlotAreaBorderColor="{Binding Path=Color, Source={StaticResource BorderBrush}}">
+            <oxy:Plot.Axes>
+                <oxy:LinearAxis
+                    Key="Temperature"
+                    AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
+                    IntervalLength="50"
+                    IsPanEnabled="False"
+                    IsZoomEnabled="False"
+                    MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=100}"
+                    MajorGridlineStyle="LongDash"
+                    Maximum="50"
+                    Minimum="-50"
+                    MinorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=50}"
+                    MinorGridlineStyle="Dash"
+                    Position="Left"
+                    TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
+                <oxy:LinearAxis
+                    Key="CoolingPower"
+                    AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
+                    IntervalLength="50"
+                    IsPanEnabled="False"
+                    IsZoomEnabled="False"
+                    MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=100}"
+                    MajorGridlineStyle="LongDash"
+                    Maximum="100"
+                    Minimum="0"
+                    MinorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=50}"
+                    MinorGridlineStyle="Dash"
+                    Position="Right"
+                    TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
+                    TicklineColor="{Binding Path=Color, Source={StaticResource SecondaryBrush}}"
+                    Visibility="{Binding Cam.CanSetTemperature, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}" />
+                <oxy:DateTimeAxis
+                    IsPanEnabled="False"
+                    IsZoomEnabled="False"
+                    Position="Bottom"
+                    TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
+                    TicklineColor="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
+            </oxy:Plot.Axes>
+            <oxy:Plot.Series>
+                <oxy:LineSeries
+                    Title="{ns:Loc LblChipTemp}"
+                    DataFieldX="Date"
+                    DataFieldY="Temperature"
+                    ItemsSource="{Binding CoolerHistory}"
+                    YAxisKey="Temperature" />
+                <oxy:LineSeries
+                    Title="{ns:Loc LblCoolerPower}"
+                    DataFieldX="Date"
+                    DataFieldY="Power"
+                    ItemsSource="{Binding CoolerHistory}"
+                    Visibility="{Binding Cam.CanSetTemperature, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}"
+                    YAxisKey="CoolingPower" />
+            </oxy:Plot.Series>
+        </oxy:Plot>
+    </Grid>
 </UserControl>

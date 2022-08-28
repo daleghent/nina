@@ -48,7 +48,7 @@ namespace NINA.Sequencer.Container {
         }
 
         private bool isExpanded = true;
-        private object lockObj = new object();
+        private static object lockObj = new object();
 
         [JsonProperty]
         public IExecutionStrategy Strategy { get; }
@@ -558,8 +558,8 @@ namespace NINA.Sequencer.Container {
         public virtual async Task Interrupt() {
             if (localCTS != null) {
                 try {
-                    localCTS.Cancel();
-                } catch (Exception) { }
+                    localCTS?.Cancel();
+                } catch { }
 
                 if (executionTask != null) {
                     await executionTask;

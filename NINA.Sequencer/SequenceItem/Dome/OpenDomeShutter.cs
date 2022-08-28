@@ -61,7 +61,7 @@ namespace NINA.Sequencer.SequenceItem.Dome {
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (!await domeMediator.OpenShutter(token)) {
-                throw new SequenceEntityFailedException();
+                throw new SequenceEntityFailedException("Failed to open dome shutter");
             }
         }
 

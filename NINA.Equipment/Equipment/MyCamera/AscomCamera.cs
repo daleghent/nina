@@ -69,10 +69,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Gains.Clear();
             try {
                 var gains = device.Gains;
+                int idx = 0;
                 foreach (object o in device.Gains) {
-                    if (o.GetType() == typeof(string)) {
-                        var gain = Regex.Match(o.ToString(), @"\d+").Value;
-                        Gains.Add(int.Parse(gain, CultureInfo.InvariantCulture));
+                    if (o is string) {
+                        // Per the ASCOM spec, if we have Gains, then they are names, not values.
+                        // Add an index for each value and write the mapping to the log.
+                        // TODO - Look at how to carry the names to the UI
+                        // eg by adding a GainsPreset string list to ICamera.
+                        // Making Gains a string has too many ripple effects with the 
+                        // UI for a quick fix. 
+                        Logger.Info($"Gain {idx} Mapped to {o as string}");
+                        Gains.Add(idx++);
                     }
                 }
             } catch (Exception) {
@@ -112,10 +119,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         //Map offsets to integer values
                         offsets.Clear();
                         try {
+                            var idx = 0;
                             foreach (object o in arrayListOffsets) {
                                 if (o.GetType() == typeof(string)) {
-                                    var offset = Regex.Match(o.ToString(), @"\d+").Value;
-                                    offsets.Add(int.Parse(offset, CultureInfo.InvariantCulture));
+                                    Logger.Info($"Offset {idx} Mapped to {o as string}");
+                                    offsets.Add(idx++);
                                 }
                             }
                         } catch (Exception) {
@@ -142,19 +150,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short BayerOffsetX {
             get {
-                return GetProperty<short>(nameof(Camera.BayerOffsetX), -1);
+                return GetProperty<short>(nameof(Camera.BayerOffsetX), 0);
             }
         }
 
         public short BayerOffsetY {
             get {
-                return GetProperty<short>(nameof(Camera.BayerOffsetY), -1);
+                return GetProperty<short>(nameof(Camera.BayerOffsetY), 0);
             }
         }
 
         public short BinX {
             get {
-                return GetProperty<short>(nameof(Camera.BinX), -1);
+                return GetProperty<short>(nameof(Camera.BinX), 1);
             }
             set {
                 SetProperty(nameof(Camera.BinX), value);
@@ -163,7 +171,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short BinY {
             get {
-                return GetProperty<short>(nameof(Camera.BinY), -1);
+                return GetProperty<short>(nameof(Camera.BinY), 1);
             }
             set {
                 SetProperty(nameof(Camera.BinY), value);
@@ -313,7 +321,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get {
                 bool val = false;
                 if (CanFastReadout) {
-                    return GetProperty(nameof(Camera.ExposureResolution), false);
+                    return GetProperty(nameof(Camera.FastReadout), false);
                 }
                 return val;
             }
@@ -588,13 +596,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short MaxBinX {
             get {
-                return GetProperty<short>(nameof(Camera.MaxBinX), -1);
+                return GetProperty<short>(nameof(Camera.MaxBinX), 1);
             }
         }
 
         public short MaxBinY {
             get {
-                return GetProperty<short>(nameof(Camera.MaxBinY), -1);
+                return GetProperty<short>(nameof(Camera.MaxBinY), 1);
             }
         }
 
@@ -869,7 +877,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         offsetMin = device.OffsetMin;
                     } else {
                         if (offsets.Count > 0) {
-                            offsetMin = offsets.Aggregate((l, r) => l < r ? l : r);
+                            offsetMin = 0;
                         }
                     }
                 }
@@ -885,7 +893,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         offsetMax = device.OffsetMax;
                     } else {
                         if (offsets.Count > 0) {
-                            offsetMax = offsets.Aggregate((l, r) => l > r ? l : r);
+                            offsetMax = offsets.Count() - 1;
                         }
                     }
                 }
@@ -924,10 +932,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                             device.Offset = value;
                         } else {
-                            var idx = offsets.IndexOf(value);
-                            if (idx >= 0) {
-                                device.Offset = idx;
+                            if (value < 0) {
+                                value = 0;
                             }
+                            if (value > offsets.Count() - 1) {
+                                value = offsets.Count() - 1;
+                            }
+                            device.Offset = value;
                         }
                         RaisePropertyChanged();
                     }

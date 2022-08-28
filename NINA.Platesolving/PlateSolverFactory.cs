@@ -64,6 +64,9 @@ namespace NINA.PlateSolving {
                 case PlateSolverEnum.PLATESOLVE2:
                     return new Platesolve2Solver(plateSolveSettings.PS2Location);
 
+                case PlateSolverEnum.PLATESOLVE3:
+                    return new Platesolve3Solver(plateSolveSettings.PS3Location);
+
                 case PlateSolverEnum.ASPS:
                     return new AllSkyPlateSolver(plateSolveSettings.AspsLocation);
 
@@ -84,6 +87,8 @@ namespace NINA.PlateSolving {
                 type = PlateSolverEnum.ASPS;
             } else if (plateSolveSettings.BlindSolverType == BlindSolverEnum.ASTROMETRY_NET) {
                 type = PlateSolverEnum.ASTROMETRY_NET;
+            } else if (plateSolveSettings.BlindSolverType == BlindSolverEnum.PLATESOLVE3) {
+                type = PlateSolverEnum.PLATESOLVE3;
             }
 
             return GetPlateSolver(plateSolveSettings, type);

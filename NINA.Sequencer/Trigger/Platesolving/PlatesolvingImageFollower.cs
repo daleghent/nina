@@ -98,8 +98,8 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 if (!closed) {
                     this.imageSaveMediator.ImageSaved -= ImageSaveMediator_ImageSaved;
                     try {
-                        solverBackgroundTaskCancellationSource.Cancel();
-                    } catch (Exception) { }
+                        solverBackgroundTaskCancellationSource?.Cancel();
+                    } catch { }
                     closed = true;
                 }
             }

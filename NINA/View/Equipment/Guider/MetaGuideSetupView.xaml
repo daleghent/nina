@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:utility="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -20,7 +21,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
@@ -30,7 +31,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center">
             <UniformGrid
-                Margin="5,5,0,0"
+                Margin="0,5,0,0"
                 VerticalAlignment="Center"
                 Columns="2">
                 <TextBlock
@@ -39,7 +40,10 @@
                     Text="{ns:Loc LblMetaGuideIP}" />
                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBox.Text>
-                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.GuiderSettings.MetaGuideIP" UpdateSourceTrigger="LostFocus">
+                        <Binding
+                            Path="ActiveProfile.GuiderSettings.MetaGuideIP"
+                            Source="{StaticResource ProfileService}"
+                            UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <rules:IsValidIPAddressRule />
                             </Binding.ValidationRules>
@@ -48,7 +52,7 @@
                 </TextBox>
             </UniformGrid>
             <UniformGrid
-                Margin="5,5,0,0"
+                Margin="0,5,0,0"
                 VerticalAlignment="Center"
                 Columns="2">
                 <TextBlock
@@ -57,7 +61,10 @@
                     Text="{ns:Loc LblMetaGuidePort}" />
                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBox.Text>
-                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.GuiderSettings.MetaGuidePort" UpdateSourceTrigger="LostFocus">
+                        <Binding
+                            Path="ActiveProfile.GuiderSettings.MetaGuidePort"
+                            Source="{StaticResource ProfileService}"
+                            UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <rules:GreaterZeroRule />
                             </Binding.ValidationRules>
@@ -65,6 +72,112 @@
                     </TextBox.Text>
                 </TextBox>
             </UniformGrid>
+
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <UniformGrid VerticalAlignment="Center" Columns="2">
+                    <TextBlock
+                        MinWidth="200"
+                        MinHeight="20"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblMinIntensity}">
+                        <TextBlock.ToolTip>
+                            <TextBlock Text="{ns:Loc LblMinIntensityTooltip}" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                    <TextBox
+                        MinWidth="75"
+                        MinHeight="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding
+                                Path="ActiveProfile.GuiderSettings.MetaGuideMinIntensity"
+                                Source="{StaticResource ProfileService}"
+                                UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="255" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </UniformGrid>
+            </StackPanel>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <UniformGrid VerticalAlignment="Center" Columns="2">
+                    <TextBlock
+                        MinWidth="200"
+                        MinHeight="20"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblDitherPixels}" />
+                    <TextBox
+                        MinWidth="75"
+                        MinHeight="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding
+                                Path="ActiveProfile.GuiderSettings.DitherPixels"
+                                Source="{StaticResource ProfileService}"
+                                UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <rules:GreaterZeroRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </UniformGrid>
+            </StackPanel>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <UniformGrid VerticalAlignment="Center" Columns="2">
+                    <TextBlock
+                        MinWidth="200"
+                        MinHeight="20"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblMetaGuideDitherSettleTime}">
+                        <TextBlock.ToolTip>
+                            <TextBlock Text="{ns:Loc LblMetaGuideDitherSettleTimeTooltip}" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                    <ninactrl:UnitTextBox
+                        MinWidth="75"
+                        MinHeight="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Unit="s">
+                        <ninactrl:UnitTextBox.Text>
+                            <Binding
+                                Path="ActiveProfile.GuiderSettings.MetaGuideDitherSettleSeconds"
+                                Source="{StaticResource ProfileService}"
+                                UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <rules:GreaterZeroRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ninactrl:UnitTextBox.Text>
+                    </ninactrl:UnitTextBox>
+                </UniformGrid>
+            </StackPanel>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <UniformGrid VerticalAlignment="Center" Columns="2">
+                    <TextBlock
+                        MinWidth="200"
+                        MinHeight="20"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblMetaGuideLockWhenGuiding}" />
+                    <CheckBox Height="25" HorizontalAlignment="Left">
+                        <CheckBox.IsChecked>
+                            <Binding
+                                Path="ActiveProfile.GuiderSettings.MetaGuideLockWhenGuiding"
+                                Source="{StaticResource ProfileService}"
+                                UpdateSourceTrigger="LostFocus" />
+                        </CheckBox.IsChecked>
+                    </CheckBox>
+                </UniformGrid>
+            </StackPanel>
             <Button
                 Grid.Row="1"
                 Grid.Column="0"

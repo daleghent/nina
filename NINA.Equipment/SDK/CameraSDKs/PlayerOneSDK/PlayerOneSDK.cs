@@ -131,8 +131,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public void StartExposure(double exposureTime, int width, int height) {
-            var transformedExposureTime = (int)(exposureTime * 1000000d);
-            SetControlValue(POAConfig.POA_EXPOSURE, transformedExposureTime);
+            var transformedExposureTime = (long)(exposureTime * 1000000d);
+            if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
+            SetControlValue(POAConfig.POA_EXPOSURE, (int)transformedExposureTime);
 
             CheckAndThrowError(playerOnePInvoke.POAStartExposure(id, POABool.POA_TRUE));                  
         }

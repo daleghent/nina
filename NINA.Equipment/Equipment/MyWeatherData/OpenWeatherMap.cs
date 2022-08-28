@@ -220,8 +220,10 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             if (Connected == false)
                 return;
 
-            OWMUpdateWorkerCts.Cancel();
-            OWMUpdateWorkerCts.Dispose();
+            try {
+                OWMUpdateWorkerCts?.Cancel();
+                OWMUpdateWorkerCts?.Dispose();
+            } catch { }
 
             Connected = false;
         }

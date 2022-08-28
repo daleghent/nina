@@ -83,6 +83,7 @@
     <Compile Include="Solvers\BaseSolver.cs" />
     <Compile Include="Solvers\CLISolver.cs" />
     <Compile Include="Solvers\LocalPlateSolver.cs" />
+    <Compile Include="Solvers\Platesolve3Solver.cs" />
     <Compile Include="Solvers\Platesolve2Solver.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -276,7 +276,14 @@ namespace NINA.Equipment.Model {
         [XmlAttribute(nameof(RAMinutes))]
         public int RAMinutes {
             get {
-                return (int)(Math.Floor(_coordinates.RA * 60.0d) % 60);
+                var minutes = (Math.Abs(_coordinates.RA * 60.0d) % 60);
+
+                var seconds = (int)Math.Round((Math.Abs(_coordinates.RA * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    minutes += 1;
+                }
+
+                return (int)Math.Floor(minutes);
             }
             set {
                 if (value >= 0) {
@@ -289,7 +296,11 @@ namespace NINA.Equipment.Model {
         [XmlAttribute(nameof(RASeconds))]
         public int RASeconds {
             get {
-                return (int)(Math.Floor(_coordinates.RA * 60.0d * 60.0d) % 60);
+                var seconds = (int)Math.Round((Math.Abs(_coordinates.RA * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    seconds = 0;
+                }
+                return seconds;
             }
             set {
                 if (value >= 0) {
@@ -328,10 +339,17 @@ namespace NINA.Equipment.Model {
         [XmlAttribute(nameof(DecMinutes))]
         public int DecMinutes {
             get {
-                return (int)Math.Floor((Math.Abs(_coordinates.Dec * 60.0d) % 60));
+                var minutes = (Math.Abs(_coordinates.Dec * 60.0d) % 60);
+
+                var seconds = (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    minutes += 1;
+                }
+
+                return (int)Math.Floor(minutes);
             }
             set {
-                if (_coordinates.Dec < 0) {
+                if (NegativeDec) {
                     _coordinates.Dec = _coordinates.Dec + DecMinutes / 60.0d - value / 60.0d;
                 } else {
                     _coordinates.Dec = _coordinates.Dec - DecMinutes / 60.0d + value / 60.0d;
@@ -344,10 +362,14 @@ namespace NINA.Equipment.Model {
         [XmlAttribute(nameof(DecSeconds))]
         public int DecSeconds {
             get {
-                return (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    seconds = 0;
+                }
+                return seconds;
             }
             set {
-                if (_coordinates.Dec < 0) {
+                if (NegativeDec) {
                     _coordinates.Dec = _coordinates.Dec + DecSeconds / (60.0d * 60.0d) - value / (60.0d * 60.0d);
                 } else {
                     _coordinates.Dec = _coordinates.Dec - DecSeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);
@@ -372,17 +394,19 @@ namespace NINA.Equipment.Model {
 
         private void RaiseCoordinatesChanged() {
             RaisePropertyChanged(nameof(Rotation));
-            RaisePropertyChanged(nameof(Coordinates));
-            RaisePropertyChanged(nameof(RAHours));
-            RaisePropertyChanged(nameof(RAMinutes));
-            RaisePropertyChanged(nameof(RASeconds));
-            RaisePropertyChanged(nameof(DecDegrees));
-            RaisePropertyChanged(nameof(DecMinutes));
-            RaisePropertyChanged(nameof(DecSeconds));
-            DSO.Name = this.TargetName;
-            DSO.Coordinates = Coordinates;
-            DSO.Rotation = Rotation;
-            NegativeDec = DSO?.Coordinates?.Dec < 0;
+            if (Coordinates?.RA != 0 || Coordinates?.Dec != 0) {
+                RaisePropertyChanged(nameof(Coordinates));
+                RaisePropertyChanged(nameof(RAHours));
+                RaisePropertyChanged(nameof(RAMinutes));
+                RaisePropertyChanged(nameof(RASeconds));
+                RaisePropertyChanged(nameof(DecDegrees));
+                RaisePropertyChanged(nameof(DecMinutes));
+                RaisePropertyChanged(nameof(DecSeconds));
+                DSO.Name = this.TargetName;
+                DSO.Coordinates = Coordinates;
+                DSO.Rotation = Rotation;
+                NegativeDec = DSO?.Coordinates?.Dec < 0;
+            }
         }
 
         private DeepSkyObject _dso;

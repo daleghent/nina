@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -131,6 +132,7 @@ namespace NINA.WPF.Base.Behaviors {
         }
 
         private void ElementOnStylusMove(object sender, StylusEventArgs e) {
+            if (e.StylusDevice.TabletDevice.Type != TabletDeviceType.Stylus) { return; }
             if (e.StylusDevice.Id == stylusId) {
                 var element = (FrameworkElement)sender;
                 var parent = (UIElement)element.Parent;
@@ -141,6 +143,7 @@ namespace NINA.WPF.Base.Behaviors {
         }
 
         private void ElementOnStylusUp(object sender, StylusEventArgs e) {
+            if (e.StylusDevice.TabletDevice.Type != TabletDeviceType.Stylus) { return; }
             if (e.StylusDevice.Id == stylusId) {
                 var element = (FrameworkElement)sender;
                 element.ReleaseStylusCapture();
@@ -152,6 +155,7 @@ namespace NINA.WPF.Base.Behaviors {
         private int stylusId = -1;
 
         private void ElementOnStylusDown(object sender, StylusDownEventArgs e) {
+            if(e.StylusDevice.TabletDevice.Type != TabletDeviceType.Stylus) { return; }
             if (stylusId == -1) {
                 var id = e.StylusDevice.Id;
                 var element = (FrameworkElement)sender;
@@ -172,12 +176,14 @@ namespace NINA.WPF.Base.Behaviors {
             var point = e.TouchDevice.GetTouchPoint(parent).Position;
 
             OnMove(element, point);
+            e.Handled = true;
         }
 
         private void ElementOnTouchUp(object sender, TouchEventArgs e) {
             var element = (FrameworkElement)sender;
             element.ReleaseTouchCapture(e.TouchDevice);
             OnUp(element);
+            e.Handled = true;
         }
 
         private void ElementOnTouchDown(object sender, TouchEventArgs e) {
@@ -189,9 +195,11 @@ namespace NINA.WPF.Base.Behaviors {
             OnDown(element, point);
 
             element.CaptureTouch(e.TouchDevice);
+            e.Handled = true;
         }
 
         private void Element_MouseLeave(object sender, MouseEventArgs e) {
+            if (e.StylusDevice != null) { return; }
             var element = (FrameworkElement)sender;
             var overrideCursor = GetOverrideCursor(element);
             if (overrideCursor) {
@@ -200,6 +208,7 @@ namespace NINA.WPF.Base.Behaviors {
         }
 
         private void ElementOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs) {
+            if (mouseButtonEventArgs.StylusDevice != null) { return; }
             /*var parent = Application.Current.MainWindow;
             _mouseStartPosition2 = mouseButtonEventArgs.GetPosition(parent);*/
 
@@ -253,6 +262,7 @@ namespace NINA.WPF.Base.Behaviors {
         }
 
         private void ElementOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs) {
+            if (mouseButtonEventArgs.StylusDevice != null) { return; }
             /*((UIElement)sender).ReleaseMouseCapture();
             _elementStartPosition2.X = Transform.X;
             _elementStartPosition2.Y = Transform.Y;*/
@@ -265,6 +275,7 @@ namespace NINA.WPF.Base.Behaviors {
         private DragMode _mode;
 
         private void ElementOnMouseMove(object sender, MouseEventArgs mouseEventArgs) {
+            if (mouseEventArgs.StylusDevice != null) { return; }
             var element = (FrameworkElement)sender;
 
             var parent = (UIElement)element.Parent;

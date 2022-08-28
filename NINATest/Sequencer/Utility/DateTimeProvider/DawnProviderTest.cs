@@ -32,7 +32,7 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
     internal class DawnProviderTest {
 
         [Test]
-        public void GetDateTime_NoDawn_NowIsReturned() {
+        public void GetDateTime_NoDawn_ExceptionIsThrown() {
             var referenceDate = new DateTime(2020, 1, 1, 0, 0, 0);
 
             var customDateTimeMock = new Mock<ICustomDateTime>();
@@ -47,7 +47,8 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
             var sut = new DawnProvider(nightTimeCalculatorMock.Object);
             sut.DateTime = customDateTimeMock.Object;
 
-            sut.GetDateTime(null).Should().Be(referenceDate);
+            Action act = () => sut.GetDateTime(null);
+            act.Should().Throw<Exception>();
             nightTimeCalculatorMock.Verify(x => x.Calculate(It.IsAny<DateTime?>()), Times.Once);
         }
 

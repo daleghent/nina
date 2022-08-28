@@ -28,6 +28,7 @@ namespace NINA.Profile.Interfaces {
         FilterInfo Filter { get; set; }
         PlateSolverEnum PlateSolverType { get; set; }
         string PS2Location { get; set; }
+        string PS3Location { get; set; }
         int Regions { get; set; }
         double SearchRadius { get; set; }
         double Threshold { get; set; }

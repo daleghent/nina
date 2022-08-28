@@ -45,6 +45,7 @@ using NINA.WPF.Base.ViewModel;
 using NINA.Plugin.Interfaces;
 using System.Diagnostics;
 using System.Threading;
+using NINA.Core.Utility.Notification;
 
 namespace NINA.ViewModel {
 
@@ -74,6 +75,8 @@ namespace NINA.ViewModel {
                              IPluginLoader pluginProvider) : base(profileService) {
             LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => InitializeAvalonDockLayout(o)));
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
+            BackupDockLayoutCommand = new RelayCommand(BackupDockLayout, (object o) => _dockmanager != null);
+            RestoreDockLayoutFromFileCommand = new RelayCommand(RestoreDockLayoutFromFile);
 
             var initAnchorables = new List<IDockableVM>();
             var initAnchorableInfoPanels = new List<IDockableVM>();
@@ -124,8 +127,6 @@ namespace NINA.ViewModel {
             initAnchorableTools.Add(autoFocusToolVM);
             initAnchorableTools.Add(focusTargetsVM);
 
-            ClosingCommand = new RelayCommand(ClosingApplication);
-
             profileService.ProfileChanged += ProfileService_ProfileChanged;
 
             Task.Run(async () => {
@@ -143,6 +144,50 @@ namespace NINA.ViewModel {
                 AnchorableTools = initAnchorableTools;
                 Initialized = true;
             });
+        }
+
+        private void RestoreDockLayoutFromFile(object obj) {
+            try {
+                var dialog = OptionsVM.GetFilteredFileDialog("", "DockBackup.dock.config", "Dock Config|*.dock.config");
+                if (dialog.ShowDialog() == true) {
+                    if(File.Exists(dialog.FileName)) {
+                        lock(lockObj) {
+                            _dockloaded = false;
+                            File.Copy(dialog.FileName, GetDockConfigPath(profileService.ActiveProfile.Id), true);
+                            Notification.ShowInformation(Loc.Instance["LblDockLayoutRestored"]);
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Loc.Instance["LblRestoreDockLayoutFromFileFailed"]);
+            }
+        }
+
+        private void BackupDockLayout(object obj) {
+            try {
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.InitialDirectory = "";
+                dialog.FileName = "DockBackup.dock.config";
+                dialog.Title = Loc.Instance["LblBackupDockLayout"];
+                dialog.DefaultExt = ".dock.config";
+                dialog.Filter = "Dock Config|*.dock.config";
+                dialog.OverwritePrompt = true;
+
+                if (dialog.ShowDialog().Value) {
+                    if (Directory.Exists(Path.GetDirectoryName(dialog.FileName))) {
+                        lock (lockObj) {
+                            var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+                            serializer.Serialize(dialog.FileName);
+                            Notification.ShowInformation(Loc.Instance["LblBackupDockLayoutSuccessful"]);
+                        }
+                    }
+                    
+                }
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Loc.Instance["LblBackupDockLayoutFailed"]);
+            }
         }
 
         private bool initialized;
@@ -186,6 +231,7 @@ namespace NINA.ViewModel {
 
                     LoadDefaultLayout(serializer);
                     SaveAvalonDockLayout();
+                    Notification.ShowInformation(Loc.Instance["LblDockLayoutReset"]);
                 }
             }
         }
@@ -240,6 +286,15 @@ namespace NINA.ViewModel {
         private object lockObj = new object();
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
+        public static string GetDockConfigPath(Guid profileId) {
+            if(Properties.Settings.Default.SingleDockLayout) {
+                return Path.Combine(ProfileService.PROFILEFOLDER, $"GLOBAL.dock.config");
+            } else {
+                return Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+            }
+            
+        }
+
         public async Task<bool> InitializeAvalonDockLayout(object o) {
             lock (lockObj) {
                 if (Initialized && _dockloaded) { return true; }
@@ -288,7 +343,7 @@ namespace NINA.ViewModel {
                         };
 
                         var profileId = profileService.ActiveProfile.Id;
-                        var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+                        var profilePath = GetDockConfigPath(profileId);
                         if (File.Exists(profilePath)) {
                             try {
                                 Logger.Info($"Initializing imaging tab layout from {profilePath}");
@@ -332,7 +387,7 @@ namespace NINA.ViewModel {
                                 Logger.Error("Failed to load imaging tab layout. Loading default Layout!", ex);
                                 LoadDefaultLayout(serializer);
                             }
-                        } else if (File.Exists(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
+                        } else if (!Properties.Settings.Default.SingleDockLayout && File.Exists(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
                             try {
                                 Logger.Info("Migrating imaging tab layout from old path");
                                 serializer.Deserialize(Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"));
@@ -363,23 +418,15 @@ namespace NINA.ViewModel {
                     var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
 
                     var profileId = profileService.ActiveProfile.Id;
-                    var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+                    var profilePath = GetDockConfigPath(profileId);
                     serializer.Serialize(profilePath);
                 }
             }
         }
 
-        private void ClosingApplication(object o) {
-            try {
-                SaveAvalonDockLayout();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-        }
-
         public IAsyncCommand LoadAvalonDockLayoutCommand { get; private set; }
         public ICommand ResetDockLayoutCommand { get; }
-
-        public ICommand ClosingCommand { get; private set; }
+        public ICommand BackupDockLayoutCommand { get; private set; }
+        public ICommand RestoreDockLayoutFromFileCommand { get; private set; }        
     }
 }

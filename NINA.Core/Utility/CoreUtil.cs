@@ -121,46 +121,56 @@ namespace NINA.Core.Utility {
         public static async Task<TimeSpan> Delay(TimeSpan span, CancellationToken token) {
             var now = DateTime.UtcNow;
             if (span.Ticks >= 0) await Task.Delay(span, token);
-            return DateTime.UtcNow.Subtract(now);
+            return DateTime.UtcNow.Subtract(now);        
         }
 
-        public static async Task<TimeSpan> Wait(TimeSpan t, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = default, string status = "") {
+        public static Task<TimeSpan> Wait(TimeSpan t, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = default, string status = "") {
+            return Wait(t, false, token, progress, status);
+        }
+
+        public static async Task<TimeSpan> Wait(TimeSpan t, bool progressCountDown, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = default,  string status = "") {
             status = string.IsNullOrWhiteSpace(status) ? NINA.Core.Locale.Loc.Instance["LblWaiting"] : status;
 
             var elapsed = new TimeSpan(0);
             while (elapsed < t) {
                 var delta = await Delay(100, token);
                 elapsed += delta;
+                token.ThrowIfCancellationRequested();
 
-                if (t.Hours > 0) {
+                if (progress != null) { 
+                    string progressStatus;
+                    if (t.Hours > 0) {
+                        if(progressCountDown) {
+                            var remaining = t - elapsed;
+                            progressStatus = $"{status} {remaining.Hours:D2}:{remaining.Minutes:D2}:{remaining.Seconds:D2}";
+                        } else {
+                            progressStatus = $"{status} {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2} / {t.Hours:D2}:{t.Minutes:D2}:{t.Seconds:D2}";
+                        }
+                    } else if (t.Minutes > 0) {
+                        if (progressCountDown) {
+                            var remaining = t - elapsed;
+                            progressStatus = $"{status} {remaining.Minutes:D2}:{remaining.Seconds:D2}";
+                        } else {
+                            progressStatus = $"{status} {elapsed.Minutes:D2}:{elapsed.Seconds:D2} / {t.Minutes:D2}:{t.Seconds:D2}";
+                        }
+                    } else {
+                        if (progressCountDown) {
+                            var remaining = t - elapsed;
+                            progressStatus = $"{status} {remaining.Seconds} s";
+                        } else {
+                            progressStatus = $"{status} {elapsed.Seconds} s / {t.Seconds} s";
+                        }
+                    }
+
                     progress?.Report(
                         new ApplicationStatus {
                             MaxProgress = 1,
                             Progress = elapsed.TotalSeconds / t.TotalSeconds,
-                            Status = $"{status} {elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2} / {t.Hours:D2}:{t.Minutes:D2}:{t.Seconds:D2}",
+                            Status = progressStatus,
                             ProgressType = ApplicationStatus.StatusProgressType.Percent
-                        }
-                    );
-                } else if (t.Minutes > 0) {
-                    progress?.Report(
-                        new ApplicationStatus {
-                            MaxProgress = 1,
-                            Progress = elapsed.TotalSeconds / t.TotalSeconds,
-                            Status = $"{status} {elapsed.Minutes:D2}:{elapsed.Seconds:D2} / {t.Minutes:D2}:{t.Seconds:D2}",
-                            ProgressType = ApplicationStatus.StatusProgressType.Percent
-                        }
-                    );
-                } else {
-                    progress?.Report(
-                        new ApplicationStatus {
-                            MaxProgress = (int)t.TotalSeconds,
-                            Progress = (int)elapsed.TotalSeconds,
-                            Status = status,
-                            ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue
                         }
                     );
                 }
-                token.ThrowIfCancellationRequested();
             }
             return elapsed;
         }

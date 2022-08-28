@@ -87,7 +87,7 @@ namespace NINA.Sequencer.Conditions {
                 if (ItemUtility.IsInRootContainer(Parent)) {
                     ConditionWatchdog.Start();
                 } else {
-                    ConditionWatchdog.Cancel();
+                    try { ConditionWatchdog?.Cancel(); } catch { }
                 }
             }
         }
@@ -106,6 +106,8 @@ namespace NINA.Sequencer.Conditions {
         public bool RunCheck(ISequenceItem previousItem, ISequenceItem nextItem) {
             if(this.Status == SequenceEntityStatus.DISABLED) { return false; }
 
+            var root = ItemUtility.GetRootContainer(this.Parent);
+
             try {
                 if (this is IValidatable && !(this is ISequenceContainer)) {
                     var validatable = this as IValidatable;
@@ -118,10 +120,12 @@ namespace NINA.Sequencer.Conditions {
             } catch (SequenceEntityFailedException ex) {
                 Logger.Error($"Failed: {this} - " + ex.Message);
                 Status = SequenceEntityStatus.FAILED;
+                root?.RaiseFailureEvent(this, ex);
                 return false;
             } catch (SequenceEntityFailedValidationException ex) {
                 Status = SequenceEntityStatus.FAILED;
                 Logger.Error($"Failed validation: {this} - " + ex.Message);
+                root?.RaiseFailureEvent(this, ex);
                 return false;
             } catch (OperationCanceledException) {
                 Status = SequenceEntityStatus.CREATED;
@@ -129,6 +133,7 @@ namespace NINA.Sequencer.Conditions {
             } catch (Exception ex) {
                 Status = SequenceEntityStatus.FAILED;
                 Logger.Error(ex);
+                root?.RaiseFailureEvent(this, ex);
                 return false;
             }
         }

@@ -45,18 +45,17 @@ using NINA.Plugin.Interfaces;
 using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
 using NINA.WPF.Base.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel {
 
     internal class OptionsVM : DockableVM, IOptionsVM {
 
         public OptionsVM(IProfileService profileService,
-                         IFilterWheelMediator filterWheelMediator,
                          IAllDeviceConsumer deviceConsumer,
                          IVersionCheckVM versionCheckVM,
                          ProjectVersion projectVersion,
                          IPlanetariumFactory planetariumFactory,
-                         IDockManagerVM dockManagerVM,
                          ISGPServiceHost sgpServiceHost,
                          IPluggableBehaviorSelector<IStarDetection> starDetectionSelector,
                          IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector,
@@ -66,15 +65,14 @@ namespace NINA.ViewModel {
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
 
             DeviceConsumer = deviceConsumer;
+            customPatterns = new List<ImagePattern>();
             this.versionCheckVM = versionCheckVM;
             this.projectVersion = projectVersion;
             this.planetariumFactory = planetariumFactory;
-            this.filterWheelMediator = filterWheelMediator;
             this.sgpServiceHost = sgpServiceHost;
             this.PluggableStarDetection = starDetectionSelector;
             this.PluggableStarAnnotator = starAnnotatorSelector;
             this.PluggableAutoFocusVMFactory = autoFocusVMFactorySelector;
-            DockManagerVM = dockManagerVM;
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
             OpenSequenceTemplateDiagCommand = new RelayCommand(OpenSequenceTemplateDiag);
@@ -84,6 +82,7 @@ namespace NINA.ViewModel {
             OpenSequenceTemplateFolderDiagCommand = new RelayCommand(OpenSequenceTemplateFolderDiag);
             OpenCygwinFileDiagCommand = new RelayCommand(OpenCygwinFileDiag);
             OpenPS2FileDiagCommand = new RelayCommand(OpenPS2FileDiag);
+            OpenPS3FileDiagCommand = new RelayCommand(OpenPS3FileDiag);
             OpenASPSFileDiagCommand = new RelayCommand(OpenASPSFileDiag);
             OpenASTAPFileDiagCommand = new RelayCommand(OpenASTAPFileDiag);
             OpenHorizonFilePathDiagCommand = new RelayCommand(OpenHorizonFilePathDiag);
@@ -106,12 +105,12 @@ namespace NINA.ViewModel {
             CopyToAlternativeCustomSchemaCommand = new RelayCommand(CopyToAlternativeCustomSchema, (object o) => ActiveProfile.ColorSchemaSettings.ColorSchema?.Name != "Alternative Custom");
             SiteFromGPSCommand = new AsyncCommand<bool>(() => Task.Run(SiteFromGPS));
             SiteFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(SiteFromPlanetarium));
-            ImagePatterns = ImagePatterns.CreateExample();
+            RecreatePatterns();
 
             ScanForIndexFiles();
 
             profileService.LocaleChanged += (object sender, EventArgs e) => {
-                ImagePatterns = ImagePatterns.CreateExample();
+                RecreatePatterns();
                 RaisePropertyChanged(nameof(FileTypes));
             };
 
@@ -132,6 +131,35 @@ namespace NINA.ViewModel {
         public bool IsX64 {
             get => !DllLoader.IsX86();
         }
+
+        public void AddImagePattern(ImagePattern pattern) {
+            customPatterns.Add(pattern);
+            RecreatePatterns();
+        }
+
+        private void RecreatePatterns() {
+            var patterns = ImagePatterns.CreateExample();
+            foreach(var cp in customPatterns) {
+                patterns.Add(cp);
+            }
+            ImagePatterns = patterns;
+            RaisePropertyChanged(nameof(FilePatternPreview));
+        }
+
+        public string FilePattern {
+            get => profileService.ActiveProfile.ImageFileSettings.FilePattern;
+            set {
+                profileService.ActiveProfile.ImageFileSettings.FilePattern = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FilePatternPreview));
+            }
+        }
+
+        public string FilePatternPreview {
+            get => ImagePatterns.GetImageFileString(FilePattern).Replace("\\", " › ");
+        }
+
+        private List<ImagePattern> customPatterns;
 
         private void OpenHorizonFilePathDiag(object obj) {
             var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz;*.hzn;*.txt|MountWizzard4 Horizon File|*.hpts");
@@ -226,6 +254,22 @@ namespace NINA.ViewModel {
         private void CloneProfile(object obj) {
             if (!profileService.Clone(SelectedProfile)) {
                 Notification.ShowWarning(Loc.Instance["LblLoadProfileInUseWarning"]);
+            } else {    
+                if(!Properties.Settings.Default.SingleDockLayout) {
+                    try {
+                        var currentProfileId = profileService.ActiveProfile.Id;
+                        var dockPath = DockManagerVM.GetDockConfigPath(currentProfileId);
+
+                        var newProfile = profileService.Profiles.Last();
+
+                        if (File.Exists(dockPath)) {
+                            File.Copy(dockPath, Path.Combine(Path.GetDirectoryName(dockPath), $"{newProfile.Id}.dock.config"));
+                        }
+
+                    } catch (Exception e) {
+                        Logger.Error("Failed to clone dock config", e);
+                    }
+                }
             }
         }
 
@@ -335,8 +379,6 @@ namespace NINA.ViewModel {
             }
         }
 
-        public IDockManagerVM DockManagerVM { get; }
-
         private void OpenSequenceTemplateDiag(object o) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Title = Loc.Instance["LblSequenceTemplate"];
@@ -393,6 +435,13 @@ namespace NINA.ViewModel {
             var dialog = GetFilteredFileDialog(profileService.ActiveProfile.PlateSolveSettings.PS2Location, "PlateSolve2.exe", "PlateSolve2|PlateSolve2.exe");
             if (dialog.ShowDialog() == true) {
                 ActiveProfile.PlateSolveSettings.PS2Location = dialog.FileName;
+            }
+        }
+
+        private void OpenPS3FileDiag(object o) {
+            var dialog = GetFilteredFileDialog(profileService.ActiveProfile.PlateSolveSettings.PS3Location, "PlateSolve3.exe", "PlateSolve3|PlateSolve3*.exe");
+            if (dialog.ShowDialog() == true) {
+                ActiveProfile.PlateSolveSettings.PS3Location = dialog.FileName;
             }
         }
 
@@ -455,6 +504,8 @@ namespace NINA.ViewModel {
         public ICommand OpenCygwinFileDiagCommand { get; private set; }
 
         public ICommand OpenPS2FileDiagCommand { get; private set; }
+
+        public ICommand OpenPS3FileDiagCommand { get; private set; }
 
         public ICommand OpenASPSFileDiagCommand { get; private set; }
 
@@ -569,6 +620,18 @@ namespace NINA.ViewModel {
                 FontWeight = familyTypeface.Weight;
 
                 RaisePropertyChanged();
+            }
+        }
+
+        public bool SingleDockLayout {
+            get {
+                return NINA.Properties.Settings.Default.SingleDockLayout;
+            }
+            set {
+                NINA.Properties.Settings.Default.SingleDockLayout = value;
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+                RaisePropertyChanged();
+                RequiresRestart = true;
             }
         }
 
@@ -721,6 +784,31 @@ namespace NINA.ViewModel {
             }
         }
 
+        public int SaveQueueSize {
+            get {
+                return Properties.Settings.Default.SaveQueueSize;
+            }
+            set {
+                if(value < 1) { value = 1; }
+                if(value != SaveQueueSize) {
+                    NINA.Properties.Settings.Default.SaveQueueSize = value;
+                    CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+                    RaisePropertyChanged();
+                    RequiresRestart = true;
+                }                
+            }
+        }
+
+        public bool RequiresRestart {
+            get {
+                return requiresRestart;
+            }
+            set {
+                requiresRestart = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public LogLevelEnum LogLevel {
             get {
                 return profileService.ActiveProfile.ApplicationSettings.LogLevel;
@@ -744,8 +832,8 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ProfileMeta _selectedProfile;
-        private IFilterWheelMediator filterWheelMediator;
+        private ProfileMeta _selectedProfile;        
+        private bool requiresRestart = false;
         private readonly IVersionCheckVM versionCheckVM;
         private readonly ProjectVersion projectVersion;
         private readonly IPlanetariumFactory planetariumFactory;

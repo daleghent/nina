@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.WPF.Base.Exceptions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,14 +31,20 @@ namespace NINA.WPF.Base.SkySurvey {
                 if (fieldOfView > MaxFoVPerImage * 3) {
                     throw new Exception(string.Format("Sky Survey only supports up to {0} degree", AstroUtil.ArcminToDegree(MaxFoVPerImage * 3)));
                 } else {
-                    BitmapSource image;
-                    if (fieldOfView <= MaxFoVPerImage) {
-                        image = await GetSingleImage(coordinates, fieldOfView, fieldOfView, ct, width, height);
-                    } else {
-                        image = await GetMosaicImage(name, coordinates, fieldOfView, width, height, ct, progress);
+                    BitmapSource image = null;
+
+                    try {
+                        if (fieldOfView <= MaxFoVPerImage) {
+                            image = await GetSingleImage(coordinates, fieldOfView, fieldOfView, ct, width, height);
+                        } else {
+                            image = await GetMosaicImage(name, coordinates, fieldOfView, width, height, ct, progress);
+                        }
+                    } catch (Exception ex) {
+                        throw new SkySurveyUnavailableException(ex.Message);
                     }
 
                     image.Freeze();
+
                     return new SkySurveyImage() {
                         Name = name,
                         Source = this.GetType().Name,

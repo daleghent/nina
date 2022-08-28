@@ -245,6 +245,9 @@ namespace NINA.ViewModel.Sequencer {
             if (clonedContainer == null || clonedContainer is ISequenceRootContainer || clonedContainer is IImmutableContainer) return;
             clonedContainer.AttachNewParent(null);
             clonedContainer.ResetAll();
+            if (clonedContainer is DeepSkyObjectContainer dsoContainer) {
+                dsoContainer.ExposureInfoList.Clear();
+            }
 
             bool addTemplate = true;
             var templateExists = TemplateController.UserTemplates.Any(t => t.Container.Name == clonedContainer.Name);
@@ -433,7 +436,7 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         private void CancelSequence(object obj) {
-            cts?.Cancel();
+            try { cts?.Cancel(); } catch { }
         }
 
         public IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates() {

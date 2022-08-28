@@ -214,7 +214,7 @@ namespace NINATest.Equipment.SDK.CameraSDKs.SVBony {
             var sut = new SVBonySDK(id, pinvoke.Object);
             sut.Connect();
             var cts = new CancellationTokenSource();
-            cts.Cancel();
+            try { cts?.Cancel(); } catch { }
             var data = await sut.StartExposure(0.1, 80, 100, cts.Token);
 
             pinvoke.Verify(x => x.SVBGetVideoDataMono16(id, It.IsAny<ushort[]>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);

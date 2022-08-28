@@ -142,8 +142,6 @@ namespace NINA.ViewModel {
                 }
                 return false;
             });
-
-            ClosingCommand = new RelayCommand(ClosingApplication);
         }
 
         private bool allConnected = false;
@@ -156,7 +154,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void ClosingApplication(object o) {
+        public void Shutdown() {
             AsyncContext.Run(DisconnectEquipment);
             try {
                 NINA.Equipment.SDK.CameraSDKs.AtikSDK.AtikCameraDll.Shutdown();
@@ -230,8 +228,6 @@ namespace NINA.ViewModel {
                 Logger.Error(ex);
             }
         }
-
-        public ICommand ClosingCommand { get; private set; }
 
         public ICommand ConnectAllDevicesCommand { get; private set; }
         public ICommand DisconnectAllDevicesCommand { get; private set; }

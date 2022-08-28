@@ -92,6 +92,7 @@ namespace NINA.Image.FileFormat.FITS {
 
         public ImageMetaData ExtractMetaData() {
             var metaData = new ImageMetaData();
+            metaData.GenericHeaders = GetAllFITSKeywords();
 
             if (_headerCards.ContainsKey("IMAGETYP")) {
                 metaData.Image.ImageType = _headerCards["IMAGETYP"].OriginalValue;
@@ -159,7 +160,9 @@ namespace NINA.Image.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("BAYERPAT", out card)) {
-                metaData.Camera.SensorType = metaData.StringToSensorType(card.OriginalValue);
+                // FITS Bayer Patterns seem to include single quotes and extra spaces
+                var originalValue = card.OriginalValue.Trim('\'').Trim();
+                metaData.Camera.SensorType = metaData.StringToSensorType(originalValue);
             }
 
             if (_headerCards.TryGetValue("XBAYROFF", out card)) {
@@ -424,6 +427,22 @@ namespace NINA.Image.FileFormat.FITS {
             }
 
             return metaData;
+        }
+
+        private List<IGenericMetaDataHeader> GetAllFITSKeywords() {
+            var l = new List<IGenericMetaDataHeader>();            
+            if (_headerCards.Count == 0) { return l; }
+
+            foreach (var elem in _headerCards) {
+                if (elem.Key == null) { continue; }
+
+                var key = elem.Key;
+                if (key == null) { continue; }
+
+                var value = elem.Value.OriginalValue.Trim();
+                l.Add(new StringMetaDataHeader(key, value, elem.Value.Comment));
+            }
+            return l;
         }
 
         private double ParseDouble(string value) {
@@ -711,6 +730,27 @@ namespace NINA.Image.FileFormat.FITS {
 
             Add("EQUINOX", 2000.0d, "Equinox of celestial coordinate system");
             Add("SWCREATE", string.Format("N.I.N.A. {0} ({1})", CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
+
+            foreach(var elem in metaData.GenericHeaders) {
+                switch(elem) {
+                    case StringMetaDataHeader s:
+                        Add(s.Key, s.Value, s.Comment);
+                        break;
+                    case IntMetaDataHeader i:
+                        Add(i.Key, i.Value, i.Comment);
+                        break;
+                    case DoubleMetaDataHeader d:
+                        Add(d.Key, d.Value, d.Comment);
+                        break;
+                    case BoolMetaDataHeader b:
+                        Add(b.Key, b.Value, b.Comment);
+                        break;
+                    case DateTimeMetaDataHeader d:
+                        Add(d.Key, d.Value, d.Comment);
+                        break;
+                }
+                
+            }
         }
     }
 }

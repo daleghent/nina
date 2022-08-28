@@ -257,7 +257,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
         }
 
         private void CancelChooseFW(object o) {
-            _cancelChooseFilterWheelSource?.Cancel();
+            try { _cancelChooseFilterWheelSource?.Cancel(); } catch { }
         }
 
         private CancellationTokenSource _cancelChooseFilterWheelSource;
@@ -272,7 +272,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
         public Task Disconnect() {
             if (FW != null) {
-                _changeFilterCancellationSource?.Cancel();
+                try { _changeFilterCancellationSource?.Cancel(); } catch { }
                 FW.Disconnect();
                 FW = null;
                 FilterWheelInfo = DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();

@@ -489,20 +489,32 @@
                                     MinValue="1"
                                     Value="{Binding VerticalPanels, Mode=TwoWay}" />
                             </UniformGrid>
-                            <UniformGrid
+                            <Grid
                                 Margin="0,0,0,6"
-                                Columns="2"
                                 Visibility="{Binding IsMosaic, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOverlapPercentage}" />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{ns:Loc LblPanelOverlap}" />
                                 <ninactrl:IntStepperControl
+                                    x:Name="OverlapValueStepperControl"
+                                    Grid.Column="1"
                                     Margin="5,0,0,0"
                                     VerticalContentAlignment="Center"
-                                    MaxValue="100"
-                                    MinValue="1"
-                                    StepSize="10"
-                                    Unit="%"
-                                    Value="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}, Mode=TwoWay}" />
-                            </UniformGrid>
+                                    MinValue="0"
+                                    MaxValue="{Binding MaxOverlapValue}"
+                                    StepSize="{Binding OverlapValueStepSize}"/>
+                                <ComboBox
+                                    x:Name="OverlapUnitCombobox"
+                                    Grid.Column="2"
+                                    Margin="5,0,0,0"
+                                    ItemsSource="{Binding OverlapUnits}"
+                                    SelectedItem="{Binding SelectedOverlapUnit}"
+                                    SelectionChanged="OverlapUnitCombobox_SelectionChanged"
+                                    IsSynchronizedWithCurrentItem="True" />
+                            </Grid>
 
                             <UniformGrid Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRotation}" />

@@ -120,6 +120,20 @@ namespace NINA.ViewModel {
                     target.Target.DeepSkyObject = dso;
                 }
             };
+
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
+
+            nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
+        }
+
+        private void ProfileService_ProfileChanged(object sender, EventArgs e) {
+            DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
+            EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         private string savePath = string.Empty;
@@ -155,9 +169,9 @@ namespace NINA.ViewModel {
                     var targetArea = factory.GetContainer<TargetAreaContainer>();
                     var rootContainer = factory.GetContainer<SequenceRootContainer>();
                     rootContainer.Name = Loc.Instance["LblTargetSetTitle"];
-                    rootContainer.Add(new SimpleStartContainer(factory, profileService));
+                    rootContainer.Add(new SimpleStartContainer(factory, profileService, cameraMediator));
                     rootContainer.Add(targetArea);
-                    rootContainer.Add(new SimpleEndContainer(factory, profileService));
+                    rootContainer.Add(new SimpleEndContainer(factory, profileService, cameraMediator));
                     (targetArea.Items as ObservableCollection<ISequenceItem>).CollectionChanged += SimpleSequenceVM_CollectionChanged;
                     rootContainer.ClearHasChanged();
                     Sequencer = new NINA.Sequencer.Sequencer(
@@ -276,7 +290,7 @@ namespace NINA.ViewModel {
         }
 
         private void CancelSequence(object obj) {
-            cts?.Cancel();
+            try { cts?.Cancel(); } catch { }
         }
 
         private MeridianFlipTrigger flipTrigger;
@@ -713,6 +727,24 @@ namespace NINA.ViewModel {
             private set {
                 overallDuration = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(OverallDurationFormatted));
+            }
+        }
+
+        public string OverallDurationFormatted {
+            get {
+                if(OverallDuration.TotalDays > 1) {
+                    return OverallDuration.ToString(@"dd\d\ hh\h\ mm\m\ ss\s");
+
+                } else if(OverallDuration.TotalHours > 1) {
+                    return OverallDuration.ToString(@"hh\h\ mm\m\ ss\s");
+
+                } else if(OverallDuration.TotalMinutes > 1) {
+                    return OverallDuration.ToString(@"mm\m\ ss\s");
+
+                } else {
+                    return OverallDuration.ToString(@"ss\s");
+                }                
             }
         }
 

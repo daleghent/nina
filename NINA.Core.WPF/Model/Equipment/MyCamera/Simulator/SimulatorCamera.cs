@@ -401,16 +401,17 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public bool HasDewHeater {
             get {
-                return false;
+                return true;
             }
         }
 
+        private bool dewHeaterOn;
         public bool DewHeaterOn {
-            get {
-                return false;
-            }
+            get => dewHeaterOn;
 
             set {
+                dewHeaterOn = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -468,7 +469,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                     // Trigger a download to ensure the the properties from the previously saved image settings are intialized
                     _ = await this.DownloadExposure(token);
                 } catch (Exception e) {
-                    Logger.Error(e, "Failed to download image on connect");
+                    Logger.Error("Failed to download image on connect", e);
                 }
 
                 return true;
@@ -484,7 +485,9 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
                 var remaining = exposureTime - (DateTime.Now - exposureStart);
-                await Task.Delay(remaining, token);
+                if (remaining > TimeSpan.Zero) {
+                    await Task.Delay(remaining, token);
+                }
             }
         }
 

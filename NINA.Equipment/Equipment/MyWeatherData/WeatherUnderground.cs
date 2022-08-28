@@ -232,8 +232,10 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             if (Connected == false)
                 return;
 
-            WUnderUpdateWorkerCts.Cancel();
-            WUnderUpdateWorkerCts.Dispose();
+            try {
+                WUnderUpdateWorkerCts?.Cancel();
+                WUnderUpdateWorkerCts?.Dispose();
+            } catch { }
 
             Connected = false;
         }

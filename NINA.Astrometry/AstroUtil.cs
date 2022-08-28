@@ -17,6 +17,7 @@ using NINA.Core.Database;
 using NINA.Core.Utility;
 using Nito.AsyncEx;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -149,7 +150,7 @@ namespace NINA.Astrometry {
         private static double DeltaUTToday = 0.0;
         private static double DeltaUTYesterday = 0.0;
         private static double DeltaUTTomorrow = 0.0;
-        private static Dictionary<DateTime, double> DeltaUTCache = new Dictionary<DateTime, double>();
+        private static ConcurrentDictionary<DateTime, double> DeltaUTCache = new ConcurrentDictionary<DateTime, double>();
         private static DateTime DeltaUTReference;
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace NINA.Astrometry {
 
             try {
                 if (!DeltaUTCache.ContainsKey(utcDate.Date)) {
-                    DeltaUTCache.Add(utcDate.Date, deltaUT);
+                    DeltaUTCache.AddOrUpdate(utcDate.Date, deltaUT, (a, b) => b);
                 }                
             } catch(Exception) { }
             
@@ -824,6 +825,49 @@ namespace NINA.Astrometry {
             var denominator = Math.Cos(d2) * Math.Tan(d1) - Math.Sin(d2) * Math.Cos(a1 - a2);
             var result = AstroUtil.ToDegree(Math.Atan(numerator / denominator));
             return result;
+        }
+
+        /// <summary>
+        /// Calculates the refraction adjusted (observed) altitude for a given topocentric (in vacuum) altitude
+        /// The Method works for Altitudes down to about 5°. For lower altitudes the method will produce unreliable results.
+        /// </summary>
+        /// <param name="altitude">Altitude to calculate the refracted altitude from</param>
+        /// <param name="pressurehPa">Pressure in hecto pascals (hPa) at the observer (not at sea level)</param>
+        /// <param name="tempCelcius">Ambient temperature in Celcius</param>
+        /// <param name="relativeHumidity">Relative humidity at the ambient temperature</param>
+        /// <param name="wavelength">Wavelength of light in micrometers. 0.54 is approximately the center of a typical luminance bandpass and would be a reasonable default value to use</param>
+        /// <param name="iterationIncrementInArcsec">[Optional] Iteration Increment Size. Decreasing increment will need more iterations</param>
+        /// <param name="maxIterations">[Optional] Maximum Iterations - When exceeded NaN is returned</param>
+        /// <returns></returns>
+        public static double CalculateRefractedAltitude(double altitude, double pressurehPa, double tempCelcius, double relativeHumidity, double wavelength, double iterationIncrementInArcsec = 1, double maxIterations = 1000) {
+            if(altitude < 0) { throw new ArgumentException("Altitude must be greater than or equals 0"); }
+
+            double refa = 0d;
+            double refb = 0d;
+            double Z = AstroUtil.ToRadians(90 - altitude);
+
+            SOFA.RefractionConstants(pressurehPa, tempCelcius, relativeHumidity, wavelength, ref refa, ref refb);
+            
+            var increment = AstroUtil.ToRadians(AstroUtil.ArcsecToDegree(iterationIncrementInArcsec));
+            var roller = increment;
+            var iterations = 0;
+            do {
+                double refractedZenithDistanceRadian = Z - roller;
+                // dZ = A tan Z + B tan^3 Z.  
+                var dZ2 = refa * Math.Tan(refractedZenithDistanceRadian) + refb * Math.Pow(Math.Tan(refractedZenithDistanceRadian), 3);
+                if(double.IsNaN(dZ2)) {
+                    return double.NaN;
+                }
+                var originalZenithDistanceRadian = refractedZenithDistanceRadian + dZ2;
+                if (Math.Abs(originalZenithDistanceRadian - Z) < AstroUtil.ToRadians(AstroUtil.ArcsecToDegree(iterationIncrementInArcsec))) {
+                    return 90 - AstroUtil.ToDegree(refractedZenithDistanceRadian);
+                }
+                roller += increment;
+                iterations++;
+
+            } while (iterations < maxIterations);
+
+            return double.NaN;
         }
     }
 

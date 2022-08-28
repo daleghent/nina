@@ -47,6 +47,9 @@ namespace NINA.Profile.Interfaces {
         bool SkyGuardTimeLapsChecked { get; set; }
         double SkyGuardValueMaxGuiding { get; set; }
         double SkyGuardTimeLapsGuiding { get; set; }
+        bool SkyGuardTimeLapsDitherChecked { get; set; }
+        double SkyGuardValueMaxDithering { get; set; }
+        double SkyGuardTimeLapsDithering { get; set; }
         double SkyGuardTimeOutGuiding { get; set; }
     }
 }

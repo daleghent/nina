@@ -11,6 +11,7 @@
 #endregion "copyright"
 using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Equipment.SDK.CameraSDKs.ASTPANSDK;
 using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp;
 using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
@@ -114,6 +115,12 @@ namespace NINA.ViewModel {
             } catch (Exception) {
                 PlayerOneSDKVersion = Loc.Instance["LblNotInstalled"];
             }
+
+            try {
+                ASTPANSDKVersion = new ASTPANPInvokeProxy().GetSDKVersion();
+            } catch (Exception) {
+                ASTPANSDKVersion = Loc.Instance["LblNotInstalled"];
+            }
         }
 
         public string AltairSDKVersion { get; }
@@ -130,5 +137,6 @@ namespace NINA.ViewModel {
         public string SBIGSDKVersion { get; }
         public string MallinCamSDKVersion { get; }
         public string PlayerOneSDKVersion { get; }
+        public string ASTPANSDKVersion { get; }
     }
 }

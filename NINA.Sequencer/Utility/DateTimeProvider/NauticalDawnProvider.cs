@@ -39,7 +39,7 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         public DateTime GetDateTime(ISequenceEntity context) {
             var night = nighttimeCalculator.Calculate().NauticalTwilightRiseAndSet.Rise;
             if (!night.HasValue) {
-                night = DateTime.Now;
+                throw new Exception("No nautical dawn");
             }
             return night.Value;
         }

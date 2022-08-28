@@ -33,6 +33,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.Interfaces.Mediator;
 using NINA.Sequencer.SequenceItem.Platesolving;
 using NINA.WPF.Base.Behaviors;
+using NINA.WPF.Base.Exceptions;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.SkySurvey;
@@ -71,7 +72,8 @@ namespace NINA.ViewModel.FramingAssistant {
                                   IRotatorMediator rotatorMediator,
                                   IDomeMediator domeMediator,
                                   IDomeFollower domeFollower,
-                                  IImageDataFactory imageDataFactory) : base(profileService) {
+                                  IImageDataFactory imageDataFactory,
+                                  IWindowServiceFactory windowServiceFactory) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -87,6 +89,7 @@ namespace NINA.ViewModel.FramingAssistant {
             this.domeMediator = domeMediator;
             this.domeFollower = domeFollower;
             this.imageDataFactory = imageDataFactory;
+            this.windowServiceFactory = windowServiceFactory;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
 
@@ -142,8 +145,17 @@ namespace NINA.ViewModel.FramingAssistant {
             InitializeCommands();
             Task.Run(() => {
                 this.NighttimeData = this.nighttimeCalculator.Calculate();
+                nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
                 InitializeCache();
             });
+
+            this.OverlapUnits = new List<string> { "%", "px" };
+            this.SelectedOverlapUnit = this.overlapUnits[0];
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         public bool IsX64 {
@@ -175,7 +187,7 @@ namespace NINA.ViewModel.FramingAssistant {
             RefreshSkyMapAnnotationCommand = new RelayCommand((object o) => SkyMapAnnotator.UpdateSkyMap(), (object o) => SkyMapAnnotator.Initialized);
             MouseWheelCommand = new RelayCommand(MouseWheel);
             GetRotationFromCameraCommand = new AsyncCommand<bool>(GetRotationFromCamera, (object o) => RectangleCalculated && cameraMediator.GetInfo().Connected && cameraMediator.IsFreeToCapture(this));
-            CancelGetRotationFromCameraCommand = new RelayCommand(o => { try { getRotationTokenSource?.Cancel(); } catch (Exception) { } });
+            CancelGetRotationFromCameraCommand = new RelayCommand(o => { try { getRotationTokenSource?.Cancel(); } catch { } });
 
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
             CoordsFromScopeCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromScope));
@@ -252,7 +264,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
 
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async (object o) => {
-                slewTokenSource?.Cancel();
+                try { slewTokenSource?.Cancel(); } catch { }
                 slewTokenSource?.Dispose();
                 slewTokenSource = new CancellationTokenSource();
                 bool result;
@@ -290,7 +302,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
                 return result;
             }, (object o) => RectangleCalculated && cameraMediator.IsFreeToCapture(this));
-            CancelSlewToCoordinatesCommand = new RelayCommand((object o) => slewTokenSource?.Cancel());
+            CancelSlewToCoordinatesCommand = new RelayCommand((object o) => { try { slewTokenSource?.Cancel(); } catch { } });
 
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {
                 resizeTimer.Stop();
@@ -641,7 +653,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private void CancelLoadImage() {
-            _loadImageSource?.Cancel();
+            try { _loadImageSource?.Cancel(); } catch { }
         }
 
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
@@ -687,6 +699,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private IDomeFollower domeFollower;
         private NighttimeData nighttimeData;
         private IImageDataFactory imageDataFactory;
+        private IWindowServiceFactory windowServiceFactory;
 
         public NighttimeData NighttimeData {
             get => nighttimeData;
@@ -714,7 +727,14 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int RAMinutes {
             get {
-                return (int)(Math.Floor(DSO.Coordinates.RA * 60.0d) % 60);
+                var minutes = (Math.Abs(DSO.Coordinates.RA * 60.0d) % 60);
+
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    minutes += 1;
+                }
+
+                return (int)Math.Floor(minutes);
             }
             set {
                 if (value >= 0) {
@@ -726,7 +746,11 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int RASeconds {
             get {
-                return (int)(Math.Floor(DSO.Coordinates.RA * 60.0d * 60.0d) % 60);
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    seconds = 0;
+                }
+                return seconds;
             }
             set {
                 if (value >= 0) {
@@ -762,10 +786,17 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int DecMinutes {
             get {
-                return (int)Math.Floor((Math.Abs(DSO.Coordinates.Dec * 60.0d) % 60));
+                var minutes = (Math.Abs(DSO.Coordinates.Dec * 60.0d) % 60);
+
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    minutes += 1;
+                }
+
+                return (int)Math.Floor(minutes);
             }
             set {
-                if (DSO.Coordinates.Dec < 0) {
+                if (NegativeDec) {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec + DecMinutes / 60.0d - value / 60.0d;
                 } else {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec - DecMinutes / 60.0d + value / 60.0d;
@@ -777,10 +808,14 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public int DecSeconds {
             get {
-                return (int)Math.Floor((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                if (seconds > 59) {
+                    seconds = 0;
+                }
+                return seconds;
             }
             set {
-                if (DSO.Coordinates.Dec < 0) {
+                if (NegativeDec) {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec + DecSeconds / (60.0d * 60.0d) - value / (60.0d * 60.0d);
                 } else {
                     DSO.Coordinates.Dec = DSO.Coordinates.Dec - DecSeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);
@@ -830,6 +865,8 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraWidth = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(MaxOverlapValue));
+                RaisePropertyChanged(nameof(OverlapValueStepSize));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -841,6 +878,8 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraHeight = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(MaxOverlapValue));
+                RaisePropertyChanged(nameof(OverlapValueStepSize));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -930,6 +969,79 @@ namespace NINA.ViewModel.FramingAssistant {
             set {
                 overlapPercentage = value;
                 RaisePropertyChanged();
+                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+            }
+        }
+
+        private double overlapPixels = 500;
+
+        public double OverlapPixels {
+            get {
+                return overlapPixels;
+            }
+            set {
+                overlapPixels = value;
+                RaisePropertyChanged();
+                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+            }
+        }
+
+        public double OverlapValue {
+            get {
+                if (SelectedOverlapUnit == "%") {
+                    return OverlapPercentage;
+                } else { // px
+                    return OverlapPixels;
+                }
+            }
+            set {
+                if (SelectedOverlapUnit == "%") {
+                    OverlapPercentage = value;
+                } else { // px
+                    OverlapPixels = value;
+                }
+            }
+        }
+
+        public int OverlapValueStepSize {
+            get {
+                if (SelectedOverlapUnit == "%") {
+                    return 5;
+                } else { // px
+                    return (int)((Math.Round(MaxOverlapValue / 20.0) / 100) * 100);
+                }
+            }
+        }
+
+        public int MaxOverlapValue {
+            get {
+                if (SelectedOverlapUnit == "%") {
+                    return 100;
+                } else { // px
+                    return Math.Min(CameraWidth, CameraHeight);
+                }
+            }
+        }
+
+        private List<string> overlapUnits;
+
+        public List<string> OverlapUnits {
+            get => overlapUnits;
+            set {
+                overlapUnits = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string selectedOverlapUnit;
+
+        public string SelectedOverlapUnit {
+            get => selectedOverlapUnit;
+            set {
+                selectedOverlapUnit = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(MaxOverlapValue));
+                RaisePropertyChanged(nameof(OverlapValueStepSize));
                 CalculateRectangle(SkyMapAnnotator.ViewportFoV);
             }
         }
@@ -1068,36 +1180,57 @@ namespace NINA.ViewModel.FramingAssistant {
                     Logger.Info("Loading image for framing has been cancelled");
                 } catch (Exception ex) {
                     Logger.Error($"Failed to load image from source {FramingAssistantSource} with field of view {FieldOfView}° for coordinates {DSO?.Coordinates}.", ex);
-                    Notification.ShowError(ex.Message);
+
+                    if (ex is SkySurveyUnavailableException) {
+                        Notification.ShowExternalError(string.Format(Loc.Instance["LblSkySurveyUnavailable"], FramingAssistantSource.GetDescription(), ex.Message), Loc.Instance["LblImageSourceError"]);
+                    } else {
+                        Notification.ShowError(ex.Message);
+                    }
                 }
+
                 return true;
             }
         }
 
         private async Task<FileSkySurveyImage> PlateSolveSkySurvey(FileSkySurveyImage skySurveyImage) {
-            var referenceCoordinates = skySurveyImage.Coordinates != null ? skySurveyImage.Coordinates : DSO.Coordinates;
-
-            var diagResult = MyMessageBox.Show(string.Format(Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
-
-            if (diagResult == MessageBoxResult.No) {
-                referenceCoordinates = null;
-            }
-            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var referenceCoordinates = skySurveyImage.Coordinates != null ? skySurveyImage.Coordinates : DSO.Coordinates ?? new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+            skySurveyImage.Data.MetaData.Target.Coordinates = referenceCoordinates;
 
             var focalLength = double.IsNaN(skySurveyImage.Data.MetaData.Telescope.FocalLength) ? this.FocalLength : skySurveyImage.Data.MetaData.Telescope.FocalLength;
             var pixelSize = double.IsNaN(skySurveyImage.Data.MetaData.Camera.PixelSize) ? this.CameraPixelSize : skySurveyImage.Data.MetaData.Camera.PixelSize;
 
+            var framingPlateSolveParameter = new FramingPlateSolveParameter(
+                referenceCoordinates,
+                focalLength,
+                pixelSize,
+                skySurveyImage.Data.MetaData.Camera.BinX
+            );
+
+            var diag = windowServiceFactory.Create();
+            await diag.ShowDialog(framingPlateSolveParameter, Loc.Instance["LblPlateSolveRequired"]);
+
+            if(framingPlateSolveParameter.DoBlindSolve == null) { throw new OperationCanceledException(); }
+            //var diagResult = MyMessageBox.Show(string.Format(Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
+            
+            if (framingPlateSolveParameter.DoBlindSolve == true) {
+                framingPlateSolveParameter.Coordinates = null;
+                skySurveyImage.Data.MetaData.Target.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+            }
+            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+
+            
+
             var parameter = new PlateSolveParameter() {
-                Binning = skySurveyImage.Data.MetaData.Camera.BinX,
-                Coordinates = referenceCoordinates,
+                Binning = framingPlateSolveParameter.Binning,
+                Coordinates = framingPlateSolveParameter.Coordinates?.Coordinates,
                 DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
-                FocalLength = focalLength,
+                FocalLength = framingPlateSolveParameter.FocalLength,
                 MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
-                PixelSize = pixelSize,
+                PixelSize = framingPlateSolveParameter.PixelSize,
                 Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
                 SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
-                BlindFailoverEnabled = profileService.ActiveProfile.PlateSolveSettings.BlindFailoverEnabled
+                BlindFailoverEnabled = false
             };
 
             var imageSolver = new ImageSolver(plateSolver, blindSolver);
@@ -1196,8 +1329,16 @@ namespace NINA.ViewModel.FramingAssistant {
                     var panelWidth = CameraWidth * conversion;
                     var panelHeight = CameraHeight * conversion;
 
-                    var panelOverlapWidth = CameraWidth * OverlapPercentage * conversion;
-                    var panelOverlapHeight = CameraHeight * OverlapPercentage * conversion;
+                    double panelOverlapWidth;
+                    double panelOverlapHeight;
+                    if (SelectedOverlapUnit == "%") {
+                        panelOverlapWidth = CameraWidth * OverlapPercentage * conversion;
+                        panelOverlapHeight = CameraHeight * OverlapPercentage * conversion;
+                    }
+                    else { // px
+                        panelOverlapWidth = OverlapPixels * conversion;
+                        panelOverlapHeight = OverlapPixels * conversion;
+                    }
 
                     width = HorizontalPanels * panelWidth - (HorizontalPanels - 1) * panelOverlapWidth;
                     height = VerticalPanels * panelHeight - (VerticalPanels - 1) * panelOverlapHeight;

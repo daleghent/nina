@@ -3,6 +3,47 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+### <span style="color:yellow;">Beta builds are preview builds that contain the full development effort for the next release. These builds contain the full set of features for the next version and are under evaluation to find and fix potential bugs. No major changes will occur in these builds and the focus is on bug fixing only - major changes may only occur if a critical issue is identified and a major change is necessary to fix it. Thus these builds should already be quite stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
+
+# Version 2.0 HF 1
+
+## Bugfixes
+- Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver
+- Corrections made to assorted entries in the NINA object database
+- Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues
+- Touch input is now working properly when dragging the rectangle in framing assistant
+- When the filter is changed while the Smart Exposure or Simple Sequencer Exposure is already running, the first exposure afterwards no longer uses the previous filter but switches to the expected new filter
+
+## Improvements
+- Improved error message presentation if the selected sky survey image serivce fails to accept a request
+- The image save queue size can now be adjusted to allow for more concurrent image processing and save operations. Do be careful when changing this, as it will increase overall system resource usage during fast image captures
+- *Wait For Time* | *Loop Until Time* - When no dusk/dawn is available at the current date the instructions will now show an error instead of falling back to the current time
+- *Wait For Time* | *Loop Until Time* - When the date changes (at noon) the instructions will now automatically redetermine the times
+- Altitude charts across the app should now automatically update on a new date (at noon with a maximum of ~10 minutes delay)
+- Replaced old FITS library for reading FITS files with CFITSIO. Opening FITS files should now be much faster
+- Plugin initialization now shows a status in the application status bar
+- Framing mosaics can now also be done with overlapping pixel count instead of an overlap percentage
+- Guider settings could only be set when being connected. Now these settings are also available in the setup screen of each guider without requiring a connection
+- When cloning a profile, the dock config for that profile will be cloned too
+- Simple Sequencer - "Cool Camera" toggled to on will also turn on dew heater when available as well as "Warm Camera" toggled to on will turn off the dew heater when enabled
+- "Wait For Time", "Wait for Timespan" and Settle reports now count down instead of up in the progress report
+- Standard Autofocus: Break out of autofocus when a large number of points were taken without success or when the focuser hits the zero position
+- When loading a file for framing that needs to be platesolved the prompt that shows up now has more details and values can be adjusted if required. This should make it more clear of what is happening.
+
+## Features
+- Added interfaces and capabilities so that plugins can inject custom image meta data and image file patterns
+- Added missing Sharpless, LBN, Collinder, and Caldwell designations to existing entries in NINA's object database
+- AstcamPan cameras can now be controlled via a native driver implementation
+- The last plate solve failure in each session, target and solver type will now be kept for further error analysis and automatically cleaned up after seven days
+- Added a toggle in Options > General > Advanced to only have one imaging tab layout for all profiles instead of it being profile dependent
+- In Options > Imaging > Layout two new buttons have been added to backup and restore the imaging tab layout
+- Added interfaces for plugins to register to FailureEvents inside the SequenceRootContainer to react on all failures that are raised during a sequence
+- Deep Sky Object Containers now also show a section with exposure times done on that particular target. 
+    - When a target is saved these recorded exposure times are also stored with it to be reloaded at a later point
+    - Furthermore this info will also be used to set the `$$FRAMENR$$` for exposures in the context of that target to have a continuous increment
+    - Rows can manually be removed and the counter will reset
+- In the Imaging Tab above the image preview, a new button to rotate an image by 90° per click is added. Each following image will then also be rotated. This rotation is for display only and doesn't affect the data.
+
 # Version 2.0
 
 The changelog contains the most prominent changes of Version 2.0. In summary this version has tons of improvements and almost every aspect of the application has been touched and improved. A big thank you to everyone that participated in this long release cycle!

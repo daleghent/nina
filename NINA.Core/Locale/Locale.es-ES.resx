@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2287,8 +2287,8 @@ Calculado HFR: {2}
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientación</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>Porcentaje de superposición</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>Superposición del panel</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panel</value>
@@ -6265,5 +6265,126 @@ Por favor, comprueba si hay disponible actualización.</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>Con la introducción de la Plataforma Pegasus Astro Unity y los posibles cambios en los protocolos de comunicación los drivers nativos quedarán obsoletos en futuras versiones. Por favor, ¡usa los controladores ASCOM en su lugar!</value>
+  </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Escucha siempre los cambios de archivo</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Segundos a esperar antes de descargar</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} no está disponible. Por favor, seleccione otra imagen.
+
+Razón: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Error en imagen seleccionada</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Tamaño de la cola de guardado de imagen</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Incrementarlo permite a la aplicación poner más de una imagen en la cola de procesamiento y guardado. Esto es útil para aumentar la velocidad de exposiciones cortas durante una secuencia a costa de un mayor consumo de memoria.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>La fuente de tiempo seleccionada no pudo determinar una hora válida. Por favor, seleccione una diferente.</value>
+  </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>Cargando plugin {0} versión {1} creado por {2}</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>Configuración MGEN</value>
+  </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Single imaging tab layout</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>Cuando se activa, la pestaña de fotografía tendrá un diseño único para todos los perfiles en lugar de depender del perfil.</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Localización del Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No hay coordenadas disponibles. ¡El Platesolve3 las necesita para poder realizarse!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Archivo ejecutable del Platesolve3 no encontraado</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Guardar diseño</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>Falló la carga de la copia del diseño</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>Diseño de la pestaña de fotografíado guardada</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Guardar la copia de la pestaña de fotografíado como archivo para poder ser restaurada posteriomente</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Restablecer diseño de pestaña de fotografiado</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>Diseño de pestaña de fotografiado restaurado</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Restore Layout</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>Error al restaurar diseño</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Restaurar el diseño de la pestaña de fotografía desde una copia de seguridad</value>
+  </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Información de exposición</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>Actualizar objetivo</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>Sin filtro</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Velocidad de exposición</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Ganancia preestablecida</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Nivel de potencia del calefactor</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Estabilizando dither</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>No se pudo completar el autoenfoque. Alcanzado el número máximo de puntos de medición.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>No se ha podido completar el autoenfoque. La posición del enfocador ha llegado a 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rota la imagen 90° en sentido horario. Las siguientes imágenes también rotarán de igual forma. Solo es para verlas así en pantalla y no afectarán a los datos de la imagen.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>La imagen debe ser resuelta para el fotografiarla.
+Por favor, confirme los metadatos a usar para astrometría.
+Una vez confirmados elija qué programa de astrometría usará.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Se requiere astrometría (platesolve)</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>Cuando se selecciona resolución astrométrica ciega, se ignorarán las coordenadas y se utilizará la astrometría ciega que esté configurada en las opciones.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>Cuando se seleccione el programa de astrometría, las coordenadas se usarán como coordenadas de referencia y se usarán por el resolutor astrométrico configurado en las opciones.</value>
   </data>
 </root>

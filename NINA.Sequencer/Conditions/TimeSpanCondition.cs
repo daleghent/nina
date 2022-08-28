@@ -157,7 +157,7 @@ namespace NINA.Sequencer.Conditions {
             if (RemainingTime > TimeSpan.Zero) {
                 previousRemainingTime = RemainingTime;
             }
-            ConditionWatchdog?.Cancel();
+            try { ConditionWatchdog?.Cancel(); } catch { }
         }
 
         public override void ResetProgress() {

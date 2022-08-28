@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2280,8 +2280,8 @@
   <data name="LblOrientation" xml:space="preserve">
     <value>回転角度</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>オーバーラップ率</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>パネルの重なり</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>パネル</value>
@@ -6247,5 +6247,124 @@ Refer to your camera's manual for the location of this setting</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>Pegasus Astro Unity Platformが導入され、通信プロトコルへの変更が考えられますので、ネイティブドライバーは今後のバージョンで非推奨になります。 代わりにASCOMドライバーを使用してください!</value>
+  </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Always listen to file changes</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Seconds to wait before download</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} is unavailable. Please select an alternative image source.
+
+Reason: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Image source error</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Image Save Queue Size</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+  </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>プラグイン{0}バージョン{1}（作成者{2}）をロード中</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>MGEN Setup</value>
+  </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>単一の画像タブレイアウト</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>有効にすると、画像タブのレイアウトは、すべてのプロファイルに対して一つだけになり、プロファイルに依存しなくなります</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Platesolve3の場所</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Platesolve3 exeが見つかりません</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Backup Layout</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>レイアウトのバックアップに失敗しました</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>画像タブのレイアウトをバックアップしました</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>後で復元できるように、画像タブのレイアウトをファイルにバックアップ</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>画像タブのレイアウトをリセットしました</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>画像タブのレイアウトを復元しました</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>レイアウトを復元</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>レイアウトの復元に失敗しました</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>画像タブのレイアウトをバックアップから復元</value>
+  </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>合計</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>露出情報</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>UPDATE TARGET</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>フィルターなし</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>露出速度</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>ゲインのプリセット</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>ヒーターの電力レベル</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>ディザリング設定</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>オートフォーカスが完了できませんでした。測定ポイント数が最大になりました。</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>オートフォーカスが完了できませんでした。フォーカス位置は0になりました。</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won't affect the image data.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>フレーミングをするために、画像をプレートソルブする必要があります。プレートソルブに使われるメタデータを確認して下さい。確認できたら、使うソルバーを選択して下さい。</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>プレートソルブが必要です</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>ブラインドソルバーを選択すると、座標は無視され、オプションで設定されたブラインドソルバーが使用されます。</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>プレートソルバーを選択した場合、この座標が参照座標となり、オプションで設定されたプレートソルバーで使われます。</value>
   </data>
 </root>

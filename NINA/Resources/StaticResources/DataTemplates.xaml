@@ -15,6 +15,7 @@
     xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:flatdevice="clr-namespace:NINA.Equipment.Equipment.MyFlatDevice;assembly=NINA.Equipment"
     xmlns:focuser="clr-namespace:NINA.Equipment.Equipment.MyFocuser;assembly=NINA.Equipment"
+    xmlns:framing="clr-namespace:NINA.ViewModel.FramingAssistant"
     xmlns:fw="clr-namespace:NINA.ViewModel.FlatWizard"
     xmlns:fwcore="clr-namespace:NINA.WPF.Base.Model;assembly=NINA.WPF.Base"
     xmlns:guider="clr-namespace:NINA.Equipment.Equipment.MyGuider;assembly=NINA.Equipment"
@@ -89,6 +90,10 @@
         <equip:MetaGuideSetupView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type guider:MGENGuider}">
+        <equip:MGenSetupView />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type eagle:Eagle}">
         <switchview:EagleSetupView />
     </DataTemplate>
@@ -119,5 +124,9 @@
 
     <DataTemplate DataType="{x:Type skyguard:SkyGuardGuider}">
         <equip:SkyGuardSetupView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type framing:FramingPlateSolveParameter}">
+        <view:FramingPlateSolvePromptView />
     </DataTemplate>
 </ResourceDictionary>

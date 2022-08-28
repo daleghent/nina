@@ -232,6 +232,7 @@ namespace NINA.Sequencer.SequenceItem {
                             } catch (Exception ex) {
                                 Logger.Error($"{this} - ", ex);
                                 success = false;
+                                root?.RaiseFailureEvent(this, ex);
                             }
                         }
 
@@ -240,10 +241,12 @@ namespace NINA.Sequencer.SequenceItem {
                         }
                     } catch (SequenceEntityFailedException ex) {
                         Logger.Error($"Failed: {this} - " + ex.Message);
-                        Status = SequenceEntityStatus.FAILED;
+                        Status = SequenceEntityStatus.FAILED;                        
+                        root?.RaiseFailureEvent(this, ex);                        
                     } catch (SequenceEntityFailedValidationException ex) {
                         Logger.Error($"Failed validation: {this} - " + ex.Message);
                         Status = SequenceEntityStatus.FAILED;
+                        root?.RaiseFailureEvent(this, ex);
                     } catch (SequenceItemSkippedException) {
                         Logger.Warning($"Skipped {this}");
                         Status = SequenceEntityStatus.SKIPPED;
@@ -284,7 +287,7 @@ namespace NINA.Sequencer.SequenceItem {
                 this.Status = SequenceEntityStatus.SKIPPED;
                 try {
                     localCts?.Cancel();
-                } catch (Exception) { }
+                } catch { }
             }
         }
 

@@ -90,6 +90,12 @@ namespace NINA.ViewModel {
                 InitializeFilters();
                 ResetFilters(null);
             };
+            nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         private NighttimeData nighttimeData;
@@ -158,7 +164,7 @@ namespace NINA.ViewModel {
                 if (NighttimeData.SunRiseAndSet.Set.HasValue) {
                     SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
                 } else {
-                    SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                    SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0);
                 }
             } else if(prevTimeFrom == oldNauticalDusk) {
                 if (NighttimeData.NauticalTwilightRiseAndSet.Set.HasValue) {
@@ -167,7 +173,7 @@ namespace NINA.ViewModel {
                     if (NighttimeData.SunRiseAndSet.Set.HasValue) {
                         SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
                     } else {
-                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0);
                     }
                 }
             } else if(prevTimeFrom == oldAstroDusk) {
@@ -180,7 +186,7 @@ namespace NINA.ViewModel {
                         if (NighttimeData.SunRiseAndSet.Set.HasValue) {
                             SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
                         } else {
-                            SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                            SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0);
                         }
                     }
                 }
@@ -192,7 +198,7 @@ namespace NINA.ViewModel {
                 if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
                     SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
                 } else {
-                    SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                    SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 0, 0);
                 }
             } else if(prevTimeThrough == oldNauticalDawn) {
                 if (NighttimeData.NauticalTwilightRiseAndSet.Rise.HasValue) {
@@ -201,7 +207,7 @@ namespace NINA.ViewModel {
                     if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
                         SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
                     } else {
-                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 0, 0);
                     }
                 }
             } else if(prevTimeThrough == oldAstroDawn) {
@@ -214,7 +220,7 @@ namespace NINA.ViewModel {
                         if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
                             SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
                         } else {
-                            SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                            SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 0, 0);
                         }
                     }
                 }
@@ -273,7 +279,7 @@ namespace NINA.ViewModel {
                     if (NighttimeData.SunRiseAndSet.Set.HasValue) {
                         SelectedAltitudeTimeFrom = NighttimeData.SunRiseAndSet.Set.Value;
                     } else {
-                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 12, 0, 0);
+                        SelectedAltitudeTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0);
                     }
                 }
             }
@@ -286,7 +292,7 @@ namespace NINA.ViewModel {
                     if (NighttimeData.SunRiseAndSet.Rise.HasValue) {
                         SelectedAltitudeTimeThrough = NighttimeData.SunRiseAndSet.Rise.Value;
                     } else {
-                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Year, DateTime.Now.Year, 11, 0, 0);
+                        SelectedAltitudeTimeThrough = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 0, 0);
                     }
                 }
             }
@@ -295,7 +301,7 @@ namespace NINA.ViewModel {
         private CancellationTokenSource _searchTokenSource;
 
         private void CancelSearch(object obj) {
-            _searchTokenSource?.Cancel();
+            try { _searchTokenSource?.Cancel(); } catch { }
         }
 
         private readonly INighttimeCalculator nighttimeCalculator;

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2296,8 +2296,8 @@ HFR calculado: {2}
   <data name="LblOrientation" xml:space="preserve">
     <value>Orientación</value>
   </data>
-  <data name="LblOverlapPercentage" xml:space="preserve">
-    <value>% Superposición</value>
+  <data name="LblPanelOverlap" xml:space="preserve">
+    <value>Panel overlap</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>Panel</value>
@@ -6276,5 +6276,126 @@ Please check if there is an update available.</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
     <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
+  </data>
+  <data name="LblAlwaysListen" xml:space="preserve">
+    <value>Always listen to file changes</value>
+  </data>
+  <data name="LblDownloadDelay" xml:space="preserve">
+    <value>Seconds to wait before download</value>
+  </data>
+  <data name="LblSkySurveyUnavailable" xml:space="preserve">
+    <value>{0} is unavailable. Please select an alternative image source.
+
+Reason: {1}</value>
+  </data>
+  <data name="LblImageSourceError" xml:space="preserve">
+    <value>Image source error</value>
+  </data>
+  <data name="LblSaveImageQueueSize" xml:space="preserve">
+    <value>Image Save Queue Size</value>
+  </data>
+  <data name="LblSaveImageQueueSizeTooltip" xml:space="preserve">
+    <value>Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption.</value>
+  </data>
+  <data name="LblSelectedTimeSourceInvalid" xml:space="preserve">
+    <value>Selected time source could not determine a valid time. Please select a different source.</value>
+  </data>
+  <data name="LblLoadingPlugin" xml:space="preserve">
+    <value>Loading plugin {0} version {1} created by {2}</value>
+  </data>
+  <data name="LblMGENSetup" xml:space="preserve">
+    <value>MGEN Setup</value>
+  </data>
+  <data name="LblSingleImagingLayout" xml:space="preserve">
+    <value>Single imaging tab layout</value>
+  </data>
+  <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
+    <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
+  </data>
+  <data name="LblPlatesolve3" xml:space="preserve">
+    <value>Platesolve3</value>
+  </data>
+  <data name="LblPlatesolve3Directory" xml:space="preserve">
+    <value>Platesolve3 Location</value>
+  </data>
+  <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
+    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+  </data>
+  <data name="LblPlatesolve3NotFound" xml:space="preserve">
+    <value>Platesolve3 exe not found</value>
+  </data>
+  <data name="LblBackupDockLayout" xml:space="preserve">
+    <value>Backup Layout</value>
+  </data>
+  <data name="LblBackupDockLayoutFailed" xml:space="preserve">
+    <value>Backup layout failed</value>
+  </data>
+  <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
+    <value>Imaging tab layout backed up</value>
+  </data>
+  <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
+    <value>Backup the imaging tab layout to a file, so it can be restored at a later point</value>
+  </data>
+  <data name="LblDockLayoutReset" xml:space="preserve">
+    <value>Imaging tab layout reset</value>
+  </data>
+  <data name="LblDockLayoutRestored" xml:space="preserve">
+    <value>Imaging tab layout restored</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
+    <value>Restore Layout</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
+    <value>Restore layout failed</value>
+  </data>
+  <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
+    <value>Restore imaging tab layout from a backup</value>
+  </data>
+  <data name="LblTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
+    <value>Exposure Info</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
+    <value>UPDATE TARGET</value>
+  </data>
+  <data name="LblNoFilter" xml:space="preserve">
+    <value>No Filter</value>
+  </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Exposure speed</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Gain preset</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Heater power level</value>
+  </data>
+  <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
+    <value>Dither Settling</value>
+  </data>
+  <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+  </data>
+  <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
+    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+  </data>
+  <data name="LblRotateImageTooltip" xml:space="preserve">
+    <value>Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won't affect the image data.</value>
+  </data>
+  <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
+    <value>Image needs to be solved for framing.
+Please confirm the meta data to use for solving.
+Once confirmed choose which solver should be used.</value>
+  </data>
+  <data name="LblPlateSolveRequired" xml:space="preserve">
+    <value>Platesolve required</value>
+  </data>
+  <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
+    <value>When blind solver is selected, the coordinates will be ignored and the blind solver that is set up in the options will be used.</value>
+  </data>
+  <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
+    <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
   </data>
 </root>

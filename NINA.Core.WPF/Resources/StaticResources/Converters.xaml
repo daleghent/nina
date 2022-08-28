@@ -65,7 +65,6 @@
     <converters:AFFittingToVisibilityConverter x:Key="AFFittingToVisibilityConverter" />
     <converters:FilterWheelFilterConverter x:Key="FilterWheelFilterConverter" />
     <converters:DecDegreeConverter x:Key="DecDegreeConverter" />
-    <converters:ImagePatternToTextConverter x:Key="ImagePatternToTextConverter" />
     <converters:IntNegativeOneToDoubleDashConverter x:Key="IntNegativeOneToDoubleDashConverter" />
     <converters:NaNToDoubleDashConverter x:Key="NaNToDoubleDashConverter" />
     <converters:BooleanToVisibilityHiddenMultiConverter x:Key="BooleanToVisibilityHiddenMultiConverter" />

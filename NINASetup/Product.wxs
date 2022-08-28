@@ -57,6 +57,7 @@
 			<ComponentGroupRef Id="External_x64_AllPro_files" />
 			<ComponentGroupRef Id="External_x64_ASI_files" />
 			<ComponentGroupRef Id="External_x64_Atik_files" />
+			<ComponentGroupRef Id="External_x64_Cfitsio_files" />
 			<ComponentGroupRef Id="External_x64_QHYCCD_files" />
 			<ComponentGroupRef Id="External_x64_FLI_files" />
 			<ComponentGroupRef Id="External_x64_FreeImage_files" />
@@ -105,17 +106,17 @@
 			<ComponentGroupRef Id="External_x64_SBIG_files" />
 			<ComponentGroupRef Id="External_x64_MallinCam_files" />
 			<ComponentGroupRef Id="External_x64_PlayerOne_files" />
+			<ComponentGroupRef Id="External_x64_ASTPAN_files" />
 			<?else?>
 			<ComponentGroupRef Id="External_x86_FTDI_files" />
 			<ComponentGroupRef Id="External_x86_AllPro_files" />
 			<ComponentGroupRef Id="External_x86_ASI_files" />
 			<ComponentGroupRef Id="External_x86_Atik_files" />
+			<ComponentGroupRef Id="External_x86_Cfitsio_files" />
 			<ComponentGroupRef Id="External_x86_QHYCCD_files" />
-			<ComponentGroupRef Id="External_x86_Canon_files" />
 			<ComponentGroupRef Id="External_x86_FLI_files" />
 			<ComponentGroupRef Id="External_x86_FreeImage_files" />
 			<ComponentGroupRef Id="External_x86_SQLite_files" />
-			<ComponentGroupRef Id="External_x86_Altair_files" />
 			<ComponentGroupRef Id="External_x86_ToupTek_files" />
 			<ComponentGroupRef Id="External_x86_Omegon_files" />
 			<ComponentGroupRef Id="External_x86_NOVAS_files" />
@@ -127,6 +128,7 @@
 			<ComponentGroupRef Id="External_x86_SBIG_files" />
 			<ComponentGroupRef Id="External_x86_MallinCam_files" />
 			<ComponentGroupRef Id="External_x86_PlayerOne_files" />
+			<ComponentGroupRef Id="External_x86_ASTPAN_files" />
 			<?endif?>
 			<ComponentGroupRef Id="Utility_ColorSchema_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -204,6 +206,7 @@
 							<Directory Id="External_x64_AllPro" Name="AllPro" />
 							<Directory Id="External_x64_ASI" Name="ASI" />
 							<Directory Id="External_x64_Atik" Name="Atik" />
+							<Directory Id="External_x64_Cfitsio" Name="Cfitsio" />
 							<Directory Id="External_x64_QHYCCD" Name="QHYCCD" />
 							<Directory Id="External_x64_Canon" Name="Canon" />
 							<Directory Id="External_x64_FLI" Name="FLI" />
@@ -254,12 +257,14 @@
 							<Directory Id="External_x64_SBIG" Name="SBIG" />
 							<Directory Id="External_x64_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x64_PlayerOne" Name="PlayerOne" />
+							<Directory Id="External_x64_ASTPAN" Name="ASTPAN" />
 						</Directory>
 						<Directory Id="External_x86" Name="x86">
 							<Directory Id="External_x86_AllPro" Name="AllPro" />
 							<Directory Id="External_x86_FreeImage" Name="FreeImage" />
 							<Directory Id="External_x86_Canon" Name="Canon" />
 							<Directory Id="External_x86_Atik" Name="Atik" />
+							<Directory Id="External_x86_Cfitsio" Name="Cfitsio" />
 							<Directory Id="External_x86_QHYCCD" Name="QHYCCD" />
 							<Directory Id="External_x86_FLI" Name="FLI" />
 							<Directory Id="External_x86_ASI" Name="ASI" />
@@ -277,6 +282,7 @@
 							<Directory Id="External_x86_SBIG" Name="SBIG" />
 							<Directory Id="External_x86_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x86_PlayerOne" Name="PlayerOne" />
+							<Directory Id="External_x86_ASTPAN" Name="ASTPAN" />
 						</Directory>
 					</Directory>
 					<Directory Id="Utility" Name="Utility">
@@ -697,7 +703,13 @@
 				<File Id="Database_Migration_5.sql" Name="5.sql" Source="$(var.NINA_TargetDir)Database\Migration\5.sql" />
 			</Component>
 			<Component Id="Database_Migration_6.sql" Guid="5bdcdd4a-5ba9-4842-b4e7-aea3cc1448ac">
-			  <File Id="Database_Migration_6.sql" Name="6.sql" Source="$(var.NINA_TargetDir)Database\Migration\6.sql" />
+				<File Id="Database_Migration_6.sql" Name="6.sql" Source="$(var.NINA_TargetDir)Database\Migration\6.sql" />
+			</Component>
+			<Component Id="Database_Migration_7.sql" Guid="8BF176FE-D0BF-4B2D-87D0-6C77B95674AE">
+				<File Id="Database_Migration_7.sql" Name="7.sql" Source="$(var.NINA_TargetDir)Database\Migration\7.sql" />
+			</Component>
+			<Component Id="Database_Migration_8.sql" Guid="9C1B70BE-92DD-4B88-A53A-6E3429B35A73">
+				<File Id="Database_Migration_8.sql" Name="8.sql" Source="$(var.NINA_TargetDir)Database\Migration\8.sql" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
@@ -898,11 +910,11 @@
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
-	  <ComponentGroup Id="ko_KR_files" Directory="ko_KR">
-	    <Component Id="ko_KR_NINA.Core.resources.dll" Guid="ebf93db4-7346-4646-95c4-b912b2627d5f">
-	      <File Id="ko_KR_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)ko-KR\NINA.Core.resources.dll" />
-	    </Component>
-	  </ComponentGroup>
+		<ComponentGroup Id="ko_KR_files" Directory="ko_KR">
+			<Component Id="ko_KR_NINA.Core.resources.dll" Guid="ebf93db4-7346-4646-95c4-b912b2627d5f">
+				<File Id="ko_KR_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA_TargetDir)ko-KR\NINA.Core.resources.dll" />
+			</Component>
+		</ComponentGroup>
 	</Fragment>
 
 	<!-- x64 Dependencies -->
@@ -919,6 +931,9 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcr100.dll" Guid="02CB55BE-6D62-47AA-8D05-F6A626D1D8C3">
 				<File Id="External_x64_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr100.dll" />
+			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcr120.dll" Guid="ABD36695-F2E3-417D-A862-32B04E905E98">
+				<File Id="External_x64_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr120.dll" />
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcruntime140.dll" Guid="27F9ADDA-59DB-4ABE-AB7B-4DC74DBF128B">
 				<File Id="External_x64_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140.dll" />
@@ -967,6 +982,14 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x64_Atik_libiomp5md.dll" Guid="54989fa0-5e1a-4fb6-84f7-bdab8db7b5af">
 				<File Id="External_x64_Atik_libiomp5md.dll" Name="libiomp5md.dll" Source="$(var.NINA_TargetDir)External\x64\Atik\libiomp5md.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="External_x64_Cfitsio_files" Directory="External_x64_Cfitsio">
+			<Component Win64="$(var.Win64)" Id="External_x64_Cfitsio_cfitsio.dll" Guid="BF1295A6-5DF8-436D-ABAD-C7EAF02A054A">
+				<File Id="External_x64_Cfitsio_cfitsio.dll" Name="cfitsio.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\cfitsio.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
@@ -1428,13 +1451,21 @@
 			</Component>
 		</ComponentGroup>
 	</Fragment>
-	
+
 	<Fragment>
 		<ComponentGroup Id="External_x64_PlayerOne_files" Directory="External_x64_PlayerOne">
 			<Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524">
 				<File Id="External_x64_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOneCamera.dll" />
 			</Component>
 		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+	  <ComponentGroup Id="External_x64_ASTPAN_files" Directory="External_x64_ASTPAN">
+	    <Component Win64="$(var.Win64)" Id="External_x64_ASTPAN_ASTPANCamera.dll" Guid="e40be9b9-5232-4a19-a39e-a01a80490bb2">
+			<File DefaultVersion="65535.0.0.0" Id="External_x64_ASTPAN_ASTPANCamera.dll" Name="ASTPANCamera.dll" Source="$(var.NINA_TargetDir)External\x64\ASTPAN\ASTPANCamera.dll" />
+	    </Component>
+	  </ComponentGroup>
 	</Fragment>
 
 	<?else?>
@@ -1450,6 +1481,9 @@
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_msvcr100.dll" Guid="0E286812-0EC4-4DE4-B8E0-3A940E0FC94D">
 				<File Id="External_x86_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\msvcr100.dll" />
+			</Component>
+			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_msvcr120.dll" Guid="25828C87-CAF0-4BC7-BAAF-54623C52445F">
+				<File Id="External_x86_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\msvcr120.dll" />
 			</Component>
 			<Component Win64="$(var.Win64)" Id="External_x86_VCRedis_vcruntime140.dll" Guid="583EAF30-DAE3-47E3-AB18-35B2DB9E22D2">
 				<File Id="External_x86_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x86\VCRedis\vcruntime140.dll" />
@@ -1500,6 +1534,14 @@
 	</Fragment>
 
 	<Fragment>
+		<ComponentGroup Id="External_x86_Cfitsio_files" Directory="External_x86_Cfitsio">
+			<Component Win64="$(var.Win64)" Id="External_x86_Cfitsio_cfitsio.dll" Guid="BA95537F-86DD-4952-BFD0-32A70CEA5687">
+				<File Id="External_x86_Cfitsio_cfitsio.dll" Name="cfitsio.dll" Source="$(var.NINA_ProjectDir)External\x86\Cfitsio\cfitsio.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
 		<ComponentGroup Id="External_x86_QHYCCD_files" Directory="External_x86_QHYCCD">
 			<Component Win64="$(var.Win64)" Id="External_x86_QHYCCD_ftd2xx.dll" Guid="F5709DC0-F98F-400E-8E79-CA06FC0ED6CF">
 				<File Id="External_x86_QHYCCD_ftd2xx.dll" Name="ftd2xx.dll" Source="$(var.NINA_ProjectDir)External\x86\QHYCCD\ftd2xx.dll" />
@@ -1517,14 +1559,6 @@
 		<ComponentGroup Id="External_x86_FLI_files" Directory="External_x86_FLI">
 			<Component Win64="$(var.Win64)" Id="External_x86_FLI_libfli.dll" Guid="6BA4A62F-6E93-4437-A500-9104B33B980A">
 				<File Id="External_x86_FLI_libfli.dll" Name="libfli.dll" Source="$(var.NINA_ProjectDir)External\x86\FLI\libfli.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="External_x86_Canon_files" Directory="External_x86_Canon">
-			<Component Win64="$(var.Win64)" Id="External_x86_Canon_EDSDK.dll" Guid="3ece4cf6-7d5a-4c39-87b4-8cd08ac4f128">
-				<File Id="External_x86_Canon_EDSDK.dll" Name="EDSDK.dll" Source="$(var.NINA_ProjectDir)External\x86\Canon\EDSDK.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
@@ -1597,14 +1631,6 @@
 	</Fragment>
 
 	<Fragment>
-		<ComponentGroup Id="External_x86_Altair_files" Directory="External_x86_Altair">
-			<Component Win64="$(var.Win64)" Id="External_x86_Altair_altaircam.dll" Guid="5fc243e4-9305-47ca-9033-3c35857b79e6">
-				<File Id="External_x86_Altair_altaircam.dll" Name="altaircam.dll" Source="$(var.NINA_ProjectDir)External\x86\Altair\altaircam.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-
-	<Fragment>
 		<ComponentGroup Id="External_x86_SQLite_files" Directory="External_x86_SQLite">
 			<Component Win64="$(var.Win64)" Id="External_x86_SQLite_SQLite.Interop.dll" Guid="28344711-a224-4ebe-a286-67b583207993">
 				<File Id="External_x86_SQLite_SQLite.Interop.dll" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)External\x86\SQLite\SQLite.Interop.dll" />
@@ -1635,13 +1661,21 @@
 			</Component>
 		</ComponentGroup>
 	</Fragment>
-	
+
 	<Fragment>
 		<ComponentGroup Id="External_x86_PlayerOne_files" Directory="External_x86_PlayerOne">
 			<Component Win64="$(var.Win64)" Id="External_x86_PlayerOne_PlayerOneCamera.dll" Guid="857fda00-6a08-4ae8-82e3-f69cb0c46e32">
 				<File Id="External_x86_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x86\PlayerOne\PlayerOneCamera.dll" />
 			</Component>
 		</ComponentGroup>
+	</Fragment>
+
+	<Fragment>
+	  <ComponentGroup Id="External_x86_ASTPAN_files" Directory="External_x86_ASTPAN">
+	    <Component Win64="$(var.Win64)" Id="External_x86_ASTPAN_ASTPANCamera.dll" Guid="89b93ed1-9a76-484b-ac79-d4230a398109">
+			<File DefaultVersion="65535.0.0.0" Id="External_x86_ASTPAN_ASTPANCamera.dll" Name="ASTPANCamera.dll" Source="$(var.NINA_TargetDir)External\x86\ASTPAN\ASTPANCamera.dll" />
+	    </Component>
+	  </ComponentGroup>
 	</Fragment>
 
 	<?endif?>
@@ -1756,11 +1790,11 @@
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
-	  <ComponentGroup Id="pt_files" Directory="pt">
-	    <Component Id="pt_AvalonDock.resources.dll" Guid="5333970e-2607-4707-81f5-bcc6f6395a4b">
-	      <File Id="pt_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt\AvalonDock.resources.dll" />
-	    </Component>
-	  </ComponentGroup>
+		<ComponentGroup Id="pt_files" Directory="pt">
+			<Component Id="pt_AvalonDock.resources.dll" Guid="5333970e-2607-4707-81f5-bcc6f6395a4b">
+				<File Id="pt_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt\AvalonDock.resources.dll" />
+			</Component>
+		</ComponentGroup>
 	</Fragment>
 	<!-- Avalondock localization End -->
 </Wix>

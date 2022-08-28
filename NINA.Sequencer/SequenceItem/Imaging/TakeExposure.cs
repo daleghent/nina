@@ -166,14 +166,21 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            var count = ExposureCount; 
+            var dsoContainer = RetrieveTarget(this.Parent);
+            var specificDSOContainer = dsoContainer as DeepSkyObjectContainer;
+            if (specificDSOContainer != null) {                
+                count = specificDSOContainer.GetOrCreateExposureCountForItemAndCurrentFilter(this, 1)?.Count ?? ExposureCount;
+            }
+
             var capture = new CaptureSequence() {
                 ExposureTime = ExposureTime,
                 Binning = Binning,
                 Gain = Gain,
                 Offset = Offset,
                 ImageType = ImageType,
-                ProgressExposureCount = ExposureCount,
-                TotalExposureCount = ExposureCount + 1,
+                ProgressExposureCount = count,
+                TotalExposureCount = count + 1,
             };
 
             var imageParams = new PrepareImageParameters(null, false);
@@ -181,18 +188,20 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 imageParams = new PrepareImageParameters(true, true);
             }
 
-            var target = RetrieveTarget(this.Parent);
-
+            
             var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
             var imageData = await exposureData.ToImageData(progress, token);
 
             var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
 
-            if (target != null) {
-                imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
-                imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
-                imageData.MetaData.Target.Rotation = target.Rotation;
+            if (dsoContainer != null) {
+                var target = dsoContainer.Target;
+                if(target != null) { 
+                    imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
+                    imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
+                    imageData.MetaData.Target.Rotation = target.Rotation;
+                }
             }
 
             ISequenceContainer parent = Parent;
@@ -209,7 +218,11 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
             }
 
+            if (specificDSOContainer != null) {
+                specificDSOContainer.IncrementExposureCountForItemAndCurrentFilter(this, 1);
+            }
             ExposureCount++;
+
         }
 
         private bool IsLightSequence() {
@@ -220,11 +233,11 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             Validate();
         }
 
-        private InputTarget RetrieveTarget(ISequenceContainer parent) {
+        private IDeepSkyObjectContainer RetrieveTarget(ISequenceContainer parent) {
             if (parent != null) {
                 var container = parent as IDeepSkyObjectContainer;
                 if (container != null) {
-                    return container.Target;
+                    return container;
                 } else {
                     return RetrieveTarget(parent.Parent);
                 }
@@ -266,7 +279,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         public override string ToString() {
             var currentGain = Gain == -1 ? CameraInfo.DefaultGain : Gain;
             var currentOffset = Offset == -1 ? CameraInfo.DefaultOffset : Offset;
-            return $"Category: {Category}, Item: {nameof(TakeExposure)}, ExposureTime {ExposureTime}, Gain {currentGain}, Offset {currentOffset}, ImageType {ImageType}, Binning {Binning?.Name}";
+            return $"Category: {Category}, Item: {nameof(TakeExposure)}, ExposureTime {ExposureTime}, Gain {currentGain}, Offset {currentOffset}, ImageType {ImageType}, Binning {Binning?.Name ?? "1x1"}";
         }
     }
 }

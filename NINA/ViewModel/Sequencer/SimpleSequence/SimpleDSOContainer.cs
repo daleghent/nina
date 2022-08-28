@@ -51,6 +51,7 @@ using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Core.MyMessageBox;
+using System.Windows;
 
 namespace NINA.Sequencer.Container {
 
@@ -126,6 +127,7 @@ namespace NINA.Sequencer.Container {
 
             this.rotateLoopCondition = factory.GetCondition<LoopCondition>();
             this.rotateLoopCondition.Iterations = 1;
+            WeakEventManager<INighttimeCalculator, EventArgs>.AddHandler(nighttimeCalculator, nameof(nighttimeCalculator.OnReferenceDayChanged), NighttimeCalculator_OnReferenceDayChanged);
         }
 
         public override ICommand ResetProgressCommand => new RelayCommand(
@@ -195,6 +197,23 @@ namespace NINA.Sequencer.Container {
             set {
                 estimatedDuration = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(EstimatedDurationFormatted));
+            }
+        }
+        public string EstimatedDurationFormatted {
+            get {
+                if (EstimatedDuration.TotalDays > 1) {
+                    return EstimatedDuration.ToString(@"dd\d\ hh\h\ mm\m\ ss\s");
+
+                } else if (EstimatedDuration.TotalHours > 1) {
+                    return EstimatedDuration.ToString(@"hh\h\ mm\m\ ss\s");
+
+                } else if (EstimatedDuration.TotalMinutes > 1) {
+                    return EstimatedDuration.ToString(@"mm\m\ ss\s");
+
+                } else {
+                    return EstimatedDuration.ToString(@"ss\s");
+                }
             }
         }
 
@@ -506,6 +525,11 @@ namespace NINA.Sequencer.Container {
                 }
                 RaisePropertyChanged();
             }
+        }
+
+        private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {
+            NighttimeData = nighttimeCalculator.Calculate();
+            RaisePropertyChanged(nameof(NighttimeData));
         }
 
         public NighttimeData NighttimeData { get; private set; }

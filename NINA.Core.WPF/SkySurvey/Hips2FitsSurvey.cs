@@ -14,6 +14,8 @@
 
 using NINA.Astrometry;
 using NINA.Core.Utility.Http;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.WPF.Base.Exceptions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,9 +39,13 @@ namespace NINA.WPF.Base.SkySurvey {
             try {
                 image = await QueryImage(Url, coordinates, fieldOfView, ct, progress);
             } catch(OperationCanceledException) {
-                throw;            
+                throw;
             } catch (Exception) {
-                image = await QueryImage(AltUrl, coordinates, fieldOfView, ct, progress);
+                try {
+                    image = await QueryImage(AltUrl, coordinates, fieldOfView, ct, progress);
+                } catch (Exception ex) {
+                    throw new SkySurveyUnavailableException(ex.Message);
+                }
             }
 
             if (image.DpiX != 96) {

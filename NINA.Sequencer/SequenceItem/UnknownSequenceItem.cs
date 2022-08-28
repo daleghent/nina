@@ -49,7 +49,7 @@ namespace NINA.Sequencer.SequenceItem {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            throw new SequenceItemSkippedException();
+            throw new SequenceItemSkippedException($"Unknown instruction will be skipped - ${Name}");
         }
 
         public bool Validate() {

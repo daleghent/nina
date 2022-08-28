@@ -15,6 +15,7 @@
 using NINA.Astrometry.Interfaces;
 using NINA.Core.Interfaces;
 using NINA.Core.Locale;
+using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Utility.WindowService;
@@ -93,7 +94,8 @@ namespace NINA.Plugin {
                               IImageControlVM imageControlVM,
                               IImageStatisticsVM imageStatisticsVM,
                               IDomeSynchronization domeSynchronization,
-                              ISequenceMediator sequenceMediator) {
+                              ISequenceMediator sequenceMediator,
+                              IOptionsVM optionsVM) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -128,6 +130,7 @@ namespace NINA.Plugin {
             this.imageStatisticsVM = imageStatisticsVM;
             this.domeSynchronization = domeSynchronization;
             this.sequenceMediator = sequenceMediator;
+            this.optionsVM = optionsVM;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -206,56 +209,59 @@ namespace NINA.Plugin {
             return Task.Run(async () => {
                 lock (lockobj) {
                     if (!initialized) {
-                        Stopwatch sw = Stopwatch.StartNew();
+                        try {
+                            Stopwatch sw = Stopwatch.StartNew();
 
-                        //Check for pending plugin updates and deploy them
-                        CleanupEmptyFolders();
-                        DeployFromStaging();
-                        DeleteFromDeletion();
+                            //Check for pending plugin updates and deploy them
+                            CleanupEmptyFolders();
+                            DeployFromStaging();
+                            DeleteFromDeletion();
 
-                        Items = new List<ISequenceItem>();
-                        Conditions = new List<ISequenceCondition>();
-                        Triggers = new List<ISequenceTrigger>();
-                        Container = new List<ISequenceContainer>();
-                        DockableVMs = new List<IDockableVM>();
-                        PluggableBehaviors = new List<IPluggableBehavior>();
-                        Plugins = new Dictionary<IPluginManifest, bool>();
+                            Items = new List<ISequenceItem>();
+                            Conditions = new List<ISequenceCondition>();
+                            Triggers = new List<ISequenceTrigger>();
+                            Container = new List<ISequenceContainer>();
+                            DockableVMs = new List<IDockableVM>();
+                            PluggableBehaviors = new List<IPluggableBehavior>();
+                            Plugins = new Dictionary<IPluginManifest, bool>();
 
-                        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-                        /* Compose the core catalog */
-                        var types = GetCoreSequencerTypes();
-                        var coreCatalog = new TypeCatalog(types);
+                            /* Compose the core catalog */
+                            var types = GetCoreSequencerTypes();
+                            var coreCatalog = new TypeCatalog(types);
 
-                        Compose(coreCatalog);
+                            Compose(coreCatalog);
 
-                        /* Compose the plugin catalog */
+                            /* Compose the plugin catalog */
 
-                        var files = new List<string>();
+                            var files = new List<string>();
 
-                        if (Directory.Exists(Constants.CoreExtensionsFolder)) {
-                            files.AddRange(Directory.GetFiles(Constants.CoreExtensionsFolder, "*.dll"));
-                        }
-
-                        foreach (var file in files) {
-                            AsyncContext.Run(() => LoadPlugin(file));
-                        }
-
-                        // Enumerate only 1 level deep, where we'd expect plugin dlls to be in the root of the plugin folder
-                        var userExtensionsDirectory = new DirectoryInfo(Constants.UserExtensionsFolder);
-                        if (userExtensionsDirectory.Exists) {
-                            files.AddRange(userExtensionsDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
-                            foreach (var subDirectory in userExtensionsDirectory.GetDirectories()) {
-                                files.AddRange(subDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
+                            if (Directory.Exists(Constants.CoreExtensionsFolder)) {
+                                files.AddRange(Directory.GetFiles(Constants.CoreExtensionsFolder, "*.dll"));
                             }
-                        }
 
-                        foreach (var file in files) {
-                            AsyncContext.Run(() => LoadPlugin(file));
-                        }
+                            // Enumerate only 1 level deep, where we'd expect plugin dlls to be in the root of the plugin folder
+                            var userExtensionsDirectory = new DirectoryInfo(Constants.UserExtensionsFolder);
+                            if (userExtensionsDirectory.Exists) {
+                                files.AddRange(userExtensionsDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
+                                foreach (var subDirectory in userExtensionsDirectory.GetDirectories()) {
+                                    files.AddRange(subDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
+                                }
+                            }
 
-                        initialized = true;
-                        Debug.Print($"Time to load all plugins {sw.Elapsed}");
+                            for(int i = 0; i < files.Count; i++) {
+                                var file = files[i];
+                                AsyncContext.Run(() => LoadPlugin(file, (i + 1) / (double)files.Count));
+                            }
+
+                            initialized = true;
+                            Debug.Print($"Time to load all plugins {sw.Elapsed}");
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        } finally {
+                            applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblPlugins"] });
+                        }
                     }
                 }
             });
@@ -270,7 +276,7 @@ namespace NINA.Plugin {
             }
         }
 
-        private async Task LoadPlugin(string file) {
+        private async Task LoadPlugin(string file, double progress) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
                 var applicationVersion = new Version(CoreUtil.Version);
@@ -318,7 +324,6 @@ namespace NINA.Plugin {
                     }
                 }
 
-
                 AppDomain.Unload(childDomain);
 
                 if (references.FirstOrDefault(x => x.Contains("NINA.Plugin")) != null) {
@@ -337,15 +342,23 @@ namespace NINA.Plugin {
                                 throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum version of {manifest.MinimumApplicationVersion}, but N.I.N.A. is {applicationVersion}");
                             }
 
-                            if(!compatibilityMap.IsCompatible(manifest)) {
+                            if (!compatibilityMap.IsCompatible(manifest)) {
                                 var deprecatedVersion = new Version(65535, 0, 0, 0);
                                 var minVersion = compatibilityMap.GetMinimumVersion(manifest);
-                                if(minVersion >= deprecatedVersion) {
+                                if (minVersion >= deprecatedVersion) {
                                     throw new Exception($"This plugin is deprecated.");
                                 } else {
                                     throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum plugin version of {minVersion}, but current plugin version is {manifest.Version}");
-                                }                                
+                                }
                             }
+
+                            applicationStatusMediator.StatusUpdate(new ApplicationStatus() { 
+                                Source = Loc.Instance["LblPlugins"], 
+                                Status = Loc.Instance["LblInitializingPlugins"],
+                                Status2 = string.Format(Loc.Instance["LblLoadingPlugin"], manifest.Name, manifest.Version, manifest.Author),
+                                Progress = progress,
+                                ProgressType = ApplicationStatus.StatusProgressType.Percent
+                            });
 
                             Compose(plugin);
 
@@ -360,8 +373,7 @@ namespace NINA.Plugin {
                             if (pluginDllDirectory.Exists && !AddDllDirectory(pluginDllDirectory.FullName)) {
                                 Logger.Warning($"Failed to add {pluginDllDirectory.FullName} to dll search path");
                             }
-                            Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
-                           
+                            Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version} by {manifest.Author}");
                         } catch (Exception ex) {
                             //Manifest ok - plugin composition failed
                             var failedManifest = new PluginManifest {
@@ -482,6 +494,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(imageStatisticsVM);
             container.ComposeExportedValue(domeSynchronization);
             container.ComposeExportedValue(sequenceMediator);
+            container.ComposeExportedValue(optionsVM);
 
             return container;
         }
@@ -532,6 +545,7 @@ namespace NINA.Plugin {
         private readonly IImageStatisticsVM imageStatisticsVM;
         private readonly IDomeSynchronization domeSynchronization;
         private readonly ISequenceMediator sequenceMediator;
+        private readonly IOptionsVM optionsVM;
         private readonly Dictionary<string, string> assemblyReferencePathMap;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {

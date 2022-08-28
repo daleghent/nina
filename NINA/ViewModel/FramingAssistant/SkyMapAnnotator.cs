@@ -579,7 +579,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 var needFullRedraw = center != oldCenter || fov != oldFoV || UseCachedImages != oldUseCachedImages || renderTask == null || renderTask.Status < TaskStatus.RanToCompletion;
                 try {
                     renderTimer?.Stop();
-                    renderCts?.Cancel();
+                    try { renderCts?.Cancel(); } catch { }
                     while (renderTask != null && (renderTask.Status < TaskStatus.RanToCompletion)) {
                     }
                 } catch (Exception) {

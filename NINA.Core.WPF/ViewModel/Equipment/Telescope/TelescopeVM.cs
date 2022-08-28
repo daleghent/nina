@@ -694,7 +694,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private void CancelChooseTelescope(object o) {
-            _cancelChooseTelescopeSource?.Cancel();
+            try { _cancelChooseTelescopeSource?.Cancel(); } catch { }
         }
 
         private CancellationTokenSource _cancelChooseTelescopeSource;
@@ -707,7 +707,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private void CancelSlewTelescope() {
-            _cancelSlewTelescopeSource?.Cancel();
+            try { _cancelSlewTelescopeSource?.Cancel(); } catch { }
         }
 
         private async Task<bool> DisconnectTelescope() {
@@ -896,7 +896,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     await Telescope.SlewToCoordinates(coords, token);
                     BroadcastTelescopeInfo();
                     await Task.WhenAll(
-                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Loc.Instance["LblSettle"]),
+                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), true, token, progress, Loc.Instance["LblSettle"]),
                         domeSyncTask);
                     return true;
                 } else {

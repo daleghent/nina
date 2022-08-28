@@ -189,7 +189,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
         }
 
         private void CancelConnect(object o) {
-            connectCts?.Cancel();
+            try { connectCts?.Cancel(); } catch { }
         }
 
         public async Task Disconnect() {

@@ -737,7 +737,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 if (_downloadExposure != null && _downloadExposure.Task.Status <= TaskStatus.Running) {
                     Notification.ShowWarning("Another exposure still in progress. Cancelling it to start another.");
                     Logger.Warning("An exposure was still in progress. Cancelling it to start another.");
-                    bulbCompletionCTS?.Cancel();
+                    try { bulbCompletionCTS?.Cancel(); } catch { }
                     _downloadExposure.TrySetCanceled();
                 }
 
@@ -852,7 +852,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             /*Stop Exposure after exposure time or upon cancellation*/
-            bulbCompletionCTS?.Cancel();
+            try { bulbCompletionCTS?.Cancel(); } catch { }
             bulbCompletionCTS = new CancellationTokenSource();
             bulbCompletionTask = Task.Run(async () => {
                 await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);

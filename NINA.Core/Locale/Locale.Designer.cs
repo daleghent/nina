@@ -613,11 +613,29 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exposure Info.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deep Sky Object Sequence.
         /// </summary>
         internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE TARGET.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget", resourceCulture);
             }
         }
         
@@ -3560,6 +3578,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autofocus failed to complete. Maximum number of measurement points reached..
+        /// </summary>
+        internal static string LblAutoFocusPointLimitReached {
+            get {
+                return ResourceManager.GetString("LblAutoFocusPointLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect..
         /// </summary>
         internal static string LblAutoFocusPointOutsideOfBounds {
@@ -3637,6 +3664,15 @@ namespace NINA.Core.Locale {
         internal static string LblAutoFocusTrendCorrelationCoefficientLow {
             get {
                 return ResourceManager.GetString("LblAutoFocusTrendCorrelationCoefficientLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autofocus failed to complete. Focuser Position reached 0..
+        /// </summary>
+        internal static string LblAutoFocusZeroPositionReached {
+            get {
+                return ResourceManager.GetString("LblAutoFocusZeroPositionReached", resourceCulture);
             }
         }
         
@@ -3812,6 +3848,42 @@ namespace NINA.Core.Locale {
         internal static string LblBackLashSteps {
             get {
                 return ResourceManager.GetString("LblBackLashSteps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Layout.
+        /// </summary>
+        internal static string LblBackupDockLayout {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup layout failed.
+        /// </summary>
+        internal static string LblBackupDockLayoutFailed {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayoutFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imaging tab layout backed up.
+        /// </summary>
+        internal static string LblBackupDockLayoutSuccessful {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayoutSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup the imaging tab layout to a file, so it can be restored at a later point.
+        /// </summary>
+        internal static string LblBackupDockLayoutTooltip {
+            get {
+                return ResourceManager.GetString("LblBackupDockLayoutTooltip", resourceCulture);
             }
         }
         
@@ -6837,6 +6909,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Imaging tab layout reset.
+        /// </summary>
+        internal static string LblDockLayoutReset {
+            get {
+                return ResourceManager.GetString("LblDockLayoutReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imaging tab layout restored.
+        /// </summary>
+        internal static string LblDockLayoutRestored {
+            get {
+                return ResourceManager.GetString("LblDockLayoutRestored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documentation.
         /// </summary>
         internal static string LblDocumentation {
@@ -9319,6 +9409,35 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image needs to be solved for framing.
+        ///Please confirm the meta data to use for solving.
+        ///Once confirmed choose which solver should be used..
+        /// </summary>
+        internal static string LblFramingPlateSolvePromptText {
+            get {
+                return ResourceManager.GetString("LblFramingPlateSolvePromptText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When blind solver is selected, the coordinates will be ignored and the blind solver that is set up in the options will be used..
+        /// </summary>
+        internal static string LblFramingSolveWithBlindSolver {
+            get {
+                return ResourceManager.GetString("LblFramingSolveWithBlindSolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options..
+        /// </summary>
+        internal static string LblFramingSolveWithPlateSolver {
+            get {
+                return ResourceManager.GetString("LblFramingSolveWithPlateSolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to {0} from the framing wizard.
         /// </summary>
         internal static string LblFramingWizardSlewFailed {
@@ -10003,6 +10122,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image source error.
+        /// </summary>
+        internal static string LblImageSourceError {
+            get {
+                return ResourceManager.GetString("LblImageSourceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light, Flat, Dark, Bias, Snapshot.
         /// </summary>
         internal static string LblImageTypeDescription {
@@ -10368,6 +10496,15 @@ namespace NINA.Core.Locale {
         internal static string LblLoadImageFromFileTooltip {
             get {
                 return ResourceManager.GetString("LblLoadImageFromFileTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading plugin {0} version {1} created by {2}.
+        /// </summary>
+        internal static string LblLoadingPlugin {
+            get {
+                return ResourceManager.GetString("LblLoadingPlugin", resourceCulture);
             }
         }
         
@@ -10923,6 +11060,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MGEN Setup.
+        /// </summary>
+        internal static string LblMGENSetup {
+            get {
+                return ResourceManager.GetString("LblMGENSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Min.
         /// </summary>
         internal static string LblMin {
@@ -11363,6 +11509,15 @@ namespace NINA.Core.Locale {
         internal static string LblNoFileFormatOptions {
             get {
                 return ResourceManager.GetString("LblNoFileFormatOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Filter.
+        /// </summary>
+        internal static string LblNoFilter {
+            get {
+                return ResourceManager.GetString("LblNoFilter", resourceCulture);
             }
         }
         
@@ -12069,15 +12224,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overlap percentage.
-        /// </summary>
-        internal static string LblOverlapPercentage {
-            get {
-                return ResourceManager.GetString("LblOverlapPercentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Overshoot.
         /// </summary>
         internal static string LblOvershoot {
@@ -12092,6 +12238,15 @@ namespace NINA.Core.Locale {
         internal static string LblPanel {
             get {
                 return ResourceManager.GetString("LblPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Panel overlap.
+        /// </summary>
+        internal static string LblPanelOverlap {
+            get {
+                return ResourceManager.GetString("LblPanelOverlap", resourceCulture);
             }
         }
         
@@ -12759,6 +12914,42 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Platesolve3.
+        /// </summary>
+        internal static string LblPlatesolve3 {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platesolve3 Location.
+        /// </summary>
+        internal static string LblPlatesolve3Directory {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No coordinates available. Platesolve3 requires coordinates to solve!.
+        /// </summary>
+        internal static string LblPlatesolve3NoCoordinates {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3NoCoordinates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platesolve3 exe not found.
+        /// </summary>
+        internal static string LblPlatesolve3NotFound {
+            get {
+                return ResourceManager.GetString("LblPlatesolve3NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plate Solved Polar Alignment.
         /// </summary>
         internal static string LblPlateSolvedPolarAlignment {
@@ -12899,6 +13090,15 @@ namespace NINA.Core.Locale {
         internal static string LblPlateSolveReattemptDelay {
             get {
                 return ResourceManager.GetString("LblPlateSolveReattemptDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platesolve required.
+        /// </summary>
+        internal static string LblPlateSolveRequired {
+            get {
+                return ResourceManager.GetString("LblPlateSolveRequired", resourceCulture);
             }
         }
         
@@ -13725,6 +13925,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore Layout.
+        /// </summary>
+        internal static string LblRestoreDockLayoutFromFile {
+            get {
+                return ResourceManager.GetString("LblRestoreDockLayoutFromFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore layout failed.
+        /// </summary>
+        internal static string LblRestoreDockLayoutFromFileFailed {
+            get {
+                return ResourceManager.GetString("LblRestoreDockLayoutFromFileFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore imaging tab layout from a backup.
+        /// </summary>
+        internal static string LblRestoreDockLayoutFromFileTooltip {
+            get {
+                return ResourceManager.GetString("LblRestoreDockLayoutFromFileTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resume.
         /// </summary>
         internal static string LblResume {
@@ -13865,6 +14092,15 @@ namespace NINA.Core.Locale {
         internal static string LblROIPercentageTooltip {
             get {
                 return ResourceManager.GetString("LblROIPercentageTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won&apos;t affect the image data..
+        /// </summary>
+        internal static string LblRotateImageTooltip {
+            get {
+                return ResourceManager.GetString("LblRotateImageTooltip", resourceCulture);
             }
         }
         
@@ -14157,6 +14393,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image Save Queue Size.
+        /// </summary>
+        internal static string LblSaveImageQueueSize {
+            get {
+                return ResourceManager.GetString("LblSaveImageQueueSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increasing this allows the application to enqueue more than one image into the processing and saving queue. This is useful for increasing the speed of short exposures during a sequence at the cost of increased memory consumption..
+        /// </summary>
+        internal static string LblSaveImageQueueSizeTooltip {
+            get {
+                return ResourceManager.GetString("LblSaveImageQueueSizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save selected profile and don&apos;t ask again next time.
         /// </summary>
         internal static string LblSaveSelectedProfileAndDontAskAgain {
@@ -14342,6 +14596,15 @@ namespace NINA.Core.Locale {
         internal static string LblSeeing {
             get {
                 return ResourceManager.GetString("LblSeeing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected time source could not determine a valid time. Please select a different source..
+        /// </summary>
+        internal static string LblSelectedTimeSourceInvalid {
+            get {
+                return ResourceManager.GetString("LblSelectedTimeSourceInvalid", resourceCulture);
             }
         }
         
@@ -14869,6 +15132,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Single imaging tab layout.
+        /// </summary>
+        internal static string LblSingleImagingLayout {
+            get {
+                return ResourceManager.GetString("LblSingleImagingLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent.
+        /// </summary>
+        internal static string LblSingleImagingLayoutTooltip {
+            get {
+                return ResourceManager.GetString("LblSingleImagingLayoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site Elevation.
         /// </summary>
         internal static string LblSiteElevation {
@@ -15112,6 +15393,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dither Settling.
+        /// </summary>
+        internal static string LblSkyGuardTimeLapsDitherChecked {
+            get {
+                return ResourceManager.GetString("LblSkyGuardTimeLapsDitherChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to For a duration of.
         /// </summary>
         internal static string LblSkyGuardTimeLapsGuiding {
@@ -15180,6 +15470,17 @@ namespace NINA.Core.Locale {
         internal static string LblSkySurveyCacheDirectory {
             get {
                 return ResourceManager.GetString("LblSkySurveyCacheDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is unavailable. Please select an alternative image source.
+        ///
+        ///Reason: {1}.
+        /// </summary>
+        internal static string LblSkySurveyUnavailable {
+            get {
+                return ResourceManager.GetString("LblSkySurveyUnavailable", resourceCulture);
             }
         }
         
@@ -16808,6 +17109,15 @@ namespace NINA.Core.Locale {
         internal static string LblTooltipTargetSaveSet {
             get {
                 return ResourceManager.GetString("LblTooltipTargetSaveSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        internal static string LblTotal {
+            get {
+                return ResourceManager.GetString("LblTotal", resourceCulture);
             }
         }
         

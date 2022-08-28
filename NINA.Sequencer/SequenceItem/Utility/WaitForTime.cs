@@ -25,6 +25,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Utility;
+using NINA.Sequencer.Validations;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -34,7 +36,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Utility")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class WaitForTime : SequenceItem {
+    public class WaitForTime : SequenceItem, IValidatable {
         private IList<IDateTimeProvider> dateTimeProviders;
         private int hours;
         private int minutes;
@@ -66,6 +68,32 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 Seconds = Seconds,
                 MinutesOffset = MinutesOffset
             };
+        }
+
+        private IList<string> issues = new List<string>();
+
+        public IList<string> Issues {
+            get => issues;
+            set {
+                issues = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool Validate() {
+            var i = new List<string>();
+            if (HasFixedTimeProvider) {
+                var referenceDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+                if (lastReferenceDate != referenceDate) {
+                    UpdateTime();
+                }
+            }
+            if (!timeDeterminedSuccessfully) {
+                i.Add(Loc.Instance["LblSelectedTimeSourceInvalid"]);
+            }
+
+            Issues = i;
+            return i.Count == 0;
         }
 
         public IList<IDateTimeProvider> DateTimeProviders {
@@ -131,14 +159,23 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 }
             }
         }
-
+        private bool timeDeterminedSuccessfully;
+        private DateTime lastReferenceDate;
         private void UpdateTime() {
-            if (HasFixedTimeProvider) {
-                var t = SelectedProvider.GetDateTime(this) + TimeSpan.FromMinutes(MinutesOffset);
-                Hours = t.Hour;
-                Minutes = t.Minute;
-                Seconds = t.Second;
-            }
+            try {
+                lastReferenceDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+                if (HasFixedTimeProvider) {
+                    var t = SelectedProvider.GetDateTime(this) + TimeSpan.FromMinutes(MinutesOffset);
+                    Hours = t.Hour;
+                    Minutes = t.Minute;
+                    Seconds = t.Second;
+                    
+                }
+                timeDeterminedSuccessfully = true;
+            } catch(Exception) {
+                timeDeterminedSuccessfully = false;
+                Validate();
+            }            
         }
 
         public override void AfterParentChanged() {
@@ -148,7 +185,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public ICustomDateTime DateTime { get; set; }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), token, progress);
+            return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), true, token, progress, "");
         }
 
         public override TimeSpan GetEstimatedDuration() {

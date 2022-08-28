@@ -680,5 +680,39 @@ namespace NINATest.AstrometryTest {
 
             px.Should().BeApproximately(expected, 0.00001);
         }
+        
+        [Test]
+        [TestCase(1, 1005d, 7d, 80d, 0.574d, double.NaN, 1)]
+        [TestCase(3, 1005d, 7d, 80d, 0.574d, 672, 1)]
+        [TestCase(4, 1005d, 7d, 80d, 0.574d, 631, 1)]
+        [TestCase(5, 1005d, 7d, 80d, 0.574d, 557, 1)]
+        // Below Test Cases are taken from SOFA Documented values for method iauRefco
+        [TestCase(10, 1005d, 7d, 80d, 0.574d, 318.55, 4)]
+        [TestCase(12, 1005d, 7d, 80d, 0.574d, 267.29, 3)]
+        [TestCase(14, 1005d, 7d, 80d, 0.574d, 229.43, 2)]
+        [TestCase(16, 1005d, 7d, 80d, 0.574d, 200.38, 2)]
+        [TestCase(18, 1005d, 7d, 80d, 0.574d, 177.37, 2)]
+        [TestCase(20, 1005d, 7d, 80d, 0.574d, 158.68, 2)]
+        [TestCase(25, 1005d, 7d, 80d, 0.574d, 124.26, 2)]
+        [TestCase(30, 1005d, 7d, 80d, 0.574d, 100.54, 2)]
+        [TestCase(35, 1005d, 7d, 80d, 0.574d, 82.99 , 1)]
+        [TestCase(40, 1005d, 7d, 80d, 0.574d, 69.30 , 1)]
+        [TestCase(45, 1005d, 7d, 80d, 0.574d, 58.18 , 1)]
+        [TestCase(50, 1005d, 7d, 80d, 0.574d, 48.83 , 1)]
+        [TestCase(60, 1005d, 7d, 80d, 0.574d, 33.61 , 1)]
+        [TestCase(70, 1005d, 7d, 80d, 0.574d, 21.20 , 1)]
+        [TestCase(80, 1005d, 7d, 80d, 0.574d, 10.27 , 1)]
+        public void CalculateRefractedAltitudeTest(double altitude, double pressure, double temperature, double humidity, double wavelength, double expectedArcsecDistance, double tolerance) {
+            var result = AstroUtil.CalculateRefractedAltitude(altitude, pressure, temperature, humidity, wavelength);
+
+            var arcsec = Math.Abs(AstroUtil.DegreeToArcsec(altitude - result));
+
+            //Should be within <tolerance> arcseconds precision
+            if(double.IsNaN(expectedArcsecDistance)) {
+                arcsec.Should().Be(double.NaN);
+            } else {
+                arcsec.Should().BeApproximately(expectedArcsecDistance, tolerance);
+            }            
+        }
     }
 }

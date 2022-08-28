@@ -14,6 +14,9 @@
 
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
+using NINA.Sequencer.Utility;
+using System;
+using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Container {
 
@@ -26,5 +29,8 @@ namespace NINA.Sequencer.Container {
         void SkipCurrentRunningItems();
 
         string SequenceTitle { get; set; }
+
+        Task RaiseFailureEvent(ISequenceEntity sender, Exception ex);
+        event Func<object, SequenceEntityFailureEventArgs, Task> FailureEvent;
     }
 }

@@ -142,13 +142,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="FileFormat\FileSaveInfo.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\ByteConverter.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\DoubleConverter.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\FloatConverter.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\IDataConverter.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\IntConverter.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\LongConverter.cs" />
-    <Compile Include="FileFormat\FITS\DataConverter\ShortConverter.cs" />
+    <Compile Include="FileFormat\FITS\CfitsioNative.cs" />
     <Compile Include="FileFormat\FITS\FITS.cs" />
     <Compile Include="FileFormat\FITS\FITSData.cs" />
     <Compile Include="FileFormat\FITS\FITSHeader.cs" />

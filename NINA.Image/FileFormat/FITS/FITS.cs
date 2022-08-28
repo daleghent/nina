@@ -13,18 +13,16 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
-using NINA.Image.FileFormat.FITS.DataConverter;
-using NINA.Image.Interfaces;
 using NINA.Image.ImageData;
-using nom.tam.fits;
+using NINA.Image.Interfaces;
 using System;
-using System.Collections;
 using System.Globalization;
 using System.IO;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Image.ImageAnalysis;
-using NINA.Profile.Interfaces;
 
 namespace NINA.Image.FileFormat.FITS {
 
@@ -40,49 +38,62 @@ namespace NINA.Image.FileFormat.FITS {
             this.Data = new FITSData(data);
         }
 
-        public static Task<IImageData> Load(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
-            return Task.Run<IImageData>(() => {
-                Fits f = new Fits(filePath);
-                ImageHDU hdu = (ImageHDU)f.ReadHDU();
-                Array[] arr = (Array[])hdu.Data.DataArray;
 
-                var dimensions = hdu.Header.GetIntValue("NAXIS");
+        public static Task<IImageData> Load(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
+            return Task.Run<IImageData>(() => LoadInternal(filePath, isBayered, imageDataFactory, ct), ct);
+        }
+
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        private static IImageData LoadInternal(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
+            IntPtr fitsPtr = IntPtr.Zero;
+            IntPtr buffer = IntPtr.Zero;
+            try {
+                var bytes = File.ReadAllBytes(filePath.LocalPath);
+
+                buffer = Marshal.AllocHGlobal(bytes.Length);
+                Marshal.Copy(bytes, 0, buffer, bytes.Length);
+
+                UIntPtr size = new UIntPtr((uint)bytes.Length);
+                UIntPtr deltaSize = UIntPtr.Zero;
+
+                CfitsioNative.fits_open_memory(out fitsPtr, string.Empty, CfitsioNative.IOMODE.READONLY, ref buffer, ref size, ref deltaSize, IntPtr.Zero, out var status);
+                CfitsioNative.CheckStatus("fits_open_memory", status);
+
+                var dimensions = CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS");
                 if (dimensions > 2) {
-                    //Debayered Images are not supported. Take the first dimension instead to get at least a monochrome image
-                    arr = (Array[])arr[0];
+                    Logger.Warning("Reading debayered FITS images not supported. Reading the first 2 axes to get a monochrome image");
                 }
 
-                var width = hdu.Header.GetIntValue("NAXIS1");
-                var height = hdu.Header.GetIntValue("NAXIS2");
-                var bitPix = hdu.Header.GetIntValue("BITPIX");
-
-                var converter = GetConverter(bitPix);
-                ushort[] pixels = converter.Convert(arr, width, height);
+                var width = (int)CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS1");
+                var height = (int)CfitsioNative.fits_read_key_long(fitsPtr, "NAXIS2");
+                var bitPix = (CfitsioNative.BITPIX)(int)CfitsioNative.fits_read_key_long(fitsPtr, "BITPIX");
+                var pixels = CfitsioNative.read_ushort_pixels(fitsPtr, bitPix, 2, width * height);
 
                 //Translate nom.tam.fits into N.I.N.A. FITSHeader
                 FITSHeader header = new FITSHeader(width, height);
-                var iterator = hdu.Header.GetCursor();
-                while (iterator.MoveNext()) {
-                    HeaderCard card = (HeaderCard)((DictionaryEntry)iterator.Current).Value;
+                CfitsioNative.fits_get_hdrspace(fitsPtr, out var numKeywords, out var numMoreKeywords, out status);
+                CfitsioNative.CheckStatus("fits_get_hdrspace", status);
+                for (int headerIdx = 1; headerIdx <= numKeywords; ++headerIdx) {
+                    CfitsioNative.fits_read_keyn(fitsPtr, headerIdx, out var keyName, out var keyValue, out var keyComment);
 
-                    if (string.IsNullOrEmpty(card.Value) || card.Key.Equals("COMMENT") || card.Key.Equals("HISTORY")) {
+                    if (string.IsNullOrEmpty(keyValue) || keyName.Equals("COMMENT") || keyName.Equals("HISTORY")) {
                         continue;
                     }
 
-                    if (card.IsStringValue) {
-                        header.Add(card.Key, card.Value, card.Comment);
+                    if (keyValue.Equals("T")) {
+                        header.Add(keyName, true, keyComment);
+                    } else if (keyValue.Equals("F")) {
+                        header.Add(keyName, false, keyComment);
+                    } else if (keyValue.Contains(".")) {
+                        if (double.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                            header.Add(keyName, value, keyComment);
+                        }
                     } else {
-                        if (card.Value.Equals("T")) {
-                            header.Add(card.Key, true, card.Comment);
-                        } else if (card.Value.Equals("F")) {
-                            header.Add(card.Key, false, card.Comment);
-                        } else if (card.Value.Contains(".")) {
-                            if (double.TryParse(card.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
-                                header.Add(card.Key, value, card.Comment);
-                            }
+                        if (int.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                            header.Add(keyName, value, keyComment);
                         } else {
-                            if (int.TryParse(card.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
-                                header.Add(card.Key, value, card.Comment);
+                            // Treat as a string
+                            header.Add(keyName, keyValue, keyComment);
                         }
                     }
                 }
@@ -94,31 +105,26 @@ namespace NINA.Image.FileFormat.FITS {
                     Logger.Error(ex.Message);
                 }
                 return imageDataFactory.CreateBaseImageData(pixels, width, height, 16, isBayered, metaData);
-            }, ct);
-        }
 
-        private static IDataConverter GetConverter(int bitPix) {
-            switch (bitPix) {
-                case BITPIX_BYTE:
-                    return new ByteConverter();
-
-                case BITPIX_SHORT:
-                    return new ShortConverter();
-
-                case BITPIX_INT:
-                    return new IntConverter();
-
-                case BITPIX_LONG:
-                    return new LongConverter();
-
-                case BITPIX_FLOAT:
-                    return new FloatConverter();
-
-                case BITPIX_DOUBLE:
-                    return new DoubleConverter();
-
-                default:
-                    throw new InvalidDataException($"Invalid BITPIX in FITS header {bitPix}");
+            } catch (AccessViolationException ex) {
+                Logger.Error($"{nameof(FITS)} - Access Violation Exception occurred during cfitsio load!", ex);
+                // Finally blocks are not executed after corrupted state exception
+                if (fitsPtr != IntPtr.Zero) {
+                    try {
+                        CfitsioNative.fits_close_file(fitsPtr, out var status);
+                    } catch(Exception) { }                    
+                }
+                if (buffer != IntPtr.Zero) {
+                    Marshal.FreeHGlobal(buffer);
+                }
+                throw new Exception($"Unable to load FITS file from {filePath.LocalPath}");
+            } finally {
+                if (fitsPtr != IntPtr.Zero) {
+                    CfitsioNative.fits_close_file(fitsPtr, out var status);
+                }
+                if (buffer != IntPtr.Zero) {
+                    Marshal.FreeHGlobal(buffer);
+                }
             }
         }
 

@@ -32,18 +32,21 @@ using NINA.Core.Model;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Enum;
 using System.Collections.Generic;
+using NINA.Core.Utility.WindowService;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
     public class MGENGuider : BaseINPC, IGuider {
         public readonly IMGEN MGen;
         private IProfileService profileService;
+        private readonly IWindowServiceFactory windowServiceFactory;
         private ITelescopeMediator telescopeMediator;
         private Coordinates lastCalibratedCoords = null;
         private PierSide lastCalibratedSideOfPier;
         private Coordinates lastKnownGuidingPosition = null;
 
-        public MGENGuider(IMGEN mgen, string name, string id, IProfileService profileService, ITelescopeMediator telescopeMediator) {
+        public MGENGuider(IMGEN mgen, string name, string id, IProfileService profileService, ITelescopeMediator telescopeMediator, IWindowServiceFactory windowServiceFactory) {
+            this.windowServiceFactory = windowServiceFactory;
             this.MGen = mgen;
             this.Name = name;
             this.Id = id;
@@ -285,7 +288,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public void Disconnect() {
-            refreshCts?.Cancel();
+            try { this.refreshCts?.Cancel(); } catch { }
             MGen.Disconnect();
             Display = null;
             Connected = false;
@@ -486,8 +489,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public async Task<bool> Connect(CancellationToken token) {
             try {
-                refreshCts?.Cancel();
-                refreshCts?.Dispose();
+                try { 
+                    refreshCts?.Cancel();
+                    refreshCts?.Dispose();
+                } catch { }
                 refreshCts = new CancellationTokenSource();
 
                 await MGen.DetectAndOpen();
@@ -500,13 +505,15 @@ namespace NINA.Equipment.Equipment.MyGuider {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
-                refreshCts?.Cancel();
+                try { refreshCts?.Cancel(); } catch { }
                 return false;
             }
             return true;
         }
 
         public void SetupDialog() {
+            var windowService = windowServiceFactory.Create();
+            windowService.ShowDialog(this, Loc.Instance["LblMGENSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
 
         public ICommand MGenUpCommand { get; }
@@ -518,7 +525,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public string Id { get; }
 
-        public bool HasSetupDialog => false;
+        public bool HasSetupDialog => !Connected;
 
         public string Category => "Lacerta";
 

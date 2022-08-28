@@ -62,7 +62,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             MoveFocuserOutSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / 2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserOutLargeCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * 5)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserInternal(TargetPosition)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
-            HaltFocuserCommand = new RelayCommand((object o) => moveCts?.Cancel());
+            HaltFocuserCommand = new RelayCommand((object o) => { try { moveCts?.Cancel(); } catch { } });
             ToggleTempCompCommand = new RelayCommand(ToggleTempComp);
 
             updateTimer = new DeviceUpdateTimer(
@@ -214,7 +214,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                         //Wait for focuser to settle
                         if (profileService.ActiveProfile.FocuserSettings.FocuserSettleTime > 0) {
                             FocuserInfo.IsSettling = true;
-                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), ct, progress, Loc.Instance["LblSettle"]);
+                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), true, ct, progress, Loc.Instance["LblSettle"]);
                         }
                     }
                 } catch (OperationCanceledException) {
@@ -318,7 +318,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         }
 
         private void CancelChooseFocuser(object o) {
-            cancelChooseFocuserCts?.Cancel();
+            try { cancelChooseFocuserCts?.Cancel(); } catch { }
         }
 
         private Dictionary<string, object> GetFocuserValues() {

@@ -13,22 +13,99 @@
 #endregion "copyright"
 
 using NINA.Core.Model;
+using NINA.Core.Utility;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Windows.Media;
 
 namespace NINA.Astrometry {
 
-    public class DeepSkyObject : SkyObjectBase {
+    class DeepSkyObjectDailyRefresher {
+        private static readonly DeepSkyObjectDailyRefresher instance = new DeepSkyObjectDailyRefresher();
 
+        private DeepSkyObjectDailyRefresher() {
+            ReferenceDateTimer = new Timer(10 * 60 * 1000);
+            ReferenceDateTimer.Elapsed += OnTimedEvent;
+            ReferenceDateTimer.AutoReset = true;
+            ReferenceDateTimer.Enabled = true;
+        }
+
+        public static DeepSkyObjectDailyRefresher Instance {
+            get {
+                return instance;
+            }
+        }
+
+
+        private List<WeakReference<DeepSkyObject>> DeepSkyObjects = new List<WeakReference<DeepSkyObject>>();
+        private Timer ReferenceDateTimer = null;
+        private DateTime LastReferenceDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+
+        /// <summary>
+        /// Registers a deep sky object to be scheduled for daily updates at noon
+        /// </summary>
+        /// <param name="dso"></param>
+        public void Register(DeepSkyObject dso) {
+            lock (DeepSkyObjects) {
+                DeepSkyObjects.Add(new WeakReference<DeepSkyObject>(dso));
+            }
+
+        }
+        private void OnTimedEvent(object source, ElapsedEventArgs e) {
+            lock (DeepSkyObjects) {
+                try {
+
+                    int updated = 0;
+                    int count = DeepSkyObjects.Count;
+
+                    DateTime referenceDate = NighttimeCalculator.GetReferenceDate(DateTime.Now);
+
+                    // If the current ReferenceDate hasn't changed, we're done except for cleaning up
+                    if (referenceDate != LastReferenceDate) {
+                        foreach (WeakReference<DeepSkyObject> wr in DeepSkyObjects) {
+                            // Ignore weak references that are no longer valid
+                            if (wr != null && wr.TryGetTarget(out DeepSkyObject target)) {
+                                // If the target's reference date is our previous date, it's updatable.  Otherwise, it could
+                                // be for future planning or historical something or other, in which case we do nothing
+                                if (target.ReferenceDate == LastReferenceDate) {
+                                    target.ReferenceDate = referenceDate;
+                                    // Update altitude chart
+                                    target.Refresh();
+                                    updated++;
+                                }
+                            }
+                        }
+                        LastReferenceDate = referenceDate;
+                    }
+
+                    // Prune the list of weak references
+                    DeepSkyObjects.RemoveAll(i => i == null || !i.TryGetTarget(out DeepSkyObject _));
+
+                    if (updated != 0 || count != DeepSkyObjects.Count) {
+                        Logger.Debug($"{nameof(DeepSkyObjectDailyRefresher)} -- Updated: {updated}; Pruned: {(count - DeepSkyObjects.Count)} / {count}");
+
+                    }
+                } catch(Exception ex) {
+                    Logger.Error(ex);
+                }
+            }
+        }
+    }
+
+    public class DeepSkyObject : SkyObjectBase {
         public DeepSkyObject(string id, Coordinates coords, string imageRepository, CustomHorizon customHorizon)
             : base(id, imageRepository, customHorizon) {
             _coordinates = coords;
             Moon = new MoonInfo(_coordinates);
+
+
+            DeepSkyObjectDailyRefresher.Instance.Register(this);
         }
+        public DateTime ReferenceDate { get => _referenceDate; set { _referenceDate = value; } }
 
         public MoonInfo Moon { get; private set; }
 
@@ -79,13 +156,13 @@ namespace NINA.Astrometry {
             }
 
             var start = _referenceDate;
-            
+
             // Do this every time in case reference date has changed
             Moon.SetReferenceDateAndObserver(_referenceDate, new ObserverInfo { Latitude = _latitude, Longitude = _longitude });
-            
+
             Altitudes.Clear();
             Horizon.Clear();
-           
+
             var siderealTime = AstroUtil.GetLocalSiderealTime(start, _longitude);
             var hourAngle = AstroUtil.GetHourAngle(siderealTime, Coordinates.RA);
 

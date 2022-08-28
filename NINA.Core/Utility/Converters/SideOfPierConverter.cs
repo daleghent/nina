@@ -35,7 +35,7 @@ namespace NINA.Core.Utility.Converters {
                         return string.Empty;
                 }
             } catch (Exception ex) {
-                Logger.Error(ex, $"Failed to convert {value} to PierSide");
+                Logger.Error($"Failed to convert {value} to PierSide", ex);
                 return string.Empty;
             }
         }

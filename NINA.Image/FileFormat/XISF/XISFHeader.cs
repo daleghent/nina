@@ -23,6 +23,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using NINA.Core.Utility;
+using System.Collections.Generic;
 
 namespace NINA.Image.FileFormat.XISF {
     /*
@@ -86,6 +87,7 @@ namespace NINA.Image.FileFormat.XISF {
 
         public ImageMetaData ExtractMetaData() {
             var metaData = new ImageMetaData();
+            metaData.GenericHeaders = GetAllFITSKeywords();
 
             if (TryGetImageProperty(XISFImageProperty.Observation.Time.Start, out var value)) {
                 metaData.Image.ExposureStart = DateTime.Parse(value);
@@ -348,6 +350,29 @@ namespace NINA.Image.FileFormat.XISF {
             return true;
         }
 
+        private List<IGenericMetaDataHeader> GetAllFITSKeywords() {
+            var l = new List<IGenericMetaDataHeader>();
+            var elements = Image.Elements(xmlns + "FITSKeyword");
+            if (elements.Count() == 0) { return l; }
+
+            foreach(var elem in elements) {
+                if (elem == null) { continue; }
+
+                var key = elem.Attribute("name")?.Value;
+                if(key == null) { continue; }
+
+                var value = elem.Attribute("value").Value;
+                var comment = elem.Attribute("comment")?.Value ?? string.Empty;
+
+                if (value.StartsWith("'")) {
+                    value = value.Trim();
+                    value = value.Remove(value.Length - 1, 1).Remove(0, 1).Replace(@"''", @"'");
+                }
+                l.Add(new StringMetaDataHeader(key, value, comment));
+            }
+            return l;
+        }
+
         public void Populate(ImageMetaData metaData) {
             if (metaData.Image.ExposureStart > DateTime.MinValue) {
                 AddImageProperty(XISFImageProperty.Observation.Time.Start, metaData.Image.ExposureStart.ToUniversalTime(), "Time of observation (UTC)");
@@ -608,6 +633,26 @@ namespace NINA.Image.FileFormat.XISF {
 
             AddImageProperty(XISFImageProperty.Observation.Equinox, 2000d, "Equinox of celestial coordinate system");
             AddImageFITSKeyword("SWCREATE", string.Format("N.I.N.A. {0} ({1})", CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
+
+            foreach (var elem in metaData.GenericHeaders) {
+                switch (elem) {
+                    case StringMetaDataHeader s:
+                        AddImageFITSKeyword(s.Key, s.Value, s.Comment);
+                        break;
+                    case IntMetaDataHeader i:
+                        AddImageFITSKeyword(i.Key, i.Value, i.Comment);
+                        break;
+                    case DoubleMetaDataHeader d:
+                        AddImageFITSKeyword(d.Key, d.Value, d.Comment);
+                        break;
+                    case BoolMetaDataHeader b:
+                        AddImageFITSKeyword(b.Key, b.Value ? "T" : "F", b.Comment);
+                        break;
+                    case DateTimeMetaDataHeader d:
+                        AddImageFITSKeyword(d.Key, d.Value, d.Comment);
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -669,10 +714,14 @@ namespace NINA.Image.FileFormat.XISF {
 
         public void AddImageFITSKeyword(string name, string value, string comment = "") {
             if (Image == null) { throw new InvalidOperationException("No Image component available to add FITS Keyword!"); }
-            Image.Add(new XElement(xmlns + "FITSKeyword",
-                        new XAttribute("name", name),
-                        new XAttribute("value", RemoveInvalidXMLChars(value)),
-                        new XAttribute("comment", comment)));
+
+            var exists = Image.Elements(xmlns + "FITSKeyword").Attributes("name").Any(x => x.Value == name);
+            if(!exists) { 
+                Image.Add(new XElement(xmlns + "FITSKeyword",
+                            new XAttribute("name", name),
+                            new XAttribute("value", RemoveInvalidXMLChars(value)),
+                            new XAttribute("comment", comment)));
+            }
         }
 
         public void AddImageFITSKeyword(string name, DateTime value, string comment = "") {

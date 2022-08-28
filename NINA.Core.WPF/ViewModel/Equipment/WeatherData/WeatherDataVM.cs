@@ -160,7 +160,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
         }
 
         private void CancelChooseWeatherData(object o) {
-            _cancelChooseWeatherDataSource?.Cancel();
+            try { _cancelChooseWeatherDataSource?.Cancel(); } catch { }
         }
 
         private Dictionary<string, object> GetWeatherDataValues() {

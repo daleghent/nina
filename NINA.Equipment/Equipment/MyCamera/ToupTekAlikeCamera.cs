@@ -337,7 +337,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int SubSampleWidth { get; set; }
         public int SubSampleHeight { get; set; }
         public bool CanShowLiveView { get => false; }
-        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
+        public bool LiveViewEnabled { get; set; }
 
         public bool HasBattery {
             get {
@@ -549,7 +549,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 _connected = value;
                 if (!_connected) {
-                    coolerPowerReadoutCts?.Cancel();
+                    try { coolerPowerReadoutCts?.Cancel(); } catch { }
                 }
 
                 RaisePropertyChanged();
@@ -837,6 +837,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 width = roiInfo.Value.Width / binning;
                 height = roiInfo.Value.Height / binning;
             }
+            width -= width % 2;
+            height -= height % 2;
 
             var size = width * height;
             var data = new ushort[size];
@@ -846,7 +848,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return null;
             }
 
-            if (!sdk.put_Option(ToupTekAlikeOption.OPTION_FLUSH, 3)) {
+            if (!sdk.put_Option(ToupTekAlikeOption.OPTION_FLUSH, 2)) {
                 Logger.Error($"{Category} - Unable to flush camera");
             }
 
@@ -870,7 +872,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void Disconnect() {
-            coolerPowerReadoutCts?.Cancel();
+            try { coolerPowerReadoutCts?.Cancel(); } catch { }
             Connected = false;
             sdk.Close();
         }
@@ -883,18 +885,25 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {
             if (imageReadyTCS?.Task.IsCanceled != false) { return null; }
+            IExposureData exposureData;
             using (token.Register(() => imageReadyTCS.TrySetCanceled())) {
                 using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15))) {
                     using (cts.Token.Register(() => { Logger.Error($"{Category} - No Image Callback Event received"); imageReadyTCS.TrySetResult(true); })) {
                         var imageReady = await imageReadyTCS.Task;
-                        return PullImage();
+                        exposureData = PullImage();
                     }
                 }
             }
+            if (LiveViewEnabled) {
+                imageReadyTCS?.TrySetCanceled();
+                imageReadyTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            }
+            return exposureData;
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            throw new System.NotImplementedException();
+            var localCTS = CancellationTokenSource.CreateLinkedTokenSource(token);
+            return DownloadExposure(localCTS.Token);
         }
 
         public void SetBinning(short x, short y) {
@@ -926,13 +935,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private Rectangle GetROI() {
-            var x = SubSampleX / BinX;
+            var x = SubSampleX;
             x -= x % 2;
-            var y = (CameraYSize - SubSampleY - SubSampleHeight) / BinY;
+            var y = (CameraYSize - SubSampleY - SubSampleHeight);
             y -= y % 2;
-            var width = Math.Max(SubSampleWidth / BinX, 16);
+            var width = Math.Max(SubSampleWidth, 16);
             width -= width % 2;
-            var height = Math.Max(SubSampleHeight / BinY, 16);
+            var height = Math.Max(SubSampleHeight, 16);
             height -= height % 2;
             return new Rectangle(x, y, width, height);
         }
@@ -979,7 +988,30 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StartLiveView(CaptureSequence sequence) {
-            throw new System.NotImplementedException();
+            imageReadyTCS?.TrySetCanceled();
+            imageReadyTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            Logger.Trace($"{Category} - starting live view Task with Id {imageReadyTCS.Task.Id}");
+
+            if (EnableSubSample) {
+                var rect = GetROI();
+                roiInfo = rect;
+                if (!sdk.put_ROI((uint)rect.X, (uint)rect.Y, (uint)rect.Width, (uint)rect.Height)) {
+                    throw new Exception($"{Category} - Failed to set ROI to {rect.X}x{rect.Y}x{rect.Width}x{rect.Height}");
+                }
+            } else {
+                roiInfo = null;
+                // 0,0,0,0 resets the ROI to original size
+                if (!sdk.put_ROI(0, 0, 0, 0)) {
+                    throw new Exception($"{Category} - Failed to reset ROI");
+                }
+            }
+
+            SetExposureTime(sequence.ExposureTime);
+            LiveViewEnabled = true;
+
+            if (!sdk.put_Option(ToupTekAlikeOption.OPTION_TRIGGER, 0)) {
+                throw new Exception("Could not set Trigger video mode");
+            }
         }
 
         public void StopExposure() {
@@ -990,7 +1022,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StopLiveView() {
-            throw new System.NotImplementedException();
+            imageReadyTCS.Task.ContinueWith((Task<bool> o) => {
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_TRIGGER, 1)) {
+                    Disconnect();
+                    throw new Exception("Could not set Trigger manual mode. Reconnect Camera!");
+                }
+                LiveViewEnabled = false;
+            });
         }
 
         public int USBLimitStep { get => 1; }

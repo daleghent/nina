@@ -24,7 +24,32 @@ using NINA.PlateSolving.Interfaces;
 namespace NINA.PlateSolving.Solvers {
 
     internal abstract class BaseSolver : IPlateSolver {
-        protected static string WORKING_DIRECTORY = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PlateSolver");
+        protected static string WORKING_DIRECTORY;
+        protected static string FAILED_DIRECTORY;
+        protected static string FAILED_FILENAME;
+        static BaseSolver() {
+            var sessionDate = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+            var processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+            FAILED_FILENAME = $"{sessionDate}.{processId}";
+            WORKING_DIRECTORY = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PlateSolver");
+            FAILED_DIRECTORY = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PlateSolver", "Failed");
+
+            CreateOrCleanupDirectory(WORKING_DIRECTORY);
+            CreateOrCleanupDirectory(FAILED_DIRECTORY);
+        }
+
+        private static void CreateOrCleanupDirectory(string path) {
+            if (!Directory.Exists(path)) {
+                try {
+                    Directory.CreateDirectory(path);
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+            } else {
+                CoreUtil.DirectoryCleanup(path, TimeSpan.FromDays(-7));
+            }
+
+        }
 
         public async Task<PlateSolveResult> SolveAsync(IImageData source, PlateSolveParameter parameter, IProgress<ApplicationStatus> progress, CancellationToken canceltoken) {
             EnsureSolverValid(parameter);

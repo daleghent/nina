@@ -24,6 +24,7 @@ using NINA.Image.Interfaces;
 using NINA.Image.RawConverter;
 using NINA.Profile.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -122,14 +123,19 @@ namespace NINA.Image.ImageData {
             return actualPath;
         }
 
+        [Obsolete]
+        public string FinalizeSave(string file, string pattern) {
+            return FinalizeSave(file, pattern, new List<ImagePattern>());
+        }
+
         /// <summary>
         /// Renames and moves file to destination according to pattern
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="targetPath"></param>
         /// <param name="pattern"></param>
+        /// <param name="customPatterns"></param>
         /// <returns></returns>
-        public string FinalizeSave(string file, string pattern) {
+        public string FinalizeSave(string file, string pattern, IList<ImagePattern> customPatterns) {
             try {
                 if (pattern.Contains(ImagePatternKeys.SensorTemp) && double.IsNaN(this.MetaData.Camera.Temperature) && !string.IsNullOrEmpty(this.Data.RAWType)) {
                     string sensorTemp = getSensorTempFromExifTool(file);
@@ -137,6 +143,10 @@ namespace NINA.Image.ImageData {
                 }
 
                 var imagePatterns = GetImagePatterns();
+                foreach(var cp in customPatterns) {
+                    imagePatterns.Add(cp);
+                }
+
                 var fileName = imagePatterns.GetImageFileString(pattern);
                 var extension = Path.GetExtension(file);
                 var targetPath = Path.GetDirectoryName(file);
