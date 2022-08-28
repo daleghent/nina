@@ -104,5 +104,7 @@ namespace NINA.Equipment.Interfaces {
         void SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
         void FindHome();
+
+        PierSide DestinationSideOfPier(Coordinates coordinates);
     }
 }

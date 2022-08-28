@@ -90,5 +90,9 @@ namespace NINA.WPF.Base.Mediator {
         public void StopSlew() {
             handler.StopSlew();
         }
+
+        public PierSide DestinationSideOfPier(Coordinates coordinates) {
+            return handler.DestinationSideOfPier(coordinates);
+        }
     }
 }

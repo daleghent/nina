@@ -1065,5 +1065,11 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         protected override Telescope GetInstance(string id) {
             return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Telescope(id));
         }
+
+        public PierSide DestinationSideOfPier(Coordinates coordinates) {
+            coordinates = coordinates.Transform(EquatorialSystem);
+            var pierSide = device.DestinationSideOfPier(coordinates.RA, coordinates.Dec);
+            return (PierSide)pierSide;
+        }
     }
 }
