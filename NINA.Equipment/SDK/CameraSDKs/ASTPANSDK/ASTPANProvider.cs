@@ -36,7 +36,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
                     astpanPInvoke.ASTPANGetCameraInfo(out var info, i);
 
 
-                    devices.Add(new ASTPANCamera((int)info.CameraID, info.Name, "1.0", new ASTPANSDK((int)info.CameraID), profileService, exposureDataFactory));
+                    devices.Add(new GenericCamera((int)info.CameraID, info.Name, "AstpanCam", "1.0", false, new ASTPANSDK((int)info.CameraID), profileService, exposureDataFactory));
                 }
             }
             return devices;

@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 namespace NINATest.Equipment.Camera {
 
     [TestFixture]
-    public class SVBonyCameraTest {
+    public class GenericCameraTest {
         private ImageDataFactoryTestUtility dataFactoryUtility;
 
         [SetUp]
@@ -40,29 +40,29 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public void Ctor_AllPropertiesSet() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             var profile = new Mock<IProfileService>();
 
             var id = 12345;
             var name = "SomeName";
 
-            var sut = new SVBonyCamera(id, name, "Some SDK Version", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(id, name, "Generic Camera", "Some SDK Version", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
-            sut.Id.Should().Be("SVBony_" + id.ToString());
+            sut.Id.Should().Be("Generic Camera_" + id.ToString());
             sut.Name.Should().Be(name);
-            sut.Category.Should().Be("SVBony");
-            sut.Description.Should().Be("Native driver implementation for SVBony Cameras");
-            sut.DriverInfo.Should().Be("SVBony native driver");
+            sut.Category.Should().Be("Generic Camera");
+            sut.Description.Should().Be("Native driver implementation for Generic Camera Cameras");
+            sut.DriverInfo.Should().Be("Generic Camera native driver");
             sut.DriverVersion.Should().Be("Some SDK Version");
         }
 
         [Test]
         public async Task Connect_Unsuccessfully_ReturnFalse() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -72,12 +72,12 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task Connect_Unsuccessfully_WithException_ReturnFalse() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.Setup(x => x.Connect()).Throws(new Exception());
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -87,12 +87,12 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task Connect_Successfully_ReturnTrue() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -103,13 +103,13 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task Connect_Successfully_OneBinningInitialized() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.GetBinningInfo()).Returns(new int[] { });
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -122,13 +122,13 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task Connect_Successfully_MultiBinningInitialized() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.GetBinningInfo()).Returns(new int[] { 4, 2, 6, 1 });
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -147,13 +147,13 @@ namespace NINATest.Equipment.Camera {
         [TestCase(0, double.NaN)]
         [TestCase(0.1, 0.1)]
         public async Task Connect_Successfully_PixelSizeInitialized(double sdkReturn, double expected) {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.GetPixelSize()).Returns(sdkReturn);
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -164,13 +164,13 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task Connect_Successfully_DimensionsInitialized() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.GetDimensions()).Returns((1920, 1080));
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -184,13 +184,13 @@ namespace NINATest.Equipment.Camera {
         [TestCase(SensorType.BGGR)]
         [TestCase(SensorType.RGBG)]
         public async Task Connect_Successfully_GetSensorInfoInitialized(SensorType sensorType) {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.GetSensorInfo()).Returns(sensorType);
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -200,11 +200,11 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public void Disconnect_Successful() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             sut.Disconnect();
 
@@ -213,12 +213,12 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public void Disconnect_WithException_Successful() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.Setup(x => x.Disconnect()).Throws(new Exception());
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             sut.Disconnect();
 
@@ -236,14 +236,14 @@ namespace NINATest.Equipment.Camera {
         public async Task SetBinning_Successful(short bin, short maxbin, short expectedbin) {
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
 
             int[] binnings = new int[maxbin];
             for (int i = 0; i < maxbin; i++) { binnings[i] = i + 1; }
             sdk.Setup(x => x.GetBinningInfo()).Returns(binnings);
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
             await sut.Connect(default);
 
             sut.SetBinning(bin, bin);
@@ -259,7 +259,7 @@ namespace NINATest.Equipment.Camera {
         public async Task StartExposure_NoSubSample_ROISetCorrectly(short binning) {
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
 
             int[] binnings = new int[binning];
             for (int i = 0; i < binning; i++) { binnings[i] = i + 1; }
@@ -268,9 +268,10 @@ namespace NINATest.Equipment.Camera {
             sdk.Setup(x => x.GetDimensions()).Returns((1920, 1080));
             sdk.Setup(x => x.GetROI()).Returns((0, 0, 1920, 1080, binning));
 
-            sdk.Setup(x => x.StartExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(new ushort[] { });
+            sdk.Setup(x => x.IsExposureReady()).Returns(true);
+            sdk.Setup(x => x.GetExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(new ushort[] { });
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
             await sut.Connect(default);
             sut.SetBinning(binning, binning);
 
@@ -285,7 +286,7 @@ namespace NINATest.Equipment.Camera {
 
             sdk.Verify(x => x.SetROI(0, 0, 1920, 1080, binning), Times.Once);
             sdk.Verify(x => x.GetROI(), Times.Once);
-            sdk.Verify(x => x.StartExposure(100d, 1920, 1080, It.IsAny<CancellationToken>()), Times.Once);
+            sdk.Verify(x => x.StartExposure(100d, 1920, 1080), Times.Once);
         }
 
         [Test]
@@ -295,7 +296,7 @@ namespace NINATest.Equipment.Camera {
         public async Task StartExposure_WithSubSample_ROISetCorrectly(short binning) {
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
 
             int[] binnings = new int[binning];
             for (int i = 0; i < binning; i++) { binnings[i] = i + 1; }
@@ -304,9 +305,10 @@ namespace NINATest.Equipment.Camera {
             sdk.Setup(x => x.GetDimensions()).Returns((1920, 1080));
             sdk.Setup(x => x.GetROI()).Returns((0, 0, 600, 500, binning));
 
-            sdk.Setup(x => x.StartExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(new ushort[] { });
+            sdk.Setup(x => x.IsExposureReady()).Returns(true);
+            sdk.Setup(x => x.GetExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(new ushort[] { });
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
             await sut.Connect(default);
             sut.SetBinning(binning, binning);
 
@@ -321,16 +323,17 @@ namespace NINATest.Equipment.Camera {
 
             sdk.Verify(x => x.SetROI(100, 100, 600, 500, binning), Times.Once);
             sdk.Verify(x => x.GetROI(), Times.Once);
-            sdk.Verify(x => x.StartExposure(100d, 600, 500, It.IsAny<CancellationToken>()), Times.Once);
+            sdk.Verify(x => x.StartExposure(100d, 600, 500), Times.Once);
         }
 
         [Test]
         public async Task WaitForExposureTask_NoTaskAvailable_ReturnsImmediately() {
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            sdk.Setup(x => x.IsExposureReady()).Returns(true);
             var task = sut.WaitUntilExposureIsReady(default);
             await task;
 
@@ -345,7 +348,7 @@ namespace NINATest.Equipment.Camera {
             var profile = new Mock<IProfileService>();
             profile.SetupGet(x => x.ActiveProfile.CameraSettings.BitScaling).Returns(false);
             var deviceId = 12345;
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.Setup(x => x.GetBitDepth()).Returns(12);
 
             int[] binnings = new int[binning];
@@ -356,9 +359,10 @@ namespace NINATest.Equipment.Camera {
             sdk.Setup(x => x.GetROI()).Returns((0, 0, 600, 500, binning));
 
             var data = new ushort[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-            sdk.Setup(x => x.StartExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(data);
+            sdk.Setup(x => x.IsExposureReady()).Returns(true);
+            sdk.Setup(x => x.GetExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(data);
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
             await sut.Connect(default);
             sut.SetBinning(binning, binning);
 
@@ -387,7 +391,7 @@ namespace NINATest.Equipment.Camera {
             var profile = new Mock<IProfileService>();
             profile.SetupGet(x => x.ActiveProfile.CameraSettings.BitScaling).Returns(true);
             var deviceId = 12345;
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.Setup(x => x.GetBitDepth()).Returns(12);
 
             int[] binnings = new int[binning];
@@ -398,9 +402,10 @@ namespace NINATest.Equipment.Camera {
             sdk.Setup(x => x.GetROI()).Returns((0, 0, 600, 500, binning));
 
             var data = new ushort[] { 1, 1, 1, 1, 128, 128, 128, 128 };
-            sdk.Setup(x => x.StartExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(data);
+            sdk.Setup(x => x.IsExposureReady()).Returns(true);
+            sdk.Setup(x => x.GetExposure(It.IsAny<double>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(data);
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
             await sut.Connect(default);
             sut.SetBinning(binning, binning);
 
@@ -423,13 +428,13 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task HasNoTemperatureControl_ReturnsFalseWhenSdkFalse() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.HasTemperatureControl()).Returns(false);
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -439,13 +444,13 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task HasTemperatureControl_ReturnsTrueWhenSdkTrue() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.HasTemperatureControl()).Returns(true);
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
 
@@ -455,7 +460,7 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task HasTemperatureControl_CanAdjustTemperatureAndCooler() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.HasTemperatureControl()).Returns(true);
             sdk.Setup(x => x.GetCoolerOnOff()).Returns(true);
@@ -465,7 +470,7 @@ namespace NINATest.Equipment.Camera {
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
             sut.TemperatureSetPoint = 10;
@@ -488,7 +493,7 @@ namespace NINATest.Equipment.Camera {
 
         [Test]
         public async Task HasNoTemperatureControl_CannotAdjustTemperatureAndCooler() {
-            var sdk = new Mock<ISVBonySDK>();
+            var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
             sdk.Setup(x => x.HasTemperatureControl()).Returns(false);
             sdk.Setup(x => x.GetCoolerOnOff()).Returns(true);
@@ -498,7 +503,7 @@ namespace NINATest.Equipment.Camera {
             var profile = new Mock<IProfileService>();
             var deviceId = 12345;
 
-            var sut = new SVBonyCamera(deviceId, "", "", sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
+            var sut = new GenericCamera(deviceId, "", "", "Generic Camera", true, sdk.Object, profile.Object, dataFactoryUtility.ExposureDataFactory);
 
             var connected = await sut.Connect(default);
             sut.TemperatureSetPoint = 10;

@@ -1,5 +1,6 @@
 ﻿using NINA.Core.Enum;
 using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -11,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
-    public class ASTPANSDK : IASTPANSDK {
+    public class ASTPANSDK : IGenericCameraSDK {
         private int id;
         private IASTPANPInvokeProxy pInvoke;
         private int bitDepth;

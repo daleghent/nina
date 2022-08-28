@@ -281,7 +281,7 @@
   <ItemGroup>
     <Compile Include="AngleTest.cs" />
     <Compile Include="AstrometryTest\AstrometryTest.cs" />
-    <Compile Include="AstrometryTest\CustomHorizonTest.cs" />    
+    <Compile Include="AstrometryTest\CustomHorizonTest.cs" />
     <Compile Include="AstrometryTest\InputCoordinatesTest.cs" />
     <Compile Include="Autofocus\AutoFocusReportTest.cs" />
     <Compile Include="Autofocus\AutofocusVMTest.cs" />
@@ -297,7 +297,7 @@
     <Compile Include="Database\DatabaseInteractionTest.cs" />
     <Compile Include="Dome\DomeFollowerTest.cs" />
     <Compile Include="Dome\DomeVMTest.cs" />
-    <Compile Include="Equipment\Camera\SVBonyCameraTest.cs" />
+    <Compile Include="Equipment\Camera\GenericCameraTest.cs" />
     <Compile Include="Equipment\SDK\CameraSDKs\ASTPAN\ASTPANProviderTest.cs" />
     <Compile Include="Equipment\SDK\CameraSDKs\SVBony\SVBonyProviderTest.cs" />
     <Compile Include="Equipment\SDK\CameraSDKs\SVBony\SVBonySDKTest.cs" />
