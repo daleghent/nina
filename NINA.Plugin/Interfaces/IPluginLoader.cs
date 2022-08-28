@@ -35,6 +35,7 @@ namespace NINA.Plugin.Interfaces {
         IList<IDateTimeProvider> DateTimeProviders { get; }
         IList<IDockableVM> DockableVMs { get; }
         IList<IPluggableBehavior> PluggableBehaviors { get; }
+        IList<IEquipmentProvider> DeviceProviders { get; }
 
         Task Load();
     }

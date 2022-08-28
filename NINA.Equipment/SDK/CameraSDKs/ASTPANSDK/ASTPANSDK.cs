@@ -120,9 +120,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
                     }
                 }                
             } catch (AccessViolationException ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Access Violation Exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Access Violation Exception occurred during frame download!", ex);
             } catch (Exception ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Unexpected exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Unexpected exception occurred during frame download!", ex);
             }
 
             return null;
@@ -190,9 +190,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
                     
                 }
             } catch (AccessViolationException ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Access Violation Exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Access Violation Exception occurred during frame download!", ex);
             } catch (Exception ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Unexpected exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Unexpected exception occurred during frame download!", ex);
             }
 
             return null;

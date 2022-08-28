@@ -25,22 +25,34 @@ using NINA.Equipment.Utility;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
-    public class SafetyMonitorChooserVM : DeviceChooserVM {
-        private readonly IDeviceDispatcher deviceDispatcher;
-
-        public SafetyMonitorChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
-            this.deviceDispatcher = deviceDispatcher;
+    public class SafetyMonitorChooserVM : DeviceChooserVM<ISafetyMonitor> {
+        public SafetyMonitorChooserVM(IProfileService profileService,
+                                      IDeviceDispatcher deviceDispatcher,
+                                      IEquipmentProviders<ISafetyMonitor> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoSafetyMonitor"]));
+
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Safety Monitors");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
 
                 try {
                     foreach (ISafetyMonitor safetyMonitor in ascomInteraction.GetSafetyMonitors()) {
@@ -53,6 +65,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                 devices.Add(new SafetyMonitorSimulator());
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.SafetyMonitorSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

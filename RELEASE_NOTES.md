@@ -14,6 +14,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
+- Plugin Enablement: Added interfaces that allow plugins to provide device drivers
 
 # Version 2.0 HF 1
 

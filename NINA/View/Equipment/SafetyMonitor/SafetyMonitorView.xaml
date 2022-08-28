@@ -36,12 +36,12 @@
                         CancelCommand="{Binding CancelConnectCommand}"
                         ConnectCommand="{Binding ConnectCommand}"
                         Connected="{Binding SafetyMonitorInfo.Connected}"
-                        Devices="{Binding SafetyMonitorChooserVM.Devices}"
+                        Devices="{Binding DeviceChooserVM.Devices}"
                         DisconnectCommand="{Binding DisconnectCommand}"
-                        HasSetupDialog="{Binding SafetyMonitorChooserVM.SelectedDevice.HasSetupDialog}"
-                        RefreshCommand="{Binding RefreshMonitorListCommand}"
-                        SelectedDevice="{Binding SafetyMonitorChooserVM.SelectedDevice, Mode=TwoWay}"
-                        SetupCommand="{Binding SafetyMonitorChooserVM.SetupDialogCommand}" />
+                        HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RescanDevicesCommand}"
+                        SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                 </Grid>
             </GroupBox.Header>
 

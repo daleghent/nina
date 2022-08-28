@@ -55,6 +55,6 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         Task<bool> WarmCamera(TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
-        IDeviceChooserVM CameraChooserVM { get; set; }
+        IDeviceChooserVM DeviceChooserVM { get; set; }
     }
 }

@@ -45,15 +45,15 @@
                         Text="{ns:Loc LblGuider}" />
                     <equip:Connector
                         Grid.Column="1"
-                        CancelCommand="{Binding CancelConnectGuiderCommand}"
-                        ConnectCommand="{Binding ConnectGuiderCommand}"
+                        CancelCommand="{Binding CancelConnectCommand}"
+                        ConnectCommand="{Binding ConnectCommand}"
                         Connected="{Binding GuiderInfo.Connected}"
-                        Devices="{Binding GuiderChooserVM.Devices}"
-                        DisconnectCommand="{Binding DisconnectGuiderCommand}"
-                        HasSetupDialog="{Binding GuiderChooserVM.SelectedDevice.HasSetupDialog}"
-                        RefreshCommand="{Binding RefreshGuiderListCommand}"
-                        SelectedDevice="{Binding GuiderChooserVM.SelectedDevice, Mode=TwoWay}"
-                        SetupCommand="{Binding GuiderChooserVM.SetupDialogCommand}" />
+                        Devices="{Binding DeviceChooserVM.Devices}"
+                        DisconnectCommand="{Binding DisconnectCommand}"
+                        HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RescanDevicesCommand}"
+                        SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                 </Grid>
             </GroupBox.Header>
             <Grid>

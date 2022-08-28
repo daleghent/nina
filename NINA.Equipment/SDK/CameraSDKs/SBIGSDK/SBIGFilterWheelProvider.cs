@@ -26,6 +26,8 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
 
     public class SBIGFilterWheelProvider : IEquipmentProvider<IFilterWheel> {
+        public string Name => "NINA";
+        public string ContentId => this.GetType().FullName;
         private readonly ISbigSdk sbigSdk;
         private readonly IProfileService profileService;
 

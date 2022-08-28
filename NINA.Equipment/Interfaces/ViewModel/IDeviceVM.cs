@@ -12,8 +12,10 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NINA.Equipment.Interfaces.ViewModel {
 

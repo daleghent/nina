@@ -36,27 +36,27 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelVM : DockableVM, IFilterWheelVM {
 
-        public FilterWheelVM(
-            IProfileService profileService,
-            IFilterWheelMediator filterWheelMediator,
-            IFocuserMediator focuserMediator,
-            IDeviceChooserVM filterWheelChooserVM,
-            IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public FilterWheelVM(IProfileService profileService,
+                             IFilterWheelMediator filterWheelMediator,
+                             IFocuserMediator focuserMediator,
+                             IDeviceChooserVM filterWheelChooserVM,
+                             IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblFilterWheel"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["FWSVG"];
 
-            FilterWheelChooserVM = filterWheelChooserVM;
+            DeviceChooserVM = filterWheelChooserVM;
             this.filterWheelMediator = filterWheelMediator;
             this.filterWheelMediator.RegisterHandler(this);
-            _ = Rescan();
 
             this.focuserMediator = focuserMediator;
             this.applicationStatusMediator = applicationStatusMediator;
 
-            ChooseFWCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFW));
-            CancelChooseFWCommand = new RelayCommand(CancelChooseFW);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFW));
+            CancelConnectCommand = new RelayCommand(CancelChooseFW);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFW));
-            RefreshFWListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FilterWheelInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FilterWheelInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
+
             ChangeFilterCommand = new AsyncCommand<bool>(async () => {
                 _changeFilterCancellationSource?.Dispose();
                 _changeFilterCancellationSource = new CancellationTokenSource();
@@ -65,14 +65,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             }, (object o) => FilterWheelInfo.Connected && !FilterWheelInfo.IsMoving);
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                _ = RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                FilterWheelChooserVM.GetEquipment();
-                return FilterWheelChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -176,8 +176,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             try {
                 await Disconnect();
 
-                if (FilterWheelChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.FilterWheelSettings.Id = FilterWheelChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.FilterWheelSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -188,7 +188,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                     }
                 );
 
-                var fW = (IFilterWheel)FilterWheelChooserVM.SelectedDevice;
+                var fW = (IFilterWheel)DeviceChooserVM.SelectedDevice;
                 _cancelChooseFilterWheelSource?.Dispose();
                 _cancelChooseFilterWheelSource = new CancellationTokenSource();
                 if (fW != null) {
@@ -340,11 +340,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             }
         }
 
-        public IDeviceChooserVM FilterWheelChooserVM { get; set; }
-        public IAsyncCommand ChooseFWCommand { get; private set; }
-        public ICommand CancelChooseFWCommand { get; private set; }
+        public IDeviceChooserVM DeviceChooserVM { get; set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
+        public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
-        public ICommand RefreshFWListCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
         public IAsyncCommand ChangeFilterCommand { get; private set; }
     }
 }

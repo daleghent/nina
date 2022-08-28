@@ -41,16 +41,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
     public class DomeVM : DockableVM, IDomeVM, ITelescopeConsumer, ISafetyMonitorConsumer {
 
-        public DomeVM(
-            IProfileService profileService,
-            IDomeMediator domeMediator,
-            IApplicationStatusMediator applicationStatusMediator,
-            ITelescopeMediator telescopeMediator,
-            IDeviceChooserVM domeChooserVM,
-            IDomeFollower domeFollower,
-            ISafetyMonitorMediator safetyMonitorMediator,
-            IApplicationResourceDictionary resourceDictionary,
-            IDeviceUpdateTimerFactory deviceUpdateTimerFactory) : base(profileService) {
+        public DomeVM(IProfileService profileService,
+                      IDomeMediator domeMediator,
+                      IApplicationStatusMediator applicationStatusMediator,
+                      ITelescopeMediator telescopeMediator,
+                      IDeviceChooserVM domeChooserVM,
+                      IDomeFollower domeFollower,
+                      ISafetyMonitorMediator safetyMonitorMediator,
+                      IApplicationResourceDictionary resourceDictionary,
+                      IDeviceUpdateTimerFactory deviceUpdateTimerFactory) : base(profileService) {
             Title = Loc.Instance["LblDome"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["ObservatorySVG"];
 
@@ -61,8 +60,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             this.applicationStatusMediator = applicationStatusMediator;
             this.safetyMonitorMediator = safetyMonitorMediator;
             this.safetyMonitorMediator.RegisterConsumer(this);
-            DomeChooserVM = domeChooserVM;
-            _ = Rescan();
+            DeviceChooserVM = domeChooserVM;
             this.domeFollower = domeFollower;
             this.domeFollower.PropertyChanged += DomeFollower_PropertyChanged;
             this.progress = new Progress<ApplicationStatus>(p => {
@@ -70,10 +68,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 this.applicationStatusMediator.StatusUpdate(p);
             });
 
-            ChooseDomeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseDome));
-            CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseDome));
+            CancelConnectCommand = new RelayCommand(CancelChooseDome);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshDomeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !DomeInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !DomeInfo.Connected);
             StopCommand = new AsyncCommand<bool>((o) => Task.Run(() => StopAll(o)));
             OpenShutterCommand = new AsyncCommand<bool>(() => Task.Run(OpenShutterVM));
             CloseShutterCommand = new AsyncCommand<bool>(() => Task.Run(CloseShutterVM));
@@ -84,6 +82,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             RotateCCWCommand = new AsyncCommand<bool>(() => Task.Run(() => RotateRelative(-RotateDegrees)));
             FindHomeCommand = new AsyncCommand<bool>((o) => Task.Run(() => FindHome(o, CancellationToken.None)));
             SyncCommand = new RelayCommand(SyncAzimuth);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
 
             this.updateTimer = deviceUpdateTimerFactory.Create(
                 GetDomeValues,
@@ -92,14 +91,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                DomeChooserVM.GetEquipment();
-                return DomeChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -123,8 +122,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     await updateTimer.Stop();
                 }
 
-                if (DomeChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.DomeSettings.Id = DomeChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.DomeSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -135,7 +134,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     }
                 );
 
-                var dome = (IDome)DomeChooserVM.SelectedDevice;
+                var dome = (IDome)DeviceChooserVM.SelectedDevice;
                 cancelChooseDomeSource?.Dispose();
                 cancelChooseDomeSource = new CancellationTokenSource();
                 if (dome != null) {
@@ -335,7 +334,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
         }
 
-        public IDeviceChooserVM DomeChooserVM { get; private set; }
+        public IDeviceChooserVM DeviceChooserVM { get; private set; }
 
         private Task<bool> OpenShutterVM() {
             return OpenShutter(CancellationToken.None);
@@ -666,9 +665,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private readonly IProgress<ApplicationStatus> progress;
         private ITelescopeMediator telescopeMediator;
         private ISafetyMonitorMediator safetyMonitorMediator;
-        public IAsyncCommand ChooseDomeCommand { get; private set; }
-        public ICommand RefreshDomeListCommand { get; private set; }
-        public ICommand CancelChooseDomeCommand { get; private set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
+        public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
         public ICommand OpenShutterCommand { get; private set; }

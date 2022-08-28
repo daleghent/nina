@@ -63,6 +63,7 @@
                                     Grid.Column="1"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Stretch"
+                                    LoadingImage="{TemplateBinding LoadingImage}"
                                     LoadingImageBrush="{TemplateBinding LoadingImageBrush}"
                                     Visibility="{TemplateBinding IsPaused,
                                                                  Converter={StaticResource InverseBoolToVisibilityConverter}}" />

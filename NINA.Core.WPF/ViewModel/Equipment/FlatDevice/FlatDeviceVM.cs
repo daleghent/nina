@@ -48,17 +48,20 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         private readonly DeviceUpdateTimer updateTimer;
         private readonly ICameraMediator cameraMediator;
 
-        public IDeviceChooserVM FlatDeviceChooserVM { get; }
+        public IDeviceChooserVM DeviceChooserVM { get; }
 
-        public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator,
-            ICameraMediator cameraMediator, IDeviceChooserVM flatDeviceChooserVm, IImageGeometryProvider imageGeometryProvider) : base(profileService) {
+        public FlatDeviceVM(IProfileService profileService,
+                            IFlatDeviceMediator flatDeviceMediator,
+                            IApplicationStatusMediator applicationStatusMediator,
+                            ICameraMediator cameraMediator,
+                            IDeviceChooserVM flatDeviceChooserVm,
+                            IImageGeometryProvider imageGeometryProvider) : base(profileService) {
             this.applicationStatusMediator = applicationStatusMediator;
             this.flatDeviceMediator = flatDeviceMediator;
             this.flatDeviceMediator.RegisterHandler(this);
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
-            FlatDeviceChooserVM = flatDeviceChooserVm;
-            _ = Rescan();
+            DeviceChooserVM = flatDeviceChooserVm;
 
             Title = Loc.Instance["LblFlatDevice"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
@@ -68,8 +71,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFlatDeviceDialog));
             OpenCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => OpenCover(CancellationToken.None)));
             CloseCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => CloseCover(CancellationToken.None)));
-            RefreshFlatDeviceListCommand =
+            RescanDevicesCommand =
                 new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FlatDeviceInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
             SetBrightnessCommand = new AsyncCommand<bool>(o => Task.Run(() => SetBrightness(o, CancellationToken.None)));
             ToggleLightCommand = new AsyncCommand<bool>(o => Task.Run(() => ToggleLight(o, CancellationToken.None)));
             AddGainCommand = new RelayCommand(AddGain);
@@ -91,9 +95,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                FlatDeviceChooserVM.GetEquipment();
-                return FlatDeviceChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async  () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -110,7 +114,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         private async void ProfileChanged(object sender, EventArgs e) {
             flatDeviceSettings.PropertyChanged -= FlatDeviceSettingsChanged;
             profileService.ActiveProfile.FilterWheelSettings.PropertyChanged += FilterWheelSettingsChanged;
-            await Rescan();
+            await RescanDevicesCommand.ExecuteAsync(null);
             flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
             flatDeviceSettings.PropertyChanged += FlatDeviceSettingsChanged;
             RaisePropertyChanged(nameof(Gains));
@@ -161,10 +165,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     await updateTimer.Stop();
                 }
 
-                var device = FlatDeviceChooserVM.SelectedDevice;
+                var device = DeviceChooserVM.SelectedDevice;
                 if (device == null) return false;
                 if (device.Id == "No_Device") {
-                    profileService.ActiveProfile.FlatDeviceSettings.Id = FlatDeviceChooserVM.SelectedDevice.Id;
+                    profileService.ActiveProfile.FlatDeviceSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -342,7 +346,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public async Task<bool> OpenCover(CancellationToken token) {
             await ssOpen.WaitAsync(token);
             try {
-                var device = FlatDeviceChooserVM.SelectedDevice;
+                var device = DeviceChooserVM.SelectedDevice;
                 if (device == null || device.Id == "No_Device") return false;
                 var flatD = (IFlatDevice)device;
                 if (flatD.Connected == false) return false;
@@ -363,7 +367,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public async Task<bool> CloseCover(CancellationToken token) {
             await ssClose.WaitAsync(token);
             try {
-                var device = FlatDeviceChooserVM.SelectedDevice;
+                var device = DeviceChooserVM.SelectedDevice;
                 if (device == null || device.Id == "No_Device") return false;
                 var flatD = (IFlatDevice)device;
                 if (flatD.Connected == false) return false;
@@ -536,7 +540,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             column.RemoveFilterTimingByKeys(existingFilterKeys);
         }
 
-        public ICommand RefreshFlatDeviceListCommand { get; }
+        public IAsyncCommand RescanDevicesCommand { get; }
         public IAsyncCommand ConnectCommand { get; }
         public ICommand CancelConnectCommand { get; }
         public IAsyncCommand DisconnectCommand { get; }

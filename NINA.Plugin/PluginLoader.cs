@@ -95,7 +95,8 @@ namespace NINA.Plugin {
                               IImageStatisticsVM imageStatisticsVM,
                               IDomeSynchronization domeSynchronization,
                               ISequenceMediator sequenceMediator,
-                              IOptionsVM optionsVM) {
+                              IOptionsVM optionsVM,
+                              IExposureDataFactory exposureDataFactory) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -131,6 +132,7 @@ namespace NINA.Plugin {
             this.domeSynchronization = domeSynchronization;
             this.sequenceMediator = sequenceMediator;
             this.optionsVM = optionsVM;
+            this.exposureDataFactory = exposureDataFactory;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -223,13 +225,15 @@ namespace NINA.Plugin {
                             Container = new List<ISequenceContainer>();
                             DockableVMs = new List<IDockableVM>();
                             PluggableBehaviors = new List<IPluggableBehavior>();
+                            DeviceProviders = new List<IEquipmentProvider>();
                             Plugins = new Dictionary<IPluginManifest, bool>();
 
                             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
                             /* Compose the core catalog */
                             var types = GetCoreSequencerTypes();
-                            var coreCatalog = new TypeCatalog(types);
+                            var sdkTypes = GetCoreEquipmentSDKTypes();
+                            var coreCatalog = new TypeCatalog(types.Concat(sdkTypes));
 
                             Compose(coreCatalog);
 
@@ -451,6 +455,7 @@ namespace NINA.Plugin {
 
                 DockableVMs = DockableVMs.Concat(parts.DockableVMImports).ToList();
                 PluggableBehaviors = PluggableBehaviors.Concat(parts.PluggableBehaviorImports).ToList();
+                DeviceProviders = DeviceProviders.Concat(parts.DeviceProviderImports).ToList();
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;
@@ -495,6 +500,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(domeSynchronization);
             container.ComposeExportedValue(sequenceMediator);
             container.ComposeExportedValue(optionsVM);
+            container.ComposeExportedValue(exposureDataFactory);
 
             return container;
         }
@@ -510,6 +516,7 @@ namespace NINA.Plugin {
         public IList<IPluggableBehavior> PluggableBehaviors { get; private set; }
         public IDictionary<IPluginManifest, bool> Plugins { get; private set; }
         public IList<Assembly> Assemblies { get; private set; } = new List<Assembly>();
+        public IList<IEquipmentProvider> DeviceProviders { get; private set; }
 
         private readonly IProfileService profileService;
         private readonly ICameraMediator cameraMediator;
@@ -546,6 +553,7 @@ namespace NINA.Plugin {
         private readonly IDomeSynchronization domeSynchronization;
         private readonly ISequenceMediator sequenceMediator;
         private readonly IOptionsVM optionsVM;
+        private readonly IExposureDataFactory exposureDataFactory;
         private readonly Dictionary<string, string> assemblyReferencePathMap;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
@@ -587,6 +595,27 @@ namespace NINA.Plugin {
             return sequencerTypes;
         }
 
+        private static IEnumerable<Type> GetCoreEquipmentSDKTypes() {
+            IEnumerable<Type> loadableTypes;
+            try {
+                loadableTypes = Assembly.GetAssembly(typeof(IDevice)).GetTypes();
+            } catch (ReflectionTypeLoadException e) {
+                loadableTypes = e.Types.Where(t => t != null);
+            }
+
+            List<Type> coreTypes = new List<Type>();
+            foreach (Type t in loadableTypes) {
+                try {
+                    if (t.IsClass && t.GetInterfaces().Contains(typeof(IEquipmentProvider)) == true) {
+                        coreTypes.Add(t);
+                    }
+                } catch (Exception) {
+                }
+            }
+            return coreTypes;
+        }
+        
+                   
         private IOrderedEnumerable<T> AssignSequenceEntity<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
             var items = new List<T>();
             foreach (var importItem in imports) {
@@ -654,5 +683,10 @@ namespace NINA.Plugin {
 
         [ImportMany(typeof(IPluggableBehavior))]
         public IEnumerable<IPluggableBehavior> PluggableBehaviorImports { get; private set; }
+
+        [ImportMany(typeof(IEquipmentProvider))]
+        public IEnumerable<IEquipmentProvider> DeviceProviderImports { get; private set; }
+
+        
     }
 }

@@ -48,15 +48,15 @@
                             Text="{ns:Loc LblCamera}" />
                         <local:Connector
                             Grid.Column="1"
-                            CancelCommand="{Binding CancelConnectCameraCommand}"
-                            ConnectCommand="{Binding ChooseCameraCommand}"
+                            CancelCommand="{Binding CancelConnectCommand}"
+                            ConnectCommand="{Binding ConnectCommand}"
                             Connected="{Binding CameraInfo.Connected}"
-                            Devices="{Binding CameraChooserVM.Devices}"
+                            Devices="{Binding DeviceChooserVM.Devices}"
                             DisconnectCommand="{Binding DisconnectCommand}"
-                            HasSetupDialog="{Binding CameraChooserVM.SelectedDevice.HasSetupDialog}"
-                            RefreshCommand="{Binding RefreshCameraListCommand}"
-                            SelectedDevice="{Binding CameraChooserVM.SelectedDevice, Mode=TwoWay}"
-                            SetupCommand="{Binding CameraChooserVM.SetupDialogCommand}" />
+                            HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                            RefreshCommand="{Binding RescanDevicesCommand}"
+                            SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                            SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                     </Grid>
                 </GroupBox.Header>
                 <Grid>

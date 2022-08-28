@@ -45,15 +45,15 @@
                             Text="{ns:Loc LblTelescope}" />
                         <equip:Connector
                             Grid.Column="1"
-                            CancelCommand="{Binding CancelChooseTelescopeCommand}"
-                            ConnectCommand="{Binding ChooseTelescopeCommand}"
+                            CancelCommand="{Binding CancelConnectCommand}"
+                            ConnectCommand="{Binding ConnectCommand}"
                             Connected="{Binding TelescopeInfo.Connected}"
-                            Devices="{Binding TelescopeChooserVM.Devices}"
+                            Devices="{Binding DeviceChooserVM.Devices}"
                             DisconnectCommand="{Binding DisconnectCommand}"
-                            HasSetupDialog="{Binding TelescopeChooserVM.SelectedDevice.HasSetupDialog}"
-                            RefreshCommand="{Binding RefreshTelescopeListCommand}"
-                            SelectedDevice="{Binding TelescopeChooserVM.SelectedDevice, Mode=TwoWay}"
-                            SetupCommand="{Binding TelescopeChooserVM.SetupDialogCommand}" />
+                            HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                            RefreshCommand="{Binding RescanDevicesCommand}"
+                            SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                            SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                     </Grid>
                 </GroupBox.Header>
                 <Grid>

@@ -21,22 +21,35 @@ using NINA.Core.Locale;
 using NINA.Equipment.Utility;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
+using System.Threading.Tasks;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
-    public class RotatorChooserVM : DeviceChooserVM {
-        private readonly IDeviceDispatcher deviceDispatcher;
-
-        public RotatorChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
-            this.deviceDispatcher = deviceDispatcher;
+    public class RotatorChooserVM : DeviceChooserVM<IRotator> {
+        public RotatorChooserVM(IProfileService profileService,
+                                IDeviceDispatcher deviceDispatcher,
+                                IEquipmentProviders<IRotator> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoRotator"]));
+                
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Rotators");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
 
                 try {
                     foreach (IRotator rotator in ascomInteraction.GetRotators()) {
@@ -49,6 +62,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                 devices.Add(new ManualRotator(profileService));
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.RotatorSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

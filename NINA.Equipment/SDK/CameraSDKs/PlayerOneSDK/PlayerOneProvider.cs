@@ -9,6 +9,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using NINA.Core.Interfaces;
 using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Interfaces;
@@ -17,17 +18,22 @@ using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
+    [Export(typeof(IEquipmentProvider))]
     public class PlayerOneProvider : IEquipmentProvider<ICamera> {
+        public string Name => "PlayerOne";
+        public string ContentId => this.GetType().FullName;
         private IProfileService profileService;
         private IPlayerOnePInvokeProxy playerOnePInvoke;
         private IExposureDataFactory exposureDataFactory;
 
+        [ImportingConstructor]
         public PlayerOneProvider(IProfileService profileService, IExposureDataFactory exposureDataFactory) : this(profileService, exposureDataFactory, new PlayerOnePInvokeProxy()) {
         }
 

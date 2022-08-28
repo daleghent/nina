@@ -101,26 +101,18 @@
                     Stretch="Uniform" />
             </Grid>
         </Button>
-        <Button
+        <ninactrl:AsyncProcessButton
             Grid.Column="3"
             Width="40"
             Height="40"
             Margin="1,0,0,0"
+            ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
+            ButtonImage="{StaticResource LoopSVG}"
             Command="{Binding RefreshCommand}"
-            Visibility="{Binding RefreshCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-            <Button.ToolTip>
-                <ToolTip ToolTipService.ShowOnDisabled="False">
-                    <TextBlock Text="{ns:Loc LblRescanDevices}" />
-                </ToolTip>
-            </Button.ToolTip>
-            <Grid>
-                <Path
-                    Margin="5"
-                    Data="{StaticResource LoopSVG}"
-                    Fill="{StaticResource ButtonForegroundBrush}"
-                    Stretch="Uniform" />
-            </Grid>
-        </Button>
+            LoadingImage="{StaticResource LoopSVG}"
+            LoadingImageBrush="{StaticResource PrimaryBrush}"
+            ToolTip="{ns:Loc LblRescanDevices}"
+            Visibility="{Binding RefreshCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
         <Grid
             Grid.Column="4"
             Width="40"
@@ -138,7 +130,6 @@
                 IsEnabled="{Binding Connected, Converter={StaticResource InverseBooleanConverter}}"
                 ToolTip="{ns:Loc LblConnect}"
                 Visibility="{Binding Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-            <!--<Grid Visibility="{Binding RotatorInfo, Converter={StaticResource NullToVisibilityConverter}}">-->
             <Button
                 Command="{Binding DisconnectCommand}"
                 IsEnabled="{Binding Connected}"
@@ -156,7 +147,6 @@
                         Stretch="Uniform" />
                 </Grid>
             </Button>
-            <!--</Grid>-->
         </Grid>
     </Grid>
 </UserControl>

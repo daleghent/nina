@@ -58,12 +58,12 @@
                         CancelCommand="{Binding CancelConnectCommand}"
                         ConnectCommand="{Binding ConnectCommand}"
                         Connected="{Binding SwitchInfo.Connected}"
-                        Devices="{Binding SwitchChooserVM.Devices}"
+                        Devices="{Binding DeviceChooserVM.Devices}"
                         DisconnectCommand="{Binding DisconnectCommand}"
-                        HasSetupDialog="{Binding SwitchChooserVM.SelectedDevice.HasSetupDialog}"
-                        RefreshCommand="{Binding RefreshDevicesCommand}"
-                        SelectedDevice="{Binding SwitchChooserVM.SelectedDevice, Mode=TwoWay}"
-                        SetupCommand="{Binding SwitchChooserVM.SetupDialogCommand}" />
+                        HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RescanDevicesCommand}"
+                        SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                 </Grid>
             </GroupBox.Header>
         </GroupBox>

@@ -338,6 +338,7 @@
     <Compile Include="Utility\PluggableAutoFocusVMFactory.cs" />
     <Compile Include="Utility\PluggableBehaviorManager.cs" />
     <Compile Include="Utility\PluggableBehaviorSelector.cs" />
+    <Compile Include="Utility\PluginEquipmentProvider.cs" />
     <Compile Include="Utility\ProjectVersion.cs" />
     <Compile Include="ViewModel\AboutSDKsVM.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,22 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Interfaces.ViewModel {
+    public interface IEquipmentProviders {
+        bool Initialized { get; set; }
 
-    public interface IEquipmentProvider<T> where T : IDevice {
+        Type GetInterfaceType();
+        void AddProvider(IEquipmentProvider deviceProvider);
+    }
+
+
+    public interface IEquipmentProviders<T>: IEquipmentProviders where T : IDevice {        
+        Task<IList<IEquipmentProvider<T>>> GetProviders();
+    }
+
+    public interface IEquipmentProvider {
+        string Name { get; }
+    }
+    public interface IEquipmentProvider<T> : IEquipmentProvider where T : IDevice {
 
         IList<T> GetEquipment();
     }

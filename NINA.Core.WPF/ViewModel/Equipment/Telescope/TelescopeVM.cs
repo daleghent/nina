@@ -42,18 +42,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private static double LAT_LONG_TOLERANCE = 0.001;
         private static double SITE_ELEVATION_TOLERANCE = 10;
 
-        public TelescopeVM(
-            IProfileService profileService,
-            ITelescopeMediator telescopeMediator,
-            IApplicationStatusMediator applicationStatusMediator,
-            IDomeMediator domeMediator,
-            IDeviceDispatcher deviceDispatcher) : base(profileService) {
+        public TelescopeVM(IProfileService profileService,
+                           ITelescopeMediator telescopeMediator,
+                           IApplicationStatusMediator applicationStatusMediator,
+                           IDomeMediator domeMediator,
+                           IDeviceChooserVM deviceChooserVM) : base(profileService) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             this.domeMediator = domeMediator;
-            this.deviceDispatcher = deviceDispatcher;
+            this.DeviceChooserVM = deviceChooserVM;
             Title = Loc.Instance["LblTelescope"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
@@ -61,10 +60,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 p.Source = this.Title;
                 this.applicationStatusMediator.StatusUpdate(p);
             });
-            _ = Rescan();
 
-            ChooseTelescopeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope));
-            CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope));
+            CancelConnectCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectTelescope));
             ParkCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
@@ -77,7 +75,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }));
             SetParkPositionCommand = new AsyncCommand<bool>(() => Task.Run(SetParkPosition));
             SlewToCoordinatesCommand = new AsyncCommand<bool>((p) => Task.Run(() => SlewToCoordinatesInternal(p)));
-            RefreshTelescopeListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !TelescopeInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !TelescopeInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
             FindHomeCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
                 return FindHome(progress, _cancelSlewTelescopeSource.Token);
@@ -96,14 +95,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                TelescopeChooserVM.GetEquipment();
-                return TelescopeChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -351,20 +350,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 RaisePropertyChanged();
             }
         }
-
-        private TelescopeChooserVM _telescopeChooserVM;
-
-        public TelescopeChooserVM TelescopeChooserVM {
-            get {
-                if (_telescopeChooserVM == null) {
-                    _telescopeChooserVM = new TelescopeChooserVM(profileService, deviceDispatcher);
-                }
-                return _telescopeChooserVM;
-            }
-            set {
-                _telescopeChooserVM = value;
-            }
-        }
+        public IDeviceChooserVM DeviceChooserVM { get; set; }
 
         public IWindowService WindowService { get; set; } = new WindowService();
 
@@ -378,8 +364,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     await updateTimer.Stop();
                 }
 
-                if (TelescopeChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.TelescopeSettings.Id = TelescopeChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.TelescopeSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -390,7 +376,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     }
                 );
 
-                var telescope = (ITelescope)TelescopeChooserVM.SelectedDevice;
+                var telescope = (ITelescope)DeviceChooserVM.SelectedDevice;
                 _cancelChooseTelescopeSource?.Dispose();
                 _cancelChooseTelescopeSource = new CancellationTokenSource();
                 if (telescope != null) {
@@ -814,7 +800,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private IDomeMediator domeMediator;
-        private IDeviceDispatcher deviceDispatcher;
         private IProgress<ApplicationStatus> progress;
 
         public double TargetRightAscencionSeconds {
@@ -1022,8 +1007,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 
-        public IAsyncCommand ChooseTelescopeCommand { get; private set; }
-        public ICommand CancelChooseTelescopeCommand { get; private set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
+        public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
 
         public ICommand MoveCommand { get; private set; }
@@ -1038,7 +1023,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public ICommand StopSlewCommand { get; private set; }
 
-        public ICommand RefreshTelescopeListCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
 
         public ICommand SetTrackingEnabledCommand { get; private set; }
 

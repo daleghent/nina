@@ -20,18 +20,26 @@ using System.Collections.Generic;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace NINA.WPF.Base.ViewModel.Equipment {
 
-    public abstract class DeviceChooserVM : BaseVM, IDeviceChooserVM {
+    public abstract class DeviceChooserVM<T> : BaseVM, IDeviceChooserVM where T : IDevice {
 
-        public DeviceChooserVM(IProfileService profileService) : base(profileService) {
+        public DeviceChooserVM(
+                IProfileService profileService,
+                IDeviceDispatcher deviceDispatcher,
+                IEquipmentProviders<T> equipmentProviders) : base(profileService) {
             this.profileService = profileService;
+            this.deviceDispatcher = deviceDispatcher;
+            this.equipmentProviders = equipmentProviders;
             this.Devices = new List<IDevice>();
             SetupDialogCommand = new RelayCommand(OpenSetupDialog);
         }
 
-        protected object lockObj = new object();
+        protected SemaphoreSlim lockObj = new SemaphoreSlim(1,1);
+        protected readonly IDeviceDispatcher deviceDispatcher;
+        protected readonly IEquipmentProviders<T> equipmentProviders;
 
         private IList<IDevice> devices;
 
@@ -43,7 +51,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment {
             }
         }
 
-        public abstract void GetEquipment();
+        public abstract Task GetEquipment();
 
         private IDevice _selectedDevice;
 

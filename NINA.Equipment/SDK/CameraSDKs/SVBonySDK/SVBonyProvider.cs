@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Interfaces;
 using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Interfaces;
@@ -19,16 +20,22 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
+    [Export(typeof(IEquipmentProvider))]
     public class SVBonyProvider : IEquipmentProvider<ICamera> {
+        public string Name => "SVBony";
+        public string ContentId => this.GetType().FullName;
+
         private IProfileService profileService;
         private ISVBonyPInvokeProxy sVBonyPInvoke;
         private IExposureDataFactory exposureDataFactory;
 
         [ExcludeFromCodeCoverage]
+        [ImportingConstructor]
         public SVBonyProvider(IProfileService profileService, IExposureDataFactory exposureDataFactory) : this(profileService, exposureDataFactory, new SVBonyPInvokeProxy()) {
         }
 

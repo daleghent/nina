@@ -43,20 +43,21 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
     public class CameraVM : DockableVM, ICameraVM {
 
-        public CameraVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator,
-            IDeviceChooserVM cameraChooserVM) : base(profileService) {
+        public CameraVM(IProfileService profileService,
+                        ICameraMediator cameraMediator,
+                        IApplicationStatusMediator applicationStatusMediator,
+                        IDeviceChooserVM cameraChooserVM) : base(profileService) {
             Title = Loc.Instance["LblCamera"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
 
-            CameraChooserVM = cameraChooserVM;
-            _ = Rescan();
+            DeviceChooserVM = cameraChooserVM;
 
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
 
-            ChooseCameraCommand = new AsyncCommand<bool>(() => Task.Run(ChooseCamera));
-            CancelConnectCameraCommand = new RelayCommand(CancelConnectCamera);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseCamera));
+            CancelConnectCommand = new RelayCommand(CancelConnectCamera);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             CoolCamCommand = new AsyncCommand<bool>(() => {
                 _cancelChangeTemperatureCts?.Dispose();
@@ -69,7 +70,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 return Task.Run(() => WarmCamera(TimeSpan.FromMinutes(WarmingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token));
             }, (object o) => !TempChangeRunning);
             CancelCoolCamCommand = new RelayCommand(CancelCoolCamera);
-            RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !CameraInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !CameraInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
 
             TempChangeRunning = false;
             CoolerHistory = new AsyncObservableLimitedSizedStack<CameraCoolingStep>(100);
@@ -82,15 +84,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
                 RaiseAllPropertiesChanged();  // Reload DefaultGain, and other default camera settings
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                CameraChooserVM.GetEquipment();
-                return CameraChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -111,7 +113,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
         private ICameraMediator cameraMediator;
 
-        public IDeviceChooserVM CameraChooserVM { get; set; }
+        public IDeviceChooserVM DeviceChooserVM { get; set; }
 
         private bool _tempChangeRunning;
 
@@ -326,8 +328,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 if (updateTimer != null) {
                     await updateTimer.Stop();
                 }
-                if (CameraChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.CameraSettings.Id = CameraChooserVM.SelectedDevice.Id;
+
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.CameraSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -338,7 +341,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     }
                 );
 
-                var cam = new PersistSettingsCameraDecorator(this.profileService, (ICamera)CameraChooserVM.SelectedDevice);
+                var cam = new PersistSettingsCameraDecorator(this.profileService, (ICamera)DeviceChooserVM.SelectedDevice);
                 _cancelConnectCameraSource?.Dispose();
                 _cancelConnectCameraSource = new CancellationTokenSource();
                 if (cam != null) {
@@ -971,14 +974,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private IApplicationStatusMediator applicationStatusMediator;
         private double exposureTime;
 
-        public IAsyncCommand ChooseCameraCommand { get; private set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
 
         public ICommand DisconnectCommand { get; private set; }
 
         public ICommand CancelCoolCamCommand { get; private set; }
 
-        public ICommand RefreshCameraListCommand { get; private set; }
-        public ICommand CancelConnectCameraCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
+        public ICommand CancelConnectCommand { get; private set; }
     }
 
     public class CameraCoolingStep { 

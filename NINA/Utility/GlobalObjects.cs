@@ -22,11 +22,14 @@ namespace NINA.Utility {
     /// </summary>
     public class GlobalObjects {
         private readonly IPluggableBehaviorManager pluggableBehaviorManager;
+        private readonly IPluginEquipmentProviderManager pluginEquipmentProviderManager;
 
-        public GlobalObjects(IPluggableBehaviorManager pluggableBehaviorManager) {
+        public GlobalObjects(IPluggableBehaviorManager pluggableBehaviorManager, IPluginEquipmentProviderManager pluginEquipmentProviderManager) {
             this.pluggableBehaviorManager = pluggableBehaviorManager;
+            this.pluginEquipmentProviderManager = pluginEquipmentProviderManager;
 
             this.pluggableBehaviorManager.Initialize();
+            this.pluginEquipmentProviderManager.Initialize();
         }
     }
 }

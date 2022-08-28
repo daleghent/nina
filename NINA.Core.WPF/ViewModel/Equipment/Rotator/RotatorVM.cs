@@ -37,25 +37,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
     public class RotatorVM : DockableVM, IRotatorVM {
 
-        public RotatorVM(
-            IProfileService profileService,
-            IRotatorMediator rotatorMediator,
-            IDeviceChooserVM rotatorChooserVM,
-            IApplicationResourceDictionary resourceDictionary,
-            IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public RotatorVM(IProfileService profileService,
+                         IRotatorMediator rotatorMediator,
+                         IDeviceChooserVM rotatorChooserVM,
+                         IApplicationResourceDictionary resourceDictionary,
+                         IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblRotator"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["RotatorSVG"];
 
             this.rotatorMediator = rotatorMediator;
             this.rotatorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
-            RotatorChooserVM = rotatorChooserVM;
-            _ = Rescan();
+            DeviceChooserVM = rotatorChooserVM;
 
             ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshRotatorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !RotatorInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !RotatorInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
             MoveCommand = new AsyncCommand<float>(() => Task.Run(() => Move(TargetPosition, CancellationToken.None)), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
             MoveMechanicalCommand = new AsyncCommand<float>(() => Task.Run(() => MoveMechanical(TargetPosition, CancellationToken.None)), (p) => RotatorInfo.Connected);
             HaltCommand = new RelayCommand(Halt, (p) => RotatorInfo.Connected);
@@ -68,14 +67,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                RotatorChooserVM.GetEquipment();
-                return RotatorChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -284,7 +283,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             return RotatorInfo;
         }
 
-        public IDeviceChooserVM RotatorChooserVM { get; private set; }
+        public IDeviceChooserVM DeviceChooserVM { get; private set; }
 
         private float targetPosition;
 
@@ -300,7 +299,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         public IAsyncCommand ConnectCommand { get; private set; }
         public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
-        public ICommand RefreshRotatorListCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
         public IAsyncCommand MoveCommand { get; private set; }
         public IAsyncCommand MoveMechanicalCommand { get; private set; }
         public ICommand HaltCommand { get; private set; }
@@ -318,8 +317,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     await updateTimer.Stop();
                 }
 
-                if (RotatorChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.RotatorSettings.Id = RotatorChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.RotatorSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -330,7 +329,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     }
                 );
 
-                var rotator = (IRotator)RotatorChooserVM.SelectedDevice;
+                var rotator = (IRotator)DeviceChooserVM.SelectedDevice;
                 _connectRotatorCts?.Dispose();
                 _connectRotatorCts = new CancellationTokenSource();
                 if (rotator != null) {

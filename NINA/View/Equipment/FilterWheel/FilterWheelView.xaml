@@ -39,15 +39,15 @@
                         Text="{ns:Loc LblFilterWheel}" />
                     <equip:Connector
                         Grid.Column="1"
-                        CancelCommand="{Binding CancelChooseFWCommand}"
-                        ConnectCommand="{Binding ChooseFWCommand}"
+                        CancelCommand="{Binding CancelConnectCommand}"
+                        ConnectCommand="{Binding ConnectCommand}"
                         Connected="{Binding FilterWheelInfo.Connected}"
-                        Devices="{Binding FilterWheelChooserVM.Devices}"
+                        Devices="{Binding DeviceChooserVM.Devices}"
                         DisconnectCommand="{Binding DisconnectCommand}"
-                        HasSetupDialog="{Binding FilterWheelChooserVM.SelectedDevice.HasSetupDialog}"
-                        RefreshCommand="{Binding RefreshFWListCommand}"
-                        SelectedDevice="{Binding FilterWheelChooserVM.SelectedDevice, Mode=TwoWay}"
-                        SetupCommand="{Binding FilterWheelChooserVM.SetupDialogCommand}" />
+                        HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RescanDevicesCommand}"
+                        SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                 </Grid>
             </GroupBox.Header>
             <Grid Background="{StaticResource BackgroundBrush}">

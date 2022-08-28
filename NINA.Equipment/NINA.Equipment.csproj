@@ -141,6 +141,7 @@
     <Reference Include="System.Collections.Immutable, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.6.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -389,7 +390,6 @@
     <Compile Include="Interfaces\Mediator\IWeatherDataMediator.cs" />
     <Compile Include="Interfaces\ViewModel\ICameraVM.cs" />
     <Compile Include="Interfaces\ViewModel\IDeviceChooserVM.cs" />
-    <Compile Include="Interfaces\ViewModel\IDeviceFactory.cs" />
     <Compile Include="Interfaces\ViewModel\IDeviceVM.cs" />
     <Compile Include="Interfaces\ViewModel\IDockableVM.cs" />
     <Compile Include="Interfaces\ViewModel\IDomeVM.cs" />
