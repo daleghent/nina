@@ -1004,6 +1004,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 Telescope.SendCommandBlind(command, raw);
             }
         }
+        public PierSide DestinationSideOfPier(Coordinates coordinates) {
+            if(Telescope?.Connected == true) {
+                return Telescope.DestinationSideOfPier(coordinates);
+            }
+            return PierSide.pierUnknown;
+        }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 

@@ -55,5 +55,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
 
         void StopSlew();
+
+        PierSide DestinationSideOfPier(Coordinates coordinates);
     }
 }
