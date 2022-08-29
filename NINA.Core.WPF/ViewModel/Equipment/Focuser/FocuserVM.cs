@@ -56,7 +56,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             this.applicationStatusMediator = applicationStatusMediator;
             DeviceChooserVM = focuserChooserVm;
 
-            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFocuser));
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFocuser), (object o) => DeviceChooserVM.SelectedDevice != null);
             CancelConnectCommand = new RelayCommand(CancelChooseFocuser);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FocuserInfo.Connected);

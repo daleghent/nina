@@ -61,7 +61,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 this.applicationStatusMediator.StatusUpdate(p);
             });
 
-            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope));
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope), (object o) => DeviceChooserVM.SelectedDevice != null);
             CancelConnectCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectTelescope));
             ParkCommand = new AsyncCommand<bool>(() => Task.Run(() => {

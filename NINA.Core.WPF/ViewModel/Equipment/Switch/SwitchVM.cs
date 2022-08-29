@@ -50,7 +50,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             this.switchMediator = switchMediator;
             this.switchMediator.RegisterHandler(this);
 
-            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect), (object o) => DeviceChooserVM.SelectedDevice != null);
             DisconnectCommand = new AsyncCommand<bool>(async () => { await Task.Run(Disconnect); return true; });
             CancelConnectCommand = new RelayCommand((object o) => CancelConnect());
             RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !SwitchInfo.Connected);

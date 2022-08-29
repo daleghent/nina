@@ -66,7 +66,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             Title = Loc.Instance["LblFlatDevice"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
 
-            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect), (object o) => DeviceChooserVM.SelectedDevice != null);
             CancelConnectCommand = new RelayCommand(CancelConnectFlatDevice);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFlatDeviceDialog));
             OpenCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => OpenCover(CancellationToken.None)));
