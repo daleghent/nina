@@ -18,6 +18,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Plugin Enablement: Added interfaces that allow plugins to provide device drivers
     - This change will make it necessary for plugins to be loaded completely before being able to connect to the devices.
 - Plugin Enablement: Plugins can now query for Telescope "DestinationSideOfPier"
+- Added an option in the filter wheel options to disable guiding during a filter change. This can be useful when having filter focus offsets and overshoot backlash compensation enabled to prevent losing guide stars.
 
 # Version 2.0 HF 1
 
