@@ -310,9 +310,9 @@ namespace NINA.Plugin {
             try {
                 var applicationVersion = new Version(CoreUtil.Version);
 
-                FileInfo fileInfo = new FileInfo(file);
-                if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
-                    fileInfo.DeleteAlternateDataStream("Zone.Identifier");
+                var pluginFileInfo = new FileInfo(file);
+                if (pluginFileInfo.AlternateDataStreamExists("Zone.Identifier")) {
+                    pluginFileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
 
                 var handle = Activator.CreateInstance(
@@ -329,7 +329,6 @@ namespace NINA.Plugin {
                 var loader = (PluginAssemblyLoader)handle.Unwrap();
                 var references = loader.GrabAssemblyReferences(file);
 
-                var pluginFileInfo = new FileInfo(file);
                 var pluginDllDirectory = new DirectoryInfo(Path.Combine(pluginFileInfo.Directory.FullName, "dll"));
                 if (pluginDllDirectory.Exists) {
                     // If there's a dll sub-directory, enumerate the references for any potentially matching dlls, and add them
