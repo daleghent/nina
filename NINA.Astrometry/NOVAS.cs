@@ -35,15 +35,21 @@ namespace NINA.Astrometry {
             return output;
         });
 
+        public static string EphemerisLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "External", "JPLEPH");
+
         static NOVAS() {
             DllLoader.LoadDll(Path.Combine("NOVAS", DLLNAME));
 
             short a = 0;
-            var ephemLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "External", "JPLEPH");
-            var code = EphemOpen(ephemLocation, ref JPL_EPHEM_START_DATE, ref JPL_EPHEM_END_DATE, ref a);
-            if (code > 0) {
-                Logger.Warning($"Failed to load ephemerides file due to error {code}");
+            if(File.Exists(EphemerisLocation)) {
+                var code = EphemOpen(EphemerisLocation, ref JPL_EPHEM_START_DATE, ref JPL_EPHEM_END_DATE, ref a);
+                if (code > 0) {
+                    Logger.Error($"Failed to load ephemerides file due to error {code}");
+                }
+            } else {
+                Logger.Error($"Ephemeris file not found at {EphemerisLocation}");
             }
+            
         }
 
         #region "Public Methods"

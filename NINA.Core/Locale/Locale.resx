@@ -6409,4 +6409,7 @@ Once confirmed choose which solver should be used.</value>
   <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
     <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
   </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+  </data>
 </root>

@@ -8034,6 +8034,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation..
+        /// </summary>
+        internal static string LblEphemerisNotFound {
+            get {
+                return ResourceManager.GetString("LblEphemerisNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Epoch.
         /// </summary>
         internal static string LblEpoch {
