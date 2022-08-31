@@ -6720,6 +6720,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable guiding during filter change.
+        /// </summary>
+        internal static string LblDisableGuidingOnFilterChange {
+            get {
+                return ResourceManager.GetString("LblDisableGuidingOnFilterChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards..
+        /// </summary>
+        internal static string LblDisableGuidingOnFilterChangeTooltip {
+            get {
+                return ResourceManager.GetString("LblDisableGuidingOnFilterChangeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable Simple Sequencer.
         /// </summary>
         internal static string LblDisableSimpleSequencer {

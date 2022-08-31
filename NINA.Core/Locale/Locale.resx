@@ -6403,4 +6403,10 @@ Once confirmed choose which solver should be used.</value>
   <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
     <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
   </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Disable guiding during filter change</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
+  </data>
 </root>

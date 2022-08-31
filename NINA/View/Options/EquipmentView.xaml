@@ -346,10 +346,31 @@
                 Header="{ns:Loc LblFilterWheel}">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
+
+                    <UniformGrid Columns="2">
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDisableGuidingOnFilterChange}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDisableGuidingOnFilterChangeTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DisableGuidingOnFilterChange}" />
+                        </UniformGrid>
+                    </UniformGrid>
                     <DataGrid
+                        Grid.Row="1"
+                        Margin="0,10,0,0"
                         AutoGenerateColumns="False"
                         CanUserAddRows="False"
                         HeadersVisibility="Column"
@@ -398,7 +419,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="1" DataContext="{Binding DataContext, ElementName=UC}">
+                    <Grid Grid.Row="2" DataContext="{Binding DataContext, ElementName=UC}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -490,7 +511,10 @@
                                 VerticalContentAlignment="Center"
                                 Unit="mm">
                                 <ninactrl:UnitTextBox.Text>
-                                    <Binding Path="FocalLength" UpdateSourceTrigger="LostFocus" Converter="{StaticResource NaNToDoubleDashConverter}">
+                                    <Binding
+                                        Converter="{StaticResource NaNToDoubleDashConverter}"
+                                        Path="FocalLength"
+                                        UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterThanZeroRule />
                                         </Binding.ValidationRules>
@@ -582,8 +606,8 @@
                                     Text="{Binding OpenWeatherMapAPIKey}" />
                                 <TextBlock
                                     Grid.Column="2"
-                                    Margin="2,0,0,0"
                                     Width="Auto"
+                                    Margin="2,0,0,0"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
                                     FontWeight="Bold"
@@ -614,8 +638,8 @@
                                     Text="{Binding TheWeatherCompanyAPIKey}" />
                                 <TextBlock
                                     Grid.Column="2"
-                                    Margin="2,0,0,0"
                                     Width="Auto"
+                                    Margin="2,0,0,0"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
                                     FontWeight="Bold"
@@ -645,8 +669,8 @@
                                     Text="{Binding WeatherUndergroundAPIKey}" />
                                 <TextBlock
                                     Grid.Column="2"
-                                    Margin="2,0,0,0"
                                     Width="Auto"
+                                    Margin="2,0,0,0"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
                                     FontWeight="Bold"
@@ -676,8 +700,8 @@
                                     Text="{Binding WeatherUndergroundStation}" />
                                 <TextBlock
                                     Grid.Column="2"
-                                    Margin="2,0,0,0"
                                     Width="Auto"
+                                    Margin="2,0,0,0"
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
                                     FontWeight="Bold"
