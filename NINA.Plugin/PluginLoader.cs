@@ -254,10 +254,12 @@ namespace NINA.Plugin {
                                 }
                             }
 
-                            for(int i = 0; i < files.Count; i++) {
+                            CreateChildDomain();
+                            for (int i = 0; i < files.Count; i++) {
                                 var file = files[i];
                                 AsyncContext.Run(() => LoadPlugin(file, (i + 1) / (double)files.Count));
                             }
+                            UnloadChildDomain();
 
                             initialized = true;
                             Debug.Print($"Time to load all plugins {sw.Elapsed}");
@@ -280,6 +282,29 @@ namespace NINA.Plugin {
             }
         }
 
+
+        object domainlock = new object();
+        AppDomain childDomain;
+        private void CreateChildDomain() {
+            if(childDomain == null) { 
+                lock(domainlock) {
+                    if (childDomain == null) {
+                        var settings = new AppDomainSetup {
+                            ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
+                        };
+                        childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
+                    }
+                }
+            }
+        }
+
+        private void UnloadChildDomain() {
+            lock(domainlock) { 
+                AppDomain.Unload(childDomain);
+                childDomain = null;
+            }
+        }
+
         private async Task LoadPlugin(string file, double progress) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
@@ -289,11 +314,6 @@ namespace NINA.Plugin {
                 if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
                     fileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
-
-                var settings = new AppDomainSetup {
-                    ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
-                };
-                var childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
 
                 var handle = Activator.CreateInstance(
                     childDomain,
@@ -328,7 +348,6 @@ namespace NINA.Plugin {
                     }
                 }
 
-                AppDomain.Unload(childDomain);
 
                 if (references.FirstOrDefault(x => x.Contains("NINA.Plugin")) != null) {
                     try {

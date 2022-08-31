@@ -114,8 +114,8 @@
     <Compile Include="ManifestDefinition\PluginManifest.cs" />
     <Compile Include="PluginCompatibility.cs" />
     <Compile Include="PluginInstaller.cs" />
-    <Compile Include="PluginLoader.cs" />
     <Compile Include="PluginFetcher.cs" />
+    <Compile Include="PluginLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
