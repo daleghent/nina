@@ -147,14 +147,8 @@
                             PHD2="{StaticResource PHD2}"
                             SkyGuardGuider="{StaticResource SkyGuardGuider}" />
                     </Grid.Resources>
-                    <ContentControl
-                        VerticalAlignment="Top"
-                        Content="{Binding}"
-                        ContentTemplateSelector="{StaticResource ContentSelector}"
-                        DataContext="{Binding Guider}"
-                        IsEnabled="{Binding GuiderInfo.Connected}" />
 
-                    <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <StackPanel Orientation="Vertical">
                         <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                             <UniformGrid Columns="2">
                                 <UniformGrid
@@ -198,6 +192,13 @@
                             </UniformGrid>
                         </Border>
                     </StackPanel>
+                    <ContentControl
+                        Grid.Row="1"
+                        VerticalAlignment="Top"
+                        Content="{Binding}"
+                        ContentTemplateSelector="{StaticResource ContentSelector}"
+                        DataContext="{Binding Guider}"
+                        IsEnabled="{Binding GuiderInfo.Connected}" />
                 </Grid>
             </ScrollViewer>
         </GroupBox>

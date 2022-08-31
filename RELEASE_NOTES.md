@@ -11,10 +11,13 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Improvements
 - Guide Chart Colors can now be customized in the guider tab
+- Plugin load times have been improved
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
 - Plugin Enablement: Added interfaces that allow plugins to provide device drivers
+    - This change will make it necessary for plugins to be loaded completely before being able to connect to the devices.
+- Plugin Enablement: Plugins can now query for Telescope "DestinationSideOfPier"
 
 # Version 2.0 HF 1
 
