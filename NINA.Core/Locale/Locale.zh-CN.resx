@@ -2295,7 +2295,7 @@
     <value>位置</value>
   </data>
   <data name="LblPanelOverlap" xml:space="preserve">
-    <value>Panel overlap</value>
+    <value>重叠大小</value>
   </data>
   <data name="LblPanel" xml:space="preserve">
     <value>面板</value>
@@ -6296,82 +6296,82 @@
     <value>MGEN Setup</value>
   </data>
   <data name="LblSingleImagingLayout" xml:space="preserve">
-    <value>Single imaging tab layout</value>
+    <value>统一 UI 布局</value>
   </data>
   <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
-    <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
+    <value>若启用，所有的配置文件将使用同一种 UI 布局。否则，不同配置文件的 UI 布局相互独立</value>
   </data>
   <data name="LblPlatesolve3" xml:space="preserve">
     <value>Platesolve3</value>
   </data>
   <data name="LblPlatesolve3Directory" xml:space="preserve">
-    <value>Platesolve3 Location</value>
+    <value>PlateSolve3 路径</value>
   </data>
   <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
-    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+    <value>没有可用的坐标。PlateSolve3 需要坐标来解析！</value>
   </data>
   <data name="LblPlatesolve3NotFound" xml:space="preserve">
-    <value>Platesolve3 exe not found</value>
+    <value>未找到 PlateSolve3</value>
   </data>
   <data name="LblBackupDockLayout" xml:space="preserve">
-    <value>Backup Layout</value>
+    <value>备份 UI 布局</value>
   </data>
   <data name="LblBackupDockLayoutFailed" xml:space="preserve">
-    <value>Backup layout failed</value>
+    <value>备份 UI 布局失败</value>
   </data>
   <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
-    <value>Imaging tab layout backed up</value>
+    <value>UI 布局已备份</value>
   </data>
   <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
-    <value>Backup the imaging tab layout to a file, so it can be restored at a later point</value>
+    <value>将 UI 布局备份到文件中，以便后续使用</value>
   </data>
   <data name="LblDockLayoutReset" xml:space="preserve">
-    <value>Imaging tab layout reset</value>
+    <value>重置 UI 布局</value>
   </data>
   <data name="LblDockLayoutRestored" xml:space="preserve">
-    <value>Imaging tab layout restored</value>
+    <value>UI 布局已加载</value>
   </data>
   <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
-    <value>Restore Layout</value>
+    <value>加载 UI 布局</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
-    <value>Restore layout failed</value>
+    <value>加载 UI 布局失败</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
-    <value>Restore imaging tab layout from a backup</value>
+    <value>从文件中加载 UI 布局</value>
   </data>
   <data name="LblTotal" xml:space="preserve">
     <value>Total</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
-    <value>Exposure Info</value>
+    <value>曝光信息</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
-    <value>UPDATE TARGET</value>
+    <value>更新目标</value>
   </data>
   <data name="LblNoFilter" xml:space="preserve">
-    <value>No Filter</value>
+    <value>没有滤镜</value>
   </data>
   <data name="LblAtikExposureSpeed" xml:space="preserve">
     <value>Exposure speed</value>
   </data>
   <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Gain preset</value>
+    <value>增益预设</value>
   </data>
   <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Heater power level</value>
+    <value>加热功率</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Dither Settling</value>
   </data>
   <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+    <value>自动对焦失败。已达到最大测量点数。</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+    <value>自动对焦失败。电调位置已到0。</value>
   </data>
   <data name="LblRotateImageTooltip" xml:space="preserve">
-    <value>Rotates the image by 90° clockwise. Following images will then also be rotated by the same amount. This is for displaying purposes only and won't affect the image data.</value>
+    <value>将图像顺时针旋转90°。后续图像也将同样旋转。 只改变图像显示，不影响保存的数据。</value>
   </data>
   <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
     <value>Image needs to be solved for framing.
@@ -6379,10 +6379,10 @@ Please confirm the meta data to use for solving.
 Once confirmed choose which solver should be used.</value>
   </data>
   <data name="LblPlateSolveRequired" xml:space="preserve">
-    <value>Platesolve required</value>
+    <value>需要解析</value>
   </data>
   <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
-    <value>When blind solver is selected, the coordinates will be ignored and the blind solver that is set up in the options will be used.</value>
+    <value>若选择盲解析，将忽略图像坐标并使用设定的盲解析工具。</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
