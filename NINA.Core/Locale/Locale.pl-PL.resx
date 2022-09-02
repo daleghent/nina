@@ -6351,15 +6351,6 @@ Powód: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Brak filtra</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Prędkość ekspozycji</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Ustawienia wzmocnienia</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Poziom mocy grzałki</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Ustawienia Ditheringu</value>
   </data>
@@ -6385,5 +6376,29 @@ Po potwierdzeniu wybierz, która metoda powinna zostać użyta.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>Po wybraniu Plate Solving, współrzędne będą wykorzystywane jako punkty odniesienia i użyte będą do metody, która jest podana w ustawieniach.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Kolor wykresu Dec guidingu</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Kolor wykresu RA guidingu</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Pokaż korekty wykresu guidingu</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Obróć obraz po meridianie</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>Gdy ta opcja jest włączona, obraz na karcie obrazowania zostanie obrócony o 180° po meridianie. Obrót wyłącznie wizualny i nie będzie miał wpływu na dane obrazu.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Wyłącz prowadzenie podczas zmiany filtra</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>Gdy ta opcja jest włączona, za każdym razem, gdy filtr będzie zmieniany, prowadzenie zostanie wyłączone, a następnie ponownie włączone.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>Plik Efemeryd do obliczenia ścieżek nie został znaleziony. Proszę uruchomić naprawę w instalacji N.I.N.A.</value>
   </data>
 </root>

@@ -6351,15 +6351,6 @@ Raó: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Sense Filtre</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Velocitat d'exposició</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Guany preestablert</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Nivell de potència del calefactor</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Estabilització del Dither</value>
   </data>
@@ -6385,5 +6376,29 @@ Un cop confirmat, trieu quin solucionador s'ha d'utilitzar.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>Quan se selecciona el solucionador de plaques, les coordenades s'utilitzaran com a coordenades de referència i s'utilitzaran per al solucionador de plaques configurat a les opcions.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Color de la Dec en el Gràfic de Guiatge</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Color de AR en el Gràfic de Guiatge</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Mostra les correccions en el Gràfic del guiatge</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Gira la imatge després del canvi de meridià</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>Quan està activat, girarà la imatge 180° a la pestanya d'imatge després del canvi de meridià. Això només té finalitats de visualització i no afectarà les dades de la imatge.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Desactiva el guiatge durant el canvi de filtre</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>Quan aquesta opció està habilitada, cada vegada que es canvia un filtre, el guiatge es desactivarà mentrestant i es tornarà a habilitar després.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>No s'ha trobat el fitxer d'efemèrides per calcular trajectòries celestes. Si us plau, executeu una reparació amb la instal·lació de N.I.N.A.</value>
   </data>
 </root>

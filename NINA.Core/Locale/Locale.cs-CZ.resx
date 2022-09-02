@@ -6356,15 +6356,6 @@ Důvod: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Žádný Filtr</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Rychlost expozice</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Předvolba zisku</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Úroveň výkonu topení</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Nastavení Ditheringu</value>
   </data>
@@ -6390,5 +6381,29 @@ Po potvrzení vyberte, která astrometrie se má použít.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>Pokud je vybrána astrometrie, souřadnice se použijí jako referenční souřadnice a použijí se pro astrometrii, která je nastavena v možnostech.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Pointační Barva Grafu Dec</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Pointační Barva Grafu Ra</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Zobrazit Opravy v Grafu Pointace</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Otočit snímek po překlopení</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>Pokud je tato funkce povolena, otočí se snímek na kartě snímání po překlopení o 180°. Toto nastavení slouží pouze pro účely zobrazení a neovlivní obrazová data.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Vypnout pointaci při výměně filtru</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>Pokud je tato funkce povolena, při každé změně filtru bude pointace po dobu změny filtru zakázána a poté opět povolena.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>Soubor Ephemeris pro výpočet nebeských trajektorií nebyl nalezen. Spusťte opravu na vaší instalaci N.I.N.A.</value>
   </data>
 </root>
