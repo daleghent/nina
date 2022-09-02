@@ -81,6 +81,14 @@ namespace NINA.Equipment.Interfaces {
         bool CanSetDeclinationRate { get; }
         bool CanSetRightAscensionRate { get; }
 
+        // new properties for skyGuardTelescope
+        ASCOM.DeviceInterface.AlignmentModes AlignmentMode { get; }
+        bool CanPulseGuide { get; }
+        bool IsPulseGuiding { get; }
+        bool CanSetPierSide { get; }
+        bool CanSlew { get; }
+        System.DateTime UTCDate { get; }
+
         IList<(double, double)> GetAxisRates(TelescopeAxes axis);
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token);

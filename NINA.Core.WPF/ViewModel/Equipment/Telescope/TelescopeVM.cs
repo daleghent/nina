@@ -478,6 +478,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 PrimaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Primary),
                                 SecondaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Secondary),
                                 SupportedActions = Telescope.SupportedActions,
+                                AlignmentMode = Telescope.AlignmentMode,
+                                CanPulseGuide = Telescope.CanPulseGuide,
+                                IsPulseGuiding = Telescope.IsPulseGuiding,
+                                CanSetPierSide = Telescope.CanSetPierSide,
+                                CanSlew = Telescope.CanSlew,
+                                UTCDate = Telescope.UTCDate,
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
@@ -637,6 +643,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.GuideRateDeclinationArcsecPerSec), out o);
             TelescopeInfo.GuideRateDeclinationArcsecPerSec = (double)(o ?? double.NaN);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.AlignmentMode), out o);
+            TelescopeInfo.AlignmentMode = (ASCOM.DeviceInterface.AlignmentModes)(o ?? null);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanPulseGuide), out o);
+            TelescopeInfo.CanPulseGuide = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.IsPulseGuiding), out o);
+            TelescopeInfo.IsPulseGuiding = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSetPierSide), out o);
+            TelescopeInfo.CanSetPierSide = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSlew), out o);
+            TelescopeInfo.CanSlew = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.UTCDate), out o);
+            TelescopeInfo.UTCDate = (DateTime)(o ?? null);
+
             BroadcastTelescopeInfo();
         }
 
@@ -675,6 +699,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.Slewing), _telescope?.Slewing ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.GuideRateRightAscensionArcsecPerSec), _telescope?.GuideRateRightAscensionArcsecPerSec ?? double.NaN);
             telescopeValues.Add(nameof(TelescopeInfo.GuideRateDeclinationArcsecPerSec), _telescope?.GuideRateDeclinationArcsecPerSec ?? double.NaN);
+            telescopeValues.Add(nameof(TelescopeInfo.AlignmentMode), _telescope?.AlignmentMode ?? null);
+            telescopeValues.Add(nameof(TelescopeInfo.CanPulseGuide), _telescope?.CanSetPierSide ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.IsPulseGuiding), _telescope?.CanSlew ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.CanSetPierSide), _telescope?.CanSetPierSide ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.CanSlew), _telescope?.CanSlew ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.UTCDate), _telescope?.UTCDate ?? null);
 
             return telescopeValues;
         }
