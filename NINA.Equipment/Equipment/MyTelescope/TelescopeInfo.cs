@@ -371,11 +371,9 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        // New Properties for SkyGuard Telescope
+        private AlignmentMode alignmentMode;
 
-        private ASCOM.DeviceInterface.AlignmentModes alignmentMode;
-
-        public ASCOM.DeviceInterface.AlignmentModes AlignmentMode {
+        public AlignmentMode AlignmentMode {
             get => alignmentMode;
             set {
                 alignmentMode = value;

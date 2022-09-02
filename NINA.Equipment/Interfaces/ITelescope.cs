@@ -80,9 +80,7 @@ namespace NINA.Equipment.Interfaces {
         bool CanMoveSecondaryAxis { get; }
         bool CanSetDeclinationRate { get; }
         bool CanSetRightAscensionRate { get; }
-
-        // new properties for skyGuardTelescope
-        ASCOM.DeviceInterface.AlignmentModes AlignmentMode { get; }
+        AlignmentMode AlignmentMode { get; }
         bool CanPulseGuide { get; }
         bool IsPulseGuiding { get; }
         bool CanSetPierSide { get; }

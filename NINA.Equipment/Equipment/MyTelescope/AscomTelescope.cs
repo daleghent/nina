@@ -48,9 +48,9 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             _hasUnknownEpoch = false;
         }
 
-        public AlignmentModes AlignmentMode {
+        public Core.Enum.AlignmentMode AlignmentMode {
             get {
-                return GetProperty(nameof(Telescope.AlignmentMode), AlignmentModes.algGermanPolar);
+                return (Core.Enum.AlignmentMode)GetProperty(nameof(Telescope.AlignmentMode), AlignmentModes.algGermanPolar);
             }
         }
 

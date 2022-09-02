@@ -86,6 +86,7 @@
     <Compile Include="Database\Schema\DsoDetail.cs" />
     <Compile Include="Database\Schema\EarthRotationParameters.cs" />
     <Compile Include="Database\Schema\VisualDescription.cs" />
+    <Compile Include="Enum\AlignmentMode.cs" />
     <Compile Include="Enum\CameraStates.cs" />
     <Compile Include="Enum\CameraType.cs" />
     <Compile Include="Enum\SendCommandTypeEnum.cs" />

@@ -644,7 +644,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             TelescopeInfo.GuideRateDeclinationArcsecPerSec = (double)(o ?? double.NaN);
 
             telescopeValues.TryGetValue(nameof(TelescopeInfo.AlignmentMode), out o);
-            TelescopeInfo.AlignmentMode = (ASCOM.DeviceInterface.AlignmentModes)(o ?? null);
+            TelescopeInfo.AlignmentMode = (AlignmentMode)(o ?? null);
 
             telescopeValues.TryGetValue(nameof(TelescopeInfo.CanPulseGuide), out o);
             TelescopeInfo.CanPulseGuide = (bool)(o ?? false);
