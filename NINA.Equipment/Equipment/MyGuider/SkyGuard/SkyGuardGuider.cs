@@ -961,10 +961,16 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                         timeLaps--;
 
+                        Logger.Info($"Calculation of errors : {(errorX * errorX) + (errorY * errorY)} <<<<< must be smaller than : {maxValueDithering}");
+
                         if (Math.Sqrt((errorX * errorX) + (errorY * errorY)) > maxValueDithering) {
                             timeLaps = profileService.ActiveProfile.GuiderSettings.SkyGuardTimeLapsDithering;
-                            Logger.Warning("An error has occurred, the timeout is reset");
+                            var difference = (errorX * errorX) + (errorY * errorY) - maxValueDithering;
+
+                            Logger.Warning($"the error exceeds the threshold of: {difference}! the timeout is reset");
                         }
+
+                        Logger.Info($"Timeout in {timeLaps} sec");
 
                     } while (timeLaps > 0);
                 }
