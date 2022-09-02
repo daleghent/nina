@@ -40,6 +40,9 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct);
 
-        Task<bool> StopShifting(CancellationToken ct);
+        Task<bool> StopShifting(CancellationToken ct);         
+
+        event Func<object, EventArgs, Task> AfterDither;
+        Task RaiseAfterDither(EventArgs e);
     }
 }

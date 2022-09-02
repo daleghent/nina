@@ -58,5 +58,28 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void StopSlew();
 
         PierSide DestinationSideOfPier(Coordinates coordinates);
+
+        event Func<object, BeforeMeridianFlipEventArgs, Task> BeforeMeridianFlip;
+        Task RaiseBeforeMeridianFlip(BeforeMeridianFlipEventArgs e);
+
+        event Func<object, AfterMeridianFlipEventArgs, Task> AfterMeridianFlip;
+        Task RaiseAfterMeridianFlip(AfterMeridianFlipEventArgs e);
+    }
+
+    public class BeforeMeridianFlipEventArgs : EventArgs {
+        public BeforeMeridianFlipEventArgs(Coordinates target) {
+            this.Target = target;
+        }
+        public Coordinates Target { get; }
+    }
+
+    public class AfterMeridianFlipEventArgs : EventArgs {
+        public AfterMeridianFlipEventArgs(bool success, Coordinates target) {
+            this.Success = success;
+            this.Target = target;
+        }
+
+        public bool Success { get; }
+        public Coordinates Target { get; }
     }
 }

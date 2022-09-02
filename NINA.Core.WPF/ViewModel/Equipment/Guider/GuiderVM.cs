@@ -309,6 +309,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = Loc.Instance["LblDither"], Source = Title });
                     GuideStepsHistory.AddDitherIndicator();
                     await Guider.Dither(prog, token);
+                    await guiderMediator.RaiseAfterDither(new EventArgs());
                 } finally {
                     Guider.GuideEvent += Guider_GuideEvent;
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = string.Empty, Source = Title });

@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using NINA.Core.Model;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Astrometry;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.Mediator {
 
@@ -59,6 +60,12 @@ namespace NINA.WPF.Base.Mediator {
 
         public Task<bool> StopShifting(CancellationToken ct) {
             return handler.StopShifting(ct);
+        }
+
+        public event Func<object, EventArgs, Task> AfterDither;
+
+        public async Task RaiseAfterDither(EventArgs e) {
+            await (AfterDither?.InvokeAsync(this, e) ?? Task.CompletedTask);
         }
     }
 }

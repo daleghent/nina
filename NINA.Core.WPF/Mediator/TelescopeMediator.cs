@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using NINA.Core.Model;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.Mediator {
 
@@ -93,6 +94,18 @@ namespace NINA.WPF.Base.Mediator {
 
         public PierSide DestinationSideOfPier(Coordinates coordinates) {
             return handler.DestinationSideOfPier(coordinates);
+        }
+
+        public event Func<object, BeforeMeridianFlipEventArgs, Task> BeforeMeridianFlip;
+
+        public async Task RaiseBeforeMeridianFlip(BeforeMeridianFlipEventArgs e) {
+            await (BeforeMeridianFlip?.InvokeAsync(this, e) ?? Task.CompletedTask);
+        }
+
+        public event Func<object, AfterMeridianFlipEventArgs, Task> AfterMeridianFlip;
+
+        public async Task RaiseAfterMeridianFlip(AfterMeridianFlipEventArgs e) {
+            await (AfterMeridianFlip?.InvokeAsync(this, e) ?? Task.CompletedTask);
         }
     }
 }
