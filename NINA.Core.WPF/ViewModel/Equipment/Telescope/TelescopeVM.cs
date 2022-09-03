@@ -644,7 +644,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             TelescopeInfo.GuideRateDeclinationArcsecPerSec = (double)(o ?? double.NaN);
 
             telescopeValues.TryGetValue(nameof(TelescopeInfo.AlignmentMode), out o);
-            TelescopeInfo.AlignmentMode = (AlignmentMode)(o ?? null);
+            TelescopeInfo.AlignmentMode = (AlignmentMode)(o ?? AlignmentMode.GermanPolar);
 
             telescopeValues.TryGetValue(nameof(TelescopeInfo.CanPulseGuide), out o);
             TelescopeInfo.CanPulseGuide = (bool)(o ?? false);
@@ -659,7 +659,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             TelescopeInfo.CanSlew = (bool)(o ?? false);
 
             telescopeValues.TryGetValue(nameof(TelescopeInfo.UTCDate), out o);
-            TelescopeInfo.UTCDate = (DateTime)(o ?? null);
+            TelescopeInfo.UTCDate = (DateTime)(o ?? DateTime.MinValue);
 
             BroadcastTelescopeInfo();
         }
