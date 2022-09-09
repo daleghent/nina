@@ -369,6 +369,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     await Task.Delay(TimeSpan.FromSeconds(5));
                 }
 
+                // Wait for at least one exposure to finish
+                var exposureDurationResponse = await SendMessage<GetExposureResponse>(new Phd2GetExposure());
+                var durationMs = exposureDurationResponse.result;
+                await Task.Delay(TimeSpan.FromMilliseconds(durationMs + 1000));
+
                 var findStarMsg = new Phd2FindStar() {
                     Parameters = new Phd2FindStarParameter() {
                         Roi = await GetROI()
