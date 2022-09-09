@@ -6359,27 +6359,27 @@ Reason: {1}</value>
     <value>プレートソルバーを選択した場合、この座標が参照座標となり、オプションで設定されたプレートソルバーで使われます。</value>
   </data>
   <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
-    <value>Guide Graph Dec Color</value>
+    <value>ガイドグラフの赤緯の色</value>
   </data>
   <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
-    <value>Guide Graph RA Color</value>
+    <value>ガイドグラフの赤経の色</value>
   </data>
   <data name="LblGuideGraphShowCorrections" xml:space="preserve">
-    <value>Guide Graph Show Corrections</value>
+    <value>ガイドグラフの補正の表示</value>
   </data>
   <data name="LblRotateImageAfterFlip" xml:space="preserve">
-    <value>Rotate image after flip</value>
+    <value>反転後に画像を回転</value>
   </data>
   <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
-    <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
+    <value>有効にすると、反転後に画像タブの画像を180°回転させます。 これは表示のためだけで、画像データは影響を受けません。</value>
   </data>
   <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
-    <value>Disable guiding during filter change</value>
+    <value>フィルタ交換中のガイドを無効</value>
   </data>
   <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
-    <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
+    <value>このオプションが有効になっていると、フィルター交換のときは常にガイドは無効になります。フィルターが交換されると、再び有効になります。</value>
   </data>
   <data name="LblEphemerisNotFound" xml:space="preserve">
-    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+    <value>天体の軌道を計算する天体暦ファイルが見つかりません。N.I.N.A.のインストールで修復を実行してください。</value>
   </data>
 </root>

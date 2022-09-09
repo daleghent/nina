@@ -6379,27 +6379,27 @@ Una vez confirmados elija qué programa de astrometría usará.</value>
     <value>Cuando se seleccione el programa de astrometría, las coordenadas se usarán como coordenadas de referencia y se usarán por el resolutor astrométrico configurado en las opciones.</value>
   </data>
   <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
-    <value>Guide Graph Dec Color</value>
+    <value>Color del gráfico de guía Dec</value>
   </data>
   <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
-    <value>Guide Graph RA Color</value>
+    <value>Color del gráfico de guía RA</value>
   </data>
   <data name="LblGuideGraphShowCorrections" xml:space="preserve">
-    <value>Guide Graph Show Corrections</value>
+    <value>Mostrar correcciones en el gráfico</value>
   </data>
   <data name="LblRotateImageAfterFlip" xml:space="preserve">
-    <value>Rotate image after flip</value>
+    <value>Rotar imagen después del flip (volteo)</value>
   </data>
   <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
-    <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
+    <value>Cuando está activado, se girará la imagen 180° en la pestaña de imagen después del flip. Solo para ver el efedto y no afectará a los datos de la imagen.</value>
   </data>
   <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
-    <value>Disable guiding during filter change</value>
+    <value>Desactivar guiado durante el cambio de filtro</value>
   </data>
   <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
-    <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
+    <value>Cuando se activa esta opción, cada vez que se cambie un filtro, se desactivaará el guiado volviéndose a activar tras el cambio.</value>
   </data>
   <data name="LblEphemerisNotFound" xml:space="preserve">
-    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+    <value>No se ha encontrado el archivo de efemérides para calcular trayectorias celestes. Ejecute la reparación en su instalación de N.I.N.A.</value>
   </data>
 </root>
