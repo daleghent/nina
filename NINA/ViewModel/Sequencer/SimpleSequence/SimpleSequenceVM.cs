@@ -266,11 +266,11 @@ namespace NINA.ViewModel {
                 Logger.Info("Simple Sequence started");
 
                 //Reset start and end of sequence options in case they were both already done
-                if (Sequencer.MainContainer.Items[0].Status == SequenceEntityStatus.FINISHED) {
+                if (Sequencer.MainContainer.Items[0].Status != SequenceEntityStatus.CREATED) {
                     Sequencer.MainContainer.Items[0].ResetProgress();
                 }
 
-                if (Sequencer.MainContainer.Items[2].Status == SequenceEntityStatus.FINISHED) {                    
+                if (Sequencer.MainContainer.Items[2].Status != SequenceEntityStatus.CREATED) {                    
                     Sequencer.MainContainer.Items[2].ResetProgress();
                 }
 
