@@ -782,7 +782,7 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="RASeconds" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="RASeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -839,7 +839,7 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="InputCoordinates.DecSeconds" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="InputCoordinates.DecSeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>

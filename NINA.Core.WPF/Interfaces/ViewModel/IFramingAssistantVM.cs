@@ -39,7 +39,7 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ICommand CoordsFromPlanetariumCommand { get; set; }
         int DecDegrees { get; set; }
         int DecMinutes { get; set; }
-        int DecSeconds { get; set; }
+        double DecSeconds { get; set; }
         IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
         int DownloadProgressValue { get; set; }
         ICommand DragMoveCommand { get; }
@@ -64,7 +64,7 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         string SelectedOverlapUnit { get; set; }
         int RAHours { get; set; }
         int RAMinutes { get; set; }
-        int RASeconds { get; set; }
+        double RASeconds { get; set; }
         FramingRectangle Rectangle { get; set; }
         bool RectangleCalculated { get; }
         ICommand RefreshSkyMapAnnotationCommand { get; }

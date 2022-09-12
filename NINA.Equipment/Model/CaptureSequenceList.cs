@@ -251,9 +251,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(Coordinates))]
         public Coordinates Coordinates {
-            get {
-                return _coordinates;
-            }
+            get => _coordinates;
             set {
                 _coordinates = value;
                 RaiseCoordinatesChanged();
@@ -262,9 +260,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(RAHours))]
         public int RAHours {
-            get {
-                return (int)Math.Truncate(_coordinates.RA);
-            }
+            get => (int)Math.Truncate(Math.Abs(_coordinates.RA));
             set {
                 if (value >= 0) {
                     _coordinates.RA = _coordinates.RA - RAHours + value;
@@ -275,36 +271,21 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(RAMinutes))]
         public int RAMinutes {
-            get {
-                var minutes = (Math.Abs(_coordinates.RA * 60.0d) % 60);
-
-                var seconds = (int)Math.Round((Math.Abs(_coordinates.RA * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    minutes += 1;
-                }
-
-                return (int)Math.Floor(minutes);
-            }
+            get => (int)Math.Truncate(Math.Abs(_coordinates.RA) * 60 % 60);
             set {
                 if (value >= 0) {
-                    _coordinates.RA = _coordinates.RA - RAMinutes / 60.0d + value / 60.0d;
+                    _coordinates.RA = _coordinates.RA - (RAMinutes / 60.0d) + (value / 60.0d);
                     RaiseCoordinatesChanged();
                 }
             }
         }
 
         [XmlAttribute(nameof(RASeconds))]
-        public int RASeconds {
-            get {
-                var seconds = (int)Math.Round((Math.Abs(_coordinates.RA * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    seconds = 0;
-                }
-                return seconds;
-            }
+        public double RASeconds {
+            get => Math.Round(Math.Abs(_coordinates.RA) * 3600 % 60, 5);
             set {
-                if (value >= 0) {
-                    _coordinates.RA = _coordinates.RA - RASeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);
+                if (value > 0d) {
+                    _coordinates.RA = _coordinates.RA - (RASeconds / 3600d) + (value / 3600d);
                     RaiseCoordinatesChanged();
                 }
             }
@@ -323,14 +304,12 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(DecDegrees))]
         public int DecDegrees {
-            get {
-                return (int)Math.Truncate(_coordinates.Dec);
-            }
+            get => (int)Math.Truncate(_coordinates.Dec);
             set {
                 if (NegativeDec) {
-                    _coordinates.Dec = value - DecMinutes / 60.0d - DecSeconds / (60.0d * 60.0d);
+                    _coordinates.Dec = value - (DecMinutes / 60.0d) - (DecSeconds / 3600d);
                 } else {
-                    _coordinates.Dec = value + DecMinutes / 60.0d + DecSeconds / (60.0d * 60.0d);
+                    _coordinates.Dec = value + (DecMinutes / 60.0d) + (DecSeconds / 3600d);
                 }
                 RaiseCoordinatesChanged();
             }
@@ -338,21 +317,12 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(DecMinutes))]
         public int DecMinutes {
-            get {
-                var minutes = (Math.Abs(_coordinates.Dec * 60.0d) % 60);
-
-                var seconds = (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    minutes += 1;
-                }
-
-                return (int)Math.Floor(minutes);
-            }
+            get => (int)Math.Truncate(Math.Abs(_coordinates.Dec) * 60 % 60);
             set {
                 if (NegativeDec) {
-                    _coordinates.Dec = _coordinates.Dec + DecMinutes / 60.0d - value / 60.0d;
+                    _coordinates.Dec = _coordinates.Dec + (DecMinutes / 60.0d) - (value / 60.0d);
                 } else {
-                    _coordinates.Dec = _coordinates.Dec - DecMinutes / 60.0d + value / 60.0d;
+                    _coordinates.Dec = _coordinates.Dec - (DecMinutes / 60.0d) + (value / 60.0d);
                 }
 
                 RaiseCoordinatesChanged();
@@ -360,19 +330,13 @@ namespace NINA.Equipment.Model {
         }
 
         [XmlAttribute(nameof(DecSeconds))]
-        public int DecSeconds {
-            get {
-                var seconds = (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    seconds = 0;
-                }
-                return seconds;
-            }
+        public double DecSeconds {
+            get => Math.Round(Math.Abs(_coordinates.Dec) * 3600d % 60, 5);
             set {
                 if (NegativeDec) {
-                    _coordinates.Dec = _coordinates.Dec + DecSeconds / (60.0d * 60.0d) - value / (60.0d * 60.0d);
+                    _coordinates.Dec = _coordinates.Dec + (DecSeconds / 3600d) - (value / 3600d);
                 } else {
-                    _coordinates.Dec = _coordinates.Dec - DecSeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);
+                    _coordinates.Dec = _coordinates.Dec - (DecSeconds / 3600d) + (value / 3600d);
                 }
 
                 RaiseCoordinatesChanged();

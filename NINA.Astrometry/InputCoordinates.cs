@@ -57,9 +57,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int RAHours {
-            get {
-                return (int)Math.Truncate(coordinates.RA);
-            }
+            get => (int)Math.Truncate(Math.Abs(coordinates.RA));
             set {
                 if (value >= 0) {
                     coordinates.RA = coordinates.RA - RAHours + value;
@@ -70,36 +68,21 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int RAMinutes {
-            get {                
-                var minutes = (Math.Abs(coordinates.RA * 60.0d) % 60);
-
-                var seconds = (int)Math.Round((Math.Abs(coordinates.RA * 60.0d * 60.0d) % 60));
-                if(seconds > 59) {
-                    minutes += 1;
-                }
-
-                return (int)Math.Floor(minutes);
-            }
+            get => (int)Math.Truncate(Math.Abs(coordinates.RA) * 60 % 60);
             set {
                 if (value >= 0) {
-                    coordinates.RA = coordinates.RA - RAMinutes / 60.0d + value / 60.0d;
+                    coordinates.RA = coordinates.RA - (RAMinutes / 60.0d) + (value / 60.0d);
                     RaiseCoordinatesChanged();
                 }
             }
         }        
 
         [JsonProperty]
-        public int RASeconds {
-            get {
-                var seconds = (int)Math.Round((Math.Abs(coordinates.RA * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    seconds = 0;
-                }
-                return seconds;
-            }
+        public double RASeconds {
+            get => Math.Round(Math.Abs(coordinates.RA) * 3600 % 60, 5);
             set {
-                if (value >= 0) {
-                    coordinates.RA = coordinates.RA - RASeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);
+                if (value > 0d) {
+                    coordinates.RA = coordinates.RA - (RASeconds / 3600d) + (value / 3600d);
                     RaiseCoordinatesChanged();
                 }
             }
@@ -118,14 +101,12 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int DecDegrees {
-            get {
-                return (int)Math.Truncate(coordinates.Dec);
-            }
+            get => (int)Math.Truncate(coordinates.Dec);
             set {
                 if (NegativeDec) {
-                    coordinates.Dec = value - DecMinutes / 60.0d - DecSeconds / (60.0d * 60.0d);
+                    coordinates.Dec = value - (DecMinutes / 60.0d) - (DecSeconds / 3600d);
                 } else {
-                    coordinates.Dec = value + DecMinutes / 60.0d + DecSeconds / (60.0d * 60.0d);
+                    coordinates.Dec = value + (DecMinutes / 60.0d) + (DecSeconds / 3600d);
                 }
                 RaiseCoordinatesChanged();
             }
@@ -133,21 +114,12 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int DecMinutes {
-            get {
-                var minutes = (Math.Abs(coordinates.Dec * 60.0d) % 60);
-
-                var seconds = (int)Math.Round((Math.Abs(coordinates.Dec * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    minutes += 1;
-                }
-
-                return (int)Math.Floor(minutes);
-            }
+            get => (int)Math.Truncate(Math.Abs(coordinates.Dec) * 60 % 60);
             set {
                 if (NegativeDec) {
-                    coordinates.Dec = coordinates.Dec + DecMinutes / 60.0d - value / 60.0d;
+                    coordinates.Dec = coordinates.Dec + (DecMinutes / 60.0d) - (value / 60.0d);
                 } else {
-                    coordinates.Dec = coordinates.Dec - DecMinutes / 60.0d + value / 60.0d;
+                    coordinates.Dec = coordinates.Dec - (DecMinutes / 60.0d) + (value / 60.0d);
                 }
 
                 RaiseCoordinatesChanged();
@@ -155,19 +127,13 @@ namespace NINA.Astrometry {
         }
 
         [JsonProperty]
-        public int DecSeconds {
-            get {
-                var seconds = (int)Math.Round((Math.Abs(coordinates.Dec * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
-                    seconds = 0;
-                }
-                return seconds;
-            }
+        public double DecSeconds {
+            get => Math.Round(Math.Abs(coordinates.Dec) * 3600d % 60, 5);
             set {
                 if (NegativeDec) {
-                    coordinates.Dec = coordinates.Dec + DecSeconds / (60.0d * 60.0d) - value / (60.0d * 60.0d);
+                    coordinates.Dec = coordinates.Dec + (DecSeconds / 3600d) - (value / 3600d);
                 } else {
-                    coordinates.Dec = coordinates.Dec - DecSeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d);
+                    coordinates.Dec = coordinates.Dec - (DecSeconds / 3600d) + (value / 3600d);
                 }
 
                 RaiseCoordinatesChanged();

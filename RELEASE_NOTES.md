@@ -12,6 +12,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Improvements
 - Guide Chart Colors can now be customized in the guider tab
 - Plugin load times have been improved
+- Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
