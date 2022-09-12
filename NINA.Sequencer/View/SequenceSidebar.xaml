@@ -831,7 +831,7 @@
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RAMinutes}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds, StringFormat={}{0:N1}}" />
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock
@@ -851,7 +851,7 @@
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecMinutes}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds, StringFormat={}{0:N1}}" />
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock

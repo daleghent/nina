@@ -744,10 +744,10 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        public int RASeconds {
+        public double RASeconds {
             get {
-                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
+                var seconds = Math.Round(DSO.Coordinates.RA * 60.0d * 60.0d % 60, 1);
+                if (seconds >= 60d) {
                     seconds = 0;
                 }
                 return seconds;
@@ -806,10 +806,10 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        public int DecSeconds {
+        public double DecSeconds {
             get {
-                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
-                if (seconds > 59) {
+                var seconds = Math.Round(DSO.Coordinates.Dec * 60.0d * 60.0d % 60, 1);
+                if (seconds >= 60d) {
                     seconds = 0;
                 }
                 return seconds;
