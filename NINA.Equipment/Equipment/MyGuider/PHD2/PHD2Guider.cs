@@ -37,6 +37,7 @@ using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 using NINA.Astrometry;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -1027,14 +1028,31 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         private async Task<bool> StartPHD2Process() {
-            // if phd2 is not running start it
+            // If PHD2 instance is not running start it.
             try {
-                if (Process.GetProcessesByName("phd2").Length == 0) {
+                bool startInstance = true;
+                var windowTitleRegex = new Regex(@"PHD2 Guiding\(?#?([0-9]*)\)?");
+
+                foreach (var p in Process.GetProcessesByName("phd2")) {
+                    var match = windowTitleRegex.Match(p.MainWindowTitle);
+                    if ((int.TryParse(match.Groups[1].Value, out int i) ? i : 1) == profileService.ActiveProfile.GuiderSettings.PHD2InstanceNumber) {
+                        startInstance = false;
+                        break;
+                    }
+                }
+
+                if (startInstance) {
                     if (!File.Exists(profileService.ActiveProfile.GuiderSettings.PHD2Path)) {
                         throw new FileNotFoundException();
                     }
 
-                    var process = Process.Start(profileService.ActiveProfile.GuiderSettings.PHD2Path);
+                    var process = new Process {
+                        StartInfo = {
+                            FileName = profileService.ActiveProfile.GuiderSettings.PHD2Path,
+                            Arguments = $"-i={profileService.ActiveProfile.GuiderSettings.PHD2InstanceNumber}"
+                        }
+                     };
+                    process?.Start();
                     process?.WaitForInputIdle();
 
                     await Task.Delay(2000);

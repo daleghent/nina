@@ -12557,6 +12557,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PHD2 instance number.
+        /// </summary>
+        internal static string LblPHD2InstanceNumber {
+            get {
+                return ResourceManager.GetString("LblPHD2InstanceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 History Size (Imaging).
         /// </summary>
         internal static string LblPHD2MinimalHistorySize {

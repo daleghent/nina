@@ -38,6 +38,7 @@ namespace NINA.Profile {
             settleTime = 10;
             pHD2ServerUrl = "localhost";
             pHD2ServerPort = 4400;
+            pHD2InstanceNumber = 1;
             pHD2LargeHistorySize = 100;
             pHD2GuiderScale = GuiderScaleEnum.PIXELS;
             phd2ROIPct = 100;
@@ -114,6 +115,19 @@ namespace NINA.Profile {
             set {
                 if (settleTime != value) {
                     settleTime = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int pHD2InstanceNumber;
+
+        [DataMember]
+        public int PHD2InstanceNumber {
+            get => pHD2InstanceNumber;
+            set {
+                if (pHD2InstanceNumber != value) {
+                    pHD2InstanceNumber = value;
                     RaisePropertyChanged();
                 }
             }
