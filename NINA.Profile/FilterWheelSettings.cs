@@ -64,6 +64,7 @@ namespace NINA.Profile {
         }
 
         private bool disableGuidingOnFilterChange;
+        [DataMember]
         public bool DisableGuidingOnFilterChange {
             get => disableGuidingOnFilterChange;
             set {
