@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Equipment.Equipment;
 using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
@@ -37,6 +39,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
+                devices.Add(new DummyDevice(Loc.Instance["LblNoFocuser"]));
 
                 /* Plugin Providers */
                 foreach (var provider in await equipmentProviders.GetProviders()) {
