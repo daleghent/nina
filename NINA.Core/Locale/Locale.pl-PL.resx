@@ -6401,4 +6401,7 @@ Po potwierdzeniu wybierz, która metoda powinna zostać użyta.</value>
   <data name="LblEphemerisNotFound" xml:space="preserve">
     <value>Plik Efemeryd do obliczenia ścieżek nie został znaleziony. Proszę uruchomić naprawę w instalacji N.I.N.A.</value>
   </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>Numer instancji PHD2</value>
+  </data>
 </root>

@@ -6402,4 +6402,7 @@ Una vez confirmados elija qué programa de astrometría usará.</value>
   <data name="LblEphemerisNotFound" xml:space="preserve">
     <value>No se ha encontrado el archivo de efemérides para calcular trayectorias celestes. Ejecute la reparación en su instalación de N.I.N.A.</value>
   </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>Número de instancia PHD2</value>
+  </data>
 </root>

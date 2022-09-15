@@ -6382,4 +6382,7 @@ Reason: {1}</value>
   <data name="LblEphemerisNotFound" xml:space="preserve">
     <value>天体の軌道を計算する天体暦ファイルが見つかりません。N.I.N.A.のインストールで修復を実行してください。</value>
   </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>PHD2 instance number</value>
+  </data>
 </root>
