@@ -93,6 +93,7 @@ namespace NINA.Image.FileFormat.FITS {
                             header.Add(keyName, value, keyComment);
                         } else {
                             // Treat as a string
+                            keyValue = $"{keyValue.TrimStart('\'').TrimEnd('\'', ' ').Replace(@"''", @"'")}";
                             header.Add(keyName, keyValue, keyComment);
                         }
                     }

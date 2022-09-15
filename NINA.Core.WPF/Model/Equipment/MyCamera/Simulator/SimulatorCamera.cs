@@ -578,7 +578,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
                 case CameraType.DIRECTORY:
                     if (files == null || files.Length == 0) {
-                        files = Directory.GetFiles(settings.DirectorySettings.DirectoryPath);
+                        files = Directory.GetFiles(settings.DirectorySettings.DirectoryPath, "*", SearchOption.AllDirectories);
                         if (files.Length == 0) {
                             throw new Exception("No Image found in directory set in Simulator!");
                         }
