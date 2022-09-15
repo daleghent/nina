@@ -56,7 +56,10 @@ namespace NINA.PlateSolving.Solvers {
             var result = new PlateSolveResult() { Success = false };
             string imagePath = null, outputPath = null;
             try {
-                //Copy Image to local app data
+                // Update target coordinates
+                if (source.MetaData.Target.Coordinates == null || double.IsNaN(source.MetaData.Target.Coordinates.RA))
+                    source.MetaData.Target.Coordinates = source.MetaData.Telescope.Coordinates;
+                // Copy Image to local app data
                 imagePath = await PrepareAndSaveImage(source, cancelToken);
 
                 progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSolving"] });
