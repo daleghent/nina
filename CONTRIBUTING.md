@@ -62,6 +62,7 @@ git remote add upstream https://bitbucket.org/Isbeorn/nina.git
 git lfs fetch upstream --all
 git lfs push origin --all
 git checkout <desired branch>
+git submodule update --init --recursive
 ```
 3. Add your changes
 4. Check that unit tests are passing
@@ -142,11 +143,15 @@ This database will be automatically created by the EntityFramework based on the 
     * [XAML Styler](https://github.com/Xavalon/XamlStyler/) A XAML style formatter
     * [MarkdownEditor](https://github.com/madskristensen/MarkdownEditor) To edit Markdown and auto generate HTML files
     * [License Header Manager](https://github.com/rubicon-oss/LicenseHeaderManager) for automatic insertion of the license into new files
-* Other external dependencies are automatically installed via nuget (except for some camera vendor DLLs)
-* (Optional) External Camera Vendor SDK DLLs have to be manually put inside the project to \NINA\External\ &lt;x64 and x32&gt;\
+* Static external dependencies are hosted in a separate git repository and pulled as a submodule, so they need to be checked out separately
+    * `git submodule update --init --recursive` on the first checkout
+    * `git submodule update --recursive` to update the submodule to the latest version
+    * Having submodules for these files has the advantage that the fork doesn't have to host the files again and run into available LFS space limits
+
     * To get Canon and Nikon DLLs you have to register as a developer for canon and nikon separately on their websites
 	* Altair SDK: Join the altair development group at https://groups.google.com/forum/#!forum/altair-development-group
     * Due to not being publicly available, they must not be put into a public repository
+* Other external dependencies are automatically installed via nuget (except for some camera vendor DLLs)
 * (Optional) To be able to build the setup projects you need to install [WiX](http://wixtoolset.org/) and their [Visual Studio plugin](https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2017Extension)
 
 ## Automated Unit Tests (AUT)
