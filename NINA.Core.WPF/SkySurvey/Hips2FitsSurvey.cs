@@ -43,6 +43,8 @@ namespace NINA.WPF.Base.SkySurvey {
             } catch (Exception) {
                 try {
                     image = await QueryImage(AltUrl, coordinates, fieldOfView, ct, progress);
+                } catch (OperationCanceledException) {
+                    throw;
                 } catch (Exception ex) {
                     throw new SkySurveyUnavailableException(ex.Message);
                 }

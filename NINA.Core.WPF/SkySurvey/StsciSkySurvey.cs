@@ -38,6 +38,8 @@ namespace NINA.WPF.Base.SkySurvey {
                 );
 
                 image = request.Request(ct);
+            } catch (OperationCanceledException) {
+                throw;
             } catch (Exception ex) {
                 throw new SkySurveyUnavailableException(ex.Message);
             }
