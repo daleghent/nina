@@ -78,10 +78,19 @@
                 <DataTemplate x:Key="UltimatePowerBoxV2">
                     <switch:PegasusAstroUltimatePowerboxV2 />
                 </DataTemplate>
+                <DataTemplate x:Key="Failed">
+                    <TextBlock
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Failed to load plugin data template" />
+                </DataTemplate>
                 <switch:SwitchHubTemplateSelector
                     x:Key="ContentSelector"
                     Eagle="{StaticResource Eagle}"
+                    FailedToLoadTemplate="{StaticResource Failed}"
                     Generic="{StaticResource Generic}"
+                    Postfix="{x:Static wpfutil:DataTemplatePostfix.SwitchSettings}"
                     UltimatePowerBoxV2="{StaticResource UltimatePowerBoxV2}" />
             </Grid.Resources>
             <ContentControl

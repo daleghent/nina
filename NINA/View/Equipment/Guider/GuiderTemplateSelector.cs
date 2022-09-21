@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyGuider;
 using NINA.Equipment.Equipment.MyGuider.PHD2;
 using NINA.Equipment.Equipment.MyGuider.SkyGuard;
@@ -32,6 +33,8 @@ namespace NINA.View.Equipment.Guider {
         public DataTemplate DirectGuider { get; set; }
         public DataTemplate SkyGuardGuider { get; set; }
         public DataTemplate Default { get; set; }
+        public DataTemplate FailedToLoadTemplate { get; set; }
+        public string Postfix { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             if (item is MGENGuider) {
@@ -45,7 +48,17 @@ namespace NINA.View.Equipment.Guider {
             } else if (item is SkyGuardGuider) {
                 return SkyGuardGuider;
             } else {
-                return Default;
+                var templateKey = item?.GetType().FullName + Postfix;
+                if (item != null && Application.Current.Resources.Contains(templateKey)) {
+                    try {
+                        return (DataTemplate)Application.Current.Resources[templateKey];
+                    } catch (Exception ex) {
+                        Logger.Error($"Datatemplate {templateKey} failed to load", ex);
+                        return FailedToLoadTemplate;
+                    }
+                } else {
+                    return Default;
+                }
             }
         }
     }

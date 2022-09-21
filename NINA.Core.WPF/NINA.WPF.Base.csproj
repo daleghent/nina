@@ -259,6 +259,8 @@
     <Compile Include="Utility\AutoFocus\QuadraticFitting.cs" />
     <Compile Include="Utility\AutoFocus\Trendline.cs" />
     <Compile Include="Utility\AutoFocus\TrendlineFitting.cs" />
+    <Compile Include="Utility\DataTemplatePostfix.cs" />
+    <Compile Include="Utility\GenericTemplateSelector.cs" />
     <Compile Include="Utility\MVVMLight\IExecuteWithObject.cs" />
     <Compile Include="Utility\MVVMLight\IExecuteWithObjectAndResult.cs" />
     <Compile Include="Utility\MVVMLight\RelayCommand.cs" />

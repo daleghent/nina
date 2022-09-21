@@ -38,7 +38,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
     public class SafetyMonitorVM : DockableVM, ISafetyMonitorVM {
         private ISafetyMonitorMediator safetyMonitorMediator;
         private IApplicationStatusMediator applicationStatusMediator;
-        private ISafetyMonitor safetyMonitor;
         private DeviceUpdateTimer updateTimer;
         private CancellationTokenSource connectCts;
         private readonly SemaphoreSlim ss = new SemaphoreSlim(1, 1);
@@ -97,8 +96,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
         private Dictionary<string, object> GetMonitorValues() {
             Dictionary<string, object> safetyMonitorValues = new Dictionary<string, object>();
-            safetyMonitorValues.Add(nameof(SafetyMonitorInfo.Connected), safetyMonitor?.Connected ?? false);
-            safetyMonitorValues.Add(nameof(SafetyMonitorInfo.IsSafe), safetyMonitor?.IsSafe ?? false);
+            safetyMonitorValues.Add(nameof(SafetyMonitorInfo.Connected), SafetyMonitor?.Connected ?? false);
+            safetyMonitorValues.Add(nameof(SafetyMonitorInfo.IsSafe), SafetyMonitor?.IsSafe ?? false);
 
             return safetyMonitorValues;
         }
@@ -131,7 +130,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                         var connected = await sm?.Connect(connectCts.Token);
                         connectCts.Token.ThrowIfCancellationRequested();
                         if (connected) {
-                            this.safetyMonitor = sm;
+                            this.SafetyMonitor = sm;
 
                             SafetyMonitorInfo = new SafetyMonitorInfo {
                                 Connected = true,
@@ -156,7 +155,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                             return true;
                         } else {
                             SafetyMonitorInfo.Connected = false;
-                            this.safetyMonitor = null;
+                            this.SafetyMonitor = null;
                             return false;
                         }
                     } catch (OperationCanceledException) {
@@ -186,8 +185,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                 if (updateTimer != null) {
                     await updateTimer.Stop();
                 }
-                safetyMonitor?.Disconnect();
-                safetyMonitor = null;
+                SafetyMonitor?.Disconnect();
+                SafetyMonitor = null;
                 SafetyMonitorInfo = DeviceInfo.CreateDefaultInstance<SafetyMonitorInfo>();
                 BroadcastMonitorInfo();
                 Logger.Info("Disconnected Safety Monitor");
@@ -195,20 +194,20 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
         }
 
         public string Action(string actionName, string actionParameters = "") {
-            return SafetyMonitorInfo?.Connected == true ? safetyMonitor.Action(actionName, actionParameters) : null;
+            return SafetyMonitorInfo?.Connected == true ? SafetyMonitor.Action(actionName, actionParameters) : null;
         }
 
         public string SendCommandString(string command, bool raw = true) {
-            return SafetyMonitorInfo?.Connected == true ? safetyMonitor.SendCommandString(command, raw) : null;
+            return SafetyMonitorInfo?.Connected == true ? SafetyMonitor.SendCommandString(command, raw) : null;
         }
 
         public bool SendCommandBool(string command, bool raw = true) {
-            return SafetyMonitorInfo?.Connected == true ? safetyMonitor.SendCommandBool(command, raw) : false;
+            return SafetyMonitorInfo?.Connected == true ? SafetyMonitor.SendCommandBool(command, raw) : false;
         }
 
         public void SendCommandBlind(string command, bool raw = true) {
             if (SafetyMonitorInfo?.Connected == true) {
-                safetyMonitor.SendCommandBlind(command, raw);
+                SafetyMonitor.SendCommandBlind(command, raw);
             }
         }
 
@@ -222,6 +221,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
         public SafetyMonitorInfo GetDeviceInfo() {
             return SafetyMonitorInfo;
+        }
+        
+        private ISafetyMonitor safetyMonitor;
+        public ISafetyMonitor SafetyMonitor {
+            get => safetyMonitor;
+            private set {
+                safetyMonitor = value;
+                RaisePropertyChanged();
+            }
         }
 
         private SafetyMonitorInfo safetyMonitorInfo;

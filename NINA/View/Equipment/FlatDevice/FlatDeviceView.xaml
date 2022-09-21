@@ -17,6 +17,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -254,7 +255,7 @@
         <GroupBox
             Grid.Row="1"
             Grid.Column="0"
-            Header="{ns:Loc LblFlatDeviceFlatPanelSettings}">
+            Header="{ns:Loc LblSettings}">
             <Grid>
                 <StackPanel Orientation="Vertical">
                     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
@@ -300,6 +301,29 @@
                             </ninactrl:UnitTextBox>
                         </UniformGrid>
                     </Border>
+                    <Grid>
+                        <Grid.Resources>
+                            <DataTemplate x:Key="Default">
+                                <Grid />
+                            </DataTemplate>
+                            <DataTemplate x:Key="Failed">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="Failed to load plugin data template" />
+                            </DataTemplate>
+                            <wpfutil:GenericTemplateSelector
+                                x:Key="ContentSelector"
+                                Default="{StaticResource Default}"
+                                FailedToLoadTemplate="{StaticResource Failed}"
+                                Postfix="{x:Static wpfutil:DataTemplatePostfix.FlatDeviceSettings}" />
+                        </Grid.Resources>
+                        <ContentControl
+                            Content="{Binding}"
+                            ContentTemplateSelector="{StaticResource ContentSelector}"
+                            DataContext="{Binding FlatDevice}" />
+                    </Grid>
                 </StackPanel>
             </Grid>
         </GroupBox>

@@ -13,13 +13,18 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Guide Chart Colors can now be customized in the guider tab
 - Plugin load times have been improved
 - Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.
+- Added instance number setting to PHD2 to be able to have N.I.N.A. autostart PHD2 with multiple instances and not just the first one
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
-- Plugin Enablement: Added interfaces that allow plugins to provide device drivers
-    - This change will make it necessary for plugins to be loaded completely before being able to connect to the devices.
-- Plugin Enablement: Plugins can now query for Telescope "DestinationSideOfPier"
 - Added an option in the filter wheel options to disable guiding during a filter change. This can be useful when having filter focus offsets and overshoot backlash compensation enabled to prevent losing guide stars.
+
+## Plugin Enablement
+- Added interfaces that allow plugins to provide device drivers
+    - Each device type can also provide dedicated settings in the equipment setting sections
+    - This change will make it necessary for plugins to be loaded completely before being able to connect to the devices.
+- Plugins can now query for Telescope "DestinationSideOfPier"
+- New Plugin Eventhooks to react on Befor/After MeridianFlip and After Dithers
 
 # Version 2.0 HF 1
 

@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,6 +24,8 @@ namespace NINA.View.Equipment.Switch {
         public DataTemplate Generic { get; set; }
         public DataTemplate Eagle { get; set; }
         public DataTemplate UltimatePowerBoxV2 { get; set; }
+        public DataTemplate FailedToLoadTemplate { get; set; }
+        public string Postfix { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             switch (item) {
@@ -32,7 +36,17 @@ namespace NINA.View.Equipment.Switch {
                     return UltimatePowerBoxV2;
 
                 default:
-                    return Generic;
+                    var templateKey = item?.GetType().FullName + Postfix;
+                    if (item != null && Application.Current.Resources.Contains(templateKey)) {
+                        try {
+                            return (DataTemplate)Application.Current.Resources[templateKey];
+                        } catch (Exception ex) {
+                            Logger.Error($"Datatemplate {templateKey} failed to load", ex);
+                            return FailedToLoadTemplate;
+                        }
+                    } else {
+                        return Generic;
+                    }
             }
         }
     }

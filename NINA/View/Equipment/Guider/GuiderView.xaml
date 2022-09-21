@@ -17,6 +17,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -176,13 +177,22 @@
                     <DataTemplate x:Key="SkyGuardGuider">
                         <local:SkyGuardDetailView />
                     </DataTemplate>
+                    <DataTemplate x:Key="Failed">
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="Failed to load plugin data template" />
+                    </DataTemplate>
                     <local:GuiderTemplateSelector
                         x:Key="ContentSelector"
                         Default="{StaticResource Default}"
                         DirectGuider="{StaticResource DirectGuider}"
+                        FailedToLoadTemplate="{StaticResource Failed}"
                         MGen="{StaticResource MGen}"
                         MetaGuide="{StaticResource MetaGuide}"
                         PHD2="{StaticResource PHD2}"
+                        Postfix="{x:Static wpfutil:DataTemplatePostfix.GuiderSettings}"
                         SkyGuardGuider="{StaticResource SkyGuardGuider}" />
                 </Grid.Resources>
                 <ContentControl

@@ -17,6 +17,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -313,6 +314,39 @@
                         </UniformGrid>
                     </Border>
                 </StackPanel>
+            </Grid>
+        </GroupBox>
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid Height="40" Margin="5">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblSettings}" />
+                </Grid>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.Resources>
+                    <DataTemplate x:Key="Default">
+                        <TextBlock Text="{ns:Loc LblNone}" />
+                    </DataTemplate>
+                    <DataTemplate x:Key="Failed">
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="Failed to load plugin data template" />
+                    </DataTemplate>
+                    <wpfutil:GenericTemplateSelector
+                        x:Key="ContentSelector"
+                        Default="{StaticResource Default}"
+                        FailedToLoadTemplate="{StaticResource Failed}"
+                        Postfix="{x:Static wpfutil:DataTemplatePostfix.FocuserSettings}" />
+                </Grid.Resources>
+                <ContentControl
+                    Content="{Binding}"
+                    ContentTemplateSelector="{StaticResource ContentSelector}"
+                    DataContext="{Binding Focuser}" />
             </Grid>
         </GroupBox>
     </UniformGrid>
