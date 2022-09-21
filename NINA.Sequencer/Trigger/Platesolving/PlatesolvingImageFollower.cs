@@ -35,29 +35,22 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
     public class PlatesolvingImageFollower : BaseINPC, IDisposable {
         private readonly IImageSaveMediator imageSaveMediator;
-        private readonly IImageHistoryVM history;
         private readonly ITelescopeMediator telescopeMediator;
         private readonly IProfileService profileService;
         private readonly IApplicationStatusMediator applicationStatusMediator;
-        private readonly IImageDataFactory imageDataFactory;
         private readonly IProgress<ApplicationStatus> progress;
         private object lockObj = new object();
         private bool closed = false;
         private Task solverBackgroundTask;
         private CancellationTokenSource solverBackgroundTaskCancellationSource = new CancellationTokenSource();
 
-        public PlatesolvingImageFollower(IProfileService profileService, IImageHistoryVM history, ITelescopeMediator telescopeMediator, IImageSaveMediator imageSaveMediator,
-            IApplicationStatusMediator applicationStatusMediator, IImageDataFactory imageDataFactory) {
+        public PlatesolvingImageFollower(IProfileService profileService, ITelescopeMediator telescopeMediator, IImageSaveMediator imageSaveMediator, IApplicationStatusMediator applicationStatusMediator) {
             this.profileService = profileService;
             this.imageSaveMediator = imageSaveMediator;
-            this.history = history;
             this.telescopeMediator = telescopeMediator;
-            this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
+            this.imageSaveMediator.BeforeImageSaved += ImageSaveMediator_BeforeImageSaved;
             this.applicationStatusMediator = applicationStatusMediator;
-            this.imageDataFactory = imageDataFactory;
             this.progress = new Progress<ApplicationStatus>(ProgressStatusUpdate);
-            var lastLightImage = history.ImageHistory.Where(x => x.LocalPath != null && x.Type == "LIGHT").LastOrDefault();
-            LastPlatesolvedId = lastLightImage != null ? lastLightImage.Id : -1;
         }
 
         private void ProgressStatusUpdate(ApplicationStatus status) {
@@ -67,52 +60,36 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             applicationStatusMediator.StatusUpdate(status);
         }
 
-        private bool ImageHistoryIsRelevant(ImageHistoryPoint p) {
-            return p.LocalPath != null && p.Type == "LIGHT" && p.Id > LastPlatesolvedId;
-        }
-
-        private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
+        private async Task ImageSaveMediator_BeforeImageSaved(object sender, BeforeImageSavedEventArgs e) {
             lock (lockObj) {
+                if(e.Image.MetaData.Image.ImageType != "LIGHT") {
+                    return;
+                }
+                ProgressExposures++;
                 if (ProgressExposures < AfterExposures) {
                     return;
                 }
 
-                var recentLightHistory = history.ImageHistory.Where(ImageHistoryIsRelevant).ToList();
-                var matchingHistoryItem = recentLightHistory.Where(x => new Uri(x.LocalPath) == e.PathToImage).FirstOrDefault();
-                if (matchingHistoryItem == null) {
-                    return;
-                }
-
                 if (solverBackgroundTask != null && !solverBackgroundTask.IsCompleted) {
-                    Logger.Info($"Won't platesolve {e.PathToImage} because another operation is already in progress");
+                    Logger.Info($"Won't platesolve image because another operation is already in progress");
                     return;
                 }
 
-                LastPlatesolvedId = matchingHistoryItem.Id;
-                solverBackgroundTask = Task.Run(async () => await SolveLastImage(matchingHistoryItem, solverBackgroundTaskCancellationSource.Token));
+                solverBackgroundTask = Task.Run(async () => {
+                    await SolveLastImage(e.Image, solverBackgroundTaskCancellationSource.Token);                    
+                });
             }
         }
 
         public void Dispose() {
             lock (lockObj) {
                 if (!closed) {
-                    this.imageSaveMediator.ImageSaved -= ImageSaveMediator_ImageSaved;
+                    this.imageSaveMediator.BeforeImageSaved -= ImageSaveMediator_BeforeImageSaved;
                     try {
                         solverBackgroundTaskCancellationSource?.Cancel();
                     } catch { }
                     closed = true;
                 }
-            }
-        }
-
-        private int lastPlatesolvedId = -1;
-
-        public int LastPlatesolvedId {
-            get => lastPlatesolvedId;
-            set {
-                lastPlatesolvedId = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(ProgressExposures));
             }
         }
 
@@ -125,10 +102,13 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 RaisePropertyChanged();
             }
         }
+        private int progressExposures = 0;
 
         public int ProgressExposures {
-            get {
-                return history.ImageHistory.Count(ImageHistoryIsRelevant);
+            get => progressExposures;
+            set {
+                progressExposures = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -142,26 +122,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             }
         }
 
-        private async Task<IImageData> LoadHistoryImage(ImageHistoryPoint historyImage) {
-            try {
-                if (File.Exists(historyImage.LocalPath)) {
-                    return await imageDataFactory.CreateFromFile(historyImage.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, historyImage.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
-                } else {
-                    Notification.ShowError($"File {historyImage.Filename} does not exist");
-                }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(ex.Message);
-            }
-            return null;
-        }
-
-        private async Task SolveLastImage(ImageHistoryPoint historyImage, CancellationToken token) {
-            var loadedImage = await LoadHistoryImage(historyImage);
-            if (loadedImage == null) {
-                return;
-            }
-
+        private async Task SolveLastImage(IImageData loadedImage, CancellationToken token) {
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
@@ -192,6 +153,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             }
 
             LastCoordinates = solveResult.Coordinates;
+            ProgressExposures = 0;
         }
     }
 }

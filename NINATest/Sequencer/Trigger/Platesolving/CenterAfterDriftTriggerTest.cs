@@ -39,9 +39,7 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
         private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
         private Mock<IFilterWheelMediator> filterMediatorMock;
         private Mock<ICameraMediator> cameraMediatorMock;
-        private Mock<IImageHistoryVM> historyMock;
         private Mock<IImageSaveMediator> imageSaveMediatorMock;
-        private Mock<IImageDataFactory> imageDataFactoryMock;
         private Mock<IDomeMediator> domeMediatorMock;
         private Mock<IDomeFollower> domeFollowerMock;
 
@@ -54,9 +52,7 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
             applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
             filterMediatorMock = new Mock<IFilterWheelMediator>();
             cameraMediatorMock = new Mock<ICameraMediator>();
-            historyMock = new Mock<IImageHistoryVM>();
             imageSaveMediatorMock = new Mock<IImageSaveMediator>();
-            imageDataFactoryMock = new Mock<IImageDataFactory>();
             domeMediatorMock = new Mock<IDomeMediator>();
             domeFollowerMock = new Mock<IDomeFollower>();
         }
@@ -71,7 +67,6 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
 
             var sut = new CenterAfterDriftTrigger(
                 profileServiceMock.Object,
-                historyMock.Object,
                 telescopeMediatorMock.Object,
                 filterMediatorMock.Object,
                 guiderMediatorMock.Object,
@@ -80,8 +75,7 @@ namespace NINATest.Sequencer.Trigger.Platesolving {
                 domeMediatorMock.Object,
                 domeFollowerMock.Object,
                 imageSaveMediatorMock.Object,
-                applicationStatusMediatorMock.Object,
-                imageDataFactoryMock.Object);
+                applicationStatusMediatorMock.Object);
 
             sut.DistanceArcMinutes = arcmin;
 
