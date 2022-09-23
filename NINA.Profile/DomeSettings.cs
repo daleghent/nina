@@ -253,6 +253,58 @@ namespace NINA.Profile {
             }
         }
 
+        private bool parkMountBeforeShutterMove = false;
+
+        [DataMember]
+        public bool ParkMountBeforeShutterMove {
+            get => parkMountBeforeShutterMove;
+            set {
+                if (parkMountBeforeShutterMove != value) {
+                    parkMountBeforeShutterMove = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool refuseUnsafeShutterMove = false;
+
+        [DataMember]
+        public bool RefuseUnsafeShutterMove {
+            get => refuseUnsafeShutterMove;
+            set {
+                if (refuseUnsafeShutterMove != value) {
+                    refuseUnsafeShutterMove = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool refuseUnsafeShutterOpenSansSafetyDevice = false;
+
+        [DataMember]
+        public bool RefuseUnsafeShutterOpenSansSafetyDevice {
+            get => refuseUnsafeShutterOpenSansSafetyDevice;
+            set {
+                if (refuseUnsafeShutterOpenSansSafetyDevice != value) {
+                    refuseUnsafeShutterOpenSansSafetyDevice = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool parkDomeBeforeShutterMove = false;
+
+        [DataMember]
+        public bool ParkDomeBeforeShutterMove {
+            get => parkDomeBeforeShutterMove;
+            set {
+                if (parkDomeBeforeShutterMove != value) {
+                    parkDomeBeforeShutterMove = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private MountTypeEnum mountType = MountTypeEnum.EQUATORIAL;
 
         [DataMember]

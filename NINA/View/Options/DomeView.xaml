@@ -23,319 +23,404 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid Margin="0,5,0,0" DataContext="{Binding ActiveProfile.DomeSettings}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <GroupBox Header="{ns:Loc LblDomeSettings}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Vertical">
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMountType}" />
-                        <ComboBox
-                            Name="PART_MountTypeList"
-                            MinWidth="150"
-                            ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:MountTypeEnum}}}"
-                            SelectedItem="{Binding MountType}" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="0,5,0,0" DataContext="{Binding ActiveProfile.DomeSettings}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <GroupBox Header="{ns:Loc LblDomeMountGeometry}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMountType}" />
+                            <ComboBox
+                                Name="PART_MountTypeList"
+                                MinWidth="150"
+                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:MountTypeEnum}}}"
+                                SelectedItem="{Binding MountType}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeScopeNS}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeScopeNSTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding ScopePositionNorthSouth_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeScopeEW}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeScopeEWTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding ScopePositionEastWest_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeScopeUD}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeScopeUDTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding ScopePositionUpDown_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeRadius}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeRadiusTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding DomeRadius_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <UniformGrid.Style>
+                                <Style TargetType="{x:Type UniformGrid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=PART_MountTypeList, Path=SelectedItem}" Value="1">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </UniformGrid.Style>
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeGemAxisLength}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeGemAxisLengthTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding GemAxis_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <UniformGrid.Style>
+                                <Style TargetType="{x:Type UniformGrid}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=PART_MountTypeList, Path=SelectedItem}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </UniformGrid.Style>
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeDecOffsetHorizontal}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeDecOffsetHorizontalTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding DecOffsetHorizontal_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeLateralAxisLength}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeLateralAxisLengthTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding LateralAxis_mm, UpdateSourceTrigger=LostFocus}"
+                                Unit="mm" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="250"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeAzimuthToleranceDegrees}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeAzimuthToleranceDegreesTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Unit="°">
+                                <TextBox.Text>
+                                    <Binding Path="AzimuthTolerance_degrees" UpdateSourceTrigger="LostFocus">
+                                        <Binding.ValidationRules>
+                                            <rules:GreaterZeroRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </ninactrl:UnitTextBox>
+                        </UniformGrid>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox
+                Header="{ns:Loc LblDomeSettings}"
+                Margin="0,10,0,0"
+                Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeSyncTimeout}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDomeSyncTimeoutTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <ninactrl:UnitTextBox
+                                HorizontalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                Unit="s">
+                                <TextBox.Text>
+                                    <Binding Path="DomeSyncTimeoutSeconds" UpdateSourceTrigger="LostFocus">
+                                        <Binding.ValidationRules>
+                                            <rules:GreaterZeroRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </ninactrl:UnitTextBox>
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="130"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSettleTimeAfterSlew}" />
+                            <ninactrl:UnitTextBox
+                                MinWidth="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Unit="s">
+                                <TextBox.Text>
+                                    <Binding Path="SettleTimeSeconds" UpdateSourceTrigger="LostFocus">
+                                        <Binding.ValidationRules>
+                                            <rules:GreaterZeroRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </ninactrl:UnitTextBox>
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeSyncDuringMountSlew}"
+                                ToolTip="{ns:Loc LblDomeSyncDuringMountSlewTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding SynchronizeDuringMountSlew}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeSyncSlewWhenMountSlew}"
+                                ToolTip="{ns:Loc LblDomeSyncSlewWhenMountSlewTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding SyncSlewDomeWhenMountSlews}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeFindHomeBeforePark}"
+                                ToolTip="{ns:Loc LblDomeFindHomeBeforeParkTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FindHomeBeforePark}" />
+                        </UniformGrid>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox
+                Header="{ns:Loc LblDomeShutterCoordination}"
+                Margin="0,10,0,0"
+                Grid.Row="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
                         <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
+                            Text="{ns:Loc LblShutterSettingsWarning}"
+                            Margin="0,10,0,10"
+                            FontSize="16"
+                            Grid.ColumnSpan="3"
+                            TextWrapping="Wrap" />
+
+                        <UniformGrid
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeScopeNS}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeScopeNSTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDomeCloseOnUnsafe}"
+                                ToolTip="{ns:Loc LblDomeCloseOnUnsafeTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding CloseOnUnsafe}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding ScopePositionNorthSouth_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblRefuseUnsafeShutterMoveIfNoSafetyDevice}"
+                                ToolTip="{ns:Loc LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding RefuseUnsafeShutterOpenSansSafetyDevice}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeScopeEW}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeScopeEWTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblParkMountBeforeShutterMovement}"
+                                ToolTip="{ns:Loc LblParkMountBeforeShutterMovementTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountBeforeShutterMove}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding ScopePositionEastWest_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblParkDomeBeforeShutterMovement}"
+                                ToolTip="{ns:Loc LblParkDomeBeforeShutterMovementTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkDomeBeforeShutterMove}" />
+                        </UniformGrid>
+                        <UniformGrid
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeScopeUD}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeScopeUDTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding ScopePositionUpDown_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeRadius}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeRadiusTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding DomeRadius_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <UniformGrid.Style>
-                            <Style TargetType="{x:Type UniformGrid}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=PART_MountTypeList, Path=SelectedItem}" Value="1">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </UniformGrid.Style>
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeGemAxisLength}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeGemAxisLengthTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding GemAxis_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <UniformGrid.Style>
-                            <Style TargetType="{x:Type UniformGrid}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=PART_MountTypeList, Path=SelectedItem}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </UniformGrid.Style>
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeDecOffsetHorizontal}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeDecOffsetHorizontalTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding DecOffsetHorizontal_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeLateralAxisLength}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeLateralAxisLengthTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding LateralAxis_mm, UpdateSourceTrigger=LostFocus}"
-                            Unit="mm" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            Width="250"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeAzimuthToleranceDegrees}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeAzimuthToleranceDegreesTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Unit="°">
-                            <TextBox.Text>
-                                <Binding Path="AzimuthTolerance_degrees" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <rules:GreaterZeroRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </ninactrl:UnitTextBox>
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            MinWidth="200"
-                            MinHeight="20"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeSyncTimeout}">
-                            <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblDomeSyncTimeoutTooltip}" />
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                        <ninactrl:UnitTextBox
-                            HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Center"
-                            Unit="s">
-                            <TextBox.Text>
-                                <Binding Path="DomeSyncTimeoutSeconds" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <rules:GreaterZeroRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </ninactrl:UnitTextBox>
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            Width="130"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblSettleTimeAfterSlew}" />
-                        <ninactrl:UnitTextBox
-                            MinWidth="80"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Unit="s">
-                            <TextBox.Text>
-                                <Binding Path="SettleTimeSeconds" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <rules:GreaterZeroRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </ninactrl:UnitTextBox>
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            MinWidth="200"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeSyncDuringMountSlew}"
-                            ToolTip="{ns:Loc LblDomeSyncDuringMountSlewTooltip}" />
-                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding SynchronizeDuringMountSlew}" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            MinWidth="200"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeSyncSlewWhenMountSlew}"
-                            ToolTip="{ns:Loc LblDomeSyncSlewWhenMountSlewTooltip}" />
-                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding SyncSlewDomeWhenMountSlews}" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            MinWidth="200"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeFindHomeBeforePark}"
-                            ToolTip="{ns:Loc LblDomeFindHomeBeforeParkTooltip}" />
-                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FindHomeBeforePark}" />
-                    </UniformGrid>
-                    <UniformGrid
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        Columns="2">
-                        <TextBlock
-                            MinWidth="200"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDomeCloseOnUnsafe}"
-                            ToolTip="{ns:Loc LblDomeCloseOnUnsafeTooltip}" />
-                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding CloseOnUnsafe}" />
-                    </UniformGrid>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
-    </Grid>
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblRefuseUnsafeShutterMoveIfMountUnparked}"
+                                ToolTip="{ns:Loc LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip}" />
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding RefuseUnsafeShutterMove}" />
+                        </UniformGrid>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+        </Grid>
+    </ScrollViewer>
 </UserControl>
