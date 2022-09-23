@@ -29,6 +29,7 @@ using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
 using System.Drawing;
 using System.Collections;
+using System.Linq;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -171,7 +172,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public IList<string> SupportedActions => new List<string>();
+        public IList<string> SupportedActions { get; } = new List<string>();
 
         public double ElectronsPerADU => double.NaN;
 
@@ -599,6 +600,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             return Task<bool>.Run(() => {
                 var success = false;
                 try {
+                    SupportedActions.Clear();
                     imageReadyTCS?.TrySetCanceled();
                     imageReadyTCS = null;
 
@@ -655,12 +657,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                     if ((this.flags & ToupTekAlikeFlag.FLAG_LOW_NOISE) != 0) {
                         HasLowNoiseMode = true;
+                        SupportedActions.Add(ToupTekActions.LowNoiseMode);
                     }
 
                     if (((this.flags & ToupTekAlikeFlag.FLAG_CG) != 0) || ((this.flags & ToupTekAlikeFlag.FLAG_CGHDR) != 0)) {
                         Logger.Trace($"{Category} - Camera has High Conversion Gain option");
                         HasHighGain = true;
                         HighGainMode = true;
+                        SupportedActions.Add(ToupTekActions.HighGainMode);
                     } else {
                         HasHighGain = false;
                     }
@@ -1034,7 +1038,79 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int USBLimitStep { get => 1; }
 
         public string Action(string actionName, string actionParameters) {
-            throw new NotImplementedException();
+            switch (actionName) {
+                case ToupTekActions.LowNoiseMode:
+                    if (HasLowNoiseMode) {
+                        var flag = StringToBoolean(actionParameters);
+                        if(flag.HasValue) {
+                            Logger.Info($"Device Action {actionName}: {flag.Value}");
+                            LowNoiseMode = flag.Value;
+                            return "1";
+                        } else {
+                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
+                            return "0";
+                        }
+                    }
+                    break;
+                case ToupTekActions.HighGainMode:
+                    if (HasHighGain) {
+                        var flag = StringToBoolean(actionParameters);
+                        if (flag.HasValue) {
+                            Logger.Info($"Device Action {actionName}: {flag.Value}");
+                            HighGainMode = flag.Value;
+                            return "1";
+                        } else {
+                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
+                            return "0";
+                        }
+                    }
+                    break;
+                case ToupTekActions.BinAverage:
+                    if (HasLowNoiseMode) {
+                        var flag = StringToBoolean(actionParameters);
+                        if (flag.HasValue) {
+                            Logger.Info($"Device Action {actionName}: {flag.Value}");
+                            BinAverageEnabled = flag.Value;
+                            return "1";
+                        } else {
+                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
+                            return "0";
+                        }
+                    }
+                    break;
+                case ToupTekActions.FanSpeed:
+                    if (HasLowNoiseMode) {
+                        if(int.TryParse(actionParameters, out var flag)) {
+                            Logger.Info($"Device Action {actionName}: {flag}");
+                            FanSpeed = flag;
+                            return "1";
+
+                        } else {
+                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
+                            return "0";
+                        }
+                    }
+                    break;
+            }
+
+            Logger.Error($"Unsupported action [{actionName}]");
+            return "0";
+            
+        }
+
+        private bool? StringToBoolean(string input) {
+            if(string.IsNullOrWhiteSpace(input)) { return null; }
+
+            string[] booleanFalse = { "0", "off", "no", "false", "f" };
+            string[] booleanTrue = { "1", "on", "yes", "true", "t" };
+
+            if(booleanFalse.Contains(input.ToLower())) {
+                return false;
+            }
+            if(booleanTrue.Contains(input.ToLower())) {
+                return true;
+            }
+            return null;
         }
 
         public string SendCommandString(string command, bool raw) {
@@ -1047,6 +1123,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
+        }
+
+        private static class ToupTekActions {
+            public const string LowNoiseMode = "Ultra Mode";
+            public const string HighGainMode = "High Gain Mode";
+            public const string BinAverage = "Bin Average";
+            public const string FanSpeed = "Fan Speed";
         }
     }
 }

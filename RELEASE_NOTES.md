@@ -18,6 +18,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
 - Added an option in the filter wheel options to disable guiding during a filter change. This can be useful when having filter focus offsets and overshoot backlash compensation enabled to prevent losing guide stars.
+- Custom Action to toggle Low Noise, High Gain, Fan Speed and Average Binning via custom device actions added to Altair, Mallincam, Omegon, Risingcam and Touptek cameras. This action can be controlled via plugins. 
+    - Valid parameters for Low Noise, High Gain and Average Binning are  "0", "off", "no", "false", "f", "1", "on", "yes", "true", "t"
+    - Valid parameters for Fan Speed are integer values from 0 to Max Fan Speed
 
 ## Plugin Enablement
 - Added interfaces that allow plugins to provide device drivers
