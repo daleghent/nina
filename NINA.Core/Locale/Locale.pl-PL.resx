@@ -984,7 +984,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Katalog Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Do zrobienia - Dark Flats</value>
+    <value>Ilość dark flat</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>Obrót D.A.R.V.</value>
@@ -2864,7 +2864,7 @@ Ten szablon będzie używany przy starcie do inicjowania sekwencji zamiast domy�
     <value>Ustawienia</value>
   </data>
   <data name="LblSettle" xml:space="preserve">
-    <value>Wyreguluj</value>
+    <value>Stabilizacja</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
     <value>Stabilizacja tolerancji pikseli</value>
