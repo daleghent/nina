@@ -341,25 +341,74 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         public async Task<bool> OpenShutter(CancellationToken cancellationToken) {
-            if (Dome.CanSetShutter) {
-                if (SafetyMonitorInfo.Connected && !SafetyMonitorInfo.IsSafe) {
-                    Logger.Error("Cannot open dome shutter due to unsafe conditions");
-                    Notification.ShowError(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+            if (DomeInfo.Connected) {
+                if (Dome.CanSetShutter) {
+
+                    // 1. Check if the shutter/roof is already open or is in the process of becoming so
+                    if (DomeInfo.ShutterStatus == ShutterState.ShutterOpen || DomeInfo.ShutterStatus == ShutterState.ShutterOpening) {
+                        return true;
+                    }
+
+                    // 2. Refuse to open if the safety monitor device signals an unsafe condition.
+                    // Optionally, a disconnected safety monitor can be a failure of this test.
+                    if (SafetyMonitorInfo.Connected) {
+                        if (!SafetyMonitorInfo.IsSafe) {
+                            Logger.Error("Cannot open dome shutter due to unsafe conditions");
+                            Notification.ShowError(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+                            return false;
+                        }
+                    } else {
+                        if (profileService.ActiveProfile.DomeSettings.RefuseUnsafeShutterOpenSansSafetyDevice) {
+                            Logger.Error("Dome shutter ordered to open but the safety monitor device is disconnected! Not opening as this might be dangerous! (RefuseUnsafeShutterOpenSansSafetyDevice=true)");
+                            Notification.ShowError(Loc.Instance["LblSafetyDeviceDisconnectedOnShutterMoveError"]);
+                            return false;
+                        }
+                    }
+
+                    // 3. Refuse to open the shutter/roof if RefuseUnsafeShutterMove is enabled and the mount is not parked. A disconnected mount is considered a failure of this test because mount state cannot be deterined.
+                    // We do not proactively park the mount because doing so might drive the OTA into a closed roof. The user will need to sort out this situation.
+                    if (profileService.ActiveProfile.DomeSettings.RefuseUnsafeShutterMove) {
+                        if (TelescopeInfo.Connected) {
+                            if (!TelescopeInfo.AtPark) {
+                                Logger.Error("Dome shutter ordered to open but the mount is unparked! Not opening as this might be dangerous! (RefuseUnsafeShutterMove=true)");
+                                Notification.ShowError(Loc.Instance["LblMountUnparkedOnShutterMoveError"]);
+                                return false;
+                            }
+                        } else {
+                            Logger.Error("Dome shutter ordered to open but the mount is disconnected! Not opening as this might be dangerous! (RefuseUnsafeShutterMove=true)");
+                            Notification.ShowError(Loc.Instance["LblMountDisconnectedOnShutterMoveError"]);
+                            return false;
+                        }
+                    }
+
+                    // 4. Park the DOME if ParkDomeBeforeShutterMove is enabled.
+                    // Some domes require this to align power contacts to operate the shutter. It should be the last thing to do before moving the shutter/roof
+                    if (profileService.ActiveProfile.DomeSettings.ParkDomeBeforeShutterMove) {
+                        if (!DomeInfo.AtPark) {
+                            Logger.Info("Dome shutter ordered to open. Disabling following and parking dome first");
+                            FollowEnabled = false;
+                            await Park(cancellationToken);
+                        }
+                    }
+
+                    // 5. Open the shutter/roof
+                    try {
+                        Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterOpen"] });
+                        await Dome.OpenShutter(cancellationToken);
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
+                        Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
+                        return true;
+                    } finally {
+                        progress.Report(new ApplicationStatus() { Status = string.Empty });
+                    }
+                } else {
+                    Logger.Warning("Cannot open shutter. Dome does not support it.");
                     return false;
                 }
-
-                try {
-                    Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
-                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterOpen"] });
-                    await Dome.OpenShutter(cancellationToken);
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
-                    Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
-                    return true;
-                } finally {
-                    progress.Report(new ApplicationStatus() { Status = string.Empty });
-                }
             } else {
-                Logger.Warning("Cannot open shutter. Dome does not support it.");
+                Logger.Error("Dome shutter ordered to open but the dome is disconnected!");
+                Notification.ShowError(Loc.Instance["LblDomeNotConnectedError"]);
                 return false;
             }
         }
@@ -369,19 +418,73 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         public async Task<bool> CloseShutter(CancellationToken cancellationToken) {
-            if (Dome.CanSetShutter) {
-                try {
-                    Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
-                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterClose"] });
-                    await Dome.CloseShutter(cancellationToken);
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
-                    Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
-                    return true;
-                } finally {
-                    progress.Report(new ApplicationStatus() { Status = string.Empty });
+            if (DomeInfo.Connected) {
+                if (Dome.CanSetShutter) {
+
+                    // 1. Check if the shutter/roof is already closed or is in the process of becoming so
+                    if (DomeInfo.ShutterStatus == ShutterState.ShutterClosed || DomeInfo.ShutterStatus == ShutterState.ShutterClosing) {
+                        return true;
+                    }
+
+                    // 2. Park the mount if ParkMountBeforeShutterMove is enabled. A disconnected mount is considered a failure here.
+                    if (profileService.ActiveProfile.DomeSettings.ParkMountBeforeShutterMove) {
+                        if (TelescopeInfo.Connected) {
+                            if (!TelescopeInfo.AtPark) {
+                                Logger.Info($"Dome shutter ordered to close. Disabling following and parking mount first. (ParkMountBeforeShutterMove=true)");
+                                FollowEnabled = false;
+                                await telescopeMediator.ParkTelescope(progress, cancellationToken);
+                            }
+                        } else {
+                            Logger.Error("Dome shutter ordered to close but the mount is disconnected! Not close as this might be dangerous! (ParkMountBeforeShutterMove=true)");
+                            Notification.ShowError(Loc.Instance["LblMountDisconnectedOnShutterMoveError"]);
+                            return false;
+                        }
+                    }
+
+                    // 3. If RefuseUnsafeShutterMove is enabled, refuse to close the shutter/roof if the mount is not parked A disconnected mount is considered a failure of this test because mount state cannot be deterined.
+                    // This is a fail-safe for any cases where we reach this point and the mount is not, or not yet, parked. This can be a driver bug or something else causing the mount to unpark.
+                    if (profileService.ActiveProfile.DomeSettings.RefuseUnsafeShutterMove) {
+                        if (TelescopeInfo.Connected) {
+                            if (!TelescopeInfo.AtPark) {
+                                Logger.Error("Dome shutter ordered to close but the mount is unparked! Not closing it as this might be dangerous! (RefuseUnsafeShutterMove=true)");
+                                Notification.ShowError(Loc.Instance["LblMountUnparkedOnShutterMoveError"]);
+                                return false;
+                            }
+                        } else {
+                            Logger.Error("Dome shutter ordered to close but the mount is disconnected! Not close as this might be dangerous! (RefuseUnsafeShutterMove=true)");
+                            Notification.ShowError(Loc.Instance["LblMountDisconnectedOnShutterMoveError"]);
+                            return false;
+                        }
+                    }
+
+                    // 4. Park the DOME if ParkDomeBeforeShutterMove is enabled.
+                    // Some domes require this to align power contacts to operate the shutter. It should be the last thing to do before moving the shutter/roof
+                    if (profileService.ActiveProfile.DomeSettings.ParkDomeBeforeShutterMove) {
+                        if (!DomeInfo.AtPark) {
+                            Logger.Info("Dome shutter ordered to close. Disabling following and parking dome first");
+                            FollowEnabled = false;
+                            await Park(cancellationToken);
+                        }
+                    }
+
+                    // 5. Close the shutter/roof
+                    try {
+                        Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterClose"] });
+                        await Dome.CloseShutter(cancellationToken);
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
+                        Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
+                        return true;
+                    } finally {
+                        progress.Report(new ApplicationStatus() { Status = string.Empty });
+                    }
+                } else {
+                    Logger.Warning("Cannot close shutter. Dome does not support it.");
+                    return false;
                 }
             } else {
-                Logger.Warning("Cannot close shutter. Dome does not support it.");
+                Logger.Error("Dome shutter ordered to close but the dome is disconnected!");
+                Notification.ShowError(Loc.Instance["LblDomeNotConnectedError"]);
                 return false;
             }
         }

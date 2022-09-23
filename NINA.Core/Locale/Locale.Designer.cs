@@ -7386,6 +7386,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dome &amp; mount geometry.
+        /// </summary>
+        internal static string LblDomeMountGeometry {
+            get {
+                return ResourceManager.GetString("LblDomeMountGeometry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Dome Source.
         /// </summary>
         internal static string LblDomeNoSource {
@@ -7400,6 +7409,15 @@ namespace NINA.Core.Locale {
         internal static string LblDomeNotConnected {
             get {
                 return ResourceManager.GetString("LblDomeNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The dome driver is not connected!.
+        /// </summary>
+        internal static string LblDomeNotConnectedError {
+            get {
+                return ResourceManager.GetString("LblDomeNotConnectedError", resourceCulture);
             }
         }
         
@@ -7535,6 +7553,15 @@ namespace NINA.Core.Locale {
         internal static string LblDomeShutterClose {
             get {
                 return ResourceManager.GetString("LblDomeShutterClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutter coordination.
+        /// </summary>
+        internal static string LblDomeShutterCoordination {
+            get {
+                return ResourceManager.GetString("LblDomeShutterCoordination", resourceCulture);
             }
         }
         
@@ -11306,6 +11333,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The shutter or roof was ordered to move but the mount is disconnected. Mount status cannot be determined. This can be unsafe!.
+        /// </summary>
+        internal static string LblMountDisconnectedOnShutterMoveError {
+            get {
+                return ResourceManager.GetString("LblMountDisconnectedOnShutterMoveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The mount&apos;s clock differs from the computer&apos;s clock by {0:0} seconds. This may lead to inaccurate pointing and issues with plate solving. Please review your mount&apos;s documentation regarding time configuration..
         /// </summary>
         internal static string LblMountTimeDifferenceTooLarge {
@@ -11320,6 +11356,15 @@ namespace NINA.Core.Locale {
         internal static string LblMountType {
             get {
                 return ResourceManager.GetString("LblMountType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The shutter or roof was ordered to move but the mount is unparked. This can be unsafe!.
+        /// </summary>
+        internal static string LblMountUnparkedOnShutterMoveError {
+            get {
+                return ResourceManager.GetString("LblMountUnparkedOnShutterMoveError", resourceCulture);
             }
         }
         
@@ -12341,6 +12386,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Park dome before shutter operation.
+        /// </summary>
+        internal static string LblParkDomeBeforeShutterMovement {
+            get {
+                return ResourceManager.GetString("LblParkDomeBeforeShutterMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends the dome to its park position before attempting to open or cloose the shutter.
+        /// </summary>
+        internal static string LblParkDomeBeforeShutterMovementTooltip {
+            get {
+                return ResourceManager.GetString("LblParkDomeBeforeShutterMovementTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telescope is set to park at sequence end, yet it is unable to do so.
         /// </summary>
         internal static string LblParkEnabledButTelescopeCannotPark {
@@ -12364,6 +12427,24 @@ namespace NINA.Core.Locale {
         internal static string LblParkMount {
             get {
                 return ResourceManager.GetString("LblParkMount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Park mount before shutter operation.
+        /// </summary>
+        internal static string LblParkMountBeforeShutterMovement {
+            get {
+                return ResourceManager.GetString("LblParkMountBeforeShutterMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempt to park the mount before opening or closing the shutter.
+        /// </summary>
+        internal static string LblParkMountBeforeShutterMovementTooltip {
+            get {
+                return ResourceManager.GetString("LblParkMountBeforeShutterMovementTooltip", resourceCulture);
             }
         }
         
@@ -13826,6 +13907,43 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refuse open or close if mount is unparked.
+        /// </summary>
+        internal static string LblRefuseUnsafeShutterMoveIfMountUnparked {
+            get {
+                return ResourceManager.GetString("LblRefuseUnsafeShutterMoveIfMountUnparked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Causes N.I.N.A. to refuse to open or close the shutter or roof if the mount is in an unparked state.
+        ///This is evaluated AFTER the &quot;Park mount before moving the shutter&quot; setting..
+        /// </summary>
+        internal static string LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip {
+            get {
+                return ResourceManager.GetString("LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refuse open if a Safety Monitor is not connected.
+        /// </summary>
+        internal static string LblRefuseUnsafeShutterMoveIfNoSafetyDevice {
+            get {
+                return ResourceManager.GetString("LblRefuseUnsafeShutterMoveIfNoSafetyDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Causes N.I.N.A. to refuse to open the shutter or roof if a Safety Monitor device is not connected..
+        /// </summary>
+        internal static string LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip {
+            get {
+                return ResourceManager.GetString("LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regions.
         /// </summary>
         internal static string LblRegions {
@@ -14371,6 +14489,15 @@ namespace NINA.Core.Locale {
         internal static string LblRunningEndOfSequence {
             get {
                 return ResourceManager.GetString("LblRunningEndOfSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The shutter or roof was ordered to open but the safety monitor device is disconnected. Opening has been aborted..
+        /// </summary>
+        internal static string LblSafetyDeviceDisconnectedOnShutterMoveError {
+            get {
+                return ResourceManager.GetString("LblSafetyDeviceDisconnectedOnShutterMoveError", resourceCulture);
             }
         }
         
@@ -15191,6 +15318,15 @@ namespace NINA.Core.Locale {
         internal static string LblShowSnapshots {
             get {
                 return ResourceManager.GetString("LblShowSnapshots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTICE: These settings relate to the safety of your equipment. They must be set with careful consideration and with the familiarity you have with your specific setup. They govern only N.I.N.A.&apos;s control of the equipment and are NOT in effect if N.I.N.A. is not running or is not connected to the equipment in question. Dome or roof safety mechanisms should always have a hardware backup and electrical interlocks to prevent any undesired shutter or roof movement. It is your responsibility to ensure that these s [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LblShutterSettingsWarning {
+            get {
+                return ResourceManager.GetString("LblShutterSettingsWarning", resourceCulture);
             }
         }
         

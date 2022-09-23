@@ -21,6 +21,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Custom Action to toggle Low Noise, High Gain, Fan Speed and Average Binning via custom device actions added to Altair, Mallincam, Omegon, Risingcam and Touptek cameras. This action can be controlled via plugins. 
     - Valid parameters for Low Noise, High Gain and Average Binning are  "0", "off", "no", "false", "f", "1", "on", "yes", "true", "t"
     - Valid parameters for Fan Speed are integer values from 0 to Max Fan Speed
+- Added additional options that relate to dome or roll-off-roof shutter operation. Please review the notice in the Shutter Coordination area of Options > Dome settings.
 
 ## Plugin Enablement
 - Added interfaces that allow plugins to provide device drivers
