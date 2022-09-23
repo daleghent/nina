@@ -27,22 +27,37 @@
 <p>If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.<br />
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a></p>
 <h3 id="beta-builds-are-preview-builds-that-contain-the-full-development-effort-for-the-next-release.these-builds-contain-the-full-set-of-features-for-the-next-version-and-are-under-evaluation-to-find-and-fix-potential-bugs.no-major-changes-will-occur-in-these-builds-and-the-focus-is-on-bug-fixing-only-major-changes-may-only-occur-if-a-critical-issue-is-identified-and-a-major-change-is-necessary-to-fix-it.thus-these-builds-should-already-be-quite-stable-to-use.to-be-able-to-roll-back-to-a-previous-released-version-without-losing-the-profiles-backup-the-profiles-which-are-located-at-localappdatanina"><span style="color:yellow;">Beta builds are preview builds that contain the full development effort for the next release. These builds contain the full set of features for the next version and are under evaluation to find and fix potential bugs. No major changes will occur in these builds and the focus is on bug fixing only - major changes may only occur if a critical issue is identified and a major change is necessary to fix it. Thus these builds should already be quite stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span></h3>
-<h1 id="version-2.0-hf2">Version 2.0 HF2</h1>
+<h1 id="version-2.0-hotfix-2">Version 2.0 Hotfix 2</h1>
 <h2 id="bugfixes">Bugfixes</h2>
 <h2 id="improvements">Improvements</h2>
 <ul>
 <li>Guide Chart Colors can now be customized in the guider tab</li>
 <li>Plugin load times have been improved</li>
+<li>Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.</li>
+<li>Added instance number setting to PHD2 to be able to have N.I.N.A. autostart PHD2 with multiple instances and not just the first one</li>
 </ul>
 <h2 id="features">Features</h2>
 <ul>
 <li>Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes</li>
-<li>Plugin Enablement: Added interfaces that allow plugins to provide device drivers
+<li>Added an option in the filter wheel options to disable guiding during a filter change. This can be useful when having filter focus offsets and overshoot backlash compensation enabled to prevent losing guide stars.</li>
+<li>Custom Action to toggle Low Noise, High Gain, Fan Speed and Average Binning via custom device actions added to Altair, Mallincam, Omegon, Risingcam and Touptek cameras. This action can be controlled via plugins.
 <ul>
+<li>Valid parameters for Low Noise, High Gain and Average Binning are  &quot;0&quot;, &quot;off&quot;, &quot;no&quot;, &quot;false&quot;, &quot;f&quot;, &quot;1&quot;, &quot;on&quot;, &quot;yes&quot;, &quot;true&quot;, &quot;t&quot;</li>
+<li>Valid parameters for Fan Speed are integer values from 0 to Max Fan Speed</li>
+</ul>
+</li>
+<li>Added additional options that relate to dome or roll-off-roof shutter operation. Please review the notice in the Shutter Coordination area of Options &gt; Dome settings.</li>
+</ul>
+<h2 id="plugin-enablement">Plugin Enablement</h2>
+<ul>
+<li>Added interfaces that allow plugins to provide device drivers
+<ul>
+<li>Each device type can also provide dedicated settings in the equipment setting sections</li>
 <li>This change will make it necessary for plugins to be loaded completely before being able to connect to the devices.</li>
 </ul>
 </li>
-<li>Plugin Enablement: Plugins can now query for Telescope &quot;DestinationSideOfPier&quot;</li>
+<li>Plugins can now query for Telescope &quot;DestinationSideOfPier&quot;</li>
+<li>New Plugin Eventhooks to react on Befor/After MeridianFlip and After Dithers</li>
 </ul>
 <h1 id="version-2.0-hf-1">Version 2.0 HF 1</h1>
 <h2 id="bugfixes-1">Bugfixes</h2>
