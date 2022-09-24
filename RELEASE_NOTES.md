@@ -14,6 +14,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Plugin load times have been improved
 - Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.
 - Added instance number setting to PHD2 to be able to have N.I.N.A. autostart PHD2 with multiple instances and not just the first one
+- Changed Message Box Instruction to include "Stop Sequence" button along with "Continue" to be able to stop the sequence in case this is used as a checkpoint
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
