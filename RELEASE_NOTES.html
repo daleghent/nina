@@ -29,12 +29,17 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h3 id="beta-builds-are-preview-builds-that-contain-the-full-development-effort-for-the-next-release.these-builds-contain-the-full-set-of-features-for-the-next-version-and-are-under-evaluation-to-find-and-fix-potential-bugs.no-major-changes-will-occur-in-these-builds-and-the-focus-is-on-bug-fixing-only-major-changes-may-only-occur-if-a-critical-issue-is-identified-and-a-major-change-is-necessary-to-fix-it.thus-these-builds-should-already-be-quite-stable-to-use.to-be-able-to-roll-back-to-a-previous-released-version-without-losing-the-profiles-backup-the-profiles-which-are-located-at-localappdatanina"><span style="color:yellow;">Beta builds are preview builds that contain the full development effort for the next release. These builds contain the full set of features for the next version and are under evaluation to find and fix potential bugs. No major changes will occur in these builds and the focus is on bug fixing only - major changes may only occur if a critical issue is identified and a major change is necessary to fix it. Thus these builds should already be quite stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span></h3>
 <h1 id="version-2.0-hotfix-2">Version 2.0 Hotfix 2</h1>
 <h2 id="bugfixes">Bugfixes</h2>
+<ul>
+<li>Fixed QHY Camera selection being lost on rescan</li>
+</ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
 <li>Guide Chart Colors can now be customized in the guider tab</li>
 <li>Plugin load times have been improved</li>
 <li>Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.</li>
 <li>Added instance number setting to PHD2 to be able to have N.I.N.A. autostart PHD2 with multiple instances and not just the first one</li>
+<li>Changed Message Box Instruction to include &quot;Stop Sequence&quot; button along with &quot;Continue&quot; to be able to stop the sequence in case this is used as a checkpoint</li>
+<li>When PHD2 Configuration Changes happen, N.I.N.A. will now requery the pixel scale in case the focal length or pixel size setting of the guider has changed</li>
 </ul>
 <h2 id="features">Features</h2>
 <ul>
