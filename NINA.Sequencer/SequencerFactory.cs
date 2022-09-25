@@ -138,10 +138,10 @@ namespace NINA.Sequencer {
             }
         }
 
-        public ICollectionView ItemsView { get; set; }
-        public ICollectionView InstructionsView { get; set; }
-        public ICollectionView ConditionsView { get; set; }
-        public ICollectionView TriggersView { get; set; }
+        public ICollectionView ItemsView { get; }
+        public ICollectionView InstructionsView { get; }
+        public ICollectionView ConditionsView { get; }
+        public ICollectionView TriggersView { get; }
 
         public T GetContainer<T>() where T : ISequenceContainer {
             return (T)Container.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();

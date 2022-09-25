@@ -28,7 +28,10 @@ namespace NINA.Sequencer {
         IList<ISequenceCondition> Conditions { get; }
         IList<ISequenceContainer> Container { get; }
         IList<ISequenceItem> Items { get; }
-        ICollectionView ItemsView { get; set; }
+        ICollectionView ItemsView { get; }
+        ICollectionView InstructionsView { get; }
+        ICollectionView ConditionsView { get; }
+        ICollectionView TriggersView { get; }
         IList<ISequenceTrigger> Triggers { get; }
         IList<IDateTimeProvider> DateTimeProviders { get; }
         string ViewFilter { get; set; }
