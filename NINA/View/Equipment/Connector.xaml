@@ -74,6 +74,7 @@
             Grid.Column="1"
             MinHeight="40"
             IsEnabled="{Binding Connected, Converter={StaticResource InverseBooleanConverter}}"
+            IsSynchronizedWithCurrentItem="False"
             ItemTemplate="{StaticResource DeviceItemTemplate}"
             ItemsSource="{Binding Source={StaticResource GroupedDevices}}"
             SelectedItem="{Binding SelectedDevice}">

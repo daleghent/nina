@@ -8,6 +8,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 # Version 2.0 Hotfix 2
 
 ## Bugfixes
+- Fixed QHY Camera selection being lost on rescan
 
 ## Improvements
 - Guide Chart Colors can now be customized in the guider tab
