@@ -257,8 +257,16 @@ namespace NINA.WPF.Base.View {
                 }
 
                 if (targetBefore.HasValue) {
-                    double dXInTargetPixels = targetNow.Value.X - targetBefore.Value.X;
-                    double dYInTargetPixels = targetNow.Value.Y - targetBefore.Value.Y;
+                    double deltaX = targetNow.Value.X - targetBefore.Value.X;
+                    double deltaY = targetNow.Value.Y - targetBefore.Value.Y;
+
+                    var rotRad = Astrometry.AstroUtil.ToRadians(ImageRotation);
+                    var cos = Math.Cos(rotRad);
+                    var sin = Math.Sin(rotRad);
+
+                    var dXInTargetPixels = deltaX * cos - sin * deltaY;
+                    var dYInTargetPixels = cos * deltaY + sin * deltaX;
+
 
                     double multiplicatorX = e.ExtentWidth / PART_Canvas.ActualWidth;
                     double multiplicatorY = e.ExtentHeight / PART_Canvas.ActualHeight;
