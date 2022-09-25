@@ -37,7 +37,12 @@
                     Width="200"
                     Height="200"
                     RenderOptions.BitmapScalingMode="NearestNeighbor"
-                    Source="{Binding PixelPeepImage}" />
+                    RenderTransformOrigin="0.5,0.5"
+                    Source="{Binding PixelPeepImage}">
+                    <Image.RenderTransform>
+                        <RotateTransform Angle="{Binding ImageRotation}" />
+                    </Image.RenderTransform>
+                </Image>
 
 
                 <Grid
