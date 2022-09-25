@@ -16,6 +16,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.
 - Added instance number setting to PHD2 to be able to have N.I.N.A. autostart PHD2 with multiple instances and not just the first one
 - Changed Message Box Instruction to include "Stop Sequence" button along with "Continue" to be able to stop the sequence in case this is used as a checkpoint
+- When PHD2 Configuration Changes happen, N.I.N.A. will now requery the pixel scale in case the focal length or pixel size setting of the guider has changed
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes

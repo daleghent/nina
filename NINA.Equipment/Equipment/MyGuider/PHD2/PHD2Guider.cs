@@ -210,11 +210,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     await TryRefreshShiftLockParams();
                 }
 
-                var msg = new Phd2GetPixelScale();
-                var resp = await SendMessage(msg);
-                if (resp.result != null) {
-                    PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
-                }
+                await SetPixelScale();
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -222,6 +218,18 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             }
 
             return connected;
+        }
+
+        public async Task SetPixelScale() {
+            try {
+                var msg = new Phd2GetPixelScale();
+                var resp = await SendMessage(msg);
+                if (resp.result != null) {
+                    PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                }
+            } catch(Exception ex) {
+                Logger.Error(ex);
+            }            
         }
 
         private async Task<bool> ProfileSelectionChanged() {
@@ -950,6 +958,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 case "LockPositionShiftLimitReached": {
                         Logger.Debug($"PHD2 - LockPositionShiftLimitReached!");
                         _ = RestartForLostShiftLock();
+                        break;
+                    }
+                case "ConfigurationChange": {
+                        Logger.Debug($"PHD2 - ConfigurationChange!");
+                        _ = SetPixelScale();
                         break;
                     }
                 default: {
