@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Trigger;
@@ -33,6 +34,9 @@ namespace NINA.View.Sequencer {
         public DataTemplate SequenceCondition { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
+            if(item is SidebarEntity sidebarEntity) {
+                item = sidebarEntity.Entity;
+            }
             if (item is IImmutableContainer) {
                 return SequenceItem;
             } else if (item is IDeepSkyObjectContainer) {

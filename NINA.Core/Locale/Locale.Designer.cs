@@ -2142,6 +2142,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable settings mode. When this mode is enabled each instruction can be disabled or enabled. A disabled instruction will then not be shown inside the sidebar outside of settings mode..
+        /// </summary>
+        internal static string Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load complete sequence from JSON file.
         /// </summary>
         internal static string Lbl_Sequencer_LoadSequence_Tooltip {
@@ -4930,6 +4939,15 @@ namespace NINA.Core.Locale {
         internal static string LblCloudCover {
             get {
                 return ResourceManager.GetString("LblCloudCover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        internal static string LblCollapseAll {
+            get {
+                return ResourceManager.GetString("LblCollapseAll", resourceCulture);
             }
         }
         
@@ -8192,6 +8210,15 @@ namespace NINA.Core.Locale {
         internal static string LblExecutingItemsInParallel {
             get {
                 return ResourceManager.GetString("LblExecutingItemsInParallel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        internal static string LblExpandAll {
+            get {
+                return ResourceManager.GetString("LblExpandAll", resourceCulture);
             }
         }
         

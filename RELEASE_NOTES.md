@@ -25,6 +25,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
     - Valid parameters for Low Noise, High Gain and Average Binning are  "0", "off", "no", "false", "f", "1", "on", "yes", "true", "t"
     - Valid parameters for Fan Speed are integer values from 0 to Max Fan Speed
 - Added additional options that relate to dome or roll-off-roof shutter operation. Please review the notice in the Shutter Coordination area of Options > Dome settings.
+- In the Sequencer Sidebar inside the Instructions Tab a new button is added to enter a Settings Mode - There individual instructions can be disabled to be shown in the sidebar or in the context menus. For example when you have no dome, you can hide all dome instructions to not clog up space.
+- Collapse and Expand all button is added to the sequencer sidebar for the Instructions Tab
 
 ## Plugin Enablement
 - Added interfaces that allow plugins to provide device drivers

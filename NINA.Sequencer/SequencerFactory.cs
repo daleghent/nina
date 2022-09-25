@@ -12,6 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility;
+using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
@@ -32,7 +35,7 @@ using System.Windows.Data;
 
 namespace NINA.Sequencer {
 
-    public class SequencerFactory : ISequencerFactory {
+    public class SequencerFactory : BaseINPC, ISequencerFactory {
         public IList<ISequenceItem> Items { get; private set; }
         public IList<ISequenceCondition> Conditions { get; private set; }
         public IList<ISequenceTrigger> Triggers { get; private set; }
@@ -40,6 +43,7 @@ namespace NINA.Sequencer {
         public IList<IDateTimeProvider> DateTimeProviders { get; private set; }
 
         public SequencerFactory(
+                IProfileService profileService,
                 IList<ISequenceItem> items,
                 IList<ISequenceCondition> conditions,
                 IList<ISequenceTrigger> triggers,
@@ -52,26 +56,64 @@ namespace NINA.Sequencer {
             Triggers = new ObservableCollection<ISequenceTrigger>(triggers);
             Container = new ObservableCollection<ISequenceContainer>(container);
 
-            var instructions = new List<ISequenceEntity>();
+            var enitityOptions = new PluginOptionsAccessor(profileService, Guid.Parse("E7C2BE8E-479B-4DBA-A0B0-D513B77F9A54"));
+            var allEntities = new List<SidebarEntity>();
+            var sidebarItems = new List<SidebarEntity>();
+            var sidebarConditions = new List<SidebarEntity>();
+            var sidebarTriggers = new List<SidebarEntity>();
             foreach (var item in Items) {
-                instructions.Add(item);
+                sidebarItems.Add(new SidebarEntity(item, enitityOptions));
+                allEntities.Add(new SidebarEntity(item, enitityOptions));
             }
             foreach (var condition in Conditions) {
-                instructions.Add(condition);
+                sidebarConditions.Add(new SidebarEntity(condition, enitityOptions));
+                allEntities.Add(new SidebarEntity(condition, enitityOptions));
             }
             foreach (var trigger in Triggers) {
-                instructions.Add(trigger);
+                sidebarTriggers.Add(new SidebarEntity(trigger, enitityOptions));
+                allEntities.Add(new SidebarEntity(trigger, enitityOptions));
             }
 
-            ItemsView = CollectionViewSource.GetDefaultView(instructions);
-            ItemsView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-            ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
-            ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            ItemsView = CollectionViewSource.GetDefaultView(allEntities);
+            ItemsView.GroupDescriptions.Add(new PropertyGroupDescription("Entity.Category"));
+            ItemsView.SortDescriptions.Add(new SortDescription("Entity.Category", ListSortDirection.Ascending));
+            ItemsView.SortDescriptions.Add(new SortDescription("Entity.Name", ListSortDirection.Ascending));
             ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
+
+            InstructionsView = CollectionViewSource.GetDefaultView(sidebarItems);
+            InstructionsView.GroupDescriptions.Add(new PropertyGroupDescription("Entity.Category"));
+            InstructionsView.SortDescriptions.Add(new SortDescription("Entity.Category", ListSortDirection.Ascending));
+            InstructionsView.SortDescriptions.Add(new SortDescription("Entity.Name", ListSortDirection.Ascending));
+            InstructionsView.Filter += new Predicate<object>((object o) => (o as SidebarEntity).Enabled);
+
+            ConditionsView = CollectionViewSource.GetDefaultView(sidebarConditions);
+            ConditionsView.SortDescriptions.Add(new SortDescription("Entity.Category", ListSortDirection.Ascending));
+            ConditionsView.SortDescriptions.Add(new SortDescription("Entity.Name", ListSortDirection.Ascending));
+            ConditionsView.Filter += new Predicate<object>((object o) => (o as SidebarEntity).Enabled);
+
+            TriggersView = CollectionViewSource.GetDefaultView(sidebarTriggers);
+            TriggersView.SortDescriptions.Add(new SortDescription("Entity.Category", ListSortDirection.Ascending));
+            TriggersView.SortDescriptions.Add(new SortDescription("Entity.Name", ListSortDirection.Ascending));
+            TriggersView.Filter += new Predicate<object>((object o) => (o as SidebarEntity).Enabled);
+
+            SettingsMode = false;
+
+            ItemsView = CollectionViewSource.GetDefaultView(allEntities);
+
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
+        }
+
+        private void ProfileService_ProfileChanged(object sender, EventArgs e) {
+            ViewFilter = string.Empty;
+            SettingsMode = false;
         }
 
         private bool ApplyViewFilter(object obj) {
-            return (obj as ISequenceEntity).Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+            var sidebarEntity = obj as SidebarEntity;
+
+            var filterByName = sidebarEntity.Entity.Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+            var filterByEnabled = SettingsMode ? true : sidebarEntity.Enabled;
+            return filterByEnabled && filterByName;
         }
 
         private string viewFilter = string.Empty;
@@ -83,8 +125,23 @@ namespace NINA.Sequencer {
                 ItemsView.Refresh();
             }
         }
+        private bool settingsMode;
+        public bool SettingsMode {
+            get => settingsMode;
+            set {
+                settingsMode = value;
+                RaisePropertyChanged();
+                ItemsView.Refresh();
+                InstructionsView.Refresh();
+                ConditionsView.Refresh();
+                TriggersView.Refresh();
+            }
+        }
 
         public ICollectionView ItemsView { get; set; }
+        public ICollectionView InstructionsView { get; set; }
+        public ICollectionView ConditionsView { get; set; }
+        public ICollectionView TriggersView { get; set; }
 
         public T GetContainer<T>() where T : ISequenceContainer {
             return (T)Container.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();
@@ -101,5 +158,25 @@ namespace NINA.Sequencer {
         public T GetTrigger<T>() where T : ISequenceTrigger {
             return (T)Triggers.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();
         }
+    }
+
+    public class SidebarEntity : BaseINPC {
+        public SidebarEntity(ISequenceEntity entity, PluginOptionsAccessor entityOptions) {
+            Entity = entity;
+            this.entityOptions = entityOptions;
+        }
+
+        public bool Enabled { 
+            get {
+                return entityOptions.GetValueBoolean(this.Entity.GetType().FullName, true);
+            }
+            set {
+                entityOptions.SetValueBoolean(this.Entity.GetType().FullName, value);
+                RaisePropertyChanged();
+            }
+        }
+        public ISequenceEntity Entity { get; }
+
+        private PluginOptionsAccessor entityOptions;
     }
 }

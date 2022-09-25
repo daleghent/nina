@@ -6467,4 +6467,13 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblExpandSidebarTooltip" xml:space="preserve">
     <value>Expands the left sidebars to show larger icons with text</value>
   </data>
+  <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
+    <value>Enable settings mode. When this mode is enabled each instruction can be disabled or enabled. A disabled instruction will then not be shown inside the sidebar outside of settings mode.</value>
+  </data>
+  <data name="LblCollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="LblExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
 </root>

@@ -92,11 +92,13 @@ namespace NINA.View.Sequencer {
 
         private void MenuItemInstruction_Click(object sender, RoutedEventArgs e) {
             if (sender is Control ctrl) {
-                if (ctrl.DataContext is ISequenceItem item) {
-                    if (this.DataContext is SequenceContainer container) {
-                        var p = new DropIntoParameters(item as IDroppable);
-                        p.Position = DropTargetEnum.Center;
-                        container.DropIntoCommand.Execute(p);
+                if (ctrl.DataContext is SidebarEntity entity) {
+                    if (entity.Entity is ISequenceItem item) {
+                        if (this.DataContext is SequenceContainer container) {
+                            var p = new DropIntoParameters(item as IDroppable);
+                            p.Position = DropTargetEnum.Center;
+                            container.DropIntoCommand.Execute(p);
+                        }
                     }
                 }
             }
@@ -104,11 +106,13 @@ namespace NINA.View.Sequencer {
 
         private void MenuItemTrigger_Click(object sender, RoutedEventArgs e) {
             if (sender is Control ctrl) {
-                if (ctrl.DataContext is ISequenceTrigger item) {
-                    if (this.DataContext is SequenceContainer container) {
-                        var p = new DropIntoParameters(item as IDroppable);
-                        p.Position = DropTargetEnum.Center;
-                        container.DropIntoTriggersCommand.Execute(p);
+                if (ctrl.DataContext is SidebarEntity entity) {
+                    if (entity.Entity is ISequenceTrigger item) {
+                        if (this.DataContext is SequenceContainer container) {
+                            var p = new DropIntoParameters(item as IDroppable);
+                            p.Position = DropTargetEnum.Center;
+                            container.DropIntoTriggersCommand.Execute(p);
+                        }
                     }
                 }
             }
@@ -116,11 +120,13 @@ namespace NINA.View.Sequencer {
 
         private void MenuItemCondition_Click(object sender, RoutedEventArgs e) {
             if (sender is Control ctrl) {
-                if (ctrl.DataContext is ISequenceCondition item) {
-                    if (this.DataContext is SequenceContainer container) {
-                        var p = new DropIntoParameters(item as IDroppable);
-                        p.Position = DropTargetEnum.Center;
-                        container.DropIntoConditionsCommand.Execute(p);
+                if (ctrl.DataContext is SidebarEntity entity) {
+                    if (entity.Entity is ISequenceCondition item) {
+                        if (this.DataContext is SequenceContainer container) {
+                            var p = new DropIntoParameters(item as IDroppable);
+                            p.Position = DropTargetEnum.Center;
+                            container.DropIntoConditionsCommand.Execute(p);
+                        }
                     }
                 }
             }

@@ -45,20 +45,21 @@
         IsHitTestVisible="True">
         <Grid.Resources>
             <utility:BindingProxy x:Key="ViewModel" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SequenceView}}, Path=DataContext}" />
-            <CollectionViewSource x:Key="GroupedItems" Source="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Items}">
-                <CollectionViewSource.GroupDescriptions>
-                    <PropertyGroupDescription PropertyName="Category" />
-                </CollectionViewSource.GroupDescriptions>
-            </CollectionViewSource>
             <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
             <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
-
             <Border
                 x:Key="MenuHeader"
                 MinHeight="30"
                 x:Shared="false"
                 Background="Transparent">
                 <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+            </Border>
+            <Border
+                x:Key="EntityMenuHeader"
+                MinHeight="30"
+                x:Shared="false"
+                Background="Transparent">
+                <TextBlock VerticalAlignment="Center" Text="{Binding Entity.Name}" />
             </Border>
             <Border
                 x:Key="TemplateMenuHeader"
@@ -74,6 +75,15 @@
                 Margin="5"
                 x:Shared="false"
                 Data="{Binding Icon}"
+                Fill="{StaticResource PrimaryBrush}"
+                Stretch="Uniform" />
+            <Path
+                x:Key="EntityMenuIcon"
+                Width="20"
+                Height="20"
+                Margin="5"
+                x:Shared="false"
+                Data="{Binding Entity.Icon}"
                 Fill="{StaticResource PrimaryBrush}"
                 Stretch="Uniform" />
             <Path
@@ -96,8 +106,8 @@
                                 ItemsSource="{Binding Items}">
                                 <MenuItem.ItemContainerStyle>
                                     <Style TargetType="MenuItem">
-                                        <Setter Property="Header" Value="{StaticResource MenuHeader}" />
-                                        <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                        <Setter Property="Header" Value="{StaticResource EntityMenuHeader}" />
+                                        <Setter Property="Icon" Value="{StaticResource EntityMenuIcon}" />
                                         <EventSetter Event="Click" Handler="MenuItemInstruction_Click" />
                                     </Style>
                                 </MenuItem.ItemContainerStyle>
@@ -222,7 +232,7 @@
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu>
-                                    <MenuItem MinHeight="30" ItemsSource="{Binding Source={StaticResource GroupedItems}}">
+                                    <MenuItem MinHeight="30" ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.InstructionsView}">
                                         <MenuItem.Header>
                                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblInstructions}" />
                                         </MenuItem.Header>
@@ -344,11 +354,11 @@
                                             </Style.Triggers>
                                             <Setter Property="ContextMenu">
                                                 <Setter.Value>
-                                                    <ContextMenu ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Triggers}">
+                                                    <ContextMenu ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.TriggersView}">
                                                         <ContextMenu.ItemContainerStyle>
                                                             <Style TargetType="MenuItem">
-                                                                <Setter Property="Header" Value="{StaticResource MenuHeader}" />
-                                                                <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                                <Setter Property="Header" Value="{StaticResource EntityMenuHeader}" />
+                                                                <Setter Property="Icon" Value="{StaticResource EntityMenuIcon}" />
                                                                 <EventSetter Event="Click" Handler="MenuItemTrigger_Click" />
                                                             </Style>
                                                         </ContextMenu.ItemContainerStyle>
