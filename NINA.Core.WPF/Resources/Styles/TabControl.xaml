@@ -181,7 +181,7 @@
             </Grid.ColumnDefinitions>
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <TabPanel
-                    MinWidth="65"
+                    MinWidth="{TemplateBinding MinWidth}"
                     HorizontalAlignment="Left"
                     Background="{StaticResource TertiaryBackgroundBrush}"
                     IsItemsHost="true" />
@@ -204,6 +204,7 @@
         <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
         <Style.Triggers>
             <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="MinWidth" Value="65" />
                 <Setter Property="Template" Value="{StaticResource SecondLevelLeftTabTemplate}" />
                 <Setter Property="ItemContainerStyle" Value="{StaticResource LeftTabItem}" />
             </Trigger>

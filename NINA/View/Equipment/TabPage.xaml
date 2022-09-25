@@ -15,6 +15,7 @@
     xmlns:local="clr-namespace:NINA.View.Equipment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:settings="clr-namespace:NINA.Properties"
     xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -64,28 +65,58 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl Style="{StaticResource SecondLevelTabControl}" TabStripPlacement="Left">
+    <TabControl
+        MinWidth="40"
+        Style="{StaticResource SecondLevelTabControl}"
+        TabStripPlacement="Left">
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource CameraSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid MinWidth="65" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource CameraSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding CameraVM.Cam, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,7,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding CameraVM.CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblCamera}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource CameraSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding CameraVM.Cam, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -94,10 +125,6 @@
                                 Visibility="{Binding CameraVM.CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblCamera}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -107,24 +134,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource FWSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource FWSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Margin="0,0,0,5" Visibility="{Binding FilterWheelVM.FW, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding FilterWheelVM.FilterWheelInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblFilterWheel}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource FWSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Margin="0,0,0,5" Visibility="{Binding FilterWheelVM.FW, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -133,10 +187,6 @@
                                 Visibility="{Binding FilterWheelVM.FilterWheelInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblFilterWheel}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -146,24 +196,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource FocusSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource FocusSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Margin="0,0,0,5" Visibility="{Binding FocuserVM.Focuser, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding FocuserVM.FocuserInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblFocuser}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource FocusSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Margin="0,0,0,5" Visibility="{Binding FocuserVM.Focuser, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -172,10 +249,6 @@
                                 Visibility="{Binding FocuserVM.FocuserInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblFocuser}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -186,24 +259,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource RotatorSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource RotatorSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Margin="0,0,0,5" Visibility="{Binding RotatorVM.RotatorInfo, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding RotatorVM.RotatorInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblRotator}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource RotatorSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Margin="0,0,0,5" Visibility="{Binding RotatorVM.RotatorInfo, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -212,10 +312,6 @@
                                 Visibility="{Binding RotatorVM.RotatorInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblRotator}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -226,24 +322,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource TelescopeSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource TelescopeSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding TelescopeVM.Telescope, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding TelescopeVM.TelescopeInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblTelescope}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource TelescopeSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding TelescopeVM.Telescope, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -252,10 +375,6 @@
                                 Visibility="{Binding TelescopeVM.TelescopeInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblTelescope}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -265,24 +384,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource GuiderSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource GuiderSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding GuiderVM.Guider, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding GuiderVM.Guider.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblGuider}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource GuiderSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding GuiderVM.Guider, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -291,10 +437,6 @@
                                 Visibility="{Binding GuiderVM.Guider.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblGuider}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -304,24 +446,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource SwitchesSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource SwitchesSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding SwitchVM.SwitchHub, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding SwitchVM.SwitchHub.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblSwitch}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource SwitchesSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding SwitchVM.SwitchHub, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -330,10 +499,6 @@
                                 Visibility="{Binding SwitchVM.SwitchHub.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblSwitch}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -344,24 +509,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource LightBulbSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource LightBulbSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Margin="0,0,0,5" Visibility="{Binding FlatDeviceVM.FlatDeviceInfo, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding FlatDeviceVM.FlatDeviceInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblFlatDevice}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource LightBulbSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Margin="0,0,0,5" Visibility="{Binding FlatDeviceVM.FlatDeviceInfo, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -370,10 +562,6 @@
                                 Visibility="{Binding FlatDeviceVM.FlatDeviceInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblFlatDevice}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -384,24 +572,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource CloudSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource CloudSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding WeatherDataVM.WeatherData, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding WeatherDataVM.WeatherData.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblWeather}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource CloudSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding WeatherDataVM.WeatherData, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -410,10 +625,6 @@
                                 Visibility="{Binding WeatherDataVM.WeatherData.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblWeather}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -424,24 +635,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource ObservatorySVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource ObservatorySVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding DomeVM.Dome, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding DomeVM.Dome.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblDome}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource ObservatorySVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding DomeVM.Dome, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -450,10 +688,6 @@
                                 Visibility="{Binding DomeVM.Dome.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblDome}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
@@ -463,24 +697,51 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="10" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid Width="40" Height="40">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource ShieldSVG}"
-                                Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                    <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid Width="40" Height="40">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource ShieldSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                            </Grid>
+
+                            <Grid Visibility="{Binding SafetyMonitorVM.SafetyMonitorInfo, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Path
+                                    Width="10"
+                                    Height="10"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Data="{StaticResource PowerSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}"
+                                    Visibility="{Binding SafetyMonitorVM.SafetyMonitorInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                            </Grid>
                         </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            Style="{StaticResource SideBarTextBlock}"
+                            Text="{ns:Loc LblSafetyMonitor}" />
+                    </Grid>
+                    <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Path
+                            Width="25"
+                            Margin="2.5"
+                            Data="{StaticResource ShieldSVG}"
+                            Stretch="Uniform"
+                            Style="{StaticResource TabItemPath}" />
 
                         <Grid Visibility="{Binding SafetyMonitorVM.SafetyMonitorInfo, Converter={StaticResource NullToVisibilityConverter}}">
                             <Path
                                 Width="10"
                                 Height="10"
-                                Margin="0,0,0,4"
+                                Margin="0,0,0,-3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Data="{StaticResource PowerSVG}"
@@ -489,10 +750,6 @@
                                 Visibility="{Binding SafetyMonitorVM.SafetyMonitorInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                         </Grid>
                     </Grid>
-                    <TextBlock
-                        Grid.Row="1"
-                        Style="{StaticResource SideBarTextBlock}"
-                        Text="{ns:Loc LblSafetyMonitor}" />
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>

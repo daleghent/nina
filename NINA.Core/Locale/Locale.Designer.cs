@@ -4952,6 +4952,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapses the left sidebars to only show smaller icons without text.
+        /// </summary>
+        internal static string LblCollapseSidebarTooltip {
+            get {
+                return ResourceManager.GetString("LblCollapseSidebarTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color sensor is not supported yet.
         /// </summary>
         internal static string LblColorSensorNotSupported {
@@ -8183,6 +8192,15 @@ namespace NINA.Core.Locale {
         internal static string LblExecutingItemsInParallel {
             get {
                 return ResourceManager.GetString("LblExecutingItemsInParallel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expands the left sidebars to show larger icons with text.
+        /// </summary>
+        internal static string LblExpandSidebarTooltip {
+            get {
+                return ResourceManager.GetString("LblExpandSidebarTooltip", resourceCulture);
             }
         }
         
