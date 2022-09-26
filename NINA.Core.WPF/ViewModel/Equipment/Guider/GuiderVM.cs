@@ -146,12 +146,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 _cancelConnectGuiderSource?.Dispose();
                 _cancelConnectGuiderSource = new CancellationTokenSource();
                 Guider = (IGuider)DeviceChooserVM.SelectedDevice;
-                Guider.PropertyChanged += Guider_PropertyChanged;
                 connected = await Guider.Connect(_cancelConnectGuiderSource.Token);
                 _cancelConnectGuiderSource.Token.ThrowIfCancellationRequested();
+                connected = connected && Guider.Connected;
 
                 if (connected) {
                     Guider.GuideEvent += Guider_GuideEvent;
+                    GuideStepsHistory.PixelScale = Guider.PixelScale;
+                    Guider.PropertyChanged += Guider_PropertyChanged;
+
 
                     GuiderInfo = new GuiderInfo {
                         Connected = connected,
@@ -170,6 +173,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
                 }
             } catch (OperationCanceledException) {
+                connected = false;
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(ex.Message);
                 connected = false;
             }
 
@@ -209,14 +216,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         }
 
         public Task Disconnect() {
-            if (Guider != null) {
-                Guider.PropertyChanged -= Guider_PropertyChanged;
-                Guider.GuideEvent -= Guider_GuideEvent;
+            try {
+                if (Guider != null) {
+                    Guider.PropertyChanged -= Guider_PropertyChanged;
+                    Guider.GuideEvent -= Guider_GuideEvent;
+                }
+                Guider?.Disconnect();
+                Guider = null;
+                GuiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
+                BroadcastGuiderInfo();
+            } catch(Exception ex) {
+                Logger.Error(ex);
             }
-            Guider?.Disconnect();
-            Guider = null;
-            GuiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
-            BroadcastGuiderInfo();
             return Task.CompletedTask;
         }
 

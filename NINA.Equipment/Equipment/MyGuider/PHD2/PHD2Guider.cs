@@ -191,7 +191,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         private TaskCompletionSource<bool> _tcs;
 
+        private bool initialized;
+
         public async Task<bool> Connect(CancellationToken token) {
+            initialized = false;
             _tcs = new TaskCompletionSource<bool>();
             var startedPHD2 = await StartPHD2Process();
 
@@ -208,9 +211,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     }
                     await EnsurePHD2EquipmentConnected();
                     await TryRefreshShiftLockParams();
+                    await SetPixelScale();
+                    initialized = true;
                 }
 
-                await SetPixelScale();
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -220,16 +224,18 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return connected;
         }
 
-        public async Task SetPixelScale() {
-            try {
-                var msg = new Phd2GetPixelScale();
-                var resp = await SendMessage(msg);
-                if (resp.result != null) {
-                    PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+        public Task SetPixelScale() {
+            return Task.Run(async () => {
+                try {
+                    var msg = new Phd2GetPixelScale();
+                    var resp = await SendMessage(msg);
+                    if (resp.result != null) {
+                        PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch(Exception ex) {
-                Logger.Error(ex);
-            }            
+            });
         }
 
         private async Task<bool> ProfileSelectionChanged() {
@@ -869,10 +875,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
 
         public void Disconnect() {
+            initialized = false;
             try { _clientCTS?.Cancel(); } catch { }
         }
 
-        private void ProcessEvent(string phdevent, JObject message) {
+        private async Task ProcessEvent(string phdevent, JObject message) {
             switch (phdevent) {
                 case "Resumed": {
                         break;
@@ -961,8 +968,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         break;
                     }
                 case "ConfigurationChange": {
-                        Logger.Debug($"PHD2 - ConfigurationChange!");
-                        _ = SetPixelScale();
+                        if(initialized) { 
+                            Logger.Debug($"PHD2 - ConfigurationChange!");
+                            _ = SetPixelScale();
+                        }
                         break;
                     }
                 default: {
@@ -1128,7 +1137,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                                     if (t != null) {
                                         phdevent = t.ToString();
                                         Logger.Trace($"PHD2 event received - {o}");
-                                        ProcessEvent(phdevent, o);
+                                        await ProcessEvent(phdevent, o);
                                     }
                                 }
                             }
