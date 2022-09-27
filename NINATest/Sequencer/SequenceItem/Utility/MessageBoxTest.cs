@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using FluentAssertions;
+using NINA.Core.Utility.WindowService;
 using NINA.Sequencer;
 using NINA.Sequencer.SequenceItem.Utility;
 using NUnit.Framework;
@@ -29,7 +30,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
         [Test]
         public void MessageBox_Clone_GoodClone() {
-            var sut = new MessageBox();
+            var sut = new MessageBox(new Moq.Mock<IWindowServiceFactory>().Object);
             sut.Icon = new System.Windows.Media.GeometryGroup();
             var item2 = (MessageBox)sut.Clone();
 
@@ -42,7 +43,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
         [Test]
         public void MessageBoxTest_GetEstimatedDuration_Test() {
-            var sut = new MessageBox();
+            var sut = new MessageBox(new Moq.Mock<IWindowServiceFactory>().Object);
 
             var estimate = sut.GetEstimatedDuration();
 
