@@ -262,34 +262,35 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public bool CanGetGain {
             get {
-                return false;
+                return true;
             }
         }
 
         public bool CanSetGain {
             get {
-                return false;
+                return true;
             }
         }
 
         public int GainMax {
             get {
-                return -1;
+                return 10000;
             }
         }
 
         public int GainMin {
             get {
-                return -1;
+                return 0;
             }
         }
 
+        private int gain;
         public int Gain {
-            get {
-                return -1;
-            }
+            get => gain;
 
             set {
+                gain = value;
+                RaisePropertyChanged();
             }
         }
 
