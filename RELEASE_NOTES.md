@@ -10,6 +10,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Bugfixes
 - Fixed QHY Camera selection being lost on rescan
 - Imaging Platesolve Panel will preset initial gain from platesolve settings
+- Flat Wizard not showing results until N.I.N.A. restarted for some filters
 
 ## Improvements
 - Guide Chart Colors can now be customized in the guider tab

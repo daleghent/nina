@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
 using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace NINA.Profile {
     public class FlatDeviceSettings : Settings, IFlatDeviceSettings {
 
         public FlatDeviceSettings() {
-            FilterSettings = new Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
+            FilterSettings = new ObservableDictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
         }
 
         [OnDeserializing]
@@ -38,7 +39,7 @@ namespace NINA.Profile {
         public void OnDeserialized(StreamingContext context) {
             if (FilterSettings == null) {
                 FilterSettings =
-                    new Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
+                    new ObservableDictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
             }
         }
 
@@ -142,10 +143,10 @@ namespace NINA.Profile {
             }
         }
 
-        private Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> filterSettings;
+        private ObservableDictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> filterSettings;
 
         [DataMember]
-        public Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> FilterSettings {
+        public ObservableDictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> FilterSettings {
             get => filterSettings;
             set {
                 filterSettings = value;
