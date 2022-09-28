@@ -147,6 +147,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             if (FlatDevice == null || !FlatDevice.Connected) return Task.FromResult(false);
             if (!int.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
             return Task.Run(async () => {
+                Logger.Info($"Setting brightness to {result}");
                 FlatDevice.Brightness = result;
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
@@ -345,12 +346,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public async Task<bool> OpenCover(CancellationToken token) {
             await ssOpen.WaitAsync(token);
             try {
-                var device = DeviceChooserVM.SelectedDevice;
-                if (device == null || device.Id == "No_Device") return false;
-                var flatD = (IFlatDevice)device;
-                if (flatD.Connected == false) return false;
-                if (!flatD.SupportsOpenClose) return false;
-                var result = await flatD.Open(token);
+                if (FlatDevice.Connected == false) return false;
+                if (!FlatDevice.SupportsOpenClose) return false;
+                Logger.Info("Opening Flat Device Cover");
+                var result = await FlatDevice.Open(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return result;
             } catch (Exception ex) {
@@ -366,12 +365,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public async Task<bool> CloseCover(CancellationToken token) {
             await ssClose.WaitAsync(token);
             try {
-                var device = DeviceChooserVM.SelectedDevice;
-                if (device == null || device.Id == "No_Device") return false;
-                var flatD = (IFlatDevice)device;
-                if (flatD.Connected == false) return false;
-                if (!flatD.SupportsOpenClose) return false;
-                var result = await flatD.Close(token);
+                if (FlatDevice.Connected == false) return false;
+                if (!FlatDevice.SupportsOpenClose) return false;
+                Logger.Info("Closing Flat Device Cover");
+                var result = await FlatDevice.Close(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return result;
             } catch (Exception ex) {
@@ -437,6 +434,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public Task<bool> ToggleLight(object o, CancellationToken token) {
             if (FlatDevice == null || FlatDevice.Connected == false) return Task.FromResult(false);
             return Task.Run(async () => {
+                Logger.Info($"Toggling light to {o}");
                 FlatDevice.LightOn = o is bool b && b;
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
