@@ -25,6 +25,7 @@ using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Equipment.Model;
 using NINA.PlateSolving.Interfaces;
+using NINA.Core.Locale;
 
 namespace NINA.PlateSolving {
 
@@ -49,7 +50,9 @@ namespace NINA.PlateSolving {
             do {
                 remainingAttempts--;
                 var oldFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
+                progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblCameraStateExposing"] });
                 var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(detectStars: false), ct, progress);
+                progress?.Report(new ApplicationStatus() { Status = string.Empty });
 
                 if (renderedImage == null) {
                     plateSolveResult = new PlateSolveResult() { Success = false }; ;

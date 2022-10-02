@@ -125,7 +125,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
+            progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
+            await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);            
 
             var domeInfo = domeMediator.GetInfo();
             if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
@@ -136,6 +137,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     Logger.Warning("Centering Solver - Synchronize dome operation didn't complete successfully. Moving on");
                 }
             }
+            progress?.Report(new ApplicationStatus() { Status = string.Empty });
 
             var plateSolver = plateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = plateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
@@ -169,7 +171,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var service = windowServiceFactory.Create();
-            service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            progress = PlateSolveStatusVM.CreateLinkedProgress(progress);
+            service.Show(PlateSolveStatusVM, Loc.Instance["Lbl_SequenceItem_Platesolving_Center_Name"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {
                 var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 var result = await DoCenter(progress, token);

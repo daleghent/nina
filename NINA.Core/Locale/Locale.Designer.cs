@@ -14367,6 +14367,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotating.
+        /// </summary>
+        internal static string LblRotating {
+            get {
+                return ResourceManager.GetString("LblRotating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotation.
         /// </summary>
         internal static string LblRotation {

@@ -90,7 +90,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var service = windowServiceFactory.Create();
-            service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            progress = PlateSolveStatusVM.CreateLinkedProgress(progress);
+            service.Show(PlateSolveStatusVM, Loc.Instance["Lbl_SequenceItem_Platesolving_SolveAndSync_Name"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {
                 var result = await DoSolve(progress, token);
                 if (result.Success == false) {

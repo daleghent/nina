@@ -422,8 +422,12 @@
     <Compile Include="Utility\WindowService\CustomWindow.cs" />
     <Compile Include="Utility\WindowService\WindowService.cs" />
     <Compile Include="Utility\WindowService\WindowServiceFactory.cs" />
-    <EmbeddedResource Include="Locale\Locale.ca-ES.resx" />
-    <EmbeddedResource Include="Locale\Locale.cs-CZ.resx" />
+    <EmbeddedResource Include="Locale\Locale.ca-ES.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Locale\Locale.cs-CZ.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Locale\Locale.da-DK.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
