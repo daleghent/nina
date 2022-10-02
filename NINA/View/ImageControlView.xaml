@@ -142,21 +142,45 @@
                             </Path.RenderTransform>
                         </Path>
                     </Button>
-                    <Button
-                        Width="35"
+                    <ToggleButton
+                        Grid.Column="1"
                         Margin="2.5"
-                        Command="{Binding InspectAberrationCommand}">
-                        <Button.ToolTip>
+                        Command="{Binding InspectAberrationCommand}"
+                        IsChecked="{Binding ShowAberration}">
+                        <ToggleButton.ToolTip>
                             <ToolTip ToolTipService.ShowOnDisabled="True">
                                 <TextBlock Text="{ns:Loc LblAberrationInspector}" />
                             </ToolTip>
-                        </Button.ToolTip>
-                        <Path
-                            Margin="5"
-                            Data="{StaticResource AberrationInspectorSVG}"
-                            Fill="{StaticResource ButtonForegroundBrush}"
-                            Stretch="Uniform" />
-                    </Button>
+                        </ToggleButton.ToolTip>
+                        <ToggleButton.Style>
+                            <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Path
+                                                    Margin="5"
+                                                    Data="{StaticResource AberrationInspectorSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Path
+                                                    Margin="5"
+                                                    Data="{StaticResource AberrationInspectorSVG}"
+                                                    Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                    Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
                     <ninactrl:CancellableButton
                         Grid.Column="0"
                         Width="35"
@@ -290,7 +314,8 @@
                     <ToggleButton
                         Grid.Column="4"
                         Margin="2.5"
-                        IsChecked="{Binding ShowBahtinovAnalyzer}">
+                        IsChecked="{Binding ShowBahtinovAnalyzer}"
+                        IsEnabled="{Binding ShowAberration, Converter={StaticResource InverseBooleanConverter}}">
                         <ToggleButton.ToolTip>
                             <ToolTip ToolTipService.ShowOnDisabled="True">
                                 <TextBlock Text="{ns:Loc LblTooltipBahtinovAnalyzer}" />

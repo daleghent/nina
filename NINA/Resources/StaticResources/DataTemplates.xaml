@@ -54,10 +54,6 @@
         <view:ManualRotatorView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:AberrationInspectorVM}">
-        <view:AberrationInspectorView />
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type telescope:TelescopeLatLongSyncVM}">
         <equip:TelescopeLatLongSyncView />
     </DataTemplate>

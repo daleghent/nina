@@ -22,6 +22,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - When PHD2 Configuration Changes happen, N.I.N.A. will now requery the pixel scale in case the focal length or pixel size setting of the guider has changed
 - Improved layout of plate solve pop up during centering and added a status indicator inside the window as well
 - Plate solve pop out from solve button above the image inside the imaging tab now shows the thumbnail and also keeps the solve history
+- Aberration inspector no longer pops up a new window but is instead a toggleable button and replaces the image itself. This also allows for looping exposures and keeping the inspector updated.
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
