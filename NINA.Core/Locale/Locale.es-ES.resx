@@ -6405,4 +6405,65 @@ Una vez confirmados elija qué programa de astrometría usará.</value>
   <data name="LblPHD2InstanceNumber" xml:space="preserve">
     <value>Número de instancia PHD2</value>
   </data>
+  <data name="LblDomeMountGeometry" xml:space="preserve">
+    <value>Cúpula y geometría de la montura</value>
+  </data>
+  <data name="LblDomeNotConnectedError" xml:space="preserve">
+    <value>¡El controlador de cúpula no está conectado!</value>
+  </data>
+  <data name="LblDomeShutterCoordination" xml:space="preserve">
+    <value>Coordinación del cierre</value>
+  </data>
+  <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>Se ha mandado una orden a la ventana de la cúpula para que se mueva, pero la montura está desconectada. No se puede determinar el estatus de la montura. ¡Esto puede ser inseguro!</value>
+  </data>
+  <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
+    <value>Se ha ordenado que se mueva la ventana o el techo pero la montura no está aparcada. ¡Esto puede ocasionar riesgos!</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
+    <value>Aparcar cúpula antes de operar con la ventana de la misma</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Envía la cúpula a su posición de aparcado antes de intentar abrir o cerrar la ventana</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
+    <value>Aparcar montura antes de operar con la ventana</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Intento de aparcar la montura antes de abrir o cerrar la ventana</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
+    <value>Rechazar abrir o cerrar si la montura no está aparcada</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
+    <value>Causa que N.I.N.A. se niegue a abrir o cerrar la ventana o el techo si la montura no está aparcada.
+Esto se evalúa DESPUÉS del ajuste "Aparcar montura antes de mover la ventana".</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
+    <value>Rechazar abrir si un monitor de seguridad no está conectado</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
+    <value>Causa que N.I.N.A. se niegue a abrir la ventana o el techo si no se conecta un dispositivo de monitoreo de seguridad.</value>
+  </data>
+  <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>Se ha ordenado la apertura de la ventana o el techo pero el dispositivo de monitoreo de seguridad está desconectado. La apertura ha sido abortada.</value>
+  </data>
+  <data name="LblShutterSettingsWarning" xml:space="preserve">
+    <value>AVISO: Estos ajustes se relacionan con la seguridad de su equipo. Deben configurarse con muy cuidadosamente y con la familiaridad que Ud. tiene con su configuración y equipo específico. Gestionan el control del equipo por parte de N.I.N.A. y NO tienen efecto si N.I.N.A. no está funcionando o no está conectado al equipo en cuestión. Los mecanismos de seguridad de la cúpula o del techo siempre deben tener un respaldo de hardware y dispositivos de bloqueo eléctricos para evitar cualquier movimiento no deseado de la ventana o el techo. Es su responsabilidad asegurarse de que esta configuración no entre en conflicto con la configuración del controlador de su cúpula.</value>
+  </data>
+  <data name="LblCollapseSidebarTooltip" xml:space="preserve">
+    <value>Minimiza las barras laterales de la izquierda para mostrar iconos más pequeños sin texto</value>
+  </data>
+  <data name="LblExpandSidebarTooltip" xml:space="preserve">
+    <value>Expande las barras laterales de la izquierda para mostrar iconos más grandes con sus nombres</value>
+  </data>
+  <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
+    <value>Activar modo de configuración. Cuando este modo está habilitado, cada instrucción puede ser desactivada o activada. Una instrucción desactivada no se mostrará dentro de la barra lateral fuera del modo de configuración.</value>
+  </data>
+  <data name="LblCollapseAll" xml:space="preserve">
+    <value>Minimizar todo</value>
+  </data>
+  <data name="LblExpandAll" xml:space="preserve">
+    <value>Expandir todo</value>
+  </data>
 </root>
