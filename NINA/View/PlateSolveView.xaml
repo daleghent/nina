@@ -49,7 +49,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblCenterRA}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.RA, StringFormat=\{0:0.000\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.RA, StringFormat=\{0:0.000\}, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -58,7 +58,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblCenterRAhms}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.RAString}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.RAString, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -67,7 +67,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblCenterDec}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.Dec, StringFormat=\{0:0.000\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.Dec, StringFormat=\{0:0.000\}, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -76,7 +76,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblCenterDecdms}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.DecString}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.DecString, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -103,7 +103,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblOrientation}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Orientation, StringFormat=\{0:0.00\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Orientation, StringFormat=\{0:0.00\}, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -112,7 +112,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblEpoch}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.Epoch}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Coordinates.Epoch, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -121,7 +121,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblErrorDistance}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Separation.Distance, StringFormat=\{0:0.00°\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Separation.Distance, StringFormat=\{0:0.00°\}, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -139,7 +139,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblRAPixError}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.RaPixError, StringFormat=\{0:0.00\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.RaPixError, Converter={StaticResource NaNToDoubleDashConverter}}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -157,7 +157,7 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblDecPixError}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.DecPixError, StringFormat=\{0:0.00\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.DecPixError, Converter={StaticResource NaNToDoubleDashConverter}}" />
                 </UniformGrid>
             </Border>
 
@@ -193,17 +193,17 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn
                         Width="60"
-                        Binding="{Binding Coordinates.RAString}"
+                        Binding="{Binding Coordinates.RAString, FallbackValue=--}"
                         Header="{ns:Loc LblRA}"
                         IsReadOnly="True" />
                     <DataGridTextColumn
                         Width="60"
-                        Binding="{Binding Coordinates.DecString}"
+                        Binding="{Binding Coordinates.DecString, FallbackValue=--}"
                         Header="{ns:Loc LblDec}"
                         IsReadOnly="True" />
                     <DataGridTextColumn
                         Width="60"
-                        Binding="{Binding Separation.Distance}"
+                        Binding="{Binding Separation.Distance, FallbackValue=--}"
                         Header="{ns:Loc LblErrorDistance}"
                         IsReadOnly="True" />
                     <DataGridTextColumn
@@ -218,12 +218,12 @@
                         IsReadOnly="True" />
                     <DataGridTextColumn
                         Width="40"
-                        Binding="{Binding RaPixError, StringFormat=\{0:0.00\}}"
+                        Binding="{Binding RaPixError, Converter={StaticResource NaNToDoubleDashConverter}}"
                         Header="{ns:Loc LblRAPixError}"
                         IsReadOnly="True" />
                     <DataGridTextColumn
                         Width="40"
-                        Binding="{Binding DecPixError, StringFormat=\{0:0.00\}}"
+                        Binding="{Binding DecPixError, Converter={StaticResource NaNToDoubleDashConverter}}"
                         Header="{ns:Loc LblDecPixError}"
                         IsReadOnly="True" />
                     <DataGridTextColumn
