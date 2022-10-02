@@ -21,6 +21,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Changed Message Box Instruction to include "Stop Sequence" button along with "Continue" to be able to stop the sequence in case this is used as a checkpoint
 - When PHD2 Configuration Changes happen, N.I.N.A. will now requery the pixel scale in case the focal length or pixel size setting of the guider has changed
 - Improved layout of plate solve pop up during centering and added a status indicator inside the window as well
+- Plate solve pop out from solve button above the image inside the imaging tab now shows the thumbnail and also keeps the solve history
 
 ## Features
 - Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes

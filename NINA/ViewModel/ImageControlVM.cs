@@ -34,6 +34,7 @@ using NINA.Image.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using NINA.WPF.Base.ViewModel;
+using Accord.IO;
 
 namespace NINA.ViewModel {
 
@@ -366,9 +367,18 @@ namespace NINA.ViewModel {
             }
         }
 
+        private IWindowService service;
+        private PlateSolvingStatusVM plateSolveStatusVM;
         private async Task<bool> PlateSolveImage() {
             if (this.RenderedImage != null) {
                 try {
+                    if(plateSolveStatusVM == null) {
+                        plateSolveStatusVM = new PlateSolvingStatusVM();
+                        service = WindowServiceFactory.Create();
+                    } else {
+                        await service.Close();
+                    }
+
                     _plateSolveToken?.Dispose();
                     _plateSolveToken = new CancellationTokenSource();
 
@@ -388,11 +398,11 @@ namespace NINA.ViewModel {
 
                     var imageSolver = new ImageSolver(plateSolver, blindSolver);
 
-                    var service = WindowServiceFactory.Create();
-                    var plateSolveStatusVM = new PlateSolvingStatusVM();
+                    
                     service.Show(plateSolveStatusVM, this.Title + " - " + plateSolveStatusVM.Title, ResizeMode.CanResize, WindowStyle.ToolWindow);
-
-                    var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, _progress, _plateSolveToken.Token);
+                    plateSolveStatusVM.PlateSolveResult = null;
+                    plateSolveStatusVM.Thumbnail = await this.RenderedImage.GetThumbnail();
+                    var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, plateSolveStatusVM.CreateLinkedProgress(_progress), _plateSolveToken.Token);
                     if(result.Success && telescopeMediator.GetInfo().Connected) { 
                         var scopePosition = telescopeMediator.GetCurrentPosition();
                         var resultCoordinates = result.Coordinates.Transform(scopePosition.Epoch);
