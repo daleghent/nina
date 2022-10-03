@@ -25,64 +25,18 @@ namespace NINA.Plugin {
     /// This is necessary due to offline installations not having any information about the latest online plugin manifests
     /// </summary>
     internal class PluginCompatibilityMap {
-        private string raw = @"
-[
-  {
-    'name': 'Orbuculum',
-    'identifier': 'a6c614f3-c3ab-423a-8be1-d480a253f07c',
-    'minimumVersion': '1.0.4.0'
-  },
-  {
-    'name': 'ExoPlanets',
-    'identifier': '6d0e07f2-8773-4229-dc2b-f451e53c677f',
-    'minimumVersion': '1.1.4.0'
-  },
-  {
-    'name': 'DIY Meridian Flip',
-    'identifier': '38367705-3489-4528-9b4a-c7765bc0eced',
-    'minimumVersion': '1.1.1.0'
-  },
-  {
-    'name': 'Smart Meridian Flip',
-    'identifier': '6d0e07f2-8773-4229-bf2c-f451e53f677a',
-    'minimumVersion': '1.0.1.3'
-  },
-  {
-    'name': 'Astro-Physics Tools',
-    'identifier': '99688A5D-BD28-4D8D-80D5-3D4192BB987D',
-    'minimumVersion': '0.5.0.0'
-  },
-  {
-    'name': 'Ground Station',
-    'identifier': '2737AFDF-A1AA-48C3-BE17-0F5F03282AEB',
-    'minimumVersion': '1.11.0.0'
-  },
-  {
-    'name': 'Moon Angle',
-    'identifier': '036af399-91b0-4a29-a7d3-44af0bfde13e',
-    'minimumVersion': '1.3.0.0'
-  },
-  {
-    'name': 'Scope Control',
-    'identifier': '0bcbb707-6611-4266-9686-231be457f069',
-    'minimumVersion': '1.2.2.0'
-  },
-  {
-    'name': 'Framing Cache Generator',
-    'identifier': 'b71ce4a9-17bd-4152-a372-e9e6e127ddfb',
-    'minimumVersion': '65535.0.0.0'
-  }
-]";
-
-
         public PluginCompatibilityMap() {
-            CompatibilityMap = new Dictionary<string, PluginCompatibility>();
-
-
-            var obj = JsonConvert.DeserializeObject<List<PluginCompatibility>>(raw);
-            foreach (var compatibility in obj) {
-                CompatibilityMap[compatibility.Identifier] = compatibility;
-            }
+            CompatibilityMap = new Dictionary<string, PluginCompatibility>() {
+                { "Orbuculum", new PluginCompatibility { Name = "Orbuculum", Identifier = "a6c614f3-c3ab-423a-8be1-d480a253f07c", MinimumVersion = "1.0.4.0" } },
+                { "ExoPlanets", new PluginCompatibility { Name = "ExoPlanets", Identifier = "6d0e07f2-8773-4229-dc2b-f451e53c677f", MinimumVersion = "1.1.4.0" } },
+                { "DIY Meridian Flip", new PluginCompatibility { Name = "DIY Meridian Flip", Identifier = "38367705-3489-4528-9b4a-c7765bc0eced", MinimumVersion = "1.1.1.0" } },
+                { "Smart Meridian Flip", new PluginCompatibility { Name = "Smart Meridian Flip", Identifier = "6d0e07f2-8773-4229-bf2c-f451e53f677a", MinimumVersion = "1.0.1.3" } },
+                { "Astro-Physics Tools", new PluginCompatibility { Name = "Astro-Physics Tools", Identifier = "99688A5D-BD28-4D8D-80D5-3D4192BB987D", MinimumVersion = "0.5.0.0" } },
+                { "Ground Station", new PluginCompatibility { Name = "Ground Station", Identifier = "2737AFDF-A1AA-48C3-BE17-0F5F03282AEB", MinimumVersion = "1.11.0.0" } },
+                { "Moon Angle", new PluginCompatibility { Name = "Moon Angle", Identifier = "036af399-91b0-4a29-a7d3-44af0bfde13e", MinimumVersion = "1.3.0.0" } },
+                { "Scope Control", new PluginCompatibility { Name = "Scope Control", Identifier = "0bcbb707-6611-4266-9686-231be457f069", MinimumVersion = "1.2.2.0" } },
+                { "Framing Cache Generator", new PluginCompatibility { Name = "Framing Cache Generator", Identifier = "b71ce4a9-17bd-4152-a372-e9e6e127ddfb", MinimumVersion = "65535.0.0.0" } }
+            };
         }
         private Dictionary<string, PluginCompatibility> CompatibilityMap { get; }
 
