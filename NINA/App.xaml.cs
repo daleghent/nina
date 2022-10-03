@@ -51,7 +51,7 @@ namespace NINA {
                 try {
                     if (config.HasFile) {
                         var backup = config.FilePath + ".bkp";
-                        config.SaveAs(backup, ConfigurationSaveMode.Full, true);
+                        File.Copy(config.FilePath, backup, true);
                     }
                 } catch (Exception) { }
             } catch (ConfigurationErrorsException configException) {
