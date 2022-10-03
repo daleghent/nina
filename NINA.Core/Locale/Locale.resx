@@ -6365,10 +6365,10 @@ Reason: {1}</value>
   <data name="LblAtikExposureSpeed" xml:space="preserve">
     <value>Exposure speed</value>
   </data>
-	<data name="LblAtikGainPreset" xml:space="preserve">
+  <data name="LblAtikGainPreset" xml:space="preserve">
     <value>Gain preset</value>
   </data>
-	<data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
     <value>Heater power level</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
@@ -6487,5 +6487,8 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   </data>
   <data name="LblRotating" xml:space="preserve">
     <value>Rotating</value>
+  </data>
+  <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
+    <value>The drive rate {0} is invalid to move the telescope axis. Please enter a different rate.</value>
   </data>
 </root>

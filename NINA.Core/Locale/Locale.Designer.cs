@@ -3143,6 +3143,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The drive rate {0} is invalid to move the telescope axis. Please enter a different rate..
+        /// </summary>
+        internal static string LblASCOMTelescopeDriveRateInvalid {
+            get {
+                return ResourceManager.GetString("LblASCOMTelescopeDriveRateInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error retrieving image data from camera!.
         /// </summary>
         internal static string LblASIImageDownloadError {
