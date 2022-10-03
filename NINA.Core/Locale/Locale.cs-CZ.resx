@@ -6470,4 +6470,7 @@ Toto se vyhodnotí PO nastavení "Zaparkovat montáž před pohybem štěrbiny".
   <data name="LblExpandAll" xml:space="preserve">
     <value>Rozbalit Vše</value>
   </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Otáčení</value>
+  </data>
 </root>

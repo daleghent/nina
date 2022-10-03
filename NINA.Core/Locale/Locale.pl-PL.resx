@@ -6465,4 +6465,7 @@ Sprawdzane PO "Zaparkuj przed przesunięciem przesłony".</value>
   <data name="LblExpandAll" xml:space="preserve">
     <value>Rozwiń wszystko</value>
   </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Rotacja</value>
+  </data>
 </root>

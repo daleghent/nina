@@ -6465,4 +6465,7 @@ Això s'avalua DESPRÉS del paràmetre "Estacionar la muntura abans de moure la 
   <data name="LblExpandAll" xml:space="preserve">
     <value>Expandir tot</value>
   </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Rotant</value>
+  </data>
 </root>

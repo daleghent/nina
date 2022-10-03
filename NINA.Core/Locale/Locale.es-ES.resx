@@ -6466,4 +6466,7 @@ Esto se evalúa DESPUÉS del ajuste "Aparcar montura antes de mover la ventana".
   <data name="LblExpandAll" xml:space="preserve">
     <value>Expandir todo</value>
   </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Rotando</value>
+  </data>
 </root>
