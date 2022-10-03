@@ -23,6 +23,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Improved layout of plate solve pop up during centering and added a status indicator inside the window as well
 - Plate solve pop out from solve button above the image inside the imaging tab now shows the thumbnail and also keeps the solve history
 - Aberration inspector no longer pops up a new window but is instead a toggleable button and replaces the image itself. This also allows for looping exposures and keeping the inspector updated.
+- Framing Assistant Cache list has a button added to delete individual entries
 - Atik native driver improvements:
     - Full support for Apx26/Apx60 exposure speeds and presets
     - Fast readout/preview mode may be selected on CCD models that support them

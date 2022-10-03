@@ -184,6 +184,7 @@ namespace NINA.ViewModel.FramingAssistant {
             DragStopCommand = new RelayCommand(DragStop);
             DragMoveCommand = new RelayCommand(DragMove);
             ClearCacheCommand = new RelayCommand(ClearCache, (object o) => Cache != null);
+            DeleteCacheEntryCommand = new RelayCommand(DeleteCacheEntry, (object o) => Cache != null);
             RefreshSkyMapAnnotationCommand = new RelayCommand((object o) => SkyMapAnnotator.UpdateSkyMap(), (object o) => SkyMapAnnotator.Initialized);
             MouseWheelCommand = new RelayCommand(MouseWheel);
             GetRotationFromCameraCommand = new AsyncCommand<bool>(GetRotationFromCamera, (object o) => RectangleCalculated && cameraMediator.GetInfo().Connected && cameraMediator.IsFreeToCapture(this));
@@ -616,6 +617,13 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
             }
         }
+        private void DeleteCacheEntry(object obj) {
+            if (Cache != null && obj is XElement elem) {
+
+                Cache.DeleteFromCache(elem);
+                RaisePropertyChanged(nameof(ImageCacheInfo));
+            }
+        }        
 
         public static string FRAMINGASSISTANTCACHEPATH = Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
         public static string FRAMINGASSISTANTCACHEINFOPATH = Path.Combine(FRAMINGASSISTANTCACHEPATH, "CacheInfo.xml");
@@ -1585,6 +1593,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand CancelSlewToCoordinatesCommand { get; private set; }
         public ICommand CancelLoadImageFromFileCommand { get; private set; }
         public ICommand ClearCacheCommand { get; private set; }
+        public ICommand DeleteCacheEntryCommand { get; private set; }        
         public ICommand ScrollViewerSizeChangedCommand { get; private set; }
         public ICommand RefreshSkyMapAnnotationCommand { get; private set; }
         public ICommand MouseWheelCommand { get; private set; }
