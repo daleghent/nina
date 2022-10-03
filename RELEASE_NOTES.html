@@ -44,6 +44,17 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Changed Message Box Instruction to include &quot;Stop Sequence&quot; button along with &quot;Continue&quot; to be able to stop the sequence in case this is used as a checkpoint</li>
 <li>When PHD2 Configuration Changes happen, N.I.N.A. will now requery the pixel scale in case the focal length or pixel size setting of the guider has changed</li>
 <li>Improved layout of plate solve pop up during centering and added a status indicator inside the window as well</li>
+<li>Plate solve pop out from solve button above the image inside the imaging tab now shows the thumbnail and also keeps the solve history</li>
+<li>Aberration inspector no longer pops up a new window but is instead a toggleable button and replaces the image itself. This also allows for looping exposures and keeping the inspector updated.</li>
+<li>Atik native driver improvements:
+<ul>
+<li>Full support for Apx26/Apx60 exposure speeds and presets</li>
+<li>Fast readout/preview mode may be selected on CCD models that support them</li>
+<li>Window heater may now be controlled on models that are equipped with one</li>
+<li>16bit output is now explicitly configured on CMOS models that support both 12bit and 16bit output</li>
+<li>Many thanks to <a href="https://www.atik-cameras.com/">Atik Cameras, Ltd.</a> for loaning a 428ex camera for use in the testing and improvement of the native driver</li>
+</ul>
+</li>
 </ul>
 <h2 id="features">Features</h2>
 <ul>
