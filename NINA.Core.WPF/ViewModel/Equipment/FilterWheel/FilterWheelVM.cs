@@ -142,6 +142,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                         }
 
                         await changeFilter;
+
                         if (activeGuidingStopped) {
                             var resumedGuiding = await this.guiderMediator.StartGuiding(false, progress, token);
                             if (resumedGuiding) {
@@ -150,6 +151,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                                 Logger.Error($"Failed to resume guiding after filter change");
                                 Notification.ShowError(Loc.Instance["LblFilterChangeResumeGuidingFailed"]);
                             }
+                        }
+
+                        if (FW?.Position != filter.Position) {
+                            Logger.Error($"Failed to move filter wheel to filter {filter.Name} at position {filter.Position}");
+                            Notification.ShowError(string.Format(Loc.Instance["LblFilterChangeFailed"], filter.Name, filter.Position));
+                            throw new Exception(string.Format(Loc.Instance["LblFilterChangeFailed"], filter.Name, filter.Position));
                         }
                     }
                     FilterWheelInfo.SelectedFilter = filter;

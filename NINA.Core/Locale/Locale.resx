@@ -6491,4 +6491,8 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
     <value>The drive rate {0} is invalid to move the telescope axis. Please enter a different rate.</value>
   </data>
+  <data name="LblFilterChangeFailed" xml:space="preserve">
+    <value>Failed to move filter wheel to filter {0} at position {1}</value>
+    <comment>First parameter is filter name and second parameter is filter position number</comment>
+  </data>
 </root>

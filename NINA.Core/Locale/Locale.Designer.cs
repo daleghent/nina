@@ -8462,6 +8462,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to move filter wheel to filter {0} at position {1}.
+        /// </summary>
+        internal static string LblFilterChangeFailed {
+            get {
+                return ResourceManager.GetString("LblFilterChangeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter Change Required.
         /// </summary>
         internal static string LblFilterChangeRequired {
