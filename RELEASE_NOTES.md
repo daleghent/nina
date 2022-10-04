@@ -12,6 +12,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Imaging Platesolve Panel will preset initial gain from platesolve settings
 - Flat Wizard not showing results until N.I.N.A. restarted for some filters
 - Flat Wizard Sky Flat Mode no longer closes a flat device cover when connected
+- AutofocusAfterTemperatureChangeTrigger did not set initial temperature correctly when focuser was not connected on sequence start
 
 ## Improvements
 - Guide Chart Colors can now be customized in the guider tab
