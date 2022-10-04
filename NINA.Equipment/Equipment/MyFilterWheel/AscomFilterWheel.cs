@@ -48,7 +48,6 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
         public short Position {
             get {
-                return 3;
                 return GetProperty<short>(nameof(FilterWheel.Position), -1);
             }
             set {
