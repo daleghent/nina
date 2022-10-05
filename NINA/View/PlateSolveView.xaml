@@ -189,11 +189,13 @@
                 <DataGridTextColumn
                     Width="70"
                     Binding="{Binding SolveTime, StringFormat=\{0:HH:mm:ss\}}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblTime}"
                     IsReadOnly="True"
                     SortDirection="Ascending" />
                 <DataGridTemplateColumn
                     Width="25"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblSuccess}"
                     IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
@@ -212,41 +214,49 @@
                 <DataGridTextColumn
                     Width="70"
                     Binding="{Binding Coordinates.RAString, FallbackValue=--}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblRA}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="70"
                     Binding="{Binding Coordinates.DecString, FallbackValue=--}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblDec}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="70"
                     Binding="{Binding Separation.Distance, FallbackValue=--}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblErrorDistance}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="70"
                     Binding="{Binding RaErrorString}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblRAError}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="70"
                     Binding="{Binding DecErrorString}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblDecError}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="40"
                     Binding="{Binding RaPixError, Converter={StaticResource NaNToDoubleDashConverter}}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblRAPixError}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="40"
                     Binding="{Binding DecPixError, Converter={StaticResource NaNToDoubleDashConverter}}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblDecPixError}"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="40"
                     Binding="{Binding Orientation, StringFormat=\{0:0.00\}}"
+                    CellStyle="{StaticResource CenteredDataGridCell}"
                     Header="{ns:Loc LblOrientation}"
                     IsReadOnly="True" />
             </DataGrid.Columns>

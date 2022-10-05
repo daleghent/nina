@@ -91,6 +91,19 @@
 
     <Style x:Key="MyDataGridCell" TargetType="{x:Type DataGridCell}">
         <Setter Property="TextBlock.TextAlignment" Value="Center" />
+
+        <Style.Triggers>
+            <Trigger Property="DataGridCell.IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style BasedOn="{StaticResource MyDataGridCell}" TargetType="{x:Type DataGridCell}" />
+    <Style
+        x:Key="CenteredDataGridCell"
+        BasedOn="{StaticResource MyDataGridCell}"
+        TargetType="{x:Type DataGridCell}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -100,12 +113,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="DataGridCell.IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
-                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
-    <Style BasedOn="{StaticResource MyDataGridCell}" TargetType="{x:Type DataGridCell}" />
 </ResourceDictionary>
