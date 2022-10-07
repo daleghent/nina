@@ -6447,6 +6447,6 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>Expand All</value>
   </data>
   <data name="LblRotating" xml:space="preserve">
-    <value>Rotating</value>
+    <value>回転中</value>
   </data>
 </root>
