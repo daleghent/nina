@@ -344,7 +344,6 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
             {
                 Logger.Warning($"{Loc.Instance["LblSkyGuardOperationCancelled"]} : {cancelException}");
                 Notification.ShowWarning(Loc.Instance["LblSkyGuardOperationCancelled"]);
-                StopSkyProcess();
                 return false;
             }
             catch (Exception ex)
@@ -981,7 +980,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 var msg = $"Operation cancelled.";
                 Logger.Warning(msg);
                 Notification.ShowWarning(Loc.Instance["LblSkyGuardOperationCancelled"]);
-                StopSkyProcess();
+                ExecuteWebRequest($"{SKSS_Uri}/SKSS_StopGuiderCameraExposure");
                 return false;
 
             } catch (TimeoutException) {
@@ -1080,7 +1079,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 var msg = $"Operation cancelled.";
                 Logger.Warning(msg);
                 Notification.ShowWarning(Loc.Instance["LblSkyGuardOperationCancelled"]);
-                StopSkyProcess();
+                ExecuteWebRequest($"{SKSS_Uri}/SKSS_StopGuiderCameraExposure");
                 return false;
 
             }
