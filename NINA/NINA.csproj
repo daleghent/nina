@@ -1173,6 +1173,9 @@
     <Content Include="Database\Migration\7.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\9.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Database\Migration\8.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
