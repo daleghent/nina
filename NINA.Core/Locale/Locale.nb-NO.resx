@@ -2448,7 +2448,7 @@ Forventet HFR: {2}</value>
     <value>Platesolve2 plassering</value>
   </data>
   <data name="LblPlatesolve2NoCoordinates" xml:space="preserve">
-    <value>Ingen koordinater tilgjengelig. Platesolve2 krever koordinater for å løse!</value>
+    <value>Ingen koordinater tilgjengelig. Platesolve2 krever koordinater for å søke!</value>
   </data>
   <data name="LblPlatesolve2NotFound" xml:space="preserve">
     <value>Finner ikke kjørbar fil for Platesolve2</value>
@@ -3008,7 +3008,7 @@ Før du fortsetter, bekreft at systemet er i eller nær god fokus</value>
     <value>Kunne ikke starte guiding</value>
   </data>
   <data name="LblRestartGuidingAfterLostShiftLockFailed" xml:space="preserve">
-    <value>Restarting guiding failed after lost shift lock</value>
+    <value>Gjenopptakelse av guiding feilet etter misting av skift-lås</value>
   </data>
   <data name="LblStartingINBacklashMeasurement" xml:space="preserve">
     <value>Starter INN-måling av slakk</value>
@@ -6086,31 +6086,31 @@ Denne knappen er ikke synlig i mosaikk-modus.</value>
     <value>UTC-tid på format TT-mm-ss</value>
   </data>
   <data name="LblGuiderCanSetShift" xml:space="preserve">
-    <value>Can Shift Tracking</value>
+    <value>Kan skift-følge</value>
   </data>
   <data name="LblGuiderShiftEnabled" xml:space="preserve">
-    <value>Shift Enabled</value>
+    <value>Skift aktivert</value>
   </data>
   <data name="LblGuiderRAShiftRate" xml:space="preserve">
-    <value>RA Shift Rate</value>
+    <value>RA skiftrate</value>
   </data>
   <data name="LblGuiderDecShiftRate" xml:space="preserve">
-    <value>Dec Shift Rate</value>
+    <value>Dek skiftrate</value>
   </data>
   <data name="LblPhd2GuiderShiftAxis" xml:space="preserve">
-    <value>Shift Axis</value>
+    <value>Skiftakse</value>
   </data>
   <data name="LblGuiderSetShiftRate" xml:space="preserve">
-    <value>Set Shift</value>
+    <value>Sett skift</value>
   </data>
   <data name="LblGuiderStopShift" xml:space="preserve">
-    <value>Stop Shift</value>
+    <value>Stopp skift</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockFailed" xml:space="preserve">
-    <value>Setting shift rate after losing shift lock failed</value>
+    <value>Setting av skiftrate feilet etter misting av skiftlås</value>
   </data>
   <data name="LblPhd2GuiderRestartShiftLockSuccess" xml:space="preserve">
-    <value>Restored shift rate after losing shift lock</value>
+    <value>Gjenopprett skiftrate etter misting av skiftlås</value>
   </data>
   <data name="LblDisplayMoonChart" xml:space="preserve">
     <value>Vis månen i diagrammet</value>
@@ -6135,7 +6135,7 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>Kommando</value>
   </data>
   <data name="LblRaw" xml:space="preserve">
-    <value>Raw</value>
+    <value>Rå</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_SendCommand_Description" xml:space="preserve">
     <value>Sender en kommando til den valgte enheten i samsvar med ASCOM SendCommand-metodene. Eventuelle resultater logges i N.I.N.A. sin loggfil.</value>
@@ -6255,10 +6255,10 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>synlig i</value>
   </data>
   <data name="LblPegasusNativeDeprecation" xml:space="preserve">
-    <value>With the introduction of the Pegasus Astro Unity Platform and possible changes to the communication protocols the native drivers will be deprecated in future versions. Please use the ASCOM drivers instead!</value>
+    <value>Etter introduksjon av Pegasus Astro Unity Platform og mulig endring av kommunikasjonsprotokollene vil de innebyggede driverne foreldes og fases ut i framtidige versjoner. Vennligst bruk ASCOM-driverne i stedet!</value>
   </data>
   <data name="LblAlwaysListen" xml:space="preserve">
-    <value>Always listen to file changes</value>
+    <value>Alltid overvåk filendringer</value>
   </data>
   <data name="LblDownloadDelay" xml:space="preserve">
     <value>Ventetid i sekunder før nedlasting</value>
@@ -6281,61 +6281,61 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>Valgt tidskilde kunne ikke fastslå gyldig tid. Velg en annen kilde.</value>
   </data>
   <data name="LblLoadingPlugin" xml:space="preserve">
-    <value>Loading plugin {0} version {1} created by {2}</value>
+    <value>Laster programtillegg {0} versjon {1} fra {2}</value>
   </data>
   <data name="LblMGENSetup" xml:space="preserve">
-    <value>MGEN Setup</value>
+    <value>MGEN-oppsett</value>
   </data>
   <data name="LblSingleImagingLayout" xml:space="preserve">
-    <value>Single imaging tab layout</value>
+    <value>Felles oppsett for foto-panelet</value>
   </data>
   <data name="LblSingleImagingLayoutTooltip" xml:space="preserve">
-    <value>When enabled, the imaging tab will have only one layout for all profiles instead of being profile dependent</value>
+    <value>Når aktivert vil foto-panelet kun ha ett felles oppsett i stedet for å være profilavhengig</value>
   </data>
   <data name="LblPlatesolve3" xml:space="preserve">
     <value>Platesolve3</value>
   </data>
   <data name="LblPlatesolve3Directory" xml:space="preserve">
-    <value>Platesolve3 Location</value>
+    <value>Platesolve3 plassering</value>
   </data>
   <data name="LblPlatesolve3NoCoordinates" xml:space="preserve">
-    <value>No coordinates available. Platesolve3 requires coordinates to solve!</value>
+    <value>Ingen koordinater tilgjengelig. Platesolve3 krever koordinater for å søke!</value>
   </data>
   <data name="LblPlatesolve3NotFound" xml:space="preserve">
-    <value>Platesolve3 exe not found</value>
+    <value>Finner ikke kjørbar fil for Platesolve3</value>
   </data>
   <data name="LblBackupDockLayout" xml:space="preserve">
-    <value>Backup Layout</value>
+    <value>Lagre oppsett</value>
   </data>
   <data name="LblBackupDockLayoutFailed" xml:space="preserve">
-    <value>Backup layout failed</value>
+    <value>Lagring av oppsett feilet</value>
   </data>
   <data name="LblBackupDockLayoutSuccessful" xml:space="preserve">
-    <value>Imaging tab layout backed up</value>
+    <value>Oppsett av foto-panelet er lagret</value>
   </data>
   <data name="LblBackupDockLayoutTooltip" xml:space="preserve">
-    <value>Backup the imaging tab layout to a file, so it can be restored at a later point</value>
+    <value>Lagre oppsettet av foto-panelet, så det kan gjenopprettes senere</value>
   </data>
   <data name="LblDockLayoutReset" xml:space="preserve">
-    <value>Imaging tab layout reset</value>
+    <value>Tilbakestill foto-panelet</value>
   </data>
   <data name="LblDockLayoutRestored" xml:space="preserve">
-    <value>Imaging tab layout restored</value>
+    <value>Foto-panelet er tilbakestilt</value>
   </data>
   <data name="LblRestoreDockLayoutFromFile" xml:space="preserve">
-    <value>Restore Layout</value>
+    <value>Gjenopprett oppsett</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileFailed" xml:space="preserve">
-    <value>Restore layout failed</value>
+    <value>Gjenoppretting feilet</value>
   </data>
   <data name="LblRestoreDockLayoutFromFileTooltip" xml:space="preserve">
-    <value>Restore imaging tab layout from a backup</value>
+    <value>Gjenopprett oppsettet til foto-panelet fra fil</value>
   </data>
   <data name="LblTotal" xml:space="preserve">
-    <value>Total</value>
+    <value>Totalt</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
-    <value>Exposure Info</value>
+    <value>Eksponeringsinfo</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_UpdateTarget" xml:space="preserve">
     <value>OPPDATER MÅL</value>
@@ -6344,39 +6344,39 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>Uten filter</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
-    <value>Dither Settling</value>
+    <value>Hviler etter dither</value>
   </data>
   <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Maximum number of measurement points reached.</value>
+    <value>Autofokusering feilet. Maksimalt antall målepunkter nådd.</value>
   </data>
   <data name="LblAutoFocusZeroPositionReached" xml:space="preserve">
-    <value>Autofocus failed to complete. Focuser Position reached 0.</value>
+    <value>Autofokusering feilet. Fokusposisjon har nådd 0.</value>
   </data>
   <data name="LblRotateImageTooltip" xml:space="preserve">
     <value>Snur bildevisning 90° med klokka. Dette påvirker bare visning, og endrer ikke rådata.</value>
   </data>
   <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
-    <value>Image needs to be solved for framing.
-Please confirm the meta data to use for solving.
-Once confirmed choose which solver should be used.</value>
+    <value>Bildets koordinater må søkes opp for bruk i komposisjon.
+Vennligst bekreft metadata brukt for søket.
+Når metadata er bekreftet, velg søkemotoren som skal brukes.</value>
   </data>
   <data name="LblPlateSolveRequired" xml:space="preserve">
     <value>Astrometrisk søk er nødvendig</value>
   </data>
   <data name="LblFramingSolveWithBlindSolver" xml:space="preserve">
-    <value>When blind solver is selected, the coordinates will be ignored and the blind solver that is set up in the options will be used.</value>
+    <value>Når blind søkemotor velges, blir koordinatene ignorert og den blinde søkemotoren valgt i innstillingene vil bli brukt.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
-    <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
+    <value>Når søkemotor velges, blir koordinatene brukt som referanse og søkemotoren valgt i innstillingene vil bli brukt.</value>
   </data>
   <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
-    <value>Guide Graph Dec Color</value>
+    <value>Farge for Dek i guidegraf</value>
   </data>
   <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
-    <value>Guide Graph RA Color</value>
+    <value>Farge for RA i guidegraf</value>
   </data>
   <data name="LblGuideGraphShowCorrections" xml:space="preserve">
-    <value>Guide Graph Show Corrections</value>
+    <value>Vis korreksjoner i guidegraf</value>
   </data>
   <data name="LblRotateImageAfterFlip" xml:space="preserve">
     <value>Snu bilde etter meridianvending</value>
@@ -6391,73 +6391,72 @@ Once confirmed choose which solver should be used.</value>
     <value>Når dette valget er aktivert, vil følging deaktiveres før hvert filterbytte, for så å aktiveres igjen rett etterpå.</value>
   </data>
   <data name="LblEphemerisNotFound" xml:space="preserve">
-    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+    <value>Efemeridefil for beregning av astronomiske baner ble ikke funnet. N.I.N.A-installasjonen må repareres.</value>
   </data>
   <data name="LblPHD2InstanceNumber" xml:space="preserve">
     <value>PHD2 instansnummer</value>
   </data>
   <data name="LblDomeMountGeometry" xml:space="preserve">
-    <value>Dome &amp; mount geometry</value>
+    <value>Geometri for kuppel og teleskop</value>
   </data>
   <data name="LblDomeNotConnectedError" xml:space="preserve">
-    <value>The dome driver is not connected!</value>
+    <value>Kuppeldriveren er ikke koblet til!</value>
   </data>
   <data name="LblDomeShutterCoordination" xml:space="preserve">
-    <value>Shutter coordination</value>
+    <value>Koordinering av åpning og lukking</value>
   </data>
   <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to move but the mount is disconnected. Mount status cannot be determined. This can be unsafe!</value>
+    <value>Kuppelen eller taket var kommandert til å åpnes eller lukkes, men teleskopet er ikke tilkoblet og tilstanden er derfor ukjent. Dette kan være utrygt!</value>
   </data>
   <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to move but the mount is unparked. This can be unsafe!</value>
+    <value>Kuppelen eller taket var kommandert til å åpnes eller lukkes, men teleskopet er ikke parkert. Dette kan være utrygt!</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
-    <value>Park dome before shutter operation</value>
+    <value>Parker kuppel før åpning eller lukking</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Sends the dome to its park position before attempting to open or cloose the shutter</value>
+    <value>Parkerer kuppelen før åpning eller lukking forsøkes</value>
   </data>
   <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
-    <value>Park mount before shutter operation</value>
+    <value>Parker teleskop før kuppel åpnes eller lukkes</value>
   </data>
   <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Attempt to park the mount before opening or closing the shutter</value>
+    <value>Forsøk å parkere teleskopet før kuppelen åpnes eller lukkes</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
-    <value>Refuse open or close if mount is unparked</value>
+    <value>Hindre åpning eller lukking hvis teleskopet ikke er parkert</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
-    <value>Causes N.I.N.A. to refuse to open or close the shutter or roof if the mount is in an unparked state.
-This is evaluated AFTER the "Park mount before moving the shutter" setting.</value>
+    <value>Hindrer åpning eller lukking av kuppelen hvis teleskopet ikke er parkert. Evalueres etter "Parker teleskop før kuppel åpnes eller lukkes"-innstillingen.</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
-    <value>Refuse open if a Safety Monitor is not connected</value>
+    <value>Hindre åpning eller lukking uten en tilkoblet sikkerhetsovervåker</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
-    <value>Causes N.I.N.A. to refuse to open the shutter or roof if a Safety Monitor device is not connected.</value>
+    <value>Hindrer åpning eller lukking av kuppelen hvis sikkerhetsovervåkeren ikke er tilkoblet.</value>
   </data>
   <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to open but the safety monitor device is disconnected. Opening has been aborted.</value>
+    <value>Kuppelen ble kommandert til å åpnes uten at sikkerhetsovervåker var tilkoblet. Åpning avbrytes.</value>
   </data>
   <data name="LblShutterSettingsWarning" xml:space="preserve">
-    <value>NOTICE: These settings relate to the safety of your equipment. They must be set with careful consideration and with the familiarity you have with your specific setup. They govern only N.I.N.A.'s control of the equipment and are NOT in effect if N.I.N.A. is not running or is not connected to the equipment in question. Dome or roof safety mechanisms should always have a hardware backup and electrical interlocks to prevent any undesired shutter or roof movement. It is your responsibility to ensure that these settings do not conflict with your dome driver's settings.</value>
+    <value>MERK: Disse innstillingene angår sikkerheten til utstyret. De må stilles inn med omhu ut fra din kunnskap om ditt spesifikke oppsett. Innstillingene omfatter kun N.I.N.A., og trer IKKE i kraft dersom N.I.N.A. ikke kjører eller ikke er tilkoblet det aktuelle utstyret. Sikkerhetsmekanismer for kuppel eller tak bør alltid ha mekanisk eller elektrisk forrigling som hindrer uønsket bevegelse av dome eller tak. Det er ditt ansvar å sørge for at disse innstillingene ikke er i konflikt med innstillingene i kuppelens driverinnstillinger.</value>
   </data>
   <data name="LblCollapseSidebarTooltip" xml:space="preserve">
-    <value>Collapses the left sidebars to only show smaller icons without text</value>
+    <value>Kollapser menylinjen på venste side til å vise mindre ikoner uten tekst</value>
   </data>
   <data name="LblExpandSidebarTooltip" xml:space="preserve">
-    <value>Expands the left sidebars to show larger icons with text</value>
+    <value>Utvider menylinjen på venstre side til å vise større ikoner med tekst</value>
   </data>
   <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
-    <value>Enable settings mode. When this mode is enabled each instruction can be disabled or enabled. A disabled instruction will then not be shown inside the sidebar outside of settings mode.</value>
+    <value>Aktiver innstillingsmodus. I denne modusen kan hver instruksjon aktiveres eller deaktiveres. En deaktivert instruksjon vil ikke bli vist i sidepanelet utenom i innstillingsmodus.</value>
   </data>
   <data name="LblCollapseAll" xml:space="preserve">
-    <value>Collapse All</value>
+    <value>Kollaps alle</value>
   </data>
   <data name="LblExpandAll" xml:space="preserve">
-    <value>Expand All</value>
+    <value>Utvid alle</value>
   </data>
   <data name="LblRotating" xml:space="preserve">
-    <value>Rotating</value>
+    <value>Dreier</value>
   </data>
 </root>

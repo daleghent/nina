@@ -6417,26 +6417,26 @@ Un cop confirmat, trieu quin solucionador s'ha d'utilitzar.</value>
     <value>S'ha ordenat que la persiana o el sostre es mogui, però la muntura està desconnectada. No es pot determinar l'estat de la muntura. Això pot ser perillós!</value>
   </data>
   <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
-    <value>S'ha ordenat que la persiana o el sostre es mogui, però la muntura no està estacionada. Això pot ser perillós!</value>
+    <value>S'ha ordenat que la persiana o el sostre es mogui, però la muntura no està aparcada. Això pot ser perillós!</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
-    <value>Estaciona la cúpula abans de l'operació de la persiana</value>
+    <value>Aparca la cúpula abans de l'operació de la persiana</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Envia la cúpula a la seva posició d'estacionament abans d'intentar obrir o tancar la persiana</value>
+    <value>Envia la cúpula a la seva posició d'aparcament abans d'intentar obrir o tancar la persiana</value>
   </data>
   <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
-    <value>Estaciona la muntura abans de l'operació de la persiana</value>
+    <value>Aparca la muntura abans de l'operació de la persiana</value>
   </data>
   <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Intenta estacionar la muntura abans d'obrir o tancar la persiana</value>
+    <value>Intenta aparcar la muntura abans d'obrir o tancar la persiana</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
-    <value>Impedir obrir o tancar si la muntura no està estacionada</value>
+    <value>Impedir obrir o tancar si la muntura no està aparcada</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
-    <value>Obligar que N.I.N.A. impedeixi obrir o tancar la persiana o el sostre si la muntura està sense estacionar.
-Això s'avalua DESPRÉS del paràmetre "Estacionar la muntura abans de moure la persiana".</value>
+    <value>Obliga que N.I.N.A. impedeixi obrir o tancar la persiana o el sostre si la muntura està sense aparcar.
+Això s'avalua DESPRÉS del paràmetre "Aparcar la muntura abans de moure la persiana".</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
     <value>Impedir l'obertura si no hi ha cap monitor de seguretat connectat</value>
