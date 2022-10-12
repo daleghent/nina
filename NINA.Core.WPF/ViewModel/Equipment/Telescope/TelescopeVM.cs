@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ï¿½ 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -769,6 +769,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 if (!profileService.ActiveProfile.TelescopeSettings.NoSync && TelescopeInfo.Connected) {
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSync"] });
 
+                    if(transform.RA<0) {
+                        var mod24Ra = AstroUtil.EuclidianModulus(transform.RA, 24);
+                        Logger.Info($"RA value {transform.RA} is less than zero: applying Euclidean % 24 to RA for sync.");
+                        transform.RA = mod24Ra;
+                    }
                     var position = GetCurrentPosition();
                     bool result = Telescope.Sync(transform);
                     Logger.Info($"{(result ? string.Empty : "FAILED - ")}Syncing scope from {position} to {transform}");
