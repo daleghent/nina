@@ -48,9 +48,9 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             _hasUnknownEpoch = false;
         }
 
-        public AlignmentModes AlignmentMode {
+        public Core.Enum.AlignmentMode AlignmentMode {
             get {
-                return GetProperty(nameof(Telescope.AlignmentMode), AlignmentModes.algGermanPolar);
+                return (Core.Enum.AlignmentMode)GetProperty(nameof(Telescope.AlignmentMode), AlignmentModes.algGermanPolar);
             }
         }
 
@@ -579,6 +579,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             if (Connected) {
                 if (CanSlew) {
                     if (!AtPark) {
+                        var actualRate = rate;
                         try {
                             var translatedAxis = TransformAxis(axis);
 
@@ -589,16 +590,18 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                                 Logger.Warning("Telescope cannot move secondary axis");
                                 Notification.ShowWarning(Loc.Instance["LblTelescopeCannotMoveSecondaryAxis"]);
                             } else {
-                                var actualRate = rate;
                                 if (actualRate != 0) {
                                     //Check that the given rate falls into the values of acceptable rates and adjust to the nearest rate if outside
                                     var sign = 1;
                                     if (actualRate < 0) { sign = -1; }
                                     actualRate = GetAdjustedMovingRate(Math.Abs(rate), Math.Abs(rate), translatedAxis) * sign;
                                 }
-
+                                Logger.Info($"Moving {translatedAxis} Telescope Axis using rate {actualRate}.");
                                 device.MoveAxis(translatedAxis, actualRate);
                             }
+                        } catch (ASCOM.InvalidValueException e) {
+                            Logger.Error(e);
+                            Notification.ShowExternalError(string.Format(Loc.Instance["LblASCOMTelescopeDriveRateInvalid"], actualRate), Loc.Instance["LblASCOMDriverError"]);
                         } catch (Exception e) {
                             Logger.Error(e);
                             Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
@@ -1064,6 +1067,12 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         protected override Telescope GetInstance(string id) {
             return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Telescope(id));
+        }
+
+        public PierSide DestinationSideOfPier(Coordinates coordinates) {
+            coordinates = coordinates.Transform(EquatorialSystem);
+            var pierSide = device.DestinationSideOfPier(coordinates.RA, coordinates.Dec);
+            return (PierSide)pierSide;
         }
     }
 }

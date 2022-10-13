@@ -262,34 +262,35 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public bool CanGetGain {
             get {
-                return false;
+                return true;
             }
         }
 
         public bool CanSetGain {
             get {
-                return false;
+                return true;
             }
         }
 
         public int GainMax {
             get {
-                return -1;
+                return 10000;
             }
         }
 
         public int GainMin {
             get {
-                return -1;
+                return 0;
             }
         }
 
+        private int gain;
         public int Gain {
-            get {
-                return -1;
-            }
+            get => gain;
 
             set {
+                gain = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -578,7 +579,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
                 case CameraType.DIRECTORY:
                     if (files == null || files.Length == 0) {
-                        files = Directory.GetFiles(settings.DirectorySettings.DirectoryPath);
+                        files = Directory.GetFiles(settings.DirectorySettings.DirectoryPath, "*", SearchOption.AllDirectories);
                         if (files.Length == 0) {
                             throw new Exception("No Image found in directory set in Simulator!");
                         }

@@ -439,8 +439,17 @@ namespace NINA.Image.FileFormat.FITS {
                 var key = elem.Key;
                 if (key == null) { continue; }
 
-                var value = elem.Value.OriginalValue.Trim();
-                l.Add(new StringMetaDataHeader(key, value, elem.Value.Comment));
+                if(elem.Value.Value.StartsWith("'")) {
+                    var value = elem.Value.OriginalValue.Trim();
+                    l.Add(new StringMetaDataHeader(key, value, elem.Value.Comment));
+                } else if (elem.Value.OriginalValue == "T" || elem.Value.OriginalValue == "F") {
+                    var value = elem.Value.OriginalValue.Trim() == "T" ? true : false;
+                    l.Add(new BoolMetaDataHeader(key, value, elem.Value.Comment));
+                } else if (elem.Value.OriginalValue.Contains(".") && double.TryParse(elem.Value.OriginalValue, out var number)) {                    
+                    l.Add(new DoubleMetaDataHeader(key, number, elem.Value.Comment));
+                } else if (int.TryParse(elem.Value.OriginalValue, out var integer)) {
+                    l.Add(new IntMetaDataHeader(key, integer, elem.Value.Comment));
+                }
             }
             return l;
         }

@@ -12,9 +12,15 @@
 
 #endregion "copyright"
 
+using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
+using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Sequencer.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -22,6 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -32,11 +39,15 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
     public class MessageBox : SequenceItem {
+        private IWindowServiceFactory windowServiceFactory;
 
         [ImportingConstructor]
-        public MessageBox() { }
+        public MessageBox(IWindowServiceFactory windowServiceFactory) {
+            this.windowServiceFactory = windowServiceFactory;
+        }
 
-        private MessageBox(MessageBox cloneMe) : base(cloneMe) {
+        private MessageBox(MessageBox cloneMe) : this(cloneMe.windowServiceFactory) {
+            CopyMetaData(cloneMe);
         }
 
         public override object Clone() {
@@ -48,13 +59,37 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         [JsonProperty]
         public string Text { get; set; }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            MyMessageBox.Show(Text);
-            return Task.CompletedTask;
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+
+            var service = windowServiceFactory.Create();
+            var msgBoxResult = new MessageBoxResult(Text);
+
+            await service.ShowDialog(msgBoxResult, Loc.Instance["Lbl_Sequencer_Title"]);
+
+            if(!msgBoxResult.Continue) {
+                Logger.Info("Stopping Sequence");
+                var root = ItemUtility.GetRootContainer(this.Parent);
+                root?.Interrupt();
+            }
         }
 
         public override string ToString() {
             return $"Category: {Category}, Item: {nameof(MessageBox)}, Text: {Text}";
         }
+    }
+
+    public class MessageBoxResult {
+        public MessageBoxResult(string message) {
+            this.Message = message;
+            Continue = true;
+            ContinueCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => Continue = true);
+            CancelCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => Continue = false);
+        }
+
+        public string Message { get; }
+        public bool Continue { get; private set; }
+
+        public ICommand ContinueCommand { get; }
+        public ICommand CancelCommand { get; }
     }
 }

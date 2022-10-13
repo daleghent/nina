@@ -1,5 +1,6 @@
 ﻿using NINA.Core.Enum;
 using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -11,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
-    public class ASTPANSDK : IASTPANSDK {
+    public class ASTPANSDK : IGenericCameraSDK {
         private int id;
         private IASTPANPInvokeProxy pInvoke;
         private int bitDepth;
@@ -119,9 +120,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
                     }
                 }                
             } catch (AccessViolationException ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Access Violation Exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Access Violation Exception occurred during frame download!", ex);
             } catch (Exception ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Unexpected exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Unexpected exception occurred during frame download!", ex);
             }
 
             return null;
@@ -189,9 +190,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
                     
                 }
             } catch (AccessViolationException ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Access Violation Exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Access Violation Exception occurred during frame download!", ex);
             } catch (Exception ex) {
-                Logger.Error($"{nameof(PlayerOneSDK)} - Unexpected exception occurred during frame download!", ex);
+                Logger.Error($"{nameof(ASTPANSDK)} - Unexpected exception occurred during frame download!", ex);
             }
 
             return null;

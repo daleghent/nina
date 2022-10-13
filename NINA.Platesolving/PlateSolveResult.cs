@@ -56,25 +56,25 @@ namespace NINA.PlateSolving {
 
         public string RaErrorString {
             get {
-                return AstroUtil.DegreesToHMS(Separation?.RA.Degree ?? 0);
+                return Separation == null ? "--" : AstroUtil.DegreesToHMS(Separation.RA.Degree);
             }
         }
 
         public double RaPixError {
             get {
-                return Separation?.RA.ArcSeconds / Pixscale ?? 0;
+                return Separation == null ? double.NaN : Math.Round(Separation.RA.ArcSeconds / Pixscale, 2);
             }
         }
 
         public double DecPixError {
             get {
-                return Separation?.Dec.ArcSeconds / Pixscale ?? 0;
+                return Separation == null ? double.NaN : Math.Round(Separation.Dec.ArcSeconds / Pixscale, 2);
             }
         }
 
         public string DecErrorString {
             get {
-                return AstroUtil.DegreesToDMS(Separation?.Dec.Degree ?? 0);
+                return Separation == null ? "--" : AstroUtil.DegreesToDMS(Separation.Dec.Degree);
             }
         }
     }

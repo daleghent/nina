@@ -19,7 +19,7 @@ namespace NINA.Core.Interfaces.API.SGP {
 
     public interface ISGPServiceBackend {
 
-        SgEnumerateDevicesResponse EnumerateDevices(SgEnumerateDevices input);
+        Task<SgEnumerateDevicesResponse> EnumerateDevices(SgEnumerateDevices input);
 
         SgGetDeviceStatusResponse GetDeviceStatus(SgGetDeviceStatus input);
 

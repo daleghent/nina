@@ -105,6 +105,8 @@ namespace NINA.Profile {
                 return autoFocusInitialOffsetSteps;
             }
             set {
+                if(value < 1) { value = 1; }
+                if(value > 10) { value = 10; }
                 if (autoFocusInitialOffsetSteps != value) {
                     autoFocusInitialOffsetSteps = value;
                     RaisePropertyChanged();

@@ -415,6 +415,26 @@
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding AutoFocusAfterFlip}" />
                         </StackPanel>
+
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                            <TextBlock
+                                MinWidth="200"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblRotateImageAfterFlip}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblRotateImageAfterFlipTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <CheckBox
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                IsChecked="{Binding RotateImageAfterFlip}">
+                                <CheckBox.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblRotateImageAfterFlipTooltip}" />
+                                </CheckBox.ToolTip>
+                            </CheckBox>
+                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox DataContext="{Binding ImageSettings}" Header="{ns:Loc LblImageOptions}">

@@ -80,5 +80,13 @@ namespace NINA.WPF.Base.Mediator {
         public void OnImagePrepared(ImagePreparedEventArgs e) {
             ImagePrepared?.Invoke(handler, e);
         }
+
+        public int GetImageRotation() {
+            return handler.GetImageRotation();
+        }
+
+        public void SetImageRotation(int rotation) {
+            handler.SetImageRotation(rotation);
+        }
     }
 }

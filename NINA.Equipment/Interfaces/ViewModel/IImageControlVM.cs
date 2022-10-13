@@ -47,6 +47,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         bool ShowCrossHair { get; set; }
         ApplicationStatus Status { get; set; }
         IWindowServiceFactory WindowServiceFactory { get; set; }
+        int ImageRotation { get; set; }
 
         void Dispose();
 

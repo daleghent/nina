@@ -9,6 +9,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using NINA.Core.Interfaces;
 using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Interfaces;
@@ -17,17 +18,22 @@ using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
+    [Export(typeof(IEquipmentProvider))]
     public class PlayerOneProvider : IEquipmentProvider<ICamera> {
+        public string Name => "PlayerOne";
+        public string ContentId => this.GetType().FullName;
         private IProfileService profileService;
         private IPlayerOnePInvokeProxy playerOnePInvoke;
         private IExposureDataFactory exposureDataFactory;
 
+        [ImportingConstructor]
         public PlayerOneProvider(IProfileService profileService, IExposureDataFactory exposureDataFactory) : this(profileService, exposureDataFactory, new PlayerOnePInvokeProxy()) {
         }
 
@@ -45,8 +51,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
                 for (var i = 0; i < cameras; i++) {
                     var err = playerOnePInvoke.POAGetCameraProperties(i, out var props);
                     if(err == POAErrors.POA_OK) {                        
-                        var pOneCamera = new PlayerOneCamera(props.cameraID, props.cameraModelName, playerOnePInvoke.POAGetSDKVersion(), new PlayerOneSDK(props.cameraID, playerOnePInvoke), profileService, exposureDataFactory);
-                        Logger.Debug($"Adding PlayerOnce camera {i}: {props.cameraID} (as {props.cameraModelName})");
+                        var pOneCamera = new GenericCamera(props.cameraID, props.cameraModelName, "Player One", playerOnePInvoke.POAGetSDKVersion(), false, new PlayerOneSDK(props.cameraID, playerOnePInvoke), profileService, exposureDataFactory);
+                        Logger.Debug($"Adding PlayerOne camera {i}: {props.cameraID} (as {props.cameraModelName})");
                         devices.Add(pOneCamera);
                     }
                 }

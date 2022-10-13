@@ -23,18 +23,17 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid Margin="0,5,0,0" DataContext="{Binding ActiveProfile.DomeSettings}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <GroupBox Header="{ns:Loc LblDomeSettings}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid DataContext="{Binding ActiveProfile.DomeSettings}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="{ns:Loc LblDomeMountGeometry}">
                 <StackPanel Orientation="Vertical">
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -240,6 +239,14 @@
                             </TextBox.Text>
                         </ninactrl:UnitTextBox>
                     </UniformGrid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                Header="{ns:Loc LblDomeSettings}">
+                <StackPanel Orientation="Vertical">
                     <UniformGrid
                         Margin="0,5,0,0"
                         VerticalAlignment="Center"
@@ -323,6 +330,21 @@
                             ToolTip="{ns:Loc LblDomeFindHomeBeforeParkTooltip}" />
                         <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FindHomeBeforePark}" />
                     </UniformGrid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox
+                Grid.RowSpan="2"
+                Grid.Column="1"
+                Header="{ns:Loc LblDomeShutterCoordination}">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        Grid.ColumnSpan="3"
+                        Margin="0,10,0,10"
+                        FontSize="16"
+                        Text="{ns:Loc LblShutterSettingsWarning}"
+                        TextWrapping="Wrap" />
+
                     <UniformGrid
                         Margin="0,5,0,0"
                         VerticalAlignment="Center"
@@ -334,8 +356,53 @@
                             ToolTip="{ns:Loc LblDomeCloseOnUnsafeTooltip}" />
                         <CheckBox HorizontalAlignment="Left" IsChecked="{Binding CloseOnUnsafe}" />
                     </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
+                            MinWidth="200"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblRefuseUnsafeShutterMoveIfNoSafetyDevice}"
+                            ToolTip="{ns:Loc LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip}" />
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding RefuseUnsafeShutterOpenSansSafetyDevice}" />
+                    </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
+                            MinWidth="200"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblParkMountBeforeShutterMovement}"
+                            ToolTip="{ns:Loc LblParkMountBeforeShutterMovementTooltip}" />
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountBeforeShutterMove}" />
+                    </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
+                            MinWidth="200"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblParkDomeBeforeShutterMovement}"
+                            ToolTip="{ns:Loc LblParkDomeBeforeShutterMovementTooltip}" />
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkDomeBeforeShutterMove}" />
+                    </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
+                            MinWidth="200"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblRefuseUnsafeShutterMoveIfMountUnparked}"
+                            ToolTip="{ns:Loc LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip}" />
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding RefuseUnsafeShutterMove}" />
+                    </UniformGrid>
                 </StackPanel>
-            </Grid>
-        </GroupBox>
-    </Grid>
+            </GroupBox>
+
+        </Grid>
+    </ScrollViewer>
 </UserControl>

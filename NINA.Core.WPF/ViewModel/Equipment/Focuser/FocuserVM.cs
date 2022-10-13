@@ -43,20 +43,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         private double lastFocusedTemperature = -1000;
         private double lastRoundoff = 0;
 
-        public FocuserVM(IProfileService profileService, IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM focuserChooserVm, IImageGeometryProvider imageGeometryProvider) : base(profileService) {
+        public FocuserVM(IProfileService profileService,
+                         IFocuserMediator focuserMediator,
+                         IApplicationStatusMediator applicationStatusMediator,
+                         IDeviceChooserVM focuserChooserVm,
+                         IImageGeometryProvider imageGeometryProvider) : base(profileService) {
             Title = Loc.Instance["LblFocuser"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("FocusSVG");
 
             this.focuserMediator = focuserMediator;
             this.focuserMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
-            FocuserChooserVM = focuserChooserVm;
-            _ = Rescan();
+            DeviceChooserVM = focuserChooserVm;
 
-            ChooseFocuserCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFocuser));
-            CancelChooseFocuserCommand = new RelayCommand(CancelChooseFocuser);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseFocuser), (object o) => DeviceChooserVM.SelectedDevice != null);
+            CancelConnectCommand = new RelayCommand(CancelChooseFocuser);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshFocuserListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FocuserInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FocuserInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
             MoveFocuserInSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / -2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserInLargeCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * -5)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserOutSmallCommand = new AsyncCommand<int>(() => Task.Run(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / 2d))), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
@@ -72,7 +76,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
 
             progress = new Progress<ApplicationStatus>(p => {
@@ -82,9 +86,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                FocuserChooserVM.GetEquipment();
-                return FocuserChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -257,16 +261,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             try {
                 await Disconnect();
 
-                if (FocuserChooserVM.SelectedDevice == null) return false;
+                if (DeviceChooserVM.SelectedDevice == null) return false;
 
-                if (FocuserChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.FocuserSettings.Id = FocuserChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.FocuserSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
                 progress.Report(new ApplicationStatus { Status = Loc.Instance["LblConnecting"] });
 
-                var newFocuser = GetBacklashCompensationFocuser(profileService, (IFocuser)FocuserChooserVM.SelectedDevice);
+                var newFocuser = GetBacklashCompensationFocuser(profileService, (IFocuser)DeviceChooserVM.SelectedDevice);
                 cancelChooseFocuserCts?.Dispose();
                 cancelChooseFocuserCts = new CancellationTokenSource();
                 try {
@@ -439,10 +443,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             }
         }
 
-        public IDeviceChooserVM FocuserChooserVM { get; }
-        public ICommand RefreshFocuserListCommand { get; }
-        public IAsyncCommand ChooseFocuserCommand { get; }
-        public ICommand CancelChooseFocuserCommand { get; }
+        public IDeviceChooserVM DeviceChooserVM { get; }
+        public IAsyncCommand RescanDevicesCommand { get; }
+        public IAsyncCommand ConnectCommand { get; }
+        public ICommand CancelConnectCommand { get; }
         public ICommand DisconnectCommand { get; }
         public ICommand MoveFocuserCommand { get; }
         public ICommand MoveFocuserInSmallCommand { get; }

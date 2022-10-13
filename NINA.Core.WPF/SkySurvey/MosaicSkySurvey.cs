@@ -39,6 +39,8 @@ namespace NINA.WPF.Base.SkySurvey {
                         } else {
                             image = await GetMosaicImage(name, coordinates, fieldOfView, width, height, ct, progress);
                         }
+                    } catch (OperationCanceledException) {
+                        throw;
                     } catch (Exception ex) {
                         throw new SkySurveyUnavailableException(ex.Message);
                     }

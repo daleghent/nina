@@ -90,39 +90,74 @@ namespace NINA.Utility {
 
                     Bind<IDeviceDispatcher>().To<DeviceDispatcher>().InSingletonScope();
                     Bind<IApplicationVM>().To<ApplicationVM>().InSingletonScope();
+
+                    Bind<IEquipmentProviders, IEquipmentProviders<ICamera>>().To<PluginEquipmentProviders<ICamera>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IFilterWheel>>().To<PluginEquipmentProviders<IFilterWheel>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IFocuser>>().To<PluginEquipmentProviders<IFocuser>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IRotator>>().To<PluginEquipmentProviders<IRotator>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<ITelescope>>().To<PluginEquipmentProviders<ITelescope>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IGuider>>().To<PluginEquipmentProviders<IGuider>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<ISwitchHub>>().To<PluginEquipmentProviders<ISwitchHub>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IFlatDevice>>().To<PluginEquipmentProviders<IFlatDevice>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IWeatherData>>().To<PluginEquipmentProviders<IWeatherData>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<IDome>>().To<PluginEquipmentProviders<IDome>>().InSingletonScope();
+                    Bind<IEquipmentProviders, IEquipmentProviders<ISafetyMonitor>>().To<PluginEquipmentProviders<ISafetyMonitor>>().InSingletonScope();
+                    Bind<IPluginEquipmentProviderManager>().To<PluginEquipmentProviderManager>().InSingletonScope();
+
+                    Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<CameraVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<SGPServiceBackend>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<FilterWheelChooserVM>().WhenInjectedExactlyInto<FilterWheelVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<FocuserChooserVM>().WhenInjectedInto<IFocuserVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<RotatorChooserVM>().WhenInjectedExactlyInto<RotatorVM>().InSingletonScope();                    
+                    Bind<IDeviceChooserVM>().To<TelescopeChooserVM>().WhenInjectedExactlyInto<TelescopeVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<GuiderChooserVM>().WhenInjectedExactlyInto<GuiderVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<SwitchChooserVM>().WhenInjectedExactlyInto<SwitchVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<FlatDeviceChooserVM>().WhenInjectedInto<IFlatDeviceVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<WeatherDataChooserVM>().WhenInjectedExactlyInto<WeatherDataVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<SafetyMonitorChooserVM>().WhenInjectedExactlyInto<SafetyMonitorVM>().InSingletonScope();
+
                     Bind<ICameraVM>().To<CameraVM>().InSingletonScope();
+                    Bind<IFilterWheelVM>().To<FilterWheelVM>().InSingletonScope();
+                    Bind<IFocuserVM>().To<FocuserVM>().InSingletonScope();
+                    Bind<IRotatorVM>().To<RotatorVM>().InSingletonScope();
+                    Bind<ITelescopeVM>().To<TelescopeVM>().InSingletonScope();
+                    Bind<IGuiderVM>().To<GuiderVM>().InSingletonScope();
+                    Bind<ISwitchVM>().To<SwitchVM>().InSingletonScope();
+                    Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
+                    Bind<IWeatherDataVM>().To<WeatherDataVM>().InSingletonScope();
+                    Bind<IDomeVM>().To<DomeVM>().InSingletonScope();
+                    Bind<ISafetyMonitorVM>().To<SafetyMonitorVM>().InSingletonScope();
+
+                    Bind<ICameraMediator>().To<CameraMediator>().InSingletonScope();
+                    Bind<IFilterWheelMediator>().To<FilterWheelMediator>().InSingletonScope();
+                    Bind<IFocuserMediator>().To<FocuserMediator>().InSingletonScope();
+                    Bind<IRotatorMediator>().To<RotatorMediator>().InSingletonScope();
+                    Bind<ITelescopeMediator>().To<TelescopeMediator>().InSingletonScope();
+                    Bind<IGuiderMediator>().To<GuiderMediator>().InSingletonScope();
+                    Bind<ISwitchMediator>().To<SwitchMediator>().InSingletonScope();
+                    Bind<IFlatDeviceMediator>().To<FlatDeviceMediator>().InSingletonScope();
+                    Bind<IWeatherDataMediator>().To<WeatherDataMediator>().InSingletonScope();
+                    Bind<IDomeMediator>().To<DomeMediator>().InSingletonScope();
+                    Bind<ISafetyMonitorMediator>().To<SafetyMonitorMediator>().InSingletonScope();
+
                     Bind<IImagingVM>().To<ImagingVM>().InSingletonScope();
                     Bind<IEquipmentVM>().To<EquipmentVM>().InSingletonScope();
                     Bind<IApplicationDeviceConnectionVM>().To<ApplicationDeviceConnectionVM>().InSingletonScope();
                     Bind<IImageGeometryProvider>().To<ImageGeometryProvider>().InSingletonScope();
-                    Bind<ISwitchVM>().To<SwitchVM>().InSingletonScope();
                     Bind<IOptionsVM>().To<OptionsVM>().InSingletonScope();
-                    Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
-                    Bind<IGuiderVM>().To<GuiderVM>().InSingletonScope();
                     Bind<ISkyAtlasVM>().To<SkyAtlasVM>().InSingletonScope();
                     Bind<IFramingAssistantVM>().To<FramingAssistantVM>().InSingletonScope();
                     Bind<IFocusTargetsVM>().To<FocusTargetsVM>().InSingletonScope();
                     Bind<IAutoFocusToolVM>().To<AutoFocusToolVM>().InSingletonScope();
-                    Bind<ITelescopeVM>().To<TelescopeVM>().InSingletonScope();
-                    Bind<IWeatherDataVM>().To<WeatherDataVM>().InSingletonScope();
-                    Bind<IDomeVM>().To<DomeVM>().InSingletonScope();
                     Bind<IThumbnailVM>().To<ThumbnailVM>().InSingletonScope();
                     Bind<IDockManagerVM>().To<DockManagerVM>().InSingletonScope();
-                    Bind<IRotatorVM>().To<RotatorVM>().InSingletonScope();
-                    Bind<ISafetyMonitorVM>().To<SafetyMonitorVM>().InSingletonScope();
-                    Bind<IFilterWheelVM>().To<FilterWheelVM>().InSingletonScope();
                     Bind<IApplicationStatusVM>().To<ApplicationStatusVM>().InSingletonScope();
-                    Bind<IFocuserVM>().To<FocuserVM>().InSingletonScope();
                     Bind<IVersionCheckVM>().To<VersionCheckVM>().InSingletonScope();
                     Bind<IImageControlVM>().To<ImageControlVM>().InSingletonScope();
                     Bind<IImageHistoryVM>().To<ImageHistoryVM>().InSingletonScope();
-                    Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<RotatorChooserVM>().WhenInjectedExactlyInto<RotatorVM>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<CameraVM>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<SGPServiceBackend>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<FilterWheelChooserVM>().WhenInjectedExactlyInto<FilterWheelVM>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<GuiderChooserVM>().WhenInjectedExactlyInto<GuiderVM>().InSingletonScope();
+                    Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();                    
+
                     Bind<IFlatWizardUserPromptVM>().To<FlatWizardUserPromptVM>().InSingletonScope();
                     Bind<ITwilightCalculator>().To<TwilightCalculator>().InSingletonScope();
                     Bind<IMicroCacheFactory>().To<DefaultMicroCacheFactory>().InSingletonScope();
@@ -140,21 +175,10 @@ namespace NINA.Utility {
                     Bind<IAnchorablePlateSolverVM>().To<AnchorablePlateSolverVM>().InSingletonScope();
                     Bind<IAnchorableSnapshotVM>().To<AnchorableSnapshotVM>().InSingletonScope();
 
-                    Bind<ICameraMediator>().To<CameraMediator>().InSingletonScope();
-                    Bind<ITelescopeMediator>().To<TelescopeMediator>().InSingletonScope();
-                    Bind<IFocuserMediator>().To<FocuserMediator>().InSingletonScope();
-                    Bind<IFilterWheelMediator>().To<FilterWheelMediator>().InSingletonScope();
-                    Bind<IRotatorMediator>().To<RotatorMediator>().InSingletonScope();
-                    Bind<IFlatDeviceMediator>().To<FlatDeviceMediator>().InSingletonScope();
                     Bind<IImagingMediator>().To<ImagingMediator>().InSingletonScope();
-                    Bind<IGuiderMediator>().To<GuiderMediator>().InSingletonScope();
                     Bind<IApplicationStatusMediator>().To<ApplicationStatusMediator>().InSingletonScope();
-                    Bind<ISwitchMediator>().To<SwitchMediator>().InSingletonScope();
-                    Bind<IDomeMediator>().To<DomeMediator>().InSingletonScope();
-                    Bind<IWeatherDataMediator>().To<WeatherDataMediator>().InSingletonScope();
                     Bind<IApplicationMediator>().To<ApplicationMediator>().InSingletonScope();
                     Bind<ISequenceMediator>().To<SequenceMediator>().InSingletonScope();
-                    Bind<ISafetyMonitorMediator>().To<SafetyMonitorMediator>().InSingletonScope();
 
                     Bind<IWindowServiceFactory>().To<WindowServiceFactory>().InSingletonScope();
                     Bind<IPlanetariumFactory>().To<PlanetariumFactory>().InSingletonScope();
@@ -166,10 +190,6 @@ namespace NINA.Utility {
                     Bind<IDomeSynchronization>().To<DomeSynchronization>().InSingletonScope();
                     Bind<IDomeFollower>().To<DomeFollower>().InSingletonScope();
                     Bind<IDeviceUpdateTimerFactory>().To<DefaultDeviceUpateTimerFactory>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<FlatDeviceChooserVM>().WhenInjectedInto<IFlatDeviceVM>().InSingletonScope();
-                    Bind<IDeviceFactory>().To<FlatDeviceFactory>().WhenInjectedInto<FlatDeviceChooserVM>().InSingletonScope();
-                    Bind<IDeviceChooserVM>().To<FocuserChooserVM>().WhenInjectedInto<IFocuserVM>().InSingletonScope();
-                    Bind<IDeviceFactory>().To<FocuserFactory>().WhenInjectedInto<FocuserChooserVM>().InSingletonScope();
 
                     if (DllLoader.IsX86()) {
                         Bind<IImageSaveMediator>().To<ImageSaveMediatorX86>().InSingletonScope();

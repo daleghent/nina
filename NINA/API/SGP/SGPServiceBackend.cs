@@ -157,7 +157,7 @@ namespace NINA.API.SGP {
             Logger.Trace(String.Format("SGP API: ConnectDevice {0} {1}", input.Device, input.DeviceName));
             if (input.Device == DeviceType.Camera) {
                 var response = new SgConnectDeviceResponse();
-                var cameraChooserVM = cameraVM.CameraChooserVM;
+                var cameraChooserVM = cameraVM.DeviceChooserVM;
                 var selectedDevice = cameraChooserVM.Devices.FirstOrDefault(d => d.Name == input.DeviceName);
                 if (selectedDevice == null) {
                     response.Success = false;
@@ -199,10 +199,10 @@ namespace NINA.API.SGP {
             }
         }
 
-        public SgEnumerateDevicesResponse EnumerateDevices(SgEnumerateDevices input) {
+        public async Task<SgEnumerateDevicesResponse> EnumerateDevices(SgEnumerateDevices input) {
             if (input.Device == DeviceType.Camera) {
-                var cameraChooserVM = cameraVM.CameraChooserVM;
-                cameraChooserVM.GetEquipment();
+                var cameraChooserVM = cameraVM.DeviceChooserVM;
+                await cameraChooserVM.GetEquipment();
                 var devices = cameraChooserVM.Devices.ToList();
                 return new SgEnumerateDevicesResponse() {
                     Success = true,

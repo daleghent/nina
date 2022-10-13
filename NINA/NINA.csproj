@@ -338,6 +338,7 @@
     <Compile Include="Utility\PluggableAutoFocusVMFactory.cs" />
     <Compile Include="Utility\PluggableBehaviorManager.cs" />
     <Compile Include="Utility\PluggableBehaviorSelector.cs" />
+    <Compile Include="Utility\PluginEquipmentProvider.cs" />
     <Compile Include="Utility\ProjectVersion.cs" />
     <Compile Include="ViewModel\AboutSDKsVM.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
@@ -501,9 +502,6 @@
     <Compile Include="ViewModel\SkyAtlasVM.cs" />
     <Compile Include="ViewModel\ThumbnailVM.cs" />
     <Compile Include="ViewModel\VersionCheckVM.cs" />
-    <Compile Include="View\AberrationInspectorView.xaml.cs">
-      <DependentUpon>AberrationInspectorView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Equipment\Camera\FileCameraSetupView.xaml.cs">
       <DependentUpon>FileCameraSetupView.xaml</DependentUpon>
     </Compile>
@@ -738,10 +736,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\Window.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AberrationInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1177,6 +1171,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\Migration\7.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Database\Migration\9.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\Migration\8.sql">

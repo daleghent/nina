@@ -93,6 +93,8 @@ namespace NINATest.FlatDevice {
         public async Task TestOpenCoverNotConnectedFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(false);
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            await sut.Connect();
             (await sut.OpenCover(It.IsAny<CancellationToken>())).Should().BeFalse();
         }
 
@@ -101,6 +103,8 @@ namespace NINATest.FlatDevice {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(false);
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            await sut.Connect();
             (await sut.OpenCover(It.IsAny<CancellationToken>())).Should().BeFalse();
         }
 
@@ -113,6 +117,8 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Open(It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.FromResult(expected));
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            await sut.Connect();
             (await sut.OpenCover(CancellationToken.None)).Should().Be(expected);
         }
 
@@ -124,6 +130,8 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Open(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Callback((CancellationToken ct, int delay) => throw new OperationCanceledException());
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            await sut.Connect();
             (await sut.OpenCover(CancellationToken.None)).Should().BeFalse();
         }
 
@@ -137,6 +145,8 @@ namespace NINATest.FlatDevice {
         public async Task TestCloseCoverNotConnectedFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(false);
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            await sut.Connect();
             (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 
@@ -145,6 +155,8 @@ namespace NINATest.FlatDevice {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(false);
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            await sut.Connect();
             (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 
@@ -157,6 +169,8 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Close(It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.FromResult(expected));
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            await sut.Connect();
             (await sut.CloseCover(CancellationToken.None)).Should().Be(expected);
         }
 
@@ -168,6 +182,8 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Close(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Callback((CancellationToken ct, int delay) => throw new OperationCanceledException());
+            mockFlatDevice.Setup(x => x.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            await sut.Connect();
             (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 

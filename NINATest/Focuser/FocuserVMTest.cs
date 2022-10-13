@@ -73,10 +73,10 @@ namespace NINATest.Focuser {
             mockProfileService.SetupAdd(m => m.ProfileChanged += It.IsAny<EventHandler>());
 
             sut.Should().NotBeNull();
-            sut.FocuserChooserVM.Should().Be(mockFocuserChooserVm.Object);
-            sut.RefreshFocuserListCommand.Should().NotBeNull();
-            sut.ChooseFocuserCommand.Should().NotBeNull();
-            sut.CancelChooseFocuserCommand.Should().NotBeNull();
+            sut.DeviceChooserVM.Should().Be(mockFocuserChooserVm.Object);
+            sut.RescanDevicesCommand.Should().NotBeNull();
+            sut.ConnectCommand.Should().NotBeNull();
+            sut.CancelConnectCommand.Should().NotBeNull();
             sut.DisconnectCommand.Should().NotBeNull();
             sut.MoveFocuserCommand.Should().NotBeNull();
             sut.MoveFocuserInSmallCommand.Should().NotBeNull();

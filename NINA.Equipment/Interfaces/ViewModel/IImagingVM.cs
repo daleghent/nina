@@ -32,6 +32,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         void DestroyImage();
 
         void SetImage(BitmapSource img);
+        int GetImageRotation();
+        void SetImageRotation(int rotation);
 
         Task<IExposureData> CaptureImage(
             CaptureSequence sequence,

@@ -80,6 +80,12 @@ namespace NINA.Equipment.Interfaces {
         bool CanMoveSecondaryAxis { get; }
         bool CanSetDeclinationRate { get; }
         bool CanSetRightAscensionRate { get; }
+        AlignmentMode AlignmentMode { get; }
+        bool CanPulseGuide { get; }
+        bool IsPulseGuiding { get; }
+        bool CanSetPierSide { get; }
+        bool CanSlew { get; }
+        System.DateTime UTCDate { get; }
 
         IList<(double, double)> GetAxisRates(TelescopeAxes axis);
 
@@ -104,5 +110,7 @@ namespace NINA.Equipment.Interfaces {
         void SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
         void FindHome();
+
+        PierSide DestinationSideOfPier(Coordinates coordinates);
     }
 }

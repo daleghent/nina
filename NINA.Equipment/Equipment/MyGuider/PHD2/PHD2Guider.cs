@@ -37,6 +37,7 @@ using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 using NINA.Astrometry;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -190,7 +191,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         private TaskCompletionSource<bool> _tcs;
 
+        private bool initialized;
+
         public async Task<bool> Connect(CancellationToken token) {
+            initialized = false;
             _tcs = new TaskCompletionSource<bool>();
             var startedPHD2 = await StartPHD2Process();
 
@@ -207,13 +211,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     }
                     await EnsurePHD2EquipmentConnected();
                     await TryRefreshShiftLockParams();
+                    await SetPixelScale();
+                    initialized = true;
                 }
 
-                var msg = new Phd2GetPixelScale();
-                var resp = await SendMessage(msg);
-                if (resp.result != null) {
-                    PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
-                }
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -221,6 +222,20 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             }
 
             return connected;
+        }
+
+        public Task SetPixelScale() {
+            return Task.Run(async () => {
+                try {
+                    var msg = new Phd2GetPixelScale();
+                    var resp = await SendMessage(msg);
+                    if (resp.result != null) {
+                        PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+            });
         }
 
         private async Task<bool> ProfileSelectionChanged() {
@@ -368,6 +383,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     await SendMessage(loopMsg);
                     await Task.Delay(TimeSpan.FromSeconds(5));
                 }
+
+                // Wait for at least one exposure to finish
+                var exposureDurationResponse = await SendMessage<GetExposureResponse>(new Phd2GetExposure());
+                var durationMs = exposureDurationResponse.result;
+                await Task.Delay(TimeSpan.FromMilliseconds(durationMs + 1000));
 
                 var findStarMsg = new Phd2FindStar() {
                     Parameters = new Phd2FindStarParameter() {
@@ -855,10 +875,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
 
         public void Disconnect() {
+            initialized = false;
             try { _clientCTS?.Cancel(); } catch { }
         }
 
-        private void ProcessEvent(string phdevent, JObject message) {
+        private async Task ProcessEvent(string phdevent, JObject message) {
             switch (phdevent) {
                 case "Resumed": {
                         break;
@@ -946,6 +967,13 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         _ = RestartForLostShiftLock();
                         break;
                     }
+                case "ConfigurationChange": {
+                        if(initialized) { 
+                            Logger.Debug($"PHD2 - ConfigurationChange!");
+                            _ = SetPixelScale();
+                        }
+                        break;
+                    }
                 default: {
                         break;
                     }
@@ -1022,14 +1050,31 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         private async Task<bool> StartPHD2Process() {
-            // if phd2 is not running start it
+            // If PHD2 instance is not running start it.
             try {
-                if (Process.GetProcessesByName("phd2").Length == 0) {
+                bool startInstance = true;
+                var windowTitleRegex = new Regex(@"PHD2 Guiding\(?#?([0-9]*)\)?");
+
+                foreach (var p in Process.GetProcessesByName("phd2")) {
+                    var match = windowTitleRegex.Match(p.MainWindowTitle);
+                    if ((int.TryParse(match.Groups[1].Value, out int i) ? i : 1) == profileService.ActiveProfile.GuiderSettings.PHD2InstanceNumber) {
+                        startInstance = false;
+                        break;
+                    }
+                }
+
+                if (startInstance) {
                     if (!File.Exists(profileService.ActiveProfile.GuiderSettings.PHD2Path)) {
                         throw new FileNotFoundException();
                     }
 
-                    var process = Process.Start(profileService.ActiveProfile.GuiderSettings.PHD2Path);
+                    var process = new Process {
+                        StartInfo = {
+                            FileName = profileService.ActiveProfile.GuiderSettings.PHD2Path,
+                            Arguments = $"-i={profileService.ActiveProfile.GuiderSettings.PHD2InstanceNumber}"
+                        }
+                     };
+                    process?.Start();
                     process?.WaitForInputIdle();
 
                     await Task.Delay(2000);
@@ -1092,7 +1137,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                                     if (t != null) {
                                         phdevent = t.ToString();
                                         Logger.Trace($"PHD2 event received - {o}");
-                                        ProcessEvent(phdevent, o);
+                                        await ProcessEvent(phdevent, o);
                                     }
                                 }
                             }

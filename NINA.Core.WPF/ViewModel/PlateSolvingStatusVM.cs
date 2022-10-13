@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using NINA.Core.Locale;
+using NINA.Core.Model;
 
 namespace NINA.WPF.Base.ViewModel {
 
@@ -43,6 +44,22 @@ namespace NINA.WPF.Base.ViewModel {
         private PlateSolveResult plateSolveResult;
 
         public IProgress<PlateSolveProgress> Progress { get; }
+
+        public IProgress<ApplicationStatus> CreateLinkedProgress(IProgress<ApplicationStatus> original) {
+            return new Progress<ApplicationStatus>(x => {
+                Status = x;
+                original?.Report(x);
+            });
+        }
+
+        private ApplicationStatus status;
+        public ApplicationStatus Status {
+            get => status;
+            set {
+                status = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public PlateSolveResult PlateSolveResult {
             get {

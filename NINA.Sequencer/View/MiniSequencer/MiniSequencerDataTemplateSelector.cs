@@ -15,6 +15,7 @@
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Trigger;
+using NINA.WPF.Base.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,8 @@ namespace NINA.View.Sequencer.MiniSequencer {
         public DataTemplate SequenceCondition { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            if (resources.Contains(item.GetType().FullName + "_Mini")) {
-                return (DataTemplate)resources[item.GetType().FullName + "_Mini"];
+            if (resources.Contains(item.GetType().FullName + DataTemplatePostfix.MiniSequence)) {
+                return (DataTemplate)resources[item.GetType().FullName + DataTemplatePostfix.MiniSequence];
             } else if (item is IImmutableContainer) {
                 return SequenceItem;
             } else if (item is IDeepSkyObjectContainer) {

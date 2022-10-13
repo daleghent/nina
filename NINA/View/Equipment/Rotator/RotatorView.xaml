@@ -19,6 +19,7 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -39,12 +40,12 @@
                         CancelCommand="{Binding CancelConnectCommand}"
                         ConnectCommand="{Binding ConnectCommand}"
                         Connected="{Binding RotatorInfo.Connected}"
-                        Devices="{Binding RotatorChooserVM.Devices}"
+                        Devices="{Binding DeviceChooserVM.Devices}"
                         DisconnectCommand="{Binding DisconnectCommand}"
-                        HasSetupDialog="{Binding RotatorChooserVM.SelectedDevice.HasSetupDialog}"
-                        RefreshCommand="{Binding RefreshRotatorListCommand}"
-                        SelectedDevice="{Binding RotatorChooserVM.SelectedDevice, Mode=TwoWay}"
-                        SetupCommand="{Binding RotatorChooserVM.SetupDialogCommand}" />
+                        HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RescanDevicesCommand}"
+                        SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                 </Grid>
             </GroupBox.Header>
 
@@ -316,6 +317,40 @@
                         </Grid>
                     </Border>
                 </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid Height="40" Margin="5">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblSettings}" />
+                </Grid>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.Resources>
+                    <DataTemplate x:Key="Default">
+                        <TextBlock Text="{ns:Loc LblNone}" />
+                    </DataTemplate>
+                    <DataTemplate x:Key="Failed">
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="Failed to load plugin data template" />
+                    </DataTemplate>
+                    <wpfutil:GenericTemplateSelector
+                        x:Key="ContentSelector"
+                        Default="{StaticResource Default}"
+                        FailedToLoadTemplate="{StaticResource Failed}"
+                        Postfix="{x:Static wpfutil:DataTemplatePostfix.RotatorSettings}" />
+                </Grid.Resources>
+                <ContentControl
+                    Content="{Binding}"
+                    ContentTemplateSelector="{StaticResource ContentSelector}"
+                    DataContext="{Binding Rotator}" />
             </Grid>
         </GroupBox>
     </UniformGrid>

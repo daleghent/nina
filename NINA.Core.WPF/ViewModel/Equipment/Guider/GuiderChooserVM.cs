@@ -23,23 +23,31 @@ using System.IO;
 using System.Collections.Generic;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment.MyGuider.SkyGuard;
+using System.Threading.Tasks;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
-    public class GuiderChooserVM : DeviceChooserVM {
+    public class GuiderChooserVM : DeviceChooserVM<IGuider> {
         private readonly ICameraMediator cameraMediator;
         private readonly ITelescopeMediator telescopeMediator;
         private readonly IWindowServiceFactory windowServiceFactory;
 
-        public GuiderChooserVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IWindowServiceFactory windowServiceFactory) : base(profileService) {
+        public GuiderChooserVM(IProfileService profileService,
+                               ICameraMediator cameraMediator,
+                               ITelescopeMediator telescopeMediator,
+                               IDeviceDispatcher deviceDispatcher,
+                               IWindowServiceFactory windowServiceFactory,
+                               IEquipmentProviders<IGuider> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
             this.cameraMediator = cameraMediator;
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.windowServiceFactory = windowServiceFactory;
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var devices = new List<IDevice>();
                 devices.Add(new DummyGuider(profileService));
                 devices.Add(new PHD2Guider(profileService, windowServiceFactory));
@@ -62,7 +70,21 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     Logger.Error(ex);
                 }
 
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Guiders");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
+
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.GuiderSettings.GuiderName);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

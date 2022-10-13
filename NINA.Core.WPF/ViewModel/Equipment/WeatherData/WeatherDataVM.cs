@@ -36,20 +36,23 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
     public class WeatherDataVM : DockableVM, IWeatherDataVM {
 
-        public WeatherDataVM(IProfileService profileService, IWeatherDataMediator weatherDataMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+        public WeatherDataVM(IProfileService profileService,
+                             IWeatherDataMediator weatherDataMediator,
+                             IApplicationStatusMediator applicationStatusMediator,
+                             IDeviceChooserVM deviceChooserVM) : base(profileService) {
             Title = Loc.Instance["LblWeather"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CloudSVG"];
 
             this.weatherDataMediator = weatherDataMediator;
             this.weatherDataMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
-            this.deviceDispatcher = deviceDispatcher;
-            _ = Rescan();
+            this.DeviceChooserVM = deviceChooserVM;
 
-            ChooseWeatherDataCommand = new AsyncCommand<bool>(() => Task.Run(ChooseWeatherData));
-            CancelChooseWeatherDataCommand = new RelayCommand(CancelChooseWeatherData);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseWeatherData), (object o) => DeviceChooserVM.SelectedDevice != null);
+            CancelConnectCommand = new RelayCommand(CancelChooseWeatherData);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
-            RefreshWeatherDataListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !WeatherDataInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !WeatherDataInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
 
             updateTimer = new DeviceUpdateTimer(
                 GetWeatherDataValues,
@@ -58,14 +61,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                WeatherDataChooserVM.GetEquipment();
-                return WeatherDataChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -81,8 +84,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                     await updateTimer.Stop();
                 }
 
-                if (WeatherDataChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.WeatherDataSettings.Id = WeatherDataChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.WeatherDataSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -93,7 +96,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                     }
                 );
 
-                var weatherdev = (IWeatherData)WeatherDataChooserVM.SelectedDevice;
+                var weatherdev = (IWeatherData)DeviceChooserVM.SelectedDevice;
                 _cancelChooseWeatherDataSource?.Dispose();
                 _cancelChooseWeatherDataSource = new CancellationTokenSource();
                 if (weatherdev != null) {
@@ -312,26 +315,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                 RaisePropertyChanged();
             }
         }
-
-        private WeatherDataChooserVM _weatherDataChooserVM;
-
-        public WeatherDataChooserVM WeatherDataChooserVM {
-            get {
-                if (_weatherDataChooserVM == null) {
-                    _weatherDataChooserVM = new WeatherDataChooserVM(profileService, deviceDispatcher);
-                }
-                return _weatherDataChooserVM;
-            }
-            set => _weatherDataChooserVM = value;
-        }
+        public IDeviceChooserVM DeviceChooserVM { get; set; }
 
         private DeviceUpdateTimer updateTimer;
         private IWeatherDataMediator weatherDataMediator;
         private IApplicationStatusMediator applicationStatusMediator;
-        private IDeviceDispatcher deviceDispatcher;
-        public IAsyncCommand ChooseWeatherDataCommand { get; private set; }
-        public ICommand RefreshWeatherDataListCommand { get; private set; }
-        public ICommand CancelChooseWeatherDataCommand { get; private set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
+        public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
     }
 }

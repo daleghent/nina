@@ -31,6 +31,10 @@ namespace NINA.Profile.Interfaces {
         bool SyncSlewDomeWhenMountSlews { get; set; }
         double RotateDegrees { get; set; }
         bool CloseOnUnsafe { get; set; }
+        bool ParkMountBeforeShutterMove { get; set; }
+        bool RefuseUnsafeShutterMove { get; set; }
+        bool RefuseUnsafeShutterOpenSansSafetyDevice { get; set; }
+        bool ParkDomeBeforeShutterMove { get; set; }
         MountTypeEnum MountType { get; set; }
         double DecOffsetHorizontal_mm { get; set; }
         int SettleTimeSeconds { get; set; }

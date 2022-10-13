@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
-    public interface IASTPANSDK {
+namespace NINA.Equipment.Interfaces {
+    public interface IGenericCameraSDK {
         bool Connected { get; }
 
         void Connect();

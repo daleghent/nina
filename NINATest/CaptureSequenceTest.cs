@@ -92,7 +92,7 @@ namespace NINATest {
         [TestCase(0, 0, 0, 0)]  //Lowest bound
         //[TestCase(24, 0, 0, 0)] //Overflow
         //[TestCase(0, 0, -1, 0)] //Overflow
-        public void CoordinatesTest_ManualInput_RACheck(int raHours, int raMinutes, int raSeconds, double expected) {
+        public void CoordinatesTest_ManualInput_RACheck(int raHours, int raMinutes, double raSeconds, double expected) {
             var l = new CaptureSequenceList();
             var coordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Hours);
 
@@ -118,7 +118,7 @@ namespace NINATest {
         [TestCase(-89, 59, 59, -89.99972222222222)] //high bound
         //[TestCase(90, 0, 1, 90)] //overflow
         //[TestCase(-90, 0, 1, 90)] //overflow
-        public void CoordinatesTest_ManualInput_DecCheck(int decDegrees, int decMinutes, int decSeconds, double expected) {
+        public void CoordinatesTest_ManualInput_DecCheck(int decDegrees, int decMinutes, double decSeconds, double expected) {
             var l = new CaptureSequenceList();
             var coordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Hours);
 

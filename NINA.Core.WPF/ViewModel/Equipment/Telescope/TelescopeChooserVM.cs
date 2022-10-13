@@ -21,22 +21,36 @@ using NINA.Equipment.Utility;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using System.Threading.Tasks;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
-    public class TelescopeChooserVM : DeviceChooserVM {
-        private readonly IDeviceDispatcher deviceDispatcher;
+    public class TelescopeChooserVM : DeviceChooserVM<ITelescope> {
 
-        public TelescopeChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
-            this.deviceDispatcher = deviceDispatcher;
+        public TelescopeChooserVM(IProfileService profileService,
+                                  IDeviceDispatcher deviceDispatcher,
+                                  IEquipmentProviders<ITelescope> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblNoTelescope"]));
+
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Telescopes");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
 
                 try {
                     foreach (ITelescope telescope in ascomInteraction.GetTelescopes()) {
@@ -47,6 +61,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 }
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.TelescopeSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

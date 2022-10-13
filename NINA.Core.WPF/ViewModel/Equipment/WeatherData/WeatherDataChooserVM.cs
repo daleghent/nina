@@ -21,22 +21,36 @@ using NINA.Core.Locale;
 using NINA.Equipment.Utility;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using System.Threading.Tasks;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
-    public class WeatherDataChooserVM : DeviceChooserVM {
-        private readonly IDeviceDispatcher deviceDispatcher;
+    public class WeatherDataChooserVM : DeviceChooserVM<IWeatherData> {
 
-        public WeatherDataChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
-            this.deviceDispatcher = deviceDispatcher;
+        public WeatherDataChooserVM(IProfileService profileService,
+                                    IDeviceDispatcher deviceDispatcher,
+                                    IEquipmentProviders<IWeatherData> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
                 devices.Add(new DummyDevice(Loc.Instance["LblWeatherNoSource"]));
+
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Weather Data");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
 
                 try {
                     foreach (IWeatherData obsdev in ascomInteraction.GetWeatherDataSources()) {
@@ -52,6 +66,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                 devices.Add(new WeatherUnderground(this.profileService));
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.WeatherDataSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

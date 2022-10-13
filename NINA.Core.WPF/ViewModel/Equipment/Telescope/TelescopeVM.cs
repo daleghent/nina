@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ï¿½ 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -42,18 +42,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private static double LAT_LONG_TOLERANCE = 0.001;
         private static double SITE_ELEVATION_TOLERANCE = 10;
 
-        public TelescopeVM(
-            IProfileService profileService,
-            ITelescopeMediator telescopeMediator,
-            IApplicationStatusMediator applicationStatusMediator,
-            IDomeMediator domeMediator,
-            IDeviceDispatcher deviceDispatcher) : base(profileService) {
+        public TelescopeVM(IProfileService profileService,
+                           ITelescopeMediator telescopeMediator,
+                           IApplicationStatusMediator applicationStatusMediator,
+                           IDomeMediator domeMediator,
+                           IDeviceChooserVM deviceChooserVM) : base(profileService) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             this.domeMediator = domeMediator;
-            this.deviceDispatcher = deviceDispatcher;
+            this.DeviceChooserVM = deviceChooserVM;
             Title = Loc.Instance["LblTelescope"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
@@ -61,10 +60,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 p.Source = this.Title;
                 this.applicationStatusMediator.StatusUpdate(p);
             });
-            _ = Rescan();
 
-            ChooseTelescopeCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope));
-            CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope), (object o) => DeviceChooserVM.SelectedDevice != null);
+            CancelConnectCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectTelescope));
             ParkCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
@@ -77,7 +75,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }));
             SetParkPositionCommand = new AsyncCommand<bool>(() => Task.Run(SetParkPosition));
             SlewToCoordinatesCommand = new AsyncCommand<bool>((p) => Task.Run(() => SlewToCoordinatesInternal(p)));
-            RefreshTelescopeListCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !TelescopeInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Task.Run(Rescan); return true; }, o => !TelescopeInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
             FindHomeCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
                 return FindHome(progress, _cancelSlewTelescopeSource.Token);
@@ -96,14 +95,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             );
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                TelescopeChooserVM.GetEquipment();
-                return TelescopeChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -351,20 +350,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 RaisePropertyChanged();
             }
         }
-
-        private TelescopeChooserVM _telescopeChooserVM;
-
-        public TelescopeChooserVM TelescopeChooserVM {
-            get {
-                if (_telescopeChooserVM == null) {
-                    _telescopeChooserVM = new TelescopeChooserVM(profileService, deviceDispatcher);
-                }
-                return _telescopeChooserVM;
-            }
-            set {
-                _telescopeChooserVM = value;
-            }
-        }
+        public IDeviceChooserVM DeviceChooserVM { get; set; }
 
         public IWindowService WindowService { get; set; } = new WindowService();
 
@@ -378,8 +364,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     await updateTimer.Stop();
                 }
 
-                if (TelescopeChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.TelescopeSettings.Id = TelescopeChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.TelescopeSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -390,7 +376,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     }
                 );
 
-                var telescope = (ITelescope)TelescopeChooserVM.SelectedDevice;
+                var telescope = (ITelescope)DeviceChooserVM.SelectedDevice;
                 _cancelChooseTelescopeSource?.Dispose();
                 _cancelChooseTelescopeSource = new CancellationTokenSource();
                 if (telescope != null) {
@@ -492,6 +478,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 PrimaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Primary),
                                 SecondaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Secondary),
                                 SupportedActions = Telescope.SupportedActions,
+                                AlignmentMode = Telescope.AlignmentMode,
+                                CanPulseGuide = Telescope.CanPulseGuide,
+                                IsPulseGuiding = Telescope.IsPulseGuiding,
+                                CanSetPierSide = Telescope.CanSetPierSide,
+                                CanSlew = Telescope.CanSlew,
+                                UTCDate = Telescope.UTCDate,
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
@@ -651,6 +643,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.GuideRateDeclinationArcsecPerSec), out o);
             TelescopeInfo.GuideRateDeclinationArcsecPerSec = (double)(o ?? double.NaN);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.AlignmentMode), out o);
+            TelescopeInfo.AlignmentMode = (AlignmentMode)(o ?? AlignmentMode.GermanPolar);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanPulseGuide), out o);
+            TelescopeInfo.CanPulseGuide = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.IsPulseGuiding), out o);
+            TelescopeInfo.IsPulseGuiding = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSetPierSide), out o);
+            TelescopeInfo.CanSetPierSide = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSlew), out o);
+            TelescopeInfo.CanSlew = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.UTCDate), out o);
+            TelescopeInfo.UTCDate = (DateTime)(o ?? DateTime.MinValue);
+
             BroadcastTelescopeInfo();
         }
 
@@ -689,6 +699,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.Slewing), _telescope?.Slewing ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.GuideRateRightAscensionArcsecPerSec), _telescope?.GuideRateRightAscensionArcsecPerSec ?? double.NaN);
             telescopeValues.Add(nameof(TelescopeInfo.GuideRateDeclinationArcsecPerSec), _telescope?.GuideRateDeclinationArcsecPerSec ?? double.NaN);
+            telescopeValues.Add(nameof(TelescopeInfo.AlignmentMode), _telescope?.AlignmentMode ?? null);
+            telescopeValues.Add(nameof(TelescopeInfo.CanPulseGuide), _telescope?.CanSetPierSide ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.IsPulseGuiding), _telescope?.CanSlew ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.CanSetPierSide), _telescope?.CanSetPierSide ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.CanSlew), _telescope?.CanSlew ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.UTCDate), _telescope?.UTCDate ?? null);
 
             return telescopeValues;
         }
@@ -753,6 +769,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 if (!profileService.ActiveProfile.TelescopeSettings.NoSync && TelescopeInfo.Connected) {
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSync"] });
 
+                    if(transform.RA<0) {
+                        var mod24Ra = AstroUtil.EuclidianModulus(transform.RA, 24);
+                        Logger.Info($"RA value {transform.RA} is less than zero: applying Euclidean % 24 to RA for sync.");
+                        transform.RA = mod24Ra;
+                    }
                     var position = GetCurrentPosition();
                     bool result = Telescope.Sync(transform);
                     Logger.Info($"{(result ? string.Empty : "FAILED - ")}Syncing scope from {position} to {transform}");
@@ -814,7 +835,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private IDomeMediator domeMediator;
-        private IDeviceDispatcher deviceDispatcher;
         private IProgress<ApplicationStatus> progress;
 
         public double TargetRightAscencionSeconds {
@@ -1019,11 +1039,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 Telescope.SendCommandBlind(command, raw);
             }
         }
+        public PierSide DestinationSideOfPier(Coordinates coordinates) {
+            if(Telescope?.Connected == true) {
+                return Telescope.DestinationSideOfPier(coordinates);
+            }
+            return PierSide.pierUnknown;
+        }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 
-        public IAsyncCommand ChooseTelescopeCommand { get; private set; }
-        public ICommand CancelChooseTelescopeCommand { get; private set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
+        public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
 
         public ICommand MoveCommand { get; private set; }
@@ -1038,7 +1064,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public ICommand StopSlewCommand { get; private set; }
 
-        public ICommand RefreshTelescopeListCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
 
         public ICommand SetTrackingEnabledCommand { get; private set; }
 

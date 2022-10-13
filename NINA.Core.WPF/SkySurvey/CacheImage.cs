@@ -48,12 +48,12 @@ namespace NINA.WPF.Base.SkySurvey {
                     if (cachedImage != null) { cachedImage.Dispose(); }
                     var file = GetImagePathForThumbnail(ImagePath, SmallThumbnailSize);
                     if (!File.Exists(file)) {
-                        var tmp = new Bitmap(ImagePath);
+                        var tmp = BitmapWithoutLock(ImagePath);
                         cachedImage = new Bitmap(tmp, SmallThumbnailSize, SmallThumbnailSize);
                         cachedImage.Save(file);
                         tmp.Dispose();
                     } else {
-                        cachedImage = new Bitmap(file);
+                        cachedImage = BitmapWithoutLock(file);
                     }
                 }
             } else if (estimatedPlatePixelWidth <= (MediumThumbnailSize * 2)) {
@@ -61,12 +61,12 @@ namespace NINA.WPF.Base.SkySurvey {
                     if (cachedImage != null) { cachedImage.Dispose(); }
                     var file = GetImagePathForThumbnail(ImagePath, MediumThumbnailSize);
                     if (!File.Exists(file)) {
-                        var tmp = new Bitmap(ImagePath);
+                        var tmp = BitmapWithoutLock(ImagePath);
                         cachedImage = new Bitmap(tmp, MediumThumbnailSize, MediumThumbnailSize);
                         cachedImage.Save(file);
                         tmp.Dispose();
                     } else {
-                        cachedImage = new Bitmap(file);
+                        cachedImage = BitmapWithoutLock(file);
                     }
                 }
             } else if (estimatedPlatePixelWidth <= (BigThumbnailSize * 2)) {
@@ -74,23 +74,31 @@ namespace NINA.WPF.Base.SkySurvey {
                     if (cachedImage != null) { cachedImage.Dispose(); }
                     var file = GetImagePathForThumbnail(ImagePath, BigThumbnailSize);
                     if (!File.Exists(file)) {
-                        var tmp = new Bitmap(ImagePath);
+                        var tmp = BitmapWithoutLock(ImagePath);
                         cachedImage = new Bitmap(tmp, BigThumbnailSize, BigThumbnailSize);
                         cachedImage.Save(file);
                         tmp.Dispose();
                     } else {
-                        cachedImage = new Bitmap(file);
+                        cachedImage = BitmapWithoutLock(file);
                     }
                 }
             } else {
                 if (cachedImage == null || previousPixelWidth <= (BigThumbnailSize * 2)) {
                     if (cachedImage != null) { cachedImage.Dispose(); }
-                    cachedImage = new Bitmap(ImagePath);
+                    cachedImage = BitmapWithoutLock(ImagePath);
                 }
             }
 
             previousPixelWidth = cachedImage.Width;
             return cachedImage;
+        }
+
+        private Bitmap BitmapWithoutLock(string path) {
+            Bitmap img;
+            using (var bmpTemp = new Bitmap(path)) {
+                img = new Bitmap(bmpTemp);
+            }
+            return img;
         }
 
         private Bitmap cachedImage;

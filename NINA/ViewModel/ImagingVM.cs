@@ -395,6 +395,14 @@ namespace NINA.ViewModel {
             ;
         }
 
+        public int GetImageRotation() {
+            return _imageControl.ImageRotation;
+        }
+
+        public void SetImageRotation(int rotation) {
+            _imageControl.ImageRotation = rotation;
+        }
+
         private int ExposureId { get { return Interlocked.Increment(ref _exposuerId); } }
     }
 }

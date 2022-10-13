@@ -27,26 +27,37 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Equipment.MySwitch.Eagle4;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
-    public class SwitchChooserVM : DeviceChooserVM {
-        private readonly IDeviceDispatcher deviceDispatcher;
-
-        public SwitchChooserVM(IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
-            this.deviceDispatcher = deviceDispatcher;
+    public class SwitchChooserVM : DeviceChooserVM<ISwitchHub> {
+        public SwitchChooserVM(IProfileService profileService,
+                               IDeviceDispatcher deviceDispatcher,
+                               IEquipmentProviders<ISwitchHub> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
-                {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {                
                     var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                     var devices = new List<IDevice>();
 
                     devices.Add(new DummyDevice(Loc.Instance["LblNoSwitch"]));
 
-                    /* ASCOM */
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
                     try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Switch Hubs");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
+
+                /* ASCOM */
+                try {
                         foreach (ISwitchHub ascomSwitch in ascomInteraction.GetSwitches()) {
                             devices.Add(ascomSwitch);
                         }
@@ -62,8 +73,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                     devices.Add(new UltimatePowerBoxV2(profileService));
 
                     DetermineSelectedDevice(devices, profileService.ActiveProfile.SwitchSettings.Id);
-                }
-            }
+
+            } finally {
+                lockObj.Release();
+            }            
         }
     }
 }

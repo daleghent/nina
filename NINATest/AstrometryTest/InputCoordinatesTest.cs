@@ -30,16 +30,21 @@ namespace NINATest.AstrometryTest {
         [TestCase(1, 10, 20, 0, 10, 20, false)]
         [TestCase(1, 10, 20, -1, 10, 20, true)]
         [TestCase(1, 10, 20, -0, 10, 20, true)]
-        public void SerializationAndDeserializationTest(int raHours, int raMinutes, int raSeconds, int decDegree, int decMinutes, int decSeconds, bool negativeDec) {
+        [TestCase(1, 10, 20.0, 1, 10, 20.0, false)]
+        [TestCase(1, 10, 20.7, 0, 10, 20.7, false)]
+        [TestCase(1, 10, 20.989, -1, 10, 20.989, true)]
+        [TestCase(1, 10, 20.32556, -0, 10, 20.32556, true)]
+        public void SerializationAndDeserializationTest(int raHours, int raMinutes, double raSeconds, int decDegree, int decMinutes, double decSeconds, bool negativeDec) {
 
-            var coordinates = new InputCoordinates();
-            coordinates.RAHours = raHours;
-            coordinates.RAMinutes = raMinutes;
-            coordinates.RASeconds = raSeconds;
-            coordinates.DecDegrees = decDegree;
-            coordinates.DecMinutes = decMinutes;
-            coordinates.DecSeconds = decSeconds;
-            coordinates.NegativeDec = negativeDec;
+            var coordinates = new InputCoordinates {
+                RAHours = raHours,
+                RAMinutes = raMinutes,
+                RASeconds = raSeconds,
+                DecDegrees = decDegree,
+                DecMinutes = decMinutes,
+                DecSeconds = decSeconds,
+                NegativeDec = negativeDec
+            };
 
             var json = JsonConvert.SerializeObject(coordinates);
 

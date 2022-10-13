@@ -67,6 +67,7 @@ namespace NINA.PlateSolving {
                 Separation offset = new Separation();
                 do {
                     maxSlewAttempts--;
+                                        
                     result = await CaptureSolver.Solve(seq, parameter, solveProgress, progress, ct);
 
                     if (result.Success == false) {

@@ -4127,7 +4127,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru štěrbiny nabíjí, když je zaparkovaná.</value>
   </data>
   <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
-    <value>Zavřít při nebezpečných podmínek</value>
+    <value>Zavřít v nebezpečných podmínkách</value>
   </data>
   <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
     <value>Uzavření štěrbiny kopule kvůli nebezpečným podmínkám</value>
@@ -5114,7 +5114,7 @@ Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spou�
     <value>Přesune vybraný řádek dolů</value>
   </data>
   <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
-    <value>Přesune vybranou řádek nahoru</value>
+    <value>Přesune vybraný řádek nahoru</value>
   </data>
   <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
     <value>Při přidávání nové šablony došlo k chybě. Další podrobnosti naleznete v protokolech.</value>
@@ -6356,15 +6356,6 @@ Důvod: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Žádný Filtr</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Rychlost expozice</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Předvolba zisku</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Úroveň výkonu topení</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Nastavení Ditheringu</value>
   </data>
@@ -6390,5 +6381,96 @@ Po potvrzení vyberte, která astrometrie se má použít.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>Pokud je vybrána astrometrie, souřadnice se použijí jako referenční souřadnice a použijí se pro astrometrii, která je nastavena v možnostech.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Pointační Barva Grafu Dec</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Pointační Barva Grafu Ra</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Zobrazit Opravy v Grafu Pointace</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Otočit snímek po překlopení</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>Pokud je tato funkce povolena, otočí se snímek na kartě snímání po překlopení o 180°. Toto nastavení slouží pouze pro účely zobrazení a neovlivní obrazová data.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Vypnout pointaci při výměně filtru</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>Pokud je tato funkce povolena, při každé změně filtru bude pointace po dobu změny filtru zakázána a poté opět povolena.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>Soubor Ephemeris pro výpočet nebeských trajektorií nebyl nalezen. Spusťte opravu na vaší instalaci N.I.N.A.</value>
+  </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>Číslo instance PHD2</value>
+  </data>
+  <data name="LblDomeMountGeometry" xml:space="preserve">
+    <value>Geometrie kopule a montáže</value>
+  </data>
+  <data name="LblDomeNotConnectedError" xml:space="preserve">
+    <value>Ovladač kopule nepřipojen!</value>
+  </data>
+  <data name="LblDomeShutterCoordination" xml:space="preserve">
+    <value>Koordinace štěrbiny</value>
+  </data>
+  <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>Štěrbina nebo střecha dostaly příkaz k pohybu, ale montáž je odpojená. Stav montáže nelze zjistit. To může být nebezpečné!</value>
+  </data>
+  <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
+    <value>Štěrbina nebo střecha dostaly příkaz k pohybu, ale montáž je odparkovaná. To může být nebezpečné!</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
+    <value>Zaparkovat kopuli před ovládáním štěrbiny</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Před pokusem o otevření nebo zavření štěrbiny nastaví kopuli do parkovací polohy</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
+    <value>Zaparkovat kopuli před ovládáním montáže</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Pokus o zaparkování montáže před otevřením nebo zavřením štěrbiny</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
+    <value>Zamítnout otevření nebo zavření, pokud je montáž odparkovaná</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
+    <value>Způsobí, že systém N.I.N.A. odmítne otevřít nebo zavřít štěrbinu nebo střechu, pokud je montáž v nezaparkovaném stavu.
+Toto se vyhodnotí PO nastavení "Zaparkovat montáž před pohybem štěrbiny".</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
+    <value>Odmítnout otevřít, pokud není připojen Bezpečnostní Monitor</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
+    <value>Způsobí, že systém N.I.N.A. odmítne otevřít štěrbinu nebo střechu, pokud není připojen Bezpečnostní Monitor.</value>
+  </data>
+  <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>Bylo přikázáno otevřít štěrbinu nebo střechu, ale bezpečnostní monitor je odpojeno. Otevření bylo zrušeno.</value>
+  </data>
+  <data name="LblShutterSettingsWarning" xml:space="preserve">
+    <value>UPOZORNĚNÍ: Tato nastavení se týkají bezpečnosti vašeho zařízení. Je třeba je nastavit s pečlivou rozvahou a s ohledem na znalosti konkrétního nastavení. Řídí se jimi pouze ovládání zařízení systémem N.I.N.A. a NEJSOU v platnosti, pokud systém N.I.N.A. není spuštěn nebo není k danému zařízení připojen. Bezpečnostní mechanismy kopule nebo střechy by vždy měly mít hardwarovou zálohu a elektrické blokování, aby se zabránilo nežádoucímu pohybu štěrbiny nebo střechy. Je vaší odpovědností zajistit, aby tato nastavení nebyla v rozporu s nastavením ovladače kopule.</value>
+  </data>
+  <data name="LblCollapseSidebarTooltip" xml:space="preserve">
+    <value>Sbalí levé postranní panely a zobrazí pouze menší ikony bez textu</value>
+  </data>
+  <data name="LblExpandSidebarTooltip" xml:space="preserve">
+    <value>Rozbalí levé postranní panely a zobrazí větší ikony s textem</value>
+  </data>
+  <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
+    <value>Povolit režim nastavení. Když je tento režim povolen, lze každou instrukci zakázat nebo povolit. Zakázaná instrukce se pak v postranním panelu mimo režim nastavení nezobrazí.</value>
+  </data>
+  <data name="LblCollapseAll" xml:space="preserve">
+    <value>Sbalit Vše</value>
+  </data>
+  <data name="LblExpandAll" xml:space="preserve">
+    <value>Rozbalit Vše</value>
+  </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Otáčení</value>
   </data>
 </root>

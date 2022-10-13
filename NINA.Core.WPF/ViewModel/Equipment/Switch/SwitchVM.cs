@@ -38,20 +38,23 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
     public class SwitchVM : DockableVM, ISwitchVM {
 
-        public SwitchVM(IProfileService profileService, IApplicationStatusMediator applicationStatusMediator, ISwitchMediator switchMediator, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+        public SwitchVM(IProfileService profileService,
+                        IApplicationStatusMediator applicationStatusMediator,
+                        ISwitchMediator switchMediator,
+                        IDeviceChooserVM deviceChooserVM) : base(profileService) {
             Title = Loc.Instance["LblSwitch"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SwitchesSVG"];
-            SwitchChooserVM = new SwitchChooserVM(profileService, deviceDispatcher);
-            _ = Rescan();
+            DeviceChooserVM = deviceChooserVM;
 
             this.applicationStatusMediator = applicationStatusMediator;
             this.switchMediator = switchMediator;
             this.switchMediator.RegisterHandler(this);
 
-            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect), (object o) => DeviceChooserVM.SelectedDevice != null);
             DisconnectCommand = new AsyncCommand<bool>(async () => { await Task.Run(Disconnect); return true; });
             CancelConnectCommand = new RelayCommand((object o) => CancelConnect());
-            RefreshDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !SwitchInfo.Connected);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !SwitchInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
 
             updateTimer = new DeviceUpdateTimer(
                  GetSwitchValues,
@@ -69,14 +72,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             });
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                SwitchChooserVM.GetEquipment();
-                return SwitchChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -187,7 +190,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             try { connectSwitchCts?.Cancel(); } catch { }
         }
 
-        public SwitchChooserVM SwitchChooserVM { get; set; }
+        public IDeviceChooserVM DeviceChooserVM { get; set; }
 
         public IApplicationStatusMediator applicationStatusMediator { get; private set; }
 
@@ -204,8 +207,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                     await updateTimer.Stop();
                 }
 
-                if (SwitchChooserVM.SelectedDevice.Id == "No_Device") {
-                    profileService.ActiveProfile.SwitchSettings.Id = SwitchChooserVM.SelectedDevice.Id;
+                if (DeviceChooserVM.SelectedDevice.Id == "No_Device") {
+                    profileService.ActiveProfile.SwitchSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -216,7 +219,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                     }
                 );
 
-                var switchHub = (ISwitchHub)SwitchChooserVM.SelectedDevice;
+                var switchHub = (ISwitchHub)DeviceChooserVM.SelectedDevice;
                 connectSwitchCts?.Dispose();
                 connectSwitchCts = new CancellationTokenSource();
                 if (switchHub != null) {
@@ -259,7 +262,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
                             return true;
                         } else {
-                            Notification.ShowError($"Unable to connect to {SwitchChooserVM.SelectedDevice.Name}");
+                            Notification.ShowError($"Unable to connect to {DeviceChooserVM.SelectedDevice.Name}");
                             SwitchInfo.Connected = false;
                             this.SwitchHub = null;
                             return false;
@@ -321,6 +324,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
         public IAsyncCommand ConnectCommand { get; set; }
         public ICommand CancelConnectCommand { get; set; }
         public ICommand DisconnectCommand { get; set; }
-        public ICommand RefreshDevicesCommand { get; set; }
+        public IAsyncCommand RescanDevicesCommand { get; set; }
     }
 }

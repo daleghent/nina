@@ -27,20 +27,24 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
+using System.Threading.Tasks;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
-    public class FilterWheelChooserVM : DeviceChooserVM {
+    public class FilterWheelChooserVM : DeviceChooserVM<IFilterWheel> {
         private readonly ISbigSdk sbigSdk;
-        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public FilterWheelChooserVM(ISbigSdk sbigSdk, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(profileService) {
+        public FilterWheelChooserVM(ISbigSdk sbigSdk,
+                                    IProfileService profileService,
+                                    IDeviceDispatcher deviceDispatcher,
+                                    IEquipmentProviders<IFilterWheel> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
             this.sbigSdk = sbigSdk;
-            this.deviceDispatcher = deviceDispatcher;
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
 
@@ -141,6 +145,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
+                
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var cameras = provider.GetEquipment();
+                        Logger.Info($"Found {cameras?.Count} {provider.Name} Filter Wheels");
+                        devices.AddRange(cameras);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
 
                 /*
                  * ASCOM devices
@@ -156,6 +171,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                 devices.Add(new ManualFilterWheel(this.profileService));
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.FilterWheelSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

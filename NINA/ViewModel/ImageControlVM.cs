@@ -34,6 +34,8 @@ using NINA.Image.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using NINA.WPF.Base.ViewModel;
+using Accord.IO;
+using System.Runtime.InteropServices;
 
 namespace NINA.ViewModel {
 
@@ -110,64 +112,71 @@ namespace NINA.ViewModel {
         }
 
         private void PixelPeeperStart(object o) {
-            ShowPixelPeeper = true;
-            PixelPeeperMove(o);
+            ShowPixelPeeper = true && !ShowAberration;
+            if(ShowPixelPeeper) { 
+                PixelPeeperMove(o);
+            }
+
         }
 
         private void PixelPeeperMove(object o) {
             if (o != null) {
-                var p = (Point)o;
-                var x = (int)p.X;
-                var y = (int)p.Y;
+                try {
+                    var p = (Point)o;
+                    var x = (int)p.X;
+                    var y = (int)p.Y;
 
-                var width = RenderedImage.Image.PixelWidth;
-                var height = RenderedImage.Image.PixelHeight;
+                    var width = RenderedImage.Image.PixelWidth;
+                    var height = RenderedImage.Image.PixelHeight;
 
-                var idx = x + y * width;
-                if (idx < 0) {
-                    idx = 0;
-                } else if (idx > RenderedImage.RawImageData.Data.FlatArray.Length - 1) {
-                    idx = RenderedImage.RawImageData.Data.FlatArray.Length - 1;
-                }
+                    if(width == Image.PixelWidth && height == Image.PixelHeight) { 
+                        var idx = x + y * width;
+                        if (idx < 0) {
+                            idx = 0;
+                        } else if (idx > RenderedImage.RawImageData.Data.FlatArray.Length - 1) {
+                            idx = RenderedImage.RawImageData.Data.FlatArray.Length - 1;
+                        }
 
-                var rectX = Math.Max(x - 12, 0);
-                var rectY = Math.Max(y - 12, 0);
-                var rectWidth = 25;
-                var rectHeight = 25;
+                        var rectX = Math.Max(x - 12, 0);
+                        var rectY = Math.Max(y - 12, 0);
+                        var rectWidth = 25;
+                        var rectHeight = 25;
 
-                if ((rectX + 25) > width) {
-                    rectX = width - rectWidth;
-                }
-                if ((rectY + 25) > height) {
-                    rectY = height - rectHeight;
-                }
+                        if ((rectX + 25) > width) {
+                            rectX = width - rectWidth;
+                        }
+                        if ((rectY + 25) > height) {
+                            rectY = height - rectHeight;
+                        }
 
-                rectX = Math.Max(0, rectX);
-                rectY = Math.Max(0, rectY);
-                rectWidth = Math.Min(this.Image.PixelWidth, rectWidth);
-                rectHeight = Math.Min(this.Image.PixelHeight, rectHeight);
+                        rectX = Math.Max(0, rectX);
+                        rectY = Math.Max(0, rectY);
+                        rectWidth = Math.Min(this.Image.PixelWidth, rectWidth);
+                        rectHeight = Math.Min(this.Image.PixelHeight, rectHeight);
 
-                long sum = 0;
-                ushort max = 0;
-                ushort min = ushort.MaxValue;
-                long points = 0;
-                for(var i = rectX; i < rectX + rectWidth; i++) {
-                    for (var j = rectY; j < rectY + rectHeight; j++) {
-                        var pixelIdx = i + j * width;
-                        var point = RenderedImage.RawImageData.Data.FlatArray[pixelIdx];
-                        sum += point;
-                        max = Math.Max(max, point);
-                        min = Math.Min(min, point);
-                        points++;
+                        long sum = 0;
+                        ushort max = 0;
+                        ushort min = ushort.MaxValue;
+                        long points = 0;
+                        for(var i = rectX; i < rectX + rectWidth; i++) {
+                            for (var j = rectY; j < rectY + rectHeight; j++) {
+                                var pixelIdx = i + j * width;
+                                var point = RenderedImage.RawImageData.Data.FlatArray[pixelIdx];
+                                sum += point;
+                                max = Math.Max(max, point);
+                                min = Math.Min(min, point);
+                                points++;
+                            }
+                        }
+                        var mean = sum / (double)points;
+
+                        PixelPeep = new PixelPeep(rectX, rectY, RenderedImage.RawImageData.Data.FlatArray[idx], min, max, mean);
+
+                        var rect = new Int32Rect(rectX, rectY, rectWidth, rectHeight);
+                        var crop = new CroppedBitmap(this.Image, rect);                
+                        PixelPeepImage = new WriteableBitmap(crop);
                     }
-                }
-                var mean = sum / (double)points;
-
-                PixelPeep = new PixelPeep(rectX, rectY, RenderedImage.RawImageData.Data.FlatArray[idx], min, max, mean);
-
-                var rect = new Int32Rect(rectX, rectY, rectWidth, rectHeight);
-                var crop = new CroppedBitmap(this.Image, rect);                
-                PixelPeepImage = new WriteableBitmap(crop);
+                } catch(Exception) { }
             }
         }
 
@@ -180,11 +189,14 @@ namespace NINA.ViewModel {
 
         private async Task<bool> InspectAberration() {
             try {
-                var vm = new AberrationInspectorVM(profileService);
-                await vm.Initialize(Image);
-                var service = WindowServiceFactory.Create();
-                service.Show(vm, Loc.Instance["LblAberrationInspector"], ResizeMode.CanResize, WindowStyle.ToolWindow);
-                return true;
+                if(ShowAberration) { 
+                    var vm = new AberrationInspectorVM(profileService);
+                    await vm.Initialize(RenderedImage.Image);
+                    Image = vm.MosaicImage;                    
+                } else {
+                    await ProcessImageHelper();
+                }
+                return ShowAberration;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
@@ -200,6 +212,19 @@ namespace NINA.ViewModel {
                 BahtinovRectangle.Height = Image.Height * 0.8;
             }
             BahtinovDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
+        }
+
+        private bool showAberration;
+
+        public bool ShowAberration {
+            get {
+                return showAberration;
+            }
+            set {
+                showAberration = value;
+                if(value) { ShowBahtinovAnalyzer = false; }
+                RaisePropertyChanged();
+            }
         }
 
         private bool _showBahtinovAnalyzer;
@@ -366,9 +391,18 @@ namespace NINA.ViewModel {
             }
         }
 
+        private IWindowService service;
+        private PlateSolvingStatusVM plateSolveStatusVM;
         private async Task<bool> PlateSolveImage() {
             if (this.RenderedImage != null) {
                 try {
+                    if(plateSolveStatusVM == null) {
+                        plateSolveStatusVM = new PlateSolvingStatusVM();
+                        service = WindowServiceFactory.Create();
+                    } else {
+                        await service.Close();
+                    }
+
                     _plateSolveToken?.Dispose();
                     _plateSolveToken = new CancellationTokenSource();
 
@@ -388,11 +422,11 @@ namespace NINA.ViewModel {
 
                     var imageSolver = new ImageSolver(plateSolver, blindSolver);
 
-                    var service = WindowServiceFactory.Create();
-                    var plateSolveStatusVM = new PlateSolvingStatusVM();
+                    
                     service.Show(plateSolveStatusVM, this.Title + " - " + plateSolveStatusVM.Title, ResizeMode.CanResize, WindowStyle.ToolWindow);
-
-                    var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, _progress, _plateSolveToken.Token);
+                    plateSolveStatusVM.PlateSolveResult = null;
+                    plateSolveStatusVM.Thumbnail = await this.RenderedImage.GetThumbnail();
+                    var result = await imageSolver.Solve(this.RenderedImage.RawImageData, parameter, plateSolveStatusVM.CreateLinkedProgress(_progress), _plateSolveToken.Token);
                     if(result.Success && telescopeMediator.GetInfo().Connected) { 
                         var scopePosition = telescopeMediator.GetCurrentPosition();
                         var resultCoordinates = result.Coordinates.Transform(scopePosition.Epoch);
@@ -606,7 +640,12 @@ namespace NINA.ViewModel {
             imagingMediator.OnImagePrepared(new ImagePreparedEventArgs { RenderedImage = renderedImage, Parameters = parameters });
 
             this.RenderedImage = processedImage;
-            this.Image = processedImage.Image;
+            if (ShowAberration) {
+                await this.InspectAberration();
+            } else {
+                this.Image = processedImage.Image;
+            }            
+
             GC.Collect();
 
             if (ShowBahtinovAnalyzer) {

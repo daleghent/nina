@@ -469,7 +469,7 @@ namespace NINA.ViewModel.FlatWizard {
             HistogramMath.ExposureAduState exposureAduState;
             do {
                 // Set flat panel brightness to static brightness
-                if (flatDeviceInfo?.Connected == true) {
+                if (flatDeviceInfo?.Connected == true && FlatWizardMode != FlatWizardMode.SKYFLAT) {
                     await flatDeviceMediator.SetBrightness(filter.Settings.MaxAbsoluteFlatDeviceBrightness, flatSequenceCts.Token);
                 }
 
@@ -784,11 +784,11 @@ namespace NINA.ViewModel.FlatWizard {
                 flatSequenceCts?.Dispose();
                 flatSequenceCts = new CancellationTokenSource();
                 var filterCount = 0;
-                if ((flatDeviceInfo?.Connected & flatDeviceInfo?.SupportsOpenClose) == true) {
+                if ((flatDeviceInfo?.Connected & flatDeviceInfo?.SupportsOpenClose) == true && FlatWizardMode != FlatWizardMode.SKYFLAT) {
                     await flatDeviceMediator.CloseCover(flatSequenceCts.Token);
                 }
 
-                if (flatDeviceInfo?.Connected == true) {
+                if (flatDeviceInfo?.Connected == true && FlatWizardMode != FlatWizardMode.SKYFLAT) {
                     await flatDeviceMediator.ToggleLight(true, flatSequenceCts.Token);
                 }
 
@@ -858,7 +858,7 @@ namespace NINA.ViewModel.FlatWizard {
                 Notification.ShowError(ex.Message);
                 return false;
             } finally {
-                if (flatDeviceInfo?.Connected == true && !flatSequenceCts.Token.IsCancellationRequested) {
+                if (flatDeviceInfo?.Connected == true && !flatSequenceCts.Token.IsCancellationRequested && FlatWizardMode != FlatWizardMode.SKYFLAT) {
                     try {
                         await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token);
                     } catch(OperationCanceledException) { 

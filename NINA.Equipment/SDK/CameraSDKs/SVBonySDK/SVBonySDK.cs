@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
-    public class SVBonySDK : ISVBonySDK {
+    public class SVBonySDK : IGenericCameraSDK {
 
         [ExcludeFromCodeCoverage]
         public SVBonySDK(int id) : this(id, new SVBonyPInvokeProxy()) {
@@ -181,26 +181,60 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return (startX, startY, width, height, binning);
         }
 
-        public async Task<ushort[]> StartExposure(double exposureTime, int width, int height, CancellationToken ct) {
+        private CancellationTokenSource exposureCts;
+        private Task<ushort[]> exposureTask;
+        private object lockobj = new object();
+        public void StartExposure(double exposureTime, int width, int height) {
             var transformedExposureTime = (long)(exposureTime * 1000000d);
             if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
             SetControlValue(SVB_CONTROL_TYPE.SVB_EXPOSURE, (int)transformedExposureTime);
 
             CheckAndThrowError(sVBonyPInvoke.SVBSendSoftTrigger(id));
 
-            if (exposureTime > 0.1) {
+
+            lock(lockobj) {
+                try { exposureCts?.Dispose(); } catch (Exception) { }
+
+                exposureCts = new CancellationTokenSource();
+                exposureTask = GetExposureInternal(exposureTime, width, height);
+            }
+        }
+        
+        
+        [HandleProcessCorruptedStateExceptions]
+        public Task<ushort[]> GetExposure(double exposureTime, int width, int height, CancellationToken ct) {
+            lock(lockobj) {
+                if(ct.IsCancellationRequested) {
+                    try { exposureCts?.Cancel(); } catch { }
+                }
+                exposureCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+                return exposureTask;
+            }
+        }
+
+        public void StopExposure() {
+            try {
+                lock (lockobj) {
+                    exposureCts?.Cancel();
+                }
+            } catch (Exception) { }
+        }
+
+        public bool IsExposureReady() {
+            lock (lockobj) {
+                return exposureTask.IsCompleted;
+            }
+        }
+
+        [HandleProcessCorruptedStateExceptions]
+        private async Task<ushort[]> GetExposureInternal(double exposureTime, int width, int height) {            
+            if(exposureTime > 0.1) {
                 try {
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), ct);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), exposureCts.Token);
                 } catch (OperationCanceledException) {
                     return null;
                 }
             }
-
-            return GetExposure(exposureTime, width, height, ct);
-        }
-
-        [HandleProcessCorruptedStateExceptions]
-        private ushort[] GetExposure(double exposureTime, int width, int height, CancellationToken ct) {
             var transformedExposureTime = (int)(exposureTime * 1000000d);
 
             int size = width * height;
@@ -213,13 +247,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
                         break;
                     }
 
-                    if (ct.IsCancellationRequested) {
+                    if (exposureCts.Token.IsCancellationRequested) {
                         break;
                     }
 
                     if (sVBonyPInvoke.SVBGetVideoDataMono16(id, buffer, buffersize, (int)(exposureTime * 2 * 100) + 500) == SVB_ERROR_CODE.SVB_SUCCESS) {
                         return buffer;
                     }
+                    await Task.Delay(10, exposureCts.Token);
                 }
             } catch (AccessViolationException ex) {
                 Logger.Error($"{nameof(SVBonySDK)} - Access Violation Exception occurred during frame download!", ex);
@@ -435,6 +470,30 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             if (code == SVB_ERROR_CODE.SVB_SUCCESS) { return; }
 
             throw new Exception(code.ToString());
+        }
+
+        public bool HasDewHeater() {
+            return false;
+        }
+
+        public bool IsDewHeaterOn() {
+            return false;
+        }
+
+        public bool SetDewHeater(bool onoff) {
+            throw new NotImplementedException();
+        }
+
+        public void StartVideoCapture(double exposureTime, int width, int height) {
+            throw new NotImplementedException();
+        }
+
+        public void StopVideoCapture() {
+            throw new NotImplementedException();
+        }
+
+        public Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
+            throw new NotImplementedException();
         }
     }
 }

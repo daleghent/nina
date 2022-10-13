@@ -259,6 +259,8 @@
     <Compile Include="Utility\AutoFocus\QuadraticFitting.cs" />
     <Compile Include="Utility\AutoFocus\Trendline.cs" />
     <Compile Include="Utility\AutoFocus\TrendlineFitting.cs" />
+    <Compile Include="Utility\DataTemplatePostfix.cs" />
+    <Compile Include="Utility\GenericTemplateSelector.cs" />
     <Compile Include="Utility\MVVMLight\IExecuteWithObject.cs" />
     <Compile Include="Utility\MVVMLight\IExecuteWithObjectAndResult.cs" />
     <Compile Include="Utility\MVVMLight\RelayCommand.cs" />
@@ -286,13 +288,11 @@
     <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelVM.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceFactory.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceVM.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatWizardValues.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\AbsoluteBacklashCompensationDecorator.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserDecorator.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\FocuserFactory.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserVM.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\OvershootBacklashCompensationDecorator.cs" />
     <Compile Include="ViewModel\Equipment\Guider\GuiderChooserVM.cs" />

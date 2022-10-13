@@ -3,6 +3,50 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.0 Hotfix 2
+
+## Bugfixes
+- Fixed QHY Camera selection being lost on rescan
+- Imaging Platesolve Panel will preset initial gain from platesolve settings
+- Flat Wizard not showing results until N.I.N.A. restarted for some filters
+- Flat Wizard Sky Flat Mode no longer closes a flat device cover when connected
+- AutofocusAfterTemperatureChangeTrigger did not set initial temperature correctly when focuser was not connected on sequence start
+
+## Improvements
+- Guide Chart Colors can now be customized in the guider tab
+- Plugin load times have been improved
+- Framing Assistant now accepts fractional second inputs for RA and declination and will display them out to the tenth of a second.
+- Added instance number setting to PHD2 to be able to have N.I.N.A. autostart PHD2 with multiple instances and not just the first one
+- Changed Message Box Instruction to include "Stop Sequence" button along with "Continue" to be able to stop the sequence in case this is used as a checkpoint
+- When PHD2 Configuration Changes happen, N.I.N.A. will now requery the pixel scale in case the focal length or pixel size setting of the guider has changed
+- Improved layout of plate solve pop up during centering and added a status indicator inside the window as well
+- Plate solve pop out from solve button above the image inside the imaging tab now shows the thumbnail and also keeps the solve history
+- Aberration inspector no longer pops up a new window but is instead a toggleable button and replaces the image itself. This also allows for looping exposures and keeping the inspector updated.
+- Framing Assistant Cache list has a button added to delete individual entries
+- Atik native driver improvements:
+    - Full support for Apx26/Apx60 exposure speeds and presets
+    - Fast readout/preview mode may be selected on CCD models that support them
+    - Window heater may now be controlled on models that are equipped with one
+    - 16bit output is now explicitly configured on CMOS models that support both 12bit and 16bit output
+    - Many thanks to [Atik Cameras, Ltd.](https://www.atik-cameras.com/) for loaning a 428ex camera for use in the testing and improvement of the native driver
+
+## Features
+- Enhanced Meridian Flip options with a toggle to automatically rotate the target in the imaging tab for displaying purposes
+- Added an option in the filter wheel options to disable guiding during a filter change. This can be useful when having filter focus offsets and overshoot backlash compensation enabled to prevent losing guide stars.
+- Custom Action to toggle Low Noise, High Gain, Fan Speed and Average Binning via custom device actions added to Altair, Mallincam, Omegon, Risingcam and Touptek cameras. This action can be controlled via plugins. 
+    - Valid parameters for Low Noise, High Gain and Average Binning are  "0", "off", "no", "false", "f", "1", "on", "yes", "true", "t"
+    - Valid parameters for Fan Speed are integer values from 0 to Max Fan Speed
+- Added additional options that relate to dome or roll-off-roof shutter operation. Please review the notice in the Shutter Coordination area of Options > Dome settings.
+- In the Sequencer Sidebar inside the Instructions Tab a new button is added to enter a Settings Mode - There individual instructions can be disabled to be shown in the sidebar or in the context menus. For example when you have no dome, you can hide all dome instructions to not clog up space.
+- Collapse and Expand all button is added to the sequencer sidebar for the Instructions Tab
+
+## Plugin Enablement
+- Added interfaces that allow plugins to provide device drivers
+    - Each device type can also provide dedicated settings in the equipment setting sections
+    - This change will make it necessary for plugins to be loaded completely before being able to connect to the devices.
+- Plugins can now query for Telescope "DestinationSideOfPier"
+- New Plugin Eventhooks to react on Befor/After MeridianFlip and After Dithers
+
 # Version 2.0 HF 1
 
 ## Bugfixes

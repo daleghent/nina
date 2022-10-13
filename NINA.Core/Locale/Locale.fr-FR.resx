@@ -6358,15 +6358,6 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>No Filter</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Exposure speed</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Gain preset</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Heater power level</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Dither Settling</value>
   </data>
@@ -6392,5 +6383,96 @@ Once confirmed choose which solver should be used.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Guide Graph Dec Color</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Guide Graph RA Color</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Guide Graph Show Corrections</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Rotate image after flip</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Disable guiding during filter change</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+  </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>PHD2 instance number</value>
+  </data>
+  <data name="LblDomeMountGeometry" xml:space="preserve">
+    <value>Dome &amp; mount geometry</value>
+  </data>
+  <data name="LblDomeNotConnectedError" xml:space="preserve">
+    <value>The dome driver is not connected!</value>
+  </data>
+  <data name="LblDomeShutterCoordination" xml:space="preserve">
+    <value>Shutter coordination</value>
+  </data>
+  <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>The shutter or roof was ordered to move but the mount is disconnected. Mount status cannot be determined. This can be unsafe!</value>
+  </data>
+  <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
+    <value>The shutter or roof was ordered to move but the mount is unparked. This can be unsafe!</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
+    <value>Park dome before shutter operation</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Sends the dome to its park position before attempting to open or cloose the shutter</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
+    <value>Park mount before shutter operation</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Attempt to park the mount before opening or closing the shutter</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
+    <value>Refuse open or close if mount is unparked</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
+    <value>Causes N.I.N.A. to refuse to open or close the shutter or roof if the mount is in an unparked state.
+This is evaluated AFTER the "Park mount before moving the shutter" setting.</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
+    <value>Refuse open if a Safety Monitor is not connected</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
+    <value>Causes N.I.N.A. to refuse to open the shutter or roof if a Safety Monitor device is not connected.</value>
+  </data>
+  <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>The shutter or roof was ordered to open but the safety monitor device is disconnected. Opening has been aborted.</value>
+  </data>
+  <data name="LblShutterSettingsWarning" xml:space="preserve">
+    <value>NOTICE: These settings relate to the safety of your equipment. They must be set with careful consideration and with the familiarity you have with your specific setup. They govern only N.I.N.A.'s control of the equipment and are NOT in effect if N.I.N.A. is not running or is not connected to the equipment in question. Dome or roof safety mechanisms should always have a hardware backup and electrical interlocks to prevent any undesired shutter or roof movement. It is your responsibility to ensure that these settings do not conflict with your dome driver's settings.</value>
+  </data>
+  <data name="LblCollapseSidebarTooltip" xml:space="preserve">
+    <value>Collapses the left sidebars to only show smaller icons without text</value>
+  </data>
+  <data name="LblExpandSidebarTooltip" xml:space="preserve">
+    <value>Expands the left sidebars to show larger icons with text</value>
+  </data>
+  <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
+    <value>Enable settings mode. When this mode is enabled each instruction can be disabled or enabled. A disabled instruction will then not be shown inside the sidebar outside of settings mode.</value>
+  </data>
+  <data name="LblCollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="LblExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Rotating</value>
   </data>
 </root>

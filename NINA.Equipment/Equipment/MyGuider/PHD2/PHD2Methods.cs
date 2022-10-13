@@ -419,6 +419,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public LockShiftParams result;
     }
 
+    public class GetExposureResponse : PhdMethodResponse {
+        public int result;
+    }
+
     public class LockShiftParams {
 
         [JsonProperty(PropertyName = "enabled")]

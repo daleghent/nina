@@ -46,6 +46,8 @@ namespace NINA.WPF.Base.SkySurvey {
                     arcSecPerPixel);
 
                 image = await request.Request(ct, progress);
+            } catch (OperationCanceledException) {
+                throw;
             } catch (Exception ex) {
                 throw new SkySurveyUnavailableException(ex.Message);
             }

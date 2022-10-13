@@ -984,7 +984,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Katalog Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Do zrobienia - Dark Flats</value>
+    <value>Ilość dark flat</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>Obrót D.A.R.V.</value>
@@ -1173,10 +1173,10 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Sterownik może śledzić</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
-    <value>Status migawki</value>
+    <value>Status przesłony</value>
   </data>
   <data name="LblDomeCanSetShutter" xml:space="preserve">
-    <value>Można ustawiać migawkę</value>
+    <value>Można ustawiać przesłonę</value>
   </data>
   <data name="LblDomeCanSetPark" xml:space="preserve">
     <value>Można ustawiać parkowanie</value>
@@ -1224,7 +1224,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Kopuła nie może określić pozycji domowej</value>
   </data>
   <data name="LblDomeCannotSetShutter" xml:space="preserve">
-    <value>Kopuła nie może sterować migawką</value>
+    <value>Kopuła nie może sterować przesłoną</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
     <value>Kopuła nie może ustawić azymutu</value>
@@ -2864,7 +2864,7 @@ Ten szablon będzie używany przy starcie do inicjowania sekwencji zamiast domy�
     <value>Ustawienia</value>
   </data>
   <data name="LblSettle" xml:space="preserve">
-    <value>Wyreguluj</value>
+    <value>Stabilizacja</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
     <value>Stabilizacja tolerancji pikseli</value>
@@ -3860,13 +3860,13 @@ W przypadku gdy potrzebny jest dłuższy czas, można go określić i aplikacja 
     <value>Wersja platformy ASCOM jest nieaktualna. Proszę zaktualizować do najnowszej wersji. W przeciwnym razie aplikacja może nie być w stanie połączyć się ze wszystkimi urządzeniami ASCOM.</value>
   </data>
   <data name="LblDomeShutter" xml:space="preserve">
-    <value>Migawka</value>
+    <value>Przesłona</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Zamknij migawkę</value>
+    <value>Zamknij przesłonę</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Otwórz migawkę</value>
+    <value>Otwórz przesłonę</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Obróć zgodnie z ruchem wskazówek zegara</value>
@@ -3989,10 +3989,10 @@ W przypadku gdy potrzebny jest dłuższy czas, można go określić i aplikacja 
     <value>Rozpocznij sekwencję</value>
   </data>
   <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
-    <value>Kamera nie posiada mechanicznej migawki, żaden zautomatyzowany flattener nie jest podłączony, a sekwencja zawiera elementy DARK/BIAS łącznie z LIGHT.</value>
+    <value>Kamera nie posiada mechanicznej przesłony, żaden zautomatyzowany flattener nie jest podłączony, a sekwencja zawiera elementy DARK/BIAS łącznie z LIGHT.</value>
   </data>
   <data name="LblSequenceContainsDarksOnly" xml:space="preserve">
-    <value>Kamera nie posiada mechanicznej migawki, żaden automatyczny flattener nie jest podłączony, sekwencja zawiera tylko elementy DARK/BIAS. Upewnij się, że kamera jest zakryta.</value>
+    <value>Kamera nie posiada mechanicznej przesłony, żaden automatyczny Flattener nie jest podłączony, sekwencja zawiera tylko elementy DARK/BIAS. Upewnij się, że kamera jest zakryta.</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
     <value>Ustawienia automatycznego dostrajania ostrości filtrów</value>
@@ -4858,7 +4858,7 @@ Jeśli pozycja powyżej jest zestawem instrukcji, który nie jest rozszerzony, z
     <value>Kopuła</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
-    <value>Zamknij migawkę kopuły</value>
+    <value>Zamknij przesłonę kopuły</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
     <value>Zamknij osłonę kopuły</value>
@@ -5533,7 +5533,7 @@ Dotyczy tylko sterownika kamery ASCOM!</value>
     <value>Bieżący tytuł sekwencji</value>
   </data>
   <data name="LblDomeShutterDidNotRespond" xml:space="preserve">
-    <value>Kopuła nie zgłosiła ruchu migawki ani błędu po wykonaniu polecenia. Jest to niezgodne z Ascom i niebezpieczne zachowanie. Proszę zgłosić to producentowi kopuły.</value>
+    <value>Kopuła nie zgłosiła ruchu przesłony ani błędu po wykonaniu polecenia. Jest to niezgodne z Ascom i niebezpieczne zachowanie. Proszę zgłosić to producentowi kopuły.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Nie udało się otworzyć przesłony. Stan przesłony jest nadal zgłaszany jako zamknięta po rozpoczęciu operacji otwierania przesłony.</value>
@@ -6351,15 +6351,6 @@ Powód: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Brak filtra</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Prędkość ekspozycji</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Ustawienia wzmocnienia</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Poziom mocy grzałki</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Ustawienia Ditheringu</value>
   </data>
@@ -6385,5 +6376,96 @@ Po potwierdzeniu wybierz, która metoda powinna zostać użyta.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>Po wybraniu Plate Solving, współrzędne będą wykorzystywane jako punkty odniesienia i użyte będą do metody, która jest podana w ustawieniach.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Kolor wykresu Dec guidingu</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Kolor wykresu RA guidingu</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Pokaż korekty wykresu guidingu</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Obróć obraz po meridianie</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>Gdy ta opcja jest włączona, obraz na karcie obrazowania zostanie obrócony o 180° po meridianie. Obrót wyłącznie wizualny i nie będzie miał wpływu na dane obrazu.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Wyłącz prowadzenie podczas zmiany filtra</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>Gdy ta opcja jest włączona, za każdym razem, gdy filtr będzie zmieniany, prowadzenie zostanie wyłączone, a następnie ponownie włączone.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>Plik Efemeryd do obliczenia ścieżek nie został znaleziony. Proszę uruchomić naprawę w instalacji N.I.N.A.</value>
+  </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>Numer instancji PHD2</value>
+  </data>
+  <data name="LblDomeMountGeometry" xml:space="preserve">
+    <value>Geometria kopuły i montażu</value>
+  </data>
+  <data name="LblDomeNotConnectedError" xml:space="preserve">
+    <value>Sterownik kopuły nie jest podłączony!</value>
+  </data>
+  <data name="LblDomeShutterCoordination" xml:space="preserve">
+    <value>Koordynaty przesłony</value>
+  </data>
+  <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>Polecenie przesunięcia przesłonę lub dachu, ale montaż jest odłączony. Nie można określić statusu montażu. Może to być niebezpieczne!</value>
+  </data>
+  <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
+    <value>Polecono przesunąć przesłonę lub dach, ale montaż jest odparkowany. Może to być niebezpieczne!</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
+    <value>Zaparkuj kopułę przed poleceniem dla przesłony</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Wysyła kopułę do swojej pozycji parkowania przed próbą otwarcia lub zamknięcia przesłony</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
+    <value>Zaparkuj montaż przed poleceniem dla przesłony</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Próba zaparkowania montażu przed otwarciem lub zamknięciem przesłony</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
+    <value>Wstrzymaj otwieranie lub zamykanie, jeśli montaż jest odparkowany</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
+    <value>N.I.N.A. odmówi otwarcia lub zamknięcia przesłony lub dachu, jeśli montaż jest w stanie niezaparkowanym.
+Sprawdzane PO "Zaparkuj przed przesunięciem przesłony".</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
+    <value>Wstrzymaj otwarcie, jeśli Monitor bezpieczeństwa nie jest podłączony</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
+    <value>N.I.N.A. odmawia otwarcia przesłony lub dachu, jeśli urządzenie monitora bezpieczeństwa nie jest podłączone.</value>
+  </data>
+  <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>Zostało wydane polecenie otwarcia przesłony lub dachu, ale urządzenie monitorujące bezpieczeństwo zostało odłączone. Otwieranie zostało przerwane.</value>
+  </data>
+  <data name="LblShutterSettingsWarning" xml:space="preserve">
+    <value>UWAGA: Te ustawienia odnoszą się do bezpieczeństwa twojego sprzętu. Należy je starannie rozważyć i zaznajomić się z konkretną konfiguracją. „Technologia”, zgodnie z uwagą ogólną do technologii, służąca do „rozwoju”, „produkcji” lub „użytkowania” sprzętu wyszczególnionego w pozycjach 3A001.a.1 do 3A001.a.2, 3A001.a.2 lub 3A001.a.2, 3A001.a.2 lub 3A001.a.3. nie działa lub nie jest podłączony do danego urządzenia. Mechanizmy bezpieczeństwa montażu lub dachu powinny zawsze posiadać sprzętowe zapasowe zabezpieczenia i blokady elektryczne, aby zapobiec niepożądanemu ruchowi montażu lub dachu. Twoim obowiązkiem jest zapewnienie, aby te ustawienia nie kolidowały z ustawieniami sterownika kopuły.</value>
+  </data>
+  <data name="LblCollapseSidebarTooltip" xml:space="preserve">
+    <value>Zwija lewe paski boczne, pokazuje tylko mniejsze ikony bez tekstu</value>
+  </data>
+  <data name="LblExpandSidebarTooltip" xml:space="preserve">
+    <value>Rozszerza lewy pasek boczny, pokazuje większe ikony z tekstem</value>
+  </data>
+  <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
+    <value>Włącz tryb ustawień. Gdy ten tryb jest włączony, każda instrukcja może być wyłączona lub włączona. Wyłączona instrukcja nie będzie wyświetlana wewnątrz paska bocznego poza trybem ustawień.</value>
+  </data>
+  <data name="LblCollapseAll" xml:space="preserve">
+    <value>Zwiń wszystko</value>
+  </data>
+  <data name="LblExpandAll" xml:space="preserve">
+    <value>Rozwiń wszystko</value>
+  </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Rotacja</value>
   </data>
 </root>

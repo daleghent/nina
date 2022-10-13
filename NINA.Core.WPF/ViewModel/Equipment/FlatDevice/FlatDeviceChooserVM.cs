@@ -12,30 +12,64 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Equipment.MyFlatDevice;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Utility;
 using NINA.Profile.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
-    public class FlatDeviceChooserVM : DeviceChooserVM {
-        private readonly IDeviceFactory deviceFactory;
-
-        public FlatDeviceChooserVM(IProfileService profileService, IDeviceFactory deviceFactory) : base(profileService) {
-            this.deviceFactory = deviceFactory;
+    public class FlatDeviceChooserVM : DeviceChooserVM<IFlatDevice> {
+        public FlatDeviceChooserVM(IProfileService profileService,
+                                   IDeviceDispatcher deviceDispatcher,
+                                   IEquipmentProviders<IFlatDevice> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
+                devices.Add(new DummyDevice(Loc.Instance["LblFlatDeviceNoDevice"]));
 
-                foreach (var device in deviceFactory.GetDevices()) {
-                    devices.Add(device);
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Flat Devices");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
                 }
 
+                try {
+                    foreach (IFlatDevice flatDevice in ascomInteraction.GetCoverCalibrators()) {
+                        devices.Add(flatDevice);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                devices.AddRange(new List<IDevice>{
+                    new AllProSpikeAFlat(profileService),
+                    new AlnitakFlipFlatSimulator(profileService),
+                    new AlnitakFlatDevice(profileService),
+                    new ArteskyFlatBox(profileService),
+                    new PegasusAstroFlatMaster(profileService)
+                });
+
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.FlatDeviceSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

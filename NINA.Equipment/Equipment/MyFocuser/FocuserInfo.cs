@@ -31,7 +31,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             set { stepsize = value; RaisePropertyChanged(); }
         }
 
-        private double temperature;
+        private double temperature = double.NaN;
 
         public double Temperature {
             get { return temperature; }

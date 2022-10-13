@@ -167,7 +167,8 @@ namespace NINATest.Dome {
         [Test]
         public async Task Test_OpenShutter_IfEnabled() {
             domeCanSetShutter = true;
-            var sut = await CreateSUT();
+            domeShutterState = ShutterState.ShutterClosed;
+            var sut = await CreateSUT();            
             mockDome.Setup(x => x.OpenShutter(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
             var result = await sut.OpenShutter(CancellationToken.None);
             Assert.IsTrue(result);

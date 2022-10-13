@@ -41,21 +41,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
     public class GuiderVM : DockableVM, IGuiderVM {
 
-        public GuiderVM(IProfileService profileService, IGuiderMediator guiderMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM deviceChooser) : base(profileService) {
+        public GuiderVM(IProfileService profileService,
+                        IGuiderMediator guiderMediator,
+                        IApplicationStatusMediator applicationStatusMediator,
+                        IDeviceChooserVM deviceChooser) : base(profileService) {
             Title = Loc.Instance["LblGuider"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["GuiderSVG"];
 
             this.guiderMediator = guiderMediator;
             this.guiderMediator.RegisterHandler(this);
-            GuiderChooserVM = deviceChooser;
-            _ = Rescan();
+            DeviceChooserVM = deviceChooser;
 
             this.applicationStatusMediator = applicationStatusMediator;
 
-            ConnectGuiderCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
-            CancelConnectGuiderCommand = new RelayCommand(CancelConnectGuider);
-            RefreshGuiderListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !GuiderInfo.Connected);
-            DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => GuiderInfo.Connected);
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect), (object o) => DeviceChooserVM.SelectedDevice != null);
+            CancelConnectCommand = new RelayCommand(CancelConnectGuider);
+            RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !GuiderInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
+            DisconnectCommand = new RelayCommand((object o) => Disconnect(), (object o) => GuiderInfo.Connected);
             ClearGraphCommand = new RelayCommand((object o) => ResetGraphValues());
             SetShiftRateCommand = new AsyncCommand<bool>(SetShiftRateVM);
             StopShiftCommand = new AsyncCommand<bool>(StopShiftVM);
@@ -63,18 +66,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             GuideStepsHistory = new GuideStepsHistory(HistorySize, GuiderScale, GuiderMaxY);
 
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
-                await Rescan();
+                await RescanDevicesCommand.ExecuteAsync(null);
             };
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                GuiderChooserVM.GetEquipment();
-                return GuiderChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
-        public IDeviceChooserVM GuiderChooserVM { get; private set; }
+        public IDeviceChooserVM DeviceChooserVM { get; private set; }
 
         /// <summary>
         /// Starts recording RMS until StopRMSRecording is called
@@ -142,13 +145,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 }
                 _cancelConnectGuiderSource?.Dispose();
                 _cancelConnectGuiderSource = new CancellationTokenSource();
-                Guider = (IGuider)GuiderChooserVM.SelectedDevice;
-                Guider.PropertyChanged += Guider_PropertyChanged;
+                Guider = (IGuider)DeviceChooserVM.SelectedDevice;
                 connected = await Guider.Connect(_cancelConnectGuiderSource.Token);
                 _cancelConnectGuiderSource.Token.ThrowIfCancellationRequested();
+                connected = connected && Guider.Connected;
 
                 if (connected) {
                     Guider.GuideEvent += Guider_GuideEvent;
+                    GuideStepsHistory.PixelScale = Guider.PixelScale;
+                    Guider.PropertyChanged += Guider_PropertyChanged;
+
 
                     GuiderInfo = new GuiderInfo {
                         Connected = connected,
@@ -167,6 +173,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
                 }
             } catch (OperationCanceledException) {
+                connected = false;
+            } catch(Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(ex.Message);
                 connected = false;
             }
 
@@ -206,14 +216,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         }
 
         public Task Disconnect() {
-            if (Guider != null) {
-                Guider.PropertyChanged -= Guider_PropertyChanged;
-                Guider.GuideEvent -= Guider_GuideEvent;
+            try {
+                if (Guider != null) {
+                    Guider.PropertyChanged -= Guider_PropertyChanged;
+                    Guider.GuideEvent -= Guider_GuideEvent;
+                }
+                Guider?.Disconnect();
+                Guider = null;
+                GuiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
+                BroadcastGuiderInfo();
+            } catch(Exception ex) {
+                Logger.Error(ex);
             }
-            Guider?.Disconnect();
-            Guider = null;
-            GuiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
-            BroadcastGuiderInfo();
             return Task.CompletedTask;
         }
 
@@ -306,6 +320,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = Loc.Instance["LblDither"], Source = Title });
                     GuideStepsHistory.AddDitherIndicator();
                     await Guider.Dither(prog, token);
+                    await guiderMediator.RaiseAfterDither(new EventArgs());
                 } finally {
                     Guider.GuideEvent += Guider_GuideEvent;
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = string.Empty, Source = Title });
@@ -441,11 +456,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         private IApplicationStatusMediator applicationStatusMediator;
         private CancellationTokenSource _cancelConnectGuiderSource;
 
-        public ICommand ConnectGuiderCommand { get; private set; }
-        public ICommand RefreshGuiderListCommand { get; private set; }
-        public ICommand DisconnectGuiderCommand { get; private set; }
+        public IAsyncCommand ConnectCommand { get; private set; }
+        public IAsyncCommand RescanDevicesCommand { get; private set; }
+        public ICommand DisconnectCommand { get; private set; }
         public ICommand ClearGraphCommand { get; private set; }
-        public ICommand CancelConnectGuiderCommand { get; }
+        public ICommand CancelConnectCommand { get; }
         public ICommand SetShiftRateCommand { get; private set; }
         public ICommand StopShiftCommand { get; private set; }
     }

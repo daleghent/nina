@@ -138,7 +138,7 @@ namespace NINA.Image.ImageData {
         public string FinalizeSave(string file, string pattern, IList<ImagePattern> customPatterns) {
             try {
                 if (pattern.Contains(ImagePatternKeys.SensorTemp) && double.IsNaN(this.MetaData.Camera.Temperature) && !string.IsNullOrEmpty(this.Data.RAWType)) {
-                    string sensorTemp = getSensorTempFromExifTool(file);
+                    string sensorTemp = GetSensorTempFromExifTool(file);
                     pattern = pattern.Replace(ImagePatternKeys.SensorTemp, sensorTemp);
                 }
 
@@ -158,9 +158,9 @@ namespace NINA.Image.ImageData {
                 }
 
                 FileInfo fileinfo = new FileInfo(file);
-                fileinfo.MoveTo(newFileName);
 
-                Logger.Info($"Saving image at {newFileName}");
+                Logger.Info($"Finalize image and moving it to {newFileName}");
+                fileinfo.MoveTo(newFileName);
 
                 return newFileName;
             } catch (Exception ex) {
@@ -170,7 +170,7 @@ namespace NINA.Image.ImageData {
             }
         }
 
-        private string getSensorTempFromExifTool(string file) {
+        private string GetSensorTempFromExifTool(string file) {
             string tempString = string.Empty;
             try {
                 string EXIFTOOLLOCATION = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Utility", "ExifTool", "exiftool.exe");

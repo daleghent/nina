@@ -29,6 +29,8 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
 
     public class SBIGCameraProvider : IEquipmentProvider<ICamera> {
+        public string Name => "SBIG";
+        public string ContentId => this.GetType().FullName;
         private readonly ISbigSdk sbigSdk;
         private readonly IProfileService profileService;
         private readonly IExposureDataFactory exposureDataFactory;

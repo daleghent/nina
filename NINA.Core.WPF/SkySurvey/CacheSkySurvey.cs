@@ -77,6 +77,38 @@ namespace NINA.WPF.Base.SkySurvey {
             Initialize();
         }
 
+
+        public void DeleteFromCache(XElement element) {
+            if(Cache != null && element != null) {
+
+                var fileNameAttribute = element.Attribute("FileName");
+
+                if(fileNameAttribute != null) {
+                    var fullFileName = Path.Combine(framingAssistantCachePath, fileNameAttribute.Value);                 
+                    var thumbnailBig = CacheImage.GetImagePathForThumbnail(fullFileName, CacheImage.BigThumbnailSize);
+                    var thumbnailMedium = CacheImage.GetImagePathForThumbnail(fullFileName, CacheImage.MediumThumbnailSize);
+                    var thumbnailSmall = CacheImage.GetImagePathForThumbnail(fullFileName, CacheImage.SmallThumbnailSize);
+
+                    if(File.Exists(fullFileName)) {
+                        try { File.Delete(fullFileName); } catch { }
+                    }
+                    if (File.Exists(thumbnailBig)) {
+                        try { File.Delete(thumbnailBig); } catch { }
+                    }
+                    if (File.Exists(thumbnailMedium)) {
+                        try { File.Delete(thumbnailMedium); } catch { }
+                    }
+                    if (File.Exists(thumbnailSmall)) {
+                        try { File.Delete(thumbnailSmall); } catch { }
+                    }
+
+                }
+
+                element.Remove();
+                Cache.Save(framingAssistantCachInfo);
+            }
+        }
+
         public XElement SaveImageToCache(SkySurveyImage skySurveyImage) {
             try {
                 var element =

@@ -12,29 +12,58 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Utility;
 using NINA.Profile.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
-    public class FocuserChooserVM : DeviceChooserVM {
-        private IDeviceFactory focuserFactory;
+    public class FocuserChooserVM : DeviceChooserVM<IFocuser> {
 
-        public FocuserChooserVM(IProfileService profileService, IDeviceFactory focuserFactory) : base(profileService) {
-            this.focuserFactory = focuserFactory;
+        public FocuserChooserVM(
+                IProfileService profileService, 
+                IDeviceDispatcher deviceDispatcher,
+                IEquipmentProviders<IFocuser> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
+                var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
                 var devices = new List<IDevice>();
+                devices.Add(new DummyDevice(Loc.Instance["LblNoFocuser"]));
 
-                foreach (var device in focuserFactory.GetDevices()) {
-                    devices.Add(device);
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var pluginDevices = provider.GetEquipment();
+                        Logger.Info($"Found {pluginDevices?.Count} {provider.Name} Focusers");
+                        devices.AddRange(pluginDevices);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                }
+
+                devices.Add(new UltimatePowerboxV2(profileService));
+
+                try {
+                    devices.AddRange(ascomInteraction.GetFocusers());
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.FocuserSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
         }
     }

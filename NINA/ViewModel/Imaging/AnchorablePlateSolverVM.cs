@@ -105,6 +105,7 @@ namespace NINA.ViewModel.Imaging {
             RepeatThreshold = profileService.ActiveProfile.PlateSolveSettings.Threshold;
             SlewToTarget = profileService.ActiveProfile.PlateSolveSettings.SlewToTarget;
             SnapBin = new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning);
+            SnapGain = profileService.ActiveProfile.PlateSolveSettings.Gain;
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 SnapExposureDuration = profileService.ActiveProfile.PlateSolveSettings.ExposureTime;
@@ -112,6 +113,7 @@ namespace NINA.ViewModel.Imaging {
                 RepeatThreshold = profileService.ActiveProfile.PlateSolveSettings.Threshold;
                 SlewToTarget = profileService.ActiveProfile.PlateSolveSettings.SlewToTarget;
                 SnapBin = new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning);
+                SnapGain = profileService.ActiveProfile.PlateSolveSettings.Gain;
             };
         }
 

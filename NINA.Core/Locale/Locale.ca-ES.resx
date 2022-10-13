@@ -3861,10 +3861,10 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Obturador</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Tanca l'obturador</value>
+    <value>Tanca la persiana</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Obre l'obturador</value>
+    <value>Obre la persiana</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotar en sentit horari</value>
@@ -4904,7 +4904,7 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Activa la Sincronització de Cúpula</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Description" xml:space="preserve">
-    <value>Desactiva la sincronització del terra de la cúpula amb el telescopi</value>
+    <value>Desactiva la sincronització en segon pla de la cúpula amb el telescopi</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_DisableDomeSynchronization_Name" xml:space="preserve">
     <value>Desactiva la sincronització de la cúpula</value>
@@ -5723,7 +5723,7 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>SDK del venedor</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>L'operació de desaparcar s'ha cancel·lat</value>
+    <value>Cancel·lada l'operació de desaparcar</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Esperant al telescopi per desaparcar</value>
@@ -5807,10 +5807,10 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>Seguiment del registre del servidor ASCOM del CCD</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
-    <value>Nom del servidor del tub (Server Pipe)</value>
+    <value>Nom del servidor de canalització (Server Pipe)</value>
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
-    <value>El controlador ASCOM que llegeix des d’aquest servidor hauria de tenir el mateix nom del tub configurat</value>
+    <value>El controlador ASCOM que llegeix des d'aquest servidor ha de tenir configurat el mateix nom de canalització (pipa name)</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
     <value>Utilitzeu CCD de seguiment extern</value>
@@ -6351,15 +6351,6 @@ Raó: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Sense Filtre</value>
   </data>
-  <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Velocitat d'exposició</value>
-  </data>
-  <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Guany preestablert</value>
-  </data>
-  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Nivell de potència del calefactor</value>
-  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Estabilització del Dither</value>
   </data>
@@ -6385,5 +6376,96 @@ Un cop confirmat, trieu quin solucionador s'ha d'utilitzar.</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
     <value>Quan se selecciona el solucionador de plaques, les coordenades s'utilitzaran com a coordenades de referència i s'utilitzaran per al solucionador de plaques configurat a les opcions.</value>
+  </data>
+  <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
+    <value>Color de la Dec en el Gràfic de Guiatge</value>
+  </data>
+  <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
+    <value>Color de AR en el Gràfic de Guiatge</value>
+  </data>
+  <data name="LblGuideGraphShowCorrections" xml:space="preserve">
+    <value>Mostra les correccions en el Gràfic del guiatge</value>
+  </data>
+  <data name="LblRotateImageAfterFlip" xml:space="preserve">
+    <value>Gira la imatge després del canvi de meridià</value>
+  </data>
+  <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
+    <value>Quan està activat, girarà la imatge 180° a la pestanya d'imatge després del canvi de meridià. Això només té finalitats de visualització i no afectarà les dades de la imatge.</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
+    <value>Desactiva el guiatge durant el canvi de filtre</value>
+  </data>
+  <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
+    <value>Quan aquesta opció està habilitada, cada vegada que es canvia un filtre, el guiatge es desactivarà mentrestant i es tornarà a habilitar després.</value>
+  </data>
+  <data name="LblEphemerisNotFound" xml:space="preserve">
+    <value>No s'ha trobat el fitxer d'efemèrides per calcular trajectòries celestes. Si us plau, executeu una reparació amb la instal·lació de N.I.N.A.</value>
+  </data>
+  <data name="LblPHD2InstanceNumber" xml:space="preserve">
+    <value>Número de instancia de PHD2</value>
+  </data>
+  <data name="LblDomeMountGeometry" xml:space="preserve">
+    <value>Geometria de la cúpula i de la muntura</value>
+  </data>
+  <data name="LblDomeNotConnectedError" xml:space="preserve">
+    <value>El controlador de la cúpula no està connectat!</value>
+  </data>
+  <data name="LblDomeShutterCoordination" xml:space="preserve">
+    <value>Coordinació de la persiana</value>
+  </data>
+  <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>S'ha ordenat que la persiana o el sostre es mogui, però la muntura està desconnectada. No es pot determinar l'estat de la muntura. Això pot ser perillós!</value>
+  </data>
+  <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
+    <value>S'ha ordenat que la persiana o el sostre es mogui, però la muntura no està aparcada. Això pot ser perillós!</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
+    <value>Aparca la cúpula abans de l'operació de la persiana</value>
+  </data>
+  <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Envia la cúpula a la seva posició d'aparcament abans d'intentar obrir o tancar la persiana</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
+    <value>Aparca la muntura abans de l'operació de la persiana</value>
+  </data>
+  <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
+    <value>Intenta aparcar la muntura abans d'obrir o tancar la persiana</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
+    <value>Impedir obrir o tancar si la muntura no està aparcada</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
+    <value>Obliga que N.I.N.A. impedeixi obrir o tancar la persiana o el sostre si la muntura està sense aparcar.
+Això s'avalua DESPRÉS del paràmetre "Aparcar la muntura abans de moure la persiana".</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
+    <value>Impedir l'obertura si no hi ha cap monitor de seguretat connectat</value>
+  </data>
+  <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
+    <value>Obligar que N.I.N.A. impedeixi obrir la persiana o el sostre si no hi ha un dispositiu de monitor de seguretat connectat.</value>
+  </data>
+  <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
+    <value>S'ha ordenat l'obertura de la persiana o el sostre, però el dispositiu de monitor de seguretat està desconnectat. L'obertura s'ha avortat.</value>
+  </data>
+  <data name="LblShutterSettingsWarning" xml:space="preserve">
+    <value>AVÍS: aquests paràmetres estan relacionats amb la seguretat del vostre equip. S'han d'establir amb molta cura i amb la familiaritat que heu de teniu de la vostra configuració específica. Governen només el control de l'equip per part de N.I.N.A. i NO estan vigents si N.I.N.A. no funciona o no està connectat a l'equip en qüestió. Els mecanismes de seguretat de la cúpula o del sostre sempre haurien de tenir una còpia de seguretat de maquinari i enclavaments elèctrics per evitar qualsevol moviment no desitjat de la persiana o del sostre. És la vostra responsabilitat assegurar-vos que aquests paràmetres no entren en conflicte amb els del controlador de la cúpula.</value>
+  </data>
+  <data name="LblCollapseSidebarTooltip" xml:space="preserve">
+    <value>Redueix les barres laterals esquerres per mostrar només icones més petites sense text</value>
+  </data>
+  <data name="LblExpandSidebarTooltip" xml:space="preserve">
+    <value>Expandeix les barres laterals esquerres per mostrar icones més grans amb text</value>
+  </data>
+  <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
+    <value>Activa el mode de configuració. Quan aquest mode està habilitat, cada instrucció es pot activar o desactivar. Aleshores, una instrucció desactivada no es mostrarà dins de la barra lateral fora del mode de configuració.</value>
+  </data>
+  <data name="LblCollapseAll" xml:space="preserve">
+    <value>Reduir tot</value>
+  </data>
+  <data name="LblExpandAll" xml:space="preserve">
+    <value>Expandir tot</value>
+  </data>
+  <data name="LblRotating" xml:space="preserve">
+    <value>Rotant</value>
   </data>
 </root>

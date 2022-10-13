@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using System.Windows.Media;
 
 namespace NINA.Profile.Interfaces {
 
@@ -25,6 +26,7 @@ namespace NINA.Profile.Interfaces {
         int PHD2HistorySize { get; set; }
         int PHD2ServerPort { get; set; }
         string PHD2ServerUrl { get; set; }
+        int PHD2InstanceNumber { get; set; }
         int SettleTime { get; set; }
         double SettlePixels { get; set; }
         int SettleTimeout { get; set; }
@@ -51,5 +53,8 @@ namespace NINA.Profile.Interfaces {
         double SkyGuardValueMaxDithering { get; set; }
         double SkyGuardTimeLapsDithering { get; set; }
         double SkyGuardTimeOutGuiding { get; set; }
+        Color GuideChartRightAscensionColor { get; set; }
+        Color GuideChartDeclinationColor { get; set; }
+        bool GuideChartShowCorrections { get; set; }
     }
 }

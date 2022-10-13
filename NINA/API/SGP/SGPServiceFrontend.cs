@@ -51,7 +51,7 @@ namespace NINA.API.SGP {
         }
 
         public SgEnumerateDevicesResponse SgEnumerateDevices_PostWithBody(SgEnumerateDevices input) {
-            return serviceBackend.EnumerateDevices(input);
+            return serviceBackend.EnumerateDevices(input).Result;
         }
 
         public SgGetDeviceStatusResponse SgGetDeviceStatus_PostWithBody(SgGetDeviceStatus input) {

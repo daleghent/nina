@@ -17,6 +17,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
+    xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -44,15 +46,15 @@
                         Text="{ns:Loc LblGuider}" />
                     <equip:Connector
                         Grid.Column="1"
-                        CancelCommand="{Binding CancelConnectGuiderCommand}"
-                        ConnectCommand="{Binding ConnectGuiderCommand}"
+                        CancelCommand="{Binding CancelConnectCommand}"
+                        ConnectCommand="{Binding ConnectCommand}"
                         Connected="{Binding GuiderInfo.Connected}"
-                        Devices="{Binding GuiderChooserVM.Devices}"
-                        DisconnectCommand="{Binding DisconnectGuiderCommand}"
-                        HasSetupDialog="{Binding GuiderChooserVM.SelectedDevice.HasSetupDialog}"
-                        RefreshCommand="{Binding RefreshGuiderListCommand}"
-                        SelectedDevice="{Binding GuiderChooserVM.SelectedDevice, Mode=TwoWay}"
-                        SetupCommand="{Binding GuiderChooserVM.SetupDialogCommand}" />
+                        Devices="{Binding DeviceChooserVM.Devices}"
+                        DisconnectCommand="{Binding DisconnectCommand}"
+                        HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RescanDevicesCommand}"
+                        SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                 </Grid>
             </GroupBox.Header>
             <Grid>
@@ -99,14 +101,54 @@
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,5,0,0"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblGuideGraphShowCorrections}" TextWrapping="Wrap" />
+                                <CheckBox
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.GuideChartShowCorrections, Mode=TwoWay}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,5,0,0"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblGuideGraphRightAscensionColor}" TextWrapping="Wrap" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.GuideChartRightAscensionColor, Mode=TwoWay}" />
+                            </UniformGrid>
+                            <UniformGrid
+                                Margin="5,5,0,0"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblGuideGraphDeclinationColor}" TextWrapping="Wrap" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.GuideChartDeclinationColor, Mode=TwoWay}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
                 </StackPanel>
             </Grid>
         </GroupBox>
 
-        <GroupBox
-            Grid.Column="1"
-            VerticalAlignment="Top"
-            IsEnabled="{Binding GuiderInfo.Connected}">
+        <GroupBox Grid.Column="1" VerticalAlignment="Top">
             <GroupBox.Header>
                 <Grid Height="40" Margin="5">
                     <TextBlock
@@ -133,22 +175,32 @@
                         <local:DefaultDetailView />
                     </DataTemplate>
                     <DataTemplate x:Key="SkyGuardGuider">
-                      <local:SkyGuardDetailView />
+                        <local:SkyGuardDetailView />
                     </DataTemplate>
-          <local:GuiderTemplateSelector
+                    <DataTemplate x:Key="Failed">
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="Failed to load plugin data template" />
+                    </DataTemplate>
+                    <local:GuiderTemplateSelector
                         x:Key="ContentSelector"
                         Default="{StaticResource Default}"
                         DirectGuider="{StaticResource DirectGuider}"
+                        FailedToLoadTemplate="{StaticResource Failed}"
                         MGen="{StaticResource MGen}"
                         MetaGuide="{StaticResource MetaGuide}"
                         PHD2="{StaticResource PHD2}"
-                        SkyGuardGuider="{StaticResource SkyGuardGuider}"/>
-        </Grid.Resources>
+                        Postfix="{x:Static wpfutil:DataTemplatePostfix.GuiderSettings}"
+                        SkyGuardGuider="{StaticResource SkyGuardGuider}" />
+                </Grid.Resources>
                 <ContentControl
                     VerticalAlignment="Top"
                     Content="{Binding}"
                     ContentTemplateSelector="{StaticResource ContentSelector}"
-                    DataContext="{Binding Guider}" />
+                    DataContext="{Binding Guider}"
+                    IsEnabled="{Binding GuiderInfo.Connected}" />
             </Grid>
         </GroupBox>
 
@@ -156,7 +208,6 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Margin="5,0,5,0"
-
             IsEnabled="{Binding GuiderInfo.Connected, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>

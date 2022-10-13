@@ -29,33 +29,36 @@ using NINA.Core.Locale;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;
-using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Image.Interfaces;
-using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
-using NINA.Equipment.SDK.CameraSDKs.ASTPANSDK;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
-    public class CameraChooserVM : DeviceChooserVM {
+    public class CameraChooserVM : DeviceChooserVM<ICamera> {
         private readonly ITelescopeMediator telescopeMediator;
         private readonly ISbigSdk sbigSdk;
         private readonly IExposureDataFactory exposureDataFactory;
         private readonly IImageDataFactory imageDataFactory;
-        private readonly IDeviceDispatcher deviceDispatcher;
 
-        public CameraChooserVM(
-            IProfileService profileService, ITelescopeMediator telescopeMediator, ISbigSdk sbigSdk, IExposureDataFactory exposureDataFactory, IImageDataFactory imageDataFactory, IDeviceDispatcher deviceDispatcher
-            ) : base(profileService) {
+        public CameraChooserVM(IProfileService profileService,
+                               ITelescopeMediator telescopeMediator,
+                               ISbigSdk sbigSdk,
+                               IExposureDataFactory exposureDataFactory,
+                               IImageDataFactory imageDataFactory,
+                               IDeviceDispatcher deviceDispatcher,
+                               IEquipmentProviders<ICamera> equipmentProviders) : base(profileService, deviceDispatcher, equipmentProviders) {
             this.telescopeMediator = telescopeMediator;
             this.sbigSdk = sbigSdk;
             this.exposureDataFactory = exposureDataFactory;
             this.imageDataFactory = imageDataFactory;
-            this.deviceDispatcher = deviceDispatcher;
         }
 
-        public override void GetEquipment() {
-            lock (lockObj) {
+        public override async Task GetEquipment() {
+            await lockObj.WaitAsync();
+            try {
                 var ascomInteraction = new ASCOMInteraction(deviceDispatcher, profileService);
 
                 var devices = new List<IDevice>();
@@ -141,15 +144,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     Logger.Error(ex);
                 }
 
-                /* Player One */
-                try {
-                    var provider = new PlayerOneProvider(profileService, exposureDataFactory);
-                    var playerOneCameras = provider.GetEquipment();
-                    Logger.Info($"Found {playerOneCameras?.Count} Player One Cameras");
-                    devices.AddRange(playerOneCameras);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
+                ///* Player One */
+                //try {
+                //    var provider = new PlayerOneProvider(profileService, exposureDataFactory);
+                //    var playerOneCameras = provider.GetEquipment();
+                //    Logger.Info($"Found {playerOneCameras?.Count} Player One Cameras");
+                //    devices.AddRange(playerOneCameras);
+                //} catch (Exception ex) {
+                //    Logger.Error(ex);
+                //}
 
                 /* ToupTek */
                 try {
@@ -199,15 +202,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     Logger.Error(ex);
                 }
 
-                /* SVBony */
-                try {
-                    var provider = new SVBonyProvider(profileService, exposureDataFactory);
-                    var svBonyCameras = provider.GetEquipment();
-                    Logger.Info($"Found {svBonyCameras?.Count} SVBony Cameras");
-                    devices.AddRange(svBonyCameras);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
+                ///* SVBony */
+                //try {
+                //    var provider = new SVBonyProvider(profileService, exposureDataFactory);
+                //    var svBonyCameras = provider.GetEquipment();
+                //    Logger.Info($"Found {svBonyCameras?.Count} SVBony Cameras");
+                //    devices.AddRange(svBonyCameras);
+                //} catch (Exception ex) {
+                //    Logger.Error(ex);
+                //}
 
                 /* SBIG */
                 try {
@@ -219,14 +222,25 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     Logger.Error(ex);
                 }
 
-                /* ASTPAN */
-                try {
-                    var provider = new ASTPANProvider(profileService, exposureDataFactory);
-                    var astpanCameras = provider.GetEquipment();
-                    Logger.Info($"Found {astpanCameras?.Count} ASTPAN Cameras");
-                    devices.AddRange(astpanCameras );
-                } catch (Exception ex) {
-                    Logger.Error(ex);
+                ///* ASTPAN */
+                //try {
+                //    var provider = new ASTPANProvider(profileService, exposureDataFactory);
+                //    var astpanCameras = provider.GetEquipment();
+                //    Logger.Info($"Found {astpanCameras?.Count} ASTPAN Cameras");
+                //    devices.AddRange(astpanCameras );
+                //} catch (Exception ex) {
+                //    Logger.Error(ex);
+                //}
+
+                /* Plugin Providers */
+                foreach (var provider in await equipmentProviders.GetProviders()) {
+                    try {
+                        var cameras = provider.GetEquipment();
+                        Logger.Info($"Found {cameras?.Count} {provider.Name} Cameras");
+                        devices.AddRange(cameras);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
                 }
 
                 /* ASCOM */
@@ -277,7 +291,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 devices.Add(new SimulatorCamera(profileService, telescopeMediator, exposureDataFactory, imageDataFactory));
 
                 DetermineSelectedDevice(devices, profileService.ActiveProfile.CameraSettings.Id);
+
+            } finally {
+                lockObj.Release();
             }
-        }
+        }        
     }
 }

@@ -13,6 +13,7 @@ using NINA.Core.Locale;
 using NINA.Core.MyMessageBox;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces.Mediator;
+using NINA.Plugin.Interfaces;
 using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
@@ -38,10 +39,19 @@ namespace NINA.ViewModel {
         private readonly ISwitchMediator switchMediator;
         private readonly ISafetyMonitorMediator safetyMonitorMediator;
 
-        public ApplicationDeviceConnectionVM(IProfileService profileService, ICameraMediator camMediator, ITelescopeMediator teleMediator,
-            IFocuserMediator focMediator, IFilterWheelMediator fwMediator, IRotatorMediator rotMediator, IFlatDeviceMediator flatdMediator, IGuiderMediator guidMediator,
-            ISwitchMediator swMediator, IWeatherDataMediator weatherMediator,
-            IDomeMediator domMediator, ISafetyMonitorMediator safetyMonitorMediator) : base(profileService) {
+        public ApplicationDeviceConnectionVM(IProfileService profileService,
+                                             ICameraMediator camMediator,
+                                             ITelescopeMediator teleMediator,
+                                             IFocuserMediator focMediator,
+                                             IFilterWheelMediator fwMediator,
+                                             IRotatorMediator rotMediator,
+                                             IFlatDeviceMediator flatdMediator,
+                                             IGuiderMediator guidMediator,
+                                             ISwitchMediator swMediator,
+                                             IWeatherDataMediator weatherMediator,
+                                             IDomeMediator domMediator,
+                                             ISafetyMonitorMediator safetyMonitorMediator,
+                                             IPluginLoader pluginLoader) : base(profileService) {
             cameraMediator = camMediator;
             telescopeMediator = teleMediator;
             focuserMediator = focMediator;
@@ -53,6 +63,11 @@ namespace NINA.ViewModel {
             domeMediator = domMediator;
             weatherDataMediator = weatherMediator;
             this.safetyMonitorMediator = safetyMonitorMediator;
+
+            _ = Task.Run(async () => {
+                await pluginLoader.Load();
+                Initialized = true;
+            });
 
             ConnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
                 var diag = MyMessageBox.Show(Loc.Instance["LblConnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
@@ -131,7 +146,7 @@ namespace NINA.ViewModel {
                     AllConnected = false;
                     return false;
                 }
-            });
+            }, (object o) => Initialized);
 
             DisconnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
                 var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
@@ -141,7 +156,23 @@ namespace NINA.ViewModel {
                     return true;
                 }
                 return false;
-            });
+            }, (object o) => Initialized);
+        }
+
+        private object lockObj = new object();
+        private bool initialized;
+        public bool Initialized {
+            get {
+                lock (lockObj) {
+                    return initialized;
+                }
+            }
+            private set {
+                lock (lockObj) {
+                    initialized = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool allConnected = false;

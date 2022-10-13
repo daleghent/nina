@@ -123,7 +123,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             await act.Should().ThrowAsync<Exception>().WithMessage(Loc.Instance["LblPlatesolveFailed"]);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -151,7 +151,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             await act.Should().ThrowAsync<Exception>().WithMessage(Loc.Instance["LblSyncFailed"]);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -179,7 +179,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             await sut.Execute(default, default);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 

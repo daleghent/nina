@@ -33,6 +33,7 @@ using System.IO;
 using System.Linq;
 using NINA.Plugin.Interfaces;
 using Nito.AsyncEx;
+using NINA.Astrometry;
 
 namespace NINA.ViewModel {
 
@@ -64,6 +65,9 @@ namespace NINA.ViewModel {
             OpenAboutCommand = new RelayCommand(OpenAbout);
             CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
             CheckWindowsVersionCommand = new RelayCommand(CheckWindowsVersion);
+            CheckEphemerisExistsCommand = new RelayCommand(CheckEphemerisExists);
+            CollapseTabControlCommand = new RelayCommand((object o) => Collapsed = true);
+            ExpandTabControlCommand = new RelayCommand((object o) => Collapsed = false);
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
         }
@@ -99,6 +103,21 @@ namespace NINA.ViewModel {
                 } finally {
                     Notification.ShowError(string.Format(Loc.Instance["LblYourWindowsIsTooOld"], friendlyName));
                 }
+            }
+        }
+
+        public bool Collapsed {
+            get => Properties.Settings.Default.CollapsedSidebar;
+            set {
+                Properties.Settings.Default.CollapsedSidebar = value;
+                CoreUtil.SaveSettings(Properties.Settings.Default);
+                RaisePropertyChanged();
+            }
+        }
+
+        private void CheckEphemerisExists(object o) {
+            if(!File.Exists(NOVAS.EphemerisLocation)) {
+                Notification.ShowError(Loc.Instance["LblEphemerisNotFound"]);
             }
         }
 
@@ -248,5 +267,8 @@ namespace NINA.ViewModel {
         public ICommand ClosingCommand { get; private set; }
         public ICommand CheckASCOMPlatformVersionCommand { get; private set; }
         public ICommand CheckWindowsVersionCommand { get; private set; }
+        public ICommand CheckEphemerisExistsCommand { get; }
+        public ICommand CollapseTabControlCommand { get; }
+        public ICommand ExpandTabControlCommand { get; }
     }
 }

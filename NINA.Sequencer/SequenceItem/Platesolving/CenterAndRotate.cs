@@ -105,13 +105,15 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var service = windowServiceFactory.Create();
-            service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            progress = PlateSolveStatusVM.CreateLinkedProgress(progress);
+            service.Show(PlateSolveStatusVM, Loc.Instance["Lbl_SequenceItem_Platesolving_CenterAndRotate_Name"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
 
             bool stoppedGuiding = false;
             try {
                 float rotationDistance = float.MaxValue;
 
                 stoppedGuiding = await guiderMediator.StopGuiding(token);
+                progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
                 await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
                 var domeInfo = domeMediator.GetInfo();
@@ -123,6 +125,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                         Logger.Warning("Center and Rotate - Synchronize dome operation didn't complete successfully. Moving on");
                     }
                 }
+                progress?.Report(new ApplicationStatus() { Status = string.Empty });
 
                 var targetRotation = (float)Rotation;
 
@@ -159,8 +162,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     }
 
                     if (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance))) {
-                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");
+                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°"); 
+                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblRotating"] });
                         await rotatorMediator.MoveRelative(rotationDistance, token);
+                        progress?.Report(new ApplicationStatus() { Status = string.Empty });
                         token.ThrowIfCancellationRequested();
                     }
                 } while (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance)));

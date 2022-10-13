@@ -86,6 +86,7 @@
     <Compile Include="Database\Schema\DsoDetail.cs" />
     <Compile Include="Database\Schema\EarthRotationParameters.cs" />
     <Compile Include="Database\Schema\VisualDescription.cs" />
+    <Compile Include="Enum\AlignmentMode.cs" />
     <Compile Include="Enum\CameraStates.cs" />
     <Compile Include="Enum\CameraType.cs" />
     <Compile Include="Enum\SendCommandTypeEnum.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Utility\Blittable.cs" />
     <Compile Include="Utility\ButtonHelper.cs" />
     <Compile Include="Utility\Extensions\DelegateExtension.cs" />
+    <Compile Include="Utility\ObservableDictionary.cs" />
     <Compile Include="Utility\TextEncoding.cs" />
     <Compile Include="Utility\ColorSchema\ColorSchema.cs" />
     <Compile Include="Utility\Converters\AddToNumberConverter.cs" />
@@ -420,8 +422,12 @@
     <Compile Include="Utility\WindowService\CustomWindow.cs" />
     <Compile Include="Utility\WindowService\WindowService.cs" />
     <Compile Include="Utility\WindowService\WindowServiceFactory.cs" />
-    <EmbeddedResource Include="Locale\Locale.ca-ES.resx" />
-    <EmbeddedResource Include="Locale\Locale.cs-CZ.resx" />
+    <EmbeddedResource Include="Locale\Locale.ca-ES.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Locale\Locale.cs-CZ.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Locale\Locale.da-DK.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

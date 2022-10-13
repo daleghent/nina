@@ -11,6 +11,7 @@
 #endregion "copyright"
 using NINA.Core.Enum;
 using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
-    public class PlayerOneSDK : IPlayerOneSDK {
+    public class PlayerOneSDK : IGenericCameraSDK {
         private IPlayerOnePInvokeProxy playerOnePInvoke;
         private Dictionary<POAConfig, PlayerOneControl> controls;
         private List<POAImgFormat> formats;
@@ -433,6 +434,34 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             if (code == POAErrors.POA_OK) { return; }
 
             throw new Exception(code.ToString());
+        }
+
+        public void StopExposure() {
+            CheckAndThrowError(playerOnePInvoke.POAStopExposure(id));
+        }
+
+        public bool HasDewHeater() {
+            return false;
+        }
+
+        public bool IsDewHeaterOn() {
+            return false;
+        }
+
+        public bool SetDewHeater(bool onoff) {
+            throw new NotImplementedException();
+        }
+
+        public void StartVideoCapture(double exposureTime, int width, int height) {
+            throw new NotImplementedException();
+        }
+
+        public void StopVideoCapture() {
+            throw new NotImplementedException();
+        }
+
+        public Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
+            throw new NotImplementedException();
         }
     }
 }

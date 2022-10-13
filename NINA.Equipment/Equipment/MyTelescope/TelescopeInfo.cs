@@ -370,5 +370,65 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 RaisePropertyChanged();
             }
         }
+
+        private AlignmentMode alignmentMode;
+
+        public AlignmentMode AlignmentMode {
+            get => alignmentMode;
+            set {
+                alignmentMode = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool canPulseGuide;
+
+        public bool CanPulseGuide {
+            get => canPulseGuide;
+            set {
+                canPulseGuide = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool isPulseGuiding;
+
+        public bool IsPulseGuiding {
+            get => isPulseGuiding;
+            set {
+                isPulseGuiding = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool canSetPierSide;
+
+        public bool CanSetPierSide {
+            get => canSetPierSide;
+            set {
+                canSetPierSide = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool canSlew;
+
+        public bool CanSlew {
+            get => canSlew;
+            set {
+                canSlew = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private System.DateTime uTCDate;
+
+        public System.DateTime UTCDate {
+            get => uTCDate;
+            set {
+                uTCDate = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

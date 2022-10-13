@@ -41,35 +41,38 @@ using Nito.AsyncEx;
 namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
     public class FlatDeviceVM : DockableVM, IFlatDeviceVM, ICameraConsumer {
-        private IFlatDevice flatDevice;
         private IFlatDeviceSettings flatDeviceSettings;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IFlatDeviceMediator flatDeviceMediator;
         private readonly DeviceUpdateTimer updateTimer;
         private readonly ICameraMediator cameraMediator;
 
-        public IDeviceChooserVM FlatDeviceChooserVM { get; }
+        public IDeviceChooserVM DeviceChooserVM { get; }
 
-        public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator,
-            ICameraMediator cameraMediator, IDeviceChooserVM flatDeviceChooserVm, IImageGeometryProvider imageGeometryProvider) : base(profileService) {
+        public FlatDeviceVM(IProfileService profileService,
+                            IFlatDeviceMediator flatDeviceMediator,
+                            IApplicationStatusMediator applicationStatusMediator,
+                            ICameraMediator cameraMediator,
+                            IDeviceChooserVM flatDeviceChooserVm,
+                            IImageGeometryProvider imageGeometryProvider) : base(profileService) {
             this.applicationStatusMediator = applicationStatusMediator;
             this.flatDeviceMediator = flatDeviceMediator;
             this.flatDeviceMediator.RegisterHandler(this);
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
-            FlatDeviceChooserVM = flatDeviceChooserVm;
-            _ = Rescan();
+            DeviceChooserVM = flatDeviceChooserVm;
 
             Title = Loc.Instance["LblFlatDevice"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
 
-            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect));
+            ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect), (object o) => DeviceChooserVM.SelectedDevice != null);
             CancelConnectCommand = new RelayCommand(CancelConnectFlatDevice);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectFlatDeviceDialog));
             OpenCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => OpenCover(CancellationToken.None)));
             CloseCoverCommand = new AsyncCommand<bool>(() => Task.Run(() => CloseCover(CancellationToken.None)));
-            RefreshFlatDeviceListCommand =
+            RescanDevicesCommand =
                 new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !FlatDeviceInfo.Connected);
+            _ = RescanDevicesCommand.ExecuteAsync(null);
             SetBrightnessCommand = new AsyncCommand<bool>(o => Task.Run(() => SetBrightness(o, CancellationToken.None)));
             ToggleLightCommand = new AsyncCommand<bool>(o => Task.Run(() => ToggleLight(o, CancellationToken.None)));
             AddGainCommand = new RelayCommand(AddGain);
@@ -91,9 +94,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         public async Task<IList<string>> Rescan() {
-            return await Task.Run(() => {
-                FlatDeviceChooserVM.GetEquipment();
-                return FlatDeviceChooserVM.Devices.Select(x => x.Id).ToList();
+            return await Task.Run(async  () => {
+                await DeviceChooserVM.GetEquipment();
+                return DeviceChooserVM.Devices.Select(x => x.Id).ToList();
             });
         }
 
@@ -110,7 +113,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         private async void ProfileChanged(object sender, EventArgs e) {
             flatDeviceSettings.PropertyChanged -= FlatDeviceSettingsChanged;
             profileService.ActiveProfile.FilterWheelSettings.PropertyChanged += FilterWheelSettingsChanged;
-            await Rescan();
+            await RescanDevicesCommand.ExecuteAsync(null);
             flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
             flatDeviceSettings.PropertyChanged += FlatDeviceSettingsChanged;
             RaisePropertyChanged(nameof(Gains));
@@ -141,10 +144,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         public Task<bool> SetBrightness(object o, CancellationToken token) {
-            if (flatDevice == null || !flatDevice.Connected) return Task.FromResult(false);
+            if (FlatDevice == null || !FlatDevice.Connected) return Task.FromResult(false);
             if (!int.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
             return Task.Run(async () => {
-                flatDevice.Brightness = result;
+                Logger.Info($"Setting brightness to {result}");
+                FlatDevice.Brightness = result;
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
             }, token);
@@ -161,10 +165,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     await updateTimer.Stop();
                 }
 
-                var device = FlatDeviceChooserVM.SelectedDevice;
+                var device = DeviceChooserVM.SelectedDevice;
                 if (device == null) return false;
                 if (device.Id == "No_Device") {
-                    profileService.ActiveProfile.FlatDeviceSettings.Id = FlatDeviceChooserVM.SelectedDevice.Id;
+                    profileService.ActiveProfile.FlatDeviceSettings.Id = DeviceChooserVM.SelectedDevice.Id;
                     return false;
                 }
 
@@ -181,7 +185,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     var connected = await newDevice.Connect(connectFlatDeviceCts.Token);
                     connectFlatDeviceCts.Token.ThrowIfCancellationRequested();
                     if (connected) {
-                        this.flatDevice = newDevice;
+                        this.FlatDevice = newDevice;
                         FlatDeviceInfo = new FlatDeviceInfo {
                             MinBrightness = newDevice.MinBrightness,
                             MaxBrightness = newDevice.MaxBrightness,
@@ -227,7 +231,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                         return true;
                     } else {
                         FlatDeviceInfo.Connected = false;
-                        this.flatDevice = null;
+                        this.FlatDevice = null;
                         return false;
                     }
                 } catch (OperationCanceledException) {
@@ -260,8 +264,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             if (updateTimer != null) {
                 await updateTimer.Stop();
             }
-            flatDevice?.Disconnect();
-            flatDevice = null;
+            FlatDevice?.Disconnect();
+            FlatDevice = null;
             FlatDeviceInfo = DeviceInfo.CreateDefaultInstance<FlatDeviceInfo>();
             BroadcastFlatDeviceInfo();
             Logger.Trace("Disconnected Flat Device");
@@ -342,12 +346,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public async Task<bool> OpenCover(CancellationToken token) {
             await ssOpen.WaitAsync(token);
             try {
-                var device = FlatDeviceChooserVM.SelectedDevice;
-                if (device == null || device.Id == "No_Device") return false;
-                var flatD = (IFlatDevice)device;
-                if (flatD.Connected == false) return false;
-                if (!flatD.SupportsOpenClose) return false;
-                var result = await flatD.Open(token);
+                if (FlatDevice.Connected == false) return false;
+                if (!FlatDevice.SupportsOpenClose) return false;
+                Logger.Info("Opening Flat Device Cover");
+                var result = await FlatDevice.Open(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return result;
             } catch (Exception ex) {
@@ -363,12 +365,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         public async Task<bool> CloseCover(CancellationToken token) {
             await ssClose.WaitAsync(token);
             try {
-                var device = FlatDeviceChooserVM.SelectedDevice;
-                if (device == null || device.Id == "No_Device") return false;
-                var flatD = (IFlatDevice)device;
-                if (flatD.Connected == false) return false;
-                if (!flatD.SupportsOpenClose) return false;
-                var result = await flatD.Close(token);
+                if (FlatDevice.Connected == false) return false;
+                if (!FlatDevice.SupportsOpenClose) return false;
+                Logger.Info("Closing Flat Device Cover");
+                var result = await FlatDevice.Close(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return result;
             } catch (Exception ex) {
@@ -376,6 +376,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                 return false;
             } finally {
                 ssClose.Release();
+            }
+        }
+
+        private IFlatDevice flatDevice;
+        public IFlatDevice FlatDevice {
+            get => flatDevice;
+            private set {
+                flatDevice = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -414,18 +423,19 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         private Dictionary<string, object> GetFlatDeviceValues() {
             var flatDeviceValues = new Dictionary<string, object>
             {
-                {nameof(FlatDeviceInfo.Connected), flatDevice?.Connected ?? false},
-                {nameof(FlatDeviceInfo.CoverState), flatDevice?.CoverState ?? CoverState.Unknown},
-                {nameof(FlatDeviceInfo.Brightness), flatDevice?.Brightness ?? 0},
-                {nameof(FlatDeviceInfo.LightOn), flatDevice?.LightOn ?? false},
+                {nameof(FlatDeviceInfo.Connected), FlatDevice?.Connected ?? false},
+                {nameof(FlatDeviceInfo.CoverState), FlatDevice?.CoverState ?? CoverState.Unknown},
+                {nameof(FlatDeviceInfo.Brightness), FlatDevice?.Brightness ?? 0},
+                {nameof(FlatDeviceInfo.LightOn), FlatDevice?.LightOn ?? false},
             };
             return flatDeviceValues;
         }
 
         public Task<bool> ToggleLight(object o, CancellationToken token) {
-            if (flatDevice == null || flatDevice.Connected == false) return Task.FromResult(false);
+            if (FlatDevice == null || FlatDevice.Connected == false) return Task.FromResult(false);
             return Task.Run(async () => {
-                flatDevice.LightOn = o is bool b && b;
+                Logger.Info($"Toggling light to {o}");
+                FlatDevice.LightOn = o is bool b && b;
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
             }, token);
@@ -445,20 +455,20 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     .ToList() ?? new List<string>());
 
         public string Action(string actionName, string actionParameters = "") {
-            return FlatDeviceInfo?.Connected == true ? flatDevice.Action(actionName, actionParameters) : null;
+            return FlatDeviceInfo?.Connected == true ? FlatDevice.Action(actionName, actionParameters) : null;
         }
 
         public string SendCommandString(string command, bool raw = true) {
-            return FlatDeviceInfo?.Connected == true ? flatDevice.SendCommandString(command, raw) : null;
+            return FlatDeviceInfo?.Connected == true ? FlatDevice.SendCommandString(command, raw) : null;
         }
 
         public bool SendCommandBool(string command, bool raw = true) {
-            return FlatDeviceInfo?.Connected == true ? flatDevice.SendCommandBool(command, raw) : false;
+            return FlatDeviceInfo?.Connected == true ? FlatDevice.SendCommandBool(command, raw) : false;
         }
 
         public void SendCommandBlind(string command, bool raw = true) {
             if (FlatDeviceInfo?.Connected == true) {
-                flatDevice.SendCommandBlind(command, raw);
+                FlatDevice.SendCommandBlind(command, raw);
             }
         }
 
@@ -536,7 +546,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             column.RemoveFilterTimingByKeys(existingFilterKeys);
         }
 
-        public ICommand RefreshFlatDeviceListCommand { get; }
+        public IAsyncCommand RescanDevicesCommand { get; }
         public IAsyncCommand ConnectCommand { get; }
         public ICommand CancelConnectCommand { get; }
         public IAsyncCommand DisconnectCommand { get; }

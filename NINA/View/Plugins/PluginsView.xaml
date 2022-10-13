@@ -19,6 +19,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:plugin="clr-namespace:NINA.ViewModel.Plugins"
+    xmlns:settings="clr-namespace:NINA.Properties"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -53,6 +54,7 @@
             </StackPanel>
         </Grid>
         <TabControl
+            MinWidth="40"
             Style="{StaticResource SecondLevelTabControl}"
             TabStripPlacement="Left"
             Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -60,23 +62,33 @@
             <TabItem>
                 <TabItem.Header>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="10" />
-                        </Grid.RowDefinitions>
-                        <Grid>
-                            <Grid Width="40" Height="40">
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource SaveSVG}"
-                                    Stretch="Uniform"
-                                    Style="{StaticResource TabItemPath}" />
+                        <Grid MinWidth="65" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="10" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid Width="40" Height="40">
+                                    <Path
+                                        Margin="5"
+                                        Data="{StaticResource SaveSVG}"
+                                        Stretch="Uniform"
+                                        Style="{StaticResource TabItemPath}" />
+                                </Grid>
                             </Grid>
+                            <TextBlock
+                                Grid.Row="1"
+                                Style="{StaticResource SideBarTextBlock}"
+                                Text="{ns:Loc LblInstalled}" />
                         </Grid>
-                        <TextBlock
-                            Grid.Row="1"
-                            Style="{StaticResource SideBarTextBlock}"
-                            Text="{ns:Loc LblInstalled}" />
+                        <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <Path
+                                Width="25"
+                                Margin="2.5"
+                                Data="{StaticResource SaveSVG}"
+                                Stretch="Uniform"
+                                Style="{StaticResource TabItemPath}" />
+                        </Grid>
                     </Grid>
                 </TabItem.Header>
                 <TabItem.Content>
@@ -442,39 +454,64 @@
                 </TabItem.Style>
                 <TabItem.Header>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="10" />
-                        </Grid.RowDefinitions>
-                        <Grid>
-                            <Grid Width="40" Height="40">
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource GridSVG}"
-                                    Stretch="Uniform"
-                                    Style="{StaticResource TabItemPath}" />
+                        <Grid Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="10" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid Width="40" Height="40">
+                                    <Path
+                                        Margin="5"
+                                        Data="{StaticResource GridSVG}"
+                                        Stretch="Uniform"
+                                        Style="{StaticResource TabItemPath}" />
 
-                                <Border
-                                    Width="15"
-                                    Height="15"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Background="{StaticResource ButtonBackgroundBrush}"
-                                    CornerRadius="1"
-                                    Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                        Text="{Binding AvailablePluginUpdateCount}" />
-                                </Border>
+                                    <Border
+                                        Width="15"
+                                        Height="15"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource ButtonBackgroundBrush}"
+                                        CornerRadius="1"
+                                        Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding AvailablePluginUpdateCount}" />
+                                    </Border>
+                                </Grid>
                             </Grid>
+                            <TextBlock
+                                Grid.Row="1"
+                                Style="{StaticResource SideBarTextBlock}"
+                                Text="{ns:Loc LblAvailable}" />
                         </Grid>
-                        <TextBlock
-                            Grid.Row="1"
-                            Style="{StaticResource SideBarTextBlock}"
-                            Text="{ns:Loc LblAvailable}" />
+                        <Grid Height="25" Visibility="{Binding CollapsedSidebar, Source={x:Static settings:Settings.Default}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <Path
+                                Width="25"
+                                Margin="2.5"
+                                Data="{StaticResource GridSVG}"
+                                Stretch="Uniform"
+                                Style="{StaticResource TabItemPath}" />
+                            <Border
+                                Width="13"
+                                Height="13"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Background="{StaticResource ButtonBackgroundBrush}"
+                                CornerRadius="1"
+                                Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold"
+                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                    Text="{Binding AvailablePluginUpdateCount}" />
+                            </Border>
+                        </Grid>
                     </Grid>
                 </TabItem.Header>
 

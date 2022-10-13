@@ -1,18 +1,4 @@
-﻿#region "copyright"
-
-/*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
-
-    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
-
-    This Source Code Form is subject to the terms of the Mozilla Public
-    License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
-
-#endregion "copyright"
-
-using NINA.Core.Enum;
+﻿using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
@@ -21,7 +7,6 @@ using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,18 +14,18 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyCamera {
-
-    public class SVBonyCamera : BaseINPC, ICamera {
-        private ISVBonySDK sdk;
+    public class GenericCamera : BaseINPC, ICamera {
+        private IGenericCameraSDK sdk;
         private IProfileService profileService;
         private readonly IExposureDataFactory exposureDataFactory;
 
-        public SVBonyCamera(int id, string name, string driverVersion, ISVBonySDK sdk, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
+        public GenericCamera(int id, string name, string category, string driverVersion, bool supportBitScaling, IGenericCameraSDK sdk, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.Name = name;
             this.sdk = sdk;
-            this.Category = "SVBony";
-            this.Description = "Native driver implementation for SVBony Cameras";
-            this.DriverInfo = "SVBony native driver";
+            this.Category = category;
+            this.supportBitScaling = supportBitScaling;
+            this.Description = $"Native driver implementation for {category} Cameras";
+            this.DriverInfo = $"{category} native driver";
             this.DriverVersion = driverVersion;
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;
@@ -80,10 +65,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SensorType = sdk.GetSensorInfo();
 
             CanSetTemperature = sdk.HasTemperatureControl();
+            HasDewHeater = sdk.HasDewHeater();
         }
 
-
-        public int BitDepth { get => profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : sdk.GetBitDepth(); }
+        private bool supportBitScaling;
+        public int BitDepth { get => supportBitScaling && profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : sdk.GetBitDepth(); }        
 
         public SensorType SensorType { get; private set; }
 
@@ -277,56 +263,44 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } else {
                 sdk.SetROI(0, 0, CameraXSize, CameraYSize, BinX);
             }
-
-            try { exposureCts?.Dispose(); } catch (Exception) { }
-
-            exposureCts = new CancellationTokenSource();
-
             var (x, y, width, height, binning) = sdk.GetROI();
+            exposureTaskWidth = width;
+            exposureTaskHeight = height;
+            exposureTaskTime = sequence.ExposureTime;
+            sdk.StartExposure(sequence.ExposureTime, width, height);
 
-            lock (lockobj) {
-                exposureTask = sdk.StartExposure(sequence.ExposureTime, width, height, exposureCts.Token);
-            }
         }
 
-        private CancellationTokenSource exposureCts;
-        private Task<ushort[]> exposureTask;
-        private object lockobj = new object();
-
-        private async Task<ushort[]> WaitForExposureTask() {
-            Task<ushort[]> task;
-            lock (lockobj) {
-                task = exposureTask;
-            }
-            if (task != null) {
-                return await task;
-            }
-            return null;
-        }
+        private int exposureTaskWidth;
+        private int exposureTaskHeight;
+        private double exposureTaskTime;
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
-                await WaitForExposureTask();
+                while (!sdk.IsExposureReady()) {
+                    await CoreUtil.Wait(TimeSpan.FromMilliseconds(10), token);
+                }
             }
         }
 
         public void StopExposure() {
             try {
-                exposureCts?.Cancel();
-            } catch { }
+                sdk.StopExposure();
+            } catch (Exception) { }
         }
 
         public void AbortExposure() {
+            sdk.StopExposure();
             try {
-                exposureCts?.Cancel();
-            } catch { }
+                sdk.StopExposure();
+            } catch (Exception) { }
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {
-            var data = await WaitForExposureTask();
+            var data = await sdk.GetExposure(exposureTaskTime, exposureTaskWidth, exposureTaskHeight, token);
             if (data == null) { return null; }
 
-            var bitScaling = this.profileService.ActiveProfile.CameraSettings.BitScaling;
+            var bitScaling = supportBitScaling && this.profileService.ActiveProfile.CameraSettings.BitScaling;
             if (bitScaling) {
                 var nativeBitDepth = sdk.GetBitDepth();
                 var shift = 16 - nativeBitDepth;
@@ -347,6 +321,18 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         #region "Temperature Control"
+        public bool HasDewHeater { get; private set; }
+
+        public bool DewHeaterOn {
+            get {
+                return sdk.IsDewHeaterOn();
+            }
+            set {
+                if (sdk.SetDewHeater(value)) {
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public bool CanSetTemperature { get; private set; }
 
@@ -430,18 +416,56 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public bool CanShowLiveView { get => false; }
 
         public void StartLiveView(CaptureSequence sequence) {
-            throw new NotImplementedException();
+            if (EnableSubSample) {
+                sdk.SetROI(SubSampleX, SubSampleY, SubSampleWidth, SubSampleHeight, BinX);
+            } else {
+                sdk.SetROI(0, 0, CameraXSize, CameraYSize, BinX);
+            }
+            var (x, y, width, height, binning) = sdk.GetROI();
+
+            exposureTaskWidth = width;
+            exposureTaskHeight = height;
+            exposureTaskTime = sequence.ExposureTime;
+
+            sdk.StartVideoCapture(sequence.ExposureTime, width, height);
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            throw new NotImplementedException();
+            return Task.Run<IExposureData>(async () => {
+                try {
+                    var data = await sdk.GetVideoCapture(exposureTaskTime, exposureTaskWidth, exposureTaskHeight, token);
+                    if (data == null) { return null; }
+
+                    var (x, y, width, height, binning) = sdk.GetROI();
+
+                    return exposureDataFactory.CreateImageArrayExposureData(
+                                input: data,
+                                width: width,
+                                height: height,
+                                bitDepth: this.BitDepth,
+                                isBayered: SensorType != SensorType.Monochrome,
+                                metaData: new ImageMetaData());
+                } catch (OperationCanceledException) {
+                }
+                return null;
+            });
         }
 
         public void StopLiveView() {
-            throw new NotImplementedException();
+            sdk.StopVideoCapture();
         }
 
-        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
+
+        private bool _liveViewEnabled = false;
+        public bool LiveViewEnabled {
+            get => _liveViewEnabled;
+            set {
+                if (_liveViewEnabled != value) {
+                    _liveViewEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         #endregion "LiveView"
 
@@ -480,11 +504,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return new List<int>();
             }
         }
-
-        // So far there is no adjustable dew heater available
-        public bool HasDewHeater { get => false; }
-
-        public bool DewHeaterOn { get => false; set { } }
 
         public string Action(string actionName, string actionParameters) {
             throw new NotImplementedException();

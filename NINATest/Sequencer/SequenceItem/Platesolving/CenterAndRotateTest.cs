@@ -200,7 +200,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             await act.Should().ThrowAsync<Exception>().WithMessage(Loc.Instance["LblPlatesolveFailed"]);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
 
             guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Once);
@@ -241,7 +241,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             var cts = new CancellationTokenSource();
             await sut.Execute(default, cts.Token);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
             centeringSolver.Verify(x => x.Center(It.IsAny<CaptureSequence>(), It.IsAny<CenterSolveParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -293,7 +293,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             var cts = new CancellationTokenSource();
             await sut.Execute(default, cts.Token);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
             centeringSolver.Verify(x => x.Center(It.IsAny<CaptureSequence>(), It.IsAny<CenterSolveParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -341,7 +341,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
 
             await act.Should().ThrowAsync<Exception>().WithMessage(Loc.Instance["LblPlatesolveFailed"]);
 
-            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.Is<string>(s => s == sut.PlateSolveStatusVM.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            service.Verify(x => x.Show(It.Is<PlateSolvingStatusVM>(s => s == sut.PlateSolveStatusVM), It.IsAny<string>(), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             service.Verify(x => x.DelayedClose(It.IsAny<TimeSpan>()), Times.Once);
             centeringSolver.Verify(x => x.Center(It.IsAny<CaptureSequence>(), It.IsAny<CenterSolveParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 

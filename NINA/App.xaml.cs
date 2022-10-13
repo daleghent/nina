@@ -42,13 +42,16 @@ namespace NINA {
         private Exception InitializeUserSettings() {
             Exception userSettingsException = null;
             Configuration config;
+            bool backupWasRestored = false;
+            string originalFileName = string.Empty;
+            string backupFileName = string.Empty;
             try {
                 config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
                 NINA.Properties.Settings.Default.GetPreviousVersion("UpdateSettings");
                 try {
                     if (config.HasFile) {
                         var backup = config.FilePath + ".bkp";
-                        config.SaveAs(backup, ConfigurationSaveMode.Full, true);
+                        File.Copy(config.FilePath, backup, true);
                     }
                 } catch (Exception) { }
             } catch (ConfigurationErrorsException configException) {
@@ -59,6 +62,9 @@ namespace NINA {
                     var backup = configException.Filename + ".bkp";
                     if (File.Exists(backup)) {
                         File.Copy(backup, configException.Filename, true);
+                        backupFileName = backup;
+                        originalFileName = configException.Filename;
+                        backupWasRestored = true;
                     }
                 } catch (Exception configRestoreException) {
                     userSettingsException = configRestoreException;
@@ -74,7 +80,23 @@ namespace NINA {
             } catch (ConfigurationErrorsException configException) {
                 try {
                     userSettingsException = configException;
-                    File.Delete(configException.Filename);
+                    if(configException?.Filename != null && File.Exists(configException.Filename)) {
+                        File.Delete(configException.Filename);
+                    }
+                    if(backupWasRestored) {
+                        // Backup was restored but it still failed to load. Both files must be corrupted
+                        if(File.Exists(originalFileName)) {
+                            File.Delete(originalFileName);
+                        }
+                        if(File.Exists(backupFileName)) {
+                            File.Delete(backupFileName);
+                        }
+                        
+                    }
+
+                    Application.Current.Shutdown();
+                    // App restart is required, as even after deleting the configuration files the configuration manager still tries to use the old values
+                    System.Windows.Forms.Application.Restart();
                 } catch (Exception configDeleteException) {
                     userSettingsException = configDeleteException;
                 }

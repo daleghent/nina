@@ -18,6 +18,7 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -48,15 +49,15 @@
                             Text="{ns:Loc LblCamera}" />
                         <local:Connector
                             Grid.Column="1"
-                            CancelCommand="{Binding CancelConnectCameraCommand}"
-                            ConnectCommand="{Binding ChooseCameraCommand}"
+                            CancelCommand="{Binding CancelConnectCommand}"
+                            ConnectCommand="{Binding ConnectCommand}"
                             Connected="{Binding CameraInfo.Connected}"
-                            Devices="{Binding CameraChooserVM.Devices}"
+                            Devices="{Binding DeviceChooserVM.Devices}"
                             DisconnectCommand="{Binding DisconnectCommand}"
-                            HasSetupDialog="{Binding CameraChooserVM.SelectedDevice.HasSetupDialog}"
-                            RefreshCommand="{Binding RefreshCameraListCommand}"
-                            SelectedDevice="{Binding CameraChooserVM.SelectedDevice, Mode=TwoWay}"
-                            SetupCommand="{Binding CameraChooserVM.SetupDialogCommand}" />
+                            HasSetupDialog="{Binding DeviceChooserVM.SelectedDevice.HasSetupDialog}"
+                            RefreshCommand="{Binding RescanDevicesCommand}"
+                            SelectedDevice="{Binding DeviceChooserVM.SelectedDevice, Mode=TwoWay}"
+                            SetupCommand="{Binding DeviceChooserVM.SetupDialogCommand}" />
                     </Grid>
                 </GroupBox.Header>
                 <Grid>
@@ -321,13 +322,23 @@
                                         </UniformGrid>
                                     </StackPanel>
                                 </DataTemplate>
+                                <DataTemplate x:Key="Failed">
+                                    <TextBlock
+                                        Margin="5"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="Failed to load plugin data template" />
+                                </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
                                     Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
+                                    FailedToLoadTemplate="{StaticResource Failed}"
                                     LegacySbig="{StaticResource Default}"
+                                    Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraDetails}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}"
+                                    Atik="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -346,7 +357,7 @@
                         <TextBlock
                             VerticalAlignment="Center"
                             FontSize="20"
-                            Text="{ns:Loc LblCamSettings}" />
+                            Text="{ns:Loc LblSettings}" />
                     </Grid>
                 </GroupBox.Header>
                 <StackPanel Visibility="{Binding Cam, Converter={StaticResource NullToVisibilityConverter}}">
@@ -542,6 +553,7 @@
                                     </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
+
                             <DataTemplate x:Key="QhyCcd">
                                 <DockPanel Margin="0,0,0,6">
                                     <TextBlock
@@ -650,14 +662,70 @@
                                     </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
+                            <DataTemplate x:Key="Failed">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="Failed to load plugin data template" />
+                            </DataTemplate>
+
+                            <DataTemplate x:Key="Atik">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasGainPresets, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAtikGainPreset}" />
+                                        <ComboBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            SelectedIndex="{Binding GainPreset}"
+                                            ItemsSource="{Binding GainPresets}" />
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasExposureSpeed, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAtikExposureSpeed}" />
+                                        <ComboBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            SelectedIndex="{Binding ExposureSpeed}"
+                                            ItemsSource="{Binding ExposureSpeeds}" />
+                                    </DockPanel>
+
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAtikWindowHeaterPowerLevel}" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="(1 - 255)" />
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="255"
+                                            MinValue="1"
+                                            StepSize="1"
+                                            Value="{Binding WindowHeaterPowerLevel, Mode=TwoWay}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
 
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
                                 Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
+                                FailedToLoadTemplate="{StaticResource Failed}"
                                 LegacySbig="{StaticResource LegacySbig}"
+                                Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraSettings}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}" />
+                                Touptek="{StaticResource Altair}"
+                                Atik="{StaticResource Atik}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

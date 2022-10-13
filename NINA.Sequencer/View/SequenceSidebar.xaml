@@ -35,6 +35,8 @@
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBlock.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/CheckBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ToggleButton.xaml" />
                 <wpfutil:SharedResourceDictionary Source="/NINA.Sequencer;component/Resources/Styles/ProgressStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -82,7 +84,7 @@
                                 x:Name="ComboExpander"
                                 BorderBrush="{StaticResource BorderBrush}"
                                 BorderThickness="0,0,0,1">
-                                <Expander IsExpanded="True">
+                                <Expander IsExpanded="{Binding ElementName=ExpandAll, Path=IsChecked, UpdateSourceTrigger=Explicit}">
                                     <Expander.Header>
                                         <TextBlock
                                             FontStyle="Italic"
@@ -133,17 +135,114 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <ninactrl:HintTextBox
-                    Margin="0,5,0,5"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Foreground="{StaticResource PrimaryBrush}"
-                    HintText="{ns:Loc LblSearch}"
-                    Text="{Binding SequencerFactory.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
-                    <ninactrl:HintTextBox.Background>
-                        <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
-                    </ninactrl:HintTextBox.Background>
-                </ninactrl:HintTextBox>
+                <Grid Margin="0,5,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ninactrl:HintTextBox
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        HintText="{ns:Loc LblSearch}"
+                        Text="{Binding SequencerFactory.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
+                        <ninactrl:HintTextBox.Background>
+                            <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                        </ninactrl:HintTextBox.Background>
+                    </ninactrl:HintTextBox>
+                    <ToggleButton
+                        Name="ExpandAll"
+                        Grid.Column="1"
+                        Width="20"
+                        Height="20"
+                        Margin="2.5"
+                        IsChecked="True">
+                        <ToggleButton.Style>
+                            <Style BasedOn="{StaticResource StaticToggleButton}" TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Path
+                                                    Margin="3.5"
+                                                    Data="{StaticResource CollapseAllSVG}"
+                                                    Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                    Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="ToolTip">
+                                            <Setter.Value>
+                                                <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                    <TextBlock Text="{ns:Loc LblCollapseAll}" />
+                                                </ToolTip>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Path
+                                                    Margin="3.5"
+                                                    Data="{StaticResource ExpandAllSVG}"
+                                                    Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                    Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="ToolTip">
+                                            <Setter.Value>
+                                                <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                    <TextBlock Text="{ns:Loc LblExpandAll}" />
+                                                </ToolTip>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+
+                    <ToggleButton
+                        Grid.Column="2"
+                        Width="20"
+                        Height="20"
+                        Margin="2.5"
+                        IsChecked="{Binding SequencerFactory.SettingsMode}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                <TextBlock Text="{ns:Loc Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip}" />
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <ToggleButton.Style>
+                            <Style BasedOn="{StaticResource TB}" TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Path
+                                                    Margin="2.5"
+                                                    Data="{StaticResource SettingsSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Path
+                                                    Margin="2.5"
+                                                    Data="{StaticResource SettingsSVG}"
+                                                    Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                    Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                </Grid>
                 <ScrollViewer
                     Grid.Row="1"
                     DataContext="{Binding SequencerFactory}"
@@ -151,251 +250,291 @@
                     VerticalScrollBarVisibility="Auto">
                     <ScrollViewer.Resources>
                         <DataTemplate x:Key="StandardTemplate">
-                            <Border MinHeight="30">
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Border
-                                        MinHeight="30"
-                                        HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent">
-                                        <Grid
-                                            Margin="5,0,0,0"
+                            <Grid>
+                                <Border MinHeight="30" DataContext="{Binding Entity}">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Border
+                                            MinHeight="30"
                                             HorizontalAlignment="Stretch"
-                                            Panel.ZIndex="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Path
-                                                Grid.Column="0"
-                                                Width="20"
-                                                Height="20"
+                                            BorderBrush="Transparent">
+                                            <Grid
                                                 Margin="5,0,0,0"
-                                                Data="{Binding Icon}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                Margin="10,0,0,0"
                                                 HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Center"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                                Text="{Binding Name}" />
-                                        </Grid>
+                                                Panel.ZIndex="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Path
+                                                    Grid.Column="0"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{Binding Icon}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    Margin="10,0,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Name}" />
+                                            </Grid>
 
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="White" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="False">
-                                                        <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <Border.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
-                                        </Border.ToolTip>
-                                    </Border>
-                                </Grid>
-                                <i:Interaction.Behaviors>
-                                    <behaviors:DragDropBehavior />
-                                </i:Interaction.Behaviors>
-                            </Border>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="White" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Border.ToolTip>
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
+                                            </Border.ToolTip>
+                                        </Border>
+                                    </Grid>
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DragDropBehavior />
+                                    </i:Interaction.Behaviors>
+                                </Border>
+                                <CheckBox
+                                    Height="20"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding Enabled, Mode=TwoWay}"
+                                    Style="{StaticResource CheckmarkCheckbox}"
+                                    Visibility="{Binding Path=DataContext.SequencerFactory.SettingsMode, Converter={StaticResource VisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}" />
+                            </Grid>
                         </DataTemplate>
                         <DataTemplate x:Key="ContainerTemplate">
-                            <Border MinHeight="30">
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Border
-                                        MinHeight="30"
-                                        HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent">
-                                        <Grid
-                                            Margin="5,0,0,0"
+                            <Grid>
+                                <Border MinHeight="30" DataContext="{Binding Entity}">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Border
+                                            MinHeight="30"
                                             HorizontalAlignment="Stretch"
-                                            Panel.ZIndex="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Path
-                                                Grid.Column="0"
-                                                Width="20"
-                                                Height="20"
+                                            BorderBrush="Transparent">
+                                            <Grid
                                                 Margin="5,0,0,0"
-                                                Data="{StaticResource BoxSVG}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <Path
-                                                Grid.Column="1"
-                                                Width="20"
-                                                Height="20"
-                                                Margin="5,0,0,0"
-                                                Data="{Binding Icon}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <TextBlock
-                                                Grid.Column="2"
-                                                Margin="10,0,0,0"
                                                 HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Center"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                                Text="{Binding Name}" />
-                                        </Grid>
+                                                Panel.ZIndex="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Path
+                                                    Grid.Column="0"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{StaticResource BoxSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <Path
+                                                    Grid.Column="1"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{Binding Icon}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="10,0,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Name}" />
+                                            </Grid>
 
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="White" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="False">
-                                                        <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <Border.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
-                                        </Border.ToolTip>
-                                    </Border>
-                                </Grid>
-                                <i:Interaction.Behaviors>
-                                    <behaviors:DragDropBehavior />
-                                </i:Interaction.Behaviors>
-                            </Border>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="White" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Border.ToolTip>
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
+                                            </Border.ToolTip>
+                                        </Border>
+                                    </Grid>
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DragDropBehavior />
+                                    </i:Interaction.Behaviors>
+                                </Border>
+                                <CheckBox
+                                    Height="20"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding Enabled, Mode=TwoWay}"
+                                    Style="{StaticResource CheckmarkCheckbox}"
+                                    Visibility="{Binding Path=DataContext.SequencerFactory.SettingsMode, Converter={StaticResource VisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}" />
+                            </Grid>
                         </DataTemplate>
                         <DataTemplate x:Key="TriggerTemplate">
-                            <Border MinHeight="30">
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Border
-                                        MinHeight="30"
-                                        HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent">
-                                        <Grid
-                                            Margin="5,0,0,0"
+                            <Grid>
+                                <Border MinHeight="30" DataContext="{Binding Entity}">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Border
+                                            MinHeight="30"
                                             HorizontalAlignment="Stretch"
-                                            Panel.ZIndex="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Path
-                                                Grid.Column="0"
-                                                Width="20"
-                                                Height="20"
+                                            BorderBrush="Transparent">
+                                            <Grid
                                                 Margin="5,0,0,0"
-                                                Data="{StaticResource ThunderSVG}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <Path
-                                                Grid.Column="1"
-                                                Width="20"
-                                                Height="20"
-                                                Margin="5,0,0,0"
-                                                Data="{Binding Icon}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <TextBlock
-                                                Grid.Column="2"
-                                                Margin="10,0,0,0"
                                                 HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Center"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                                Text="{Binding Name}" />
-                                        </Grid>
+                                                Panel.ZIndex="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Path
+                                                    Grid.Column="0"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{StaticResource ThunderSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <Path
+                                                    Grid.Column="1"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{Binding Icon}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="10,0,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Name}" />
+                                            </Grid>
 
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="White" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="False">
-                                                        <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <Border.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
-                                        </Border.ToolTip>
-                                    </Border>
-                                </Grid>
-                                <i:Interaction.Behaviors>
-                                    <behaviors:DragDropBehavior />
-                                </i:Interaction.Behaviors>
-                            </Border>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="White" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Border.ToolTip>
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
+                                            </Border.ToolTip>
+                                        </Border>
+                                    </Grid>
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DragDropBehavior />
+                                    </i:Interaction.Behaviors>
+                                </Border>
+                                <CheckBox
+                                    Height="20"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding Enabled, Mode=TwoWay}"
+                                    Style="{StaticResource CheckmarkCheckbox}"
+                                    Visibility="{Binding Path=DataContext.SequencerFactory.SettingsMode, Converter={StaticResource VisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}" />
+                            </Grid>
                         </DataTemplate>
                         <DataTemplate x:Key="ConditionTemplate">
-                            <Border MinHeight="30">
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Border
-                                        MinHeight="30"
-                                        HorizontalAlignment="Stretch"
-                                        BorderBrush="Transparent">
-                                        <Grid
-                                            Margin="5,0,0,0"
+                            <Grid>
+                                <Border MinHeight="30" DataContext="{Binding Entity}">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Border
+                                            MinHeight="30"
                                             HorizontalAlignment="Stretch"
-                                            Panel.ZIndex="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Path
-                                                Grid.Column="0"
-                                                Width="20"
-                                                Height="20"
+                                            BorderBrush="Transparent">
+                                            <Grid
                                                 Margin="5,0,0,0"
-                                                Data="{StaticResource NotepadSVG}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <Path
-                                                Grid.Column="1"
-                                                Width="20"
-                                                Height="20"
-                                                Margin="5,0,0,0"
-                                                Data="{Binding Icon}"
-                                                Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
-                                            <TextBlock
-                                                Grid.Column="2"
-                                                Margin="10,0,0,0"
                                                 HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Center"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                                Text="{Binding Name}" />
-                                        </Grid>
+                                                Panel.ZIndex="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Path
+                                                    Grid.Column="0"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{StaticResource NotepadSVG}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <Path
+                                                    Grid.Column="1"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5,0,0,0"
+                                                    Data="{Binding Icon}"
+                                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                                    Stretch="Uniform" />
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="10,0,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Name}" />
+                                            </Grid>
 
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="White" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="False">
-                                                        <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <Border.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
-                                        </Border.ToolTip>
-                                    </Border>
-                                </Grid>
-                                <i:Interaction.Behaviors>
-                                    <behaviors:DragDropBehavior />
-                                </i:Interaction.Behaviors>
-                            </Border>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="White" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Border.ToolTip>
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
+                                            </Border.ToolTip>
+                                        </Border>
+                                    </Grid>
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DragDropBehavior />
+                                    </i:Interaction.Behaviors>
+                                </Border>
+                                <CheckBox
+                                    Height="20"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding Enabled, Mode=TwoWay}"
+                                    Style="{StaticResource CheckmarkCheckbox}"
+                                    Visibility="{Binding Path=DataContext.SequencerFactory.SettingsMode, Converter={StaticResource VisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}" />
+                            </Grid>
                         </DataTemplate>
                         <local:SequenceDataTemplateSelector
                             x:Key="ItemSelector"
@@ -469,17 +608,71 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ninactrl:HintTextBox
-                        Margin="0,5,0,5"
-                        VerticalAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Foreground="{StaticResource PrimaryBrush}"
-                        HintText="{ns:Loc LblSearch}"
-                        Text="{Binding TemplateController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
-                        <ninactrl:HintTextBox.Background>
-                            <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
-                        </ninactrl:HintTextBox.Background>
-                    </ninactrl:HintTextBox>
+                    <Grid Margin="0,5,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ninactrl:HintTextBox
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Foreground="{StaticResource PrimaryBrush}"
+                            HintText="{ns:Loc LblSearch}"
+                            Text="{Binding TemplateController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
+                            <ninactrl:HintTextBox.Background>
+                                <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                            </ninactrl:HintTextBox.Background>
+                        </ninactrl:HintTextBox>
+                        <ToggleButton
+                            Grid.Column="1"
+                            Width="20"
+                            Height="20"
+                            Margin="2.5"
+                            IsChecked="{Binding Source={x:Reference ExpandAll}, Path=IsChecked, Mode=TwoWay}">
+                            <ToggleButton.Style>
+                                <Style BasedOn="{StaticResource StaticToggleButton}" TargetType="ToggleButton">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="3.5"
+                                                        Data="{StaticResource CollapseAllSVG}"
+                                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                        <TextBlock Text="{ns:Loc LblCollapseAll}" />
+                                                    </ToolTip>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="3.5"
+                                                        Data="{StaticResource ExpandAllSVG}"
+                                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                        <TextBlock Text="{ns:Loc LblExpandAll}" />
+                                                    </ToolTip>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
                     <Border
                         Grid.Row="1"
                         Margin="10,10,10,10"
@@ -729,17 +922,71 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ninactrl:HintTextBox
-                        Margin="0,5,0,5"
-                        VerticalAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Foreground="{StaticResource PrimaryBrush}"
-                        HintText="{ns:Loc LblSearch}"
-                        Text="{Binding TargetController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
-                        <ninactrl:HintTextBox.Background>
-                            <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
-                        </ninactrl:HintTextBox.Background>
-                    </ninactrl:HintTextBox>
+                    <Grid Margin="0,5,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ninactrl:HintTextBox
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Foreground="{StaticResource PrimaryBrush}"
+                            HintText="{ns:Loc LblSearch}"
+                            Text="{Binding TargetController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
+                            <ninactrl:HintTextBox.Background>
+                                <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                            </ninactrl:HintTextBox.Background>
+                        </ninactrl:HintTextBox>
+                        <ToggleButton
+                            Grid.Column="1"
+                            Width="20"
+                            Height="20"
+                            Margin="2.5"
+                            IsChecked="{Binding Source={x:Reference ExpandAll}, Path=IsChecked, Mode=TwoWay}">
+                            <ToggleButton.Style>
+                                <Style BasedOn="{StaticResource StaticToggleButton}" TargetType="ToggleButton">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="3.5"
+                                                        Data="{StaticResource CollapseAllSVG}"
+                                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                        <TextBlock Text="{ns:Loc LblCollapseAll}" />
+                                                    </ToolTip>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Path
+                                                        Margin="3.5"
+                                                        Data="{StaticResource ExpandAllSVG}"
+                                                        Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                        Stretch="Uniform" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                        <TextBlock Text="{ns:Loc LblExpandAll}" />
+                                                    </ToolTip>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
                     <Grid Grid.Row="1" Margin="0,5,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -831,7 +1078,7 @@
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RAMinutes}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds, StringFormat={}{0:N1}}" />
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock
@@ -851,7 +1098,7 @@
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecMinutes}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds, StringFormat={}{0:N1}}" />
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock

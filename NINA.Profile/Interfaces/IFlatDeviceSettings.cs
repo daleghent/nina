@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
 using System.Collections.Generic;
 
 namespace NINA.Profile.Interfaces {
@@ -27,7 +28,7 @@ namespace NINA.Profile.Interfaces {
         bool CloseAtSequenceEnd { get; set; }
         bool UseWizardTrainedValues { get; set; }
 
-        Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> FilterSettings { get; set; }
+        ObservableDictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> FilterSettings { get; set; }
 
         void AddBrightnessInfo(FlatDeviceFilterSettingsKey key, FlatDeviceFilterSettingsValue value);
 
