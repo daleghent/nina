@@ -136,7 +136,7 @@ This database will be automatically created by the EntityFramework based on the 
 
 ## Setting up the developer environment
 
-* Install Visual Studio Community 2019
+* Install Visual Studio Community 2022
 * Install [ASCOM](https://ascom-standards.org/Downloads/Index.htm)
 * Recommended Visual Studio Extensions:
     * [CodeMaid](http://www.codemaid.net/): A code cleanup Utility
