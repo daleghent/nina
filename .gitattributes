@@ -15,3 +15,5 @@ NINA/External/** filter=lfs diff=lfs merge=lfs -text
 NINA/External/**/* filter=lfs diff=lfs merge=lfs -text
 NINASetupBundle/**/*.exe filter=lfs diff=lfs merge=lfs -text
 NINASetupBundle/*.exe filter=lfs diff=lfs merge=lfs -text
+NINA/Utility/ExifTool/exiftool.exe filter=lfs diff=lfs merge=lfs -text
+NINA/Utility/DCRaw/dcraw.exe filter=lfs diff=lfs merge=lfs -text
