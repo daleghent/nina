@@ -208,6 +208,10 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             RaisePropertyChanged(nameof(ProgressExposures));
             if (LastDistanceArcMinutes >= DistanceArcMinutes) {
                 Logger.Info($"Drift exceeded threshold: {LastDistanceArcMinutes} / {DistanceArcMinutes} arc minutes");
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TimeSpan.FromMinutes(1) + nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero)) {
+                    Logger.Warning("CenterAfterDrift should be triggered, however the meridian flip is too close to be executed");
+                    return false;
+                }                
                 Notification.ShowInformation(Loc.Instance["LblCenterAfterDrift"]);
                 return true;
             }
