@@ -161,7 +161,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             lastFlipTime = DateTime.Now;
             lastFlipCoordiantes = target;
-            return meridianFlipVMFactory.Create().MeridianFlip(target, timeToFlip);
+            return meridianFlipVMFactory.Create().MeridianFlip(target, timeToFlip, token);
         }
 
         public override void AfterParentChanged() {
