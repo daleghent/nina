@@ -3,6 +3,15 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.0 Hotfix 3
+
+## Bugfixes
+- When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running
+
+
+## Improvements
+- Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver
+
 # Version 2.0 Hotfix 2
 
 ## Bugfixes

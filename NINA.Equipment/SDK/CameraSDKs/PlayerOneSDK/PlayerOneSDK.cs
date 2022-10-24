@@ -463,5 +463,32 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         public Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
             throw new NotImplementedException();
         }
+
+        private bool hasSensorModes = false;
+
+        public List<string> GetReadoutModes() {
+            CheckAndThrowError(playerOnePInvoke.POAGetSensorModeCount(id, out var count));
+            hasSensorModes = count > 0;
+            if (!hasSensorModes) { return new List<string> { "Default" }; }
+
+            var modes = new List<string>();
+            for(var i = 0; i < count; i++) {
+                CheckAndThrowError(playerOnePInvoke.POAGetSensorModeInfo(id, i, out var info));
+                modes.Add(info.name);
+            }
+            return modes;  
+        }
+        public int GetReadoutMode() {
+            if (!hasSensorModes) { return 0; }
+
+            CheckAndThrowError(playerOnePInvoke.POAGetSensorMode(id, out var modeIndex));
+            return modeIndex;
+        }
+
+        public void SetReadoutMode(int modeIndex) {
+            if(hasSensorModes) { 
+                CheckAndThrowError(playerOnePInvoke.POASetSensorMode(id, modeIndex));
+            }
+        }
     }
 }

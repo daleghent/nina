@@ -81,5 +81,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
         string POAGetSDKVersion();
         POAErrors POASetTrgModeEnable(int nCameraId, POABool enable);
+        POAErrors POAGetSensorModeCount(int nCameraID, out int pModeCount);
+
+        POAErrors POAGetSensorMode(int nCameraID, out int pModeIndex);
+
+        POAErrors POAGetSensorModeInfo(int nCameraID, int index, out POASensorModeInfo pSenModeInfo);
+
+        POAErrors POASetSensorMode(int nCameraID, int modeIndex);
     }
 }

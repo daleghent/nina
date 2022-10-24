@@ -495,5 +495,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         public Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
             throw new NotImplementedException();
         }
+
+        public List<string> GetReadoutModes() {
+            return new List<string> { "Default" };
+        }
+
+        public int GetReadoutMode() {
+            return 0;
+        }
+        public void SetReadoutMode(int modeIndex) {
+        }
     }
 }
