@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Castle.Components.DictionaryAdapter.Xml;
 using NINA.Core.Utility;
 using System;
 using System.Diagnostics.CodeAnalysis;
