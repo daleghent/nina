@@ -11,6 +11,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Improvements
 - Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver
+- Solve & Sync instruction will now also sync the sky angle with the rotator
 
 # Version 2.0 Hotfix 2
 
