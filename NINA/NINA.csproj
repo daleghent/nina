@@ -1562,6 +1562,7 @@
     <Folder Include="External\x64\Nikon\Type0027\" />
     <Folder Include="External\x64\Nikon\Type0028\" />
     <Folder Include="External\x64\Nikon\Type0029\" />
+    <Folder Include="External\x64\Nikon\Type0030\" />
     <Folder Include="External\x86\Altair\" />
     <Folder Include="External\x86\Canon\" />
   </ItemGroup>
