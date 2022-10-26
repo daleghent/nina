@@ -7,11 +7,11 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Bugfixes
 - When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running
-
+- Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues
 
 ## Improvements
 - Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver
-- Solve & Sync instruction will now also sync the sky angle with the rotator
+- Solve & Sync instruction will now also sync the sky angle with a rotator when connected
 
 # Version 2.0 Hotfix 2
 
