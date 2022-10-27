@@ -16,6 +16,7 @@ using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -378,6 +379,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         public (int, int) GetDimensions() {
             CheckAndLogError(sVBonyPInvoke.SVBGetCameraProperty(id, out var property));
             return ((int)property.MaxWidth, (int)property.MaxHeight);
+        }
+
+        public bool HasTemperatureReadout() {
+            return controls.ContainsKey(SVB_CONTROL_TYPE.SVB_CURRENT_TEMPERATURE);
         }
 
         public bool HasTemperatureControl() {

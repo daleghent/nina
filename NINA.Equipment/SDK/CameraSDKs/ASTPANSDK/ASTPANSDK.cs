@@ -1,6 +1,7 @@
 ﻿using NINA.Core.Enum;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -308,6 +309,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
         public (int, int) GetDimensions() {
             pInvoke.ASTPANGetCameraInfoByID(id, out var info);
             return (info.MaxWidth, info.MaxHeight);
+        }
+
+        public bool HasTemperatureReadout() {
+            return controls.ContainsKey(ASTPAN_AUTO_TYPE.ASTPAN_AUTO_CFG_Temperature);
         }
 
         public bool HasTemperatureControl() {

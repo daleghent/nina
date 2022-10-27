@@ -293,6 +293,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             return ((int)property.maxWidth, (int)property.maxHeight);
         }
 
+        public bool HasTemperatureReadout() {
+            return controls.ContainsKey(POAConfig.POA_TEMPERATURE);
+        }
+
         public bool HasTemperatureControl() {
             playerOnePInvoke.POAGetCameraProperties(id, out var property);
             return (property.isHasCooler == POABool.POA_TRUE);

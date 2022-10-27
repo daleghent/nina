@@ -64,6 +64,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             SensorType = sdk.GetSensorInfo();
 
+            CanGetTemperature = sdk.HasTemperatureReadout();
             CanSetTemperature = sdk.HasTemperatureControl();
             HasDewHeater = sdk.HasDewHeater();
 
@@ -340,6 +341,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public bool CanGetTemperature { get; private set; }
         public bool CanSetTemperature { get; private set; }
 
         public bool CoolerOn {
@@ -369,7 +371,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double Temperature {
             get {
-                if (CanSetTemperature) {
+                if (CanGetTemperature) {
                     return sdk.GetTemperature();
                 }
                 return double.NaN;

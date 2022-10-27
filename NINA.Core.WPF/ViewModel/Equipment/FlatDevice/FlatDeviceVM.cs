@@ -37,7 +37,6 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
