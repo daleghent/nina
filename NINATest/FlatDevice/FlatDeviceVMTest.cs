@@ -371,7 +371,7 @@ namespace NINATest.FlatDevice {
         [Test]
         public async Task TestSetBrightnessNullFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            (await sut.SetBrightness(1.0, CancellationToken.None)).Should().Be(false);
+            (await sut.SetBrightness(1, CancellationToken.None)).Should().Be(false);
             sut.Brightness.Should().Be(0);
             mockFlatDevice.Verify(m => m.Brightness, Times.Never);
         }
@@ -381,11 +381,39 @@ namespace NINATest.FlatDevice {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Id).Returns("Something");
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
+            mockFlatDevice.Setup(m => m.MaxBrightness).Returns(100);
             mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
             await sut.Connect();
-            (await sut.SetBrightness(1.0, CancellationToken.None)).Should().Be(true);
+            (await sut.SetBrightness(1, CancellationToken.None)).Should().Be(true);
             sut.Brightness.Should().Be(0);
             mockFlatDevice.VerifySet(m => m.Brightness = 1, Times.Once);
+        }
+
+        [Test]
+        public async Task TestSetBrightness_OverMaxValue_Adjusted() {
+            mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
+            mockFlatDevice.Setup(m => m.Id).Returns("Something");
+            mockFlatDevice.Setup(m => m.Connected).Returns(true);
+            mockFlatDevice.Setup(m => m.MaxBrightness).Returns(100);
+            mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
+            await sut.Connect();
+            (await sut.SetBrightness(1000, CancellationToken.None)).Should().Be(true);
+            sut.Brightness.Should().Be(0);
+            mockFlatDevice.VerifySet(m => m.Brightness = 100, Times.Once);
+        }
+
+        [Test]
+        public async Task TestSetBrightness_UnderMinValue_Adjusted() {
+            mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
+            mockFlatDevice.Setup(m => m.Id).Returns("Something");
+            mockFlatDevice.Setup(m => m.Connected).Returns(true);
+            mockFlatDevice.Setup(m => m.MinBrightness).Returns(100);
+            mockFlatDevice.Setup(m => m.MaxBrightness).Returns(1000);
+            mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
+            await sut.Connect();
+            (await sut.SetBrightness(20, CancellationToken.None)).Should().Be(true);
+            sut.Brightness.Should().Be(0);
+            mockFlatDevice.VerifySet(m => m.Brightness = 100, Times.Once);
         }
 
         [Test]

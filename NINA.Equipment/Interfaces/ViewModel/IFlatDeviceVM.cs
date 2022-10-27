@@ -31,7 +31,5 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> ToggleLight(object o, CancellationToken token);
 
         Task<bool> SetBrightness(int value, CancellationToken token);
-
-        Task<bool> SetBrightness(object o, CancellationToken token);
     }
 }

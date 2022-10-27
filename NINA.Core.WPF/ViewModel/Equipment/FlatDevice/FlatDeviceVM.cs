@@ -37,6 +37,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
@@ -140,18 +141,24 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         public Task<bool> SetBrightness(int value, CancellationToken token) {
-            return SetBrightness((object)value, token);
-        }
-
-        public Task<bool> SetBrightness(object o, CancellationToken token) {
             if (FlatDevice == null || !FlatDevice.Connected) return Task.FromResult(false);
-            if (!int.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
             return Task.Run(async () => {
-                Logger.Info($"Setting brightness to {result}");
-                FlatDevice.Brightness = result;
+                if (value < FlatDevice.MinBrightness) {
+                    value = FlatDevice.MinBrightness;
+                }
+                if (value > FlatDevice.MaxBrightness) {
+                    value = FlatDevice.MaxBrightness;
+                }
+                Logger.Info($"Setting brightness to {value}");
+                FlatDevice.Brightness = value;
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
             }, token);
+        }
+
+        private Task<bool> SetBrightness(object o, CancellationToken token) {
+            if (!int.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
+            return SetBrightness(result, token);
         }
 
         private readonly SemaphoreSlim ssConnect = new SemaphoreSlim(1, 1);

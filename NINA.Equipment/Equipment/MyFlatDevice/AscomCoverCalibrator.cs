@@ -88,6 +88,13 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             set {
                 try {
                     if (SupportsOnOff) {
+                        if (value < MinBrightness) {
+                            value = MinBrightness;
+                        }
+
+                        if (value > MaxBrightness) {
+                            value = MaxBrightness;
+                        }
                         Logger.Debug($"Setting cover calibrator brightness to {value}");
                         device.CalibratorOn(value);
                         lastBrightness = value; // save brightness for next time the user toggles the light on
