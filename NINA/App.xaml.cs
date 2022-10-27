@@ -27,6 +27,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Security;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -212,12 +213,14 @@ namespace NINA {
                 }
 
                 if (Current != null) {
-                    var result = MessageBox.Show(
-                        Loc.Instance["LblApplicationInBreakMode"],
-                        Loc.Instance["LblUnhandledException"],
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Error,
-                        MessageBoxResult.No);
+                    var result = Task.Factory.StartNew(
+                        () => MessageBox.Show(
+                                    Loc.Instance["LblApplicationInBreakMode"],
+                                    Loc.Instance["LblUnhandledException"],
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Error,
+                                    MessageBoxResult.No),
+                        TaskCreationOptions.LongRunning).Result;
                     if (result == MessageBoxResult.Yes) {
                         e.Handled = true;
                     } else {
