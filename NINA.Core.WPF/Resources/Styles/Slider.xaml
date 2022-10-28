@@ -163,7 +163,10 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
-        <Grid Margin="5">
+        <Grid
+            Margin="5"
+            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
             <Grid.RowDefinitions>
 
                 <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
@@ -221,6 +224,7 @@
         <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisualStyte}" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinWidth" Value="104" />
