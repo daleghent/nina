@@ -221,35 +221,33 @@
                                 VerticalAlignment="Center"
                                 Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBox
-                                        Height="25"
-                                        MinWidth="90"
-                                        Margin="5,0,0,0">
-                                        <TextBox.Text>
-                                            <Binding Path="TargetPosition">
-                                                <Binding.ValidationRules>
-                                                    <rules:GreaterZeroRule />
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                    </TextBox>
-                                    <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                        <ninactrl:CancellableButton
-                                            Width="50"
-                                            Height="25"
-                                            Margin="5"
-                                            HorizontalAlignment="Left"
-                                            HorizontalContentAlignment="Center"
-                                            ButtonText="{ns:Loc LblMove}"
-                                            CancelButtonImage="{StaticResource CancelSVG}"
-                                            CancelCommand="{Binding HaltFocuserCommand}"
-                                            CancelToolTip="{ns:Loc LblCancel}"
-                                            Command="{Binding MoveFocuserCommand}"
-                                            ToolTip="{ns:Loc LblMoveFocuserTooltip}" />
-                                    </Grid>
-                                </StackPanel>
+                                <TextBox
+                                    Height="25"
+                                    MinWidth="90"
+                                    Margin="5,0,0,0">
+                                    <TextBox.Text>
+                                        <Binding Path="TargetPosition">
+                                            <Binding.ValidationRules>
+                                                <rules:GreaterZeroRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </UniformGrid>
+                            <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                <ninactrl:CancellableButton
+                                    Width="50"
+                                    Height="25"
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    HorizontalContentAlignment="Center"
+                                    ButtonText="{ns:Loc LblMove}"
+                                    CancelButtonImage="{StaticResource CancelSVG}"
+                                    CancelCommand="{Binding HaltFocuserCommand}"
+                                    CancelToolTip="{ns:Loc LblCancel}"
+                                    Command="{Binding MoveFocuserCommand}"
+                                    ToolTip="{ns:Loc LblMoveFocuserTooltip}" />
+                            </Grid>
                         </UniformGrid>
                     </Border>
                     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
