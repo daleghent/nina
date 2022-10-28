@@ -144,7 +144,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override string ToString() {
-            return $"Trigger: {nameof(AutofocusAfterTimeTrigger)}, Amount: {Amount}s";
+            return $"Trigger: {nameof(AutofocusAfterTimeTrigger)}, Amount: {Amount}m";
         }
 
         public bool Validate() {
