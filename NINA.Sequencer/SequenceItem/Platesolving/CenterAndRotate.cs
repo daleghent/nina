@@ -104,6 +104,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            if (telescopeMediator.GetInfo().AtPark) {
+                Notification.ShowError(Loc.Instance["LblTelescopeParkedWarning"]);
+                throw new SequenceEntityFailedException(Loc.Instance["LblTelescopeParkedWarning"]);
+            }
             var service = windowServiceFactory.Create();
             progress = PlateSolveStatusVM.CreateLinkedProgress(progress);
             service.Show(PlateSolveStatusVM, Loc.Instance["Lbl_SequenceItem_Platesolving_CenterAndRotate_Name"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);

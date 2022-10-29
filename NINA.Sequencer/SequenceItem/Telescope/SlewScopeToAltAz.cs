@@ -28,6 +28,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Core.Utility.Notification;
 
 namespace NINA.Sequencer.SequenceItem.Telescope {
 
@@ -75,6 +76,10 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            if (telescopeMediator.GetInfo().AtPark) {
+                Notification.ShowError(Loc.Instance["LblTelescopeParkedWarning"]);
+                throw new SequenceEntityFailedException(Loc.Instance["LblTelescopeParkedWarning"]);
+            }
             var stoppedGuiding = await guiderMediator.StopGuiding(token);
             await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
             if (stoppedGuiding) {
