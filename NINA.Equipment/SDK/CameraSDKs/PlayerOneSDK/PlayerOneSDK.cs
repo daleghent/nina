@@ -303,26 +303,24 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool SetTargetTemperature(double temperature) {
-            var convertedTemp = temperature * 10;
-            var nearest = (int)Math.Round(convertedTemp);
 
-            var minTemperatureSetpoint = GetMinControlValue(POAConfig.POA_TARGET_TEMP).intValue;
-            var maxTemperatureSetpoint = GetMaxControlValue(POAConfig.POA_TARGET_TEMP).intValue;
+            var minTemperatureSetpoint = GetMinControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
+            var maxTemperatureSetpoint = GetMaxControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
 
-            if (nearest > maxTemperatureSetpoint) {
-                nearest = maxTemperatureSetpoint;
-            } else if (nearest < minTemperatureSetpoint) {
-                nearest = minTemperatureSetpoint;
+            if (temperature > maxTemperatureSetpoint) {
+                temperature = maxTemperatureSetpoint;
+            } else if (temperature < minTemperatureSetpoint) {
+                temperature = minTemperatureSetpoint;
             }
-            return SetControlValue(POAConfig.POA_TARGET_TEMP, nearest);
+            return SetControlValue(POAConfig.POA_TARGET_TEMP, temperature);
         }
 
         public double GetTargetTemperature() {
-            return GetControlValue(POAConfig.POA_TARGET_TEMP).intValue / 10d;
+            return GetControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
         }
 
         public double GetTemperature() {
-            return GetControlValue(POAConfig.POA_TEMPERATURE).intValue / 10d;
+            return GetControlValue(POAConfig.POA_TEMPERATURE).floatValue;
         }
 
         public bool SetCooler(bool onOff) {
@@ -342,7 +340,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             if(t != POAValueType.VAL_BOOL) { throw new ArgumentException(); }
             return SetControlValue(type, new POAConfigValue() { boolValue = value ? POABool.POA_TRUE : POABool.POA_FALSE });
         }
-        private bool SetControlValue(POAConfig type, float value) {
+        private bool SetControlValue(POAConfig type, double value) {
             CheckAndLogError(playerOnePInvoke.POAGetConfigValueType(type, out var t));
             if (t != POAValueType.VAL_FLOAT) { throw new ArgumentException(); }
             return SetControlValue(type, new POAConfigValue() { floatValue = value });
