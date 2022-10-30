@@ -31,11 +31,17 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <ul>
 <li>When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running</li>
 <li>Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues</li>
+<li>Prevent unhandled exception popup to be visible more than once in parallel</li>
+<li>Flat wizard should no longer try to set a negative brightness value in dynamic brightness mode</li>
+<li>Focuser tab should no longer clip the &quot;Move&quot; button when window size is small</li>
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
 <li>Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver</li>
+<li>Player One Cameras that have a temperature probe but not cooler will now show the temperature</li>
 <li>Solve &amp; Sync instruction will now also sync the sky angle with a rotator when connected</li>
+<li>Slew instructions will now show a failure when the telescope is parked</li>
+<li>When a platesolver is not set up the message &quot;Executable not found&quot; will now also tell that this is about the plate solver not being set up</li>
 </ul>
 <h1 id="version-2.0-hotfix-2">Version 2.0 Hotfix 2</h1>
 <h2 id="bugfixes-1">Bugfixes</h2>

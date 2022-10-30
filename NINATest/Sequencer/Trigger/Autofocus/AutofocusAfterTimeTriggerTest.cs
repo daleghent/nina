@@ -143,7 +143,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void ToString_FilledProperly() {
             var sut = new AutofocusAfterTimeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, autoFocusVMFactoryMock.Object);
             var tostring = sut.ToString();
-            tostring.Should().Be("Trigger: AutofocusAfterTimeTrigger, Amount: 30s");
+            tostring.Should().Be("Trigger: AutofocusAfterTimeTrigger, Amount: 30m");
         }
     }
 }

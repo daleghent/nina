@@ -462,6 +462,7 @@ namespace NINATest.Equipment.Camera {
         public async Task HasTemperatureControl_CanAdjustTemperatureAndCooler() {
             var sdk = new Mock<IGenericCameraSDK>();
             sdk.SetupGet(x => x.Connected).Returns(true);
+            sdk.Setup(x => x.HasTemperatureReadout()).Returns(true);
             sdk.Setup(x => x.HasTemperatureControl()).Returns(true);
             sdk.Setup(x => x.GetCoolerOnOff()).Returns(true);
             sdk.Setup(x => x.GetCoolerPower()).Returns(30);
