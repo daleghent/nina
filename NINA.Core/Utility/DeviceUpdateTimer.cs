@@ -43,6 +43,7 @@ namespace NINA.Core.Utility {
         Task Stop();
 
         void Start();
+        Task WaitForNextUpdate(CancellationToken ct);
     }
 
     public class DeviceUpdateTimer : IDeviceUpdateTimer {
@@ -57,12 +58,21 @@ namespace NINA.Core.Utility {
         private Task task;
         public Func<Dictionary<string, object>> GetValuesFunc { get; private set; }
         public IProgress<Dictionary<string, object>> Progress { get; private set; }
+        public DateTime LastUpdate { get; private set; } = DateTime.MinValue;
         public double Interval { get; set; }
 
         public async Task Stop() {
             try { cts?.Cancel(); } catch { }
             while (!task?.IsCompleted == true) {
                 await Task.Delay(100);
+            }
+        }
+
+        public async Task WaitForNextUpdate(CancellationToken ct) {
+            var now = DateTime.UtcNow;
+            var destination = now + TimeSpan.FromSeconds(Interval);
+            while(!ct.IsCancellationRequested && !task?.IsCompleted == true && LastUpdate < destination) {
+                await Task.Delay(50, ct);
             }
         }
 
@@ -79,6 +89,8 @@ namespace NINA.Core.Utility {
                         values = GetValuesFunc();
 
                         Progress.Report(values);
+
+                        LastUpdate = DateTime.UtcNow;
 
                         await CoreUtil.Delay(
                             TimeSpan.FromSeconds(

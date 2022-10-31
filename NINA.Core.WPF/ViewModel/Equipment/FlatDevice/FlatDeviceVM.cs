@@ -150,7 +150,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                 }
                 Logger.Info($"Setting brightness to {value}");
                 FlatDevice.Brightness = value;
+                var waitForUpdate = updateTimer.WaitForNextUpdate(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await waitForUpdate;
                 return true;
             }, token);
         }
@@ -356,7 +358,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                 if (!FlatDevice.SupportsOpenClose) return false;
                 Logger.Info("Opening Flat Device Cover");
                 var result = await FlatDevice.Open(token);
+                var waitForUpdate = updateTimer.WaitForNextUpdate(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await waitForUpdate;
                 return result;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -375,7 +379,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                 if (!FlatDevice.SupportsOpenClose) return false;
                 Logger.Info("Closing Flat Device Cover");
                 var result = await FlatDevice.Close(token);
+                var waitForUpdate = updateTimer.WaitForNextUpdate(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await waitForUpdate;
                 return result;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -442,7 +448,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             return Task.Run(async () => {
                 Logger.Info($"Toggling light to {o}");
                 FlatDevice.LightOn = o is bool b && b;
+                var waitForUpdate = updateTimer.WaitForNextUpdate(token);
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await waitForUpdate;
                 return true;
             }, token);
         }

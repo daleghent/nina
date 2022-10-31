@@ -34,7 +34,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
-using Nito.AsyncEx;
+using Newtonsoft.Json.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
@@ -152,6 +152,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     await CoreUtil.Delay(TimeSpan.FromSeconds(2), token);
                                 }
                             }
+                            await updateTimer.WaitForNextUpdate(token);
                         } else {
                             Logger.Info("Telescope commanded to park but it is already parked");
                         }
@@ -162,6 +163,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
                         Logger.Trace("Telescope will stop tracking");
                         result = SetTrackingEnabled(false);
+                        await updateTimer.WaitForNextUpdate(token);
                     }
                 } catch (OperationCanceledException) {
                     Notification.ShowWarning(Loc.Instance["LblTelescopeParkCancelled"]);
@@ -249,6 +251,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             }
 
                             success = true;
+                            await updateTimer.WaitForNextUpdate(token);
                         } catch (OperationCanceledException) {
                             Notification.ShowWarning(Loc.Instance["LblTelescopeUnparkCancelled"]);
                         } catch (Exception e) {
@@ -299,6 +302,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                             await CoreUtil.Delay(TimeSpan.FromSeconds(2), token);
                                         }
                                     }
+                                    await updateTimer.WaitForNextUpdate(token);
                                     // We are home
                                     success = true;
                                 } catch (OperationCanceledException) {
@@ -777,7 +781,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     var position = GetCurrentPosition();
                     bool result = Telescope.Sync(transform);
                     Logger.Info($"{(result ? string.Empty : "FAILED - ")}Syncing scope from {position} to {transform}");
+                    var waitForUpdate = updateTimer.WaitForNextUpdate(default);
                     await Task.Delay(TimeSpan.FromSeconds(Math.Max(2, profileService.ActiveProfile.TelescopeSettings.SettleTime)));
+                    await waitForUpdate;
                     return result;
                 } else {
                     return false;
@@ -914,10 +920,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     }
 
                     await Telescope.SlewToCoordinates(coords, token);
-                    BroadcastTelescopeInfo();
+                    var waitForUpdate = updateTimer.WaitForNextUpdate(token);
                     await Task.WhenAll(
                         CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), true, token, progress, Loc.Instance["LblSettle"]),
-                        domeSyncTask);
+                        domeSyncTask,
+                        waitForUpdate);
+                    BroadcastTelescopeInfo();
                     return true;
                 } else {
                     Logger.Warning("Telescope is not connected to slew");
@@ -939,6 +947,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             if (TelescopeInfo.Connected) {
                 var flipResult = await Telescope.MeridianFlip(coords, token);
                 await this.domeMediator.WaitForDomeSynchronization(CancellationToken.None);
+                await updateTimer.WaitForNextUpdate(default);
                 return flipResult;
             } else {
                 return false;

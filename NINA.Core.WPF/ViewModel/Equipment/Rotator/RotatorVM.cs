@@ -148,6 +148,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
                     pos = adjustedTargetPosition;
+                    await updateTimer.WaitForNextUpdate(ct);
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
@@ -199,6 +200,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
                     pos = adjustedTargetPosition;
+                    await updateTimer.WaitForNextUpdate(ct);
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {

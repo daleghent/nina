@@ -78,7 +78,7 @@ namespace NINATest.FlatDevice {
             mockProfileService.SetupProperty(m => m.ActiveProfile.FlatDeviceSettings, mockFlatDeviceSettings.Object);
             mockFilterWheelSettings.Setup(m => m.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>());
             mockProfileService.SetupProperty(m => m.ActiveProfile.FilterWheelSettings, mockFilterWheelSettings.Object);
-            mockProfileService.Setup(m => m.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(200);
+            mockProfileService.Setup(m => m.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(0);
             sut = new FlatDeviceVM(mockProfileService.Object, mockFlatDeviceMediator.Object,
                 mockApplicationStatusMediator.Object, mockCameraMediator.Object, mockFlatDeviceChooserVM.Object, mockImageGeometryProvider.Object);
         }
