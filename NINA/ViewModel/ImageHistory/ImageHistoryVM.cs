@@ -240,6 +240,12 @@ namespace NINA.ViewModel.ImageHistory {
 
         private object lockObj = new object();
 
+        private static int _exposureId = 0;
+        private int ExposureId { get { return Interlocked.Increment(ref _exposureId); } }
+        public int GetNextImageId() {
+            return ExposureId;
+        }
+
         public void Add(int id, IImageStatistics statistics, string imageType) {
             lock (lockObj) {
                 var point = new ImageHistoryPoint(id, statistics, imageType);
@@ -287,10 +293,13 @@ namespace NINA.ViewModel.ImageHistory {
         }
 
         public void PlotClear() {
-            this.ObservableImageHistory.Clear();
-            this.AutoFocusPoints.Clear();
-            this.ObservableImageHistoryView.Clear();
-            this.AutoFocusPointsView.Clear();
+            ObservableImageHistory.Clear();
+            AutoFocusPoints.Clear();
+            ObservableImageHistoryView.Clear();
+            AutoFocusPointsView.Clear();
+            ImageHistory.Clear();
+            index = 0;
+            _exposureId = 0;
         }
 
         public void PlotSave() {

@@ -258,6 +258,22 @@ namespace NINA.Core.Utility {
             }
         }
 
+        public static double GetClosestNumber(double value, double step) {
+            var absoluteValue = Math.Abs(value);
+            step = Math.Abs(step);
+
+            var lowAdjustedValue = absoluteValue - absoluteValue % step;
+            var highAdjustedValue = lowAdjustedValue + step;
+
+            var lowDiff = absoluteValue - lowAdjustedValue;
+            var highDiff = highAdjustedValue - absoluteValue;
+
+            // Determine the closest adjusted value
+            var result = lowDiff < highDiff ? lowAdjustedValue : highAdjustedValue;
+            // Add the sign back in case value was negative
+            return result * Math.Sign(value);
+        }
+
         public static Microsoft.Win32.OpenFileDialog GetFilteredFileDialog(string path, string filename, string filter) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
 

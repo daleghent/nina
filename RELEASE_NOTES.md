@@ -11,6 +11,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Prevent unhandled exception popup to be visible more than once in parallel
 - Flat wizard should no longer try to set a negative brightness value in dynamic brightness mode
 - Focuser tab should no longer clip the "Move" button when window size is small
+- ASCOM Switch target values now adhere to the step size of a switch and round to the nearest value if the user provided a value outside of the step size
 
 ## Improvements
 - Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver
@@ -19,6 +20,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Slew instructions will now show a failure when the telescope is parked
 - When a platesolver is not set up the message "Executable not found" will now also tell that this is about the plate solver not being set up
 - Options > General > Profiles are now ordered by Name with the active profile being on top
+- Layout of Switch Tab has been overhauled for a more compact and readable overview
 
 # Version 2.0 Hotfix 2
 

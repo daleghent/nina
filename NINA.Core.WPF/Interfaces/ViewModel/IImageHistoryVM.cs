@@ -29,6 +29,8 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistory { get; set; }
         ICommand PlotClearCommand { get; }
 
+        int GetNextImageId();
+
         void Add(int id, IImageStatistics statistics, string imageType);
 
         void AppendImageProperties(ImageSavedEventArgs imageSavedEventArgs);
