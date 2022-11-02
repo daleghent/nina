@@ -9654,6 +9654,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gauges.
+        /// </summary>
+        internal static string LblGauges {
+            get {
+                return ResourceManager.GetString("LblGauges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         internal static string LblGeneral {
@@ -16392,6 +16401,15 @@ namespace NINA.Core.Locale {
         internal static string LblSwitchConnectionLost {
             get {
                 return ResourceManager.GetString("LblSwitchConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches.
+        /// </summary>
+        internal static string LblSwitches {
+            get {
+                return ResourceManager.GetString("LblSwitches", resourceCulture);
             }
         }
         

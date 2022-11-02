@@ -136,6 +136,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
         }
 
         public IList<IWritableSwitch> WritableSwitches { get; private set; } = new AsyncObservableCollection<IWritableSwitch>();
+        public IList<ISwitch> ReadonlySwitches { get; private set; } = new AsyncObservableCollection<ISwitch>();
 
         private IWritableSwitch selectedWritableSwitch;
 
@@ -237,9 +238,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                             profileService.ActiveProfile.SwitchSettings.Id = switchHub.Id;
 
                             WritableSwitches.Clear();
+                            ReadonlySwitches.Clear();
                             foreach (var s in SwitchHub.Switches) {
-                                if (s is IWritableSwitch) {
-                                    WritableSwitches.Add((IWritableSwitch)s);
+                                if (s is IWritableSwitch ws) {
+                                    WritableSwitches.Add(ws);
+                                } else {
+                                    ReadonlySwitches.Add(s);
                                 }
                             }
                             SelectedWritableSwitch = WritableSwitches.FirstOrDefault();
@@ -251,6 +255,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                                 DriverInfo = switchHub.DriverInfo,
                                 DriverVersion = switchHub.DriverVersion,
                                 WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(WritableSwitches),
+                                ReadonlySwitches = new ReadOnlyCollection<ISwitch>(ReadonlySwitches),
                                 DeviceId = switchHub.Id,
                                 SupportedActions = switchHub.SupportedActions,
                             };
@@ -292,6 +297,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                 }
                 SwitchHub?.Disconnect();
                 WritableSwitches.Clear();
+                ReadonlySwitches.Clear();
                 SwitchHub = null;
                 SwitchInfo = DeviceInfo.CreateDefaultInstance<SwitchInfo>();
                 BroadcastSwitchInfo();

@@ -374,6 +374,8 @@
     <Compile Include="View\Equipment\Guider\SkyGuardSetupView.xaml.cs">
       <DependentUpon>SkyGuardSetupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Equipment\Switch\DoubleToOnOffConverter.cs" />
+    <Compile Include="View\Equipment\Switch\PowerValueConverter.cs" />
     <Compile Include="View\FramingPlateSolvePromptView.xaml.cs">
       <DependentUpon>FramingPlateSolvePromptView.xaml</DependentUpon>
     </Compile>
