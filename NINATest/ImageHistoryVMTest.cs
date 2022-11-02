@@ -94,7 +94,7 @@ namespace NINATest {
 
             sut.ObservableImageHistory.Count.Should().Be(0);
             sut.AutoFocusPoints.Count.Should().Be(0);
-            sut.ImageHistory.Count.Should().Be(100);
+            sut.ImageHistory.Count.Should().Be(0);
         }
     }
 }
