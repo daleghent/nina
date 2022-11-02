@@ -482,8 +482,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     coordinates: targetCoordinates,
                     localSiderealTime: Angle.ByHours(SiderealTime));
                 if (profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
-                    Logger.Debug($"Mount side of pier is currently {SideOfPier}, and target is {targetSideOfPier}");
-                    if (targetSideOfPier == SideOfPier) {
+                    var sop = SideOfPier;
+                    Logger.Debug($"Mount side of pier is currently {sop}, and target is {targetSideOfPier}");
+                    if (targetSideOfPier == sop) {
+                        Logger.Info($"Current Side of Pier ({sop}) is equal to Target Side of Pier ({targetSideOfPier}). No flip is required");
                         // No flip required
                         return true;
                     }
@@ -496,14 +498,17 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 int retries = 0;
                 do {
                     if (!pierSideSuccess) {
+                        Logger.Info($"Setting pier side to {targetSideOfPier}");
                         pierSideSuccess = await SetPierSide(targetSideOfPier);
                     }
                     // Keep attempting slews as well, in case that's what it takes to flip to the other side of pier
+                    Logger.Info($"Slewing to coordinates {targetCoordinates}. Attempt {retries + 1} / {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS}");
                     slewSuccess = await SlewToCoordinates(targetCoordinates, token);
                     if (!pierSideSuccess) {
                         pierSideSuccess = SideOfPier == targetSideOfPier;
                     }
                     success = slewSuccess && pierSideSuccess;
+                    Logger.Info($"Finished slewing to coordinates. Slew was {(slewSuccess ? "successful" : "NOT successful")}. Setting pier side was {(pierSideSuccess ? "successful" : "NOT successful")}");
                     if (!success) {
                         if (retries++ >= MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS) {
                             Logger.Error("Failed to slew for Meridian Flip, even after retrying");
