@@ -130,10 +130,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
                         FW.Position = filter.Position;
                         var changeFilter = Task.Run(async () => {
-                            while (FW.Position == -1) {
-                                await Task.Delay(1000, token);
+                            do {
+                                await Task.Delay(500, token);
                                 token.ThrowIfCancellationRequested();
-                            }
+                            } while (FW.Position == -1);
                         });
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSwitchingFilter"] });
 
@@ -154,9 +154,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                         }
 
                         if (FW?.Position != filter.Position) {
-                            Logger.Error($"Failed to move filter wheel to filter {filter.Name} at position {filter.Position}");
-                            Notification.ShowError(string.Format(Loc.Instance["LblFilterChangeFailed"], filter.Name, filter.Position));
-                            throw new Exception(string.Format(Loc.Instance["LblFilterChangeFailed"], filter.Name, filter.Position));
+                            Logger.Error($"Failed to move filter wheel to filter {filter.Name} at position {filter.Position}. Current reported position: {FW?.Position}");
+                            Notification.ShowError(string.Format(Loc.Instance["LblFilterChangeFailed"], filter.Name, filter.Position + 1));
+                            throw new Exception(string.Format(Loc.Instance["LblFilterChangeFailed"], filter.Name, filter.Position + 1));
                         }
                     }
                     FilterWheelInfo.SelectedFilter = filter;
