@@ -254,7 +254,7 @@ namespace NINA.Profile {
 
         public event EventHandler HorizonChanged;
 
-        public AsyncObservableCollection<ProfileMeta> Profiles { get; set; }
+        public AsyncObservableCollection<ProfileMeta> Profiles { get; }
 
         public void Add() {
             AddDefaultProfile($"{Loc.Instance["LblDefault"]}-{DateTime.Now:s}");

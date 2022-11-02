@@ -18,6 +18,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Solve & Sync instruction will now also sync the sky angle with a rotator when connected
 - Slew instructions will now show a failure when the telescope is parked
 - When a platesolver is not set up the message "Executable not found" will now also tell that this is about the plate solver not being set up
+- Options > General > Profiles are now ordered by Name with the active profile being on top
 
 # Version 2.0 Hotfix 2
 
