@@ -262,7 +262,7 @@ Czy aplikacja powinna samodzielnie uruchomić się po błędzie? (może prowadzi
     <value>Nie znaleziono pliku exe do ASPS</value>
   </data>
   <data name="LblASTAP" xml:space="preserve">
-    <value>ASTAP, the Astrometric STAcking Program, astrometric solver and FITS viewer</value>
+    <value>ASTAP, Astrometric STAcking Program, solver astrometryczny i przeglądarka FITS</value>
   </data>
   <data name="LblASTAPDirectory" xml:space="preserve">
     <value>Lokalizacja ASTAP</value>
@@ -548,7 +548,7 @@ w stanie zrekompensować zmiany temperatury otoczenia</value>
     <value>Odkryj czujnik i przechwyć obraz</value>
   </data>
   <data name="LblCdC" xml:space="preserve">
-    <value>Cartes du Ciel</value>
+    <value>Mapy nieba</value>
   </data>
   <data name="LblCenterDec" xml:space="preserve">
     <value>Wyśrodkuj Dec</value>
@@ -703,7 +703,7 @@ Czy chcesz zamknąć sekwencję i stracić zmiany?</value>
     <value>Gwiazdozbiór Kasjopei</value>
   </data>
   <data name="LblConstellation_CEN" xml:space="preserve">
-    <value>Centaurus</value>
+    <value>Centaura</value>
   </data>
   <data name="LblConstellation_CEP" xml:space="preserve">
     <value>Gwiazdozbiór Cefeusza</value>
@@ -975,7 +975,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Aktualny schemat kolorów interfejsu użytkownika</value>
   </data>
   <data name="LblCurveFittingMethod" xml:space="preserve">
-    <value>AF Curve fitting</value>
+    <value>Dopasowanie krzywej AF</value>
   </data>
   <data name="LblCygwinBashNotFound" xml:space="preserve">
     <value>Nie znaleziono Cygwin bash</value>
@@ -1095,7 +1095,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Punkt rosy</value>
   </data>
   <data name="LblDigitalSkySurvey" xml:space="preserve">
-    <value>Digital Sky Survey</value>
+    <value>Cyfrowy przegląd nieba</value>
   </data>
   <data name="LblDirectGuideDuration" xml:space="preserve">
     <value>Bezpośredni czas prowadzenia</value>
@@ -1320,7 +1320,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>błąd &lt;</value>
   </data>
   <data name="LblEsoSkySurvey" xml:space="preserve">
-    <value>ESO Sky Survey</value>
+    <value>Przegląd Nieba ESO</value>
   </data>
   <data name="LblEstimatedDownloadTime" xml:space="preserve">
     <value>Szacowany czas pobierania</value>
@@ -1628,7 +1628,7 @@ Obliczone HFR: {2}</value>
     <value>Folder podglądu</value>
   </data>
   <data name="LblFrameNFocus" xml:space="preserve">
-    <value>Frame &amp; Focus</value>
+    <value>Ramka i ostrość</value>
   </data>
   <data name="LblFrameNrDescription" xml:space="preserve">
     <value># klatki w formacie ####</value>
@@ -2039,7 +2039,7 @@ Obliczone HFR: {2}</value>
     <value>Nazwa</value>
   </data>
   <data name="LblNASASkySurvey" xml:space="preserve">
-    <value>NASA Sky Survey</value>
+    <value>Przegląd nieba NASA</value>
   </data>
   <data name="LblNative" xml:space="preserve">
     <value>Natywny</value>
@@ -2145,7 +2145,7 @@ Obliczone HFR: {2}</value>
     <value>Teraz</value>
   </data>
   <data name="LblNrStars" xml:space="preserve">
-    <value>#Stars</value>
+    <value>#Gwiazdy</value>
   </data>
   <data name="LblObjectNameHint" xml:space="preserve">
     <value>Nazwa obiektu (np. M 31)</value>
@@ -2395,7 +2395,7 @@ Obliczone HFR: {2}</value>
     <value>Identyfikator profilu PHD2 {0} nie został znaleziony. Używając {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
-    <value>Pixels</value>
+    <value>Piksele</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
     <value>Max pikseli</value>
@@ -2912,7 +2912,7 @@ Ten szablon będzie używany przy starcie do inicjowania sekwencji zamiast domy�
     <value>Rozmiar</value>
   </data>
   <data name="LblSkyAtlas" xml:space="preserve">
-    <value>Sky Atlas</value>
+    <value>Atlas nieba</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
     <value>Ścieżka do katalogu obrazów Sky Atlas</value>
@@ -2927,7 +2927,7 @@ Ten szablon będzie używany przy starcie do inicjowania sekwencji zamiast domy�
     <value>Jakość nieba</value>
   </data>
   <data name="LblSkyServerSkySurvey" xml:space="preserve">
-    <value>SkyServer Sky Survey</value>
+    <value>SkyServer Przegląd nieba</value>
   </data>
   <data name="LblSkySurveyCacheDirectory" xml:space="preserve">
     <value>Katalog pamięci podręcznej Sky Survey</value>
@@ -3054,7 +3054,7 @@ Zanim przejdziesz dalej, upewnij się, że Twój fokuser znajduje się w najleps
     <value>Rozciąganie obrazu</value>
   </data>
   <data name="LblStsciSkySurvey" xml:space="preserve">
-    <value>Stsci Sky Survey</value>
+    <value>Przegląd nieba Stsci</value>
   </data>
   <data name="LblSubSample" xml:space="preserve">
     <value>Włącz podpróbkowanie</value>
@@ -4190,7 +4190,7 @@ W przypadku gdy potrzebny jest dłuższy czas, można go określić i aplikacja 
     <value>Opóźnienie</value>
   </data>
   <data name="LblTargetJ2000" xml:space="preserve">
-    <value>Target (J2000)</value>
+    <value>Cel (J2000)</value>
   </data>
   <data name="LblExecutingItemsInParallel" xml:space="preserve">
     <value>Wykonuj pozycje równolegle</value>
@@ -4247,7 +4247,7 @@ W przypadku gdy potrzebny jest dłuższy czas, można go określić i aplikacja 
     <value>Odwróć kierunek ruchu rotatora. Przełącz, gdy plate solving obraca w złym kierunku.</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
-    <value>HIPS 2 FITS Sky Survey</value>
+    <value>HIPS 2 FITS Przegląd nieba</value>
   </data>
   <data name="LblMechanicalPosition" xml:space="preserve">
     <value>Pozycja mechaniczna</value>
@@ -6351,6 +6351,15 @@ Powód: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Brak filtra</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Prędkość ekspozycji</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Ustawienia wzmocnienia</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Poziom mocy grzałki</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Ustawienia Ditheringu</value>
   </data>
@@ -6467,5 +6476,18 @@ Sprawdzane PO "Zaparkuj przed przesunięciem przesłony".</value>
   </data>
   <data name="LblRotating" xml:space="preserve">
     <value>Rotacja</value>
+  </data>
+  <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
+    <value>Prędkość napędu {0} jest nieprawidłowa, aby przesunąć zmienić pozycję teleskopu. Proszę podać inną szybkość.</value>
+  </data>
+  <data name="LblFilterChangeFailed" xml:space="preserve">
+    <value>Nie udało się ustawić koła filtrowego {0} na pozycji {1}</value>
+    <comment>First parameter is filter name and second parameter is filter position number</comment>
+  </data>
+  <data name="LblSwitches" xml:space="preserve">
+    <value>Przełączniki</value>
+  </data>
+  <data name="LblGauges" xml:space="preserve">
+    <value>Wskaźniki</value>
   </data>
 </root>
