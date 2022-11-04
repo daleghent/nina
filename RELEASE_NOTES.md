@@ -12,6 +12,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Flat wizard should no longer try to set a negative brightness value in dynamic brightness mode
 - Focuser tab should no longer clip the "Move" button when window size is small
 - ASCOM Switch target values now adhere to the step size of a switch and round to the nearest value if the user provided a value outside of the step size
+- Fixed an issue where SynchronizeDomeTrigger would run into an exception when evaluating if it should trigger when the dome and telescope is not connected
 
 ## Improvements
 - Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver

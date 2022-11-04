@@ -633,7 +633,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private void SyncAzimuth(object obj) {
             if (CanSyncAzimuth) {
                 var calculatedTargetCoordinates = this.domeFollower.GetSynchronizedDomeCoordinates(TelescopeInfo);
-                Dome.SyncToAzimuth(calculatedTargetCoordinates.Azimuth.Degree);
+                if(calculatedTargetCoordinates != null) { 
+                    Dome.SyncToAzimuth(calculatedTargetCoordinates.Azimuth.Degree);
+                }
             }
         }
 
