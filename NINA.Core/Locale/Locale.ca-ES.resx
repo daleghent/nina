@@ -664,7 +664,7 @@ Voleu tancar la seqüència i perdre els canvis de totes maneres?</value>
     <value>Constel·lació</value>
   </data>
   <data name="LblConstellation_AND" xml:space="preserve">
-    <value>Andromeda</value>
+    <value>Andrómeda</value>
   </data>
   <data name="LblConstellation_ANT" xml:space="preserve">
     <value>Màquina Pneumàtica</value>
@@ -4835,7 +4835,7 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Guiatge</value>
   </data>
   <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
-    <value>Switch</value>
+    <value>Interruptor</value>
   </data>
   <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
     <value>Telescopi</value>
@@ -6351,6 +6351,15 @@ Raó: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Sense Filtre</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Velocitat d'exposició</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Guany preestablert</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Nivell de potència del calefactor</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Estabilització del Dither</value>
   </data>
@@ -6467,5 +6476,18 @@ Això s'avalua DESPRÉS del paràmetre "Aparcar la muntura abans de moure la per
   </data>
   <data name="LblRotating" xml:space="preserve">
     <value>Rotant</value>
+  </data>
+  <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
+    <value>La velocitat de conducció {0} no és vàlida per moure l'eix del telescopi. Introduïu una taxa diferent.</value>
+  </data>
+  <data name="LblFilterChangeFailed" xml:space="preserve">
+    <value>No s'ha pogut moure la roda de filtres a la posició {1} del filtre {0}</value>
+    <comment>First parameter is filter name and second parameter is filter position number</comment>
+  </data>
+  <data name="LblSwitches" xml:space="preserve">
+    <value>Interruptors</value>
+  </data>
+  <data name="LblGauges" xml:space="preserve">
+    <value>Indicadors</value>
   </data>
 </root>
