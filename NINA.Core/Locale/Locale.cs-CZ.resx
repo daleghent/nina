@@ -1540,7 +1540,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Flat</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
-    <value>Průvodcem Flat Snímáním</value>
+    <value>Průvodce Flat Snímáním</value>
   </data>
   <data name="LblFLICameraSetup" xml:space="preserve">
     <value>Nastavení Kamery FLI</value>

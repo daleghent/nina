@@ -6466,9 +6466,9 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <comment>First parameter is filter name and second parameter is filter position number</comment>
   </data>
   <data name="LblSwitches" xml:space="preserve">
-    <value>Switches</value>
+    <value>スイッチ</value>
   </data>
   <data name="LblGauges" xml:space="preserve">
-    <value>Gauges</value>
+    <value>計測結果</value>
   </data>
 </root>
