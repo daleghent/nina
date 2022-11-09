@@ -41,11 +41,11 @@ namespace NINA.Core.Utility {
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="val">value</param>
-        /// <exception cref="ArgumentNullException">key or val is null</exception>
+        /// <exception cref="ArgumentNullException">key is null</exception>
         /// <exception cref="ArgumentException">a value for key is already present in the locator part</exception>
         public void Add(TKey key, TValue val) {
-            if (key == null || val == null) {
-                throw new ArgumentNullException(key == null ? "key" : "val");
+            if (key == null) {
+                throw new ArgumentNullException("key");
             }
             _nameValues.Add(key, val);
             FireDictionaryChanged();

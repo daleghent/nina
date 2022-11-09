@@ -209,11 +209,20 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get => canSetTemperature;
             private set {
                 canSetTemperature = value;
+                Logger.Trace($"CanSetTemperature = {canSetTemperature}");
                 RaisePropertyChanged();
             }
         }
 
-        private bool CanGetCoolerPower { get; set; } = false;
+        private bool canGetCoolerPower = false;
+
+        private bool CanGetCoolerPower {
+            get => canGetCoolerPower;
+            set {
+                canGetCoolerPower = value;
+                Logger.Trace($"CanGetCoolerPower = {canGetCoolerPower}");
+            }
+        }
 
         public double CoolerPower => CanGetCoolerPower ? AtikCameraDll.CoolerPower(_cameraP) : double.NaN;
 
@@ -527,6 +536,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     _info = AtikCameraDll.GetCameraProperties(_cameraP);
                     var coolingFlags = AtikCameraDll.GetCoolingFlags(_cameraP);
                     var colorInfo = AtikCameraDll.GetColorInformation(_cameraP);
+
+                    Logger.Trace($"CameraFlags = 0x{Info.cameraflags:X}");
+                    Logger.Trace($"CoolingFlags = 0x{coolingFlags:X}");
 
                     HasShutter = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasShutter);
 
