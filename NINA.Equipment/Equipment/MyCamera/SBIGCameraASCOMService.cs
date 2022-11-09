@@ -455,7 +455,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             var imageReady = exposeTask?.Status == TaskStatus.RanToCompletion;
             if (!imageReady) {
                 // ASCOM specifies this exception when no image is available
-                throw ASCOM.InvalidOperationException("No exposure is ready yet");
+                throw new ASCOM.InvalidOperationException("No exposure is ready yet");
             }
 
             var downloadedData = exposeTask.Result;
