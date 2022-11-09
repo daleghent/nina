@@ -47,7 +47,7 @@ namespace NINA.Image.ImageData {
             using (MyStopWatch.Measure()) {
                 long sum = 0;
                 long squareSum = 0;
-                int count = array.Count();
+                int count = array.Length;
                 ushort min = ushort.MaxValue;
                 ushort oldmin = min;
                 ushort max = 0;

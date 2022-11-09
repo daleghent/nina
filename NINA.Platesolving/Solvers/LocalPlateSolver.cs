@@ -119,19 +119,19 @@ namespace NINA.PlateSolving.Solvers {
                     }
 
                     double ra = 0, dec = 0;
-                    if (wcsinfo.ContainsKey("ra_center")) {
-                        ra = double.Parse(wcsinfo["ra_center"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("ra_center", out string value)) {
+                        ra = double.Parse(value, CultureInfo.InvariantCulture);
                     }
-                    if (wcsinfo.ContainsKey("dec_center")) {
-                        dec = double.Parse(wcsinfo["dec_center"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("dec_center", out value)) {
+                        dec = double.Parse(value, CultureInfo.InvariantCulture);
                     }
-                    if (wcsinfo.ContainsKey("orientation_center")) {
-                        result.Orientation = double.Parse(wcsinfo["orientation_center"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("orientation_center", out value)) {
+                        result.Orientation = double.Parse(value, CultureInfo.InvariantCulture);
                         /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
                         result.Orientation = 180 - result.Orientation + 360;
                     }
-                    if (wcsinfo.ContainsKey("pixscale")) {
-                        result.Pixscale = double.Parse(wcsinfo["pixscale"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("pixscale", out value)) {
+                        result.Pixscale = double.Parse(value, CultureInfo.InvariantCulture);
                     }
 
                     result.Coordinates = new Coordinates(ra, dec, Epoch.J2000, Coordinates.RAType.Degrees);

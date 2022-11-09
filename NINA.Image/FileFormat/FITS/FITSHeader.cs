@@ -94,11 +94,11 @@ namespace NINA.Image.FileFormat.FITS {
             var metaData = new ImageMetaData();
             metaData.GenericHeaders = GetAllFITSKeywords();
 
-            if (_headerCards.ContainsKey("IMAGETYP")) {
-                metaData.Image.ImageType = _headerCards["IMAGETYP"].OriginalValue;
+            if (_headerCards.TryGetValue("IMAGETYP", out var card)) {
+                metaData.Image.ImageType = card.OriginalValue;
             }
 
-            if (_headerCards.TryGetValue("IMAGETYP", out var card)) {
+            if (_headerCards.TryGetValue("IMAGETYP", out card)) {
                 metaData.Image.ImageType = card.OriginalValue;
             }
 

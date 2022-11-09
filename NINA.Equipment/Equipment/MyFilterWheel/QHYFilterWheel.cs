@@ -189,7 +189,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                     }
                 }
 
-                int i = filtersList.Count();
+                int i = filtersList.Count;
 
                 if (positions < i) {
                     /* Too many filters defined. Truncate the list */

@@ -169,9 +169,9 @@ namespace NINA.Sequencer.Utility {
             return CalculateTimeAtAltitude(coord, latitude, longitude, targetAltitude, DateTime.Now);
         }
 
-        private static readonly int LOOP_INTERVAL = 5;  // How many minutes for each loop
-        private static readonly int NEAR_TIME = 10;  // How close before we get an exact time
-        private static readonly int NEAR_TIME_HORIZON = 60;
+        private const int LOOP_INTERVAL = 5;  // How many minutes for each loop
+        private const int NEAR_TIME = 10;  // How close before we get an exact time
+        private const int NEAR_TIME_HORIZON = 60;
 
         public static void Iterate(WaitLoopData data, RiseSetMeridian rsm, bool greater, bool sense, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
             // We'll iterate (not too much) to get a better time

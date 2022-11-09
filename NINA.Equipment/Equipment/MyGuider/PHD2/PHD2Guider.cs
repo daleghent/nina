@@ -431,7 +431,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             var lockPositionResponse = await SendMessage<GetLockPositionResponse>(
                 msg,
                 receiveTimeout);
-            if (lockPositionResponse?.result != null && lockPositionResponse.result.Count() == 2) {
+            if (lockPositionResponse?.result != null && lockPositionResponse.result.Length == 2) {
                 return new LockPosition(lockPositionResponse.result[0], lockPositionResponse.result[1]);
             }
             return null;

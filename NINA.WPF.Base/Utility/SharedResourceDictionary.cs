@@ -89,9 +89,7 @@ namespace NINA.WPF.Base.Utility {
 
         private void AddToCache() {
             base.Source = sourceUri;
-            if (sharedDictionaries.ContainsKey(sourceUri)) {
-                sharedDictionaries.Remove(sourceUri);
-            }
+            sharedDictionaries.Remove(sourceUri);
             sharedDictionaries.Add(sourceUri, new WeakReference(this, false));
         }
     }

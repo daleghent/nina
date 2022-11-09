@@ -45,7 +45,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public AsyncObservableCollection<FilterInfo> Filters {
             get {
                 var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-                int i = filtersList.Count();
+                int i = filtersList.Count;
                 int positions = GetEfwPositions();
 
                 if (positions < i) {

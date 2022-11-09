@@ -81,7 +81,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             double lowestError = double.MaxValue; //scaled RMS (square root of the mean square) of the HFD errors after curve fitting
 
             var nonZeroPoints = points.Where((dp) => dp.Y >= 0.1);
-            if (nonZeroPoints.Count() == 0) {
+            if (!nonZeroPoints.Any()) {
                 // No non zero points in curve. No fit can be calculated.
                 return this;
             }

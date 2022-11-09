@@ -25,7 +25,7 @@ namespace FLI {
             uint domain = (uint)(LibFLI.FLIDomains.DEV_CAMERA | LibFLI.FLIDomains.IF_USB);
 
             cams = LibFLI.N_FLIList(domain);
-            Logger.Debug(string.Format("FLI: Found {0} camera(s)", cams.Count()));
+            Logger.Debug(string.Format("FLI: Found {0} camera(s)", cams.Count));
 
             return cams;
         }

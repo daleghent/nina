@@ -577,15 +577,15 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints, method);
 
             if (AFMethodEnum.STARHFR.ToString() == method) {
-                if (FocusPoints.Count() >= 3
+                if (FocusPoints.Count >= 3
                     && (AFCurveFittingEnum.PARABOLIC.ToString() == fitting || AFCurveFittingEnum.TRENDPARABOLIC.ToString() == fitting)) {
                     QuadraticFitting = new QuadraticFitting().Calculate(FocusPoints);
                 }
-                if (FocusPoints.Count() >= 3
+                if (FocusPoints.Count >= 3
                     && (AFCurveFittingEnum.HYPERBOLIC.ToString() == fitting || AFCurveFittingEnum.TRENDHYPERBOLIC.ToString() == fitting)) {
                     HyperbolicFitting = new HyperbolicFitting().Calculate(FocusPoints);
                 }
-            } else if (FocusPoints.Count() >= 3) {
+            } else if (FocusPoints.Count >= 3) {
                 GaussianFitting = new GaussianFitting().Calculate(FocusPoints);
             }
         }

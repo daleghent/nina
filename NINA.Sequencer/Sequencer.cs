@@ -83,7 +83,7 @@ namespace NINA.Sequencer {
         private bool PromptForIssues() {
             var issues = Validate(MainContainer).Distinct();
 
-            if (issues.Count() > 0) {
+            if (issues.Any()) {
                 var builder = new StringBuilder();
                 builder.AppendLine(Loc.Instance["LblPreSequenceChecklist"]).AppendLine();
 

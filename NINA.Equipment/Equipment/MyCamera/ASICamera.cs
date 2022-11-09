@@ -722,7 +722,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     success = true;
 
                     var raw16 = from types in SupportedImageTypes where types == ASICameraDll.ASI_IMG_TYPE.ASI_IMG_RAW16 select types;
-                    if (raw16.Count() == 0) {
+                    if (!raw16.Any()) {
                         Logger.Error("Camera does not support 16 bit mode");
                         Notification.ShowError("Camera does not support 16 bit mode");
                         return false;

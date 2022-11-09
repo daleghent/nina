@@ -25,7 +25,7 @@ namespace FLI {
             uint domain = (uint)(LibFLI.FLIDomains.DEV_FILTERWHEEL | LibFLI.FLIDomains.IF_USB);
 
             fwheels = LibFLI.N_FLIList(domain);
-            Logger.Debug(string.Format("FLI: Found {0} filter wheel(s)", fwheels.Count()));
+            Logger.Debug(string.Format("FLI: Found {0} filter wheel(s)", fwheels.Count));
 
             return fwheels;
         }

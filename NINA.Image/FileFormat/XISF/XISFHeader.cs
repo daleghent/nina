@@ -335,7 +335,7 @@ namespace NINA.Image.FileFormat.XISF {
         private bool TryGetFITSProperty(string key, out string value) {
             value = string.Empty;
             var elements = Image.Elements(xmlns + "FITSKeyword");
-            if (elements.Count() == 0) { return false; }
+            if (!elements.Any()) { return false; }
 
             var elem = elements.FirstOrDefault(el => el.Attribute("name")?.Value == key);
             if (elem == null) { return false; }
@@ -353,7 +353,7 @@ namespace NINA.Image.FileFormat.XISF {
         private List<IGenericMetaDataHeader> GetAllFITSKeywords() {
             var l = new List<IGenericMetaDataHeader>();
             var elements = Image.Elements(xmlns + "FITSKeyword");
-            if (elements.Count() == 0) { return l; }
+            if (!elements.Any()) { return l; }
 
             foreach(var elem in elements) {
                 if (elem == null) { continue; }

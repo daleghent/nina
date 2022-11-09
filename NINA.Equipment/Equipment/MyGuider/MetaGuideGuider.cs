@@ -40,7 +40,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         [DllImport("user32.dll")]
         private static extern bool PostMessage(int hWnd, uint Msg, int wParam, int lParam);
 
-        private static readonly int HWND_BROADCAST = 0xffff;
+        private const int HWND_BROADCAST = 0xffff;
         private static readonly uint remoteLockMsg = RegisterWindowMessage("MG_RemoteLock");
         private static readonly uint remoteUnlockMsg = RegisterWindowMessage("MG_RemoteUnLock");
         private static readonly uint remoteGuideMsg = RegisterWindowMessage("MG_RemoteGuide");
@@ -48,8 +48,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private static readonly uint remoteDitherMsg = RegisterWindowMessage("MG_RemoteDither");
         private static readonly uint remoteDitherRadiusMsg = RegisterWindowMessage("MG_RemoteDitherRadius");
 
-        private static readonly int METAGUIDE_CONNECT_TIMEOUT_MS = 5000;
-        private static readonly int METAGUIDE_QUEUE_FLUSH_TIMEOUT_MS = 2000;
+        private const int METAGUIDE_CONNECT_TIMEOUT_MS = 5000;
+        private const int METAGUIDE_QUEUE_FLUSH_TIMEOUT_MS = 2000;
 
         private static readonly Version MINIMUM_MG_VERSION = Version.Parse("5.4.9");
 
@@ -395,7 +395,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         private static readonly TimeSpan LOW_INTENSITY_THRESHOLD = TimeSpan.FromSeconds(5);
         private static readonly TimeSpan LOW_INTENSITY_GUIDING_TIMEOUT = TimeSpan.FromSeconds(5);
-        private static readonly int MAX_LOW_INTENSITY_GUIDING_RETRIES = 3;
+        private const int MAX_LOW_INTENSITY_GUIDING_RETRIES = 3;
         private DateTime? lowIntensityStart;
         private bool guidingHaltedDueToLowIntensity = false;
         private Task lowIntensityChangeGuidingTask = Task.CompletedTask;

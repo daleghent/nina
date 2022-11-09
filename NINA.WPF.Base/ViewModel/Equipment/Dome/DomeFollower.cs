@@ -30,7 +30,7 @@ using NINA.Equipment.Equipment;
 namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
     public class DomeFollower : BaseINPC, IDomeFollower, ITelescopeConsumer, IDomeConsumer {
-        private static readonly double RA_DEC_WARN_THRESHOLD = 2.0;
+        private const double RA_DEC_WARN_THRESHOLD = 2.0;
         private readonly IProfileService profileService;
         private readonly ITelescopeMediator telescopeMediator;
         private readonly IDomeMediator domeMediator;

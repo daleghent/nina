@@ -893,7 +893,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         offsetMax = device.OffsetMax;
                     } else {
                         if (offsets.Count > 0) {
-                            offsetMax = offsets.Count() - 1;
+                            offsetMax = offsets.Count - 1;
                         }
                     }
                 }
@@ -935,8 +935,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             if (value < 0) {
                                 value = 0;
                             }
-                            if (value > offsets.Count() - 1) {
-                                value = offsets.Count() - 1;
+                            if (value > offsets.Count - 1) {
+                                value = offsets.Count - 1;
                             }
                             device.Offset = value;
                         }

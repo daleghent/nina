@@ -57,7 +57,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 var columns = response.Split('\t');
 
                 // An "OK!" response with fewer than 2 columns means that CdC is listening ok but the user has not selected an object.
-                if (columns.Count() < 2) {
+                if (columns.Length < 2) {
                     return await GetView();
                 }
 

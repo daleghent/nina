@@ -35,8 +35,8 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
     internal class AscomTelescope : AscomDevice<Telescope, ITelescopeFacade, TelescopeFacadeProxy>, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
-        private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
-        private static double TRACKING_RATE_EPSILON = 0.000001;
+        private const int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
+        private const double TRACKING_RATE_EPSILON = 0.000001;
 
         public AscomTelescope(string telescopeId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(telescopeId, name, deviceDispatcher, DeviceDispatcherType.Telescope) {
             this.profileService = profileService;

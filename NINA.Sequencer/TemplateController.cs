@@ -238,7 +238,7 @@ namespace NINA.Sequencer {
             this.profileService = profileService;
         }
 
-        public string GroupTranslated => Loc.Instance[Group] + " › " + (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
+        public string GroupTranslated => Loc.Instance[Group] + " › " + (SubGroups.Length > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
 
         public string Group { get; }
         public string[] SubGroups { get; set; }

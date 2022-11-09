@@ -29,7 +29,7 @@ namespace NINA.PlateSolving.Solvers {
         protected static string FAILED_FILENAME;
         static BaseSolver() {
             var sessionDate = DateTime.Now.ToString("yyyyMMdd-HHmmss");
-            var processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+            var processId = Environment.ProcessId;
             FAILED_FILENAME = $"{sessionDate}.{processId}";
             WORKING_DIRECTORY = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PlateSolver");
             FAILED_DIRECTORY = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PlateSolver", "Failed");

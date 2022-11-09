@@ -80,7 +80,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment {
         protected void DetermineSelectedDevice(IList<IDevice> d, string id) {
             if (d.Count > 0) {
                 var items = (from device in d where device.Id == id select device);
-                if (items.Count() > 0) {
+                if (items.Any()) {
                     SelectedDevice = items.First();
                 } else {
                     SelectedDevice = d.First();

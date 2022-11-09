@@ -174,7 +174,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                  * filter names after that point.
                  */
                 var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-                int i = filtersList.Count();
+                int i = filtersList.Count;
                 int positions = (int)Info.Positions;
                 long rv;
 

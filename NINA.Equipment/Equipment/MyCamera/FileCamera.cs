@@ -781,7 +781,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private object lockObj = new object();
 
         public string GetNextItem() {
-            if (fileQueue.Count == 0) {
+            if (fileQueue.IsEmpty) {
                 return null;
             }
             fileQueue.TryDequeue(out var path);

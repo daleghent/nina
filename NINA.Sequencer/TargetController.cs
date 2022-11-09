@@ -254,7 +254,7 @@ namespace NINA.Sequencer {
             this.profileService = profileService;
         }
 
-        public string Grouping => (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
+        public string Grouping => (SubGroups.Length > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
         public string[] SubGroups { get; set; }
 
         public string Name { get => Container.Name; }
