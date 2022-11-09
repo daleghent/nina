@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Utility.Converters;
-using NINACustomControlLibrary;
+using NINA.CustomControlLibrary;
 using System;
 using System.Diagnostics;
 using System.Windows.Controls;
@@ -43,7 +43,7 @@ namespace NINA.View {
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
             e.Handled = true;
         }
     }

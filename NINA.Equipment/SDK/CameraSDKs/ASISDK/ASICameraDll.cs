@@ -252,7 +252,7 @@ namespace ZWOptical.ASISDK {
         [DllImport(DLLNAME, EntryPoint = "ASIGetSDKVersion", CallingConvention = CallingConvention.StdCall)]
         private static extern IntPtr ASIGetSDKVersion();
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static ASI_CAMERA_INFO GetCameraProperties(int cameraIndex) {
             ASI_CAMERA_INFO result;
             CheckReturn(ASIGetCameraProperty(out result, cameraIndex), MethodBase.GetCurrentMethod(), cameraIndex);
@@ -287,41 +287,41 @@ namespace ZWOptical.ASISDK {
             }
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static int GetNumOfConnectedCameras() {
             return ASIGetNumOfConnectedCameras();
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void OpenCamera(int cameraId) {
             CheckReturn(ASIOpenCamera(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void InitCamera(int cameraId) {
             CheckReturn(ASIInitCamera(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void CloseCamera(int cameraId) {
             CheckReturn(ASICloseCamera(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static int GetNumOfControls(int cameraId) {
             int result;
             CheckReturn(ASIGetNumOfControls(cameraId, out result), MethodBase.GetCurrentMethod(), cameraId);
             return result;
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static ASI_CONTROL_CAPS GetControlCaps(int cameraIndex, int controlIndex) {
             ASI_CONTROL_CAPS result;
             CheckReturn(ASIGetControlCaps(cameraIndex, controlIndex, out result), MethodBase.GetCurrentMethod(), cameraIndex, controlIndex);
             return result;
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static int GetControlValue(int cameraId, ASI_CONTROL_TYPE controlType, out bool isAuto) {
             ASI_BOOL auto;
             int result;
@@ -330,29 +330,29 @@ namespace ZWOptical.ASISDK {
             return result;
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void SetControlValue(int cameraId, ASI_CONTROL_TYPE controlType, int value, bool auto) {
             CheckReturn(ASISetControlValue(cameraId, controlType, value, auto ? ASI_BOOL.ASI_TRUE : ASI_BOOL.ASI_FALSE), MethodBase.GetCurrentMethod(), cameraId, controlType, value, auto);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void SetROIFormat(int cameraId, Size size, int bin, ASI_IMG_TYPE imageType) {
             CheckReturn(ASISetROIFormat(cameraId, size.Width, size.Height, bin, imageType), MethodBase.GetCurrentMethod(), cameraId, size, bin, imageType);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static Size GetROIFormat(int cameraId, out int bin, out ASI_IMG_TYPE imageType) {
             int width, height;
             CheckReturn(ASIGetROIFormat(cameraId, out width, out height, out bin, out imageType), MethodBase.GetCurrentMethod(), cameraId, bin);
             return new Size(width, height);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void SetStartPos(int cameraId, Point startPos) {
             CheckReturn(ASISetStartPos(cameraId, startPos.X, startPos.Y), MethodBase.GetCurrentMethod(), cameraId, startPos);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static Point GetStartPos(int cameraId) {
             int x, y;
             CheckReturn(ASIGetStartPos(cameraId, out x, out y), MethodBase.GetCurrentMethod(), cameraId);
@@ -375,17 +375,17 @@ namespace ZWOptical.ASISDK {
             CheckReturn(ASIDisableDarkSubtract(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }*/
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void StartVideoCapture(int cameraId) {
             CheckReturn(ASIStartVideoCapture(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void StopVideoCapture(int cameraId) {
             CheckReturn(ASIStopVideoCapture(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static bool GetVideoData(int cameraId, ushort[] buffer, int bufferSize, int waitMs) {
             var result = ASIGetVideoData(cameraId, buffer, bufferSize, waitMs);
 
@@ -396,34 +396,34 @@ namespace ZWOptical.ASISDK {
             return true;
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void PulseGuideOn(int cameraId, ASI_GUIDE_DIRECTION direction) {
             CheckReturn(ASIPulseGuideOn(cameraId, direction), MethodBase.GetCurrentMethod(), cameraId, direction);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void PulseGuideOff(int cameraId, ASI_GUIDE_DIRECTION direction) {
             CheckReturn(ASIPulseGuideOff(cameraId, direction), MethodBase.GetCurrentMethod(), cameraId, direction);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void StartExposure(int cameraId, bool isDark) {
             CheckReturn(ASIStartExposure(cameraId, isDark ? ASI_BOOL.ASI_TRUE : ASI_BOOL.ASI_FALSE), MethodBase.GetCurrentMethod(), cameraId, isDark);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static void StopExposure(int cameraId) {
             CheckReturn(ASIStopExposure(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static ASI_EXPOSURE_STATUS GetExposureStatus(int cameraId) {
             ASI_EXPOSURE_STATUS result;
             CheckReturn(ASIGetExpStatus(cameraId, out result), MethodBase.GetCurrentMethod(), cameraId);
             return result;
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static bool GetDataAfterExp(int cameraId, ushort[] buffer, int bufferSize) {
             var result = ASIGetDataAfterExp(cameraId, buffer, bufferSize);
             if (result == ASI_ERROR_CODE.ASI_ERROR_TIMEOUT)
@@ -433,7 +433,7 @@ namespace ZWOptical.ASISDK {
             return true;
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static string GetSDKVersion() {
             IntPtr p = ASIGetSDKVersion();
             string version = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(p);

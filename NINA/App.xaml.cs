@@ -182,7 +182,7 @@ namespace NINA {
 
         private static object lockObj = new object();
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             lock(lockObj) { 
                 Logger.Error($"An unhandled exception has occurred of type {e.Exception.GetType()}");

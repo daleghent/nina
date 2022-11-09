@@ -13,88 +13,88 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
     [ExcludeFromCodeCoverage]
     public class ASTPANPInvokeProxy : IASTPANPInvokeProxy {
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetNumOfCameras(out int number) {
             return ASTPANPInvoke.ASTPANGetNumOfCameras(out number);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetCameraInfo(out ASTPAN_CAMERA_INFO pCameraInfo, int iCameraIndex) {
             return ASTPANPInvoke.ASTPANGetCameraInfo(out pCameraInfo, iCameraIndex);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetCameraInfoByID(int id, out ASTPAN_CAMERA_INFO pCameraInfo) {
             return ASTPANPInvoke.ASTPANGetCameraInfoByID(id, out pCameraInfo);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANOpenCamera(int id) {
             return ASTPANPInvoke.ASTPANOpenCamera(id);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANInitCamera(int id) {
             return ASTPANPInvoke.ASTPANInitCamera(id);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANCloseCamera(int id) {
             return ASTPANPInvoke.ASTPANCloseCamera(id);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANStartVideoCapture(int id) {
             return ASTPANPInvoke.ASTPANStartVideoCapture(id);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANStopVideoCapture(int id) {
             return ASTPANPInvoke.ASTPANStopVideoCapture(id);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANStartExposure(int id) {
             return ASTPANPInvoke.ASTPANStartExposure(id);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANStopExposure(int id) {
             return ASTPANPInvoke.ASTPANStopExposure(id);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANSetConfigValue(int id, ref ASTPAN_CONFIG pConfig, ASTPAN_CFG_TYPE index) {
             return ASTPANPInvoke.ASTPANSetConfigValue(id, ref pConfig, index);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetConfigValue(int id, ref ASTPAN_CONFIG pConfig, ASTPAN_CFG_TYPE index) {
             return ASTPANPInvoke.ASTPANGetConfigValue(id, ref pConfig, index);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetAutoConfigInfo(int id, ref ASTPAN_AUTO_CONFIG_INFO pAutoConfigInfo) {
             return ASTPANPInvoke.ASTPANGetAutoConfigInfo(id, ref pAutoConfigInfo);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANSetAutoConfigValue(int id, ASTPAN_AUTO_TYPE index, int value, int bAuto) {
             return ASTPANPInvoke.ASTPANSetAutoConfigValue(id, index, value, bAuto);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetAutoConfigValue(int id, ASTPAN_AUTO_TYPE index, out int value, out int bAuto) {
             return ASTPANPInvoke.ASTPANGetAutoConfigValue(id, index, out value, out bAuto);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetVideoDataMono8(int iCameraID, [Out] byte[] pBuffer, int lBuffSize, int iWaitms) {
             return ASTPANPInvoke.ASTPANGetVideoDataMono8(iCameraID, pBuffer, lBuffSize, iWaitms);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetVideoDataMono16(int iCameraID, [Out] ushort[] pBuffer, int lBuffSize, int iWaitms) {
             return ASTPANPInvoke.ASTPANGetVideoDataMono16(iCameraID, pBuffer, lBuffSize, iWaitms);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetDataAfterExpMono8(int iCameraID, [Out] byte[] pBuffer, int lBuffSize) {
             return ASTPANPInvoke.ASTPANGetDataAfterExpMono8(iCameraID, pBuffer, lBuffSize);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetDataAfterExpMono16(int iCameraID, [Out] ushort[] pBuffer, int lBuffSize) {
             return ASTPANPInvoke.ASTPANGetDataAfterExpMono16(iCameraID, pBuffer, lBuffSize);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public ASTPAN_RET_TYPE ASTPANGetExpStatus(int id, out ASTPAN_EXP_TYPE pExpStatus) {
             return ASTPANPInvoke.ASTPANGetExpStatus(id, out pExpStatus);
         }

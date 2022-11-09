@@ -13,7 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -439,9 +439,22 @@
                                         </TextBlock.ToolTip>
                                     </TextBlock>
                                     <CheckBox
+                                        Name="PART_ServerEnabled"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         IsChecked="{Binding SGPServerEnabled}" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Width="Auto"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        DockPanel.Dock="Right"
+                                        Text=""
+                                        Visibility="{Binding ElementName=PART_ServerEnabled, Path=IsChecked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="http://localhost:59590/swagger/index.html">
+                                            <Run Text="API Doc" />
+                                        </Hyperlink>
+                                    </TextBlock>
                                 </StackPanel>
 
                                 <StackPanel

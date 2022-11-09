@@ -44,8 +44,6 @@ namespace NINA.Image.Interfaces {
         Task<string> SaveToDisk(FileSaveInfo fileSaveInfo, CancellationToken cancelToken = default, bool forceFileType = false);
 
         Task<string> PrepareSave(FileSaveInfo fileSaveInfo, CancellationToken cancelToken = default);
-        [Obsolete]
-        string FinalizeSave(string file, string pattern);
         string FinalizeSave(string file, string pattern, IList<ImagePattern> customPatterns);
     }
 

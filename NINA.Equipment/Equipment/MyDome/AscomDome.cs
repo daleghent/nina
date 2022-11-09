@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DriverAccess;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
@@ -27,46 +27,46 @@ namespace NINA.Equipment.Equipment.MyDome {
 
     public static class ShutterStateExtensions {
 
-        public static ShutterState FromASCOM(this ASCOM.DeviceInterface.ShutterState shutterState) {
+        public static ShutterState FromASCOM(this ASCOM.Common.DeviceInterfaces.ShutterState shutterState) {
             switch (shutterState) {
-                case ASCOM.DeviceInterface.ShutterState.shutterOpen:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Open:
                     return ShutterState.ShutterOpen;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterClosed:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Closed:
                     return ShutterState.ShutterClosed;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterOpening:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Opening:
                     return ShutterState.ShutterOpening;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterClosing:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Closing:
                     return ShutterState.ShutterClosing;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterError:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Error:
                     return ShutterState.ShutterError;
             }
             Logger.Error($"Invalid ASCOM shutter state {shutterState}. The driver is non-conformant and should be fixed. Treating it as shutterError.");
             return ShutterState.ShutterError;
         }
 
-        public static ASCOM.DeviceInterface.ShutterState ToASCOM(this ShutterState shutterState) {
+        public static ASCOM.Common.DeviceInterfaces.ShutterState ToASCOM(this ShutterState shutterState) {
             switch (shutterState) {
                 case ShutterState.ShutterOpen:
-                    return ASCOM.DeviceInterface.ShutterState.shutterOpen;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Open;
 
                 case ShutterState.ShutterClosed:
-                    return ASCOM.DeviceInterface.ShutterState.shutterClosed;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Closed;
 
                 case ShutterState.ShutterOpening:
-                    return ASCOM.DeviceInterface.ShutterState.shutterOpening;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Opening;
 
                 case ShutterState.ShutterClosing:
-                    return ASCOM.DeviceInterface.ShutterState.shutterClosing;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Closing;
 
                 case ShutterState.ShutterError:
-                    return ASCOM.DeviceInterface.ShutterState.shutterError;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Error;
 
                 case ShutterState.ShutterNone:
-                    return ASCOM.DeviceInterface.ShutterState.shutterError;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Error;
             }
             throw new ArgumentOutOfRangeException($"{shutterState} is not an expected value");
         }
@@ -119,7 +119,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                 if (!CanSetShutter) {
                     return ShutterState.ShutterNone;
                 }
-                var ascomState = GetProperty(nameof(Dome.ShutterStatus), ASCOM.DeviceInterface.ShutterState.shutterError);
+                var ascomState = GetProperty(nameof(Dome.ShutterStatus), ASCOM.Common.DeviceInterfaces.ShutterState.Error);
                 return ascomState.FromASCOM();
             }
         }

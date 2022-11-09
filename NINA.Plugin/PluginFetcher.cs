@@ -37,6 +37,7 @@ namespace NINA.Plugin {
         public async Task<IList<PluginManifest>> RequestAll(IPluginVersion minimumApplicationVersion, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return await Task.Run(async () => {
                 List<PluginManifest> plugins = new List<PluginManifest>();
+                var compatibilityMap = new PluginCompatibilityMap();
                 try {
                     var req = new HttpGetRequest(repositoryURL + "/plugins/manifest", true);
                     Logger.Info($"Fetching plugin manifests from {req.Url}");
@@ -46,7 +47,8 @@ namespace NINA.Plugin {
                         foreach (var item in arr) {
                             var plugin = await ValidateAndParseManifest(item);
                             if (plugin != null) {
-                                if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)) {
+                                if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)
+                                    && !compatibilityMap.IsNotCompatible(plugin)) {
                                     plugins.Add(plugin);
                                 }
                             }

@@ -27,7 +27,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 #if DEBUG
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-[assembly: InternalsVisibleTo("NINATest")]
+[assembly: InternalsVisibleTo("NINA.Test")]
 #endif
 
 // Setting ComVisible to false makes the types in this assembly not visible to COM components. If you

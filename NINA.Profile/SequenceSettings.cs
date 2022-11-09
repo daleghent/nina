@@ -70,8 +70,8 @@ namespace NINA.Profile {
 
         private string templatePath;
 
-        [Obsolete("Used by the old sequencer")]
         [DataMember]
+        // Used by legacy sequencer
         public string TemplatePath {
             get {
                 return templatePath;

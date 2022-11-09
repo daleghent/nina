@@ -12,8 +12,8 @@
 
 #endregion "copyright"
 
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Utility;
 using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;

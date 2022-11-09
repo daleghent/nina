@@ -12,9 +12,12 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Xml.Linq;
@@ -33,16 +36,37 @@ namespace NINA.Core.Utility.ColorSchema {
         public List<ColorSchema> Items { get; set; }
 
         public static ColorSchemas ReadColorSchemas() {
-            ColorSchemas schemas = null;
-            var schemafile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Utility", "ColorSchema", "ColorSchemas.xml");
+            ColorSchemas schemas = new ColorSchemas();
+            //var schemafile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Utility", "ColorSchema", "ColorSchemas.xml");
+            var schemafile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Utility", "ColorSchema", "ColorSchemas.json");
             if (File.Exists(schemafile)) {
                 try {
-                    var schemasxml = XElement.Load(schemafile);
+                    using (StreamReader file = File.OpenText(schemafile)) {
+                        using (JsonTextReader reader = new JsonTextReader(file)) {
+                            JArray jArr = (JArray)JToken.ReadFrom(reader);
+                            foreach(var jObj in jArr) {
 
-                    using (var reader = new System.IO.StringReader(schemasxml.ToString())) {
-                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(ColorSchemas));
+                                var schema = new ColorSchema() {
+                                    Name = jObj["Name"].ToString(),
+                                    PrimaryColor = (Color)ColorConverter.ConvertFromString(jObj["PrimaryColor"].ToString()),
+                                    SecondaryColor = (Color)ColorConverter.ConvertFromString(jObj["SecondaryColor"].ToString()),
+                                    BorderColor = (Color)ColorConverter.ConvertFromString(jObj["BorderColor"].ToString()),
+                                    BackgroundColor = (Color)ColorConverter.ConvertFromString(jObj["BackgroundColor"].ToString()),
+                                    SecondaryBackgroundColor = (Color)ColorConverter.ConvertFromString(jObj["SecondaryBackgroundColor"].ToString()),
+                                    TertiaryBackgroundColor = (Color)ColorConverter.ConvertFromString(jObj["TertiaryBackgroundColor"].ToString()),
+                                    ButtonBackgroundColor = (Color)ColorConverter.ConvertFromString(jObj["ButtonBackgroundColor"].ToString()),
+                                    ButtonBackgroundSelectedColor = (Color)ColorConverter.ConvertFromString(jObj["ButtonBackgroundSelectedColor"].ToString()),
+                                    ButtonForegroundColor = (Color)ColorConverter.ConvertFromString(jObj["ButtonForegroundColor"].ToString()),
+                                    ButtonForegroundDisabledColor = (Color)ColorConverter.ConvertFromString(jObj["ButtonForegroundDisabledColor"].ToString()),
+                                    NotificationWarningColor = (Color)ColorConverter.ConvertFromString(jObj["NotificationWarningColor"].ToString()),
+                                    NotificationErrorColor = (Color)ColorConverter.ConvertFromString(jObj["NotificationErrorColor"].ToString()),
+                                    NotificationWarningTextColor = (Color)ColorConverter.ConvertFromString(jObj["NotificationWarningTextColor"].ToString()),
+                                    NotificationErrorTextColor = (Color)ColorConverter.ConvertFromString(jObj["NotificationErrorTextColor"].ToString())
+                                };
 
-                        schemas = (ColorSchemas)xmlSerializer.Deserialize(reader);
+                                schemas.Items.Add(schema);
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     schemas = new ColorSchemas();
@@ -98,7 +122,6 @@ namespace NINA.Core.Utility.ColorSchema {
     }
 
     [Serializable()]
-    [XmlRoot(ElementName = "ColorSchema")]
     [DataContract]
     public class ColorSchema : BaseINPC {
         private Color primaryColor;
@@ -116,11 +139,9 @@ namespace NINA.Core.Utility.ColorSchema {
         private Color backgroundColor;
         private Color borderColor;
 
-        [XmlAttribute(nameof(Name))]
         [DataMember]
         public String Name { get; set; }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color PrimaryColor {
             get {
@@ -134,7 +155,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color SecondaryColor {
             get {
@@ -148,7 +168,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color BorderColor {
             get {
@@ -162,7 +181,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color BackgroundColor {
             get {
@@ -176,7 +194,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color SecondaryBackgroundColor {
             get {
@@ -190,7 +207,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color TertiaryBackgroundColor {
             get {
@@ -204,7 +220,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color ButtonBackgroundColor {
             get {
@@ -218,7 +233,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color ButtonBackgroundSelectedColor {
             get {
@@ -232,7 +246,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color ButtonForegroundColor {
             get {
@@ -246,7 +259,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color ButtonForegroundDisabledColor {
             get {
@@ -260,7 +272,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color NotificationWarningColor {
             get {
@@ -274,7 +285,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color NotificationErrorColor {
             get {
@@ -288,7 +298,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color NotificationWarningTextColor {
             get {
@@ -302,7 +311,6 @@ namespace NINA.Core.Utility.ColorSchema {
             }
         }
 
-        [XmlElement(Type = typeof(XmlColor))]
         [DataMember]
         public Color NotificationErrorTextColor {
             get {
@@ -323,47 +331,6 @@ namespace NINA.Core.Utility.ColorSchema {
         }
 
         public ColorSchema() {
-        }
-    }
-
-    public class XmlColor {
-        private Color _color = Colors.Black;
-
-        public XmlColor() {
-        }
-
-        public XmlColor(Color c) {
-            _color = c;
-        }
-
-        public Color ToColor() {
-            return _color;
-        }
-
-        public void FromColor(Color c) {
-            _color = c;
-        }
-
-        public static implicit operator Color(XmlColor x) {
-            return x.ToColor();
-        }
-
-        public static implicit operator XmlColor(Color c) {
-            return new XmlColor(c);
-        }
-
-        [XmlAttribute]
-        public string Color {
-            get {
-                return _color.ToString();
-            }
-            set {
-                try {
-                    _color = (Color)ColorConverter.ConvertFromString(value);
-                } catch (Exception) {
-                    _color = Colors.Black;
-                }
-            }
         }
     }
 }

@@ -12,7 +12,7 @@
 using NINA.Core.Database;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINACustomControlLibrary;
+using NINA.CustomControlLibrary;
 using Nito.AsyncEx;
 using Nito.Mvvm;
 using System.Collections.Generic;

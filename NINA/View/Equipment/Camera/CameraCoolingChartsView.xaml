@@ -14,7 +14,7 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
-    xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Contrib.Wpf"
     xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -33,13 +33,16 @@
             HorizontalAlignment="Stretch"
             Background="{StaticResource BackgroundBrush}"
             DataContext="{Binding}"
-            LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
-            LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
-            LegendOrientation="Vertical"
-            LegendPosition="BottomLeft"
-            LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
             PlotAreaBackground="{StaticResource BackgroundBrush}"
             PlotAreaBorderColor="{Binding Path=Color, Source={StaticResource BorderBrush}}">
+            <oxy:Plot.Legends>
+                <oxy:Legend
+                    LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
+                    LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
+                    LegendOrientation="Vertical"
+                    LegendPosition="BottomLeft"
+                    LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
+            </oxy:Plot.Legends>
             <oxy:Plot.Axes>
                 <oxy:LinearAxis
                     Key="Temperature"

@@ -212,8 +212,7 @@ namespace NINA.Utility {
                         f.Kernel.Get<IImageSaveMediator>())).InSingletonScope();
 
                     Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
-                    Bind<ISGPServiceHost>().To<SGPServiceHost>().InSingletonScope();
-                    Bind<ISGPService>().To<SGPServiceFrontend>().InSingletonScope();
+                    Bind<ISGPServiceHost>().To<SGPServiceHost>().InSingletonScope();                    
                     Bind<ISGPServiceBackend>().To<SGPServiceBackend>().InSingletonScope();
                     Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
                     Bind<IMyMessageBoxVM>().To<MyMessageBoxVM>();

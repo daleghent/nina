@@ -74,7 +74,7 @@ namespace NINA.Equipment.Interfaces {
         double GetTemperature();
 
         double GetCoolerPower();
-        [HandleProcessCorruptedStateExceptions]
+        
         Task<ushort[]> GetExposure(double exposureTime, int width, int height, CancellationToken ct);
         bool IsExposureReady();
 
@@ -83,8 +83,7 @@ namespace NINA.Equipment.Interfaces {
         bool IsDewHeaterOn();
 
         void StartVideoCapture(double exposureTime, int width, int height);
-        void StopVideoCapture();
-        [HandleProcessCorruptedStateExceptions]
+        void StopVideoCapture();        
         Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct);
         List<string> GetReadoutModes();
         int GetReadoutMode();

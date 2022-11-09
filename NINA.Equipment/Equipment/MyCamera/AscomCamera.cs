@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
@@ -671,11 +671,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public ArrayList ReadoutModesArrayList {
+        public IList<string> ReadoutModesArrayList {
             get {
-                ArrayList val = new ArrayList();
+                IList<string> val = new List<string>();
                 if (!CanFastReadout) {
-                    val = GetProperty(nameof(Camera.ReadoutModes), new ArrayList());
+                    val = GetProperty(nameof(Camera.ReadoutModes), new List<string>());
                 }
                 return val;
             }
@@ -689,31 +689,31 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public SensorType SensorType {
             get {
-                var deviceType = GetProperty(nameof(Camera.SensorType), ASCOM.DeviceInterface.SensorType.Monochrome);
+                var deviceType = GetProperty(nameof(Camera.SensorType), ASCOM.Common.DeviceInterfaces.SensorType.Monochrome);
 
                 SensorType type;
                 switch (deviceType) {
-                    case ASCOM.DeviceInterface.SensorType.Monochrome:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.Monochrome:
                         type = SensorType.Monochrome;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.Color:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.Color:
                         type = SensorType.Color;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.RGGB:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.RGGB:
                         type = SensorType.RGGB;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.CMYG:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.CMYG:
                         type = SensorType.CMYG;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.CMYG2:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.CMYG2:
                         type = SensorType.CMYG2;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.LRGB:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.LRGB:
                         type = SensorType.LRGB;
                         break;
 

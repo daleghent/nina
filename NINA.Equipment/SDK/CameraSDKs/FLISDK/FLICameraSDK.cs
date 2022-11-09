@@ -417,7 +417,7 @@ namespace FLI {
         public static extern unsafe uint FLIWriteUserEEPROM(uint dev, uint loc, uint address, uint length, byte[] wbuf);
 
         private static object lockObj = new object();
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public static List<string> N_FLIList(uint domain) {
             lock(lockObj) { 
                 List<string> cameralist = new List<string>();

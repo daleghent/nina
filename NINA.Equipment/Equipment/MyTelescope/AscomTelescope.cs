@@ -12,8 +12,8 @@
 
 #endregion "copyright"
 
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Utility;
 using NINA.Astrometry;
 using NINA.Core.Utility.Notification;
@@ -50,7 +50,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public Core.Enum.AlignmentMode AlignmentMode {
             get {
-                return (Core.Enum.AlignmentMode)GetProperty(nameof(Telescope.AlignmentMode), AlignmentModes.algGermanPolar);
+                return (Core.Enum.AlignmentMode)GetProperty(nameof(Telescope.AlignmentMode), ASCOM.Common.DeviceInterfaces.AlignmentMode.GermanPolar);
             }
         }
 
@@ -232,12 +232,12 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public PierSide SideOfPier {
             get {
-                var pierside = GetProperty(nameof(Telescope.SideOfPier), ASCOM.DeviceInterface.PierSide.pierUnknown);
+                var pierside = GetProperty(nameof(Telescope.SideOfPier), ASCOM.Common.DeviceInterfaces.PointingState.Unknown);
                 return (PierSide)pierside;
             }
             set {
                 if (CanSetPierSide) {
-                    SetProperty(nameof(Telescope.SideOfPier), (ASCOM.DeviceInterface.PierSide)value);
+                    SetProperty(nameof(Telescope.SideOfPier), (ASCOM.Common.DeviceInterfaces.PointingState)value);
                 }
             }
         }
@@ -540,23 +540,23 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             return success;
         }
 
-        private ASCOM.DeviceInterface.TelescopeAxes TransformAxis(TelescopeAxes axis) {
-            ASCOM.DeviceInterface.TelescopeAxes translatedAxis;
+        private ASCOM.Common.DeviceInterfaces.TelescopeAxis TransformAxis(TelescopeAxes axis) {
+            ASCOM.Common.DeviceInterfaces.TelescopeAxis translatedAxis;
             switch (axis) {
                 case TelescopeAxes.Primary:
-                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
+                    translatedAxis = ASCOM.Common.DeviceInterfaces.TelescopeAxis.Primary;
                     break;
 
                 case TelescopeAxes.Secondary:
-                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisSecondary;
+                    translatedAxis = ASCOM.Common.DeviceInterfaces.TelescopeAxis.Secondary;
                     break;
 
                 case TelescopeAxes.Tertiary:
-                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisTertiary;
+                    translatedAxis = ASCOM.Common.DeviceInterfaces.TelescopeAxis.Tertiary;
                     break;
 
                 default:
-                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
+                    translatedAxis = ASCOM.Common.DeviceInterfaces.TelescopeAxis.Primary;
                     break;
             }
             return translatedAxis;
@@ -630,7 +630,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 if (CanPulseGuide) {
                     if (!AtPark) {
                         try {
-                            device.PulseGuide((ASCOM.DeviceInterface.GuideDirections)direction, duration);
+                            device.PulseGuide((ASCOM.Common.DeviceInterfaces.GuideDirection)direction, duration);
                         } catch (Exception e) {
                             Logger.Error(e);
                             Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
@@ -799,7 +799,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool CanMovePrimaryAxis {
             get {
                 if (Connected) {
-                    return device.CanMoveAxis(ASCOM.DeviceInterface.TelescopeAxes.axisPrimary);
+                    return device.CanMoveAxis(ASCOM.Common.DeviceInterfaces.TelescopeAxis.Primary);
                 }
                 return false;
             }
@@ -808,7 +808,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool CanMoveSecondaryAxis {
             get {
                 if (Connected) {
-                    return device.CanMoveAxis(ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
+                    return device.CanMoveAxis(ASCOM.Common.DeviceInterfaces.TelescopeAxis.Secondary);
                 }
                 return false;
             }
@@ -826,7 +826,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
             set {
                 if (Connected) {
-                    primaryMovingRate = GetAdjustedMovingRate(value, primaryMovingRate, ASCOM.DeviceInterface.TelescopeAxes.axisPrimary);
+                    primaryMovingRate = GetAdjustedMovingRate(value, primaryMovingRate, ASCOM.Common.DeviceInterfaces.TelescopeAxis.Primary);
                     RaisePropertyChanged();
                 }
             }
@@ -844,13 +844,13 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
             set {
                 if (Connected) {
-                    secondaryMovingRate = GetAdjustedMovingRate(value, secondaryMovingRate, ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
+                    secondaryMovingRate = GetAdjustedMovingRate(value, secondaryMovingRate, ASCOM.Common.DeviceInterfaces.TelescopeAxis.Secondary);
                     RaisePropertyChanged();
                 }
             }
         }
 
-        private double GetAdjustedMovingRate(double value, double oldValue, ASCOM.DeviceInterface.TelescopeAxes axis) {
+        private double GetAdjustedMovingRate(double value, double oldValue, ASCOM.Common.DeviceInterfaces.TelescopeAxis axis) {
             double result = value;
             if (result < 0) result = 0;
             bool incr = result > oldValue;
@@ -889,19 +889,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 EquatorialCoordinateType mountEqSystem = device.EquatorialSystem;
 
                 switch (mountEqSystem) {
-                    case EquatorialCoordinateType.equB1950:
+                    case EquatorialCoordinateType.B1950:
                         epoch = Epoch.B1950;
                         break;
 
-                    case EquatorialCoordinateType.equJ2000:
+                    case EquatorialCoordinateType.J2000:
                         epoch = Epoch.J2000;
                         break;
 
-                    case EquatorialCoordinateType.equJ2050:
+                    case EquatorialCoordinateType.J2050:
                         epoch = Epoch.J2050;
                         break;
 
-                    case EquatorialCoordinateType.equOther:
+                    case EquatorialCoordinateType.Other:
                         epoch = Epoch.J2000;
                         HasUnknownEpoch = true;
                         break;
@@ -933,17 +933,17 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             var trackingModes = ImmutableList.CreateBuilder<TrackingMode>();
             trackingModes.Add(TrackingMode.Sidereal);
 
-            foreach(DriveRates trackingRate in device.TrackingRates) {
+            foreach(DriveRate trackingRate in device.TrackingRates) {
                 switch (trackingRate) {
-                    case DriveRates.driveKing:
+                    case DriveRate.King:
                         trackingModes.Add(TrackingMode.King);
                         break;
 
-                    case DriveRates.driveLunar:
+                    case DriveRate.Lunar:
                         trackingModes.Add(TrackingMode.Lunar);
                         break;
 
-                    case DriveRates.driveSolar:
+                    case DriveRate.Solar:
                         trackingModes.Add(TrackingMode.Solar);
                         break;
                 }
@@ -973,7 +973,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 }
 
                 var ascomTrackingRate = device.TrackingRate;
-                if (ascomTrackingRate == DriveRates.driveSidereal && (
+                if (ascomTrackingRate == DriveRate.Sidereal && (
                     Math.Abs(device.DeclinationRate) >= TRACKING_RATE_EPSILON) || (Math.Abs(device.RightAscensionRate) >= TRACKING_RATE_EPSILON)) {
                     return new TrackingRate() {
                         TrackingMode = TrackingMode.Custom,
@@ -983,15 +983,15 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 }
                 var trackingMode = TrackingMode.Sidereal;
                 switch (ascomTrackingRate) {
-                    case DriveRates.driveKing:
+                    case DriveRate.King:
                         trackingMode = TrackingMode.King;
                         break;
 
-                    case DriveRates.driveLunar:
+                    case DriveRate.Lunar:
                         trackingMode = TrackingMode.Lunar;
                         break;
 
-                    case DriveRates.driveSolar:
+                    case DriveRate.Solar:
                         trackingMode = TrackingMode.Solar;
                         break;
                 }
@@ -1015,19 +1015,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         var currentTrackingMode = TrackingRate.TrackingMode;
                         switch (value) {
                             case TrackingMode.Sidereal:
-                                device.TrackingRate = DriveRates.driveSidereal;
+                                device.TrackingRate = DriveRate.Sidereal;
                                 break;
 
                             case TrackingMode.Lunar:
-                                device.TrackingRate = DriveRates.driveLunar;
+                                device.TrackingRate = DriveRate.Lunar;
                                 break;
 
                             case TrackingMode.Solar:
-                                device.TrackingRate = DriveRates.driveSolar;
+                                device.TrackingRate = DriveRate.Solar;
                                 break;
 
                             case TrackingMode.King:
-                                device.TrackingRate = DriveRates.driveKing;
+                                device.TrackingRate = DriveRate.King;
                                 break;
                         }
                         device.Tracking = (value != TrackingMode.Stopped);
@@ -1052,7 +1052,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 throw new NotSupportedException("Custom tracking rate not supported");
             }
 
-            this.device.TrackingRate = DriveRates.driveSidereal;
+            this.device.TrackingRate = DriveRate.Sidereal;
             this.device.Tracking = true;
             this.device.RightAscensionRate = rightAscensionRate;
             this.device.DeclinationRate = declinationRate;

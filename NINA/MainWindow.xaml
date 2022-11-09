@@ -13,7 +13,7 @@
     xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:options="clr-namespace:NINA.View.Options"
     xmlns:plugin="clr-namespace:NINA.View.Plugins"

@@ -1130,7 +1130,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
                             foreach (string line in message.Split(new[] { Environment.NewLine },
                                 StringSplitOptions.None)) {
-                                if (!string.IsNullOrEmpty(line) && !line.StartsWith("\0")) {
+                                if (!string.IsNullOrEmpty(line) && line.StartsWith("{")) {
                                     JObject o = JObject.Parse(line, jls);
                                     JToken t = o.GetValue("Event");
                                     string phdevent = "";

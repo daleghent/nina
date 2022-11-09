@@ -145,8 +145,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             return ready == POABool.POA_TRUE;
         }
 
-
-        [HandleProcessCorruptedStateExceptions]
+        
         public async Task<ushort[]> GetExposure(double exposureTime, int width, int height, CancellationToken ct) {
             var transformedExposureTime = (int)(exposureTime * 1000000d);
 

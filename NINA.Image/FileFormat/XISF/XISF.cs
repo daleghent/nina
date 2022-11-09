@@ -371,19 +371,19 @@ namespace NINA.Image.FileFormat.XISF {
             using (MyStopWatch.Measure($"XISF Checksum = {cksumType}")) {
                 switch (cksumType) {
                     case XISFChecksumTypeEnum.SHA1:
-                        SHA1 sha1 = new SHA1CryptoServiceProvider();
+                        SHA1 sha1 = SHA1.Create();
                         computedCksum = GetStringFromHash(sha1.ComputeHash(raw));
                         sha1.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA256:
-                        SHA256 sha256 = new SHA256CryptoServiceProvider();
+                        SHA256 sha256 = SHA256.Create();
                         computedCksum = GetStringFromHash(sha256.ComputeHash(raw));
                         sha256.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA512:
-                        SHA512 sha512 = new SHA512CryptoServiceProvider();
+                        SHA512 sha512 = SHA512.Create();
                         computedCksum = GetStringFromHash(sha512.ComputeHash(raw));
                         sha512.Dispose();
                         break;

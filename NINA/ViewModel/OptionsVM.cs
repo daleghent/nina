@@ -200,12 +200,12 @@ namespace NINA.ViewModel {
 
         private void OpenLogFolder(object obj) {
             var path = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\NINA\Logs");
-            Process.Start(path);
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
         }
 
         private void OpenWebRequest(object obj) {
             var url = new Uri(obj.ToString());
-            Process.Start(new ProcessStartInfo(url.AbsoluteUri));
+            Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
         }
 
         private async Task<bool> SiteFromGPS() {

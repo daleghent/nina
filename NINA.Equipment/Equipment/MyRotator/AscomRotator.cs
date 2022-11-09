@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using ASCOM.DriverAccess;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
@@ -20,7 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
-using ASCOM.DeviceInterface;
+using ASCOM.Common.DeviceInterfaces;
 using NINA.Equipment.ASCOMFacades;
 
 namespace NINA.Equipment.Equipment.MyRotator {

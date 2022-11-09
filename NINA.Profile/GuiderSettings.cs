@@ -568,8 +568,7 @@ namespace NINA.Profile {
         #endregion
 
 
-        private Color guideChartRightAscensionColor;
-        [XmlElement(Type = typeof(XmlColor))]
+        private Color guideChartRightAscensionColor;        
         [DataMember]
         public Color GuideChartRightAscensionColor {
             get {
@@ -583,8 +582,7 @@ namespace NINA.Profile {
             }
         }
 
-        private Color guideChartDeclinationColor;
-        [XmlElement(Type = typeof(XmlColor))]
+        private Color guideChartDeclinationColor;        
         [DataMember]
         public Color GuideChartDeclinationColor {
             get {

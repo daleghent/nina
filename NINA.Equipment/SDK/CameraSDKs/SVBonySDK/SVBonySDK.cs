@@ -202,7 +202,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         }
         
         
-        [HandleProcessCorruptedStateExceptions]
         public Task<ushort[]> GetExposure(double exposureTime, int width, int height, CancellationToken ct) {
             lock(lockobj) {
                 if(ct.IsCancellationRequested) {
@@ -227,7 +226,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             }
         }
 
-        [HandleProcessCorruptedStateExceptions]
         private async Task<ushort[]> GetExposureInternal(double exposureTime, int width, int height) {            
             if(exposureTime > 0.1) {
                 try {

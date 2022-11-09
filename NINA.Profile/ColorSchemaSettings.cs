@@ -96,12 +96,12 @@ namespace NINA.Profile {
             var customSchema = ColorSchemas.CreateDefaultSchema();
             customSchema.Name = "Custom";
             ColorSchemas.Items.Add(customSchema);
-            ColorSchema = ColorSchemas.Items.Where(x => x.Name == "Light").First();
+            ColorSchema = ColorSchemas.Items.Where(x => x.Name == "Light").FirstOrDefault();
 
             var altCustomSchema = ColorSchemas.CreateDefaultAltSchema();
             altCustomSchema.Name = "Alternative Custom";
             ColorSchemas.Items.Add(altCustomSchema);
-            AltColorSchema = ColorSchemas.Items.Where(x => x.Name == "Dark").First();
+            AltColorSchema = ColorSchemas.Items.Where(x => x.Name == "Dark").FirstOrDefault();
         }
 
         public void ToggleSchema() {

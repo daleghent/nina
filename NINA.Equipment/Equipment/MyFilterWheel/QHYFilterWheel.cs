@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using ASCOM;
 using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using QHYCCD;
@@ -23,6 +22,7 @@ using System.Threading.Tasks;
 using NINA.Core.Model.Equipment;
 using NINA.Equipment.Interfaces;
 using System.Collections.Generic;
+using System;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 

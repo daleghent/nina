@@ -19,7 +19,7 @@
     xmlns:fw="clr-namespace:NINA.ViewModel.FlatWizard"
     xmlns:fwcore="clr-namespace:NINA.WPF.Base.Model;assembly=NINA.WPF.Base"
     xmlns:guider="clr-namespace:NINA.Equipment.Equipment.MyGuider;assembly=NINA.Equipment"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:pegasus="clr-namespace:NINA.Equipment.Equipment.MySwitch.PegasusAstro;assembly=NINA.Equipment"
     xmlns:phd2="clr-namespace:NINA.Equipment.Equipment.MyGuider.PHD2;assembly=NINA.Equipment"

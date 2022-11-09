@@ -167,10 +167,9 @@ namespace NINA.Plugin {
         private string FindFileInRootFolderByGuid(IPluginManifest manifest) {
             foreach (var file in Directory.GetFiles(Constants.UserExtensionsFolder, "*.dll", SearchOption.AllDirectories)) {
                 try {
-                    var reflectionAssembly = Assembly.ReflectionOnlyLoadFrom(file);
+                    var metaData = PluginAssemblyReader.GrabPluginMetaData(file);
 
-                    var attr = CustomAttributeData.GetCustomAttributes(reflectionAssembly);
-                    var id = attr.First(x => x.AttributeType == typeof(GuidAttribute)).ConstructorArguments.First().Value.ToString();
+                    metaData.TryGetValue(nameof(GuidAttribute), out var id);
                     if (id == manifest.Identifier) {
                         return file;
                     }

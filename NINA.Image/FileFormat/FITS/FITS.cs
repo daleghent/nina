@@ -43,7 +43,7 @@ namespace NINA.Image.FileFormat.FITS {
             return Task.Run<IImageData>(() => LoadInternal(filePath, isBayered, imageDataFactory, ct), ct);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         private static IImageData LoadInternal(Uri filePath, bool isBayered, IImageDataFactory imageDataFactory, CancellationToken ct) {
             IntPtr fitsPtr = IntPtr.Zero;
             IntPtr buffer = IntPtr.Zero;

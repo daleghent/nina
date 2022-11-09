@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using ASCOM.DriverAccess;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;

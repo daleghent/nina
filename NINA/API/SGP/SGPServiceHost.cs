@@ -16,23 +16,23 @@ using NINA.Core.Utility.Notification;
 using NINA.Utility;
 using Nito.AsyncEx;
 using System;
-using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.ServiceModel.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace NINA.API.SGP {
 
     public class SGPServiceHost : ISGPServiceHost {
-        private readonly AsyncManualResetEvent stopServiceEvent;
-        private readonly ISGPService sgpService;
+        private WebApplication app;
+        private readonly ISGPServiceBackend backend;
         private volatile Task serviceTask;
 
-        public SGPServiceHost(ISGPService sgpService) {
-            this.sgpService = sgpService;
-            stopServiceEvent = new AsyncManualResetEvent(true);
+        public SGPServiceHost(ISGPServiceBackend backend) {
             serviceTask = null;
+            this.backend = backend;
+
         }
 
         /*
@@ -50,34 +50,36 @@ namespace NINA.API.SGP {
                 return;
             }
 
-            Logger.Info("Starting SGP Service");
-            stopServiceEvent.Reset();
             this.serviceTask = Task.Run(async () => {
-                WebServiceHost hostWeb = null;
                 try {
-                    var webBinding = new WebHttpBinding() {
-                        Name = "SGP-Compatible REST Server",
-                        Security = new WebHttpSecurity() {
-                            Mode = WebHttpSecurityMode.None
-                        }
-                    };
+                    var builder = WebApplication.CreateBuilder();
+                    builder.WebHost.ConfigureKestrel(options =>
+                    {
+                        options.AllowSynchronousIO = true;
+                        options.ListenLocalhost(59590);
+                    });                    
+                    builder.Services.AddSingleton<ISGPServiceBackend>(backend);
+                    builder.Services.AddControllers().AddNewtonsoftJson(); 
+                    
+                    builder.Services.AddEndpointsApiExplorer();
+                    builder.Services.AddSwaggerGen();
 
-                    // SGP is hardcoded to listen on a specific port, and cannot be customized
-                    hostWeb = new WebServiceHost(sgpService);
-                    hostWeb.AddServiceEndpoint(typeof(ISGPService), webBinding, "http://127.0.0.1:59590");
-                    ServiceDebugBehavior stp = hostWeb.Description.Behaviors.Find<ServiceDebugBehavior>();
-                    stp.HttpHelpPageEnabled = false;
-                    stp.IncludeExceptionDetailInFaults = true;
-                    hostWeb.Open();
 
-                    Logger.Info("SGP Service started");
-                    await stopServiceEvent.WaitAsync();
+                    app = builder.Build();
+
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                    app.MapControllers();
+
+                    Logger.Info("SGP Service starting");
+                    await app.RunAsync();
+
                 } catch (Exception ex) {
                     Logger.Error("Failed to start SGP Server", ex);
                     Notification.ShowError(string.Format(Loc.Instance["LblServerFailed"], ex.Message));
                     throw;
                 } finally {
-                    hostWeb?.Close();
+                    await app.StopAsync();
                 }
             });
         }
@@ -85,7 +87,7 @@ namespace NINA.API.SGP {
         public void Stop() {
             if (serviceTask != null) {
                 Logger.Info("Stopping SGP Service");
-                stopServiceEvent.Set();
+                AsyncContext.Run(() => app.StopAsync());
                 try {
                     serviceTask.Wait(new CancellationTokenSource(2000).Token);
                     Logger.Info("SGP Service stopped");

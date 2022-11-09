@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Dasync.Collections;
 using NINA.Core.Model;
 using NINA.Equipment.Model;
 using NINA.Image.Interfaces;

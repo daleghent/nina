@@ -186,21 +186,21 @@ namespace NINA.Image.FileFormat.XISF {
 
                 switch (ChecksumType) {
                     case XISFChecksumTypeEnum.SHA1:
-                        SHA1 sha1 = new SHA1CryptoServiceProvider();
+                        SHA1 sha1 = SHA1.Create();
                         Checksum = GetStringFromHash(sha1.ComputeHash(outArray));
                         ChecksumName = "sha-1";
                         sha1.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA256:
-                        SHA256 sha256 = new SHA256CryptoServiceProvider();
+                        SHA256 sha256 = SHA256.Create();
                         Checksum = GetStringFromHash(sha256.ComputeHash(outArray));
                         ChecksumName = "sha-256";
                         sha256.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA512:
-                        SHA512 sha512 = new SHA512CryptoServiceProvider();
+                        SHA512 sha512 = SHA512.Create();
                         Checksum = GetStringFromHash(sha512.ComputeHash(outArray));
                         ChecksumName = "sha-512";
                         sha512.Dispose();

@@ -55,7 +55,7 @@ using Trinet.Core.IO.Ntfs;
 
 namespace NINA.Plugin {
 
-    public class PluginLoader : IPluginLoader {
+    public partial class PluginLoader : IPluginLoader {
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -254,12 +254,10 @@ namespace NINA.Plugin {
                                 }
                             }
 
-                            CreateChildDomain();
                             for (int i = 0; i < files.Count; i++) {
                                 var file = files[i];
                                 AsyncContext.Run(() => LoadPlugin(file, (i + 1) / (double)files.Count));
                             }
-                            UnloadChildDomain();
 
                             initialized = true;
                             Debug.Print($"Time to load all plugins {sw.Elapsed}");
@@ -273,38 +271,6 @@ namespace NINA.Plugin {
             });
         }
 
-        public class PluginAssemblyLoader : MarshalByRefObject {
-
-            public string[] GrabAssemblyReferences(string assemblyPath) {
-                var assembly = Assembly.ReflectionOnlyLoadFrom(assemblyPath);
-                var paths = assembly.GetReferencedAssemblies().Select(x => x.FullName).ToArray();
-                return paths;
-            }
-        }
-
-
-        object domainlock = new object();
-        AppDomain childDomain;
-        private void CreateChildDomain() {
-            if(childDomain == null) { 
-                lock(domainlock) {
-                    if (childDomain == null) {
-                        var settings = new AppDomainSetup {
-                            ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
-                        };
-                        childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
-                    }
-                }
-            }
-        }
-
-        private void UnloadChildDomain() {
-            lock(domainlock) { 
-                AppDomain.Unload(childDomain);
-                childDomain = null;
-            }
-        }
-
         private async Task LoadPlugin(string file, double progress) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
@@ -314,20 +280,8 @@ namespace NINA.Plugin {
                 if (pluginFileInfo.AlternateDataStreamExists("Zone.Identifier")) {
                     pluginFileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
-
-                var handle = Activator.CreateInstance(
-                    childDomain,
-                    typeof(PluginAssemblyLoader).Assembly.FullName,
-                    typeof(PluginAssemblyLoader).FullName,
-                    false,
-                    BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                    null,
-                    null,
-                    System.Globalization.CultureInfo.CurrentCulture,
-                    new object[0]
-                );
-                var loader = (PluginAssemblyLoader)handle.Unwrap();
-                var references = loader.GrabAssemblyReferences(file);
+                
+                var references = PluginAssemblyReader.GrabAssemblyReferences(file);
 
                 var pluginDllDirectory = new DirectoryInfo(Path.Combine(pluginFileInfo.Directory.FullName, "dll"));
                 if (pluginDllDirectory.Exists) {
@@ -347,7 +301,6 @@ namespace NINA.Plugin {
                     }
                 }
 
-
                 if (references.FirstOrDefault(x => x.Contains("NINA.Plugin")) != null) {
                     try {
                         var assembly = Assembly.LoadFrom(file);
@@ -365,12 +318,21 @@ namespace NINA.Plugin {
                             }
 
                             if (!compatibilityMap.IsCompatible(manifest)) {
-                                var deprecatedVersion = new Version(65535, 0, 0, 0);
-                                var minVersion = compatibilityMap.GetMinimumVersion(manifest);
-                                if (minVersion >= deprecatedVersion) {
+
+                                var isDeprecated = compatibilityMap.IsDeprecated(manifest);
+                                var isNotCompatible = compatibilityMap.IsNotCompatible(manifest);
+                                var isUpdateRequired = compatibilityMap.IsUpdateRequired(manifest);
+
+                                if(isDeprecated) {
                                     throw new Exception($"This plugin is deprecated.");
-                                } else {
-                                    throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum plugin version of {minVersion}, but current plugin version is {manifest.Version}");
+                                }
+
+                                if (isUpdateRequired) {
+                                    throw new Exception($"The version of this plugin is not compatible with the current version of N.I.N.A. Please update the plugin.");
+                                }
+
+                                if(isNotCompatible) {
+                                    throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it was compiled against {manifest.MinimumApplicationVersion} but it has to be built against at least {compatibilityMap.MinimumMajorVersion}. Please check if there is a plugin update available.");
                                 }
                             }
 
@@ -419,13 +381,12 @@ namespace NINA.Plugin {
                             message = string.Join(Environment.NewLine, loaderExceptions.ToList());
                         }
 
-                        var reflectionAssembly = Assembly.ReflectionOnlyLoadFrom(file);
+                        var metadata = PluginAssemblyReader.GrabPluginMetaData(file);
 
-                        var attr = CustomAttributeData.GetCustomAttributes(reflectionAssembly);
-                        var id = attr.First(x => x.AttributeType == typeof(GuidAttribute)).ConstructorArguments.First().Value.ToString();
-                        var author = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyCompanyAttribute))?.ConstructorArguments.FirstOrDefault().Value.ToString() ?? string.Empty;
-                        var version = new PluginVersion(attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyFileVersionAttribute))?.ConstructorArguments.First().Value.ToString() ?? "1.0.0.0");
-                        var name = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyTitleAttribute))?.ConstructorArguments.First().Value.ToString() ?? string.Empty;
+                        var id = metadata[nameof(GuidAttribute)];
+                        var author = metadata[nameof(AssemblyCompanyAttribute)];
+                        var version = new PluginVersion(metadata[nameof(AssemblyFileVersionAttribute)]);
+                        var name = metadata[nameof(AssemblyTitleAttribute)];
 
                         //Manifest failed - Create a fake manifest using all available file meta info
                         var fvi = FileVersionInfo.GetVersionInfo(file);

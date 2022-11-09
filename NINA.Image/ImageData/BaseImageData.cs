@@ -123,11 +123,6 @@ namespace NINA.Image.ImageData {
             return actualPath;
         }
 
-        [Obsolete]
-        public string FinalizeSave(string file, string pattern) {
-            return FinalizeSave(file, pattern, new List<ImagePattern>());
-        }
-
         /// <summary>
         /// Renames and moves file to destination according to pattern
         /// </summary>
@@ -323,7 +318,7 @@ namespace NINA.Image.ImageData {
             try {
                 using (MyStopWatch.Measure()) {
                     string tempPath = await SaveToDiskAsync(fileSaveInfo, token, forceFileType);
-                    actualPath = FinalizeSave(tempPath, fileSaveInfo.FilePattern);
+                    actualPath = FinalizeSave(tempPath, fileSaveInfo.FilePattern, new List<ImagePattern>());
                 }
             } catch (OperationCanceledException) {
                 throw;

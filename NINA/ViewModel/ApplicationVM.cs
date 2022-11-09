@@ -33,6 +33,7 @@ using System.IO;
 using System.Linq;
 using NINA.Plugin.Interfaces;
 using Nito.AsyncEx;
+using System.Diagnostics;
 using NINA.Astrometry;
 
 namespace NINA.ViewModel {
@@ -134,7 +135,7 @@ namespace NINA.ViewModel {
         }
 
         private void OpenManual(object o) {
-            System.Diagnostics.Process.Start(CoreUtil.DocumentationPage);
+            System.Diagnostics.Process.Start(new ProcessStartInfo(CoreUtil.DocumentationPage) { UseShellExecute = true });
         }
 
         private void OpenAbout(object o) {

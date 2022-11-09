@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DriverAccess;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Equipment.ASCOMFacades;
@@ -35,22 +35,22 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             get {
                 var state = device.CoverState;
                 switch (state) {
-                    case ASCOM.DeviceInterface.CoverStatus.Unknown:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Unknown:
                         return CoverState.Unknown;
 
-                    case ASCOM.DeviceInterface.CoverStatus.NotPresent:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.NotPresent:
                         return CoverState.Unknown;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Moving:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Moving:
                         return CoverState.NeitherOpenNorClosed;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Closed:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Closed:
                         return CoverState.Closed;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Open:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Open:
                         return CoverState.Open;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Error:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Error:
                         return CoverState.Unknown;
 
                     default:
@@ -107,14 +107,14 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public string PortName { get => string.Empty; set { } }
 
-        public bool SupportsOpenClose => device.CoverState != ASCOM.DeviceInterface.CoverStatus.NotPresent;
+        public bool SupportsOpenClose => device.CoverState != ASCOM.Common.DeviceInterfaces.CoverStatus.NotPresent;
 
-        public bool SupportsOnOff => device.CalibratorState != ASCOM.DeviceInterface.CalibratorStatus.NotPresent;
+        public bool SupportsOnOff => device.CalibratorState != ASCOM.Common.DeviceInterfaces.CalibratorStatus.NotPresent;
 
         protected override string ConnectionLostMessage => Loc.Instance["LblFlatDeviceConnectionLost"];
 
         private void Initialize() {
-            if (device.CalibratorState == ASCOM.DeviceInterface.CalibratorStatus.NotPresent) {
+            if (device.CalibratorState == ASCOM.Common.DeviceInterfaces.CalibratorStatus.NotPresent) {
                 MinBrightness = 0;
                 MaxBrightness = 0;
             } else {

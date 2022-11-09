@@ -143,12 +143,12 @@
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
-                Text="CSharpFITS" />
+                Text="CFITSIO " />
             <TextBlock Grid.Row="7" Grid.Column="1">
-                <Hyperlink NavigateUri="http://vo.iucaa.ernet.in/~voi/CSharpFITS.html" RequestNavigate="Hyperlink_RequestNavigate">http://vo.iucaa.ernet.in/~voi/CSharpFITS.html</Hyperlink>
+                <Hyperlink NavigateUri="https://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html" RequestNavigate="Hyperlink_RequestNavigate">https://heasarc.gsfc.nasa.gov/docs/software/fitsio/fitsio.html</Hyperlink>
             </TextBlock>
             <TextBlock Grid.Row="7" Grid.Column="2">
-                <Hyperlink NavigateUri="https://opensource.org/licenses/BSD-3-Clause" RequestNavigate="Hyperlink_RequestNavigate">The 3-Clause BSD License</Hyperlink>
+                <Hyperlink NavigateUri="https://heasarc.gsfc.nasa.gov/fitsio/c/f_user/node9.html" RequestNavigate="Hyperlink_RequestNavigate">fitsio</Hyperlink>
             </TextBlock>
 
             <TextBlock

@@ -15,7 +15,7 @@
     xmlns:local="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
-    xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Contrib.Wpf"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     xmlns:vm="clr-namespace:NINA.ViewModel"
     x:Name="UC"
@@ -76,13 +76,16 @@
             Grid.Column="1"
             Background="{StaticResource BackgroundBrush}"
             DataContext="{Binding GuideStepsHistory}"
-            LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
-            LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
-            LegendOrientation="Vertical"
-            LegendPosition="BottomLeft"
-            LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
             PlotAreaBackground="{StaticResource BackgroundBrush}"
             PlotAreaBorderColor="{Binding Path=Color, Source={StaticResource BorderBrush}}">
+            <oxy:Plot.Legends>
+                <oxy:Legend
+                    LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
+                    LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
+                    LegendOrientation="Vertical"
+                    LegendPosition="BottomLeft"
+                    LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
+            </oxy:Plot.Legends>
             <oxy:Plot.Axes>
                 <oxy:LinearAxis
                     Key="DistanceAxis"

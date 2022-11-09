@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Equipment.ASCOMFacades;

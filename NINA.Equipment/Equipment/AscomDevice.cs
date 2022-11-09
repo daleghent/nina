@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DriverAccess;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
@@ -34,7 +34,7 @@ namespace NINA.Equipment.Equipment {
     /// The unified class that handles the shared properties of all ASCOM devices like Connection, Generic Info and Setup
     /// </summary>
     public abstract class AscomDevice<DeviceT, ProxyI, ProxyT> : BaseINPC, IDevice
-        where DeviceT : AscomDriver
+        where DeviceT : ASCOMDevice
         where ProxyI : class, IAscomDeviceFacade<DeviceT>
         where ProxyT : class, ProxyI, new() {
 
@@ -149,7 +149,7 @@ namespace NINA.Equipment.Equipment {
         public IList<string> SupportedActions {
             get {
                 try {
-                    var list = device?.SupportedActions ?? new ArrayList();
+                    var list = device?.SupportedActions ?? new List<string>();
                     return list.Cast<object>().Select(x => x.ToString()).ToList();
                 } catch (Exception) { }
                 return new List<string>();
@@ -337,7 +337,8 @@ namespace NINA.Equipment.Equipment {
                             return defaultValue;
                         }
                     } catch (Exception ex) {
-                        if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException 
+                        if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException
+                            || ex is ASCOM.NotImplementedException || ex.InnerException is ASCOM.NotImplementedException
                             || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
                             Logger.Info($"Property {type.Name}.{propertyName} GET is not implemented in this driver ({Name})");
 
@@ -392,7 +393,8 @@ namespace NINA.Equipment.Equipment {
                     }
                 } catch (Exception ex) {
                     if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException
-                        || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
+                            || ex is ASCOM.NotImplementedException || ex.InnerException is ASCOM.NotImplementedException
+                            || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
                         Logger.Info($"Property {type.Name}.{propertyName} SET is not implemented in this driver ({Name})");
                         memory.IsImplemented = false;
                         return false;

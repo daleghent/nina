@@ -44,117 +44,102 @@ namespace NINA.Equipment.Utility {
 
         public List<ICamera> GetCameras(IExposureDataFactory exposureDataFactory) {
             var l = new List<ICamera>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Camera")) {
-                    try {
-                        AscomCamera cam = new AscomCamera(device.Key, device.Value + " (ASCOM)", profileService, exposureDataFactory, deviceDispatcher);
-                        Logger.Trace(string.Format("Adding {0}", cam.Name));
-                        l.Add(cam);
-                    } catch (Exception) {
-                        //only add cameras which are supported. e.g. x86 drivers will not work in x64
-                    }
+            foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.Camera)) {
+                try {
+                    AscomCamera cam = new AscomCamera(device.ProgID, device.Name + " (ASCOM)", profileService, exposureDataFactory, deviceDispatcher);
+                    Logger.Trace(string.Format("Adding {0}", cam.Name));
+                    l.Add(cam);
+                } catch (Exception) {
+                    //only add cameras which are supported. e.g. x86 drivers will not work in x64
                 }
-                return l;
             }
+            return l;
         }
 
         public List<ITelescope> GetTelescopes() {
             var l = new List<ITelescope>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Telescope")) {
+                foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.Telescope)) {
                     try {
-                        AscomTelescope telescope = new AscomTelescope(device.Key, device.Value, profileService, deviceDispatcher);
+                        AscomTelescope telescope = new AscomTelescope(device.ProgID, device.Name, profileService, deviceDispatcher);
                         l.Add(telescope);
                     } catch (Exception) {
                         //only add telescopes which are supported. e.g. x86 drivers will not work in x64
                     }
                 }
                 return l;
-            }
         }
 
         public List<IFilterWheel> GetFilterWheels() {
             var l = new List<IFilterWheel>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("FilterWheel")) {
+                foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.FilterWheel)) {
                     try {
-                        AscomFilterWheel fw = new AscomFilterWheel(device.Key, device.Value, profileService, deviceDispatcher);
+                        AscomFilterWheel fw = new AscomFilterWheel(device.ProgID, device.Name, profileService, deviceDispatcher);
                         l.Add(fw);
                     } catch (Exception) {
                         //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
                     }
                 }
                 return l;
-            }
         }
 
         public List<IRotator> GetRotators() {
             var l = new List<IRotator>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Rotator")) {
+                foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.Rotator)) {
                     try {
-                        AscomRotator rotator = new AscomRotator(device.Key, device.Value, deviceDispatcher);
+                        AscomRotator rotator = new AscomRotator(device.ProgID, device.Name, deviceDispatcher);
                         l.Add(rotator);
                     } catch (Exception) {
                         //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
                     }
                 }
                 return l;
-            }
         }
 
         public List<ISafetyMonitor> GetSafetyMonitors() {
             var l = new List<ISafetyMonitor>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("SafetyMonitor")) {
+                foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.SafetyMonitor)) {
                     try {
-                        AscomSafetyMonitor safetyMonitor = new AscomSafetyMonitor(device.Key, device.Value, deviceDispatcher);
+                        AscomSafetyMonitor safetyMonitor = new AscomSafetyMonitor(device.ProgID, device.Name, deviceDispatcher);
                         l.Add(safetyMonitor);
                     } catch (Exception) {
                         //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
                     }
                 }
                 return l;
-            }
         }
 
         public List<IFocuser> GetFocusers() {
             var l = new List<IFocuser>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Focuser")) {
+                foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.Focuser)) {
                     try {
-                        AscomFocuser focuser = new AscomFocuser(device.Key, device.Value, deviceDispatcher);
+                        AscomFocuser focuser = new AscomFocuser(device.ProgID, device.Name, deviceDispatcher);
                         l.Add(focuser);
                     } catch (Exception) {
                         //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
                     }
                 }
                 return l;
-            }
         }
 
         public List<ISwitchHub> GetSwitches() {
             var l = new List<ISwitchHub>();
-            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
-                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Switch")) {
-                    try {
-                        AscomSwitchHub ascomSwitch = new AscomSwitchHub(device.Key, device.Value, deviceDispatcher);
-                        l.Add(ascomSwitch);
-                    } catch (Exception) {
-                        //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
-                    }
+            foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.Switch)) {
+                try {
+                    AscomSwitchHub ascomSwitch = new AscomSwitchHub(device.ProgID, device.Name, deviceDispatcher);
+                    l.Add(ascomSwitch);
+                } catch (Exception) {
+                    //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
                 }
-                return l;
             }
+            return l;
         }
 
         public List<IWeatherData> GetWeatherDataSources() {
             var l = new List<IWeatherData>();
-            var ascomDevices = new ASCOM.Utilities.Profile();
 
-            foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("ObservingConditions")) {
+            foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.ObservingConditions)) {
                 try {
-                    AscomObservingConditions obsdev = new AscomObservingConditions(device.Key, device.Value, deviceDispatcher);
+                    AscomObservingConditions obsdev = new AscomObservingConditions(device.ProgID, device.Name, deviceDispatcher);
                     l.Add(obsdev);
                 } catch (Exception) {
                 }
@@ -164,11 +149,10 @@ namespace NINA.Equipment.Utility {
 
         public List<IDome> GetDomes() {
             var l = new List<IDome>();
-            var ascomDevices = new ASCOM.Utilities.Profile();
 
-            foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Dome")) {
+            foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.Dome)) {
                 try {
-                    AscomDome ascomDome = new AscomDome(device.Key, device.Value, deviceDispatcher);
+                    AscomDome ascomDome = new AscomDome(device.ProgID, device.Name, deviceDispatcher);
                     l.Add(ascomDome);
                 } catch (Exception) {
                 }
@@ -178,11 +162,10 @@ namespace NINA.Equipment.Utility {
 
         public List<IFlatDevice> GetCoverCalibrators() {
             var l = new List<IFlatDevice>();
-            var ascomDevices = new ASCOM.Utilities.Profile();
 
-            foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("CoverCalibrator")) {
+            foreach (ASCOM.Com.ASCOMRegistration device in ASCOM.Com.Profile.GetDrivers(ASCOM.Common.DeviceTypes.CoverCalibrator)) {
                 try {
-                    AscomCoverCalibrator ascomCoverCalibrator = new AscomCoverCalibrator(device.Key, device.Value, deviceDispatcher);
+                    AscomCoverCalibrator ascomCoverCalibrator = new AscomCoverCalibrator(device.ProgID, device.Name, deviceDispatcher);
                     l.Add(ascomCoverCalibrator);
                 } catch (Exception) {
                 }
@@ -191,15 +174,13 @@ namespace NINA.Equipment.Utility {
         }
 
         public static string GetVersion() {
-            using (var util = new ASCOM.Utilities.Util()) {
-                return $"Version {util.PlatformVersion}";
-            }
+            return $"Version {ASCOM.Com.PlatformUtilities.PlatformVersion}";
+            
         }
 
-        public static Version GetPlatformVersion() {
-            using (var util = new ASCOM.Utilities.Util()) {
-                return new Version(util.MajorVersion, util.MinorVersion, util.ServicePack, util.BuildNumber);
-            }
+        public static Version GetPlatformVersion() {            
+            return new Version(ASCOM.Com.PlatformUtilities.MajorVersion, ASCOM.Com.PlatformUtilities.MinorVersion, ASCOM.Com.PlatformUtilities.ServicePack, ASCOM.Com.PlatformUtilities.BuildNumber);
+            
         }
 
         public static void LogComplianceIssue([CallerMemberName] string callerMember = "") {
