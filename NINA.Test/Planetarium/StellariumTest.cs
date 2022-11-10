@@ -151,7 +151,7 @@ namespace NINA.Test.Planetarium {
             enableCCD.Should().Be(true);
 
             double angle = stelSut.ParseRotationAngle(result);
-            angle.Should().Be(-246d);
+            angle.Should().Be(246d);
         }
     }
 }

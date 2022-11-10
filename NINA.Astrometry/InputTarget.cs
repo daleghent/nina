@@ -85,19 +85,21 @@ namespace NINA.Astrometry {
             }
         }
 
-        private double rotation;
+        /// <summary>
+        /// Backwards compatibility property that will migrate to position angle
+        /// </summary>
+        [JsonProperty(propertyName: "Rotation")]
+        private double DeprecatedRotation { set { PositionAngle = 360 - value; } }
 
+        private double positionAngle = 0;
         [JsonProperty]
-        public double Rotation {
-            get {
-                return rotation;
-            }
-            set {   
-                if(value != rotation) { 
-                    rotation = value;
-                    RaiseCoordinatesChanged();
+        public double PositionAngle {
+            get => positionAngle;
+            set {
+                if (value != positionAngle) {
+                    positionAngle = AstroUtil.EuclidianModulus(value, 360);
+                RaisePropertyChanged();
                 }
-                
             }
         }
 
@@ -131,12 +133,12 @@ namespace NINA.Astrometry {
 
         private void RaiseCoordinatesChanged() {
             if(!deserializing) { 
-                RaisePropertyChanged(nameof(Rotation));
+                RaisePropertyChanged(nameof(PositionAngle));
                 RaisePropertyChanged(nameof(InputCoordinates));
 
                 DeepSkyObject.Name = TargetName;
                 DeepSkyObject.Coordinates = InputCoordinates?.Coordinates;
-                DeepSkyObject.Rotation = Rotation;
+                DeepSkyObject.RotationPositionAngle = PositionAngle;
 
                 this.CoordinatesChanged?.Invoke(this, new EventArgs());
             }
@@ -145,7 +147,7 @@ namespace NINA.Astrometry {
         public event EventHandler CoordinatesChanged;
 
         public override string ToString() {
-            return $"{InputCoordinates}; Rotation: {Rotation}";
+            return $"{InputCoordinates}; Position Angle: {PositionAngle}";
         }
     }
 }

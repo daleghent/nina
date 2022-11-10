@@ -136,7 +136,7 @@ namespace NINA.WPF.Base.Model {
             Map(m => m.Target.Name).Index(2).Name("Target Name");
             Map(m => m.Target.Coordinates.RA).Index(3).Name("Target Ra");
             Map(m => m.Target.Coordinates.Dec).Index(4).Name("Target Dec");
-            Map(m => m.Target.Rotation).Optional().Index(5).Name("Target Rotation");
+            Map(m => m.Target.PositionAngle).Optional().Index(5).Name("Target PositionAngle");
             Map(m => m.Filename).Index(6);
             Map(m => m.dateTime).Index(7);
             Map(m => m.Temperature).Optional().Index(8);

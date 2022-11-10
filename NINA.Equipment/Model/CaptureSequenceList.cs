@@ -25,6 +25,8 @@ using System.Xml.Serialization;
 using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
+using Accord.Statistics.Kernels;
+using System.Globalization;
 
 namespace NINA.Equipment.Model {
 
@@ -115,6 +117,7 @@ namespace NINA.Equipment.Model {
             CaptureSequenceList l = null;
             try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(CaptureSequenceList));
+                xmlSerializer.UnknownAttribute += XmlSerializer_UnknownAttribute;
 
                 l = (CaptureSequenceList)xmlSerializer.Deserialize(stream);
                 AdjustSequenceToMatchCurrentProfile(filters, latitude, longitude, l);
@@ -159,8 +162,10 @@ namespace NINA.Equipment.Model {
             List<CaptureSequenceList> c = null;
             try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CaptureSequenceList>));
+                xmlSerializer.UnknownAttribute += XmlSerializer_UnknownAttribute;
 
                 c = (List<CaptureSequenceList>)xmlSerializer.Deserialize(stream);
+                
                 foreach (var l in c) {
                     AdjustSequenceToMatchCurrentProfile(filters, latitude, longitude, l);
                 }
@@ -171,6 +176,13 @@ namespace NINA.Equipment.Model {
             return c;
         }
 
+        private static void XmlSerializer_UnknownAttribute(object sender, XmlAttributeEventArgs e) {
+            var list = (CaptureSequenceList)e.ObjectBeingDeserialized;
+            if (e.Attr.Name == "Rotation") {
+                list.DeprecatedRotation = double.Parse(e.Attr.Value, CultureInfo.InvariantCulture);
+            }
+        }
+
         public CaptureSequenceList(CaptureSequence seq) : this() {
             Add(seq);
         }
@@ -178,7 +190,7 @@ namespace NINA.Equipment.Model {
         public void SetSequenceTarget(DeepSkyObject dso) {
             TargetName = dso.Name;
             Coordinates = dso.Coordinates;
-            Rotation = dso.Rotation;
+            PositionAngle = dso.RotationPositionAngle;
             this.DSO = dso;
         }
 
@@ -379,21 +391,29 @@ namespace NINA.Equipment.Model {
             }
         }
 
-        private double rotation;
+        private double positionAngle;
 
-        [XmlAttribute(nameof(Rotation))]
-        public double Rotation {
+        [XmlAttribute(nameof(PositionAngle))]
+        public double PositionAngle {
             get {
-                return rotation;
+                return positionAngle;
             }
             set {
-                rotation = value;
+                positionAngle = AstroUtil.EuclidianModulus(value, 360);
                 RaiseCoordinatesChanged();
             }
         }
 
+
+        [XmlAttribute(attributeName: "Rotation")]
+        public double DeprecatedRotation {
+            set { 
+                PositionAngle = 360 - value; 
+            }
+        }
+
         private void RaiseCoordinatesChanged() {
-            RaisePropertyChanged(nameof(Rotation));
+            RaisePropertyChanged(nameof(PositionAngle));
             if (Coordinates?.RA != 0 || Coordinates?.Dec != 0) {
                 RaisePropertyChanged(nameof(Coordinates));
                 RaisePropertyChanged(nameof(RAHours));
@@ -404,7 +424,7 @@ namespace NINA.Equipment.Model {
                 RaisePropertyChanged(nameof(DecSeconds));
                 DSO.Name = this.TargetName;
                 DSO.Coordinates = Coordinates;
-                DSO.Rotation = Rotation;
+                DSO.RotationPositionAngle = PositionAngle;
                 NegativeDec = DSO?.Coordinates?.Dec < 0;
             }
         }

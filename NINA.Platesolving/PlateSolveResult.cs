@@ -26,12 +26,12 @@ namespace NINA.PlateSolving {
 
         public DateTime SolveTime { get; private set; }
 
-        private double _orientation;
+        private double positionAngle;
+        public double PositionAngle {
 
-        public double Orientation {
-            get => _orientation;
+            get => positionAngle;
             set {
-                _orientation = AstroUtil.EuclidianModulus(value, 360);
+                positionAngle = AstroUtil.EuclidianModulus(value, 360);
             }
         }
 

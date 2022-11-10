@@ -163,8 +163,6 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
 
                 if (response[1].Equals("No error. Error = 0.")) {
                     if (double.TryParse(response[0], out rotationAngle)) {
-                        // Flip the orientation
-                        rotationAngle = 360d - rotationAngle;
                     }
                 }
 

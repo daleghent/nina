@@ -1108,7 +1108,7 @@
                                                     <TextBlock
                                                         Margin="5,0,0,0"
                                                         Foreground="{StaticResource ButtonForegroundBrush}"
-                                                        Text="{Binding Target.Rotation}" />
+                                                        Text="{Binding Target.PositionAngle}" />
                                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="°" />
                                                 </StackPanel>
                                                 <StackPanel DataContext="{Binding Target.DeepSkyObject}" Orientation="Horizontal">

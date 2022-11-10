@@ -582,7 +582,7 @@ namespace NINA.Sequencer.Container {
             if (RotateTarget) {
                 var rotate = factory.GetItem<CenterAndRotate>();
                 rotate.Coordinates = Target.InputCoordinates;
-                rotate.Rotation = Target.Rotation;
+                rotate.PositionAngle = Target.PositionAngle;
                 startup.Add(rotate);
             }
 
@@ -619,7 +619,7 @@ namespace NINA.Sequencer.Container {
 
             clone.Target.TargetName = this.Target.TargetName;
             clone.Target.InputCoordinates.Coordinates = this.Target.InputCoordinates.Coordinates.Transform(Epoch.J2000);
-            clone.Target.Rotation = this.Target.Rotation;
+            clone.Target.PositionAngle = this.Target.PositionAngle;
 
             clone.Delay = Delay;
             clone.StartGuiding = StartGuiding;
@@ -657,7 +657,7 @@ namespace NINA.Sequencer.Container {
             var t = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon);
             t.TargetName = this.Target.TargetName;
             t.InputCoordinates.Coordinates = this.Target.InputCoordinates.Coordinates.Transform(Epoch.J2000);
-            t.Rotation = this.Target.Rotation;
+            t.PositionAngle = this.Target.PositionAngle;
             c.Target = t;
             c.Name = t.TargetName;
 
@@ -706,7 +706,7 @@ namespace NINA.Sequencer.Container {
         private async Task<bool> CoordsToFraming() {
             if (Target.DeepSkyObject?.Coordinates != null) {
                 var dso = new DeepSkyObject(Target.DeepSkyObject.Name, Target.DeepSkyObject.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
-                dso.Rotation = Target.Rotation;
+                dso.RotationPositionAngle = Target.PositionAngle;
                 applicationMediator.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
                 return await framingAssistantVM.SetCoordinates(dso);
             }
@@ -724,13 +724,13 @@ namespace NINA.Sequencer.Container {
                     Target.InputCoordinates.Coordinates = resp.Coordinates;
                     Target.TargetName = resp.Name;
                     this.Name = resp.Name;
-                    Target.Rotation = 0;
+                    Target.PositionAngle = 0;
 
                     if (s.CanGetRotationAngle) {
                         double rotationAngle = await s.GetRotationAngle();
 
                         if (!double.IsNaN(rotationAngle)) {
-                            Target.Rotation = rotationAngle;
+                            Target.PositionAngle = rotationAngle;
                         }
                     }
                     Notification.ShowSuccess(string.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
@@ -751,7 +751,7 @@ namespace NINA.Sequencer.Container {
 
         public override string ToString() {
             var baseString = base.ToString();
-            return $"{baseString}, Target: {Target?.TargetName} {Target?.InputCoordinates?.Coordinates} {Target?.Rotation}";
+            return $"{baseString}, Target: {Target?.TargetName} {Target?.InputCoordinates?.Coordinates} {Target?.PositionAngle}";
         }
 
         public ICommand AddSimpleExposureCommand { get; private set; }

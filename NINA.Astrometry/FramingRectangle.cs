@@ -62,11 +62,11 @@ namespace NINA.Astrometry {
             }
         }
 
-        private double dsoRotation;
-        public double DSORotation {
-            get => dsoRotation;
+        private double dsoPositionAngle;
+        public double DSOPositionAngle {
+            get => dsoPositionAngle;
             set {
-                dsoRotation = value;
+                dsoPositionAngle = AstroUtil.EuclidianModulus(value, 360);
                 RaisePropertyChanged();
             }
         }

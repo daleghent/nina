@@ -66,7 +66,7 @@ namespace NINA.ViewModel {
                 var container = (IDeepSkyObjectContainer)template.Clone();
                 container.Name = SearchResult.SelectedItem.Name;
                 container.Target.TargetName = SearchResult.SelectedItem.Name;
-                container.Target.Rotation = 0;
+                container.Target.PositionAngle = 0;
                 container.Target.InputCoordinates.Coordinates = SearchResult.SelectedItem.Coordinates;
 
                 sequenceMediator.AddAdvancedTarget(container);

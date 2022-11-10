@@ -75,7 +75,7 @@ namespace NINA.Test.Sequencer.Utility {
             var coords = new Coordinates(Angle.ByDegree(5), Angle.ByDegree(20), Epoch.J2000);
             var inputCoords = new InputCoordinates(coords);
             target.InputCoordinates = inputCoords;
-            target.Rotation = 100;
+            target.PositionAngle = 100;
             containerMock.SetupGet(x => x.Target).Returns(target);
 
             var coordinates = ItemUtility.RetrieveContextCoordinates(containerMock.Object);
@@ -83,7 +83,7 @@ namespace NINA.Test.Sequencer.Utility {
             coordinates.Should().NotBeNull();
             coordinates.Coordinates.RA.Should().Be(coords.RA);
             coordinates.Coordinates.Dec.Should().Be(coords.Dec);
-            coordinates.Rotation.Should().Be(100);
+            coordinates.PositionAngle.Should().Be(100);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace NINA.Test.Sequencer.Utility {
             var coords = new Coordinates(Angle.ByDegree(5), Angle.ByDegree(20), Epoch.J2000);
             var inputCoords = new InputCoordinates(coords);
             target.InputCoordinates = inputCoords;
-            target.Rotation = 100;
+            target.PositionAngle = 100;
             parentMock.SetupGet(x => x.Target).Returns(target);
 
             var coordinates = ItemUtility.RetrieveContextCoordinates(containerMock.Object);
@@ -104,7 +104,7 @@ namespace NINA.Test.Sequencer.Utility {
             coordinates.Should().NotBeNull();
             coordinates.Coordinates.RA.Should().Be(coords.RA);
             coordinates.Coordinates.Dec.Should().Be(coords.Dec);
-            coordinates.Rotation.Should().Be(100);
+            coordinates.PositionAngle.Should().Be(100);
         }
 
         [Test]

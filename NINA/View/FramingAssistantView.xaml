@@ -560,7 +560,7 @@
                                         VerticalAlignment="Center"
                                         VerticalContentAlignment="Center"
                                         IsEnabled="{Binding RectangleCalculated}"
-                                        Text="{Binding RectangleTotalRotation}"
+                                        Text="{Binding RectangleTotalRotation, Converter={StaticResource ReverseAngleConverter}}"
                                         Unit="°" />
                                     <Slider
                                         Grid.Column="1"
@@ -570,7 +570,7 @@
                                         Maximum="359.99"
                                         Minimum="0"
                                         TickFrequency="5"
-                                        Value="{Binding RectangleTotalRotation}" />
+                                        Value="{Binding RectangleTotalRotation, Converter={StaticResource ReverseAngleConverter}}" />
                                 </Grid>
                             </UniformGrid>
                             <UniformGrid
@@ -656,7 +656,7 @@
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding DSORotation, StringFormat=\{0:0.00\}°}" />
+                                                        Text="{Binding DSOPositionAngle, StringFormat=\{0:0.00\}°}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>

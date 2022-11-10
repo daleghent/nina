@@ -102,7 +102,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                 } else {
                     var sync = await telescopeMediator.Sync(result.Coordinates);
-                    var orientation = (float)result.Orientation;
+                    var orientation = (float)result.PositionAngle;
                     rotatorMediator.Sync(orientation);
                     if (!sync) {
                         throw new SequenceEntityFailedException(Loc.Instance["LblSyncFailed"]);

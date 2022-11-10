@@ -416,15 +416,14 @@ namespace NINA.ViewModel {
                                 if (csv.TryGetField("pane", out name)) {
                                     var ra = AstroUtil.HMSToDegrees(csv.GetField("ra"));
                                     var dec = AstroUtil.DMSToDegrees(csv.GetField("dec"));
-
-                                    //Nina orientation is not east of north, but flipped
-                                    var angle = 360 - AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                                                        
+                                    var angle = AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
 
                                     var template = GetTemplate();
                                     template.Name = name;
                                     template.Target.TargetName = name;
                                     template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                                    template.Target.Rotation = angle;
+                                    template.Target.PositionAngle = angle;
                                     this.Targets.Add(template);
                                 } else if (csv.TryGetField<string>("familiar name", out name)) {
                                     var catalogue = csv.GetField("catalogue entry");
@@ -435,12 +434,11 @@ namespace NINA.ViewModel {
                                     template.Name = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
                                     template.Target.TargetName = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
                                     template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                                    if (csv.TryGetField<string>("position angle (east)", out var stringAngle) && !string.IsNullOrWhiteSpace(stringAngle)) {
-                                        //Nina orientation is not east of north, but flipped
-                                        var angle = 360 - AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
-                                        template.Target.Rotation = angle;
+                                    if (csv.TryGetField<string>("position angle (east)", out var stringAngle) && !string.IsNullOrWhiteSpace(stringAngle)) {                                        
+                                        var angle = AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                        template.Target.PositionAngle = angle;
                                     } else {
-                                        template.Target.Rotation = 0;
+                                        template.Target.PositionAngle = 0;
                                     }
                                     this.Targets.Add(template);
                                 }
@@ -476,7 +474,7 @@ namespace NINA.ViewModel {
             var target = GetTemplate();
             target.Target.InputCoordinates.Coordinates = deepSkyObject.Coordinates.Clone();
             target.Target.TargetName = deepSkyObject.Name;
-            target.Target.Rotation = deepSkyObject.Rotation;
+            target.Target.PositionAngle = deepSkyObject.RotationPositionAngle;
             this.Targets.Add(target);
             SelectedTarget = Targets.Items.Last() as SimpleDSOContainer;
             (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
@@ -847,7 +845,7 @@ namespace NINA.ViewModel {
 
             csl.TargetName = definedContainer.Target.TargetName;
             csl.Coordinates = definedContainer.Target.InputCoordinates.Coordinates.Clone();
-            csl.Rotation = definedContainer.Target.Rotation;
+            csl.PositionAngle = definedContainer.Target.PositionAngle;
 
             foreach (var item in definedContainer.Items) {
                 var simpleExposure = item as SimpleExposure;
@@ -905,7 +903,7 @@ namespace NINA.ViewModel {
 
             container.Target.TargetName = csl.TargetName;
             container.Target.InputCoordinates.Coordinates = csl.DSO.Coordinates.Clone();
-            container.Target.Rotation = csl.Rotation;
+            container.Target.PositionAngle = csl.PositionAngle;
 
             var completed = true;
             foreach (var item in csl.Items) {

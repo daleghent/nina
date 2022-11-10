@@ -110,8 +110,8 @@
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
-                    <TextBlock Text="{ns:Loc LblOrientation}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Orientation, StringFormat=\{0:0.00\}, FallbackValue=--}" />
+                    <TextBlock Text="{ns:Loc LblRotation}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.PositionAngle, StringFormat=\{0:0.00\}, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -255,9 +255,9 @@
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="40"
-                    Binding="{Binding Orientation, StringFormat=\{0:0.00\}}"
+                    Binding="{Binding PositionAngle, StringFormat=\{0:0.00\}}"
                     CellStyle="{StaticResource CenteredDataGridCell}"
-                    Header="{ns:Loc LblOrientation}"
+                    Header="{ns:Loc LblRotation}"
                     IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>

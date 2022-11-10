@@ -84,7 +84,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     var reverse = (bool)obj;
                     if (Rotator != null && RotatorInfo.Connected) {
                         Rotator.Reverse = reverse;
-                        profileService.ActiveProfile.RotatorSettings.Reverse = reverse;
+                        profileService.ActiveProfile.RotatorSettings.Reverse2 = reverse;
                     }
                 }
             } catch (Exception ex) {
@@ -349,7 +349,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                             this.Rotator = rotator;
 
                             if (this.Rotator.CanReverse) {
-                                this.Rotator.Reverse = profileService.ActiveProfile.RotatorSettings.Reverse;
+                                this.Rotator.Reverse = profileService.ActiveProfile.RotatorSettings.Reverse2;
                             }
 
                             RotatorInfo = new RotatorInfo {
@@ -374,7 +374,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
                             TargetPosition = Rotator.Position;
                             profileService.ActiveProfile.RotatorSettings.Id = Rotator.Id;
-                            profileService.ActiveProfile.RotatorSettings.Reverse = this.Rotator.Reverse;
+                            profileService.ActiveProfile.RotatorSettings.Reverse2 = this.Rotator.Reverse;
 
                             Logger.Info($"Successfully connected Rotator. Id: {Rotator.Id} Name: {Rotator.Name} Driver Version: {Rotator.DriverVersion}");
 

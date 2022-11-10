@@ -48,9 +48,7 @@ namespace NINA.PlateSolving.Solvers {
                         var fovH = lines[4];
 
                         result.Pixscale = double.Parse(lines[5]);
-                        result.Orientation = double.Parse(lines[6]);
-                        /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
-                        result.Orientation = 180 - result.Orientation + 360;
+                        result.PositionAngle = 360 - (180 - double.Parse(lines[6]) + 360);
 
                         var focalLength = lines[7];
 

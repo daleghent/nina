@@ -54,7 +54,10 @@
                         Margin="5,0,0,0"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="RASeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                            <Binding
+                                Path="RASeconds"
+                                StringFormat="N1"
+                                UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -102,7 +105,10 @@
                         Margin="5,0,0,0"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="DecSeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                            <Binding
+                                Path="DecSeconds"
+                                StringFormat="N1"
+                                UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -151,7 +157,10 @@
                             Margin="5,0,0,0"
                             TextAlignment="Right">
                             <TextBox.Text>
-                                <Binding Path="RASeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="RASeconds"
+                                    StringFormat="N1"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:SecondsRule />
                                     </Binding.ValidationRules>
@@ -202,7 +211,10 @@
                             Margin="5,0,0,0"
                             TextAlignment="Right">
                             <TextBox.Text>
-                                <Binding Path="DecSeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="DecSeconds"
+                                    StringFormat="N1"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:SecondsRule />
                                     </Binding.ValidationRules>
@@ -227,7 +239,7 @@
                         TextAlignment="Right"
                         Unit="°">
                         <ninactrl:UnitTextBox.Text>
-                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="PositionAngle" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>
@@ -254,7 +266,7 @@
                         TextAlignment="Right"
                         Unit="°">
                         <ninactrl:UnitTextBox.Text>
-                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="PositionAngle" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>

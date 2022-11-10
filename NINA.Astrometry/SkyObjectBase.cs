@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -138,15 +139,28 @@ namespace NINA.Astrometry {
             }
         }
 
-        private double rotation;
-
+        [Obsolete("Use RotationPositionAngle instead")]
         public double Rotation {
             get {
-                return rotation;
+                return AstroUtil.EuclidianModulus(360 - RotationPositionAngle, 360);
             }
             set {
-                rotation = value;
+                RotationPositionAngle = AstroUtil.EuclidianModulus(360 - value, 360);
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(RotationPositionAngle));
+            }
+        }
+
+        private double rotationRotationPositionAngle;
+
+        public double RotationPositionAngle {
+            get {
+                return rotationRotationPositionAngle;
+            }
+            set {
+                rotationRotationPositionAngle = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(Rotation));
             }
         }
 

@@ -103,20 +103,18 @@ namespace NINA.PlateSolving.Solvers {
                                     /* workaround for when decimal separator is comma instead of point.
                                      won't work when result contains even numbers tho... */
                                     result.Pixscale = double.Parse(resultArr[0] + "." + resultArr[1], CultureInfo.InvariantCulture);
-                                    result.Orientation = double.Parse(resultArr[2] + "." + resultArr[3], CultureInfo.InvariantCulture);
+                                    result.PositionAngle = 360 - double.Parse(resultArr[2] + "." + resultArr[3], CultureInfo.InvariantCulture);
 
-                                    result.Flipped = !(double.Parse(resultArr[4] + "." + resultArr[5], CultureInfo.InvariantCulture) < 0);
-                                    if (result.Flipped) {
-                                        result.Orientation = result.Orientation - 180;
-                                    }
+                                    result.Flipped = (double.Parse(resultArr[4] + "." + resultArr[5], CultureInfo.InvariantCulture) >= 0);
+                                    
                                 } else {
                                     result.Pixscale = double.Parse(resultArr[0], CultureInfo.InvariantCulture);
-                                    result.Orientation = double.Parse(resultArr[1], CultureInfo.InvariantCulture);
+                                    result.PositionAngle = 360 - double.Parse(resultArr[1], CultureInfo.InvariantCulture);
 
-                                    result.Flipped = !(double.Parse(resultArr[2], CultureInfo.InvariantCulture) < 0);
-                                    if (result.Flipped) {
-                                        result.Orientation = result.Orientation - 180;
-                                    }
+                                    result.Flipped = (double.Parse(resultArr[2], CultureInfo.InvariantCulture) >= 0);
+                                }
+                                if (result.Flipped) {
+                                    result.PositionAngle = result.PositionAngle + 180;
                                 }
                             }
                         }

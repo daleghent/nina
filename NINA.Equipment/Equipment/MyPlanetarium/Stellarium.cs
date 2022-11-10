@@ -113,9 +113,6 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 if (isOcularsCcdEnabled) {
                     angle = ParseRotationAngle(jobj);
 
-                    if (angle < 0d) {
-                        angle += 360d;
-                    }
                 }
 
                 return angle;
@@ -261,7 +258,8 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
 
         public double ParseRotationAngle(JObject jObject) {
             if (double.TryParse((string)jObject["Oculars.selectedCCDRotationAngle"]["value"], out double angle)) {
-                return angle;
+                // Stellatium ocular rotation is clockwise, so it needs to be reversed
+                return AstroUtil.EuclidianModulus(360 - angle, 360);
             } else {
                 return 0d;
             }

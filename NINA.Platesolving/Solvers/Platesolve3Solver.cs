@@ -104,16 +104,12 @@ namespace NINA.PlateSolving.Solvers {
                         if (linenr == 2) {
                             if (resultArr.Length >= 2) {
                                 result.Pixscale = 206264.8d / double.Parse(resultArr[0], CultureInfo.InvariantCulture);
-                                result.Orientation = double.Parse(resultArr[1], CultureInfo.InvariantCulture);
-                                /* We need to flip the rotation */
-                                result.Orientation = 360 - result.Orientation;
+                                result.PositionAngle = double.Parse(resultArr[1], CultureInfo.InvariantCulture);
                             }
                         }
                         if (linenr == 4) {
                             if (resultArr.Length >= 2) {
-                                if (double.Parse(resultArr[0], CultureInfo.InvariantCulture) < 0) {
-                                    result.Flipped = true;
-                                }
+                                result.Flipped = double.Parse(resultArr[0], CultureInfo.InvariantCulture) >= 0;
                             }
                         }
                         linenr++;

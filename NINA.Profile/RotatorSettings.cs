@@ -30,7 +30,7 @@ namespace NINA.Profile {
 
         protected override void SetDefaultValues() {
             id = "No_Device";
-            reverse = false;
+            reverse2 = false;
             rangeType = RotatorRangeTypeEnum.FULL;
             rangeStartMechanicalPosition = 0.0f;
         }
@@ -50,17 +50,30 @@ namespace NINA.Profile {
             }
         }
 
-        private bool reverse;
-
+        [Obsolete("Use Reverse2 instead")]
         [DataMember]
         public bool Reverse {
+            get => !reverse2;
+            set {
+                reverse2 = !value;
+            }
+        }
+
+        private bool reverse2;
+        [DataMember]
+        /// <summary>
+        /// Historically N.I.N.A. was expressing rotation in clockwise orientation
+        /// As this was changed to follow the standard of counter clockwise orientation, the reverse setting is flipped for migration purposes
+        /// </summary>
+        public bool Reverse2 {
             get {
-                return reverse;
+                return reverse2;
             }
             set {
-                if (reverse != value) {
-                    reverse = value;
+                if (reverse2 != value) {
+                    reverse2 = value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(Reverse2));
                 }
             }
         }

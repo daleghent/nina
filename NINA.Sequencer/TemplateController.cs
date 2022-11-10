@@ -200,7 +200,7 @@ namespace NINA.Sequencer {
                     var dso = (sequenceContainer as IDeepSkyObjectContainer);
                     dso.Target.TargetName = string.Empty;
                     dso.Target.InputCoordinates.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
-                    dso.Target.Rotation = 0;
+                    dso.Target.PositionAngle = 0;
                     dso.Target = dso.Target;
                 }
 

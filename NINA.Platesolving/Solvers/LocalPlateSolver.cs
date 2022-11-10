@@ -114,7 +114,6 @@ namespace NINA.PlateSolving.Solvers {
                             cd22
                         );
 
-                        /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
                         result.Flipped = !wcs.Flipped;
                     }
 
@@ -126,9 +125,7 @@ namespace NINA.PlateSolving.Solvers {
                         dec = double.Parse(value, CultureInfo.InvariantCulture);
                     }
                     if (wcsinfo.TryGetValue("orientation_center", out value)) {
-                        result.Orientation = double.Parse(value, CultureInfo.InvariantCulture);
-                        /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
-                        result.Orientation = 180 - result.Orientation + 360;
+                        result.PositionAngle = 360 - (180 - double.Parse(value, CultureInfo.InvariantCulture) + 360);
                     }
                     if (wcsinfo.TryGetValue("pixscale", out value)) {
                         result.Pixscale = double.Parse(value, CultureInfo.InvariantCulture);

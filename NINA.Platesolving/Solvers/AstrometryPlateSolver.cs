@@ -220,10 +220,9 @@ namespace NINA.PlateSolving.Solvers {
                 progress.Report(new ApplicationStatus() { Status = $"Getting result for Astrometry.net job {jobId}..." });
                 Calibration jobinfo = await GetJobResult(jobId, cancelToken);
 
-                result.Orientation = jobinfo.orientation;
                 /* The orientation is mirrored on the x-axis */
                 result.Flipped = jobinfo.parity < 0;
-                result.Orientation = 180 - result.Orientation + 360;
+                result.PositionAngle = 360 - (180 - jobinfo.orientation + 360);
 
                 result.Pixscale = jobinfo.pixscale;
                 result.Coordinates = new Astrometry.Coordinates(jobinfo.ra, jobinfo.dec, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Degrees);

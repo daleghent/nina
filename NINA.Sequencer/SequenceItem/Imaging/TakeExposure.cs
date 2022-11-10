@@ -200,7 +200,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 if(target != null) { 
                     imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
                     imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
-                    imageData.MetaData.Target.Rotation = target.Rotation;
+                    imageData.MetaData.Target.PositionAngle = target.PositionAngle;
                 }
             }
 

@@ -198,7 +198,7 @@ namespace NINA.Image.FileFormat.XISF {
             }
 
             if (TryGetFITSProperty("OBJCTROT", out value)) {
-                metaData.Target.Rotation = double.Parse(value, CultureInfo.InvariantCulture);
+                metaData.Target.PositionAngle = double.Parse(value, CultureInfo.InvariantCulture);
             }
 
             if (TryGetImageProperty(XISFImageProperty.Observation.Object.RA, out value)) {
@@ -516,9 +516,9 @@ namespace NINA.Image.FileFormat.XISF {
                 AddImageFITSKeyword(XISFImageProperty.Observation.Object.Dec[2], AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
             }
 
-            if (!double.IsNaN(metaData.Target.Rotation)) {
+            if (!double.IsNaN(metaData.Target.PositionAngle)) {
                 /* NINA Specific target rotation */
-                AddImageFITSKeyword("OBJCTROT", metaData.Target.Rotation, "[deg] planned rotation of imaged object");
+                AddImageFITSKeyword("OBJCTROT", metaData.Target.PositionAngle, "[deg] planned rotation of imaged object");
             }
 
             /* Focuser */

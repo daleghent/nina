@@ -290,7 +290,7 @@ namespace NINA.Image.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("OBJCTROT", out card)) {
-                metaData.Target.Rotation = ParseDouble(card.OriginalValue);
+                metaData.Target.PositionAngle = ParseDouble(card.OriginalValue);
             }
 
             if (_headerCards.TryGetValue("AIRMASS", out card)) {
@@ -633,9 +633,9 @@ namespace NINA.Image.FileFormat.FITS {
                 Add("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
             }
 
-            if (!double.IsNaN(metaData.Target.Rotation)) {
+            if (!double.IsNaN(metaData.Target.PositionAngle)) {
                 /* NINA Specific target rotation */
-                Add("OBJCTROT", metaData.Target.Rotation, "[deg] planned rotation of imaged object");
+                Add("OBJCTROT", metaData.Target.PositionAngle, "[deg] planned rotation of imaged object");
             }
 
             /* Focuser */

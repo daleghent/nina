@@ -141,11 +141,19 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
         }
 
         [Test]
+        public void ToString_Migration_Test() {
+            sut.Category = "TestCategory";
+            sut.Coordinates.Coordinates = new Coordinates(Angle.ByHours(10), Angle.ByDegree(20), Epoch.J2000);
+            sut.DeprecatedRotation = 100;
+            sut.ToString().Should().Be("Category: TestCategory, Item: CenterAndRotate, Coordinates RA: 10:00:00; Dec: 20° 00' 00\"; Epoch: J2000, Position Angle: 260°");
+        }
+
+        [Test]
         public void ToString_Test() {
             sut.Category = "TestCategory";
             sut.Coordinates.Coordinates = new Coordinates(Angle.ByHours(10), Angle.ByDegree(20), Epoch.J2000);
-            sut.Rotation = 100;
-            sut.ToString().Should().Be("Category: TestCategory, Item: CenterAndRotate, Coordinates RA: 10:00:00; Dec: 20° 00' 00\"; Epoch: J2000, Rotation: 100°");
+            sut.PositionAngle = 260;
+            sut.ToString().Should().Be("Category: TestCategory, Item: CenterAndRotate, Coordinates RA: 10:00:00; Dec: 20° 00' 00\"; Epoch: J2000, Position Angle: 260°");
         }
 
         [Test]
@@ -218,7 +226,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             var coordinates = new Coordinates(Angle.ByDegree(10), Angle.ByDegree(20), Epoch.J2000);
 
             var captureSolver = new Mock<ICaptureSolver>();
-            captureSolver.Setup(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, Orientation = 100 });
+            captureSolver.Setup(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, PositionAngle = 260 });
 
             var centeringSolver = new Mock<ICenteringSolver>();
             centeringSolver.Setup(x => x.Center(It.IsAny<CaptureSequence>(), It.IsAny<CenterSolveParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates });
@@ -226,7 +234,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             windowServiceFactoryMock.Setup(x => x.Create()).Returns(service.Object);
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.RotatorSettings.RangeType).Returns(RotatorRangeTypeEnum.FULL);
-            rotatorMediatorMock.Setup(x => x.GetTargetPosition(It.IsAny<float>())).Returns(100);
+            rotatorMediatorMock.Setup(x => x.GetTargetPosition(It.IsAny<float>())).Returns(260);
 
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo { Connected = true, AtPark = false });
 
@@ -241,7 +249,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             plateSolverFactoryMock.Setup(x => x.GetCaptureSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(captureSolver.Object);
             plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>(), It.IsAny<IDomeMediator>(), It.IsAny<IDomeFollower>())).Returns(centeringSolver.Object);
 
-            sut.Rotation = 100;
+            sut.PositionAngle = 260;
             var cts = new CancellationTokenSource();
             await sut.Execute(default, cts.Token);
 
@@ -252,7 +260,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Once);
             guiderMediatorMock.Verify(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
-            rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == 100)), Times.Once);
+            rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == 260)), Times.Once);
             rotatorMediatorMock.Verify(x => x.MoveRelative(It.IsAny<float>(), It.IsAny<CancellationToken>()), Times.Never);
 
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -260,8 +268,8 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
         }
 
         [Test]
-        [TestCase(200, 100, 80)]
-        [TestCase(200, 190, -10)]
+        [TestCase(160, 260, -80)]
+        [TestCase(160, 170, 10)]
         public async Task Execute_FullRotatorRange_PlateSolveSuccess_RotationOffOneTime_NoException(double first, double second, double movement) {
             var service = new Mock<IWindowService>();
             var coordinates = new Coordinates(Angle.ByDegree(10), Angle.ByDegree(20), Epoch.J2000);
@@ -270,8 +278,8 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
 
             var captureSolver = new Mock<ICaptureSolver>();
             captureSolver.SetupSequence(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, Orientation = first })
-                .ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, Orientation = second });
+                .ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, PositionAngle = first })
+                .ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, PositionAngle = second });
 
             var centeringSolver = new Mock<ICenteringSolver>();
             centeringSolver.Setup(x => x.Center(It.IsAny<CaptureSequence>(), It.IsAny<CenterSolveParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates });
@@ -281,8 +289,8 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             profileServiceMock.SetupGet(x => x.ActiveProfile.RotatorSettings.RangeType).Returns(RotatorRangeTypeEnum.FULL);
             rotatorMediatorMock
                 .SetupSequence(x => x.GetTargetPosition(It.IsAny<float>()))
-                .Returns((float)second)
-                .Returns((float)second);
+                .Returns((float)(second))
+                .Returns((float)(second));
 
             guiderMediatorMock.Setup(x => x.StopGuiding(It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
@@ -295,7 +303,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             plateSolverFactoryMock.Setup(x => x.GetCaptureSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(captureSolver.Object);
             plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>(), It.IsAny<IDomeMediator>(), It.IsAny<IDomeFollower>())).Returns(centeringSolver.Object);
 
-            sut.Rotation = second;
+            sut.PositionAngle = second;
             var cts = new CancellationTokenSource();
             await sut.Execute(default, cts.Token);
 
@@ -320,7 +328,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             var coordinates = new Coordinates(Angle.ByDegree(10), Angle.ByDegree(20), Epoch.J2000);
 
             var captureSolver = new Mock<ICaptureSolver>();
-            captureSolver.Setup(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, Orientation = 100 });
+            captureSolver.Setup(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = true, Coordinates = coordinates, PositionAngle = 260 });
 
             var centeringSolver = new Mock<ICenteringSolver>();
             centeringSolver.Setup(x => x.Center(It.IsAny<CaptureSequence>(), It.IsAny<CenterSolveParameter>(), It.IsAny<IProgress<PlateSolveProgress>>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(new PlateSolveResult { Success = false });
@@ -332,7 +340,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo { Connected = true, AtPark = false });
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.RotatorSettings.RangeType).Returns(RotatorRangeTypeEnum.FULL);
-            rotatorMediatorMock.Setup(x => x.GetTargetPosition(It.IsAny<float>())).Returns(100);
+            rotatorMediatorMock.Setup(x => x.GetTargetPosition(It.IsAny<float>())).Returns(260);
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.PlateSolveSettings).Returns(new Mock<IPlateSolveSettings>().Object);
             profileServiceMock.SetupGet(x => x.ActiveProfile.TelescopeSettings).Returns(new Mock<ITelescopeSettings>().Object);
@@ -343,7 +351,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             plateSolverFactoryMock.Setup(x => x.GetCaptureSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<IFilterWheelMediator>())).Returns(captureSolver.Object);
             plateSolverFactoryMock.Setup(x => x.GetCenteringSolver(It.IsAny<IPlateSolver>(), It.IsAny<IPlateSolver>(), It.IsAny<IImagingMediator>(), It.IsAny<ITelescopeMediator>(), It.IsAny<IFilterWheelMediator>(), It.IsAny<IDomeMediator>(), It.IsAny<IDomeFollower>())).Returns(centeringSolver.Object);
 
-            sut.Rotation = 100;
+            sut.PositionAngle = 260;
             var cts = new CancellationTokenSource();
             Func<Task> act = () => sut.Execute(default, cts.Token);
 
@@ -356,7 +364,7 @@ namespace NINA.Test.Sequencer.SequenceItem.Platesolving {
             guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Once);
             guiderMediatorMock.Verify(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
-            rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == 100)), Times.Once);
+            rotatorMediatorMock.Verify(x => x.Sync(It.Is<float>(r => r == 260)), Times.Once);
             rotatorMediatorMock.Verify(x => x.MoveRelative(It.IsAny<float>(), It.IsAny<CancellationToken>()), Times.Never);
 
             captureSolver.Verify(x => x.Solve(It.IsAny<CaptureSequence>(), It.IsAny<CaptureSolverParameter>(), It.Is<IProgress<PlateSolveProgress>>(p => p == sut.PlateSolveStatusVM.Progress), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
