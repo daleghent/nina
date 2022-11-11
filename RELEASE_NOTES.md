@@ -36,6 +36,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Options > General > Profiles are now ordered by Name with the active profile being on top
 - Layout of Switch Tab has been overhauled for a more compact and readable overview
 
+## Plugin Enablement
+- New Plugin Eventhook to react on GuidePulses
+- GuiderInfo now includes current RMS Error values
+
 # Version 2.0 Hotfix 2
 
 ## Bugfixes

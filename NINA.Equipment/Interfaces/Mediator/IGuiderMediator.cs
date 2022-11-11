@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Core.Interfaces;
 using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyGuider;
 using NINA.Equipment.Interfaces.ViewModel;
@@ -40,9 +41,12 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct);
 
-        Task<bool> StopShifting(CancellationToken ct);         
+        Task<bool> StopShifting(CancellationToken ct);
 
         event Func<object, EventArgs, Task> AfterDither;
         Task RaiseAfterDither(EventArgs e);
+
+        event EventHandler<IGuideStep> GuideEvent;
+        void RaiseGuideEvent(IGuideStep e);
     }
 }
