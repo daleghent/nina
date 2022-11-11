@@ -46,5 +46,17 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 RaisePropertyChanged();
             }
         }
+
+        private RMSError rmsError;
+        /// <summary>
+        /// The RMS Error of all datapoints in the GuideStepHistory. The values depend on the value range selection for the guide charts
+        /// </summary>
+        public RMSError RMSError {
+            get => rmsError;
+            set {
+                rmsError = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }
