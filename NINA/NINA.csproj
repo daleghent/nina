@@ -355,7 +355,7 @@
     <Folder Include="External\x64\Nikon\Type0030\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CoreWCF.WebHttp" Version="1.2.0" />
+    <PackageReference Include="CoreWCF.WebHttp" Version="1.2.1" />
     <PackageReference Include="Dirkster.AvalonDock" Version="4.70.3" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
     <PackageReference Include="MdXaml" Version="1.16.2" />
