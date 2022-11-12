@@ -361,7 +361,6 @@
     <PackageReference Include="MdXaml" Version="1.16.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Ninject" Version="4.0.0-beta-0134" />
     <PackageReference Include="OxyPlot.Contrib" Version="2.1.0" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />

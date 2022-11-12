@@ -218,9 +218,9 @@ Notes
 
 ## IoC Container
 
-* We use Ninject to inject dependencies into classes
+* We use Microsoft.Extensions.DependencyInjection to inject dependencies into classes
 * Everything that is created as a first-level composition object and all of their dependencies are automatically created on runtime and injected into the appropriate classes
-* Should you require a global singleton add the interface of that to your constructor, it will be automatically injected if your class is instantiated by Ninject
+* Should you require a global singleton add the interface of that to your constructor, it will be automatically injected if your class is instantiated by DI
 * If you create a VM that is used by the UI or refactor things out of VMs into generalized structures bind them in ``IoCBindings.cs``, so they can be easily injected into the VMs you removed them from
 	* if you create a VM that has an anchorable view, inject it into ``DockManagerVM`` so it's automatically instantiated
 	* if the VM you create is for Equipment, do the same but in EquipmentVM

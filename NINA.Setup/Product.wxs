@@ -477,9 +477,6 @@
 			<Component Win64="$(var.Win64)" Id="K4os.Compression.LZ4.dll" Guid="*">
 				<File Id="K4os.Compression.LZ4.dll" Name="K4os.Compression.LZ4.dll" Source="$(var.NINA_TargetDir)K4os.Compression.LZ4.dll" />
 			</Component>
-			<Component Win64="$(var.Win64)" Id="Ninject.dll" Guid="*">
-				<File Id="Ninject.dll" Name="Ninject.dll" Source="$(var.NINA_TargetDir)Ninject.dll" />
-			</Component>
 			<Component Win64="$(var.Win64)" Id="ToggleSwitch.dll" Guid="*">
 				<File Id="ToggleSwitch.dll" Name="ToggleSwitch.dll" Source="$(var.NINA_TargetDir)ToggleSwitch.dll" />
 			</Component>
