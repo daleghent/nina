@@ -26,6 +26,14 @@ namespace NINA.PlateSolving {
 
         public DateTime SolveTime { get; private set; }
 
+        [Obsolete("Use PositionAngle instead")]
+        public double Orientation {
+            get => AstroUtil.EuclidianModulus(360 - PositionAngle, 360);
+            set {
+                PositionAngle = 360 - value;
+            }
+        }
+
         private double positionAngle;
         public double PositionAngle {
 
