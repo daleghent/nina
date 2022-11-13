@@ -362,6 +362,17 @@ namespace NINA.Astrometry {
             Stereographic
         }
 
+        /// <summary>
+        /// Generates a Point with relative X/Y values for centering the current coordinates relative to a given point using projection.
+        /// Important Note: Rotation needs to be clockwise rotation
+        /// </summary>
+        /// <param name="deltaX"></param>
+        /// <param name="deltaY"></param>
+        /// <param name="rotation">Rotation in degrees - CLOCKWISE</param>
+        /// <param name="scaleX"></param>
+        /// <param name="scaleY"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Coordinates Shift(
             double deltaX,
             double deltaY,
@@ -375,6 +386,15 @@ namespace NINA.Astrometry {
             return this.Shift(deltaXDeg, deltaYDeg, rotation, type);
         }
 
+        /// <summary>
+        /// Generates a Point with relative X/Y values for centering the current coordinates relative to a given point using projection.
+        /// Important Note: Rotation needs to be clockwise rotation
+        /// </summary>
+        /// <param name="deltaX"></param>
+        /// <param name="deltaY"></param>
+        /// <param name="rotation">Rotation in degrees - CLOCKWISE</param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Coordinates Shift(double deltaX, double deltaY, double rotation, ProjectionType type = ProjectionType.Stereographic) {
             switch (type) {
                 case ProjectionType.Gnomonic:
@@ -397,6 +417,17 @@ namespace NINA.Astrometry {
                 viewPort.Rotation);
         }
 
+        /// <summary>
+        /// Generates a Point with relative X/Y values for centering the current coordinates relative to a given point using projection.
+        /// Important Note: Rotation needs to be clockwise rotation
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="centerPointPixels"></param>
+        /// <param name="horizResArcSecPx"></param>
+        /// <param name="vertResArcSecPix"></param>
+        /// <param name="rotation">Rotation in degrees - CLOCKWISE</param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Point XYProjection(Coordinates center, Point centerPointPixels, double horizResArcSecPx, double vertResArcSecPix, double rotation, ProjectionType type = ProjectionType.Stereographic) {
             switch (type) {
                 case ProjectionType.Gnomonic:
@@ -412,12 +443,13 @@ namespace NINA.Astrometry {
 
         /// <summary>
         /// Generates a Point with relative X/Y values for centering the current coordinates relative to a given point using a tangential gnomonic projection.
+        /// Important Note: Rotation needs to be clockwise rotation
         /// </summary>
         /// <param name="center">Center coordinates of the image</param>
         /// <param name="centerPointPixels">Center point in pixels of the image</param>
         /// <param name="horizResArcSecPx">Horizontal resolution in ArcSec/Px</param>
         /// <param name="vertResArcSecPix">Vertical resolution in ArcSec/Px</param>
-        /// <param name="rotation">Rotation in degrees</param>
+        /// <param name="rotation">Rotation in degrees - CLOCKWISE</param>
         /// <returns></returns>
         /// <remarks>
         ///     based on http://faculty.wcas.northwestern.edu/nchapman/coding/worldpos.py
@@ -471,6 +503,7 @@ namespace NINA.Astrometry {
 
         /// <summary>
         /// Generates a Point with relative X/Y values for centering the current coordinates relative to a given point using steonographic projection.
+        /// Important Note: Rotation needs to be clockwise rotation
         /// </summary>
         /// <remarks>
         ///     based on http://faculty.wcas.northwestern.edu/nchapman/coding/worldpos.py
