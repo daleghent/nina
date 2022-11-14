@@ -26,6 +26,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Plugin Enablement
 - New Plugin Eventhook to react on GuidePulses
 - GuiderInfo now includes current RMS Error values
+- Add access to the device instances
 
 # Version 2.0 Hotfix 2
 

@@ -498,5 +498,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
             return AstroUtil.EuclidianModulus(targetMechanicalPosition, 360);
         }
+        public IDevice GetDevice() {
+            return Rotator;
+        }
     }
 }

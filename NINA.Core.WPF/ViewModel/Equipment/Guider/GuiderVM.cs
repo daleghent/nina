@@ -468,6 +468,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             await Guider.StopShifting(ct);
             return true;
         }
+        public IDevice GetDevice() {
+            return Guider;
+        }
 
         private IGuiderMediator guiderMediator;
         private IApplicationStatusMediator applicationStatusMediator;

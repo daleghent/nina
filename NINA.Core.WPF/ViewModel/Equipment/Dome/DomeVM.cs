@@ -773,6 +773,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 Dome.SendCommandBlind(command, raw);
             }
         }
+        public IDevice GetDevice() {
+            return Dome;
+        }
 
         private readonly IDeviceUpdateTimer updateTimer;
         private readonly IDomeMediator domeMediator;

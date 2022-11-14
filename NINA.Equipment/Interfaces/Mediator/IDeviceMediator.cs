@@ -42,5 +42,11 @@ namespace NINA.Equipment.Interfaces.Mediator {
         bool SendCommandBool(string command, bool raw = true);
 
         void SendCommandBlind(string command, bool raw = true);
+
+        /// <summary>
+        /// Returns the device instance from the handler for direct access
+        /// Please use this only when no other method is available via the viewmodel
+        /// </summary>
+        IDevice GetDevice();
     }
 }

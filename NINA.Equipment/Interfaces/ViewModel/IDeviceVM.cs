@@ -36,5 +36,6 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         bool SendCommandBool(string command, bool raw = true);
 
         void SendCommandBlind(string command, bool raw = true);
+        IDevice GetDevice();
     }
 }

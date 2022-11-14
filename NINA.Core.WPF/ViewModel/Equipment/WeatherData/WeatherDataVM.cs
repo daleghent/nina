@@ -315,6 +315,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                 RaisePropertyChanged();
             }
         }
+        public IDevice GetDevice() {
+            return WeatherData;
+        }
         public IDeviceChooserVM DeviceChooserVM { get; set; }
 
         private DeviceUpdateTimer updateTimer;

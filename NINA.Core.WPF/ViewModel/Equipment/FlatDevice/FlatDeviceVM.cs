@@ -559,6 +559,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             }
             column.RemoveFilterTimingByKeys(existingFilterKeys);
         }
+        public IDevice GetDevice() {
+            return FlatDevice;
+        }
 
         public IAsyncCommand RescanDevicesCommand { get; }
         public IAsyncCommand ConnectCommand { get; }
