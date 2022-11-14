@@ -304,7 +304,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {
-            var data = await sdk.GetExposure(exposureTaskTime, exposureTaskWidth, exposureTaskHeight, token);
+            ushort[] data = null;
+            using (var downloadCts = CancellationTokenSource.CreateLinkedTokenSource(token)) {
+                try {
+                    downloadCts.CancelAfter(TimeSpan.FromSeconds(Math.Max(60, profileService.ActiveProfile.CameraSettings.Timeout)));
+                    data = await sdk.GetExposure(exposureTaskTime, exposureTaskWidth, exposureTaskHeight, downloadCts.Token);
+                } catch { }                
+            }
             if (data == null) { return null; }
 
             var bitScaling = supportBitScaling && this.profileService.ActiveProfile.CameraSettings.BitScaling;
