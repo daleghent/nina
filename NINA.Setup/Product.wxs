@@ -109,7 +109,6 @@
 			<ComponentGroupRef Id="External_x64_MallinCam_files" />
 			<ComponentGroupRef Id="External_x64_PlayerOne_files" />
 			<ComponentGroupRef Id="External_x64_ASTPAN_files" />
-			<ComponentGroupRef Id="Utility_ColorSchema_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
 			<ComponentGroupRef Id="External_JPLEPH_files" />
 			<ComponentGroupRef Id="Database_Initial_files" />
@@ -887,14 +886,6 @@
 			</Component>
 			<Component Id="ca_ES_AvalonDock.resources.dll" Guid="*">
 				<File Id="ca_ES_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ca-ES\AvalonDock.resources.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="Utility_ColorSchema_files" Directory="Utility_ColorSchema">
-			<Component Win64="$(var.Win64)" Id="Utility_ColorSchema_ColorSchemas.json" Guid="*">
-				<File Id="Utility_ColorSchema_ColorSchemas.json" Name="ColorSchemas.json" Source="$(var.NINA_TargetDir)Utility\ColorSchema\ColorSchemas.json" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>

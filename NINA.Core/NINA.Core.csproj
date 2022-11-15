@@ -20,9 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\API\ASCOM\Camera\CameraService.proto" />
-    <None Update="Utility\ColorSchema\ColorSchemas.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Accord.Math" Version="3.8.2-alpha" />
