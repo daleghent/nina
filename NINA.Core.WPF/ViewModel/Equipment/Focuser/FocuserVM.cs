@@ -213,13 +213,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
                         FocuserInfo.Position = this.Position;
                         pos = this.Position;
-                        BroadcastFocuserInfo();
-
+                        var waitForUpdate = updateTimer.WaitForNextUpdate(ct);
                         //Wait for focuser to settle
                         if (profileService.ActiveProfile.FocuserSettings.FocuserSettleTime > 0) {
                             FocuserInfo.IsSettling = true;
                             await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), true, ct, progress, Loc.Instance["LblSettle"]);
                         }
+                        await waitForUpdate;
+                        BroadcastFocuserInfo();
                     }
                 } catch (OperationCanceledException) {
                     Logger.Info("Focuser move cancelled");
@@ -441,6 +442,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             if (FocuserInfo?.Connected == true) {
                 Focuser.SendCommandBlind(command, raw);
             }
+        }
+        public IDevice GetDevice() {
+            return Focuser;
         }
 
         public IDeviceChooserVM DeviceChooserVM { get; }

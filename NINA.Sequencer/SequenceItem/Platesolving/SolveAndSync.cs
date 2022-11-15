@@ -44,6 +44,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
     public class SolveAndSync : SequenceItem, IValidatable {
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
+        private IRotatorMediator rotatorMediator;
         private IImagingMediator imagingMediator;
         private IFilterWheelMediator filterWheelMediator;
         private IPlateSolverFactory plateSolverFactory;
@@ -53,12 +54,14 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         [ImportingConstructor]
         public SolveAndSync(IProfileService profileService,
                             ITelescopeMediator telescopeMediator,
+                            IRotatorMediator rotatorMediator,
                             IImagingMediator imagingMediator,
                             IFilterWheelMediator filterWheelMediator,
                             IPlateSolverFactory plateSolverFactory,
                             IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
+            this.rotatorMediator = rotatorMediator;
             this.imagingMediator = imagingMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.plateSolverFactory = plateSolverFactory;
@@ -67,6 +70,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         private SolveAndSync(SolveAndSync cloneMe) : this(cloneMe.profileService,
                                                           cloneMe.telescopeMediator,
+                                                          cloneMe.rotatorMediator,
                                                           cloneMe.imagingMediator,
                                                           cloneMe.filterWheelMediator,
                                                           cloneMe.plateSolverFactory,
@@ -98,6 +102,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                 } else {
                     var sync = await telescopeMediator.Sync(result.Coordinates);
+                    var orientation = (float)result.Orientation;
+                    rotatorMediator.Sync(orientation);
                     if (!sync) {
                         throw new SequenceEntityFailedException(Loc.Instance["LblSyncFailed"]);
                     }

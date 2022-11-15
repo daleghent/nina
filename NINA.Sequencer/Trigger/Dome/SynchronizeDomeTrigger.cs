@@ -115,23 +115,29 @@ namespace NINA.Sequencer.Trigger.Dome {
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
-            if (this.telescopeMediator.GetInfo().AtPark) {
-                Logger.Warning("Telescope is parked, so Synchronize Dome will not be triggered");
-                return false;
-            }
-            if (this.domeFollower.IsFollowing) {
-                Logger.Warning("Cannot synchronize dome via trigger since Dome Following is enabled");
-                return false;
-            }
+            try { 
+                if (this.telescopeMediator.GetInfo().AtPark) {
+                    Logger.Warning("Telescope is parked, so Synchronize Dome will not be triggered");
+                    return false;
+                }
+                if (this.domeFollower.IsFollowing) {
+                    Logger.Warning("Cannot synchronize dome via trigger since Dome Following is enabled");
+                    return false;
+                }
 
-            var calculatedTargetDomeCoordinates = this.domeFollower.GetSynchronizedDomeCoordinates(this.telescopeMediator.GetInfo());
-            this.TargetAltitude = calculatedTargetDomeCoordinates.Altitude.Degree;
-            this.TargetAzimuth = calculatedTargetDomeCoordinates.Azimuth.Degree;
-            this.CurrentAzimuth = this.domeMediator.GetInfo().Azimuth;
-            var withinTolerance = domeFollower.IsDomeWithinTolerance(Angle.ByDegree(this.CurrentAzimuth), calculatedTargetDomeCoordinates);
-            if (!withinTolerance) {
-                Logger.Info($"SynchronizeDome: Outside of tolerance. Current Azimuth {this.CurrentAzimuth}, Target Azimuth {this.TargetAzimuth}, Target Altitude {this.TargetAltitude}");
-                return true;
+                var calculatedTargetDomeCoordinates = this.domeFollower.GetSynchronizedDomeCoordinates(this.telescopeMediator.GetInfo());
+                if(calculatedTargetDomeCoordinates != null) { 
+                    this.TargetAltitude = calculatedTargetDomeCoordinates.Altitude.Degree;
+                    this.TargetAzimuth = calculatedTargetDomeCoordinates.Azimuth.Degree;
+                    this.CurrentAzimuth = this.domeMediator.GetInfo().Azimuth;
+                    var withinTolerance = domeFollower.IsDomeWithinTolerance(Angle.ByDegree(this.CurrentAzimuth), calculatedTargetDomeCoordinates);
+                    if (!withinTolerance) {
+                        Logger.Info($"SynchronizeDome: Outside of tolerance. Current Azimuth {this.CurrentAzimuth}, Target Azimuth {this.TargetAzimuth}, Target Altitude {this.TargetAltitude}");
+                        return true;
+                    }
+                }
+            } catch(Exception ex) {
+                Logger.Error(ex);
             }
             return false;
         }

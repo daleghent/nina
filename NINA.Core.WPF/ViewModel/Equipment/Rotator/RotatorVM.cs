@@ -148,6 +148,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
                     pos = adjustedTargetPosition;
+                    await updateTimer.WaitForNextUpdate(ct);
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
@@ -199,6 +200,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
                     pos = adjustedTargetPosition;
+                    await updateTimer.WaitForNextUpdate(ct);
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
@@ -495,6 +497,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             }
 
             return AstroUtil.EuclidianModulus(targetMechanicalPosition, 360);
+        }
+        public IDevice GetDevice() {
+            return Rotator;
         }
     }
 }

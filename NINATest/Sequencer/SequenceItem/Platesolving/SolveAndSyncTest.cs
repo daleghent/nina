@@ -45,6 +45,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
         private Mock<IFilterWheelMediator> filterWheelMediatorMock;
         private Mock<IPlateSolverFactory> plateSolverFactoryMock;
         private Mock<IWindowServiceFactory> windowServiceFactoryMock;
+        private Mock<IRotatorMediator> rotatorMediatorMock;
 
         private SolveAndSync sut;
 
@@ -56,6 +57,7 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             filterWheelMediatorMock = new Mock<IFilterWheelMediator>();
             plateSolverFactoryMock = new Mock<IPlateSolverFactory>();
             windowServiceFactoryMock = new Mock<IWindowServiceFactory>();
+            rotatorMediatorMock = new Mock<IRotatorMediator>();
         }
 
         [SetUp]
@@ -66,10 +68,11 @@ namespace NINATest.Sequencer.SequenceItem.Platesolving {
             filterWheelMediatorMock.Reset();
             plateSolverFactoryMock.Reset();
             windowServiceFactoryMock.Reset();
+            rotatorMediatorMock.Reset();
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.PlateSolveSettings).Returns(new Mock<IPlateSolveSettings>().Object);
 
-            sut = new SolveAndSync(profileServiceMock.Object, telescopeMediatorMock.Object, imagingMediatorMock.Object, filterWheelMediatorMock.Object, plateSolverFactoryMock.Object, windowServiceFactoryMock.Object);
+            sut = new SolveAndSync(profileServiceMock.Object, telescopeMediatorMock.Object, rotatorMediatorMock.Object, imagingMediatorMock.Object, filterWheelMediatorMock.Object, plateSolverFactoryMock.Object, windowServiceFactoryMock.Object);
         }
 
         [Test]

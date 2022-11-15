@@ -49,7 +49,10 @@ namespace NINA.Equipment.Equipment.MySwitch.Ascom {
         public double TargetValue {
             get => targetValue;
             set {
-                targetValue = value;
+                var adjustedValue = CoreUtil.GetClosestNumber(value, StepSize);
+                if(adjustedValue < Minimum) { adjustedValue = Minimum; }
+                if(adjustedValue > Maximum) { adjustedValue = Maximum; }
+                targetValue = adjustedValue;
                 RaisePropertyChanged();
             }
         }

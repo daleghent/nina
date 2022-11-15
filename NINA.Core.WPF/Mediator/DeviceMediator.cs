@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
 using System;
@@ -86,6 +87,15 @@ namespace NINA.WPF.Base.Mediator {
                 return default;
             }
             return handler.GetDeviceInfo();
+        }
+
+        /// <summary>
+        /// Returns the device instance from the handler for direct access
+        /// Please use this only when no other method is available via the viewmodel
+        /// </summary>
+        /// <returns></returns>
+        public IDevice GetDevice() {
+            return handler.GetDevice();
         }
 
         public string Action(string actionName, string actionParameters) {

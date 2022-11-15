@@ -36,6 +36,7 @@ using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
 using System.Linq;
 using NINA.Core.Enum;
+using Newtonsoft.Json.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
@@ -395,8 +396,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     try {
                         Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
                         progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterOpen"] });
-                        await Dome.OpenShutter(cancellationToken);
-                        await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
+                        await Dome.OpenShutter(cancellationToken); 
+                        var waitForUpdate = updateTimer.WaitForNextUpdate(cancellationToken);
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]); 
+                        await waitForUpdate;
                         Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
                         return true;
                     } finally {
@@ -472,7 +475,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                         Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
                         progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterClose"] });
                         await Dome.CloseShutter(cancellationToken);
+                        var waitForUpdate = updateTimer.WaitForNextUpdate(cancellationToken);
                         await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, cancellationToken, progress, Loc.Instance["LblSettle"]);
+                        await waitForUpdate;
                         Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
                         return true;
                     } finally {
@@ -502,6 +507,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     await Dome.FindHome(cancellationToken);
                 }
                 await Dome.Park(cancellationToken);
+                await updateTimer.WaitForNextUpdate(cancellationToken);
                 Logger.Info("Park complete");
                 return true;
             } else {
@@ -574,8 +580,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 try {
                     Logger.Info($"Slewing dome to azimuth {degrees}°");
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
-                    await Dome?.SlewToAzimuth(degrees, token);
+                    await Dome?.SlewToAzimuth(degrees, token); 
+                    var waitForUpdate = updateTimer.WaitForNextUpdate(token);
                     await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), true, token, progress, Loc.Instance["LblSettle"]);
+                    await waitForUpdate;
                     return true;
                 } finally {
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
@@ -615,6 +623,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             ct.ThrowIfCancellationRequested();
 
             await Dome?.FindHome(ct);
+            await updateTimer.WaitForNextUpdate(ct);
             ct.ThrowIfCancellationRequested();
 
             Logger.Info("Dome home find complete");
@@ -624,7 +633,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private void SyncAzimuth(object obj) {
             if (CanSyncAzimuth) {
                 var calculatedTargetCoordinates = this.domeFollower.GetSynchronizedDomeCoordinates(TelescopeInfo);
-                Dome.SyncToAzimuth(calculatedTargetCoordinates.Azimuth.Degree);
+                if(calculatedTargetCoordinates != null) { 
+                    Dome.SyncToAzimuth(calculatedTargetCoordinates.Azimuth.Degree);
+                }
             }
         }
 
@@ -701,6 +712,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             while (Dome.Slewing && !cancellationToken.IsCancellationRequested) {
                 await Task.Delay(1000, cancellationToken);
             }
+            await updateTimer.WaitForNextUpdate(cancellationToken);
             return FollowEnabled;
         }
 
@@ -710,6 +722,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
 
             FollowEnabled = false;
+            await updateTimer.WaitForNextUpdate(cancellationToken);
             return true;
         }
 
@@ -759,6 +772,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             if (Dome?.Connected == true) {
                 Dome.SendCommandBlind(command, raw);
             }
+        }
+        public IDevice GetDevice() {
+            return Dome;
         }
 
         private readonly IDeviceUpdateTimer updateTimer;

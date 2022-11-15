@@ -65,9 +65,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
             GuideStepsHistory = new GuideStepsHistory(HistorySize, GuiderScale, GuiderMaxY);
 
+            profileService.ActiveProfile.AstrometrySettings.PropertyChanged += AstrometrySettings_PropertyChanged;
+
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
                 await RescanDevicesCommand.ExecuteAsync(null);
             };
+        }
+
+        private void AstrometrySettings_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if(e.PropertyName == nameof(profileService.ActiveProfile.AstrometrySettings.Horizon)) {
+
+            }
         }
 
         public async Task<IList<string>> Rescan() {
@@ -166,6 +174,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                         DriverVersion = Guider.DriverVersion,
                         DeviceId = Guider.Id,
                         SupportedActions = Guider.SupportedActions,
+                        RMSError = new RMSError()
                     };
                     BroadcastGuiderInfo();
                     Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);
@@ -206,10 +215,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 var step = e;
 
                 GuideStepsHistory.AddGuideStep(step);
-
-                foreach (RMS rms in recordedRMS.Values) {
+                GuiderInfo.RMSError = new RMSError(GuideStepsHistory.RMS.RA,
+                                                 GuideStepsHistory.RMS.Dec,
+                                                 GuideStepsHistory.RMS.PeakRA,
+                                                 GuideStepsHistory.RMS.PeakDec,
+                                                 GuideStepsHistory.RMS.Total,
+                                                 GuideStepsHistory.RMS.Scale);
+                
+                var rmsRecords = recordedRMS.Values.ToList();
+                foreach (RMS rms in rmsRecords) {
                     rms.AddDataPoint(step.RADistanceRaw, step.DECDistanceRaw);
                 }
+                guiderMediator?.RaiseGuideEvent(e);
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
@@ -450,6 +467,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
             await Guider.StopShifting(ct);
             return true;
+        }
+        public IDevice GetDevice() {
+            return Guider;
         }
 
         private IGuiderMediator guiderMediator;

@@ -46,6 +46,7 @@ using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
 using NINA.WPF.Base.Interfaces;
 using System.Collections.Generic;
+using System.Windows.Data;
 
 namespace NINA.ViewModel {
 
@@ -122,10 +123,15 @@ namespace NINA.ViewModel {
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 ProfileChanged();
+                Profiles.Refresh();
             };
             ToggleSGPService();
 
             FamilyTypeface = ApplicationFontFamily.FamilyTypefaces.FirstOrDefault(x => x.Weight == FontWeight && x.Style == FontStyle && x.Stretch == FontStretch);
+
+            Profiles = CollectionViewSource.GetDefaultView(profileService.Profiles);
+            Profiles.SortDescriptions.Add(new SortDescription("IsActive", ListSortDirection.Descending));
+            Profiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
         public bool IsX64 {
@@ -848,11 +854,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        public AsyncObservableCollection<ProfileMeta> Profiles {
-            get {
-                return profileService.Profiles;
-            }
-        }
+        public ICollectionView Profiles { get; }
 
         public IPluggableBehaviorSelector<IStarDetection> PluggableStarDetection { get; private set; }
         public IPluggableBehaviorSelector<IStarAnnotator> PluggableStarAnnotator { get; private set; }

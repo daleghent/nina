@@ -83,17 +83,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private bool _canSubSample = false;
-
-        public bool CanSubSample {
-            get => _canSubSample;
-            private set {
-                _canSubSample = value;
-                Logger.Trace($"CanSubSample = {_canSubSample}");
-                RaisePropertyChanged();
-            }
-        }
-
+        public bool CanSubSample => true;
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
         public int SubSampleY { get; set; }
@@ -209,11 +199,20 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get => canSetTemperature;
             private set {
                 canSetTemperature = value;
+                Logger.Trace($"CanSetTemperature = {canSetTemperature}");
                 RaisePropertyChanged();
             }
         }
 
-        private bool CanGetCoolerPower { get; set; } = false;
+        private bool canGetCoolerPower = false;
+
+        private bool CanGetCoolerPower {
+            get => canGetCoolerPower;
+            set {
+                canGetCoolerPower = value;
+                Logger.Trace($"CanGetCoolerPower = {canGetCoolerPower}");
+            }
+        }
 
         public double CoolerPower => CanGetCoolerPower ? AtikCameraDll.CoolerPower(_cameraP) : double.NaN;
 
@@ -528,11 +527,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     var coolingFlags = AtikCameraDll.GetCoolingFlags(_cameraP);
                     var colorInfo = AtikCameraDll.GetColorInformation(_cameraP);
 
+                    Logger.Trace($"CameraFlags = 0x{Info.cameraflags:X}");
+                    Logger.Trace($"CoolingFlags = 0x{coolingFlags:X}");
+
                     HasShutter = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasShutter);
 
                     HasDewHeater = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasWindowHeater);
-
-                    CanSubSample = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.Subsample);
 
                     CanGetCoolerPower = HasBit(coolingFlags, (int)AtikCameraDll.ArtemisCoolingInfoFlags.PowerLeveLControl) ||
                                         HasBit(coolingFlags, (int)AtikCameraDll.ArtemisCoolingInfoFlags.SetpointControl);

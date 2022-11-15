@@ -27,6 +27,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Security;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -179,47 +180,53 @@ namespace NINA {
             }
         }
 
+        private static object lockObj = new object();
+
         [HandleProcessCorruptedStateExceptions, SecurityCritical]
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            Logger.Error($"An unhandled exception has occurred of type {e.Exception.GetType()}");
-            if (e.Exception.InnerException != null) {
-                var message = $"{e.Exception.Message}{Environment.NewLine}{e.Exception.StackTrace}{Environment.NewLine}Inner Exception of type {e.Exception.InnerException.GetType()}: {Environment.NewLine}{e.Exception.InnerException}{e.Exception.StackTrace}";
-                Logger.Error(message);
-            } else {
-                Logger.Error(e.Exception);
-            }
-
-            if (e.Exception is InvalidOperationException) {
-                /* When accessing N.I.N.A. via RDP from a mobile device or a tablet device it seems like WPF has a stylus bug during refresh.
-                 * This piece of code tries to auto recover from that issue
-                 */
-                if (e.Exception.StackTrace.Contains("System.Windows.Input.StylusWisp.WispLogic.RefreshTablets")) {
-                    Logger.Error("The exception is related to the WPF Stylus bug and therefore tries to recover automatically");
-                    e.Handled = true;
-                    return;
-                }
-            }
-
-            if (e.Exception is System.Windows.Markup.XamlParseException xamlEx) {
-                Logger.Error($"Faulting xaml module: {xamlEx.BaseUri}");
-                if (Application.Current?.Resources != null) {
-                    Logger.Error("The following resources are available");
-                    LogResource(Application.Current.Resources, "==>");
-                }
-            }
-
-            if (Current != null) {
-                var result = MessageBox.Show(
-                    Loc.Instance["LblApplicationInBreakMode"],
-                    Loc.Instance["LblUnhandledException"],
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Error,
-                    MessageBoxResult.No);
-                if (result == MessageBoxResult.Yes) {
-                    e.Handled = true;
+            lock(lockObj) { 
+                Logger.Error($"An unhandled exception has occurred of type {e.Exception.GetType()}");
+                if (e.Exception.InnerException != null) {
+                    var message = $"{e.Exception.Message}{Environment.NewLine}{e.Exception.StackTrace}{Environment.NewLine}Inner Exception of type {e.Exception.InnerException.GetType()}: {Environment.NewLine}{e.Exception.InnerException}{e.Exception.StackTrace}";
+                    Logger.Error(message);
                 } else {
-                    e.Handled = true;
-                    Current.Shutdown();
+                    Logger.Error(e.Exception);
+                }
+
+                if (e.Exception is InvalidOperationException) {
+                    /* When accessing N.I.N.A. via RDP from a mobile device or a tablet device it seems like WPF has a stylus bug during refresh.
+                     * This piece of code tries to auto recover from that issue
+                     */
+                    if (e.Exception.StackTrace.Contains("System.Windows.Input.StylusWisp.WispLogic.RefreshTablets")) {
+                        Logger.Error("The exception is related to the WPF Stylus bug and therefore tries to recover automatically");
+                        e.Handled = true;
+                        return;
+                    }
+                }
+
+                if (e.Exception is System.Windows.Markup.XamlParseException xamlEx) {
+                    Logger.Error($"Faulting xaml module: {xamlEx.BaseUri}");
+                    if (Application.Current?.Resources != null) {
+                        Logger.Error("The following resources are available");
+                        LogResource(Application.Current.Resources, "==>");
+                    }
+                }
+
+                if (Current != null) {
+                    var result = Task.Factory.StartNew(
+                        () => MessageBox.Show(
+                                    Loc.Instance["LblApplicationInBreakMode"],
+                                    Loc.Instance["LblUnhandledException"],
+                                    MessageBoxButton.YesNo,
+                                    MessageBoxImage.Error,
+                                    MessageBoxResult.No),
+                        TaskCreationOptions.LongRunning).Result;
+                    if (result == MessageBoxResult.Yes) {
+                        e.Handled = true;
+                    } else {
+                        e.Handled = true;
+                        Current.Shutdown();
+                    }
                 }
             }
         }

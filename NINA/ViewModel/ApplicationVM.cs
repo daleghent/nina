@@ -70,14 +70,16 @@ namespace NINA.ViewModel {
             ExpandTabControlCommand = new RelayCommand((object o) => Collapsed = false);
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
+            SubscribeSystemEvents();
         }
 
         private void CheckASCOMPlatformVersion(object obj) {
             try {
                 var version = ASCOMInteraction.GetPlatformVersion();
                 Logger.Info($"ASCOM Platform {version} installed");
-                if ((version.Major < 6) || (version.Major == 6 && version.Minor < 5) || (version.Major == 6 && version.Minor == 5 && version.Build < 1) || (version.Major == 6 && version.Minor == 5 && version.Build == 1 && version.Revision < 3234)) {
-                    Logger.Error($"Outdated ASCOM Platform detected. Current: {version} - Minimum Required: 6.5.1.3234");
+                var recommendedVersion = new Version("6.6.1.3673");
+                if (version < recommendedVersion) {                 
+                    Logger.Error($"Outdated ASCOM Platform detected. Current: {version} - Minimum Required: {recommendedVersion}");
                     Notification.ShowWarning(Loc.Instance["LblASCOMPlatformOutdated"]);
                 }
             } catch (Exception) {
@@ -205,7 +207,47 @@ namespace NINA.ViewModel {
             Application.Current.Shutdown();
         }
 
+        private void SubscribeSystemEvents() {
+            try { 
+                Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+                Microsoft.Win32.SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+            } catch { }
+        }
+
+        private void UnsubscribeSystemEvents() {
+            try {
+                Microsoft.Win32.SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
+                Microsoft.Win32.SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+            } catch { }            
+        }
+
+        private void SystemEvents_SessionEnding(object sender, Microsoft.Win32.SessionEndingEventArgs e) {
+            switch (e.Reason) {
+                case Microsoft.Win32.SessionEndReasons.SystemShutdown:
+                    Logger.Info("The operating system is shutting down.");
+                    break;
+                case Microsoft.Win32.SessionEndReasons.Logoff:
+                    Logger.Info("The user is logging off and ending the current user session. The operating system continues to run.");
+                    break;
+            }
+        }
+
+        private void SystemEvents_PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e) {
+            switch(e.Mode) {
+                case Microsoft.Win32.PowerModes.Resume:
+                    Logger.Info("The operating system is about to resume from a suspended state.");
+                    break;
+                case Microsoft.Win32.PowerModes.StatusChange:
+                    Logger.Info("A power mode status notification event has been raised by the operating system. This might indicate a weak or charging battery, a transition between AC power and battery, or another change in the status of the system power supply.");
+                    break;
+                case Microsoft.Win32.PowerModes.Suspend:
+                    Logger.Info("The operating system is about to be suspended.");
+                    break;
+            }
+        }
+
         private void ClosingApplication(object o) {
+            UnsubscribeSystemEvents();
             try {
                 Logger.Debug("Saving dock layout");
                 dockManager.SaveAvalonDockLayout();

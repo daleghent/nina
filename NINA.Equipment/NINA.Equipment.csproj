@@ -206,6 +206,7 @@
     <Compile Include="Equipment\MyCamera\SBIGCameraASCOMService.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlike\MallinCamSDKWrapper.cs" />
     <Compile Include="Equipment\MyFilterWheel\SBIGFilterWheel.cs" />
+    <Compile Include="Equipment\MyGuider\RMSError.cs" />
     <Compile Include="Equipment\MySwitch\Eagle4\Eagle12VPower.cs" />
     <Compile Include="Equipment\MySwitch\Eagle4\Eagle4.cs" />
     <Compile Include="Equipment\MySwitch\Eagle4\EagleInputPower.cs" />

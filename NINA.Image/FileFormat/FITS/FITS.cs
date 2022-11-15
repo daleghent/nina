@@ -69,7 +69,7 @@ namespace NINA.Image.FileFormat.FITS {
                 var bitPix = (CfitsioNative.BITPIX)(int)CfitsioNative.fits_read_key_long(fitsPtr, "BITPIX");
                 var pixels = CfitsioNative.read_ushort_pixels(fitsPtr, bitPix, 2, width * height);
 
-                //Translate nom.tam.fits into N.I.N.A. FITSHeader
+                //Translate CFITSio into N.I.N.A. FITSHeader
                 FITSHeader header = new FITSHeader(width, height);
                 CfitsioNative.fits_get_hdrspace(fitsPtr, out var numKeywords, out var numMoreKeywords, out status);
                 CfitsioNative.CheckStatus("fits_get_hdrspace", status);

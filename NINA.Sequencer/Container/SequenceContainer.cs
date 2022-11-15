@@ -492,9 +492,13 @@ namespace NINA.Sequencer.Container {
             }
             foreach (var trigger in localTriggers) {
                 if(trigger.Status == SequenceEntityStatus.DISABLED) { continue; }
-                if (trigger.ShouldTrigger(previousItem, nextItem)) {
-                    var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
-                    await trigger.Run(context, progress, token);
+                try {
+                    if (trigger.ShouldTrigger(previousItem, nextItem)) {
+                        var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
+                        await trigger.Run(context, progress, token);
+                    }
+                } catch(Exception ex) {
+                    Logger.Error(ex);
                 }
             }
         }
@@ -506,9 +510,13 @@ namespace NINA.Sequencer.Container {
             }
             foreach (var trigger in localTriggers) {
                 if (trigger.Status == SequenceEntityStatus.DISABLED) { continue; }
-                if (trigger.ShouldTriggerAfter(previousItem, nextItem)) {
-                    var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
-                    await trigger.Run(context, progress, token);
+                try {
+                    if (trigger.ShouldTriggerAfter(previousItem, nextItem)) {
+                        var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
+                        await trigger.Run(context, progress, token);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
             }
         }

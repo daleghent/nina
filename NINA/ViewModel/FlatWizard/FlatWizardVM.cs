@@ -672,7 +672,7 @@ namespace NINA.ViewModel.FlatWizard {
 
                             case int n when n >= 3 && n < MAX_TRIES:
                                 brightness = GetNextDataPoint();
-                                if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
+                                if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness  || brightness < 0) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
                                 break;
 
                             default:
@@ -713,6 +713,7 @@ namespace NINA.ViewModel.FlatWizard {
                 }
 
                 async Task ShowErrorAndHandleInput(string message, double aBrightness) {
+                    aBrightness = aBrightness < 0 ? double.NaN : aBrightness;
                     errorDialog.Message = message;
                     errorDialog.CurrentMean = imageStatistics.Mean;
                     errorDialog.CameraBitDepth = HistogramMath.CameraBitDepthToAdu(filter.BitDepth);

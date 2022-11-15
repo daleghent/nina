@@ -126,8 +126,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
             try {
                 var calculatedTargetDomeCoordinates = GetSynchronizedDomeCoordinates(this.telescopeInfo);
-                var currentAzimuth = Angle.ByDegree(this.domeInfo.Azimuth);
-                this.IsSynchronized = IsDomeWithinTolerance(currentAzimuth, calculatedTargetDomeCoordinates);
+                if(calculatedTargetDomeCoordinates != null) { 
+                    var currentAzimuth = Angle.ByDegree(this.domeInfo.Azimuth);
+                    this.IsSynchronized = IsDomeWithinTolerance(currentAzimuth, calculatedTargetDomeCoordinates);
+                }
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["LblDomeFollowError"]);
@@ -183,7 +185,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             }
 
             var calculatedTargetDomeCoordinates = GetSynchronizedDomeCoordinates(telescopeInfo);
-            return SyncToDomeAzimuth(calculatedTargetDomeCoordinates, CancellationToken.None);
+            if(calculatedTargetDomeCoordinates != null) { 
+                return SyncToDomeAzimuth(calculatedTargetDomeCoordinates, CancellationToken.None);
+            } else {
+                return Task.FromResult(false);
+            }
+
         }
 
         public Task<bool> SyncToScopeCoordinates(Coordinates coordinates, PierSide sideOfPier, CancellationToken cancellationToken) {
@@ -203,6 +210,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public TopocentricCoordinates GetSynchronizedDomeCoordinates(TelescopeInfo telescopeInfo) {
             var targetCoordinates = telescopeInfo.TargetCoordinates ?? telescopeInfo.Coordinates;
+            if (targetCoordinates == null) { return null; }
             PierSide targetSideOfPier = PierSide.pierUnknown;
             if (this.profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
                 targetSideOfPier = telescopeInfo.TargetSideOfPier ?? telescopeInfo.SideOfPier;

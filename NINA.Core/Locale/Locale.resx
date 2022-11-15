@@ -6495,4 +6495,10 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>Failed to move filter wheel to filter {0} at position {1}</value>
     <comment>First parameter is filter name and second parameter is filter position number</comment>
   </data>
+  <data name="LblSwitches" xml:space="preserve">
+    <value>Switches</value>
+  </data>
+  <data name="LblGauges" xml:space="preserve">
+    <value>Gauges</value>
+  </data>
 </root>

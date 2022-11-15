@@ -138,7 +138,7 @@ namespace NINA.PlateSolving.Solvers {
 
         protected async Task StartCLI(string imageFilePath, string outputFilePath, PlateSolveParameter parameter, PlateSolveImageProperties imageProperties, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (executableLocation != "cmd.exe" && !File.Exists(executableLocation)) {
-                throw new FileNotFoundException("Executable not found", executableLocation);
+                throw new FileNotFoundException("Platesolver executable not found. Please point to the correct platesolver executable in platsolving options.", executableLocation);
             }
 
             System.Diagnostics.Process process = new System.Diagnostics.Process();

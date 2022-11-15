@@ -3,6 +3,32 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.1
+
+## Bugfixes
+- When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running
+- Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues
+- Prevent unhandled exception popup to be visible more than once in parallel
+- Flat wizard should no longer try to set a negative brightness value in dynamic brightness mode
+- Focuser tab should no longer clip the "Move" button when window size is small
+- ASCOM Switch target values now adhere to the step size of a switch and round to the nearest value if the user provided a value outside of the step size
+- Fixed an issue where SynchronizeDomeTrigger would run into an exception when evaluating if it should trigger when the dome and telescope is not connected
+
+## Improvements
+- Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver
+- Player One Cameras that have a temperature probe but not cooler will now show the temperature
+- Solve & Sync instruction will now also sync the sky angle with a rotator when connected
+- Slew instructions will now show a failure when the telescope is parked
+- When a platesolver is not set up the message "Executable not found" will now also tell that this is about the plate solver not being set up
+- Options > General > Profiles are now ordered by Name with the active profile being on top
+- Layout of Switch Tab has been overhauled for a more compact and readable overview
+- Framing Assistant will no longer update the altitude chart on the left while the rectangle is dragged around to be able to drag it more smoothly. The chart will update once the dragging is stopped.
+
+## Plugin Enablement
+- New Plugin Eventhook to react on GuidePulses
+- GuiderInfo now includes current RMS Error values
+- Add access to the device instances
+
 # Version 2.0 Hotfix 2
 
 ## Bugfixes

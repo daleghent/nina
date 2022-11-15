@@ -347,9 +347,11 @@ namespace NINA.Profile {
                     fs.Position = 0;
                 }
 
-                using (var temp = new FileStream(Location + ".bkp", FileMode.Create, FileAccess.Write)) {
-                    fs.CopyTo(temp);
-                    temp.Flush();
+                if(fs.Length > 0) { 
+                    using (var temp = new FileStream(Location + ".bkp", FileMode.Create, FileAccess.Write)) {
+                        fs.CopyTo(temp);
+                        temp.Flush();
+                    }
                 }
 
                 fs.SetLength(0);

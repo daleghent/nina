@@ -41,6 +41,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             DisplayMemberPath="Name"
+            IsSynchronizedWithCurrentItem="True"
             ItemsSource="{Binding Profiles}"
             SelectedItem="{Binding SelectedProfileMeta}" />
         <TextBlock

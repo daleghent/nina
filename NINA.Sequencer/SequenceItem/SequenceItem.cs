@@ -175,22 +175,22 @@ namespace NINA.Sequencer.SequenceItem {
             Status = SequenceEntityStatus.FAILED;
             switch (ErrorBehavior) {
                 case InstructionErrorBehavior.AbortOnError:
-                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Aborting Sequence!");
+                    Logger.Error($"Instruction {Name} failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Aborting Sequence!");
                     _ = root.Interrupt();
                     break;
 
                 case InstructionErrorBehavior.SkipInstructionSetOnError:
-                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping current instruction set.");
+                    Logger.Error($"Instruction {Name} failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping current instruction set.");
                     _ = Parent?.Interrupt();
                     break;
 
                 case InstructionErrorBehavior.SkipToSequenceEndInstructions:
-                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping to end of sequence instructions.");
+                    Logger.Error($"Instruction {Name} failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping to end of sequence instructions.");
                     _ = SkipToEndOfSequence(root);
                     break;
 
                 default:
-                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Continuing.");
+                    Logger.Error($"Instruction {Name} failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Continuing.");
                     break;
             }
         }

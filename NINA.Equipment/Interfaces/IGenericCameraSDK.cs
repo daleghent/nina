@@ -59,6 +59,7 @@ namespace NINA.Equipment.Interfaces {
         int GetBitDepth();
 
         (int, int, int, int, int) GetROI();
+        bool HasTemperatureReadout();
 
         bool HasTemperatureControl();
 
@@ -85,5 +86,8 @@ namespace NINA.Equipment.Interfaces {
         void StopVideoCapture();
         [HandleProcessCorruptedStateExceptions]
         Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct);
+        List<string> GetReadoutModes();
+        int GetReadoutMode();
+        void SetReadoutMode(int modeIndex);
     }
 }

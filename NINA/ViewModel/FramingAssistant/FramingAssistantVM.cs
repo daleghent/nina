@@ -754,7 +754,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public double RASeconds {
             get {
-                var seconds = Math.Round(DSO.Coordinates.RA * 60.0d * 60.0d % 60, 1);
+                var seconds = Math.Round(DSO.Coordinates.RA * 60.0d * 60.0d % 60, 5);
                 if (seconds >= 60d) {
                     seconds = 0;
                 }
@@ -816,7 +816,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public double DecSeconds {
             get {
-                var seconds = Math.Round(DSO.Coordinates.Dec * 60.0d * 60.0d % 60, 1);
+                var seconds = Math.Round(DSO.Coordinates.Dec * 60.0d * 60.0d % 60, 5);
                 if (seconds >= 60d) {
                     seconds = 0;
                 }
@@ -1418,11 +1418,13 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private void DragStop(object obj) {
             SkyMapAnnotator.UseCachedImages = cachedImagesActive;
+            DSO.Coordinates = Rectangle.Coordinates;
+            ImageParameter.Coordinates = SkyMapAnnotator.ViewportFoV.CenterCoordinates;
+            RaiseCoordinatesChanged();
             if (SkyMapAnnotator.UseCachedImages) {
                 DragMove(new DragResult());
             }
         }
-
         private void DragMove(object obj) {
             if (RectangleCalculated) {
                 var delta = ((DragResult)obj).Delta;
@@ -1430,12 +1432,10 @@ namespace NINA.ViewModel.FramingAssistant {
                     delta = new Vector(-delta.X, -delta.Y);
 
                     var newCenter = SkyMapAnnotator.ShiftViewport(delta);
-                    DSO.Coordinates = newCenter;
-                    ImageParameter.Coordinates = newCenter;
                     CalculateRectangle(SkyMapAnnotator.ViewportFoV);
-                    RaiseCoordinatesChanged();
 
                     SkyMapAnnotator.UpdateSkyMap();
+
                     RaisePropertyChanged(nameof(RectangleRotation));
                     RaisePropertyChanged(nameof(RectangleTotalRotation));
                     RaisePropertyChanged(nameof(InverseRectangleRotation));
@@ -1452,8 +1452,6 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     Rectangle.Coordinates = Rectangle.OriginalCoordinates.Shift(accumulatedDeltaX, accumulatedDeltaY, ImageParameter.Rotation,
                         imageArcsecWidth, imageArcsecHeight);
-                    DSO.Coordinates = Rectangle.Coordinates;
-                    RaiseCoordinatesChanged();
 
                     var mainRectangleReferenceCenter = Rectangle.OriginalCoordinates.Shift(Math.Abs(accumulatedDeltaX) < 1E-10 ? 1 : 0, accumulatedDeltaY, Rectangle.OriginalOffset, imageArcsecWidth, imageArcsecHeight);
                     double mainRectanglePA = 90;

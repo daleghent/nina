@@ -16,6 +16,7 @@ using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -380,6 +381,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return ((int)property.MaxWidth, (int)property.MaxHeight);
         }
 
+        public bool HasTemperatureReadout() {
+            return controls.ContainsKey(SVB_CONTROL_TYPE.SVB_CURRENT_TEMPERATURE);
+        }
+
         public bool HasTemperatureControl() {
             CheckAndLogError(sVBonyPInvoke.SVBGetCameraPropertyEx(id, out var property));
             return (property.bSupportControlTemp == SVB_BOOL.SVB_TRUE);
@@ -494,6 +499,16 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
         public Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
             throw new NotImplementedException();
+        }
+
+        public List<string> GetReadoutModes() {
+            return new List<string> { "Default" };
+        }
+
+        public int GetReadoutMode() {
+            return 0;
+        }
+        public void SetReadoutMode(int modeIndex) {
         }
     }
 }

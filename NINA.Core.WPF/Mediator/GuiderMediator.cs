@@ -21,6 +21,7 @@ using NINA.Core.Model;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Astrometry;
 using NINA.Core.Utility.Extensions;
+using NINA.Core.Interfaces;
 
 namespace NINA.WPF.Base.Mediator {
 
@@ -60,6 +61,14 @@ namespace NINA.WPF.Base.Mediator {
 
         public Task<bool> StopShifting(CancellationToken ct) {
             return handler.StopShifting(ct);
+        }
+        /// <summary>
+        /// Will be raised each time the application receives guide pulse info from the guider
+        /// </summary>
+        public event EventHandler<IGuideStep> GuideEvent;
+        
+        public void RaiseGuideEvent(IGuideStep e) {
+            GuideEvent?.Invoke(this, e);
         }
 
         public event Func<object, EventArgs, Task> AfterDither;

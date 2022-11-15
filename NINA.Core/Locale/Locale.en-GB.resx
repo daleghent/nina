@@ -6362,6 +6362,15 @@ Reason: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>No Filter</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Exposure speed</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Gain preset</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Heater power level</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Dither Settling</value>
   </data>
@@ -6478,5 +6487,18 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   </data>
   <data name="LblRotating" xml:space="preserve">
     <value>Rotating</value>
+  </data>
+  <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
+    <value>The drive rate {0} is invalid to move the telescope axis. Please enter a different rate.</value>
+  </data>
+  <data name="LblFilterChangeFailed" xml:space="preserve">
+    <value>Failed to move filter wheel to filter {0} at position {1}</value>
+    <comment>First parameter is filter name and second parameter is filter position number</comment>
+  </data>
+  <data name="LblSwitches" xml:space="preserve">
+    <value>Switches</value>
+  </data>
+  <data name="LblGauges" xml:space="preserve">
+    <value>Gauges</value>
   </data>
 </root>

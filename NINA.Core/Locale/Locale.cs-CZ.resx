@@ -1540,7 +1540,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Flat</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
-    <value>Průvodcem Flat Snímáním</value>
+    <value>Průvodce Flat Snímáním</value>
   </data>
   <data name="LblFLICameraSetup" xml:space="preserve">
     <value>Nastavení Kamery FLI</value>
@@ -6356,6 +6356,15 @@ Důvod: {1}</value>
   <data name="LblNoFilter" xml:space="preserve">
     <value>Žádný Filtr</value>
   </data>
+  <data name="LblAtikExposureSpeed" xml:space="preserve">
+    <value>Rychlost expozice</value>
+  </data>
+  <data name="LblAtikGainPreset" xml:space="preserve">
+    <value>Předvolba zisku</value>
+  </data>
+  <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
+    <value>Úroveň výkonu topení</value>
+  </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Nastavení Ditheringu</value>
   </data>
@@ -6472,5 +6481,18 @@ Toto se vyhodnotí PO nastavení "Zaparkovat montáž před pohybem štěrbiny".
   </data>
   <data name="LblRotating" xml:space="preserve">
     <value>Otáčení</value>
+  </data>
+  <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
+    <value>Rychlost otáčení {0} je pro pohyb osy dalekohledu neplatná. Zadejte jinou rychlost.</value>
+  </data>
+  <data name="LblFilterChangeFailed" xml:space="preserve">
+    <value>Nepodařilo se přesunout filtrační kolo na filtr {0} na pozici {1}</value>
+    <comment>First parameter is filter name and second parameter is filter position number</comment>
+  </data>
+  <data name="LblSwitches" xml:space="preserve">
+    <value>Přepínače</value>
+  </data>
+  <data name="LblGauges" xml:space="preserve">
+    <value>Měřiče</value>
   </data>
 </root>

@@ -125,6 +125,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            if (telescopeMediator.GetInfo().AtPark) {
+                Notification.ShowError(Loc.Instance["LblTelescopeParkedWarning"]);
+                throw new SequenceEntityFailedException(Loc.Instance["LblTelescopeParkedWarning"]);
+            }
             progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
             await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);            
 

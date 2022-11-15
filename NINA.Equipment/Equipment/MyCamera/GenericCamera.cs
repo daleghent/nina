@@ -64,8 +64,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             SensorType = sdk.GetSensorInfo();
 
+            CanGetTemperature = sdk.HasTemperatureReadout();
             CanSetTemperature = sdk.HasTemperatureControl();
             HasDewHeater = sdk.HasDewHeater();
+
+            ReadoutModes = sdk.GetReadoutModes();            
         }
 
         private bool supportBitScaling;
@@ -258,6 +261,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StartExposure(CaptureSequence sequence) {
+            var isSnap = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT;
+            var readoutMode = isSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
+            ReadoutMode = readoutMode;
+
             if (EnableSubSample) {
                 sdk.SetROI(SubSampleX, SubSampleY, SubSampleWidth, SubSampleHeight, BinX);
             } else {
@@ -297,7 +304,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {
-            var data = await sdk.GetExposure(exposureTaskTime, exposureTaskWidth, exposureTaskHeight, token);
+            ushort[] data = null;
+            using (var downloadCts = CancellationTokenSource.CreateLinkedTokenSource(token)) {
+                try {
+                    downloadCts.CancelAfter(TimeSpan.FromSeconds(Math.Max(60, profileService.ActiveProfile.CameraSettings.Timeout)));
+                    data = await sdk.GetExposure(exposureTaskTime, exposureTaskWidth, exposureTaskHeight, downloadCts.Token);
+                } catch { }                
+            }
             if (data == null) { return null; }
 
             var bitScaling = supportBitScaling && this.profileService.ActiveProfile.CameraSettings.BitScaling;
@@ -334,6 +347,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public bool CanGetTemperature { get; private set; }
         public bool CanSetTemperature { get; private set; }
 
         public bool CoolerOn {
@@ -363,7 +377,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double Temperature {
             get {
-                if (CanSetTemperature) {
+                if (CanGetTemperature) {
                     return sdk.GetTemperature();
                 }
                 return double.NaN;
@@ -469,6 +483,56 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         #endregion "LiveView"
 
+        #region "Readout Modes"
+
+
+        private IList<string> readoutModes = new List<string> { "Default" };
+        public IList<string> ReadoutModes {
+            get => readoutModes;
+            private set {
+                readoutModes = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public short ReadoutMode {
+            get => (short)sdk.GetReadoutMode();
+            set {
+                sdk.SetReadoutMode(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        private short _readoutModeForNormalImages = 0;
+        public short ReadoutModeForNormalImages {
+            get => _readoutModeForNormalImages;
+            set {
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    _readoutModeForNormalImages = value;
+                } else {
+                    _readoutModeForNormalImages = 0;
+                }
+
+                RaisePropertyChanged();
+            }
+        }
+
+        private short _readoutModeForSnapImages = 0;
+        public short ReadoutModeForSnapImages {
+            get => _readoutModeForSnapImages;
+            set {
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    _readoutModeForSnapImages = value;
+                } else {
+                    _readoutModeForSnapImages = 0;
+                }
+
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region "Unsupported Features"
 
         public CameraStates CameraState { get => CameraStates.NoState; }
@@ -487,17 +551,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public double ElectronsPerADU => double.NaN;
         public short BayerOffsetX { get; } = 0;
         public short BayerOffsetY { get; } = 0;
-
-        public IList<string> ReadoutModes => new List<string> { "Default" };
-
-        public short ReadoutMode {
-            get => 0;
-            set { }
-        }
-
-        public short ReadoutModeForSnapImages { get; set; }
-
-        public short ReadoutModeForNormalImages { get; set; }
 
         public IList<int> Gains {
             get {

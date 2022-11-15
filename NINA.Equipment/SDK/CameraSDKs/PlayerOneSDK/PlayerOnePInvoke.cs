@@ -285,6 +285,26 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
                 return error;
             }
         }
+
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        public POAErrors POAGetSensorModeCount(int nCameraID, out int pModeCount) {
+            return PlayerOnePInvoke.POAGetSensorModeCount(nCameraID, out pModeCount);
+        }
+
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        public POAErrors POAGetSensorMode(int nCameraID, out int pModeIndex) {
+            return PlayerOnePInvoke.POAGetSensorMode(nCameraID, out pModeIndex);
+        }
+
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        public  POAErrors POAGetSensorModeInfo(int nCameraID, int index, out POASensorModeInfo pSenModeInfo) {
+            return PlayerOnePInvoke.POAGetSensorModeInfo(nCameraID, index, out pSenModeInfo);
+        }
+
+        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        public  POAErrors POASetSensorMode(int nCameraID, int modeIndex) {
+            return PlayerOnePInvoke.POASetSensorMode(nCameraID, modeIndex);
+        }
     }
 
     [ExcludeFromCodeCoverage]
@@ -390,6 +410,18 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
         [DllImport(DLLNAME, EntryPoint = "POAImageReady", CallingConvention = CallingConvention.Cdecl)]
         public static extern POAErrors POAImageReady(int nCameraID, out POABool pIsReady);
+
+        [DllImport(DLLNAME, EntryPoint = "POAGetSensorModeCount", CallingConvention = CallingConvention.Cdecl)]
+        public static extern POAErrors POAGetSensorModeCount(int nCameraID, out int pModeCount);
+
+        [DllImport(DLLNAME, EntryPoint = "POAGetSensorMode", CallingConvention = CallingConvention.Cdecl)]
+        public static extern POAErrors POAGetSensorMode(int nCameraID, out int pModeIndex); 
+
+        [DllImport(DLLNAME, EntryPoint = "POAGetSensorModeInfo", CallingConvention = CallingConvention.Cdecl)]
+        public static extern POAErrors POAGetSensorModeInfo(int nCameraID, int index, out POASensorModeInfo pSenModeInfo);
+
+        [DllImport(DLLNAME, EntryPoint = "POASetSensorMode", CallingConvention = CallingConvention.Cdecl)]
+        public static extern POAErrors POASetSensorMode(int nCameraID, int modeIndex);
     }
 
     public enum POABool // BOOL Value Definition

@@ -34,6 +34,9 @@ namespace NINATest.AstrometryTest {
         [TestCase(1, 10, 20.7, 0, 10, 20.7, false)]
         [TestCase(1, 10, 20.989, -1, 10, 20.989, true)]
         [TestCase(1, 10, 20.32556, -0, 10, 20.32556, true)]
+        [TestCase(5, 17, 28.0, 34, 25, 20.0, false)]
+        [TestCase(1, 5, 0, 0, 0, 0, false)]
+        [TestCase(0, 0, 0, -72, 5, 0, true)]
         public void SerializationAndDeserializationTest(int raHours, int raMinutes, double raSeconds, int decDegree, int decMinutes, double decSeconds, bool negativeDec) {
 
             var coordinates = new InputCoordinates {
@@ -92,13 +95,13 @@ namespace NINATest.AstrometryTest {
         //                coordinates.DecSeconds = decSeconds;
         //                coordinates.NegativeDec = negativeDec;
 
-        //                coordinates.RAHours.Should().Be(raHours);
-        //                coordinates.RAMinutes.Should().Be(raMinutes);
-        //                coordinates.RASeconds.Should().Be(raSeconds);
-        //                coordinates.DecDegrees.Should().Be(decDegree);
-        //                coordinates.DecMinutes.Should().Be(decMinutes);
-        //                coordinates.DecSeconds.Should().Be(decSeconds);
-        //                coordinates.NegativeDec.Should().Be(negativeDec);
+        //                coordinates.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecDegrees.Should().Be(decDegree, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
 
         //                if (negativeDec) {
         //                    coordinates.Coordinates.Dec.Should().BeLessThan(0);
@@ -112,79 +115,18 @@ namespace NINATest.AstrometryTest {
 
         //                var sut = JsonConvert.DeserializeObject<InputCoordinates>(json);
 
-        //                sut.RAHours.Should().Be(raHours);
-        //                sut.RAMinutes.Should().Be(raMinutes);
-        //                sut.RASeconds.Should().Be(raSeconds);
-        //                sut.DecDegrees.Should().Be(decDegree);
-        //                sut.DecMinutes.Should().Be(decMinutes);
-        //                sut.DecSeconds.Should().Be(decSeconds);
-        //                sut.NegativeDec.Should().Be(negativeDec);
+        //                sut.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.DecDegrees.Should().Be(decDegree, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
 
         //                if (negativeDec) {
-        //                    sut.Coordinates.Dec.Should().BeLessThan(0);
+        //                    sut.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //                } else {
-        //                    sut.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
-        //                }
-
-        //            }
-        //        }
-        //    }
-        //}
-
-        //[Test]
-        //public void SerializationAndDeserialization_Declination_Test(/*int raHours, int raMinutes, int raSeconds, int decDegree, int decMinutes, int decSeconds, bool negativeDec*/) {
-            
-        //    for (int decDegree = -89; decDegree < 90; decDegree++) {
-        //        for (int decMinutes = 0; decMinutes < 60; decMinutes++) {
-        //            for (int decSeconds = 0; decSeconds < 60; decSeconds++) {
-
-
-        //                var raHours = 0;
-        //                var raMinutes = 0;
-        //                var raSeconds = 0;
-        //                var negativeDec = decDegree < 0;
-
-        //                var coordinates = new InputCoordinates();
-        //                coordinates.RAHours = raHours;
-        //                coordinates.RAMinutes = raMinutes;
-        //                coordinates.RASeconds = raSeconds;
-        //                coordinates.DecDegrees = decDegree;
-        //                coordinates.DecMinutes = decMinutes;
-        //                coordinates.DecSeconds = decSeconds;
-        //                coordinates.NegativeDec = negativeDec;
-
-        //                coordinates.RAHours.Should().Be(raHours);
-        //                coordinates.RAMinutes.Should().Be(raMinutes);
-        //                coordinates.RASeconds.Should().Be(raSeconds);
-        //                coordinates.DecDegrees.Should().Be(decDegree);
-        //                coordinates.DecMinutes.Should().Be(decMinutes);
-        //                coordinates.DecSeconds.Should().Be(decSeconds);
-        //                coordinates.NegativeDec.Should().Be(negativeDec);
-
-        //                if (negativeDec) {
-        //                    coordinates.Coordinates.Dec.Should().BeLessThan(0);
-        //                } else {
-        //                    coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
-        //                }
-
-
-
-        //                var json = JsonConvert.SerializeObject(coordinates);
-
-        //                var sut = JsonConvert.DeserializeObject<InputCoordinates>(json);
-
-        //                sut.RAHours.Should().Be(raHours);
-        //                sut.RAMinutes.Should().Be(raMinutes);
-        //                sut.RASeconds.Should().Be(raSeconds);
-        //                sut.DecDegrees.Should().Be(decDegree);
-        //                sut.DecMinutes.Should().Be(decMinutes);
-        //                sut.DecSeconds.Should().Be(decSeconds);
-        //                sut.NegativeDec.Should().Be(negativeDec);
-
-        //                if (negativeDec) {
-        //                    sut.Coordinates.Dec.Should().BeLessThan(0);
-        //                } else {
-        //                    sut.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
+        //                    sut.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //                }
 
         //            }
@@ -215,18 +157,18 @@ namespace NINATest.AstrometryTest {
         //            coordinates.DecMinutes = decMinutes;
         //            coordinates.DecSeconds = decSeconds;
 
-        //            coordinates.RAHours.Should().Be(raHours);
-        //            coordinates.RAMinutes.Should().Be(raMinutes);
-        //            coordinates.RASeconds.Should().Be(raSeconds);
-        //            coordinates.DecDegrees.Should().Be(0);
-        //            coordinates.DecMinutes.Should().Be(decMinutes);
-        //            coordinates.DecSeconds.Should().Be(decSeconds);
-        //            coordinates.NegativeDec.Should().Be(negativeDec);
+        //            coordinates.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.DecDegrees.Should().Be(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
 
         //            if (negativeDec && (decMinutes > 0 || decSeconds > 0)) {
-        //                coordinates.Coordinates.Dec.Should().BeLessThan(0);
+        //                coordinates.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //            } else {
-        //                coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
+        //                coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //            }
 
 
@@ -235,24 +177,85 @@ namespace NINATest.AstrometryTest {
 
         //            var sut = JsonConvert.DeserializeObject<InputCoordinates>(json);
 
-        //            sut.RAHours.Should().Be(raHours);
-        //            sut.RAMinutes.Should().Be(raMinutes);
-        //            sut.RASeconds.Should().Be(raSeconds);
-        //            sut.DecDegrees.Should().Be(0);
-        //            sut.DecMinutes.Should().Be(decMinutes);
-        //            sut.DecSeconds.Should().Be(decSeconds);
-        //            sut.NegativeDec.Should().Be(negativeDec);
+        //            sut.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            sut.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            sut.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            sut.DecDegrees.Should().Be(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            sut.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            sut.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            sut.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
 
         //            if (negativeDec && (decMinutes > 0 || decSeconds > 0)) {
-        //                sut.Coordinates.Dec.Should().BeLessThan(0);
+        //                sut.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //            } else {
-        //                sut.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
+        //                sut.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //            }
 
         //        }
 
         //    }
 
+        //}
+
+        //[Test]
+        //public void SerializationAndDeserialization_Declination_Test() {
+
+        //    for (int decDegree = -89; decDegree < 90; decDegree++) {
+        //        for (int decMinutes = 0; decMinutes < 60; decMinutes++) {
+        //            for (int decSeconds = 0; decSeconds < 60; decSeconds++) {
+
+
+        //                var raHours = 0;
+        //                var raMinutes = 0;
+        //                var raSeconds = 0;
+        //                var negativeDec = decDegree < 0;
+
+        //                var coordinates = new InputCoordinates();
+        //                coordinates.RAHours = raHours;
+        //                coordinates.RAMinutes = raMinutes;
+        //                coordinates.RASeconds = raSeconds;
+        //                coordinates.DecDegrees = decDegree;
+        //                coordinates.DecMinutes = decMinutes;
+        //                coordinates.DecSeconds = decSeconds;
+        //                coordinates.NegativeDec = negativeDec;
+
+        //                coordinates.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecDegrees.Should().Be(decDegree, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+
+        //                if (negativeDec) {
+        //                    coordinates.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                } else {
+        //                    coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                }
+
+
+
+        //                var json = JsonConvert.SerializeObject(coordinates);
+
+        //                var sut = JsonConvert.DeserializeObject<InputCoordinates>(json);
+
+        //                sut.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.DecDegrees.Should().Be(decDegree, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                sut.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+
+        //                if (negativeDec) {
+        //                    sut.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                } else {
+        //                    sut.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                }
+
+        //            }
+        //        }
+        //    }
         //}
 
         //[Test]
@@ -278,18 +281,18 @@ namespace NINATest.AstrometryTest {
         //                coordinates.DecSeconds = decSeconds;
         //                coordinates.NegativeDec = negativeDec;
 
-        //                coordinates.RAHours.Should().Be(raHours);
-        //                coordinates.RAMinutes.Should().Be(raMinutes);
-        //                coordinates.RASeconds.Should().Be(raSeconds);
-        //                coordinates.DecDegrees.Should().Be(decDegree);
-        //                coordinates.DecMinutes.Should().Be(decMinutes);
-        //                coordinates.DecSeconds.Should().Be(decSeconds);
-        //                coordinates.NegativeDec.Should().Be(negativeDec);
+        //                coordinates.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecDegrees.Should().Be(decDegree, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //                coordinates.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
 
         //                if (negativeDec) {
-        //                    coordinates.Coordinates.Dec.Should().BeLessThan(0);
+        //                    coordinates.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //                } else {
-        //                    coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
+        //                    coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //                }
 
         //            }
@@ -323,18 +326,18 @@ namespace NINATest.AstrometryTest {
         //                coordinates.DecSeconds = decSeconds;
         //                coordinates.NegativeDec = negativeDec;
 
-        //                coordinates.RAHours.Should().Be(raHours);
-        //                coordinates.RAMinutes.Should().Be(raMinutes);
-        //                coordinates.RASeconds.Should().Be(raSeconds);
-        //                coordinates.DecDegrees.Should().Be(decDegree);
-        //                coordinates.DecMinutes.Should().Be(decMinutes);
-        //                coordinates.DecSeconds.Should().Be(decSeconds);
-        //                coordinates.NegativeDec.Should().Be(negativeDec);
+        //                coordinates.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
+        //                coordinates.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
+        //                coordinates.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
+        //                coordinates.DecDegrees.Should().Be(decDegree, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
+        //                coordinates.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
+        //                coordinates.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
+        //                coordinates.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s - DecNegative: {negativeDec}");
 
         //                if (negativeDec) {
-        //                    coordinates.Coordinates.Dec.Should().BeLessThan(0);
+        //                    coordinates.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //                } else {
-        //                    coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
+        //                    coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {decDegree}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //                }
         //            }
         //        }
@@ -367,18 +370,18 @@ namespace NINATest.AstrometryTest {
         //            coordinates.DecMinutes = decMinutes;
         //            coordinates.DecSeconds = decSeconds;
 
-        //            coordinates.RAHours.Should().Be(raHours);
-        //            coordinates.RAMinutes.Should().Be(raMinutes);
-        //            coordinates.RASeconds.Should().Be(raSeconds);
-        //            coordinates.DecDegrees.Should().Be(0);
-        //            coordinates.DecMinutes.Should().Be(decMinutes);
-        //            coordinates.DecSeconds.Should().Be(decSeconds);
-        //            coordinates.NegativeDec.Should().Be(negativeDec);
+        //            coordinates.RAHours.Should().Be(raHours, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.RAMinutes.Should().Be(raMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.RASeconds.Should().Be(raSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.DecDegrees.Should().Be(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.DecMinutes.Should().Be(decMinutes, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.DecSeconds.Should().Be(decSeconds, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
+        //            coordinates.NegativeDec.Should().Be(negativeDec, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
 
         //            if (negativeDec && (decMinutes > 0 || decSeconds > 0)) {
-        //                coordinates.Coordinates.Dec.Should().BeLessThan(0);
+        //                coordinates.Coordinates.Dec.Should().BeLessThan(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //            } else {
-        //                coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0);
+        //                coordinates.Coordinates.Dec.Should().BeGreaterThanOrEqualTo(0, $"{raHours}:{raMinutes}:{raSeconds} | {0}d{decMinutes}m{decSeconds}s | DecNegative: {negativeDec}");
         //            }
         //        }
 

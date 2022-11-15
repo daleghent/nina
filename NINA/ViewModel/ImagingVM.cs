@@ -83,7 +83,7 @@ namespace NINA.ViewModel {
 
         private IWeatherDataMediator weatherDataMediator;
 
-        private static int _exposuerId = 0;
+        private IImageHistoryVM imageHistoryVM;
 
         public ImagingVM(IProfileService profileService,
                 IImagingMediator imagingMediator,
@@ -96,7 +96,8 @@ namespace NINA.ViewModel {
                 IWeatherDataMediator weatherDataMediator,
                 IApplicationStatusMediator applicationStatusMediator,
                 IImageControlVM imageControlVM,
-                IImageStatisticsVM imageStatisticsVM
+                IImageStatisticsVM imageStatisticsVM,
+                IImageHistoryVM imageHistoryVM
         ) : base(profileService) {
             this.imagingMediator = imagingMediator;
             this.imagingMediator.RegisterHandler(this);
@@ -120,6 +121,7 @@ namespace NINA.ViewModel {
             this.applicationStatusMediator = applicationStatusMediator;
             this.weatherDataMediator = weatherDataMediator;
             this.weatherDataMediator.RegisterConsumer(this);
+            this.imageHistoryVM = imageHistoryVM;
 
             progress = new Progress<ApplicationStatus>(p => Status = p);
 
@@ -163,7 +165,7 @@ namespace NINA.ViewModel {
                 DateTime start,
                 RMS rms,
                 string targetName) {
-            metaData.Image.Id = this.ExposureId;
+            metaData.Image.Id = this.imageHistoryVM.GetNextImageId();
             metaData.Image.ExposureStart = start;
             metaData.Image.Binning = sequence.Binning.Name;
             metaData.Image.ExposureNumber = sequence.ProgressExposureCount;
@@ -403,6 +405,5 @@ namespace NINA.ViewModel {
             _imageControl.ImageRotation = rotation;
         }
 
-        private int ExposureId { get { return Interlocked.Increment(ref _exposuerId); } }
     }
 }

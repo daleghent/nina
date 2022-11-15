@@ -20,6 +20,7 @@ namespace NINA.Equipment.Equipment.MySwitch {
 
     public class SwitchInfo : DeviceInfo {
         public ReadOnlyCollection<IWritableSwitch> WritableSwitches { get; set; }
+        public ReadOnlyCollection<ISwitch> ReadonlySwitches { get; set; }
 
         private IList<string> supportedActions;
 
