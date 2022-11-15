@@ -3,7 +3,7 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-# Version 2.0 Hotfix 3
+# Version 2.1
 
 ## Bugfixes
 - When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running
@@ -22,6 +22,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - When a platesolver is not set up the message "Executable not found" will now also tell that this is about the plate solver not being set up
 - Options > General > Profiles are now ordered by Name with the active profile being on top
 - Layout of Switch Tab has been overhauled for a more compact and readable overview
+- Framing Assistant will no longer update the altitude chart on the left while the rectangle is dragged around to be able to drag it more smoothly. The chart will update once the dragging is stopped.
 
 ## Plugin Enablement
 - New Plugin Eventhook to react on GuidePulses
