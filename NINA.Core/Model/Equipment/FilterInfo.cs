@@ -22,7 +22,7 @@ namespace NINA.Core.Model.Equipment {
     [JsonObject(MemberSerialization.OptIn)]
     [Serializable()]
     [DataContract]
-    public class FilterInfo : BaseINPC {
+    public class FilterInfo : SerializableINPC {
 
         public FilterInfo() {
             AutoFocusGain = -1;

@@ -22,7 +22,7 @@ namespace NINA.Core.Model.Equipment {
     [JsonObject(MemberSerialization.OptIn)]
     [Serializable()]
     [XmlRoot(ElementName = nameof(BinningMode))]
-    public class BinningMode : BaseINPC {
+    public class BinningMode : SerializableINPC {
         private const char SEPARATOR = 'x';
 
         private BinningMode() {

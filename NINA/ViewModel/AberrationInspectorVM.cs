@@ -9,6 +9,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using CommunityToolkit.Mvvm.ComponentModel;
 using NINA.Profile.Interfaces;
 using NINA.WPF.Base.ViewModel;
 using System;
@@ -19,7 +20,7 @@ using System.Windows.Media.Imaging;
 
 namespace NINA.ViewModel {
 
-    public class AberrationInspectorVM : BaseVM {
+    public partial class AberrationInspectorVM : BaseVM {
 
         public AberrationInspectorVM(IProfileService profileService) : base(profileService) {
             Columns = 3;
@@ -106,52 +107,16 @@ namespace NINA.ViewModel {
             this.MosaicImage = bmp;
         }
 
+        [ObservableProperty]
         private int separationSize;
 
-        public int SeparationSize {
-            get {
-                return separationSize;
-            }
-            private set {
-                separationSize = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private int columns;
 
-        public int Columns {
-            get {
-                return columns;
-            }
-            private set {
-                columns = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private int cellSize;
 
-        public int CellSize {
-            get {
-                return cellSize;
-            }
-            private set {
-                cellSize = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private BitmapSource mosaicImage;
-
-        public BitmapSource MosaicImage {
-            get {
-                return mosaicImage;
-            }
-            private set {
-                mosaicImage = value;
-                RaisePropertyChanged();
-            }
-        }
     }
 }

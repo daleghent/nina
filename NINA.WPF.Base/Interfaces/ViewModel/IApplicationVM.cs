@@ -12,20 +12,20 @@
 
 #endregion "copyright"
 
+using CommunityToolkit.Mvvm.Input;
 using NINA.Core.Enum;
 using System.Windows.Input;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IApplicationVM {
-        ICommand CheckASCOMPlatformVersionCommand { get; }
-        ICommand CheckProfileCommand { get; }
-        ICommand CheckUpdateCommand { get; }
-        ICommand ClosingCommand { get; }
-        ICommand ExitCommand { get; }
-        ICommand MaximizeWindowCommand { get; }
-        ICommand MinimizeWindowCommand { get; }
-        ICommand OpenManualCommand { get; }
+        IRelayCommand CheckASCOMPlatformVersionCommand { get; }
+        IRelayCommand CheckProfileCommand { get; }
+        IRelayCommand ClosingCommand { get; }
+        IRelayCommand ExitCommand { get; }
+        IRelayCommand MaximizeWindowCommand { get; }
+        IRelayCommand MinimizeWindowCommand { get; }
+        IRelayCommand OpenManualCommand { get; }
         int TabIndex { get; set; }
         string Title { get; }
         string Version { get; }

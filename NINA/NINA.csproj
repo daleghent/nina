@@ -90,12 +90,6 @@
     <CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ReachFramework" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Printing" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
@@ -356,6 +350,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CoreWCF.WebHttp" Version="1.2.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="Dirkster.AvalonDock" Version="4.70.3" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
     <PackageReference Include="MdXaml" Version="1.16.2" />

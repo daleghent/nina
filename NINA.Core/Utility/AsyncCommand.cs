@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -38,11 +39,13 @@ namespace NINA.Core.Utility {
         }
     }
 
+    [Obsolete($"Use {nameof(IAsyncRelayCommand)} instead, that utilizes MVVM Toolkit via CommunityToolkit.Mvvm.Input")]
     public interface IAsyncCommand : ICommand {
 
         Task ExecuteAsync(object parameter);
     }
 
+    [Obsolete($"Use {nameof(AsyncRelayCommand)} instead, that utilizes MVVM Toolkit via CommunityToolkit.Mvvm.Input")]
     public class AsyncCommand<TResult> : AsyncCommandBase {
         private readonly Func<object, Task<TResult>> _command;
         private NotifyTaskCompletion<TResult> _execution;

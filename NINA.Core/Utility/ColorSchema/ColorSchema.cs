@@ -123,7 +123,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
     [Serializable()]
     [DataContract]
-    public class ColorSchema : BaseINPC {
+    public class ColorSchema : SerializableINPC {
         private Color primaryColor;
         private Color secondaryColor;
         private Color notificationErrorTextColor;

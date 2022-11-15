@@ -20,10 +20,11 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces.ViewModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace NINA.WPF.Base.ViewModel {
 
-    public class DockableVM : BaseVM, IDockableVM {
+    public partial class DockableVM : BaseVM, IDockableVM {
 
         public DockableVM(IProfileService profileService) : base(profileService) {
             this.CanClose = true;
@@ -44,29 +45,12 @@ namespace NINA.WPF.Base.ViewModel {
 
         public virtual bool IsTool { get; } = false;
 
-        private bool _isClosed;
+        [ObservableProperty]
+        private bool isClosed;
 
-        public bool IsClosed {
-            get {
-                return _isClosed;
-            }
-            set {
-                _isClosed = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool canClose;
 
-        private bool _canClose;
-
-        public bool CanClose {
-            get {
-                return _canClose;
-            }
-            set {
-                _canClose = value;
-                RaisePropertyChanged();
-            }
-        }
 
         public virtual string ContentId {
             get {
@@ -74,41 +58,14 @@ namespace NINA.WPF.Base.ViewModel {
             }
         }
 
-        private string _titleLabel;
+        [ObservableProperty]
+        private string title;
 
-        public string Title {
-            get {
-                return _titleLabel;
-            }
-            set {
-                _titleLabel = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        protected bool isVisible;
 
-        protected bool _isVisible;
-
-        public bool IsVisible {
-            get {
-                return _isVisible;
-            }
-            set {
-                _isVisible = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private GeometryGroup _imageGeometry;
-
-        public GeometryGroup ImageGeometry {
-            get {
-                return _imageGeometry;
-            }
-            set {
-                _imageGeometry = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private GeometryGroup imageGeometry;
 
         public ICommand HideCommand { get; private set; }
 

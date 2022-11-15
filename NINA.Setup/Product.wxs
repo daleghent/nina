@@ -681,6 +681,9 @@
 			<Component Id="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" Guid="*">
 			  <File Id="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" Name="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" Source="$(var.NINA_TargetDir)Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" />
 			</Component>
+			<Component Id="CommunityToolkit.Mvvm.dll" Guid="*">
+			  <File Id="CommunityToolkit.Mvvm.dll" Name="CommunityToolkit.Mvvm.dll" Source="$(var.NINA_TargetDir)CommunityToolkit.Mvvm.dll" />
+			</Component>
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>

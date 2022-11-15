@@ -51,7 +51,7 @@ namespace NINA.Profile {
     [KnownType(typeof(SnapShotControlSettings))]
     [KnownType(typeof(SafetyMonitorSettings))]
     [KnownType(typeof(PluginSettings))]
-    public class Profile : BaseINPC, IProfile {
+    public class Profile : SerializableINPC, IProfile {
 
         /// <summary>
         /// Exclusive locked filestream to read and write the profile

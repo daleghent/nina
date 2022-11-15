@@ -14,9 +14,9 @@
 
 using NINA.Core.Utility;
 using NINA.Profile.Interfaces;
+using System;
 
 namespace NINA.WPF.Base.ViewModel {
-
     public class BaseVM : BaseINPC {
 
         public BaseVM(IProfileService profileService) {

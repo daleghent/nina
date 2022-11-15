@@ -14,16 +14,16 @@
 
 using System.Collections.ObjectModel;
 using NINA.Equipment.Equipment.MyTelescope;
-using NINA.Core.Utility;
 using NINA.Astrometry;
 using NINA.Equipment.Interfaces.ViewModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IFocusTargetsVM : IDockableVM {
         ObservableCollection<FocusTarget> FocusTargets { get; set; }
         FocusTarget SelectedFocusTarget { get; set; }
-        IAsyncCommand SlewToCoordinatesCommand { get; }
+        IAsyncRelayCommand SlewToCoordinatesCommand { get; }
         bool TelescopeConnected { get; set; }
 
         void Dispose();

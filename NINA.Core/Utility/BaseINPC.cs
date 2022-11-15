@@ -12,15 +12,53 @@
 
 #endregion "copyright"
 
+using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 namespace NINA.Core.Utility {
 
+    public abstract class BaseINPC : ObservableObject {
+
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
+            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void ChildChanged(object sender, PropertyChangedEventArgs e) {
+            RaisePropertyChanged("IsChanged");
+        }
+
+        protected void Items_CollectionChanged(object sender,
+               System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            if (e.OldItems != null) {
+                foreach (INotifyPropertyChanged item in e.OldItems) {
+                    item.PropertyChanged -= new
+                                           PropertyChangedEventHandler(Item_PropertyChanged);
+                }
+            }
+            if (e.NewItems != null) {
+                foreach (INotifyPropertyChanged item in e.NewItems) {
+                    item.PropertyChanged +=
+                                       new PropertyChangedEventHandler(Item_PropertyChanged);
+                }
+            }
+        }
+
+        protected void Item_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            RaisePropertyChanged("IsChanged");
+        }
+
+        protected void RaiseAllPropertiesChanged() {
+            OnPropertyChanged(new PropertyChangedEventArgs(null));
+        }
+    }
+
     [System.Serializable()]
     [DataContract]
-    public abstract class BaseINPC : INotifyPropertyChanged {
+    [Obsolete($"This class is used for migration purposes when serialization attribute is required, which is not compatible with ObservableObject")]
+    public abstract class SerializableINPC : INotifyPropertyChanged {
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

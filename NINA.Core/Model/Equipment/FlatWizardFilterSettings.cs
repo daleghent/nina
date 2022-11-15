@@ -23,7 +23,7 @@ namespace NINA.Core.Model.Equipment {
     [JsonObject(MemberSerialization.OptIn)]
     [Serializable]
     [DataContract]
-    public class FlatWizardFilterSettings : BaseINPC {
+    public class FlatWizardFilterSettings : SerializableINPC {
         private FlatWizardMode flatWizardMode;
         private double histogramMeanTarget;
 

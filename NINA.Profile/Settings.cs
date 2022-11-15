@@ -21,7 +21,7 @@ namespace NINA.Profile {
 
     [Serializable()]
     [DataContract]
-    public abstract class Settings : BaseINPC, ISettings {
+    public abstract class Settings : SerializableINPC, ISettings {
 
         public Settings() {
             SetDefaultValues();

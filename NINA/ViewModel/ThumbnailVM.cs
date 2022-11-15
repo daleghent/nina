@@ -25,15 +25,18 @@ using NINA.WPF.Base.ViewModel;
 using NINA.Core.Locale;
 using NINA.Image.Interfaces;
 using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace NINA.ViewModel {
 
-    internal class ThumbnailVM : DockableVM, IThumbnailVM {
+    internal partial class ThumbnailVM : DockableVM, IThumbnailVM {
 
         public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageDataFactory imageDataFactory) : base(profileService) {
             Title = Loc.Instance["LblImageHistory"];
             CanClose = false;
-            ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"];
+            ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"]; 
+            thumbnails = new ObservableLimitedSizedStack<Thumbnail>(50);
 
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
@@ -42,11 +45,15 @@ namespace NINA.ViewModel {
             this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
             this.imagingMediator.ImagePrepared += ImagingMediator_ImagePrepared;
 
-            SelectCommand = new AsyncCommand<bool>((object o) => {
-                return SelectImage((Thumbnail)o);
-            });
-            GradeImageCommand = new AsyncCommand<bool>(GradeImage);
+            SelectCommand = new AsyncRelayCommand<Thumbnail>(SelectImage);
+            GradeImageCommand = new AsyncRelayCommand<Thumbnail>(GradeImage);
         }
+
+        [ObservableProperty]
+        private Thumbnail selectedThumbnail;
+
+        [ObservableProperty]
+        private ObservableLimitedSizedStack<Thumbnail> thumbnails;
 
         private void ImagingMediator_ImagePrepared(object sender, ImagePreparedEventArgs e) {
             // When images that aren't saved are taken, they replace the the image shown. This unselects whatever is currently highlighted.
@@ -54,7 +61,7 @@ namespace NINA.ViewModel {
             SelectedThumbnail = null;
         }
 
-        private Task<bool> GradeImage(object arg) {
+        private Task<bool> GradeImage(Thumbnail arg) {
             return Task.Run(async () => {
                 if (arg is Thumbnail) {
                     var selected = arg as Thumbnail;
@@ -125,20 +132,6 @@ namespace NINA.ViewModel {
             frame.Freeze();
             return frame;
         }
-
-        private Thumbnail _selectedThumbnail;
-
-        public Thumbnail SelectedThumbnail {
-            get {
-                return _selectedThumbnail;
-            }
-            set {
-                _selectedThumbnail = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ObservableLimitedSizedStack<Thumbnail> _thumbnails;
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
         private readonly IImageDataFactory imageDataFactory;
@@ -160,17 +153,5 @@ namespace NINA.ViewModel {
             }
         }
 
-        public ObservableLimitedSizedStack<Thumbnail> Thumbnails {
-            get {
-                if (_thumbnails == null) {
-                    _thumbnails = new ObservableLimitedSizedStack<Thumbnail>(50);
-                }
-                return _thumbnails;
-            }
-            set {
-                _thumbnails = value;
-                RaisePropertyChanged();
-            }
-        }
     }
 }

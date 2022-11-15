@@ -223,7 +223,7 @@ namespace NINA.ViewModel {
 
                     var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                     serializer.LayoutSerializationCallback += (s, args) => {
-                        if (args.Content is DockableVM d) {
+                        if (args.Content is IDockableVM d) {
                             d.IsVisible = true;
                             args.Content = d;
                         }
@@ -368,7 +368,7 @@ namespace NINA.ViewModel {
                                                     args.Cancel = true;
                                                 } else {
                                                     dupeCheck.Add(args.Model.ContentId);
-                                                    var d = (DockableVM)args.Content;
+                                                    var d = (IDockableVM)args.Content;
                                                     if (d != null) {
                                                         d.IsVisible = true;
                                                         args.Content = d;
