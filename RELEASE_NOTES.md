@@ -16,7 +16,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Issues due to the technology shift are expected during the early nightly versions, as the complete app has to undergo a full retest!
 - Plugins of prior versions are disabled and need to target the new version specifically to ensure full compatibility with .NET 6
 
-# Version 2.0 Hotfix 3
+# Version 2.1
 
 ## Bugfixes
 - When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running
@@ -35,10 +35,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - When a platesolver is not set up the message "Executable not found" will now also tell that this is about the plate solver not being set up
 - Options > General > Profiles are now ordered by Name with the active profile being on top
 - Layout of Switch Tab has been overhauled for a more compact and readable overview
+- Framing Assistant will no longer update the altitude chart on the left while the rectangle is dragged around to be able to drag it more smoothly. The chart will update once the dragging is stopped.
 
 ## Plugin Enablement
 - New Plugin Eventhook to react on GuidePulses
 - GuiderInfo now includes current RMS Error values
+- Add access to the device instances
 
 # Version 2.0 Hotfix 2
 

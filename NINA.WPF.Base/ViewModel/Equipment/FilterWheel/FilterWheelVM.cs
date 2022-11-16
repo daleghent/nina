@@ -369,6 +369,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                 FW.SendCommandBlind(command, raw);
             }
         }
+        public IDevice GetDevice() {
+            return FW;
+        }
 
         public IDeviceChooserVM DeviceChooserVM { get; set; }
         public IAsyncCommand ConnectCommand { get; private set; }

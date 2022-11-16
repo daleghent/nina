@@ -1054,6 +1054,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
             return PierSide.pierUnknown;
         }
+        public IDevice GetDevice() {
+            return Telescope;
+        }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 

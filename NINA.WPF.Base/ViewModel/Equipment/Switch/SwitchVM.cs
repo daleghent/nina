@@ -326,6 +326,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                 SwitchHub.SendCommandBlind(command, raw);
             }
         }
+        public IDevice GetDevice() {
+            return SwitchHub;
+        }
 
         public IAsyncCommand ConnectCommand { get; set; }
         public ICommand CancelConnectCommand { get; set; }

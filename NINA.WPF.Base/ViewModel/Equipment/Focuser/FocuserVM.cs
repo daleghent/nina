@@ -443,6 +443,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                 Focuser.SendCommandBlind(command, raw);
             }
         }
+        public IDevice GetDevice() {
+            return Focuser;
+        }
 
         public IDeviceChooserVM DeviceChooserVM { get; }
         public IAsyncCommand RescanDevicesCommand { get; }

@@ -83,17 +83,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private bool _canSubSample = false;
-
-        public bool CanSubSample {
-            get => _canSubSample;
-            private set {
-                _canSubSample = value;
-                Logger.Trace($"CanSubSample = {_canSubSample}");
-                RaisePropertyChanged();
-            }
-        }
-
+        public bool CanSubSample => true;
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
         public int SubSampleY { get; set; }
@@ -543,8 +533,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     HasShutter = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasShutter);
 
                     HasDewHeater = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.HasWindowHeater);
-
-                    CanSubSample = HasBit(Info.cameraflags, (int)AtikCameraDll.ArtemisPropertiesCameraFlags.Subsample);
 
                     CanGetCoolerPower = HasBit(coolingFlags, (int)AtikCameraDll.ArtemisCoolingInfoFlags.PowerLeveLControl) ||
                                         HasBit(coolingFlags, (int)AtikCameraDll.ArtemisCoolingInfoFlags.SetpointControl);

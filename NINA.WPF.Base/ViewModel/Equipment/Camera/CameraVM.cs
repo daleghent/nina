@@ -966,6 +966,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
+        public IDevice GetDevice() {
+            return Cam;
+        }
+
         public AsyncObservableLimitedSizedStack<CameraCoolingStep> CoolerHistory { get; private set; }
         public IAsyncCommand CoolCamCommand { get; private set; }
         public IAsyncCommand WarmCamCommand { get; private set; }

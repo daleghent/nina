@@ -246,6 +246,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                 RaisePropertyChanged();
             }
         }
+        public IDevice GetDevice() {
+            return SafetyMonitor;
+        }
 
         public IAsyncCommand ConnectCommand { get; private set; }
         public ICommand CancelConnectCommand { get; private set; }
