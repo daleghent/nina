@@ -25,7 +25,6 @@ using System.Xml.Serialization;
 using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
-using Accord.Statistics.Kernels;
 using System.Globalization;
 
 namespace NINA.Equipment.Model {

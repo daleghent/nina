@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Accord.IO;
 using Dasync.Collections;
 using Newtonsoft.Json;
 using NINA.Core.Enum;

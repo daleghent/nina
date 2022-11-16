@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Accord.Math;
 using NINA.Core.Model;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;

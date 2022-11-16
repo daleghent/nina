@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Accord;
 using Newtonsoft.Json;
 using NINA.Core.Model;
 using NINA.Profile.Interfaces;
