@@ -167,11 +167,18 @@ namespace NINA.Sequencer.Container {
             foreach (var item in Items) {
                 var se = item as SimpleExposure;
                 if (se.Enabled) {
-                    duration += TimeSpan.FromSeconds((se.GetTakeExposure().GetEstimatedDuration().TotalSeconds + profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime.TotalSeconds) * ((se.GetLoopCondition() as LoopCondition).Iterations - (se.GetLoopCondition() as LoopCondition).CompletedIterations));
+                    var exposureTime = se.GetTakeExposure().GetEstimatedDuration().TotalSeconds;
+                    var downloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime.TotalSeconds;
+                    var iterations = (se.GetLoopCondition() as LoopCondition).Iterations;
+                    var completedIterations = (se.GetLoopCondition() as LoopCondition).CompletedIterations;
+                    var rotatesLeft = this.rotateLoopCondition.Iterations - this.rotateLoopCondition.CompletedIterations;
+
+                    if (Mode == SequenceMode.ROTATE) {                        
+                        duration += TimeSpan.FromSeconds((exposureTime + downloadTime) * Math.Max(0, (rotatesLeft - completedIterations)));
+                    } else {
+                        duration += TimeSpan.FromSeconds((exposureTime + downloadTime) * (iterations - completedIterations));
+                    }
                 }
-            }
-            if (Mode == SequenceMode.ROTATE) {
-                duration = TimeSpan.FromSeconds(duration.TotalSeconds * (this.rotateLoopCondition.Iterations - this.rotateLoopCondition.CompletedIterations));
             }
             return duration;
         }
