@@ -32,7 +32,7 @@ namespace NINA.Sequencer.Utility {
         public static ContextCoordinates RetrieveContextCoordinates(ISequenceContainer parent) {
             if (parent != null) {
                 var container = parent as IDeepSkyObjectContainer;
-                if (container != null) {
+                if (container != null && container.Target != null && container.Target.InputCoordinates != null && container.Target.DeepSkyObject != null) {
                     return new ContextCoordinates(
                         container.Target.InputCoordinates.Coordinates, 
                         container.Target.Rotation,
