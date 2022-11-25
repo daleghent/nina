@@ -196,6 +196,8 @@ namespace NINA.Image.ImageData {
 
     public class TargetParameter {
         public string Name { get; set; } = string.Empty;
+        [Obsolete("Use PositionAngle instead")]
+        public double Rotation { get => AstroUtil.EuclidianModulus(360 - PositionAngle, 360); }
         public double PositionAngle { get; set; } = double.NaN;
         private Coordinates coordinates = null;
 
