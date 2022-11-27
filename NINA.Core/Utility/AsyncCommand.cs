@@ -95,10 +95,15 @@ namespace NINA.Core.Utility {
         public override async Task ExecuteAsync(object parameter) {
             Execution = new NotifyTaskCompletion<TResult>(_command(parameter));
             RaiseCanExecuteChanged();
+            RaisePropertyChanged(nameof(IsRunning));
             if (!Execution.IsCompleted) {
                 await Execution.TaskCompletion;
             }
+            RaisePropertyChanged(nameof(IsRunning));
             RaiseCanExecuteChanged();
+        }
+        public bool IsRunning {
+            get => Execution?.IsNotCompleted ?? false;
         }
 
         // Raises PropertyChanged
