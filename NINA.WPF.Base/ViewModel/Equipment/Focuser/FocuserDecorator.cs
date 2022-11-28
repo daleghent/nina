@@ -40,6 +40,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         protected IFocuser focuser;
         protected OvershootDirection lastDirection = OvershootDirection.NONE;
 
+        public IFocuser Focuser => this.focuser;
+
         public bool IsMoving => this.focuser.IsMoving;
 
         public int MaxIncrement => this.focuser.MaxIncrement;
