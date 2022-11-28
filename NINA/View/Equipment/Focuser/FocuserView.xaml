@@ -341,10 +341,11 @@
                         FailedToLoadTemplate="{StaticResource Failed}"
                         Postfix="{x:Static wpfutil:DataTemplatePostfix.FocuserSettings}" />
                 </Grid.Resources>
+                <!--  Binding to Focuser.Focuser as the focuser is a decorated class and needs to bind to the internal Focuser instance  -->
                 <ContentControl
                     Content="{Binding}"
                     ContentTemplateSelector="{StaticResource ContentSelector}"
-                    DataContext="{Binding Focuser}" />
+                    DataContext="{Binding Focuser.Focuser}" />
             </Grid>
         </GroupBox>
     </UniformGrid>
