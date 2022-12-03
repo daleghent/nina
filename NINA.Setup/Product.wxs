@@ -35,7 +35,7 @@
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     
     <!--https://learn.microsoft.com/en-us/windows/win32/msi/reinstallmode-->
-		<Property Id="REINSTALLMODE" Value="dmus"/>
+		<Property Id="REINSTALLMODE" Value="dmus" />
     
 		<!--Todo does not find file-->
 		<Icon Id="Logo_Nina.ico" SourceFile="Logo_Nina.ico" />
@@ -152,6 +152,9 @@
 			<ComponentGroupRef Id="nb_NO_files" />
 			<ComponentGroupRef Id="ko_KR_files" />
 			<ComponentGroupRef Id="pt_files" />
+      <ComponentGroupRef Id="runtimes_win_x64_native_files" />
+      <ComponentGroupRef Id="runtimes_win_lib_net7.0_files" />
+      <ComponentGroupRef Id="runtimes_win_lib_netcoreapp2.1_files" />
 		</Feature>
 		<InstallExecuteSequence>
       <Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
@@ -289,6 +292,17 @@
 					<Directory Id="nb_NO" Name="nb-NO" />
 					<Directory Id="ko_KR" Name="ko-KR" />
 					<Directory Id="pt" Name="pt" />
+          <Directory Id="runtimes" Name="runtimes">
+            <Directory Id="runtimes_win_x64" Name="win-x64">
+              <Directory Id="runtimes_win_x64_native" Name="native"></Directory>
+            </Directory>
+            <Directory Id="runtimes_win" Name="win">
+              <Directory Id="runtimes_win_lib" Name="lib">
+                <Directory Id="runtimes_win_lib_net7.0" Name="net7.0" />
+                <Directory Id="runtimes_win_lib_netcoreapp2.1" Name="netcoreapp2.1" />
+              </Directory>
+            </Directory>
+          </Directory>
 				</Directory>
 			</Directory>
 			<Directory Id="ProgramMenuFolder">
@@ -665,6 +679,9 @@
 			<Component Id="NINA.runtimeconfig.json" Guid="*">
 			  <File Id="NINA.runtimeconfig.json" Name="NINA.runtimeconfig.json" Source="$(var.NINA_TargetDir)NINA.runtimeconfig.json" />
 			</Component>
+      <Component Id="NINA.deps.json" Guid="*">
+        <File Id="NINA.deps.json" Name="NINA.deps.json" Source="$(var.NINA_TargetDir)NINA.deps.json" />
+      </Component>
 			<Component Id="Microsoft.AspNetCore.JsonPatch.dll" Guid="*">
 			  <File Id="Microsoft.AspNetCore.JsonPatch.dll" Name="Microsoft.AspNetCore.JsonPatch.dll" Source="$(var.NINA_TargetDir)Microsoft.AspNetCore.JsonPatch.dll" />
 			</Component>
@@ -1585,4 +1602,60 @@
 		</ComponentGroup>
 	</Fragment>
 	<!-- Avalondock localization End -->
+  
+  <!-- Dynamic linked runtime files Start -->
+  <Fragment>
+    <ComponentGroup Id="runtimes_win_x64_native_files" Directory="runtimes_win_x64_native">
+      <Component Id="sni.dll" Guid="*">
+        <File Id="sni.dll" Name="sni.dll" Source="$(var.NINA_TargetDir)runtimes\win-x64\native\sni.dll" />
+      </Component>
+      <Component Id="SQLite.Interop.dll_x64_native" Guid="*">
+        <File Id="SQLite.Interop.dll_x64_native" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)runtimes\win-x64\native\SQLite.Interop.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  
+  <Fragment>
+    <ComponentGroup Id="runtimes_win_lib_net7.0_files" Directory="runtimes_win_lib_net7.0">
+      <Component Id="System.Data.Odbc.dll" Guid="*">
+        <File Id="System.Data.Odbc.dll" Name="System.Data.Odbc.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Data.Odbc.dll" />
+      </Component>
+      <Component Id="System.Data.OleDb.dll" Guid="*">
+        <File Id="System.Data.OleDb.dll" Name="System.Data.OleDb.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Data.OleDb.dll" />
+      </Component>
+      <Component Id="System.DirectoryServices.AccountManagement.dll" Guid="*">
+        <File Id="System.DirectoryServices.AccountManagement.dll" Name="System.DirectoryServices.AccountManagement.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.DirectoryServices.AccountManagement.dll" />
+      </Component>
+      <Component Id="System.ServiceProcess.ServiceController.dll" Guid="*">
+        <File Id="System.ServiceProcess.ServiceController.dll" Name="System.ServiceProcess.ServiceController.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.ServiceProcess.ServiceController.dll" />
+      </Component>
+      <Component Id="System.Speech.dll" Guid="*">
+        <File Id="System.Speech.dll" Name="System.Speech.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Speech.dll" />
+      </Component>
+      
+      <Component Id="System.DirectoryServices.Protocols.dll_net7.0" Guid="*">
+        <File Id="System.DirectoryServices.Protocols.dll_net7.0" Name="System.DirectoryServices.Protocols.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.DirectoryServices.Protocols.dll" />
+      </Component>
+      <Component Id="System.IO.Ports.dll_net7.0" Guid="*">
+        <File Id="System.IO.Ports.dll_net7.0" Name="System.IO.Ports.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.IO.Ports.dll" />
+      </Component>
+      <Component Id="System.Management.dll_net7.0" Guid="*">
+        <File Id="System.Management.dll_net7.0" Name="System.Management.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Management.dll" />
+      </Component>
+      <Component Id="System.Runtime.Caching.dll_net7.0" Guid="*">
+        <File Id="System.Runtime.Caching.dll_net7.0" Name="System.Runtime.Caching.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Runtime.Caching.dll" />
+      </Component>
+      
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="runtimes_win_lib_netcoreapp2.1_files" Directory="runtimes_win_lib_netcoreapp2.1">
+      <Component Id="System.Data.SqlClient.dll_netcoreapp2.1" Guid="*">
+        <File Id="System.Data.SqlClient.dll_netcoreapp2.1" Name="System.Data.SqlClient.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+      </Component>      
+      </ComponentGroup>
+    </Fragment>
+  
+  <!-- Dynamic linked runtime files End -->
 </Wix>
