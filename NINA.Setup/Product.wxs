@@ -478,9 +478,6 @@
 			<Component Win64="$(var.Win64)" Id="NINA.MGEN.dll" Guid="*">
 				<File Id="NINA.MGEN.dll" Name="NINA.MGEN.dll" Source="$(var.NINA.MGEN_TargetDir)NINA.MGEN.dll" />
 			</Component>
-			<Component Win64="$(var.Win64)" Id="Zlib.Portable.dll" Guid="*">
-				<File Id="Zlib.Portable.dll" Name="Zlib.Portable.dll" Source="$(var.NINA_TargetDir)Zlib.Portable.dll" />
-			</Component>
 			<Component Win64="$(var.Win64)" Id="SHA3Managed.dll" Guid="*">
 				<File Id="SHA3Managed.dll" Name="SHA3Managed.dll" Source="$(var.NINA_TargetDir)SHA3Managed.dll" />
 			</Component>
@@ -699,6 +696,9 @@
 			</Component>
 			<Component Id="CommunityToolkit.Mvvm.dll" Guid="*">
 			  <File Id="CommunityToolkit.Mvvm.dll" Name="CommunityToolkit.Mvvm.dll" Source="$(var.NINA_TargetDir)CommunityToolkit.Mvvm.dll" />
+			</Component>
+			<Component Id="Iconic.Zlib.Netstandard.dll" Guid="6017c127-e9e4-45cf-b5a2-7011772f4dbb">
+			  <File Id="Iconic.Zlib.Netstandard.dll" Name="Iconic.Zlib.Netstandard.dll" Source="$(var.NINA_TargetDir)Iconic.Zlib.Netstandard.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
