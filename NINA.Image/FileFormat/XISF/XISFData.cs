@@ -16,7 +16,6 @@ using Ionic.Zlib;
 using K4os.Compression.LZ4;
 using NINA.Core.Enum;
 using NINA.Core.Utility;
-using SHA3;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -182,8 +181,6 @@ namespace NINA.Image.FileFormat.XISF {
              * If the data block is compressed, we always checksum the compressed form, not the uncompressed form.
              */
             using (MyStopWatch.Measure($"XISF Checksum = {ChecksumType}")) {
-                SHA3Managed sha3;
-
                 switch (ChecksumType) {
                     case XISFChecksumTypeEnum.SHA1:
                         SHA1 sha1 = SHA1.Create();
@@ -207,18 +204,10 @@ namespace NINA.Image.FileFormat.XISF {
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_256:
-                        sha3 = new SHA3Managed(256);
-                        Checksum = GetStringFromHash(sha3.ComputeHash(outArray));
-                        ChecksumName = "sha3-256";
-                        sha3.Dispose();
-                        break;
+                        throw new NotSupportedException();                        
 
                     case XISFChecksumTypeEnum.SHA3_512:
-                        sha3 = new SHA3Managed(512);
-                        Checksum = GetStringFromHash(sha3.ComputeHash(outArray));
-                        ChecksumName = "sha3-512";
-                        sha3.Dispose();
-                        break;
+                        throw new NotSupportedException();                        
 
                     case XISFChecksumTypeEnum.NONE:
                     default:

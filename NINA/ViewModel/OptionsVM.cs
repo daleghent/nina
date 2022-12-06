@@ -710,8 +710,7 @@ namespace NINA.ViewModel {
                 /*
                  * NOTE: PixInsight does not yet support opening files with SHA3 checksums, despite then
                  * being defined as part of the XISF 1.0 specification. We will not permit the user to choose
-                 * these as a checksum type until PixInsight also supports them, which is supposed to be in early
-                 * 2020.
+                 * these as a checksum type until PixInsight also supports them.
                  */
                 return Enum.GetValues(typeof(XISFChecksumTypeEnum))
                     .Cast<XISFChecksumTypeEnum>()

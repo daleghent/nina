@@ -41,7 +41,6 @@
   <ItemGroup>
     <PackageReference Include="K4os.Compression.LZ4" Version="1.2.16" />
     <PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
-    <PackageReference Include="SHA3" Version="0.9.2" />
     <PackageReference Include="VVVV.FreeImage" Version="3.15.1.1" />
   </ItemGroup>  
   <PropertyGroup>

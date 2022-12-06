@@ -23,7 +23,6 @@ using NINA.Image.ImageAnalysis;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
-using SHA3;
 using System;
 using System.IO;
 using System.Linq;
@@ -366,7 +365,6 @@ namespace NINA.Image.FileFormat.XISF {
 
         private static bool VerifyChecksum(byte[] raw, XISFChecksumTypeEnum cksumType, string providedCksum) {
             string computedCksum;
-            SHA3Managed sha3;
 
             using (MyStopWatch.Measure($"XISF Checksum = {cksumType}")) {
                 switch (cksumType) {
@@ -389,16 +387,10 @@ namespace NINA.Image.FileFormat.XISF {
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_256:
-                        sha3 = new SHA3Managed(256);
-                        computedCksum = GetStringFromHash(sha3.ComputeHash(raw));
-                        sha3.Dispose();
-                        break;
+                        throw new NotSupportedException();
 
                     case XISFChecksumTypeEnum.SHA3_512:
-                        sha3 = new SHA3Managed(512);
-                        computedCksum = GetStringFromHash(sha3.ComputeHash(raw));
-                        sha3.Dispose();
-                        break;
+                        throw new NotSupportedException();
 
                     default:
                         return false;

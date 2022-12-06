@@ -389,60 +389,7 @@ namespace NINA.Test {
             sut.Header.Image.Should().HaveAttribute("checksum", $"sha-512:{checksum}");
         }
 
-        [Test]
-        public void XISFChecksumSHA3_256Test() {
-            const int imgSize = 128;
-            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
-            const string imageType = "LIGHT";
-            var data = new ushort[imgSize * imgSize];
-            const string checksum = "1454fca9a69b7c15209d52a7474b3b80cfc4b80c5e1720d24c13a24d9d832c0e";
-
-            var fileSaveInfo = new FileSaveInfo {
-                FilePath = string.Empty,
-                FilePattern = string.Empty,
-                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA3_256
-            };
-
-            for (ushort i = 0; i < data.Length; i++) {
-                data[i] = ushort.MaxValue;
-            }
-
-            var header = new XISFHeader();
-            header.AddImageMetaData(props, imageType);
-            var sut = new XISF(header);
-            sut.AddAttachedImage(data, fileSaveInfo);
-
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-256:{checksum}");
-        }
-
-        [Test]
-        public void XISFChecksumSHA3_512Test() {
-            const int imgSize = 128;
-            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
-            const string imageType = "LIGHT";
-            var data = new ushort[imgSize * imgSize];
-            const string checksum = "9934ce6c44048d54302b025f71ddbb44ad49da730600b60821798892c1f51b19a91b0dc9c578ed4baa4b9e7506e966100532f9b70e264aaef6ee76eda074ab57";
-
-            var fileSaveInfo = new FileSaveInfo {
-                FilePath = string.Empty,
-                FilePattern = string.Empty,
-                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA3_512
-            };
-
-            for (ushort i = 0; i < data.Length; i++) {
-                data[i] = ushort.MaxValue;
-            }
-
-            var header = new XISFHeader();
-            header.AddImageMetaData(props, imageType);
-            var sut = new XISF(header);
-            sut.AddAttachedImage(data, fileSaveInfo);
-
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-512:{checksum}");
-        }
-
+        
         #endregion "XISF"
 
         #region "XISFHeader"

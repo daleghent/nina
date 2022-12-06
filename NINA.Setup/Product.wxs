@@ -478,9 +478,6 @@
 			<Component Win64="$(var.Win64)" Id="NINA.MGEN.dll" Guid="*">
 				<File Id="NINA.MGEN.dll" Name="NINA.MGEN.dll" Source="$(var.NINA.MGEN_TargetDir)NINA.MGEN.dll" />
 			</Component>
-			<Component Win64="$(var.Win64)" Id="SHA3Managed.dll" Guid="*">
-				<File Id="SHA3Managed.dll" Name="SHA3Managed.dll" Source="$(var.NINA_TargetDir)SHA3Managed.dll" />
-			</Component>
 			<Component Win64="$(var.Win64)" Id="thirdparty" Guid="*">
 				<File Id="thirdparty" Name="3rd-party-licenses.txt" Source="$(var.NINA_TargetDir)3rd-party-licenses.txt" />
 			</Component>

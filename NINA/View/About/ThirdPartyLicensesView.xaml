@@ -130,17 +130,6 @@
             </TextBlock>
 
             <TextBlock
-                Grid.Row="6"
-                Grid.Column="0"
-                Text="SHA3" />
-            <TextBlock Grid.Row="6" Grid.Column="1">
-                <Hyperlink NavigateUri="https://bitbucket.org/jdluzen/sha3" RequestNavigate="Hyperlink_RequestNavigate">https://bitbucket.org/jdluzen/sha3</Hyperlink>
-            </TextBlock>
-            <TextBlock Grid.Row="6" Grid.Column="2">
-                <Hyperlink NavigateUri="https://opensource.org/licenses/MIT" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
-            </TextBlock>
-
-            <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
                 Text="CFITSIO " />
