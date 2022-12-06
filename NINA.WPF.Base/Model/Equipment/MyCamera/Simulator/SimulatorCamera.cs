@@ -214,37 +214,40 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public CameraStates CameraState { get => CameraStates.NoState; }
 
+        private int offset;
         public int Offset {
             get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera.Offset ?? -1;
+                return offset;
             }
-
             set {
+                offset = value;
+                RaisePropertyChanged();
             }
         }
 
+        private int usbLimit; 
         public int USBLimit {
-            get {
-                return -1;
-            }
+            get => usbLimit;
 
             set {
+                usbLimit = value;
+                RaisePropertyChanged();
             }
         }
 
-        public int USBLimitMax => -1;
-        public int USBLimitMin => -1;
-        public int USBLimitStep => -1;
+        public int USBLimitMax => 100;
+        public int USBLimitMin => 0;
+        public int USBLimitStep => 1;
 
         public bool CanSetOffset {
             get {
-                return false;
+                return true;
             }
         }
 
         public int OffsetMin {
             get {
-                return 0;
+                return 1000;
             }
         }
 
@@ -256,7 +259,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public bool CanSetUSBLimit {
             get {
-                return false;
+                return true;
             }
         }
 

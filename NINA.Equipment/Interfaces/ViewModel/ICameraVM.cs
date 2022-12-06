@@ -55,5 +55,6 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> WarmCamera(TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         IDeviceChooserVM DeviceChooserVM { get; set; }
+        void SetUSBLimit(int usbLimit);
     }
 }

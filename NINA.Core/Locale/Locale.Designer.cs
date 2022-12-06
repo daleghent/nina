@@ -933,6 +933,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the USB limit for the camera if available.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_SetUSBLimit_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_SetUSBLimit_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set USB Limit.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_SetUSBLimit_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_SetUSBLimit_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warms the camera for the given duration.
         /// </summary>
         internal static string Lbl_SequenceItem_Camera_WarmCamera_Description {
@@ -2061,6 +2079,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera cannot set USB limit.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_CannotSetUSBLimit {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_CannotSetUSBLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The flat device does not support opening or closing the cover.
         /// </summary>
         internal static string Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose {
@@ -2093,6 +2120,15 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_Validation_InvalidSwitchValue {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Validation_InvalidSwitchValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value for USB limit for the camera.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_InvalidUSBLimit {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_InvalidUSBLimit", resourceCulture);
             }
         }
         
