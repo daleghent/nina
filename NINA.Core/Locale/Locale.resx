@@ -6501,4 +6501,16 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblGauges" xml:space="preserve">
     <value>Gauges</value>
   </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Sets the USB limit for the camera if available</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Set USB Limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Camera cannot set USB limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Invalid value for USB limit for the camera</value>
+  </data>
 </root>

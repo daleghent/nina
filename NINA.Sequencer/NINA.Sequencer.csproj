@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="SequenceItem\Camera\DewHeater.cs" />
     <Compile Include="SequenceItem\Camera\SetReadoutMode.cs" />
+    <Compile Include="SequenceItem\Camera\SetUSBLimit.cs" />
     <Compile Include="SequenceItem\Camera\WarmCamera.cs" />
     <Compile Include="SequenceItem\Dome\CloseDomeShutter.cs" />
     <Compile Include="SequenceItem\Dome\DataTemplates.xaml.cs">

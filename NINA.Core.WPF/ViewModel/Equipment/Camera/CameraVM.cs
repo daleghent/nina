@@ -414,6 +414,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                                 BayerOffsetY = Cam.BayerOffsetY,
                                 DefaultGain = DefaultGain,
                                 DefaultOffset = DefaultOffset,
+                                USBLimitMin = Cam.USBLimitMin,
+                                USBLimitMax = Cam.USBLimitMax,
+                                CanSetUSBLimit = Cam.CanSetUSBLimit,
                                 USBLimit = Cam.USBLimit,
                                 SupportedActions = Cam.SupportedActions,
                             };
@@ -779,6 +782,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         public void SetReadoutMode(short mode) {
             if (CameraInfo.Connected && mode >= 0 && mode < CameraInfo.ReadoutModes.Count()) {
                 Cam.ReadoutMode = CameraInfo.ReadoutMode = mode;
+                BroadcastCameraInfo();
+            }
+        }
+
+        public void SetUSBLimit(int usbLimit) {
+            if (CameraInfo.Connected && CameraInfo.CanSetUSBLimit && usbLimit >= CameraInfo.USBLimitMin && usbLimit <= CameraInfo.USBLimitMax) {
+                Cam.USBLimit = usbLimit;
+                CameraInfo.USBLimit = usbLimit;
                 BroadcastCameraInfo();
             }
         }
