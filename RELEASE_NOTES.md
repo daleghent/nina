@@ -14,7 +14,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## .NET 7
 - The application has been lifted to utilize .NET 7. This is much more than just a Version shift of the previously used .NET Framework 4.8 as .NET 6 is based on .NET Core which is a complete rewrite of the .NET Framework by Microsoft and thus a major technical upgrade for N.I.N.A.
 - Issues due to the technology shift are expected during the early nightly versions, as the complete app has to undergo a full retest!
-- Plugins of prior versions are disabled and need to target the new version specifically to ensure full compatibility with .NET 6
+- Plugins of prior versions are disabled and need to be patched and target the new version specifically to ensure full compatibility with .NET 7
 
 # Version 2.1
 
