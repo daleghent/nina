@@ -6162,7 +6162,7 @@
     <value>字符串</value>
   </data>
   <data name="LblBlind" xml:space="preserve">
-    <value>Blind</value>
+    <value>盲解析</value>
   </data>
   <data name="LblAction" xml:space="preserve">
     <value>操作</value>
@@ -6353,13 +6353,13 @@
     <value>没有滤镜</value>
   </data>
   <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Exposure speed</value>
+    <value>曝光速度</value>
   </data>
   <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Gain preset</value>
+    <value>增益预设</value>
   </data>
   <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Heater power level</value>
+    <value>加热功率</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Dither Settling</value>
@@ -6374,9 +6374,9 @@
     <value>将图像顺时针旋转90°。后续图像也将同样旋转。 只改变图像显示，不影响保存的数据。</value>
   </data>
   <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
-    <value>Image needs to be solved for framing.
-Please confirm the meta data to use for solving.
-Once confirmed choose which solver should be used.</value>
+    <value>此图像需要被解析后才可用于构图。
+请确认用于解析的基础数据。
+确认后，这些参数将被用于解析。</value>
   </data>
   <data name="LblPlateSolveRequired" xml:space="preserve">
     <value>需要解析</value>
@@ -6385,74 +6385,74 @@ Once confirmed choose which solver should be used.</value>
     <value>若选择盲解析，将忽略图像坐标并使用设定的盲解析工具。</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
-    <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
+    <value>选择解析工具后，此坐标将在解析时用于参考，并使用选项卡中设置的解析工具进行解析。</value>
   </data>
   <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
-    <value>Guide Graph Dec Color</value>
+    <value>赤纬导星曲线的颜色</value>
   </data>
   <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
-    <value>Guide Graph RA Color</value>
+    <value>赤经导星曲线的颜色</value>
   </data>
   <data name="LblGuideGraphShowCorrections" xml:space="preserve">
-    <value>Guide Graph Show Corrections</value>
+    <value>在导星曲线图中显示修正量</value>
   </data>
   <data name="LblRotateImageAfterFlip" xml:space="preserve">
-    <value>Rotate image after flip</value>
+    <value>中天翻转后旋转图像</value>
   </data>
   <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
-    <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
+    <value>如果启用，在中天翻转后，“主控台-图像”标签中的图像将进行180°旋转，仅作用于预览，不作用于拍摄的图像数据。</value>
   </data>
   <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
-    <value>Disable guiding during filter change</value>
+    <value>更换滤镜期间暂停导星</value>
   </data>
   <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
-    <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
+    <value>若此选项启用，每次切换滤镜时将停止导星，并在切换完毕后重新启用。</value>
   </data>
   <data name="LblEphemerisNotFound" xml:space="preserve">
-    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+    <value>用于计算天体轨道的星历表文件丢失，请重新安装NINA进行修复。</value>
   </data>
   <data name="LblPHD2InstanceNumber" xml:space="preserve">
     <value>PHD2 instance number</value>
   </data>
   <data name="LblDomeMountGeometry" xml:space="preserve">
-    <value>Dome &amp; mount geometry</value>
+    <value>圆顶、支架的几何参数</value>
   </data>
   <data name="LblDomeNotConnectedError" xml:space="preserve">
-    <value>The dome driver is not connected!</value>
+    <value>圆顶驱动未连接！</value>
   </data>
   <data name="LblDomeShutterCoordination" xml:space="preserve">
     <value>Shutter coordination</value>
   </data>
   <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to move but the mount is disconnected. Mount status cannot be determined. This can be unsafe!</value>
+    <value>天窗或平顶收到移动命令但望远镜已断开连接。望远镜状态无法确定。这可能不安全。</value>
   </data>
   <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to move but the mount is unparked. This can be unsafe!</value>
+    <value>天窗或平顶收到移动命令但赤道仪不在零位，这可能不安全。</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
-    <value>Park dome before shutter operation</value>
+    <value>在天窗移动前停放圆顶</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
     <value>Sends the dome to its park position before attempting to open or cloose the shutter</value>
   </data>
   <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
-    <value>Park mount before shutter operation</value>
+    <value>在望远镜移动前停放圆顶</value>
   </data>
   <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Attempt to park the mount before opening or closing the shutter</value>
+    <value>尝试在打开或关闭天窗前停放望远镜</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
-    <value>Refuse open or close if mount is unparked</value>
+    <value>如望远镜已经停放，则拒绝打开或关闭圆顶</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
     <value>Causes N.I.N.A. to refuse to open or close the shutter or roof if the mount is in an unparked state.
 This is evaluated AFTER the "Park mount before moving the shutter" setting.</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
-    <value>Refuse open if a Safety Monitor is not connected</value>
+    <value>当安全监视器未连接时拒绝打开天窗</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
-    <value>Causes N.I.N.A. to refuse to open the shutter or roof if a Safety Monitor device is not connected.</value>
+    <value>如果安全监视器未连接，则NINA将拒绝打开天窗或平顶</value>
   </data>
   <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
     <value>The shutter or roof was ordered to open but the safety monitor device is disconnected. Opening has been aborted.</value>
@@ -6461,7 +6461,7 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>NOTICE: These settings relate to the safety of your equipment. They must be set with careful consideration and with the familiarity you have with your specific setup. They govern only N.I.N.A.'s control of the equipment and are NOT in effect if N.I.N.A. is not running or is not connected to the equipment in question. Dome or roof safety mechanisms should always have a hardware backup and electrical interlocks to prevent any undesired shutter or roof movement. It is your responsibility to ensure that these settings do not conflict with your dome driver's settings.</value>
   </data>
   <data name="LblCollapseSidebarTooltip" xml:space="preserve">
-    <value>Collapses the left sidebars to only show smaller icons without text</value>
+    <value>折叠左边栏，仅显示图标</value>
   </data>
   <data name="LblExpandSidebarTooltip" xml:space="preserve">
     <value>Expands the left sidebars to show larger icons with text</value>
@@ -6470,13 +6470,13 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>Enable settings mode. When this mode is enabled each instruction can be disabled or enabled. A disabled instruction will then not be shown inside the sidebar outside of settings mode.</value>
   </data>
   <data name="LblCollapseAll" xml:space="preserve">
-    <value>Collapse All</value>
+    <value>折叠所有</value>
   </data>
   <data name="LblExpandAll" xml:space="preserve">
-    <value>Expand All</value>
+    <value>展开所有</value>
   </data>
   <data name="LblRotating" xml:space="preserve">
-    <value>Rotating</value>
+    <value>旋转中</value>
   </data>
   <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
     <value>The drive rate {0} is invalid to move the telescope axis. Please enter a different rate.</value>
@@ -6486,9 +6486,9 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <comment>First parameter is filter name and second parameter is filter position number</comment>
   </data>
   <data name="LblSwitches" xml:space="preserve">
-    <value>Switches</value>
+    <value>开关</value>
   </data>
   <data name="LblGauges" xml:space="preserve">
-    <value>Gauges</value>
+    <value>仪表盘</value>
   </data>
 </root>
