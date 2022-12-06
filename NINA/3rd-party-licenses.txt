@@ -942,7 +942,7 @@ The rights granted under, and the subject matter referenced, in this License wer
 zlib License
 
 applies to:
-    - Zlib.Portable.Signed
+    - Iconic.Zlib.Netstandard
 -----------------------------------------------------------------------------
 
 Copyright (c) <''year''> <''copyright holders''>
