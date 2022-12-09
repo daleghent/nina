@@ -44,8 +44,8 @@
   <ItemGroup>
     <PackageReference Include="ASCOM.Com.Components" Version="1.0.52" />
     <PackageReference Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
-    <PackageReference Include="Google.Protobuf.Tools" Version="3.21.10" />
-    <PackageReference Include="Grpc.Tools" Version="2.50.0">
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.21.11" />
+    <PackageReference Include="Grpc.Tools" Version="2.51.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
