@@ -50,6 +50,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <TextBlock
@@ -131,6 +132,19 @@
                         <Run Text="{Binding Source={x:Static coreuti:CoreUtil.ChangelogPage}, Mode=OneWay}" />
                     </Hyperlink>
                 </TextBlock>
+
+                <TextBlock
+                    Grid.Row="6"
+                    Margin="0,5,0,0"
+                    FontSize="14"
+                    Text="Crowdin Translations" />
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="5,5,0,0"
+                    FontSize="14">
+                    <Hyperlink NavigateUri="https://nina.crowdin.com/nina" RequestNavigate="Hyperlink_RequestNavigate">https://nina.crowdin.com/nina</Hyperlink>
+                </TextBlock>
             </Grid>
 
             <StackPanel
@@ -150,14 +164,19 @@
                 FontSize="16">
                 Created and maintained by Stefan Berg with the help of a loose team of volunteering contributors. See the Authors page for a list of all contributors.
             </TextBlock>
-            <TextBlock
+            <StackPanel
                 Grid.Row="5"
                 Margin="5,0,0,0"
                 VerticalAlignment="Top"
-                FontSize="16">
-                Copyright © 2016 - 2022 Stefan Berg
-                &lt;isbeorn86+NINA@googlemail.com&gt; and the N.I.N.A. contributors
-            </TextBlock>
+                Orientation="Horizontal">
+                <TextBlock FontSize="16" Text="Copyright © 2016 - 2022 Stefan Berg " />
+                <TextBlock FontSize="16">
+                    <Hyperlink NavigateUri="mailto:isbeorn86+NINA@googlemail.com" RequestNavigate="Hyperlink_RequestNavigate">
+                        &lt;isbeorn86+NINA@googlemail.com&gt;
+                    </Hyperlink></TextBlock>
+                <TextBlock FontSize="16" Text=" and the N.I.N.A. contributors" />
+            </StackPanel>
+
         </Grid>
     </ScrollViewer>
 </UserControl>
