@@ -875,6 +875,19 @@ Creative Commons Attribution 3.0 Unported License
 
 applies to:
     - NikonCSWrapper (c) Thomas Dideriksen
+    - all svg icons made by the following people on flaticon.com
+        - roundicons
+        - freepik
+        - bogdan-rosu
+        - dave-gandy
+        - gregor-cresnar
+        - google
+        - smashicons
+        - dave-gandy
+        - pixel-perfect
+        - Icongeek26
+        - those-icons
+        - xnimrodx
 -----------------------------------------------------------------------------
 
 THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
