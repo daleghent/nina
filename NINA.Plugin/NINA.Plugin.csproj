@@ -44,7 +44,7 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>$(AssemblyName)</Title>
-    <Version>3.0.0.1001-nightly2</Version>
+    <Version>3.0.0.1001-nightly3</Version>
     <Authors>Stefan Berg and the N.I.N.A. Contributors</Authors>
     <Product>N.I.N.A. - Nighttime Imaging 'N' Astronomy</Product>
     <Copyright>Copyright ©  2016 - 2022 Stefan Berg and the N.I.N.A. contributors</Copyright>
