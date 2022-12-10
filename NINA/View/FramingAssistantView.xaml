@@ -440,7 +440,7 @@
                                         <ninactrl:StepperControl.InnerContent>
                                             <ninactrl:UnitTextBox
                                                 VerticalContentAlignment="Center"
-                                                Text="{Binding FieldOfView}"
+                                                Text="{Binding FieldOfView, StringFormat=\{0:0.00\}}"
                                                 TextAlignment="Center"
                                                 Unit="°" />
                                         </ninactrl:StepperControl.InnerContent>
