@@ -16,6 +16,21 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Issues due to the technology shift are expected during the early nightly versions, as the complete app has to undergo a full retest!
 - Plugins of prior versions are disabled and need to be patched and target the new version specifically to ensure full compatibility with .NET 7
 
+# Version 2.1 Hotfix 1
+
+## Bugfixes
+- Loading a FITS File that contains exponential notation for double values should now have its headers be correctly read
+- Fixed an issue where the sequence was not able to be loaded when a plugin was missing
+- Fixed an issue for plugin focusers to not show the plugin specific settings section
+- When simple sequencer was set to "Rotate Through" mode, the estimated time calculation was incorrect when partially finished. It should now reflect the correct estimate.
+
+## Features
+- Added new Instruction "Set USB Limit" to control the usb limit inside the sequencer (if available)
+
+## Improvements
+- The Field of View value in the Framing Tab is now limited to two decimal places
+- Camera simulator can now set arbitrary values for Offset and USB limit
+
 # Version 2.1
 
 ## Bugfixes
