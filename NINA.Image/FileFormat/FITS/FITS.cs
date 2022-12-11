@@ -84,12 +84,17 @@ namespace NINA.Image.FileFormat.FITS {
                         header.Add(keyName, true, keyComment);
                     } else if (keyValue.Equals("F")) {
                         header.Add(keyName, false, keyComment);
+                    } else if (keyValue.StartsWith("'")) {
+                        // Treat as a string
+                        keyValue = $"{keyValue.TrimStart('\'').TrimEnd('\'', ' ').Replace(@"''", @"'")}";
+                        header.Add(keyName, keyValue, keyComment);
+
                     } else if (keyValue.Contains(".")) {
-                        if (double.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                        if (double.TryParse(keyValue, NumberStyles.Float, CultureInfo.InvariantCulture, out var value)) {
                             header.Add(keyName, value, keyComment);
                         }
                     } else {
-                        if (int.TryParse(keyValue, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                        if (int.TryParse(keyValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value)) {
                             header.Add(keyName, value, keyComment);
                         } else {
                             // Treat as a string
