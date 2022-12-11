@@ -300,7 +300,7 @@ namespace NINA.Equipment.Equipment {
 
         /// <summary>
         /// Tries to get a property by its name. If an exception occurs the last known value will be used instead.
-        /// If a PropertyNotImplementedException occurs, the "isImplemetned" value will be set to false
+        /// If an ASCOM.NotImplementedException occurs, the "isImplemetned" value will be set to false
         /// </summary>
         /// <typeparam name="PropT"></typeparam>
         /// <param name="propertyName">Property Name of the AscomDevice property</param>
@@ -364,7 +364,7 @@ namespace NINA.Equipment.Equipment {
 
         /// <summary>
         /// Tries to set a property by its name. If an exception occurs it will be logged.
-        /// If a PropertyNotImplementedException occurs, the "isImplemetned" value will be set to false
+        /// If a ASCOM.NotImplementedException occurs, the "isImplemetned" value will be set to false
         /// </summary>
         /// <typeparam name="PropT"></typeparam>
         /// <param name="propertyName">Property Name of the AscomDevice property</param>
@@ -392,7 +392,7 @@ namespace NINA.Equipment.Equipment {
                         return false;
                     }
                 } catch (Exception ex) {
-                    if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException
+                    if (ex is ASCOM.NotImplementedException || ex.InnerException is ASCOM.NotImplementedException
                             || ex is ASCOM.NotImplementedException || ex.InnerException is ASCOM.NotImplementedException
                             || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
                         Logger.Info($"Property {type.Name}.{propertyName} SET is not implemented in this driver ({Name})");

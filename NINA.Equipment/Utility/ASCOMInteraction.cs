@@ -184,7 +184,7 @@ namespace NINA.Equipment.Utility {
         }
 
         public static void LogComplianceIssue([CallerMemberName] string callerMember = "") {
-            Logger.Error($"ASCOM {callerMember} threw a PropertyNotImplementedException. This is a driver compliance issue and should be fixed by the driver vendor.");
+            Logger.Error($"ASCOM {callerMember} threw a NotImplementedException. This is a driver compliance issue and should be fixed by the driver vendor.");
         }
     }
 }

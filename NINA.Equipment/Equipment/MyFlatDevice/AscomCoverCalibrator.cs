@@ -121,7 +121,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                 try {
                     MinBrightness = 0;
                     MaxBrightness = device.MaxBrightness;
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     MinBrightness = 0;
                     MaxBrightness = 0;
                 }

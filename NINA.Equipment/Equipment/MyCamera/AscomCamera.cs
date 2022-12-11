@@ -90,7 +90,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 //Check if Offset is implemented at all in ICameraV3 Driver
                 _ = device.Offset;
                 CanSetOffset = true;
-            } catch (PropertyNotImplementedException) {
+            } catch (ASCOM.NotImplementedException) {
                 Logger.Trace("Offset is not implemented in this driver");
                 CanSetOffset = false;
             } catch (ASCOM.InvalidOperationException) {
@@ -106,7 +106,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     //Check if offset mode is in value mode
                     _ = device.OffsetMin;
                     offsetValueMode = true;
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     Logger.Trace("Offset operates in index mode");
                     offsetValueMode = false;
                 }
@@ -128,7 +128,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             }
                         } catch (Exception) {
                         }
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         Logger.Error("Offset is implemented, but neither OffsetMin/Max nor Offsets are implemented.");
                         CanSetOffset = false;
                     }
@@ -372,7 +372,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         } else {
                             val = device.Gain;
                         }
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         CanGetGain = false;
                         Logger.Info("ASCOM - Driver does not implement Gain GET");
                     }
@@ -390,7 +390,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         } else {
                             device.Gain = (short)value;
                         }
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         CanSetGain = false;
                         Logger.Info("ASCOM - Driver does not implement Gain SET");
                     } catch (InvalidValueException ex) {
@@ -462,7 +462,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (_canGetGainMinMax) {
                         try {
                             val = device.GainMax;
-                        } catch (PropertyNotImplementedException) {
+                        } catch (ASCOM.NotImplementedException) {
                             _canGetGainMinMax = false;
                         } catch (ASCOM.InvalidOperationException) {
                             _canGetGainMinMax = false;
@@ -486,8 +486,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (_canGetGainMinMax) {
                         try {
                             val = device.GainMin;
-                        } catch (PropertyNotImplementedException) {
-                            _canGetGainMinMax = false;
+                        } catch (ASCOM.NotImplementedException) {
+                            _canGetGainMinMax = false;                        
                         } catch (ASCOM.InvalidOperationException) {
                             _canGetGainMinMax = false;
                         }
@@ -566,7 +566,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         val = device.LastExposureDuration;
                     }
                 } catch (ASCOM.InvalidOperationException) {
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     _hasLastExposureInfo = false;
                 }
                 return val;
@@ -581,7 +581,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         val = device.LastExposureStartTime;
                     }
                 } catch (ASCOM.InvalidOperationException) {
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     _hasLastExposureInfo = false;
                 }
                 return val;
@@ -664,7 +664,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
                         Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(ReadoutMode)} SET");
                     }
                 }
