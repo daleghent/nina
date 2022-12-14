@@ -6513,4 +6513,10 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
     <value>Invalid value for USB limit for the camera</value>
   </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>High Fullwell Mode</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Enables the high fullwell mode for extended fullwell</value>
+  </data>
 </root>

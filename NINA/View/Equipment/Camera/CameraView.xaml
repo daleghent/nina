@@ -331,14 +331,14 @@
                                 </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
+                                    Atik="{StaticResource Default}"
                                     Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
                                     FailedToLoadTemplate="{StaticResource Failed}"
                                     LegacySbig="{StaticResource Default}"
                                     Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraDetails}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}"
-                                    Atik="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -513,6 +513,22 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasHighFullwell, Converter={StaticResource VisibilityConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblHighFullwellMode}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding HighFullwellMode}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblHighFullwellModeTooltip}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
                                     <DockPanel Margin="0,0,0,6">
                                         <TextBlock
                                             MinWidth="100"
@@ -680,8 +696,8 @@
                                         <ComboBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            SelectedIndex="{Binding GainPreset}"
-                                            ItemsSource="{Binding GainPresets}" />
+                                            ItemsSource="{Binding GainPresets}"
+                                            SelectedIndex="{Binding GainPreset}" />
                                     </DockPanel>
 
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasExposureSpeed, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
@@ -692,8 +708,8 @@
                                         <ComboBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            SelectedIndex="{Binding ExposureSpeed}"
-                                            ItemsSource="{Binding ExposureSpeeds}" />
+                                            ItemsSource="{Binding ExposureSpeeds}"
+                                            SelectedIndex="{Binding ExposureSpeed}" />
                                     </DockPanel>
 
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
@@ -718,14 +734,14 @@
 
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
+                                Atik="{StaticResource Atik}"
                                 Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
                                 FailedToLoadTemplate="{StaticResource Failed}"
                                 LegacySbig="{StaticResource LegacySbig}"
                                 Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraSettings}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}"
-                                Atik="{StaticResource Atik}" />
+                                Touptek="{StaticResource Altair}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

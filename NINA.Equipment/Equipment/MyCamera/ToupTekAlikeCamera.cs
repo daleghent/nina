@@ -660,6 +660,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         SupportedActions.Add(ToupTekActions.LowNoiseMode);
                     }
 
+                    if((this.flags & ToupTekAlikeFlag.FLAG_HIGH_FULLWELL) != 0) {
+                        HasHighFullwell = true;
+                    } else {
+                        HasHighFullwell = false;
+                    }
+
                     if (((this.flags & ToupTekAlikeFlag.FLAG_CG) != 0) || ((this.flags & ToupTekAlikeFlag.FLAG_CGHDR) != 0)) {
                         Logger.Trace($"{Category} - Camera has High Conversion Gain option");
                         HasHighGain = true;
@@ -747,6 +753,38 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     Logger.Debug($"{Category} - Setting Low Noise Mode to {value}");
                     if (!sdk.put_Option(ToupTekAlikeOption.OPTION_LOW_NOISE, value ? 1 : 0)) {
                         Logger.Error($"{Category} - Could not set LowNoiseMode to {value}");
+                    } else {
+                        RaisePropertyChanged();
+                    }
+                }
+            }
+        }
+
+        private bool hasHighFullwell;
+
+        public bool HasHighFullwell {
+            get => hasHighFullwell;
+            set {
+                hasHighFullwell = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool HighFullwellMode {
+            get {
+                if (HasHighFullwell) {
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_HIGH_FULLWELL, out var value);
+                    Logger.Trace($"{Category} - High Fullwell mode is set to {value}");
+                    return value == 1 ? true : false;
+                } else {
+                    return false;
+                }
+            }
+            set {
+                if (HasHighFullwell) {
+                    Logger.Trace($"{Category} - High Fullwell mode to {value}");
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_HIGH_FULLWELL, value ? 1 : 0)) {
+                        Logger.Error($"{Category} - Could not set High Fullwell mode to {value}");
                     } else {
                         RaisePropertyChanged();
                     }
