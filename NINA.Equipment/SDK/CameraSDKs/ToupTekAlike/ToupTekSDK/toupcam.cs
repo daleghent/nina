@@ -758,16 +758,6 @@ namespace ToupTek {
         [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
         private static extern uint Toupcam_get_RawFormat(SafeCamHandle h, out uint nFourCC, out uint bitdepth);
 
-        /*
-            set or get the process mode: TOUPCAM_PROCESSMODE_FULL or TOUPCAM_PROCESSMODE_FAST
-        */
-
-        [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
-        private static extern int Toupcam_put_ProcessMode(SafeCamHandle h, ePROCESSMODE nProcessMode);
-
-        [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
-        private static extern int Toupcam_get_ProcessMode(SafeCamHandle h, out ePROCESSMODE pnProcessMode);
-
         [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
         private static extern int Toupcam_put_RealTime(SafeCamHandle h, int val);
 
@@ -1834,19 +1824,6 @@ namespace ToupTek {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
                 return false;
             return (Toupcam_get_RawFormat(_handle, out nFourCC, out bitdepth) >= 0);
-        }
-
-        public bool put_ProcessMode(ePROCESSMODE nProcessMode) {
-            if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
-                return false;
-            return (Toupcam_put_ProcessMode(_handle, nProcessMode) >= 0);
-        }
-
-        public bool get_ProcessMode(out ePROCESSMODE pnProcessMode) {
-            pnProcessMode = 0;
-            if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
-                return false;
-            return (Toupcam_get_ProcessMode(_handle, out pnProcessMode) >= 0);
         }
 
         /*
