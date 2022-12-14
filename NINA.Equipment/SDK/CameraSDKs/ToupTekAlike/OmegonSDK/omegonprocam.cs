@@ -48,6 +48,7 @@ namespace Omegon {
             FLAG_USB30_OVER_USB20 = 0x00000100,   /* usb3.0 camera connected to usb2.0 port */
             FLAG_ST4 = 0x00000200,   /* ST4 */
             FLAG_GETTEMPERATURE = 0x00000400,   /* support to get the temperature of the sensor */
+            FLAG_HIGH_FULLWELL = 0x00000800,   /* high fullwell capacity */
             FLAG_RAW10 = 0x00001000,   /* pixel format, RAW 10bits */
             FLAG_RAW12 = 0x00002000,   /* pixel format, RAW 12bits */
             FLAG_RAW14 = 0x00004000,   /* pixel format, RAW 14bits */
@@ -88,7 +89,9 @@ namespace Omegon {
             FLAG_LEVELRANGE_HARDWARE = 0x0000020000000000,  /* hardware level range, put(get)_LevelRangeV2 */
             FLAG_EVENT_HARDWARE = 0x0000040000000000,  /* hardware event, such as exposure start & stop */
             FLAG_LIGHTSOURCE = 0x0000080000000000,  /* light source */
-            FLAG_FILTERWHEEL = 0x0000100000000000   /* filter wheel */
+            FLAG_FILTERWHEEL = 0x0000100000000000,  /* filter wheel */
+            FLAG_GIGE = 0x0000200000000000,  /* GigE */
+            FLAG_10GIGE = 0x0000400000000000   /* 10 Gige */
         };
 
         public enum eEVENT : uint {
@@ -104,7 +107,8 @@ namespace Omegon {
             EVENT_DFC = 0x000a, /* dark field correction status changed */
             EVENT_ROI = 0x000b, /* roi changed */
             EVENT_LEVELRANGE = 0x000c, /* level range changed */
-            EVENT_AUTOEXPO_FINISH = 0x000d, /* auto exposure once mode finish */
+            EVENT_AUTOEXPO_CONV = 0x000d, /* auto exposure convergence */
+            EVENT_AUTOEXPO_CONVFAIL = 0x000e, /* auto exposure once mode convergence failed */
             EVENT_ERROR = 0x0080, /* generic error */
             EVENT_DISCONNECTED = 0x0081, /* camera disconnected */
             EVENT_NOFRAMETIMEOUT = 0x0082, /* no frame timeout error */
@@ -115,11 +119,12 @@ namespace Omegon {
             EVENT_EXPO_STOP = 0x4001, /* hardware event: exposure stop */
             EVENT_TRIGGER_ALLOW = 0x4002, /* hardware event: next trigger allow */
             EVENT_HEARTBEAT = 0x4003, /* hardware event: heartbeat, can be used to monitor whether the camera is alive */
+            EVENT_TRIGGER_IN = 0x4004, /* hardware event: trigger in */
             EVENT_FACTORY = 0x8001  /* restore factory settings */
         };
 
         public enum eOPTION : uint {
-            OPTION_NOFRAME_TIMEOUT = 0x01,       /* no frame timeout: 0 = disable, positive value = timeout milliseconds. default: disable */
+            OPTION_NOFRAME_TIMEOUT = 0x01,       /* no frame timeout: 0 => disable, positive value (>= 500) => timeout milliseconds. default: disable */
             OPTION_THREAD_PRIORITY = 0x02,       /* set the priority of the internal thread which grab data from the usb device.
                                                          Win: iValue: 0 = THREAD_PRIORITY_NORMAL; 1 = THREAD_PRIORITY_ABOVE_NORMAL; 2 = THREAD_PRIORITY_HIGHEST; 3 = THREAD_PRIORITY_TIME_CRITICAL; default: 1; see: https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setthreadpriority
                                                          Linux & macOS: The high 16 bits for the scheduling policy, and the low 16 bits for the priority; see: https://linux.die.net/man/3/pthread_setschedparam
@@ -168,7 +173,7 @@ namespace Omegon {
                                                         get:
                                                             (val & 0xff): 0 => disable, 1 => enable, 2 => inited
                                                             ((val & 0xff00) >> 8): sequence
-                                                            ((val & 0xff0000) >> 8): average number
+                                                            ((val & 0xff0000) >> 16): average number
                                                     */
             OPTION_DDR_DEPTH = 0x1c,       /* the number of the frames that DDR can cache
                                                         1: DDR cache only one frame
@@ -186,7 +191,7 @@ namespace Omegon {
                                                         get:
                                                             (val & 0xff): 0 => disable, 1 => enable, 2 => inited
                                                             ((val & 0xff00) >> 8): sequence
-                                                            ((val & 0xff0000) >> 8): average number
+                                                            ((val & 0xff0000) >> 16): average number
                                                     */
             OPTION_SHARPENING = 0x1e,       /* Sharpening: (threshold << 24) | (radius << 16) | strength)
                                                         strength: [0, 500], default: 0 (disable)
@@ -195,7 +200,7 @@ namespace Omegon {
                                                     */
             OPTION_FACTORY = 0x1f,       /* restore the factory settings */
             OPTION_TEC_VOLTAGE = 0x20,       /* get the current TEC voltage in 0.1V, 59 mean 5.9V; readonly */
-            OPTION_TEC_VOLTAGE_MAX = 0x21,       /* get the TEC maximum voltage in 0.1V; readonly */
+            OPTION_TEC_VOLTAGE_MAX = 0x21,       /* TEC maximum voltage in 0.1V */
             OPTION_DEVICE_RESET = 0x22,       /* reset usb device, simulate a replug */
             OPTION_UPSIDE_DOWN = 0x23,       /* upsize down:
                                                         1: yes
@@ -281,7 +286,23 @@ namespace Omegon {
                                                              1~99: peak percent average
                                                              0 or 100: full roi average
                                                      */
-            OPTION_ANTI_SHUTTER_EFFECT = 0x4b         /* anti shutter effect: 1 => disable, 0 => disable; default: 1 */
+            OPTION_ANTI_SHUTTER_EFFECT = 0x4b,        /* anti shutter effect: 1 => disable, 0 => disable; default: 1 */
+            OPTION_CHAMBER_HT = 0x4c,        /* get chamber humidity & temperature:
+                                                             high 16 bits: humidity, in 0.1%, such as: 325 means humidity is 32.5%
+                                                             low 16 bits: temperature, in 0.1 degrees Celsius, such as: 32 means 3.2 degrees Celsius
+                                                     */
+            OPTION_ENV_HT = 0x4d,        /* get environment humidity & temperature */
+            OPTION_EXPOSURE_PRE_DELAY = 0x4e,        /* exposure signal pre-delay, microsecond */
+            OPTION_EXPOSURE_POST_DELAY = 0x4f,        /* exposure signal post-delay, microsecond */
+            OPTION_AUTOEXPO_CONV = 0x50,        /* get auto exposure convergence status: 1(YES) or 0(NO), -1(NA) */
+            OPTION_AUTOEXPO_TRIGGER = 0x51,        /* auto exposure on trigger mode: 0 => disable, 1 => enable; default: 0 */
+            OPTION_LINE_PRE_DELAY = 0x52,        /* specified line signal pre-delay, microsecond */
+            OPTION_LINE_POST_DELAY = 0x53,        /* specified line signal post-delay, microsecond */
+            OPTION_TEC_VOLTAGE_MAX_RANGE = 0x54,        /* get the tec maximum voltage range:
+                                                             high 16 bits: max
+                                                             low 16 bits: min
+                                                     */
+            OPTION_HIGH_FULLWELL = 0x55         /* high fullwell capacity: 0 => disable, 1 => enable */
         };
 
         /* HRESULT: error code */
@@ -298,6 +319,7 @@ namespace Omegon {
         public const int E_WRONG_THREAD = unchecked((int)0x8001010e);   /* Call function in the wrong thread */
         public const int E_GEN_FAILURE = unchecked((int)0x8007001f);    /* Device not functioning */
         public const int E_PENDING = unchecked((int)0x8000000a);        /* The data necessary to complete this operation is not yet available */
+        public const int E_TIMEOUT = unchecked((int)0x8001011f);        /* This operation returned because the timeout period expired */
 
         public const int EXPOGAIN_DEF = 100;      /* exposure gain, default value */
         public const int EXPOGAIN_MIN = 100;      /* exposure gain, minimum value */
@@ -346,7 +368,7 @@ namespace Omegon {
         public const int AUTOEXPO_THRESHOLD_DEF = 5;        /* auto exposure threshold */
         public const int AUTOEXPO_THRESHOLD_MIN = 2;        /* auto exposure threshold */
         public const int AUTOEXPO_THRESHOLD_MAX = 15;       /* auto exposure threshold */
-        public const int BANDWIDTH_DEF = 90;       /* bandwidth */
+        public const int BANDWIDTH_DEF = 100;      /* bandwidth */
         public const int BANDWIDTH_MIN = 1;        /* bandwidth */
         public const int BANDWIDTH_MAX = 100;      /* bandwidth */
         public const int DENOISE_DEF = 0;        /* denoise */
@@ -354,7 +376,7 @@ namespace Omegon {
         public const int DENOISE_MAX = 100;      /* denoise */
         public const int TEC_TARGET_MIN = -300;     /* TEC target: -30.0 degrees Celsius */
         public const int TEC_TARGET_DEF = 0;        /* TEC target: 0.0 degrees Celsius */
-        public const int TEC_TARGET_MAX = 300;      /* TEC target: 30.0 degrees Celsius */
+        public const int TEC_TARGET_MAX = 400;      /* TEC target: 40.0 degrees Celsius */
         public const int HEARTBEAT_MIN = 100;      /* millisecond */
         public const int HEARTBEAT_MAX = 10000;    /* millisecond */
         public const int AE_PERCENT_MIN = 0;        /* auto exposure percent, 0 => full roi average */
@@ -379,12 +401,13 @@ namespace Omegon {
         };
 
         public enum eFRAMEINFO_FLAG : uint {
-            FRAMEINFO_FLAG_SEQ = 0x01, /* frame sequence number */
-            FRAMEINFO_FLAG_TIMESTAMP = 0x02, /* timestamp */
-            FRAMEINFO_FLAG_EXPOTIME = 0x04, /* exposure time */
-            FRAMEINFO_FLAG_EXPOGAIN = 0x08, /* exposure gain */
-            FRAMEINFO_FLAG_BLACKLEVEL = 0x10, /* black level */
-            FRAMEINFO_FLAG_SHUTTERSEQ = 0x20  /* sequence shutter counter */
+            FRAMEINFO_FLAG_SEQ = 0x0001, /* frame sequence number */
+            FRAMEINFO_FLAG_TIMESTAMP = 0x0002, /* timestamp */
+            FRAMEINFO_FLAG_EXPOTIME = 0x0004, /* exposure time */
+            FRAMEINFO_FLAG_EXPOGAIN = 0x0008, /* exposure gain */
+            FRAMEINFO_FLAG_BLACKLEVEL = 0x0010, /* black level */
+            FRAMEINFO_FLAG_SHUTTERSEQ = 0x0020, /* sequence shutter counter */
+            FRAMEINFO_FLAG_STILL = 0x8000  /* still image */
         };
 
         public enum eIoControType : uint {
@@ -455,14 +478,16 @@ namespace Omegon {
             IOCONTROLTYPE_SET_UART_BAUDRATE = 0x2c,
             IOCONTROLTYPE_GET_UART_LINEMODE = 0x2d, /* line mode: 0 => TX(GPIO_0)/RX(GPIO_1); 1 => TX(GPIO_1)/RX(GPIO_0) */
             IOCONTROLTYPE_SET_UART_LINEMODE = 0x2e,
-            IOCONTROLTYPE_GET_EXPO_ACTIVE_MODE = 0x2f, /* 0 => specified lines, 1 => common exposure time, default: 0 */
+            IOCONTROLTYPE_GET_EXPO_ACTIVE_MODE = 0x2f, /* exposure time signal: 0 => specified line, 1 => common exposure time */
             IOCONTROLTYPE_SET_EXPO_ACTIVE_MODE = 0x30,
             IOCONTROLTYPE_GET_EXPO_START_LINE = 0x31, /* exposure start line, default: 0 */
             IOCONTROLTYPE_SET_EXPO_START_LINE = 0x32,
             IOCONTROLTYPE_GET_EXPO_END_LINE = 0x33, /* exposure end line, default: 0
                                                            end line must be no less than start line
                                                         */
-            IOCONTROLTYPE_SET_EXPO_END_LINE = 0x34
+            IOCONTROLTYPE_SET_EXPO_END_LINE = 0x34,
+            IOCONTROLTYPE_GET_EXEVT_ACTIVE_MODE = 0x35, /* exposure event: 0 => specified line, 1 => common exposure time */
+            IOCONTROLTYPE_SET_EXEVT_ACTIVE_MODE = 0x36
         };
 
         /* hardware level range mode */

@@ -10095,6 +10095,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to High Fullwell Mode.
+        /// </summary>
+        internal static string LblHighFullwellMode {
+            get {
+                return ResourceManager.GetString("LblHighFullwellMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables the high fullwell mode for extended fullwell.
+        /// </summary>
+        internal static string LblHighFullwellModeTooltip {
+            get {
+                return ResourceManager.GetString("LblHighFullwellModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to High Gain Mode.
         /// </summary>
         internal static string LblHighGainMode {
