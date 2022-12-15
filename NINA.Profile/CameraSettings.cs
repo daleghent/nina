@@ -63,6 +63,12 @@ namespace NINA.Profile {
             trackingCameraASCOMServerPipeName = "NINA.ASCOM.Camera.SBIG.Tracker";
             sbigUseExternalCcdTracker = false;
             trackingCameraASCOMServerLoggingEnabled = false;
+
+
+            touptekAlikeHighGain = true;
+            touptekAlikeUltraMode = true;
+            touptekAlikeHighFullwell = false;
+            touptekAlikeDewHeaterStrength = -1;
         }
 
         private string id;
@@ -653,5 +659,53 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        #region TouptekAlike
+        private bool touptekAlikeHighGain;
+        [DataMember]
+        public bool TouptekAlikeHighGain {
+            get => touptekAlikeHighGain;
+            set {
+                if (touptekAlikeHighGain != value) {
+                    touptekAlikeHighGain = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private bool touptekAlikeUltraMode;
+        [DataMember]
+        public bool TouptekAlikeUltraMode {
+            get => touptekAlikeUltraMode;
+            set {
+                if (touptekAlikeUltraMode != value) {
+                    touptekAlikeUltraMode = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private bool touptekAlikeHighFullwell;
+        [DataMember]
+        public bool TouptekAlikeHighFullwell {
+            get => touptekAlikeHighFullwell;
+            set {
+                if (touptekAlikeHighFullwell != value) {
+                    touptekAlikeHighFullwell = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private int touptekAlikeDewHeaterStrength;
+        [DataMember]
+        public int TouptekAlikeDewHeaterStrength {
+            get => touptekAlikeDewHeaterStrength;
+            set {
+                if (touptekAlikeDewHeaterStrength != value) {
+                    touptekAlikeDewHeaterStrength = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        #endregion
     }
 }
