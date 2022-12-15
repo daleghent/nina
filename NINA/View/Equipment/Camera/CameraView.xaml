@@ -545,6 +545,28 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDewHeaterStrength}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="1" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding MaxDewHeaterStrength}" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="{Binding MaxDewHeaterStrength}"
+                                            MinValue="0"
+                                            StepSize="1"
+                                            Value="{Binding TargetDewHeaterStrength, Mode=TwoWay}" />
+                                    </DockPanel>
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding MaxFanSpeed, Converter={StaticResource ZeroToVisibilityConverter}}">
                                         <StackPanel MinWidth="100" Orientation="Horizontal">
                                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFanSpeed}" />

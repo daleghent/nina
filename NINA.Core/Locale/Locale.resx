@@ -6519,4 +6519,7 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblHighFullwellModeTooltip" xml:space="preserve">
     <value>Enables the high fullwell mode for extended fullwell</value>
   </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Target Dew Heater Strength</value>
+  </data>
 </root>

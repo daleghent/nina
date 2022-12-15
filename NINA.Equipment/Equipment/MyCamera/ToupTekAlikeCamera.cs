@@ -246,6 +246,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             FanSpeed = 0;
                     }
                     RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(FanSpeed));
                 } else {
                     Logger.Error($"{Category} - Could not set Cooler to {value}");
                 }
@@ -302,6 +303,31 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public int MaxDewHeaterStrength {
+            get {
+                if(HasDewHeater) {
+
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_HEAT_MAX, out var max);
+                    return max;
+                }
+                return 0;
+            }
+        }
+
+        public int TargetDewHeaterStrength {
+            get => profileService.ActiveProfile.CameraSettings.TouptekAlikeDewHeaterStrength;
+            set {
+                var max = MaxDewHeaterStrength;
+                if(value < 1) { value = 1; }
+                if(value > max) { value = max; }
+                profileService.ActiveProfile.CameraSettings.TouptekAlikeDewHeaterStrength = value;
+                if (DewHeaterOn) {
+                    sdk.put_Option(ToupTekAlikeOption.OPTION_HEAT, value);
+                }
+                RaisePropertyChanged();
+            }
+        }
+
         public bool DewHeaterOn {
             get {
                 if (HasDewHeater) {
@@ -314,8 +340,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 if (HasDewHeater) {
                     if (value) {
-                        sdk.get_Option(ToupTekAlikeOption.OPTION_HEAT_MAX, out var max);
-                        sdk.put_Option(ToupTekAlikeOption.OPTION_HEAT, max);
+                        sdk.put_Option(ToupTekAlikeOption.OPTION_HEAT, TargetDewHeaterStrength);
                     } else {
                         sdk.put_Option(ToupTekAlikeOption.OPTION_HEAT, 0);
                     }
@@ -606,6 +631,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                     sdk = sdk.Open(this.internalId);
                     success = true;
+                    var profile = profileService.ActiveProfile.CameraSettings;
 
                     /* Use maximum bit depth */
                     if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BITDEPTH, 1)) {
@@ -622,6 +648,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
 
                     ReadOutBinning();
+                    SupportedActions.Add(ToupTekActions.BinAverage);
 
                     sdk.get_Size(out var width, out var height);
                     this.CameraXSize = width;
@@ -653,15 +680,24 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                     if ((this.flags & ToupTekAlikeFlag.FLAG_HEAT) != 0) {
                         HasDewHeater = true;
+                        SupportedActions.Add(ToupTekActions.DewHeaterStrength);
+                        if (profile.TouptekAlikeDewHeaterStrength < 0) {
+                            TargetDewHeaterStrength = MaxDewHeaterStrength;
+                        } else {
+                            TargetDewHeaterStrength = profile.TouptekAlikeDewHeaterStrength;
+                        }                        
                     }
 
                     if ((this.flags & ToupTekAlikeFlag.FLAG_LOW_NOISE) != 0) {
                         HasLowNoiseMode = true;
+                        LowNoiseMode = profile.TouptekAlikeUltraMode;
                         SupportedActions.Add(ToupTekActions.LowNoiseMode);
                     }
 
                     if((this.flags & ToupTekAlikeFlag.FLAG_HIGH_FULLWELL) != 0) {
                         HasHighFullwell = true;
+                        SupportedActions.Add(ToupTekActions.HighFullwellMode);
+                        HighFullwellMode = profile.TouptekAlikeHighFullwell;
                     } else {
                         HasHighFullwell = false;
                     }
@@ -669,7 +705,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (((this.flags & ToupTekAlikeFlag.FLAG_CG) != 0) || ((this.flags & ToupTekAlikeFlag.FLAG_CGHDR) != 0)) {
                         Logger.Trace($"{Category} - Camera has High Conversion Gain option");
                         HasHighGain = true;
-                        HighGainMode = true;
+                        HighGainMode = profile.TouptekAlikeHighGain;
                         SupportedActions.Add(ToupTekActions.HighGainMode);
                     } else {
                         HasHighGain = false;
@@ -754,6 +790,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (!sdk.put_Option(ToupTekAlikeOption.OPTION_LOW_NOISE, value ? 1 : 0)) {
                         Logger.Error($"{Category} - Could not set LowNoiseMode to {value}");
                     } else {
+                        profileService.ActiveProfile.CameraSettings.TouptekAlikeUltraMode = value;
                         RaisePropertyChanged();
                     }
                 }
@@ -786,6 +823,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (!sdk.put_Option(ToupTekAlikeOption.OPTION_HIGH_FULLWELL, value ? 1 : 0)) {
                         Logger.Error($"{Category} - Could not set High Fullwell mode to {value}");
                     } else {
+                        profileService.ActiveProfile.CameraSettings.TouptekAlikeHighFullwell = value;
                         RaisePropertyChanged();
                     }
                 }
@@ -818,6 +856,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (!sdk.put_Option(ToupTekAlikeOption.OPTION_CG, value ? 1 : 0)) {
                         Logger.Error($"{Category} - Could not set HighGainMode to {value}");
                     } else {
+                        profileService.ActiveProfile.CameraSettings.TouptekAlikeHighGain = value;
                         RaisePropertyChanged();
                     }
                 }
@@ -1103,8 +1142,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         }
                     }
                     break;
+                case ToupTekActions.HighFullwellMode:
+                    if (HasHighFullwell) {
+                        var flag = StringToBoolean(actionParameters);
+                        if (flag.HasValue) {
+                            Logger.Info($"Device Action {actionName}: {flag.Value}");
+                            HighFullwellMode = flag.Value;
+                            return "1";
+                        } else {
+                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
+                            return "0";
+                        }
+                    }
+                    break;
                 case ToupTekActions.BinAverage:
-                    if (HasLowNoiseMode) {
+                    if (true) {
                         var flag = StringToBoolean(actionParameters);
                         if (flag.HasValue) {
                             Logger.Info($"Device Action {actionName}: {flag.Value}");
@@ -1117,10 +1169,23 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
                     break;
                 case ToupTekActions.FanSpeed:
-                    if (HasLowNoiseMode) {
+                    if (MaxFanSpeed > 0) {
                         if(int.TryParse(actionParameters, out var flag)) {
                             Logger.Info($"Device Action {actionName}: {flag}");
                             FanSpeed = flag;
+                            return "1";
+
+                        } else {
+                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
+                            return "0";
+                        }
+                    }
+                    break;
+                case ToupTekActions.DewHeaterStrength:
+                    if (HasDewHeater) {
+                        if (int.TryParse(actionParameters, out var flag)) {
+                            Logger.Info($"Device Action {actionName}: {flag}");
+                            TargetDewHeaterStrength = flag;
                             return "1";
 
                         } else {
@@ -1166,7 +1231,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private static class ToupTekActions {
             public const string LowNoiseMode = "Ultra Mode";
             public const string HighGainMode = "High Gain Mode";
+            public const string HighFullwellMode = "High Fullwell Mode";
             public const string BinAverage = "Bin Average";
+            public const string DewHeaterStrength = "Dew Heater Strength";
             public const string FanSpeed = "Fan Speed";
         }
     }

@@ -31,6 +31,11 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The Field of View value in the Framing Tab is now limited to two decimal places
 - Camera simulator can now set arbitrary values for Offset and USB limit
 
+### Altair, Mallincam, Omegon, Risingcam and Touptek 
+- Added High Fullwell Mode control for cameras that support it (also added for custom device actions)
+- Added target dew heater strength control to be able to reduce the strength of the dew heater if supported (also added for custom device actions)
+- High Gain, Ultra Mode, High Fullwell and Dew Heater Strength settings are now stored in the profile and will be restored on next connect
+
 # Version 2.1
 
 ## Bugfixes
