@@ -6720,6 +6720,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Dew Heater Strength.
+        /// </summary>
+        internal static string LblDewHeaterStrength {
+            get {
+                return ResourceManager.GetString("LblDewHeaterStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dewpoint.
         /// </summary>
         internal static string LblDewpoint {
@@ -10001,6 +10010,28 @@ namespace NINA.Core.Locale {
         internal static string LblHalt {
             get {
                 return ResourceManager.GetString("LblHalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware Acceleration.
+        /// </summary>
+        internal static string LblHardwareAcceleration {
+            get {
+                return ResourceManager.GetString("LblHardwareAcceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will enable or disable hardware accelerated rendering of the application.
+        ///In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+        ///Keep in mind that disabling hardware acceleration might reduce overall application performance.
+        ///
+        ///Changing the value will require an app restart to take affect..
+        /// </summary>
+        internal static string LblHardwareAccelerationTooltip {
+            get {
+                return ResourceManager.GetString("LblHardwareAccelerationTooltip", resourceCulture);
             }
         }
         

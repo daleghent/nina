@@ -485,6 +485,26 @@
                                         Visibility="{Binding IsX64, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                                 </StackPanel>
 
+                                <StackPanel Margin="0,5,0,5" Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblHardwareAcceleration}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblHardwareAccelerationTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding HardwareAcceleration, Mode=TwoWay}">
+                                        <CheckBox.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblHardwareAcceleration}" />
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+
+                                </StackPanel>
+
                                 <TextBlock
                                     Margin="0,0,0,5"
                                     FontStyle="Italic"

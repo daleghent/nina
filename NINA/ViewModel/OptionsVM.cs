@@ -804,6 +804,16 @@ namespace NINA.ViewModel {
             }
         }
 
+        public bool HardwareAcceleration {
+            get => NINA.Properties.Settings.Default.HardwareAcceleration;
+            set {
+                NINA.Properties.Settings.Default.HardwareAcceleration = value;
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+                RaisePropertyChanged();
+                RequiresRestart = true;
+            }
+        }
+
         public bool RequiresRestart {
             get {
                 return requiresRestart;
