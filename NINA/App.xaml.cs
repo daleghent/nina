@@ -30,6 +30,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace NINA {
 
@@ -147,6 +148,12 @@ namespace NINA {
             EventManager.RegisterClassHandler(typeof(TextBox),
                 TextBox.GotFocusEvent,
                 new RoutedEventHandler(TextBox_GotFocus));
+
+
+            if (!NINA.Properties.Settings.Default.HardwareAcceleration) {
+                Logger.Info("Disabling Hardware Acceleration");
+                RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
+            }
 
             var mainWindow = new MainWindow();
             mainWindow.DataContext = _mainWindowViewModel;

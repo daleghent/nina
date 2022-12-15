@@ -13,6 +13,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Features
 - Added new Instruction "Set USB Limit" to control the usb limit inside the sequencer (if available)
+- A new toggle in options > general > advanced is available to disable hardware acceleration. Disabling this can be useful if you are experiencing graphic glitches or the application goes blank when using a remote client to connect to the pc.
 
 ## Improvements
 - The Field of View value in the Framing Tab is now limited to two decimal places

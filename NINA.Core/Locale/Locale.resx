@@ -6522,4 +6522,14 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblDewHeaterStrength" xml:space="preserve">
     <value>Target Dew Heater Strength</value>
   </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Hardware Acceleration</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>This will enable or disable hardware accelerated rendering of the application.
+In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+Keep in mind that disabling hardware acceleration might reduce overall application performance.
+
+Changing the value will require an app restart to take affect.</value>
+  </data>
 </root>
