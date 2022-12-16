@@ -913,8 +913,8 @@
 	</Fragment>
 	<Fragment>
 		<ComponentGroup Id="External_JPLEPH_files" Directory="External">
-			<Component Win64="$(var.Win64)" Id="JPLEPH" Guid="*">
-				<File Id="JPLEPH" Name="JPLEPH" Source="$(var.NINA_TargetDir)External\JPLEPH" />
+			<Component Win64="$(var.Win64)" Id="JPLEPH" Guid="3D939C40-47D8-4BF2-8C93-5324FAD7CD08">
+				<File Id="JPLEPH" Name="JPLEPH" Source="$(var.NINA_TargetDir)External\JPLEPH" DefaultVersion="1.0.0.0" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
