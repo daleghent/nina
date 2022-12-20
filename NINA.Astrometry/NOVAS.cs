@@ -54,6 +54,10 @@ namespace NINA.Astrometry {
 
         #region "Public Methods"
 
+        public static short Shutdown() {
+            return EphemClose();
+        }
+
         public static short SiderealTime(double jdHigh, double jdLow, double deltaT, GstType gstType, Method method, Accuracy accuracy, ref double gst) {
             return NOVAS_SiderealTime(jdHigh, jdLow, deltaT, gstType, method, accuracy, ref gst);
         }
@@ -187,6 +191,9 @@ namespace NINA.Astrometry {
 
         [DllImport(DLLNAME, EntryPoint = "ephem_open", CallingConvention = CallingConvention.Cdecl)]
         private static extern short EphemOpen([MarshalAs(UnmanagedType.LPStr)] string Ephem_Name, ref double JD_Begin, ref double JD_End, ref short DENumber);
+
+        [DllImport(DLLNAME, EntryPoint = "ephem_close", CallingConvention = CallingConvention.Cdecl)]
+        private static extern short EphemClose();
 
         [DllImport(DLLNAME, EntryPoint = "refract", CallingConvention = CallingConvention.Cdecl)]
         private static extern double NOVAS_Refract(ref OnSurface location, RefractionOption refractionOption, double zdObs);

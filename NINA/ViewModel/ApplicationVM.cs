@@ -273,6 +273,11 @@ namespace NINA.ViewModel {
             } catch { }
 
             try {
+                Logger.Debug("Closing NOVAS Ephem");
+                NOVAS.Shutdown();
+            } catch { }
+
+            try {
                 foreach (var plugin in pluginProvider.Plugins) {
                     if (plugin.Value) {
                         try {
