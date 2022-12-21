@@ -6495,4 +6495,35 @@ Toto se vyhodnotí PO nastavení "Zaparkovat montáž před pohybem štěrbiny".
   <data name="LblGauges" xml:space="preserve">
     <value>Měřiče</value>
   </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Sets the USB limit for the camera if available</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Set USB Limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Camera cannot set USB limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Invalid value for USB limit for the camera</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>High Fullwell Mode</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Enables the high fullwell mode for extended fullwell</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Target Dew Heater Strength</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Hardware Acceleration</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>This will enable or disable hardware accelerated rendering of the application.
+In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+Keep in mind that disabling hardware acceleration might reduce overall application performance.
+
+Changing the value will require an app restart to take affect.</value>
+  </data>
 </root>
