@@ -44,7 +44,7 @@ namespace NINA {
                             new JumpTask {
                                 Title = x.Profile.Name,
                                 Description = "Launch N.I.N.A. using profile " + x.Profile.Name,
-                                ApplicationPath = typeof(App).Assembly.Location,
+                                ApplicationPath = System.Environment.ProcessPath,
                                 Arguments = $"/profileid {x.Profile.Id}",
                                 WorkingDirectory = System.IO.Directory.GetCurrentDirectory(),
                                 CustomCategory = "Profiles",
