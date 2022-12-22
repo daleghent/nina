@@ -85,7 +85,7 @@ namespace NINA.Test.Sequencer.SequenceItem.FlatDevice {
 
         [Test]
         public async Task Execute_NoIssues_LogicCalled() {
-            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true });
+            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true, Brightness = 10 });
 
             var sut = new SetBrightness(fdMediatorMock.Object);
             sut.Brightness = 10;

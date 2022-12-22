@@ -70,7 +70,11 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
-            return CompletedIterations < Iterations;
+            var check = CompletedIterations < Iterations;
+            if(!check && IsActive()) {
+                Logger.Info($"{nameof(LoopCondition)} finished. Iterations: {CompletedIterations} / {Iterations}");
+            }
+            return check;
         }
 
         public override void ResetProgress() {

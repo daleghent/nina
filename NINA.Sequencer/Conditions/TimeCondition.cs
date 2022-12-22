@@ -241,6 +241,9 @@ namespace NINA.Sequencer.Conditions {
                 Minutes = DateTime.Now.Minute;
                 Seconds = DateTime.Now.Second;
             }
+            if (!hasTimeRemaining && IsActive()) {
+                Logger.Info($"{nameof(TimeCondition)} finished.");
+            }
             return hasTimeRemaining;
         }
 
