@@ -57,9 +57,14 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             // Todo - this interface lacks progress
-            return flatDeviceMediator.CloseCover(token);
+            await flatDeviceMediator.CloseCover(token);
+
+            var coverState = flatDeviceMediator.GetInfo().CoverState;
+            if (coverState != Equipment.Interfaces.CoverState.Closed) {
+                throw new SequenceEntityFailedException($"Failed to close cover. Current cover state: {coverState}");
+            }
         }
 
         public bool Validate() {
