@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.WPF.Base.Mediator;
 
 namespace NINA.Sequencer.SequenceItem.Dome {
 
@@ -60,8 +61,11 @@ namespace NINA.Sequencer.SequenceItem.Dome {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (!await domeMediator.OpenShutter(token)) {
-                throw new SequenceEntityFailedException("Failed to open dome shutter");
+            var success = await domeMediator.OpenShutter(token);
+
+            var shutterState = domeMediator.GetInfo().ShutterStatus;
+            if (!success || shutterState != Equipment.Interfaces.ShutterState.ShutterOpen) {
+                throw new SequenceEntityFailedException($"Failed to open dome shutter. Current shutter state: {shutterState}");
             }
         }
 

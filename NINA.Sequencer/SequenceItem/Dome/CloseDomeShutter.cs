@@ -58,8 +58,11 @@ namespace NINA.Sequencer.SequenceItem.Dome {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (!await domeMediator.CloseShutter(token)) {
-                throw new SequenceEntityFailedException("Failed to close dome shutter");
+            var success = await domeMediator.CloseShutter(token);
+
+            var shutterState = domeMediator.GetInfo().ShutterStatus;
+            if (!success || shutterState != Equipment.Interfaces.ShutterState.ShutterClosed) {
+                throw new SequenceEntityFailedException($"Failed to close dome shutter. Current shutter state: {shutterState}");
             }
         }
 
