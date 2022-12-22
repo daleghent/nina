@@ -144,6 +144,9 @@ namespace NINA.Sequencer.Conditions {
                 startTime = DateTime.Now.Subtract(TimeSpan.FromHours(Hours) + TimeSpan.FromMinutes(Minutes) + TimeSpan.FromSeconds(Seconds));
                 RaisePropertyChanged(nameof(RemainingTime));
             }
+            if (!hasTimeRemaining && IsActive()) {
+                Logger.Info($"{nameof(TimeSpanCondition)} finished.");
+            }
             return hasTimeRemaining;
         }
 

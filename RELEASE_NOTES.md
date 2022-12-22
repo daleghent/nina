@@ -18,6 +18,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Improvements
 - The Field of View value in the Framing Tab is now limited to two decimal places
 - Camera simulator can now set arbitrary values for Offset and USB limit
+- Conditions now log on info level when they are done
 
 ### Altair, Mallincam, Omegon, Risingcam and Touptek 
 - Added High Fullwell Mode control for cameras that support it (also added for custom device actions)

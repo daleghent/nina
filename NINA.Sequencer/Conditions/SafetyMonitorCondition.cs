@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using NINA.Core.Locale;
 using NINA.Core.Enum;
 using NINA.Sequencer.Utility;
+using NINA.Sequencer.SequenceItem.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -87,7 +88,10 @@ namespace NINA.Sequencer.Conditions {
 
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             var info = safetyMonitorMediator.GetInfo();
-            IsSafe = info.Connected && info.IsSafe;
+            IsSafe = info.Connected && info.IsSafe; 
+            if (!IsSafe && IsActive()) {
+                Logger.Info($"{nameof(SafetyMonitorCondition)} finished. Status=Unsafe");
+            }
             return IsSafe;
         }
 
@@ -139,6 +143,9 @@ namespace NINA.Sequencer.Conditions {
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             var info = safetyMonitorMediator.GetInfo();
             IsSafe = info.Connected && info.IsSafe;
+            if (IsSafe && IsActive()) {
+                Logger.Info($"{nameof(LoopWhileUnsafe)} finished. Status=Safe");
+            }
             return !IsSafe;
         }
 

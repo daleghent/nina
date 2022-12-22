@@ -190,5 +190,13 @@ namespace NINA.Sequencer.Conditions {
         public void MoveDown() {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Indicates wether the condition is currently in a root container and that the parent container is running
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsActive() {
+            return ItemUtility.IsInRootContainer(Parent) && Parent.Status == SequenceEntityStatus.RUNNING && Status != SequenceEntityStatus.DISABLED;
+        }
     }
 }

@@ -87,7 +87,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
         [TestCase(true)]
         [TestCase(false)]
         public async Task Execute_NoIssues_LogicCalled(bool onoff) {
-            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true, SupportsOnOff = true });
+            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true, SupportsOnOff = true, LightOn = onoff });
 
             var sut = new ToggleLight(fdMediatorMock.Object);
             sut.OnOff = onoff;

@@ -33,18 +33,23 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public bool Check(ISequenceItem previousItem, ISequenceItem nextItem, bool test) {
             if (!test) CalculateExpectedTime();
 
+            var check = true;
             switch (Data.Comparator) {
 
                 case ComparisonOperatorEnum.GREATER_THAN:
                 case ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL:
-                    if (Data.CurrentAltitude > Data.Offset) { return false; }
+                    if (Data.CurrentAltitude > Data.Offset) { check = false; }
                     break;
 
                 default:
-                    if (Data.CurrentAltitude <= Data.Offset) { return false; }
+                    if (Data.CurrentAltitude <= Data.Offset) { check = false; }
                     break;
             }
-            return true;
+
+            if (!check && IsActive()) {
+                Logger.Info($"{nameof(LoopForSunMoonAltitudeBase)} finished. Current {Data.Comparator} Target: {Data.CurrentAltitude}° / {Data.Offset}°");
+            }
+            return check;
         }
 
         public override string ToString() {
