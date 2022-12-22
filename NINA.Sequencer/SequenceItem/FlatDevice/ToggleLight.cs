@@ -70,9 +70,14 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             // Todo - this interface lacks progress
-            return flatDeviceMediator.ToggleLight(OnOff, token);
+            await flatDeviceMediator.ToggleLight(OnOff, token);
+
+            var lightOnState = flatDeviceMediator.GetInfo().LightOn;
+            if (lightOnState != OnOff) {
+                throw new SequenceEntityFailedException($"Failed to toggle light. Current light state: {lightOnState}");
+            }
         }
 
         public bool Validate() {
