@@ -38,6 +38,7 @@ using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 using NINA.Astrometry;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -196,6 +197,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public async Task<bool> Connect(CancellationToken token) {
             initialized = false;
             _tcs = new TaskCompletionSource<bool>();
+
+            var hostEntry = Dns.GetHostEntry(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl);
+            phd2Ip = hostEntry.AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork);
+
             var startedPHD2 = await StartPHD2Process();
 
             _ = Task.Run(RunListener);
@@ -738,6 +743,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         private string shiftRateAxis;
+        private IPAddress phd2Ip;
+
         public string ShiftRateAxis {
             get => shiftRateAxis;
             private set {
@@ -773,10 +780,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     Logger.Debug($"Phd2 - Sending message '{serializedMessage}'");
                     client.ReceiveTimeout = receiveTimeout;
 
-                    var ip = System.Net.Dns.GetHostEntry(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl);
-
                     await client.ConnectAsync(
-                        ip.AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork),
+                        phd2Ip,
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     var stream = client.GetStream();
                     var data = Encoding.ASCII.GetBytes(serializedMessage + Environment.NewLine);
@@ -879,6 +884,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         public void Disconnect() {
             initialized = false;
+            phd2Ip = null;
             try { _clientCTS?.Cancel(); } catch { }
         }
 
@@ -1112,10 +1118,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             _clientCTS = new CancellationTokenSource();
             using (var client = new TcpClient()) {
                 try {
-                    var ip = System.Net.Dns.GetHostEntry(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl);
-
                     await client.ConnectAsync(
-                        ip.AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork),
+                        phd2Ip,
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     Connected = true;
                     _tcs.TrySetResult(true);
