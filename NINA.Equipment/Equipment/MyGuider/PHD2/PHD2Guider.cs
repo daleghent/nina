@@ -772,8 +772,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     var serializedMessage = JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
                     Logger.Debug($"Phd2 - Sending message '{serializedMessage}'");
                     client.ReceiveTimeout = receiveTimeout;
+
+                    var ip = System.Net.Dns.GetHostEntry(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl);
+
                     await client.ConnectAsync(
-                        profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
+                        ip.AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork),
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     var stream = client.GetStream();
                     var data = Encoding.ASCII.GetBytes(serializedMessage + Environment.NewLine);
@@ -1109,7 +1112,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             _clientCTS = new CancellationTokenSource();
             using (var client = new TcpClient()) {
                 try {
-                    await client.ConnectAsync(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
+                    var ip = System.Net.Dns.GetHostEntry(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl);
+
+                    await client.ConnectAsync(
+                        ip.AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork),
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     Connected = true;
                     _tcs.TrySetResult(true);
