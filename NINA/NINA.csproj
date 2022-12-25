@@ -144,9 +144,6 @@
     <Content Include="External\x64\SBIG\SBIGUDrv.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="External\x64\SQLite\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <ContentWithTargetPath Include="External\x64\VCRedis\msvcp100.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>msvcp100.dll</TargetPath>

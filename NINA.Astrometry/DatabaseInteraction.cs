@@ -32,7 +32,6 @@ namespace NINA.Astrometry {
     public class DatabaseInteraction {
 
         static DatabaseInteraction() {
-            DllLoader.LoadDll(Path.Combine("SQLite", "SQLite.Interop.dll"));
         }
 
         private string connectionString;

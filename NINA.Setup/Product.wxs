@@ -1376,13 +1376,6 @@
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
-		<ComponentGroup Id="External_x64_SQLite_files" Directory="External_x64_SQLite">
-			<Component Win64="$(var.Win64)" Id="External_x64_SQLite_SQLite.Interop.dll" Guid="*">
-				<File Id="External_x64_SQLite_SQLite.Interop.dll" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)External\x64\SQLite\SQLite.Interop.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-	<Fragment>
 		<ComponentGroup Id="External_x64_Altair_files" Directory="External_x64_Altair">
 			<Component Win64="$(var.Win64)" Id="External_x64_Altair_altaircam.dll" Guid="*">
 				<File Id="External_x64_Altair_altaircam.dll" Name="altaircam.dll" Source="$(var.NINA_ProjectDir)External\x64\Altair\altaircam.dll" />
