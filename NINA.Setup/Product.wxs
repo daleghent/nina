@@ -94,7 +94,6 @@
 			<ComponentGroupRef Id="External_x64_Nikon_Type0028_files" />
 			<ComponentGroupRef Id="External_x64_Nikon_Type0029_files" />
 			<ComponentGroupRef Id="External_x64_Nikon_Type0030_files" />
-			<ComponentGroupRef Id="External_x64_SQLite_files" />
 			<ComponentGroupRef Id="External_x64_Altair_files" />
 			<ComponentGroupRef Id="External_x64_ToupTek_files" />
 			<ComponentGroupRef Id="External_x64_Omegon_files" />
