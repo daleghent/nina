@@ -811,7 +811,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             }
 
             var genericError = (T)Activator.CreateInstance(typeof(T));
-            genericError.id = 1;
+            genericError.id = msg.Id.ToString();
             genericError.error = new PhdError() { code = -1, message = "Unable to get response from phd2" };
             return genericError;
         }
