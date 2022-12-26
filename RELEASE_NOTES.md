@@ -19,7 +19,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The Field of View value in the Framing Tab is now limited to two decimal places
 - Camera simulator can now set arbitrary values for Offset and USB limit
 - Conditions now log on info level when they are done
-
+# Improvements
+- Profile Chooser on startup will now be shown before the whole application is initializing
+    - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
+    
 ### Altair, Mallincam, Omegon, Risingcam and Touptek 
 - Added High Fullwell Mode control for cameras that support it (also added for custom device actions)
 - Added target dew heater strength control to be able to reduce the strength of the dew heater if supported (also added for custom device actions)

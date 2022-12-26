@@ -60,7 +60,6 @@ namespace NINA.ViewModel {
             ClosingCommand = new RelayCommand(ClosingApplication);
             MinimizeWindowCommand = new RelayCommand(MinimizeWindow);
             MaximizeWindowCommand = new RelayCommand(MaximizeWindow);
-            CheckProfileCommand = new RelayCommand(LoadProfile);
             OpenManualCommand = new RelayCommand(OpenManual);
             OpenAboutCommand = new RelayCommand(OpenAbout);
             CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
@@ -126,13 +125,6 @@ namespace NINA.ViewModel {
         private void ProfileService_ProfileChanged(object sender, EventArgs e) {
             RaisePropertyChanged(nameof(ActiveProfile));
         }
-
-        private void LoadProfile(object obj) {
-            if (profileService.Profiles.Count > 1) {
-                new ProfileSelectVM(profileService).SelectProfile();
-            }
-        }
-
         private void OpenManual(object o) {
             System.Diagnostics.Process.Start(CoreUtil.DocumentationPage);
         }
@@ -306,7 +298,6 @@ namespace NINA.ViewModel {
 
         public ICommand MinimizeWindowCommand { get; private set; }
         public ICommand MaximizeWindowCommand { get; private set; }
-        public ICommand CheckProfileCommand { get; }
         public ICommand CheckUpdateCommand { get; private set; }
         public ICommand OpenManualCommand { get; private set; }
         public ICommand OpenAboutCommand { get; private set; }
