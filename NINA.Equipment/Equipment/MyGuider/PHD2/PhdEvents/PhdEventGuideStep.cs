@@ -100,6 +100,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
         [DataMember]
         [JsonProperty]
+        private double hFD;
+
+        [DataMember]
+        [JsonProperty]
         private double avgDist;
 
         [DataMember]
@@ -328,6 +332,18 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
             set {
                 sNR = value;
+            }
+        }
+
+        [DataMember]
+        [JsonProperty]
+        public double HFD {
+            get {
+                return hFD;
+            }
+
+            set {
+                hFD = value;
             }
         }
 
