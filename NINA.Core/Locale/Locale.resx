@@ -6532,4 +6532,8 @@ Keep in mind that disabling hardware acceleration might reduce overall applicati
 
 Changing the value will require an app restart to take affect.</value>
   </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
 </root>

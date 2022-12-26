@@ -20,7 +20,6 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IApplicationVM {
         IRelayCommand CheckASCOMPlatformVersionCommand { get; }
-        IRelayCommand CheckProfileCommand { get; }
         IRelayCommand ClosingCommand { get; }
         IRelayCommand ExitCommand { get; }
         IRelayCommand MaximizeWindowCommand { get; }

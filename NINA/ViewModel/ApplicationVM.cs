@@ -128,14 +128,7 @@ namespace NINA.ViewModel {
         private void ProfileService_ProfileChanged(object sender, EventArgs e) {
             OnPropertyChanged(nameof(ActiveProfile));
         }
-
-        [RelayCommand]
-        private void CheckProfile() {
-            if (profileService.Profiles.Count > 1) {
-                new ProfileSelectVM(profileService).SelectProfile();
-            }
-        }
-
+        
         [RelayCommand]
         private void OpenManual() {
             System.Diagnostics.Process.Start(new ProcessStartInfo(CoreUtil.DocumentationPage) { UseShellExecute = true });

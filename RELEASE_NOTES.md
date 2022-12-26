@@ -16,6 +16,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Issues due to the technology shift are expected during the early nightly versions, as the complete app has to undergo a full retest!
 - Plugins of prior versions are disabled and need to be patched and target the new version specifically to ensure full compatibility with .NET 7
 
+# Improvements
+- Profile Chooser on startup will now be shown before the whole application is initializing
+    - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
+
 # Version 2.1 Hotfix 1
 
 ## Bugfixes
@@ -32,7 +36,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The Field of View value in the Framing Tab is now limited to two decimal places
 - Camera simulator can now set arbitrary values for Offset and USB limit
 - Conditions now log on info level when they are done
-
+    
 ### Altair, Mallincam, Omegon, Risingcam and Touptek 
 - Added High Fullwell Mode control for cameras that support it (also added for custom device actions)
 - Added target dew heater strength control to be able to reduce the strength of the dew heater if supported (also added for custom device actions)
