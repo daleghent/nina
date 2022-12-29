@@ -22,6 +22,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 # Improvements
 - Profile Chooser on startup will now be shown before the whole application is initializing
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
+- Options > Equipment > Telescope > "Do not sync" is renamed to "Automatic Sync" and the toggle value is reversed. To not send syncs to the mount this should be turned off. The behavior is unchanged, only the UI shows it in reversed logic.
     
 ### Altair, Mallincam, Omegon, Risingcam and Touptek 
 - Added High Fullwell Mode control for cameras that support it (also added for custom device actions)
