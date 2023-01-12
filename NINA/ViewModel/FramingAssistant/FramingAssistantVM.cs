@@ -1141,7 +1141,7 @@ namespace NINA.ViewModel.FramingAssistant {
                         } else {
                             var skySurvey = SkySurveyFactory.Create(FramingAssistantSource);
 
-                            skySurveyImage = await skySurvey.GetImage(DSO?.Name, DSO?.Coordinates,
+                            skySurveyImage = await skySurvey.GetImage(DSO?.Name ?? string.Empty, DSO?.Coordinates,
                                 AstroUtil.DegreeToArcmin(FieldOfView), boundWidth, boundHeight, _loadImageSource.Token, _progress);
                         }
                     }
