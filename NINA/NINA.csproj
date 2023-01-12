@@ -135,6 +135,9 @@
     <Content Include="External\x64\MallinCam\mallincam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x64\OGMA\ogmacam.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\PlayerOne\PlayerOneCamera.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

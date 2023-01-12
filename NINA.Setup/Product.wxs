@@ -108,6 +108,7 @@
 			<ComponentGroupRef Id="External_x64_MallinCam_files" />
 			<ComponentGroupRef Id="External_x64_PlayerOne_files" />
 			<ComponentGroupRef Id="External_x64_ASTPAN_files" />
+      <ComponentGroupRef Id="External_x64_OGMA_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
 			<ComponentGroupRef Id="External_JPLEPH_files" />
 			<ComponentGroupRef Id="Database_Initial_files" />
@@ -238,6 +239,7 @@
 							<Directory Id="External_x64_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x64_PlayerOne" Name="PlayerOne" />
 							<Directory Id="External_x64_ASTPAN" Name="ASTPAN" />
+							<Directory Id="External_x64_OGMA" Name="OGMA" />
 						</Directory>
 					</Directory>
 					<Directory Id="Utility" Name="Utility">
@@ -1473,6 +1475,13 @@
 	    </Component>
 	  </ComponentGroup>
 	</Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x64_OGMA_files" Directory="External_x64_OGMA">
+      <Component Win64="$(var.Win64)" Id="External_x64_OGMA_ogmacam.dll" Guid="*">
+        <File Id="External_x64_OGMA_ogmacam.dll" Name="ogmacam.dll" Source="$(var.NINA_TargetDir)External\x64\OGMA\ogmacam.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
   
 	<Fragment>
 		<SetProperty Id="API_Firewall_listen_ipv6" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=::" Before="API_Firewall_listen_ipv6" />
