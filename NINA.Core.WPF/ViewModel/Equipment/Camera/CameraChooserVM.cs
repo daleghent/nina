@@ -166,6 +166,18 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     Logger.Error(ex);
                 }
 
+                /* Ogma */
+                try {
+                    var ogmaCameras = Ogmacam.EnumV2();
+                    Logger.Info($"Found {ogmaCameras?.Length} Ogma Cameras");
+                    foreach (var instance in ogmaCameras) {
+                        var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new OgmaSDKWrapper(), profileService, exposureDataFactory);
+                        devices.Add(cam);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
                 /* Omegon */
                 try {
                     var omegonCameras = Omegon.Omegonprocam.EnumV2();
