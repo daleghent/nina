@@ -13,7 +13,9 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using NINA.Image.ImageAnalysis;
 using NINA.Image.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Image.ImageData {
 
@@ -21,6 +23,7 @@ namespace NINA.Image.ImageData {
         private double _hfr = double.NaN;
         private double _hfrStDev = double.NaN;
         private int _detectedStars = -1;
+        private List<DetectedStar> _starList = new List<DetectedStar>();
 
         public double HFR {
             get {
@@ -48,6 +51,16 @@ namespace NINA.Image.ImageData {
             }
             set {
                 this._detectedStars = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public List<DetectedStar> StarList {
+            get {
+                return this._starList;
+            }
+            set {
+                this._starList = value;
                 this.RaisePropertyChanged();
             }
         }

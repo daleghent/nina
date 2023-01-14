@@ -481,6 +481,7 @@ namespace NINA.Image.ImageAnalysis {
             analysis.HFR = result.AverageHFR;
             analysis.HFRStDev = result.HFRStdDev;
             analysis.DetectedStars = result.DetectedStars;
+            analysis.StarList = result.StarList;
         }
     }
 }

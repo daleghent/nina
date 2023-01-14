@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Image.ImageAnalysis;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace NINA.Image.Interfaces {
@@ -20,5 +22,6 @@ namespace NINA.Image.Interfaces {
         double HFR { get; set; }
         double HFRStDev { get; set; }
         int DetectedStars { get; set; }
+        List<DetectedStar> StarList { get; set; }
     }
 }
