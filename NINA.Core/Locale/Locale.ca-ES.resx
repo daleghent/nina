@@ -6491,34 +6491,47 @@ Això s'avalua DESPRÉS del paràmetre "Aparcar la muntura abans de moure la per
     <value>Indicadors</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
-    <value>Sets the USB limit for the camera if available</value>
+    <value>Estableix el límit USB per a la càmera si està disponible</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
-    <value>Set USB Limit</value>
+    <value>Estableix el límit USB</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
-    <value>Camera cannot set USB limit</value>
+    <value>La càmera no pot establir un límit USB</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
-    <value>Invalid value for USB limit for the camera</value>
+    <value>El valor del límit USB per a la càmera no és vàlid</value>
   </data>
   <data name="LblHighFullwellMode" xml:space="preserve">
-    <value>High Fullwell Mode</value>
+    <value>Mode Fullwell alt</value>
   </data>
   <data name="LblHighFullwellModeTooltip" xml:space="preserve">
-    <value>Enables the high fullwell mode for extended fullwell</value>
+    <value>Activa el mode fullwell alt per a un fullwell llarg</value>
   </data>
   <data name="LblDewHeaterStrength" xml:space="preserve">
-    <value>Target Dew Heater Strength</value>
+    <value>Objectiu de Potència de l'escalfador de rosada</value>
   </data>
   <data name="LblHardwareAcceleration" xml:space="preserve">
-    <value>Hardware Acceleration</value>
+    <value>Acceleració del Hardware</value>
   </data>
   <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
-    <value>This will enable or disable hardware accelerated rendering of the application.
-In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
-Keep in mind that disabling hardware acceleration might reduce overall application performance.
+    <value>Això activarà o desactivarà la representació accelerada de maquinari de l'aplicació.
+En cas que tingueu problemes de renderització o que l'aplicació es torni en blanc quan utilitzeu un programari remot mentre no hi ha cap monitor connectat, pot ser útil desactivar l'acceleració del maquinari.
+Tingueu en compte que desactivar l'acceleració de maquinari pot reduir el rendiment general de l'aplicació.
 
-Changing the value will require an app restart to take affect.</value>
+Si canvieu el valor, caldrà reiniciar l'aplicació perquè tingui efecte.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Perfil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatic Sync</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
+This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
 </root>

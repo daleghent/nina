@@ -6472,34 +6472,48 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>計測結果</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
-    <value>Sets the USB limit for the camera if available</value>
+    <value>利用可能な場合はカメラのUSB制限を設定します</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
-    <value>Set USB Limit</value>
+    <value>USB制限を設定</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
-    <value>Camera cannot set USB limit</value>
+    <value>カメラはUSB制限を設定できません</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
-    <value>Invalid value for USB limit for the camera</value>
+    <value>カメラのUSB制限値が無効</value>
   </data>
   <data name="LblHighFullwellMode" xml:space="preserve">
-    <value>High Fullwell Mode</value>
+    <value>高飽和モード</value>
   </data>
   <data name="LblHighFullwellModeTooltip" xml:space="preserve">
-    <value>Enables the high fullwell mode for extended fullwell</value>
+    <value>拡張されたフルウェルの、高飽和モードを有効にします</value>
   </data>
   <data name="LblDewHeaterStrength" xml:space="preserve">
-    <value>Target Dew Heater Strength</value>
+    <value>結露防止ヒーターの電力設定</value>
   </data>
   <data name="LblHardwareAcceleration" xml:space="preserve">
-    <value>Hardware Acceleration</value>
+    <value>ハードウェア加速</value>
   </data>
   <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
-    <value>This will enable or disable hardware accelerated rendering of the application.
-In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
-Keep in mind that disabling hardware acceleration might reduce overall application performance.
+    <value>アプリケーションのハードウェア・アクセラレーション・レンダリングを有効または無効にします。
+レンダリングに問題がある場合、もしくはリモートソフトウェアを使用していて（モニターが付いていないとき）アプリケーションの画面がブランクになる場合、ハードウェア・アクセラレーションを無効にする方が良いかもしれません。 
+ ただし、ハードウェア・アクセラレーションを無効にすると、全体的なアプリケーションのパフォーマンスが低下する可能性があることに留意してください。
 
-Changing the value will require an app restart to take affect.</value>
+設定を変更して適用するには、アプリを再起動する必要があります。</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>自動同期</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>有効にすると、プレートソルブと中央化の操作中に、アプリケーションは赤道儀に同期コマンドを送信します。
+優れた導入と追尾が可能で、どのような場合でもこの性能が損なわれないような機器を持っている場合にのみ、これを無効にするべきです。
+無効にすると、画像タブのプレートソルブパネルに、同期トグルが表示されません。</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
 </root>

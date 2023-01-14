@@ -157,7 +157,7 @@
     <value>HFR de la Estrella</value>
   </data>
   <data name="LblAfter" xml:space="preserve">
-    <value>Después</value>
+    <value>Tras</value>
   </data>
   <data name="LblAFUseBrightestStars" xml:space="preserve">
     <value>Usar las n estrellas más brillantes</value>
@@ -172,7 +172,7 @@
     <value>Panel de flats Alnitak</value>
   </data>
   <data name="LblAltairCameraSetup" xml:space="preserve">
-    <value>Configuracion Camara Altair</value>
+    <value>Configuración de cámara Altair</value>
   </data>
   <data name="LblAlternativeUIColorSchema" xml:space="preserve">
     <value>Color de Interface Alternativo</value>
@@ -253,7 +253,7 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
     <value>Actualmente solo están soportados sensores monocromáticos de 16 bit</value>
   </data>
   <data name="LblASPS" xml:space="preserve">
-    <value>All Sky Plate Solver</value>
+    <value>Astrometría All Sky</value>
   </data>
   <data name="LblASPSDirectory" xml:space="preserve">
     <value>ASPS Ubicacion</value>
@@ -438,7 +438,7 @@ Usando esos dos puntos se calculará y mostrará el error de azimut actual</valu
     <value>La imagen tiene que ser resuelta para fotografiarla.
 ¿Deberían tomarse estas coordenadas como referencia?
 RA: {0}
-Dic. {1}</value>
+Dec: {1}</value>
   </data>
   <data name="LblBlindSolver" xml:space="preserve">
     <value>Astrometría Ciega</value>
@@ -486,7 +486,7 @@ Dic. {1}</value>
     <value>Batería de la cámara</value>
   </data>
   <data name="LblCameraBusy" xml:space="preserve">
-    <value>Barajando bytes (Byte shuffling)</value>
+    <value>Cámara ocupada</value>
   </data>
   <data name="LblCameraConnected" xml:space="preserve">
     <value>Cámara conectada</value>
@@ -505,8 +505,7 @@ Ganancia: {2}
 Filtro: {3}</value>
   </data>
   <data name="LblCameraHighPower" xml:space="preserve">
-    <value>El enfriador de la cámara se está ejecutando a un {0}% de potencia y puede no ser
-capaz de compensar las variaciones de temperatura ambiente</value>
+    <value>El enfriador de la cámara se está ejecutando a un {0}% de potencia y puede no ser capaz de compensar las variaciones de temperatura ambiente</value>
   </data>
   <data name="LblCameraNotAtTargetTemp" xml:space="preserve">
     <value>Camara aún está a {0}°C y la temperatura a lograr es {1}°C</value>
@@ -6492,34 +6491,47 @@ Esto se evalúa DESPUÉS del ajuste "Aparcar montura antes de mover la ventana".
     <value>Indicador</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
-    <value>Sets the USB limit for the camera if available</value>
+    <value>Establece el límite USB para la cámara si está disponible</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
-    <value>Set USB Limit</value>
+    <value>Establecer límite USB</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
-    <value>Camera cannot set USB limit</value>
+    <value>La cámara no puede establecer el límite USB</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
-    <value>Invalid value for USB limit for the camera</value>
+    <value>Valor no válido para el límite USB para la cámara</value>
   </data>
   <data name="LblHighFullwellMode" xml:space="preserve">
-    <value>High Fullwell Mode</value>
+    <value>Modo Fullwell alto</value>
   </data>
   <data name="LblHighFullwellModeTooltip" xml:space="preserve">
-    <value>Enables the high fullwell mode for extended fullwell</value>
+    <value>Habilita el modo alto de fullwell para extenderlo</value>
   </data>
   <data name="LblDewHeaterStrength" xml:space="preserve">
-    <value>Target Dew Heater Strength</value>
+    <value>Potencia a alcanzar por el antirrocío</value>
   </data>
   <data name="LblHardwareAcceleration" xml:space="preserve">
-    <value>Hardware Acceleration</value>
+    <value>Aceleración por hardware</value>
   </data>
   <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
-    <value>This will enable or disable hardware accelerated rendering of the application.
-In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
-Keep in mind that disabling hardware acceleration might reduce overall application performance.
+    <value>Esto activará o desactivará el renderizado acelerado por hardware de la aplicación.
+En caso de que tengas problemas de renderizado, o la aplicación se vuelva blanca cuando uses un software de control remoto sin que haya ningún monitor conectado, el desactivar la aceleración por hardware podría ser beneficioso.
+Ten en cuenta que deshabilitar la aceleración por hardware puede reducir el rendimiento general de la aplicación.
 
-Changing the value will require an app restart to take affect.</value>
+Cambiar el valor requerirá el reinicio de NINA para que tenga efecto.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Perfil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Sinc Automática</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>Cuando se habilite, la aplicación enviará un comando de sincronización a la montura durante las operaciones de platesolve y centrado. 
+Esto solo debería desactivarse si tienes un buen modelado de cielo que no debe ser alterado de ninguna manera. Cuando se desactiva el panel de platesolve en la pestaña de imagen tampoco se mostrará el botón de sincronización.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
 </root>

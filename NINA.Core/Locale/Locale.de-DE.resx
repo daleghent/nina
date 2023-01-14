@@ -6524,4 +6524,17 @@ Keep in mind that disabling hardware acceleration might reduce overall applicati
 
 Changing the value will require an app restart to take affect.</value>
   </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatic Sync</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
+This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
 </root>
