@@ -22,8 +22,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public bool CanClearCalibration {
             get => _canClearCalibration;
             set {
-                _canClearCalibration = value;
-                RaisePropertyChanged();
+                if (_canClearCalibration != value) {
+                    _canClearCalibration = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -32,8 +34,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public bool CanSetShiftRate {
             get => _canSetShiftRate;
             set {
-                _canSetShiftRate = value;
-                RaisePropertyChanged();
+                if (_canSetShiftRate != value) {
+                    _canSetShiftRate = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -42,8 +46,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public IList<string> SupportedActions {
             get => supportedActions;
             set {
-                supportedActions = value;
-                RaisePropertyChanged();
+                if (supportedActions != value) {
+                    supportedActions = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -54,8 +60,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public RMSError RMSError {
             get => rmsError;
             set {
-                rmsError = value;
-                RaisePropertyChanged();
+                if (rmsError != value) {
+                    rmsError = value;
+                    RaisePropertyChanged();
+                }
             }
         }
     }

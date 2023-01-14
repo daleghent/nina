@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using NINA.Core.Enum;
 using System.Threading;
+using System;
 
 namespace NINA.Equipment.Interfaces {
 
@@ -34,6 +35,25 @@ namespace NINA.Equipment.Interfaces {
         public TrackingMode TrackingMode;
         public double? CustomRightAscensionRate;
         public double? CustomDeclinationRate;
+
+        public override bool Equals(object obj) {
+            return obj is TrackingRate rate &&
+                   TrackingMode == rate.TrackingMode &&
+                   CustomRightAscensionRate == rate.CustomRightAscensionRate &&
+                   CustomDeclinationRate == rate.CustomDeclinationRate;
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(TrackingMode, CustomRightAscensionRate, CustomDeclinationRate);
+        }
+
+        public static bool operator ==(TrackingRate left, TrackingRate right) {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(TrackingRate left, TrackingRate right) {
+            return !(left == right);
+        }
     }
 
     public interface ITelescope : IDevice {

@@ -164,7 +164,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     Guider.PropertyChanged += Guider_PropertyChanged;
 
 
-                    GuiderInfo = new GuiderInfo {
+                    GuiderInfo.CopyFrom(new GuiderInfo {
                         Connected = connected,
                         CanClearCalibration = Guider.CanClearCalibration,
                         CanSetShiftRate = Guider.CanSetShiftRate,
@@ -175,7 +175,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                         DeviceId = Guider.Id,
                         SupportedActions = Guider.SupportedActions,
                         RMSError = new RMSError()
-                    };
+                    });
                     BroadcastGuiderInfo();
                     Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);
                     RaisePropertyChanged(nameof(Guider));
@@ -240,7 +240,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 }
                 Guider?.Disconnect();
                 Guider = null;
-                GuiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
+                GuiderInfo.Reset();
                 BroadcastGuiderInfo();
             } catch(Exception ex) {
                 Logger.Error(ex);
@@ -256,10 +256,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     guiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
                 }
                 return guiderInfo;
-            }
-            set {
-                guiderInfo = value;
-                RaisePropertyChanged();
             }
         }
 

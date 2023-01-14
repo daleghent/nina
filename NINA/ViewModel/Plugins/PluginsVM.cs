@@ -9,6 +9,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using CommunityToolkit.Mvvm.Input;
 using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.Utility;
@@ -27,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using RelayCommand = NINA.Core.Utility.RelayCommand;
 
 namespace NINA.ViewModel.Plugins {
 
@@ -51,7 +53,9 @@ namespace NINA.ViewModel.Plugins {
                 }
             });
             UpdatePluginCommand = new AsyncCommand<bool>(() => InstallPlugin(true));
-            UpdateAllPluginsCommand = new AsyncCommand<bool>(() => UpdateAllPlugins(), (o) => AvailablePluginUpdateCount > 0);
+            UpdateAllPluginsCommand = new AsyncRelayCommand(UpdateAllPlugins, () => AvailablePluginUpdateCount > 0);
+            UpdateAllPluginsCommand.RegisterPropertyChangeNotification(this, nameof(AvailablePluginUpdateCount));
+
             InstallPluginCommand = new AsyncCommand<bool>(() => InstallPlugin(false));
             CancelInstallPluginCommand = new RelayCommand((object o) => { try { installCts?.Cancel(); } catch { } });
             CancelFetchPluginsCommand = new RelayCommand((object o) => { try { fetchCts?.Cancel(); } catch { } });
@@ -194,7 +198,7 @@ namespace NINA.ViewModel.Plugins {
         public ICommand RestartCommand { get; }
 
         public IAsyncCommand UpdatePluginCommand { get; }
-        public IAsyncCommand UpdateAllPluginsCommand { get; }
+        public IAsyncRelayCommand UpdateAllPluginsCommand { get; }
         public IAsyncCommand UninstallPluginCommand { get; }
 
         private ExtendedPluginManifest selectedAvailablePlugin;
@@ -212,8 +216,10 @@ namespace NINA.ViewModel.Plugins {
         public int AvailablePluginUpdateCount {
             get => availablePluginUpdateCount;
             private set {
-                availablePluginUpdateCount = value;
-                RaisePropertyChanged();
+                if (availablePluginUpdateCount != value) {
+                    availablePluginUpdateCount = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 

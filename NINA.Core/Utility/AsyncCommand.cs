@@ -14,7 +14,10 @@
 
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NINA.Core.Utility {
@@ -108,5 +111,19 @@ namespace NINA.Core.Utility {
 
         // Raises PropertyChanged
         public NotifyTaskCompletion<TResult> Execution { get { return _execution; } private set { _execution = value; RaisePropertyChanged(); } }
+    }
+
+    public static class RelayCommandExtensions {
+
+        public static void RegisterPropertyChangeNotification(this IRelayCommand value, INotifyPropertyChanged observable, params string[] propertyNames) {
+            observable.PropertyChanged += (object sender, PropertyChangedEventArgs e) => {
+                foreach (var propertyName in propertyNames) {
+                    if (e.PropertyName == propertyName) {
+                        Application.Current.Dispatcher.Invoke(value.NotifyCanExecuteChanged);
+                        return;
+                    }
+                }
+            };
+        }
     }
 }

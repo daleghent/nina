@@ -28,8 +28,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return siderealTime;
             }
             set {
-                siderealTime = value;
-                RaisePropertyChanged();
+                if (siderealTime != value) {
+                    siderealTime = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -40,8 +42,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return rightAscension;
             }
             set {
-                rightAscension = value;
-                RaisePropertyChanged();
+                if (rightAscension != value) {
+                    rightAscension = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -52,8 +56,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return declination;
             }
             set {
-                declination = value;
-                RaisePropertyChanged();
+                if (declination != value) {
+                    declination = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -64,8 +70,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return siteLatitude;
             }
             set {
-                siteLatitude = value;
-                RaisePropertyChanged();
+                if (siteLatitude != value) {
+                    siteLatitude = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -76,8 +84,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return siteLongitude;
             }
             set {
-                siteLongitude = value;
-                RaisePropertyChanged();
+                if (siteLongitude != value) {
+                    siteLongitude = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -88,8 +98,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return siteElevation;
             }
             set {
-                siteElevation = value;
-                RaisePropertyChanged();
+                if (siteElevation != value) {
+                    siteElevation = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -100,8 +112,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return rightAscensionString;
             }
             set {
-                rightAscensionString = value;
-                RaisePropertyChanged();
+                if (rightAscensionString != value) {
+                    rightAscensionString = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -112,8 +126,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return declinationString;
             }
             set {
-                declinationString = value;
-                RaisePropertyChanged();
+                if (declinationString != value) {
+                    declinationString = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -124,8 +140,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return coordinates;
             }
             set {
-                coordinates = value;
-                RaisePropertyChanged();
+                if (coordinates != value) {
+                    coordinates = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -136,8 +154,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return timeToMeridianFlip;
             }
             set {
-                timeToMeridianFlip = value;
-                RaisePropertyChanged();
+                if (timeToMeridianFlip != value) {
+                    timeToMeridianFlip = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -148,8 +168,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return sideOfPier;
             }
             set {
-                sideOfPier = value;
-                RaisePropertyChanged();
+                if (sideOfPier != value) {
+                    sideOfPier = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -157,147 +179,253 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double Altitude {
             get { return altitude; }
-            set { altitude = value; RaisePropertyChanged(); }
+            set {
+                if (altitude != value) {
+                    altitude = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private string altitudeString = string.Empty;
 
         public string AltitudeString {
             get { return altitudeString; }
-            set { altitudeString = value; RaisePropertyChanged(); }
+            set {
+                if (altitudeString != value) {
+                    altitudeString = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private double azimuth = double.NaN;
 
         public double Azimuth {
             get { return azimuth; }
-            set { azimuth = value; RaisePropertyChanged(); }
+            set {
+                if (azimuth != value) {
+                    azimuth = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private string azimuthString = string.Empty;
 
         public string AzimuthString {
             get { return azimuthString; }
-            set { azimuthString = value; RaisePropertyChanged(); }
+            set {
+                if (azimuthString != value) {
+                    azimuthString = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private string siderealTimeString;
 
         public string SiderealTimeString {
             get { return siderealTimeString; }
-            set { siderealTimeString = value; RaisePropertyChanged(); }
+            set {
+                if (siderealTimeString != value) {
+                    siderealTimeString = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private string hoursToMeridianString;
 
         public string HoursToMeridianString {
             get { return hoursToMeridianString; }
-            set { hoursToMeridianString = value; RaisePropertyChanged(); }
+            set {
+                if (hoursToMeridianString != value) {
+                    hoursToMeridianString = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool atPark;
 
         public bool AtPark {
             get { return atPark; }
-            set { atPark = value; RaisePropertyChanged(); }
+            set {
+                if (atPark != value) {
+                    atPark = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private TrackingRate trackingRate;
 
         public TrackingRate TrackingRate {
             get { return trackingRate; }
-            set { trackingRate = value; RaisePropertyChanged(); RaisePropertyChanged(nameof(TrackingMode)); }
+            set {
+                if (trackingRate != value) {
+                    trackingRate = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(TrackingMode));
+                }
+            }
         }
 
         private bool trackingEnabled;
 
         public bool TrackingEnabled {
             get { return trackingEnabled; }
-            set { trackingEnabled = value; RaisePropertyChanged(); }
+            set {
+                if (trackingEnabled != value) {
+                    trackingEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private IList<TrackingMode> trackingModes;
 
         public IList<TrackingMode> TrackingModes {
             get { return trackingModes; }
-            set { trackingModes = value; RaisePropertyChanged(); }
+            set {
+                if (trackingModes != value) {
+                    trackingModes = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool atHome;
 
         public bool AtHome {
             get { return atHome; }
-            set { atHome = value; RaisePropertyChanged(); }
+            set {
+                if (atHome != value) {
+                    atHome = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canFindHome;
 
         public bool CanFindHome {
             get { return canFindHome; }
-            set { canFindHome = value; RaisePropertyChanged(); }
+            set {
+                if (canFindHome != value) {
+                    canFindHome = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canPark;
 
         public bool CanPark {
             get { return canPark; }
-            set { canPark = value; RaisePropertyChanged(); }
+            set {
+                if (canPark != value) {
+                    canPark = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canSetPark;
 
         public bool CanSetPark {
             get { return canSetPark; }
-            set { canSetPark = value; RaisePropertyChanged(); }
+            set {
+                if (canSetPark != value) {
+                    canSetPark = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canSetTracking;
 
         public bool CanSetTrackingEnabled {
             get { return canSetTracking; }
-            set { canSetTracking = value; RaisePropertyChanged(); }
+            set {
+                if (canSetTracking != value) {
+                    canSetTracking = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canSetDeclinationRate;
 
         public bool CanSetDeclinationRate {
             get { return canSetDeclinationRate; }
-            set { canSetDeclinationRate = value; RaisePropertyChanged(); }
+            set {
+                if (canSetDeclinationRate != value) {
+                    canSetDeclinationRate = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canSetRightAscensionRate;
 
         public bool CanSetRightAscensionRate {
             get { return canSetRightAscensionRate; }
-            set { canSetRightAscensionRate = value; RaisePropertyChanged(); }
+            set {
+                if (canSetRightAscensionRate != value) {
+                    canSetRightAscensionRate = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private Epoch equatorialSystem;
 
         public Epoch EquatorialSystem {
             get { return equatorialSystem; }
-            set { equatorialSystem = value; RaisePropertyChanged(); }
+            set {
+                if (equatorialSystem != value) {
+                    equatorialSystem = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool hasUnknownEpoch;
 
         public bool HasUnknownEpoch {
             get { return hasUnknownEpoch; }
-            set { hasUnknownEpoch = value; RaisePropertyChanged(); }
+            set {
+                if (hasUnknownEpoch != value) {
+                    hasUnknownEpoch = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private string timeToMeridianFlipString;
 
         public string TimeToMeridianFlipString {
             get { return timeToMeridianFlipString; }
-            set { timeToMeridianFlipString = value; RaisePropertyChanged(); }
+            set {
+                if (timeToMeridianFlipString != value) {
+                    timeToMeridianFlipString = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private Coordinates targetCoordinates;
 
         public Coordinates TargetCoordinates {
             get { return targetCoordinates; }
-            set { targetCoordinates = value; RaisePropertyChanged(); }
+            set {
+                if (targetCoordinates != value) {
+                    targetCoordinates = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private PierSide? targetSideOfPier;
@@ -307,8 +435,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return targetSideOfPier;
             }
             set {
-                targetSideOfPier = value;
-                RaisePropertyChanged();
+                if (targetSideOfPier != value) {
+                    targetSideOfPier = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -316,49 +446,84 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public bool Slewing {
             get { return slewing; }
-            set { slewing = value; RaisePropertyChanged(); }
+            set {
+                if (slewing != value) {
+                    slewing = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private double guideRateRightAscensionArcsecPerSec;
 
         public double GuideRateRightAscensionArcsecPerSec {
             get { return guideRateRightAscensionArcsecPerSec; }
-            set { guideRateRightAscensionArcsecPerSec = value; RaisePropertyChanged(); }
+            set {
+                if (guideRateRightAscensionArcsecPerSec != value) {
+                    guideRateRightAscensionArcsecPerSec = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private double guideRateDeclinationArcsecPerSec;
 
         public double GuideRateDeclinationArcsecPerSec {
             get { return guideRateDeclinationArcsecPerSec; }
-            set { guideRateDeclinationArcsecPerSec = value; RaisePropertyChanged(); }
+            set {
+                if (guideRateDeclinationArcsecPerSec != value) {
+                    guideRateDeclinationArcsecPerSec = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canMovePrimaryAxis;
 
         public bool CanMovePrimaryAxis {
             get { return canMovePrimaryAxis; }
-            set { canMovePrimaryAxis = value; RaisePropertyChanged(); }
+            set {
+                if (canMovePrimaryAxis != value) {
+                    canMovePrimaryAxis = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private bool canMoveSecondaryAxis;
 
         public bool CanMoveSecondaryAxis {
             get { return canMoveSecondaryAxis; }
-            set { canMoveSecondaryAxis = value; RaisePropertyChanged(); }
+            set {
+                if (canMoveSecondaryAxis != value) {
+                    canMoveSecondaryAxis = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private IList<(double, double)> primaryAxisRates;
 
         public IList<(double, double)> PrimaryAxisRates {
             get { return primaryAxisRates; }
-            set { primaryAxisRates = value; RaisePropertyChanged(); }
+            set {
+                if (primaryAxisRates != value) {
+                    primaryAxisRates = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private IList<(double, double)> secondaryAxisRates;
 
         public IList<(double, double)> SecondaryAxisRates {
             get { return secondaryAxisRates; }
-            set { secondaryAxisRates = value; RaisePropertyChanged(); }
+            set {
+                if (secondaryAxisRates != value) {
+                    secondaryAxisRates = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private IList<string> supportedActions;
@@ -366,8 +531,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public IList<string> SupportedActions {
             get => supportedActions;
             set {
-                supportedActions = value;
-                RaisePropertyChanged();
+                if (supportedActions != value) {
+                    supportedActions = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -376,8 +543,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public AlignmentMode AlignmentMode {
             get => alignmentMode;
             set {
-                alignmentMode = value;
-                RaisePropertyChanged();
+                if (alignmentMode != value) {
+                    alignmentMode = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -386,8 +555,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool CanPulseGuide {
             get => canPulseGuide;
             set {
-                canPulseGuide = value;
-                RaisePropertyChanged();
+                if (canPulseGuide != value) {
+                    canPulseGuide = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -396,8 +567,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool IsPulseGuiding {
             get => isPulseGuiding;
             set {
-                isPulseGuiding = value;
-                RaisePropertyChanged();
+                if (isPulseGuiding != value) {
+                    isPulseGuiding = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -406,8 +579,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool CanSetPierSide {
             get => canSetPierSide;
             set {
-                canSetPierSide = value;
-                RaisePropertyChanged();
+                if (canSetPierSide != value) {
+                    canSetPierSide = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -416,8 +591,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool CanSlew {
             get => canSlew;
             set {
-                canSlew = value;
-                RaisePropertyChanged();
+                if (canSlew != value) {
+                    canSlew = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -426,8 +603,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public System.DateTime UTCDate {
             get => uTCDate;
             set {
-                uTCDate = value;
-                RaisePropertyChanged();
+                if (uTCDate != value) {
+                    uTCDate = value;
+                    RaisePropertyChanged();
+                }
             }
         }
     }

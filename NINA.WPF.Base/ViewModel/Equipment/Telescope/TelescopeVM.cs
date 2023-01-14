@@ -437,7 +437,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 }
                             }
 
-                            TelescopeInfo = new TelescopeInfo {
+                            TelescopeInfo.CopyFrom(new TelescopeInfo {
                                 Altitude = Telescope.Altitude,
                                 AltitudeString = Telescope.AltitudeString,
                                 AtPark = Telescope.AtPark,
@@ -488,7 +488,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 CanSetPierSide = Telescope.CanSetPierSide,
                                 CanSlew = Telescope.CanSlew,
                                 UTCDate = Telescope.UTCDate,
-                            };
+                            });
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
                             SupportedTrackingModes = new AsyncObservableCollection<TrackingMode>(Telescope.TrackingModes.Where(m => m != TrackingMode.Custom));
@@ -540,10 +540,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     telescopeInfo.SideOfPier = PierSide.pierUnknown;
                 }
                 return telescopeInfo;
-            }
-            set {
-                telescopeInfo = value;
-                RaisePropertyChanged();
             }
         }
 
@@ -745,7 +741,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
             Telescope?.Disconnect();
             Telescope = null;
-            TelescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
+            TelescopeInfo.Reset();
             BroadcastTelescopeInfo();
         }
 
