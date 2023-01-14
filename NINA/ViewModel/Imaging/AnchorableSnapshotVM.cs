@@ -37,7 +37,6 @@ using System.ComponentModel;
 using NINA.Equipment.Exceptions;
 using System.Windows.Media.Imaging;
 using NINA.Equipment.Equipment.MyFilterWheel;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace NINA.ViewModel.Imaging {
 
@@ -224,9 +223,15 @@ namespace NINA.ViewModel.Imaging {
                 RaisePropertyChanged();
             }
         }
-
-        [ObservableProperty]
+                
         private string snapTargetName = string.Empty;
+        public string SnapTargetName {
+            get => snapTargetName;
+            set {
+                snapTargetName = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public bool SnapSubSample {
             get {
