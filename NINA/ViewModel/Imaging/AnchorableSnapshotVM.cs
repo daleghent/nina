@@ -37,10 +37,11 @@ using System.ComponentModel;
 using NINA.Equipment.Exceptions;
 using System.Windows.Media.Imaging;
 using NINA.Equipment.Equipment.MyFilterWheel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace NINA.ViewModel.Imaging {
 
-    internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IFilterWheelConsumer, IAnchorableSnapshotVM {
+    internal partial class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IFilterWheelConsumer, IAnchorableSnapshotVM {
         private CancellationTokenSource _captureImageToken;
         private CancellationTokenSource _liveViewCts;
         private bool _liveViewEnabled;
@@ -224,6 +225,9 @@ namespace NINA.ViewModel.Imaging {
             }
         }
 
+        [ObservableProperty]
+        private string snapTargetName = string.Empty;
+
         public bool SnapSubSample {
             get {
                 return _snapSubSample;
@@ -398,7 +402,7 @@ namespace NINA.ViewModel.Imaging {
                     seq.SubSambleRectangle = SubSampleRectangle;
                     seq.Gain = SnapGain;
 
-                    var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress);
+                    var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress, snapTargetName);
                     if (exposureData == null) {
                         return false;
                     }
@@ -410,7 +414,7 @@ namespace NINA.ViewModel.Imaging {
                     }
                     prepareTask = imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
-                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });                        
                         await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
                         imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageTypes.SNAPSHOT);
                     }
