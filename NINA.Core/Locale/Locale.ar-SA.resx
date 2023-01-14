@@ -6501,4 +6501,48 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblGauges" xml:space="preserve">
     <value>Gauges</value>
   </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Sets the USB limit for the camera if available</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Set USB Limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Camera cannot set USB limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Invalid value for USB limit for the camera</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>High Fullwell Mode</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Enables the high fullwell mode for extended fullwell</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Target Dew Heater Strength</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Hardware Acceleration</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>This will enable or disable hardware accelerated rendering of the application.
+In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+Keep in mind that disabling hardware acceleration might reduce overall application performance.
+
+Changing the value will require an app restart to take affect.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatic Sync</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
+This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
 </root>

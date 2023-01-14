@@ -6495,4 +6495,48 @@ Toto se vyhodnotí PO nastavení "Zaparkovat montáž před pohybem štěrbiny".
   <data name="LblGauges" xml:space="preserve">
     <value>Měřiče</value>
   </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Nastaví limit USB pro kameru, pokud je k dispozici</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Nastavit limit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Kamera nemůže nastavit limit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Nesprávná hodnota limitu USB pro kameru</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>Režim High Fullwell</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Povoluje režim high fullwell pro rozšířený fullwell</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Cílový Výkon Ohřívače</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Hardwarová Akcelerace</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>Tím povolíte nebo zakážete hardwarovou akceleraci renderování aplikace.
+V případě, že máte problémy s renderováním nebo se aplikace při používání vzdáleného softwaru zobrazí jako černá, když není připojen žádný monitor, může být zakázání hardwarové akcelerace přínosné.
+Mějte na paměti, že vypnutí hardwarové akcelerace může snížit celkový výkon aplikace.
+
+Změna hodnoty bude vyžadovat restart aplikace, aby se projevila.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatická Synchronizace</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>Pokud je tato funkce povolena, aplikace odešle příkaz k synchronizaci do montáže během operací astrometrie &amp; centrování. 
+Tato funkce by měla být vypnuta pouze v případě, že máte k dispozici vynikající montáž, která by neměla být nijak upravována. Pokud je synchronizace vypnuta, přepínač se nezobrazí na panelu Astrometrie a na kartě Snímání.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
 </root>

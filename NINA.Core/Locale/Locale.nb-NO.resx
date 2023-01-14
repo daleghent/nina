@@ -1810,7 +1810,7 @@ Forventet HFR: {2}</value>
     <value>Kilde</value>
   </data>
   <data name="LblImageTypeDescription" xml:space="preserve">
-    <value>Light, Flat, Dark, Bias, Snapshot</value>
+    <value>Light, Flat, Dark, Bias, Enkeltbilde</value>
   </data>
   <data name="LblImaging" xml:space="preserve">
     <value>Foto</value>
@@ -6344,13 +6344,13 @@ Sjekk om en oppdatert versjon er tilgjengelig.</value>
     <value>Uten filter</value>
   </data>
   <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Exposure speed</value>
+    <value>Eksponeringstid</value>
   </data>
   <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Gain preset</value>
+    <value>Forsterkning</value>
   </data>
   <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Heater power level</value>
+    <value>Varmeeffekt</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
     <value>Hviler etter dither</value>
@@ -6469,7 +6469,7 @@ Når metadata er bekreftet, velg søkemotoren som skal brukes.</value>
     <value>Dreier</value>
   </data>
   <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
-    <value>The drive rate {0} is invalid to move the telescope axis. Please enter a different rate.</value>
+    <value>Følgeraten {0} er ikke gyldig for teleskopaksen. Vennligst oppgi en annen rate.</value>
   </data>
   <data name="LblFilterChangeFailed" xml:space="preserve">
     <value>Failed to move filter wheel to filter {0} at position {1}</value>
@@ -6479,6 +6479,50 @@ Når metadata er bekreftet, velg søkemotoren som skal brukes.</value>
     <value>Switches</value>
   </data>
   <data name="LblGauges" xml:space="preserve">
-    <value>Gauges</value>
+    <value>Målinger</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Setter USB-grensen for kameraet hvis mulig</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Sett USB-grense</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Kamera kan ikke sette USB-grense</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Ugyldig verdi for USB-grense</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>Dyp pikselbrønn-modus</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Slår på dyp pikselbrønn-modus for større brønnkapasitet</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Varmeeffekt</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Maskinvareakselerasjon</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>Dette vil aktivere eller deaktivere maskinvareakselerert visning av programmet.
+Hvis du har problemer med visningen, eller programmet ikke synes ved fjernstyring, kan det hjelpe å deaktivere maskinvareakselerasjon. 
+Å deaktiverer maskinvareakselerasjon kan redusere den generelle programytelsen.
+
+Endringer trer i kraft neste gang programmet startes.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatic Sync</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
+This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
 </root>

@@ -6490,4 +6490,48 @@ Sprawdzane PO "Zaparkuj przed przesunięciem przesłony".</value>
   <data name="LblGauges" xml:space="preserve">
     <value>Wskaźniki</value>
   </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Ustawia limit USB dla kamery, jeśli jest dostępny</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Ustaw limit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Nie można ustawić limitu USB dla kamery</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Nieprawidłowa wartość limitu USB dla kamery</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>Tryb wysokiego nasycenia</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Włącz rozszerzony tryb pełnej studzienki i wysokiego nasycenia</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Docelowa siła grzałki</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Przyspieszenie sprzętowe</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>Włącza lub wyłącza renderowanie przyspieszane sprzętowo dla aplikacji.
+Jeśli masz problemy z renderowaniem lub używasz zdalnego oprogramowania, a ekran aplikacji jest pusty, warto wyłączyć przyspieszenie sprzętowe.
+Należy jednak pamiętać, że wyłączenie akceleracji sprzętowej może obniżyć ogólną wydajność aplikacji.
+
+Aby zmienić i zastosować ustawienia, należy ponownie uruchomić aplikację.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatyczna synchronizacja</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>Po włączeniu aplikacja wyśle ​​polecenie synchronizacji do montażu podczas operacji platesolve i centrowania.
+Opcję tę należy wyłączyć tylko wtedy, gdy dostępny jest dobry wzorzec mapy nieba i nie należy jej w żaden sposób modyfikować. Po wyłączeniu panel platesolving w zakładce obrazu również nie będzie wyświetlał przełącznika synchronizacji.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
 </root>
