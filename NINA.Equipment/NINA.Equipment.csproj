@@ -42,7 +42,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ASCOM.Com.Components" Version="1.0.52" />
+    <PackageReference Include="ASCOM.Com.Components" Version="1.0.70" />
     <PackageReference Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
     <PackageReference Include="Google.Protobuf.Tools" Version="3.21.12" />
     <PackageReference Include="Grpc.Tools" Version="2.51.0">

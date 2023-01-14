@@ -37,7 +37,6 @@
     <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj" />
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj" />
     <ProjectReference Include="..\NINA.CustomControlLibrary\NINA.CustomControlLibrary.csproj" />
-    <ProjectReference Include="..\OxyPlot.Contrib.Wpf\OxyPlot.Contrib.Wpf.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AsyncEnumerator" Version="4.0.2" />
@@ -46,7 +45,8 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Nito.Mvvm.Async" Version="1.0.0-pre-04" />
-    <PackageReference Include="OxyPlot.Contrib" Version="2.1.0" />
+    <PackageReference Include="OxyPlot.Contrib" Version="2.1.2" />
+    <PackageReference Include="OxyPlot.Contrib.Wpf" Version="2.1.2" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
     <PackageReference Include="ToggleSwitch" Version="1.2.0" />
   </ItemGroup>
