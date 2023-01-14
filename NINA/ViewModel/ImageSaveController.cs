@@ -75,7 +75,9 @@ namespace NINA.ViewModel {
                     await imageSaveMediator.OnBeforeFinalizeImageSaved(beforeFinalizeArgs);
                     var customPatterns = beforeFinalizeArgs.Patterns;
 
-                    path = preparedData.RawImageData.FinalizeSave(path, profileService.ActiveProfile.ImageFileSettings.FilePattern, customPatterns);
+                    var patternTemplate = profileService.ActiveProfile.ImageFileSettings.GetFilePattern(item.Data.MetaData.Image.ImageType);
+
+                    path = preparedData.RawImageData.FinalizeSave(path, patternTemplate, customPatterns);
                     var stats = await preparedData.RawImageData.Statistics;
 
                     // Run this in a separate task to limit risk of deadlocks

@@ -32,6 +32,10 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             filePath = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A");
             filePattern = "$$DATEMINUS12$$\\$$IMAGETYPE$$\\$$DATETIME$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$";
+            filePatternDARK = "";
+            filePatternBIAS = "";
+            filePatternFLAT = "";
+            filePatternDARKFLAT = "";
             fileType = FileTypeEnum.FITS;
             tiffCompressionType = TIFFCompressionTypeEnum.NONE;
             xisfCompressionType = XISFCompressionTypeEnum.NONE;
@@ -60,6 +64,58 @@ namespace NINA.Profile {
             set {
                 if (filePattern != value) {
                     filePattern = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string filePatternDARK;
+
+        [DataMember]
+        public string FilePatternDARK {
+            get => filePatternDARK;
+            set {
+                if (filePatternDARK != value) {
+                    filePatternDARK = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string filePatternFLAT;
+
+        [DataMember]
+        public string FilePatternFLAT {
+            get => filePatternFLAT;
+            set {
+                if (filePatternFLAT != value) {
+                    filePatternFLAT = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string filePatternDARKFLAT;
+
+        [DataMember]
+        public string FilePatternDARKFLAT {
+            get => filePatternDARKFLAT;
+            set {
+                if (filePatternDARKFLAT != value) {
+                    filePatternDARKFLAT = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string filePatternBIAS;
+
+        [DataMember]
+        public string FilePatternBIAS {
+            get => filePatternBIAS;
+            set {
+                if (filePatternBIAS != value) {
+                    filePatternBIAS = value;
                     RaisePropertyChanged();
                 }
             }
@@ -150,6 +206,25 @@ namespace NINA.Profile {
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        public string GetFilePattern(string imageType) {
+            var pattern = FilePattern;
+
+            if(imageType == "DARK" && !string.IsNullOrWhiteSpace(FilePatternDARK)) {
+                pattern = FilePatternDARK;
+            }
+            if (imageType == "FLAT" && !string.IsNullOrWhiteSpace(FilePatternFLAT)) {
+                pattern = FilePatternFLAT;
+            }
+            if (imageType == "DARKFLAT" && !string.IsNullOrWhiteSpace(FilePatternDARKFLAT)) {
+                pattern = FilePatternDARKFLAT;
+            }
+            if (imageType == "BIAS" && !string.IsNullOrWhiteSpace(FilePatternBIAS)) {
+                pattern = FilePatternBIAS;
+            }
+
+            return pattern;
         }
     }
 }
