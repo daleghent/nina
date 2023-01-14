@@ -19,10 +19,16 @@ namespace NINA.Profile.Interfaces {
     public interface IImageFileSettings : ISettings {
         string FilePath { get; set; }
         string FilePattern { get; set; }
+        string FilePatternDARK { get; set; }
+        string FilePatternBIAS { get; set; }
+        string FilePatternFLAT { get; set; }
+        string FilePatternDARKFLAT { get; set; }
         FileTypeEnum FileType { get; set; }
         TIFFCompressionTypeEnum TIFFCompressionType { get; set; }
         XISFCompressionTypeEnum XISFCompressionType { get; set; }
         XISFChecksumTypeEnum XISFChecksumType { get; set; }
         bool XISFByteShuffling { get; set; }
+
+        string GetFilePattern(string imageType);
     }
 }

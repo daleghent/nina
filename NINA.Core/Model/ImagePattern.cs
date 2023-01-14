@@ -170,9 +170,18 @@ namespace NINA.Core.Model {
         /// <param name="patterns">KeyValue Collection of Makro -&gt; Makrovalue</param>
         /// <returns></returns>
         public string GetImageFileString(string filePatternMacro) {
+            return GetImageFileString(filePatternMacro, null);
+        }
+
+        public string GetImageFileString(string filePatternMacro, string imageType) {
+
             string s = filePatternMacro;
             foreach (ImagePattern p in patterns.Values) {
-                s = s.Replace(p.Key, p.Value);
+                if(p.Key == ImagePatternKeys.ImageType && !string.IsNullOrWhiteSpace(imageType)) {
+                    s = s.Replace(p.Key, imageType);
+                } else {
+                    s = s.Replace(p.Key, p.Value);
+                }                
             }
             var path = s.Split(Utility.CoreUtil.PATHSEPARATORS, StringSplitOptions.RemoveEmptyEntries);
 
@@ -184,9 +193,9 @@ namespace NINA.Core.Model {
             return imageFileString;
         }
 
-        /// <summary>
+            /// <summary>
 
-        public static ImagePatterns CreateExample() {
+            public static ImagePatterns CreateExample() {
             var p = new ImagePatterns();
 
             p.Set(ImagePatternKeys.Filter, "L");

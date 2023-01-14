@@ -27,7 +27,8 @@
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             Background="{TemplateBinding Background}"
-                            Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type local:HintTextBox}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type local:HintTextBox}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
                         <TextBlock
                             x:Name="PART_HintText"
                             Margin="5,0,0,0"

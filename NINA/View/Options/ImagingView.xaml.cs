@@ -85,7 +85,7 @@ namespace NINA.View.Options {
 
             // GetCharacterIndexFromPoint is missing one caret position, as there is one extra caret position than there are characters (an extra one at the end).
             //  We have to add that caret index if the given point is at the end of the textbox
-            if (index == textBox.Text.Length - 1) {
+            if (index >= 0 && index == textBox.Text.Length - 1) {
                 // Get the position of the character index using the bounding rectangle
                 Rect caretRect = textBox.GetRectFromCharacterIndex(index);
                 Point caretPoint = new Point(caretRect.X, caretRect.Y);
@@ -94,7 +94,7 @@ namespace NINA.View.Options {
                     index += 1;
                 }
             }
-            return index;
+            return index == -1 ? 0 : index;
         }
     }
 }

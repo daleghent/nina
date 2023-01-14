@@ -123,7 +123,11 @@ namespace NINA.ViewModel {
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 ProfileChanged();
-                Profiles.Refresh();
+                Profiles.Refresh(); 
+                FilePatternsExpanded = !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternBIAS)
+                    || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternDARK)
+                    || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternFLAT)
+                    || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternDARKFLAT);
             };
             ToggleSGPService();
 
@@ -132,6 +136,11 @@ namespace NINA.ViewModel {
             Profiles = CollectionViewSource.GetDefaultView(profileService.Profiles);
             Profiles.SortDescriptions.Add(new SortDescription("IsActive", ListSortDirection.Descending));
             Profiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
+            FilePatternsExpanded = !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternBIAS)
+                || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternDARK)
+                || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternFLAT)
+                || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternDARKFLAT);
         }
 
         public bool IsX64 {
@@ -161,8 +170,69 @@ namespace NINA.ViewModel {
             }
         }
 
+        public string FilePatternDARK {
+            get => profileService.ActiveProfile.ImageFileSettings.FilePatternDARK;
+            set {
+                profileService.ActiveProfile.ImageFileSettings.FilePatternDARK = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FilePatternPreviewDARK));
+            }
+        }
+
+        public string FilePatternFLAT {
+            get => profileService.ActiveProfile.ImageFileSettings.FilePatternFLAT;
+            set {
+                profileService.ActiveProfile.ImageFileSettings.FilePatternFLAT = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FilePatternPreviewFLAT));
+            }
+        }
+
+        public string FilePatternBIAS {
+            get => profileService.ActiveProfile.ImageFileSettings.FilePatternBIAS;
+            set {
+                profileService.ActiveProfile.ImageFileSettings.FilePatternBIAS = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FilePatternPreviewBIAS));
+            }
+        }
+
+        public string FilePatternDARKFLAT {
+            get => profileService.ActiveProfile.ImageFileSettings.FilePatternDARKFLAT;
+            set {
+                profileService.ActiveProfile.ImageFileSettings.FilePatternDARKFLAT = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FilePatternPreviewDARKFLAT));
+            }
+        }
+
+        private bool filePatternsExpanded;
+        public bool FilePatternsExpanded {
+            get => filePatternsExpanded;
+            set {
+                filePatternsExpanded = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public string FilePatternPreview {
             get => ImagePatterns.GetImageFileString(FilePattern).Replace("\\", " › ");
+        }
+
+        public string FilePatternPreviewDARK {
+            get => ImagePatterns.GetImageFileString(FilePatternDARK, "DARK").Replace("\\", " › ");
+        }
+
+        public string FilePatternPreviewBIAS {
+            get => ImagePatterns.GetImageFileString(FilePatternBIAS, "BIAS").Replace("\\", " › ");
+        }
+
+        public string FilePatternPreviewFLAT {
+            get => ImagePatterns.GetImageFileString(FilePatternFLAT, "FLAT").Replace("\\", " › ");
+        }
+
+        public string FilePatternPreviewDARKFLAT {
+            get => ImagePatterns.GetImageFileString(FilePatternDARKFLAT, "DARKFLAT").Replace("\\", " › ");
         }
 
         private List<ImagePattern> customPatterns;
