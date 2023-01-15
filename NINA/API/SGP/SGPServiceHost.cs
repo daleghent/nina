@@ -59,8 +59,11 @@ namespace NINA.API.SGP {
                         options.ListenLocalhost(59590);
                     });                    
                     builder.Services.AddSingleton<ISGPServiceBackend>(backend);
-                    builder.Services.AddControllers().AddNewtonsoftJson(); 
-                    
+                    builder.Services.AddControllers().AddNewtonsoftJson();
+                    builder.Services.AddControllers().AddNewtonsoftJson();
+                    builder.Services.AddControllers().AddJsonOptions(options => {
+                        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    });
                     builder.Services.AddEndpointsApiExplorer();
                     builder.Services.AddSwaggerGen();
 
