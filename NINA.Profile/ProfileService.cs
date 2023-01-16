@@ -312,6 +312,7 @@ namespace NINA.Profile {
             lock (lockobj) {
                 using (MyStopWatch.Measure()) {
                     try {
+                        var old = activeProfile;
                         var p = Profile.Load(info.Location);
 
                         UnregisterChangedEventHandlers();
@@ -328,7 +329,7 @@ namespace NINA.Profile {
                         Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
 
                         LocaleChanged?.Invoke(this, null);
-                        ProfileChanged?.Invoke(this, null);
+                        ProfileChanged?.Invoke(this, new ProfileChangedEventArgs(old, ActiveProfile));
                         LocationChanged?.Invoke(this, null);
                         RegisterChangedEventHandlers();
                     } catch (Exception ex) {
@@ -469,5 +470,15 @@ namespace NINA.Profile {
                     }
                 }, System.Threading.Tasks.TaskCreationOptions.LongRunning);
         }
+    }
+
+    public class ProfileChangedEventArgs : EventArgs {
+        public ProfileChangedEventArgs(IProfile oldProfile, IProfile newProfile) {
+            this.OldProfile = oldProfile;
+            this.NewProfile = newProfile;
+        }
+
+        public IProfile OldProfile { get; }
+        public IProfile NewProfile { get; }
     }
 }

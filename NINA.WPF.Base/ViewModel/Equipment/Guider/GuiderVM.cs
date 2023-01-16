@@ -36,6 +36,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using Nito.AsyncEx;
 using System.Linq;
 using NINA.Astrometry;
+using NINA.Profile;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
@@ -67,9 +68,61 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
             profileService.ActiveProfile.AstrometrySettings.PropertyChanged += AstrometrySettings_PropertyChanged;
 
+            profileService.ActiveProfile.CameraSettings.PropertyChanged += CameraSettings_PropertyChanged;
+            profileService.ActiveProfile.TelescopeSettings.PropertyChanged += TelescopeSettings_PropertyChanged;
+            profileService.ActiveProfile.GuiderSettings.PropertyChanged += GuiderSettings_PropertyChanged;
+
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
+                if(e is ProfileChangedEventArgs pcea) {
+                    if(pcea.OldProfile != null) { 
+                        pcea.OldProfile.CameraSettings.PropertyChanged -= CameraSettings_PropertyChanged;
+                        pcea.OldProfile.TelescopeSettings.PropertyChanged -= TelescopeSettings_PropertyChanged;
+                    }
+
+                    if(pcea.NewProfile != null) {
+                        pcea.NewProfile.CameraSettings.PropertyChanged += CameraSettings_PropertyChanged;
+                        pcea.NewProfile.TelescopeSettings.PropertyChanged += TelescopeSettings_PropertyChanged;
+                    }
+                }
                 await RescanDevicesCommand.ExecuteAsync(null);
+                RaisePropertyChanged(nameof(MainCameraPixelScale));
+                RaisePropertyChanged(nameof(MainCameraDitherPixels));
             };
+        }
+
+        private void GuiderSettings_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if(e.PropertyName == nameof(IGuiderSettings.DitherPixels)) {
+                RaisePropertyChanged(nameof(MainCameraPixelScale));
+                RaisePropertyChanged(nameof(MainCameraDitherPixels));
+            }
+        }
+
+        private void TelescopeSettings_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if(e.PropertyName == nameof(ITelescopeSettings.FocalLength)) {
+                RaisePropertyChanged(nameof(MainCameraPixelScale));
+                RaisePropertyChanged(nameof(MainCameraDitherPixels));
+            }
+        }
+
+        private void CameraSettings_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if(e.PropertyName == nameof(ICameraSettings.PixelSize)) {
+                RaisePropertyChanged(nameof(MainCameraPixelScale));
+                RaisePropertyChanged(nameof(MainCameraDitherPixels));
+            }
+        }
+
+        public double MainCameraPixelScale {
+            get => AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
+        }
+
+        public double MainCameraDitherPixels {
+            get {
+                if(Guider?.Connected == true) { 
+                    var guiderArcsec = Guider.PixelScale * profileService.ActiveProfile.GuiderSettings.DitherPixels;
+                    return guiderArcsec / MainCameraPixelScale;
+                }
+                return double.NaN;
+            }
         }
 
         private void AstrometrySettings_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -180,6 +233,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);
                     RaisePropertyChanged(nameof(Guider));
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
+                    RaisePropertyChanged(nameof(MainCameraPixelScale));
+                    RaisePropertyChanged(nameof(MainCameraDitherPixels));
                 }
             } catch (OperationCanceledException) {
                 connected = false;
@@ -199,6 +254,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         private void Guider_PropertyChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName == "PixelScale") {
                 GuideStepsHistory.PixelScale = Guider.PixelScale;
+                RaisePropertyChanged(nameof(MainCameraPixelScale));
+                RaisePropertyChanged(nameof(MainCameraDitherPixels));
             }
 
             if (e.PropertyName == nameof(IGuider.Connected)) {

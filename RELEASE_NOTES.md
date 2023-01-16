@@ -19,6 +19,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 # Improvements
 - Profile Chooser on startup will now be shown before the whole application is initializing
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
+- The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
 
 # Version 2.1 Hotfix 1
 
