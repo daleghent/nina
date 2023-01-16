@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace NINA.API.SGP {
 
@@ -59,8 +60,9 @@ namespace NINA.API.SGP {
                         options.ListenLocalhost(59590);
                     });                    
                     builder.Services.AddSingleton<ISGPServiceBackend>(backend);
-                    builder.Services.AddControllers().AddNewtonsoftJson();
-                    builder.Services.AddControllers().AddNewtonsoftJson();
+                    builder.Services.AddControllers().AddNewtonsoftJson(options => {
+                        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    });
                     builder.Services.AddControllers().AddJsonOptions(options => {
                         options.JsonSerializerOptions.PropertyNamingPolicy = null;
                     });
