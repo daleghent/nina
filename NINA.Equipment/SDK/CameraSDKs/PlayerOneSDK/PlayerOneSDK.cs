@@ -304,19 +304,19 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
         public bool SetTargetTemperature(double temperature) {
 
-            var minTemperatureSetpoint = GetMinControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
-            var maxTemperatureSetpoint = GetMaxControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
+            var minTemperatureSetpoint = GetMinControlValue(POAConfig.POA_TARGET_TEMP).intValue;
+            var maxTemperatureSetpoint = GetMaxControlValue(POAConfig.POA_TARGET_TEMP).intValue;
 
             if (temperature > maxTemperatureSetpoint) {
                 temperature = maxTemperatureSetpoint;
             } else if (temperature < minTemperatureSetpoint) {
                 temperature = minTemperatureSetpoint;
             }
-            return SetControlValue(POAConfig.POA_TARGET_TEMP, temperature);
+            return SetControlValue(POAConfig.POA_TARGET_TEMP, (int)(temperature));
         }
 
         public double GetTargetTemperature() {
-            return GetControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
+            return GetControlValue(POAConfig.POA_TARGET_TEMP).intValue;
         }
 
         public double GetTemperature() {
@@ -324,7 +324,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool SetCooler(bool onOff) {
-            return SetControlValue(POAConfig.POA_COOLER, onOff ? 1 : 0);
+            return SetControlValue(POAConfig.POA_COOLER, onOff);
         }
 
         public bool GetCoolerOnOff() {
@@ -332,7 +332,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public double GetCoolerPower() {
-            return GetControlValue(POAConfig.POA_COOLER_POWER).floatValue;
+            return (double)GetControlValue(POAConfig.POA_COOLER_POWER).intValue;
         }
 
         private bool SetControlValue(POAConfig type, bool value) {
