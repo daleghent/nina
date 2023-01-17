@@ -46,6 +46,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added target dew heater strength control to be able to reduce the strength of the dew heater if supported (also added for custom device actions)
 - High Gain, Ultra Mode, High Fullwell and Dew Heater Strength settings are now stored in the profile and will be restored on next connect
 
+### PlayerOne
+- Added temperature control for cooled camera series
+
 # Version 2.1
 
 ## Bugfixes
