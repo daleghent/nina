@@ -6534,4 +6534,16 @@ Cambiar el valor requerirá el reinicio de NINA para que tenga efecto.</value>
 Esto solo debería desactivarse si tienes un buen modelado de cielo que no debe ser alterado de ninguna manera. Cuando se desactiva el panel de platesolve en la pestaña de imagen tampoco se mostrará el botón de sincronización.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Píxeles de la cámara para el dither</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Escala de píxel de la cámara</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Píxeles de la cámara guía para el dither</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Escala de píxles de la cámara guía</value>
+  </data>
 </root>

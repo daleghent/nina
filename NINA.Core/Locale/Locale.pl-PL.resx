@@ -6534,4 +6534,16 @@ Aby zmienić i zastosować ustawienia, należy ponownie uruchomić aplikację.</
 Opcję tę należy wyłączyć tylko wtedy, gdy dostępny jest dobry wzorzec mapy nieba i nie należy jej w żaden sposób modyfikować. Po wyłączeniu panel platesolving w zakładce obrazu również nie będzie wyświetlał przełącznika synchronizacji.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Skala ditheringu kamery</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Skala pikseli kamery</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Skala ditheringu guidera</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Skala pikseli guidera</value>
+  </data>
 </root>
