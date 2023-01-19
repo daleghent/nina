@@ -90,6 +90,9 @@
     <CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="External\x64\PlayerOne\PlayerOnePW.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
@@ -129,6 +132,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x64\Cfitsio\cfitsio.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x64\PlayerOne\PlayerOnePW.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="External\x64\Cfitsio\README.txt" />

@@ -29,6 +29,7 @@ using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using System.Threading.Tasks;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
@@ -132,6 +133,21 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                     for (int i = 0; i < wheels; i++) {
                         var fw = new ASIFilterWheel(i, profileService);
                         Logger.Debug($"Adding ZWOptical Filter Wheel {i})");
+                        devices.Add(fw);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /* PlayerOne filter wheels */
+                try {
+                    Logger.Trace("Adding PlayerOne filter wheels");
+
+                    var wheels = PlayerOneFilterWheelSDK.POAGetPWCount();
+
+                    for (int i = 0; i < wheels; i++) {
+                        var fw = new PlayerOneFilterWheel(i, profileService);
+                        Logger.Debug($"Adding PlayerOne Filter Wheel {i})");
                         devices.Add(fw);
                     }
                 } catch (Exception ex) {

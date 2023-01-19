@@ -48,6 +48,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ### PlayerOne
 - Added temperature control for cooled camera series
+- Native driver for Player One Filter Wheels is now available
 
 # Version 2.1
 
