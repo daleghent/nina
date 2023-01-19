@@ -6539,4 +6539,16 @@ Změna hodnoty bude vyžadovat restart aplikace, aby se projevila.</value>
 Tato funkce by měla být vypnuta pouze v případě, že máte k dispozici vynikající montáž, která by neměla být nijak upravována. Pokud je synchronizace vypnuta, přepínač se nezobrazí na panelu Astrometrie a na kartě Snímání.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Pixely Ditheringu Kamery</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Měřítko Kamery Pixel</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Pixely Ditheringu Pointace</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Měřítko Pointace Pixel</value>
+  </data>
 </root>

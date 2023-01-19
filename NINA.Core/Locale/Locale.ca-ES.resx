@@ -6534,4 +6534,16 @@ Si canvieu el valor, caldrà reiniciar l'aplicació perquè tingui efecte.</valu
 This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Píxels de la càmera per la tramada</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Escala de Píxels de la càmera</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Píxels de tramada de la guia</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Escala de Píxels de guia</value>
+  </data>
 </root>

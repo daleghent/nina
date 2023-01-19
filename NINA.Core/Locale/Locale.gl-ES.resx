@@ -6546,4 +6546,16 @@ Changing the value will require an app restart to take affect.</value>
 This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Camera Dither Pixels</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Camera Pixel Scale</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Guider Dither Pixels</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Guider Pixel Scale</value>
+  </data>
 </root>

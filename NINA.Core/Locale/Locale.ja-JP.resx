@@ -6516,4 +6516,16 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
 無効にすると、画像タブのプレートソルブパネルに、同期トグルが表示されません。</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>カメラのディザリングスケール</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Camera Pixel Scale</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Guider Dither Pixels</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>ガイドカメラのピクセルスケール</value>
+  </data>
 </root>
