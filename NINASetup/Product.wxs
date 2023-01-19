@@ -313,6 +313,7 @@
 					<Directory Id="es_ES" Name="es-ES" />
 					<Directory Id="en_US" Name="en-US" />
 					<Directory Id="en_GB" Name="en-GB" />
+          <Directory Id="eu_ES" Name="eu-ES" />
 					<Directory Id="de_DE" Name="de-DE" />
 					<Directory Id="ja_JP" Name="ja-JP" />
 					<Directory Id="da_DK" Name="da-DK" />
@@ -1467,6 +1468,9 @@
 		<ComponentGroup Id="External_x64_PlayerOne_files" Directory="External_x64_PlayerOne">
 			<Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524">
 				<File Id="External_x64_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOneCamera.dll" />
+			</Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOnePW.dll" Guid="dc6474ad-afcc-4253-b164-040b65fc4dda">
+			  <File Id="External_x64_PlayerOne_PlayerOnePW.dll" Name="PlayerOnePW.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOnePW.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>

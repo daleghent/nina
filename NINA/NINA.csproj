@@ -1187,6 +1187,9 @@
     <Content Include="External\x64\Cfitsio\cfitsio.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x64\PlayerOne\PlayerOnePW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="External\x64\Cfitsio\README.txt" />
     <Content Include="External\x64\MallinCam\mallincam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
