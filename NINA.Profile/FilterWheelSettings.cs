@@ -46,6 +46,7 @@ namespace NINA.Profile {
             id = "No_Device";
             filterWheelFilters = new ObserveAllCollection<FilterInfo>();
             disableGuidingOnFilterChange = false;
+            unidirectional = false;
         }
 
         private string id;
@@ -64,12 +65,26 @@ namespace NINA.Profile {
         }
 
         private bool disableGuidingOnFilterChange;
+
         [DataMember]
         public bool DisableGuidingOnFilterChange {
             get => disableGuidingOnFilterChange;
             set {
                 if(disableGuidingOnFilterChange != value) {
                     disableGuidingOnFilterChange = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool unidirectional;
+
+        [DataMember]
+        public bool Unidirectional {
+            get => unidirectional;
+            set {
+                if (unidirectional != value) {
+                    unidirectional = value;
                     RaisePropertyChanged();
                 }
             }

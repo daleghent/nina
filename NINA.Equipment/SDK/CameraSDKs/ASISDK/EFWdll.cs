@@ -1,6 +1,8 @@
-﻿using NINA.Core.Utility;
+﻿using Accessibility;
+using NINA.Core.Utility;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -24,6 +26,8 @@ namespace ZWOptical.EFWSDK {
             EFW_ERROR_MOVING,
             EFW_ERROR_ERROR_STATE,
             EFW_ERROR_GENERAL_ERROR,//other error
+            EFW_ERROR_NOT_SUPPORTED,
+            EFW_ERROR_CLOSED,
             EFW_ERROR_END = -1
         }
 
@@ -37,9 +41,22 @@ namespace ZWOptical.EFWSDK {
             public int slotNum;
 
             public string Name {
-                get { return Encoding.ASCII.GetString(name).TrimEnd((Char)0); }
+                get { return Encoding.ASCII.GetString(name).TrimEnd((char)0); }
             }
         };
+
+        public struct EFW_ID {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8, ArraySubType = UnmanagedType.U1)]
+            public byte[] id;
+
+            public string ID {
+                get {
+                    string idAscii = Encoding.ASCII.GetString(id);
+                    char[] trimChars = new char[1];
+                    return idAscii.TrimEnd(trimChars);
+                }
+            }
+        }
 
         [DllImport(DLLNAME, EntryPoint = "EFWGetNum", CallingConvention = CallingConvention.Cdecl)]
         private static extern int EFWGetNum();
@@ -68,6 +85,19 @@ namespace ZWOptical.EFWSDK {
         [DllImport(DLLNAME, EntryPoint = "EFWGetDirection", CallingConvention = CallingConvention.Cdecl)]
         private static extern EFW_ERROR_CODE EFWGetDirection(int ID, [MarshalAs(UnmanagedType.I1)] out bool bUnidirectional);
 
+        [DllImport(DLLNAME, EntryPoint = "EFWSetID", CallingConvention = CallingConvention.Cdecl)]
+        private static extern EFW_ERROR_CODE EFWSetID(int ID, EFW_ID alias);
+
+        [DllImport(DLLNAME, EntryPoint = "EFWCalibrate", CallingConvention = CallingConvention.Cdecl)]
+        private static extern EFW_ERROR_CODE EFWCalibrate(int ID);
+
+        [DllImport(DLLNAME, EntryPoint = "EFWGetFirmwareVersion", CallingConvention = CallingConvention.StdCall)]
+        private static extern EFW_ERROR_CODE EFWGetFirmwareVersion(int ID, out byte pbMajor, out byte pbMinor, out byte pbBuild);
+
+        [DllImport(DLLNAME, EntryPoint = "EFWGetSDKVersion", CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr EFWGetSDKVersion();
+
+
         [SecurityCritical]
         public static int GetNum() {
             return EFWGetNum();
@@ -76,6 +106,17 @@ namespace ZWOptical.EFWSDK {
         [SecurityCritical]
         public static EFW_ERROR_CODE GetID(int index, out int ID) {
             return EFWGetID(index, out ID);
+        }
+
+        [SecurityCritical]
+        public static EFW_ERROR_CODE SetID(int ID, string id) {
+            EFW_ID asiId = default;
+            asiId.id = new byte[8];
+
+            byte[] bytes = Encoding.Default.GetBytes(id);
+            bytes.CopyTo(asiId.id, 0);
+
+            return EFWSetID(ID, asiId);
         }
 
         [SecurityCritical]
@@ -111,6 +152,21 @@ namespace ZWOptical.EFWSDK {
         [SecurityCritical]
         public static EFW_ERROR_CODE SetDirection(int ID, bool bUnidirectional) {
             return EFWSetDirection(ID, bUnidirectional);
+        }
+
+        [SecurityCritical]
+        public static EFW_ERROR_CODE Calibrate(int ID) {
+            return EFWCalibrate(ID);
+        }
+
+        [SecurityCritical]
+        public static EFW_ERROR_CODE GetFirmwareVersion(int ID, out byte bMajor, out byte bMinor, out byte bBuild) {
+            return EFWGetFirmwareVersion(ID, out bMajor, out bMinor, out bBuild);
+        }
+
+        [SecurityCritical]
+        public static string GetSDKVersion() {
+            return Marshal.PtrToStringAnsi(EFWGetSDKVersion());
         }
     }
 }

@@ -12,15 +12,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:equip="clr-namespace:NINA.View.Equipment"
-    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:NINA.View"
+    xmlns:local="clr-namespace:NINA.View.Equipment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -126,6 +128,7 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
+
         <GroupBox Grid.Row="1">
             <GroupBox.Header>
                 <Grid Height="40" Margin="5">
@@ -140,6 +143,7 @@
                     <DataTemplate x:Key="Default">
                         <TextBlock Text="{ns:Loc LblNone}" />
                     </DataTemplate>
+
                     <DataTemplate x:Key="Failed">
                         <TextBlock
                             Margin="5"
@@ -147,10 +151,52 @@
                             VerticalAlignment="Center"
                             Text="Failed to load plugin data template" />
                     </DataTemplate>
-                    <wpfutil:GenericTemplateSelector
+
+                    <DataTemplate x:Key="Zwo">
+                        <StackPanel Orientation="Vertical">
+                            <DockPanel Margin="0,0,0,6">
+                                <TextBlock
+                                    MinWidth="100"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblUnidirectional}" />
+                                <CheckBox
+                                    HorizontalAlignment="Right"
+                                    IsChecked="{Binding Unidirectional}" />
+                            </DockPanel>
+                            <DockPanel Margin="0,0,0,6" Visibility="{Binding CanGetSetAlias, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                <TextBlock
+                                    MinWidth="100"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblZwoDeviceId}" />
+                                <TextBox
+                                    Width="75"
+                                    MaxLength="8"
+                                    HorizontalAlignment="Right"
+                                    Text="{Binding FilterWheelAlias}">
+                                    <TextBox.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="False">
+                                            <TextBlock Text="{ns:Loc LblZwoDeviceIdTooltip}" />
+                                        </ToolTip>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                            </DockPanel>
+                            <DockPanel Margin="0,0,0,6">
+                                <ninactrl:AsyncProcessButton
+                                    Width="150"
+                                    Height="25"
+                                    Margin="0,0,0,5"
+                                    HorizontalAlignment="Right"
+                                    ButtonText="{ns:Loc LblCalibrate}"
+                                    Command="{Binding CalibrateEfwCommand}" />
+                            </DockPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <local:FilterWheelTemplateSelector
                         x:Key="ContentSelector"
                         Default="{StaticResource Default}"
                         FailedToLoadTemplate="{StaticResource Failed}"
+                        Zwo="{StaticResource Zwo}"
                         Postfix="{x:Static wpfutil:DataTemplatePostfix.FilterWheelSettings}" />
                 </Grid.Resources>
                 <ContentControl
@@ -159,6 +205,7 @@
                     DataContext="{Binding FW}" />
             </Grid>
         </GroupBox>
+
         <GroupBox
             Grid.RowSpan="2"
             Grid.Column="1"

@@ -13,37 +13,22 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
-using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace NINA.View.Equipment {
 
-    internal class CameraTemplateSelector : DataTemplateSelector {
+    internal class FilterWheelTemplateSelector : DataTemplateSelector {
         public DataTemplate Default { get; set; }
-        public DataTemplate QhyCcd { get; set; }
-        public DataTemplate Touptek { get; set; }
-        public DataTemplate LegacySbig { get; set; }
-        public DataTemplate Canon { get; set; }
-        public DataTemplate Atik { get; set; }
         public DataTemplate Zwo { get; set; }
         public DataTemplate FailedToLoadTemplate { get; set; }
 
         public string Postfix { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            if (item is ToupTekAlikeCamera) {
-                return Touptek;
-            } else if (item is QHYCamera) {
-                return QhyCcd;
-            } else if (item is SBIGCamera) {
-                return LegacySbig;
-            } else if (item is EDCamera) {
-                return Canon;
-            } else if (item is AtikCamera) {
-                return Atik;
-            } else if (item is ASICamera) {
+            if (item is ASIFilterWheel) {
                 return Zwo;
             } else {
                 var templateKey = item?.GetType().FullName + Postfix;

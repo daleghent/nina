@@ -41,13 +41,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
             _cameraId = cameraId;
         }
 
-        private IProfileService profileService;
+        private readonly IProfileService profileService;
         private readonly IExposureDataFactory exposureDataFactory;
-        private int _cameraId;
+        private readonly int _cameraId;
         private bool _liveViewEnabled = false;
 
         public string Category { get; } = "ZWOptical";
-        public string Id => $"{Name} #{_cameraId}";
+        public string Id => string.IsNullOrEmpty(CameraAlias) ? Name : $"{Name} #{_cameraId}";
 
         private ASICameraDll.ASI_CAMERA_INFO? _info;
 
@@ -89,11 +89,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool CanSubSample {
-            get {
-                return true;
-            }
-        }
+        public bool CanSubSample => true;
 
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
@@ -127,22 +123,58 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Name {
             get {
+                if (!string.IsNullOrEmpty(CameraAlias)) {
+                    return $"{Info.Name} ({CameraAlias})";
+                }
+
                 return Info.Name;
             }
         }
 
-        public bool HasShutter {
+        // ZWO camera alias is limited to 8 ASCII characters. Initialize with something longer to know we haven't yet asked the camera for it
+        private string cameraAlias = "%%UNINITIALIZED%%";
+
+        public string CameraAlias {
             get {
-                return Info.MechanicalShutter != ASICameraDll.ASI_BOOL.ASI_FALSE;
+                if (cameraAlias.Equals("%%UNINITIALIZED%%")) {
+                    // We must connect to the camera to get its ID. Quickly do this if we are not (such as during building the CameraChooser list)
+                    if (!Connected) {
+                        ASICameraDll.OpenCamera(_cameraId);
+                    }
+
+                    cameraAlias = ASICameraDll.GetId(_cameraId);
+
+                    if (!Connected) {
+                        ASICameraDll.CloseCamera(_cameraId);
+                    }
+
+                    Logger.Debug($"ASI: Camera ID/Alias: {cameraAlias}");
+                }
+
+                return cameraAlias;
+            }
+
+            set {
+                Logger.Debug($"ASI: Setting Camera ID/Alias to: {value}");
+
+                ASICameraDll.SetId(_cameraId, value);
+                cameraAlias = ASICameraDll.GetId(_cameraId);
+
+                Logger.Info($"ASI: Camera ID/Alias set to: {cameraAlias}");
+
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(Name));
+                RaisePropertyChanged(nameof(Id));
+                profileService.ActiveProfile.CameraSettings.Id = Id;
             }
         }
+
+        public bool HasShutter => Info.MechanicalShutter != ASICameraDll.ASI_BOOL.ASI_FALSE;
 
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             set {
                 _connected = value;
                 RaisePropertyChanged();
@@ -151,11 +183,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool CanShowLiveView => false;
 
-        public double Temperature {
-            get {
-                return GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_TEMPERATURE) / 10.0; //ASI driver gets temperature in Celsius * 10
-            }
-        }
+        public double Temperature => GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_TEMPERATURE) / 10.0; //ASI driver gets temperature in Celsius * 10
 
         public double TemperatureSetPoint {
             get {
@@ -709,6 +737,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_MONO_BIN, 0);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OVERCLOCK, 0);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_PATTERN_ADJUST, 0);
+
+            var id = ASICameraDll.GetId(_cameraId);
+            Logger.Info($"Camera ID: {id}");
         }
 
         public async Task<bool> Connect(CancellationToken token) {

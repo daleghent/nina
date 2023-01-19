@@ -132,7 +132,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
                     for (int i = 0; i < wheels; i++) {
                         var fw = new ASIFilterWheel(i, profileService);
-                        Logger.Debug($"Adding ZWOptical Filter Wheel {i})");
+                        Logger.Debug($"Adding ZWOptical Filter Wheel: {fw.Name}");
                         devices.Add(fw);
                     }
                 } catch (Exception ex) {

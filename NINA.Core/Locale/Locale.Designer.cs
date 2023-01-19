@@ -18961,6 +18961,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera ID.
+        /// </summary>
+        internal static string LblZwoCameraId {
+            get {
+                return ResourceManager.GetString("LblZwoCameraId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ZWO Driver Error.
         /// </summary>
         internal static string LblZWODriverError {

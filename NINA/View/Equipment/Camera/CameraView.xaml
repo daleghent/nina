@@ -338,7 +338,8 @@
                                     LegacySbig="{StaticResource Default}"
                                     Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraDetails}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}"
+                                    Zwo="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -754,6 +755,28 @@
                                 </StackPanel>
                             </DataTemplate>
 
+                            <DataTemplate x:Key="Zwo">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblZwoDeviceId}" />
+                                        <TextBox
+                                            Width="75"
+                                            MaxLength="8"
+                                            HorizontalAlignment="Right"
+                                            Text="{Binding CameraAlias}">
+                                            <TextBox.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblZwoDeviceIdTooltip}" />
+                                                </ToolTip>
+                                            </TextBox.ToolTip>
+                                        </TextBox>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
+
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
                                 Atik="{StaticResource Atik}"
@@ -763,7 +786,8 @@
                                 LegacySbig="{StaticResource LegacySbig}"
                                 Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraSettings}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}" />
+                                Touptek="{StaticResource Altair}"
+                                Zwo="{StaticResource Zwo}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

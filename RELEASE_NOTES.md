@@ -10,6 +10,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Important Changes
 - Rotation values in N.I.N.A. are now displayed in counter clockwise notation to follow the standard of "East of North of North Celestial Pole" that is used in most astro applications. Templates, Targets and other saved items in previous versions will be auto migrated to this adjusted approach.
+- ZWO: Persistent device IDs (Aliases) are now supported for ZWO cameras and filter wheels. If one is already set in either of these devices and has not yet connected to it under NINA 3.0, the device will need to be selected again and connected in NINA's Camera or Filter Wheel equipment selection list. This change makes it easier to support setups where multiple ZWO cameras and filter wheels are present.
+    - Device IDs are limited to 8 ASCII characters in length.
+    - ZWO EFWs must have firmware version 3.0.9 or later to support storing persistent device IDs.
 
 ## .NET 7
 - The application has been lifted to utilize .NET 7. This is much more than just a Version shift of the previously used .NET Framework 4.8 as .NET 6 is based on .NET Core which is a complete rewrite of the .NET Framework by Microsoft and thus a major technical upgrade for N.I.N.A.
@@ -20,6 +23,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Profile Chooser on startup will now be shown before the whole application is initializing
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
 - The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
+- ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.
 
 # Version 2.1 Hotfix 1
 
