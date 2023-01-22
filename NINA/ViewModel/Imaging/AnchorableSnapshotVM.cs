@@ -226,7 +226,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         [ObservableProperty]
-        private string snapTargetName = string.Empty;
+        private string snapTargetName = "Snapshot";
 
         public bool SnapSubSample {
             get {
@@ -396,13 +396,18 @@ namespace NINA.ViewModel.Imaging {
                 if (Loop) IsLooping = true;
                 Task<IRenderedImage> prepareTask = null;
                 var savedFullImageWhileLooping = false;
+                var count = 0;
                 do {
                     var seq = new CaptureSequence(SnapExposureDuration, ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
                     seq.EnableSubSample = SnapSubSample;
                     seq.SubSambleRectangle = SubSampleRectangle;
                     seq.Gain = SnapGain;
+                    seq.ProgressExposureCount = count;
+                    seq.TotalExposureCount = count + 1;
 
                     var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress, snapTargetName);
+                    count++;
+
                     if (exposureData == null) {
                         return false;
                     }
