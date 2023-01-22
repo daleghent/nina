@@ -335,6 +335,7 @@
                                     Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
                                     FailedToLoadTemplate="{StaticResource Failed}"
+                                    Generic="{StaticResource Default}"
                                     LegacySbig="{StaticResource Default}"
                                     Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraDetails}"
                                     QhyCcd="{StaticResource QhyCcd}"
@@ -754,12 +755,62 @@
                                 </StackPanel>
                             </DataTemplate>
 
+                            <DataTemplate x:Key="Generic">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDewHeaterStrength}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="10" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="100" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="100"
+                                            MinValue="10"
+                                            StepSize="10"
+                                            Value="{Binding TargetDewHeaterStrength, Mode=TwoWay}" />
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasAdjustableFan, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFanSpeed}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="10" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="100" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="100"
+                                            MinValue="10"
+                                            StepSize="10"
+                                            Value="{Binding TargetFanSpeed, Mode=TwoWay}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
+
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
                                 Atik="{StaticResource Atik}"
                                 Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
                                 FailedToLoadTemplate="{StaticResource Failed}"
+                                Generic="{StaticResource Generic}"
                                 LegacySbig="{StaticResource LegacySbig}"
                                 Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraSettings}"
                                 QhyCcd="{StaticResource QhyCcd}"

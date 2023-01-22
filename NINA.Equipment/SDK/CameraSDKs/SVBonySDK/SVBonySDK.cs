@@ -485,7 +485,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return false;
         }
 
-        public bool SetDewHeater(bool onoff) {
+        public bool SetDewHeater(int power) {
             throw new NotImplementedException();
         }
 
@@ -509,6 +509,18 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             return 0;
         }
         public void SetReadoutMode(int modeIndex) {
+        }        
+
+        public bool HasAdjustableFan() {
+            return false;
+        }
+
+        public bool SetFanPercentage(int fanPercentage) {
+            throw new NotImplementedException();
+        }
+
+        public int GetFanPercentage() {
+            throw new NotImplementedException();
         }
     }
 }

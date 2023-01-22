@@ -27,6 +27,7 @@ namespace NINA.View.Equipment {
         public DataTemplate LegacySbig { get; set; }
         public DataTemplate Canon { get; set; }
         public DataTemplate Atik { get; set; }
+        public DataTemplate Generic { get; set; }
         public DataTemplate FailedToLoadTemplate { get; set; }
 
         public string Postfix { get; set; }
@@ -42,6 +43,8 @@ namespace NINA.View.Equipment {
                 return Canon;
             } else if (item is AtikCamera) {
                 return Atik;
+            } else if (item is GenericCamera) {
+                return Generic;
             } else {
                 var templateKey = item?.GetType().FullName + Postfix;
                 if (item != null && Application.Current.Resources.Contains(templateKey)) {

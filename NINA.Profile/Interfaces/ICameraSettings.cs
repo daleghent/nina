@@ -68,5 +68,8 @@ namespace NINA.Profile.Interfaces {
         bool TouptekAlikeUltraMode { get; set; }
         bool TouptekAlikeHighFullwell { get; set; }
         int TouptekAlikeDewHeaterStrength { get; set; }
+
+        int GenericCameraDewHeaterStrength { get; set; }
+        int GenericCameraFanSpeed { get; set; }
     }
 }
