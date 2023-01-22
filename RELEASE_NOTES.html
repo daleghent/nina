@@ -32,6 +32,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h2 id="important-changes">Important Changes</h2>
 <ul>
 <li>Rotation values in N.I.N.A. are now displayed in counter clockwise notation to follow the standard of &quot;East of North of North Celestial Pole&quot; that is used in most astro applications. Templates, Targets and other saved items in previous versions will be auto migrated to this adjusted approach.</li>
+<li>ZWO: Persistent device IDs (Aliases) are now supported for ZWO cameras and filter wheels. If one is already set in either of these devices and has not yet connected to it under NINA 3.0, the device will need to be selected again and connected in NINA's Camera or Filter Wheel equipment selection list. This change makes it easier to support setups where multiple ZWO cameras and filter wheels are present.
+<ul>
+<li>Device IDs are limited to 8 ASCII characters in length.</li>
+<li>ZWO EFWs must have firmware version 3.0.9 or later to support storing persistent device IDs.</li>
+</ul>
+</li>
 </ul>
 <h2 id="net-7">.NET 7</h2>
 <ul>
@@ -47,6 +53,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 </li>
 <li>The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application</li>
+<li>ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.</li>
 </ul>
 <h1 id="version-2.1-hotfix-1">Version 2.1 Hotfix 1</h1>
 <h2 id="bugfixes">Bugfixes</h2>
@@ -79,6 +86,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h3 id="playerone">PlayerOne</h3>
 <ul>
 <li>Added temperature control for cooled camera series</li>
+<li>Cooled cameras can now control dew heater and fan strength</li>
 <li>Native driver for Player One Filter Wheels is now available</li>
 </ul>
 <h1 id="version-2.1">Version 2.1</h1>

@@ -396,8 +396,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
             return val > 0;
         }
 
-        public bool SetDewHeater(bool onoff) {
-            return SetControlValue(ASTPAN_AUTO_TYPE.ASTPAN_AUTO_CFG_AntiDewHedter, onoff ? 1 : 0);
+        public bool SetDewHeater(int power) {
+            return SetControlValue(ASTPAN_AUTO_TYPE.ASTPAN_AUTO_CFG_AntiDewHedter, power > 0 ? 1 : 0);
         }
 
         private int GetMinControlValue(ASTPAN_AUTO_TYPE type) {
@@ -480,6 +480,18 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
             return 0;
         }
         public void SetReadoutMode(int modeIndex) {
+        }
+
+        public bool HasAdjustableFan() {
+            return false;
+        }
+
+        public bool SetFanPercentage(int fanPercentage) {
+            throw new NotImplementedException();
+        }
+
+        public int GetFanPercentage() {
+            throw new NotImplementedException();
         }
     }
 }

@@ -442,15 +442,16 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool HasDewHeater() {
-            return false;
+            return HasTemperatureControl();
         }
 
         public bool IsDewHeaterOn() {
-            return false;
+            var power = GetControlValue(POAConfig.POA_HEATER_POWER);
+            return power.intValue > 0;
         }
 
-        public bool SetDewHeater(bool onoff) {
-            throw new NotImplementedException();
+        public bool SetDewHeater(int power) {
+            return SetControlValue(POAConfig.POA_HEATER_POWER, power);
         }
 
         public void StartVideoCapture(double exposureTime, int width, int height) {
@@ -490,6 +491,18 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             if(hasSensorModes) { 
                 CheckAndThrowError(playerOnePInvoke.POASetSensorMode(id, modeIndex));
             }
+        }
+
+        public bool HasAdjustableFan() {
+            return HasTemperatureControl();
+        }
+
+        public bool SetFanPercentage(int fanPercentage) {
+            return SetControlValue(POAConfig.POA_FAN_POWER, fanPercentage);
+        }
+
+        public int GetFanPercentage() {
+            return GetControlValue(POAConfig.POA_FAN_POWER).intValue;
         }
     }
 }

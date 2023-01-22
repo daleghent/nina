@@ -341,7 +341,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return sdk.IsDewHeaterOn();
             }
             set {
-                if (sdk.SetDewHeater(value)) {
+                var strength = value ? profileService.ActiveProfile.CameraSettings.GenericCameraDewHeaterStrength : 0;
+                if (sdk.SetDewHeater(strength)) {
                     RaisePropertyChanged();
                 }
             }
@@ -360,6 +361,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 if (CanSetTemperature) {
                     if (sdk.SetCooler(value)) {
+                        if(value) { 
+                            sdk.SetFanPercentage(profileService.ActiveProfile.CameraSettings.GenericCameraFanSpeed); 
+                        }
                         RaisePropertyChanged();
                     }
                 }
@@ -397,6 +401,56 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         RaisePropertyChanged();
                     }
                 }
+            }
+        }
+
+        public bool HasAdjustableFan { get => sdk.HasAdjustableFan(); }
+
+        public int FanSpeed {
+            get {
+                if(HasAdjustableFan) { 
+                    return sdk.GetFanPercentage();
+                } else {
+                    return 0;
+                }
+            }
+            set {
+                if (HasAdjustableFan) {
+                    var currentFanSpeed = FanSpeed;
+                    var targetFanSpeed = Math.Max(0, Math.Min(100, value));
+                    if (currentFanSpeed != targetFanSpeed) {
+                        if (sdk.SetFanPercentage(value)) {
+                            RaisePropertyChanged();
+                        } else {
+                            Logger.Error($"{Category} - Could not set Fan to {value}");
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public int TargetFanSpeed {
+            get => profileService.ActiveProfile.CameraSettings.GenericCameraFanSpeed;
+            set {
+                profileService.ActiveProfile.CameraSettings.GenericCameraFanSpeed = Math.Max(10, Math.Min(100, value));
+                if (sdk.GetFanPercentage() > 0) {
+                    if (!sdk.SetFanPercentage(profileService.ActiveProfile.CameraSettings.GenericCameraFanSpeed)) {
+                        Logger.Error($"{Category} - Could not set Fan to {value}");
+                    }
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        public int TargetDewHeaterStrength {
+            get => profileService.ActiveProfile.CameraSettings.GenericCameraDewHeaterStrength;
+            set {
+                profileService.ActiveProfile.CameraSettings.GenericCameraDewHeaterStrength = value;
+                if(DewHeaterOn) {
+                    sdk.SetDewHeater(profileService.ActiveProfile.CameraSettings.GenericCameraDewHeaterStrength);
+                }
+                RaisePropertyChanged();
             }
         }
 
