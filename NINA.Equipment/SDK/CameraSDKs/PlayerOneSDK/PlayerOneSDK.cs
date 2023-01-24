@@ -236,7 +236,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool SetUSBLimit(int value) {
-            return SetControlValue(POAConfig.POA_FRAME_LIMIT, value);
+            return SetControlValue(POAConfig.POA_USB_BANDWIDTH_LIMIT, value);
         }
 
         public int GetUSBLimit() {
