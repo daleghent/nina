@@ -54,6 +54,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added temperature control for cooled camera series
 - Cooled cameras can now control dew heater and fan strength
 - Native driver for Player One Filter Wheels is now available
+- Fixed an issue that USB limit could not be set correctly
 
 # Version 2.1
 
