@@ -1019,6 +1019,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             return false;
         }
 
+        public bool SetCustomTrackingRate(SiderealShiftTrackingRate rate) {
+            if (rate.Enabled) {
+                return SetCustomTrackingRate(rightAscensionRate: rate.RASecondsPerSiderealSecond, declinationRate: rate.DecArcsecsPerSec);
+            } else {
+                return SetTrackingMode(TrackingMode.Sidereal);
+            }
+        }
+
         private AsyncObservableCollection<TrackingMode> supportedTrackingModes = new AsyncObservableCollection<TrackingMode>();
 
         public AsyncObservableCollection<TrackingMode> SupportedTrackingModes {

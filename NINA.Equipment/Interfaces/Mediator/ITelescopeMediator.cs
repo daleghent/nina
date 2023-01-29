@@ -43,6 +43,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
+        bool SetCustomTrackingRate(SiderealShiftTrackingRate rate);
+
         bool SendToSnapPort(bool start);
 
         Coordinates GetCurrentPosition();

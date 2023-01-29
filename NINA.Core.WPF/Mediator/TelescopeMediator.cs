@@ -84,6 +84,10 @@ namespace NINA.WPF.Base.Mediator {
             return handler.SetCustomTrackingRate(rightAscensionRate, declinationRate);
         }
 
+        public bool SetCustomTrackingRate(SiderealShiftTrackingRate rate) {
+            return handler.SetCustomTrackingRate(rate);
+        }
+
         public Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token) {
             return handler.FindHome(progress, token);
         }
