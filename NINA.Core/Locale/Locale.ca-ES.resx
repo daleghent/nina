@@ -6526,12 +6526,12 @@ Si canvieu el valor, caldrà reiniciar l'aplicació perquè tingui efecte.</valu
     <comment>The equipment profile that is used in the application that stores all the settings</comment>
   </data>
   <data name="LblAutomaticMountSync" xml:space="preserve">
-    <value>Automatic Sync</value>
+    <value>Sincronització automàtica</value>
     <comment>The option to turn automatic sync of platesolving to the mount</comment>
   </data>
   <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
-    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
-This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <value>Quan està habilitada, l'aplicació enviarà una ordre de sincronització a la muntura durant les operacions de platesolve i centrat.
+Això només s'ha de desactivar quan es disposa d'un bon model del cel i no s'ha de modificar de cap manera. Quan està desactivat, el tauler de resolució de plaques a la pestanya d'imatge tampoc no mostrarà el commutador de sincronització.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
   <data name="LblCameraDitherPixels" xml:space="preserve">
@@ -6545,5 +6545,17 @@ This should only be disabled when having a good pointing model that must not be 
   </data>
   <data name="LblGuiderPixelScale" xml:space="preserve">
     <value>Escala de Píxels de guia</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>ID del dispositiu</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>Un nom de 8 caràcters ASCII que podeu assignar al dispositiu ZWO connectat. Això us permet identificar de manera única diverses peces del mateix model de dispositiu.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Unidireccional</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Calibrar</value>
   </data>
 </root>

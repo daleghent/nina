@@ -6551,4 +6551,16 @@ Tato funkce by měla být vypnuta pouze v případě, že máte k dispozici vyni
   <data name="LblGuiderPixelScale" xml:space="preserve">
     <value>Měřítko Pointace Pixel</value>
   </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>ID Zařízení</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>Název dlouhý až 8 znaků ASCII, který můžete přiřadit připojenému zařízení ZWO. To umožňuje jednoznačně identifikovat více kusů stejného modelu zařízení.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Jednosměrný</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Kalibrace</value>
+  </data>
 </root>

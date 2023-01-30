@@ -6546,4 +6546,16 @@ Esto solo debería desactivarse si tienes un buen modelado de cielo que no debe 
   <data name="LblGuiderPixelScale" xml:space="preserve">
     <value>Escala de píxles de la cámara guía</value>
   </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>ID del dispositivo</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>Un nombre de hasta 8 caracteres ASCII que puede asignar al dispositivo ZWO conectado. Esto le permite identificar de forma única múltiples piezas del mismo modelo de dispositivo.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Unidireccional</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Calibrar</value>
+  </data>
 </root>
