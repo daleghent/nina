@@ -516,11 +516,11 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         }
 
         public bool SetFanPercentage(int fanPercentage) {
-            throw new NotImplementedException();
+            return true;
         }
 
         public int GetFanPercentage() {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

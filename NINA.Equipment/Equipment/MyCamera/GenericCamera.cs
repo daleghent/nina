@@ -361,7 +361,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 if (CanSetTemperature) {
                     if (sdk.SetCooler(value)) {
-                        if(value) { 
+                        if(value && HasAdjustableFan) { 
                             sdk.SetFanPercentage(profileService.ActiveProfile.CameraSettings.GenericCameraFanSpeed); 
                         }
                         RaisePropertyChanged();
