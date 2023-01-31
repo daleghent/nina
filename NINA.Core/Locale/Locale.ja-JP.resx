@@ -6520,12 +6520,24 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>カメラのディザリングスケール</value>
   </data>
   <data name="LblCameraPixelScale" xml:space="preserve">
-    <value>Camera Pixel Scale</value>
+    <value>カメラのピクセルスケール</value>
   </data>
   <data name="LblGuiderDitherPixels" xml:space="preserve">
-    <value>Guider Dither Pixels</value>
+    <value>ガイドカメラのディザリングピクセル数</value>
   </data>
   <data name="LblGuiderPixelScale" xml:space="preserve">
     <value>ガイドカメラのピクセルスケール</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>デバイスID</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>接続されたZWOデバイスに割り当てられる、最大8文字までのASCII文字の名前。 これにより、同じデバイス型の複数の装置を一意に識別できます。</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>単方向性</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>キャリブレート</value>
   </data>
 </root>

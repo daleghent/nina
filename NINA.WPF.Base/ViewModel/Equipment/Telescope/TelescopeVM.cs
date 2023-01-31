@@ -1007,9 +1007,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             return false;
         }
 
-        public bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
+        public bool SetCustomTrackingRate(SiderealShiftTrackingRate rate) {
             if (Telescope?.Connected == true) {
-                Telescope.SetCustomTrackingRate(rightAscensionRate, declinationRate);
+                if (rate.Enabled) {
+                    Telescope.SetCustomTrackingRate(rightAscensionRate: rate.RASecondsPerSiderealSecond, declinationRate: rate.DecArcsecsPerSec);
+                } else {
+                    SetTrackingMode(TrackingMode.Sidereal);
+                }
+
+                
                 return true;
             }
             return false;

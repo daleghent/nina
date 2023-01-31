@@ -6546,4 +6546,16 @@ Opcję tę należy wyłączyć tylko wtedy, gdy dostępny jest dobry wzorzec map
   <data name="LblGuiderPixelScale" xml:space="preserve">
     <value>Skala pikseli guidera</value>
   </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>ID urządzenia</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>Nazwa do 8 znaków ASCII, które możesz przypisać do podłączonego urządzenia ZWO. Pozwala to na unikalną identyfikację wielu elementów tego samego modelu urządzenia.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Jednokierunkowy</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Kalibruj</value>
+  </data>
 </root>

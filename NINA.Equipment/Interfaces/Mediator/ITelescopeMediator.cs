@@ -41,7 +41,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         bool SetTrackingMode(TrackingMode trackingMode);
 
-        bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
+        bool SetCustomTrackingRate(SiderealShiftTrackingRate rate);
 
         bool SendToSnapPort(bool start);
 

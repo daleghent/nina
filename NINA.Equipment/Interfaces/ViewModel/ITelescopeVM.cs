@@ -50,7 +50,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         bool SetTrackingMode(TrackingMode trackingMode);
 
-        bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
+        bool SetCustomTrackingRate(SiderealShiftTrackingRate rate);
 
         Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
 
