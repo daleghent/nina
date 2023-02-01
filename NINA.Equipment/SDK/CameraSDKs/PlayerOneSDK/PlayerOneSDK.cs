@@ -332,7 +332,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public double GetCoolerPower() {
-            return (double)GetControlValue(POAConfig.POA_COOLER_POWER).intValue;
+            var power = GetControlValue(POAConfig.POA_COOLER_POWER).intValue;
+            return power;
         }
 
         private bool SetControlValue(POAConfig type, bool value) {
