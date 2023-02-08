@@ -89,7 +89,11 @@ namespace NINA.Astrometry {
         /// Backwards compatibility property that will migrate to position angle
         /// </summary>
         [JsonProperty(propertyName: "Rotation")]
-        private double DeprecatedRotation { set { PositionAngle = 360 - value; } }
+        public double DeprecatedRotation { 
+            set { 
+                PositionAngle = 360 - value; 
+            } 
+        }
 
         private double positionAngle = 0;
         [JsonProperty]
@@ -98,7 +102,8 @@ namespace NINA.Astrometry {
             set {
                 if (value != positionAngle) {
                     positionAngle = AstroUtil.EuclidianModulus(value, 360);
-                RaisePropertyChanged();
+                    RaisePropertyChanged();
+                    RaiseCoordinatesChanged();
                 }
             }
         }
