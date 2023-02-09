@@ -123,7 +123,7 @@ namespace NINA.ViewModel {
 
             profileService.HorizonChanged += (object sender, EventArgs e) => {
                 RaisePropertyChanged(nameof(HorizonFilePath));
-            }
+            };
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 ProfileChanged();
