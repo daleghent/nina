@@ -289,7 +289,7 @@ namespace NINA.Equipment.Model {
             get {
                 var minutes = (Math.Abs(_coordinates.RA * 60.0d) % 60);
 
-                var seconds = (int)Math.Round((Math.Abs(_coordinates.RA * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(_coordinates.RA * 60.0d * 60.0d) % 60), 5);
                 if (seconds > 59) {
                     minutes += 1;
                 }
@@ -352,7 +352,7 @@ namespace NINA.Equipment.Model {
             get {
                 var minutes = (Math.Abs(_coordinates.Dec * 60.0d) % 60);
 
-                var seconds = (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(_coordinates.Dec * 60.0d * 60.0d) % 60), 5);
                 if (seconds > 59) {
                     minutes += 1;
                 }
