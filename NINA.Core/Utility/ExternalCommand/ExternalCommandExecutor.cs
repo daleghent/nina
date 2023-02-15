@@ -84,7 +84,7 @@ namespace NINA.Core.Utility.ExternalCommand {
         }
 
         private void StatusUpdate(string src, string data) {
-            progress.Report(new ApplicationStatus() {
+            progress?.Report(new ApplicationStatus() {
                 Source = src,
                 Status = data,
             });
