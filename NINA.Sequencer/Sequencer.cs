@@ -57,6 +57,13 @@ namespace NINA.Sequencer {
         public ISequenceRootContainer MainContainer {
             get => mainContainer;
             set {
+                if(mainContainer != null && mainContainer != value){
+                    // when a new sequence is loaded, allow existing sequence elements to detect that
+                    // they are no longer part of the sequence root container.
+                    foreach(var item in mainContainer.GetItemsSnapshot()){
+                        item.Detach();
+                    }
+                }
                 mainContainer = value;
                 RaisePropertyChanged();
             }
