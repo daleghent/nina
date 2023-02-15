@@ -1243,19 +1243,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return;
             }
 
-            uint startx, starty, sizex, sizey;
-            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
-                Logger.Warning("QHYCCD: Failed to set resolution for live view");
-                CameraState = CameraStates.Error;
-                return;
-            }
-
-            /* Exposure length (in microseconds) */
-            if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_EXPOSURE, sequence.ExposureTime * 1e6)) {
-                Logger.Error("QHYCCD: Failed to set exposure time");
-                return;
-            }
-
             /*
              * Set binning
              * Certain models of camera require a 200ms pause after setting the bin mode.
@@ -1268,6 +1255,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 } else {
                     Logger.Warning($"QHYCCD: Failed to set BIN mode {BinX}x{BinY}");
                 }
+            }
+
+            uint startx, starty, sizex, sizey;
+            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
+                Logger.Warning("QHYCCD: Failed to set resolution for live view");
+                CameraState = CameraStates.Error;
+                return;
+            }
+
+            /* Exposure length (in microseconds) */
+            if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_EXPOSURE, sequence.ExposureTime * 1e6)) {
+                Logger.Error("QHYCCD: Failed to set exposure time");
+                return;
             }
 
             /*
