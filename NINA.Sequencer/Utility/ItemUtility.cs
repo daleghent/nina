@@ -285,8 +285,9 @@ namespace NINA.Sequencer.Utility {
             double targetAltitude = data.Offset;
             if (data.UseCustomHorizon) {
                 // For computing rise/set time, use minimum horizon altitude
-                if (data.Horizon == null) return;
-                targetAltitude = data.Horizon.GetMinAltitude();
+                if (data.Horizon != null) {
+                    targetAltitude = data.Horizon.GetMinAltitude();
+                }
             }
 
             RiseSetMeridian rsm = CalculateTimeAtAltitude(coord, data.Latitude, data.Longitude, targetAltitude + offset);
