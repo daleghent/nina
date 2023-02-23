@@ -57,7 +57,10 @@ Also attach your log file of that session (if applicable), which can be found in
 1. Fork the repository
 2. **Sync LFS files into the fork**
 ```
-git clone -n <your fork of the repo>    <--- NOTE: the -n flag for "don't checkout the branch"
+git clone -n -b develop https://<YourUserName>@bitbucket.org/<YourUserName>/<YourForkName>.git
+# NOTE: the -n flag for "don't checkout the branch"
+# Ignore any LFS smudge errors for now. They are not yet synced and will get synced in a later step
+cd <YourForkName>
 git remote add upstream https://bitbucket.org/Isbeorn/nina.git
 git lfs fetch upstream --all
 git lfs push origin --all
