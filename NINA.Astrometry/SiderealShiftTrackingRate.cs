@@ -4,6 +4,7 @@ namespace NINA.Astrometry {
     public class SiderealShiftTrackingRate {
         public static readonly SiderealShiftTrackingRate Disabled = CreateDisabled();
         public const double SIDEREAL_SEC_PER_SI_SEC = 1.00273791552838d;
+        public const double SIDEREAL_RATE = 15.0d * SIDEREAL_SEC_PER_SI_SEC;
 
         private SiderealShiftTrackingRate(bool enabled, double raDegreesPerHour, double decDegreesPerHour) {
             this.Enabled = enabled;
@@ -12,7 +13,7 @@ namespace NINA.Astrometry {
         }
 
         public bool Enabled { get; private set; }
-        public double RASecondsPerSiderealSecond => RAArcsecsPerSec * 15.0d * SIDEREAL_SEC_PER_SI_SEC;
+        public double RASecondsPerSiderealSecond => RAArcsecsPerSec / SIDEREAL_RATE;
         public double RADegreesPerHour { get; private set; }
         public double DecDegreesPerHour { get; private set; }
         public double RAArcsecsPerHour => RADegreesPerHour * 3600.0d;
