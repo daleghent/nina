@@ -32,6 +32,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Fixed an issue where the sequence was not able to be loaded when a plugin was missing
 - Fixed an issue for plugin focusers to not show the plugin specific settings section
 - When simple sequencer was set to "Rotate Through" mode, the estimated time calculation was incorrect when partially finished. It should now reflect the correct estimate.
+- Sending an image to framing wizard without setting a name will no longer cause the caching to fail
+- Fixed an issue for Atik OSC cameras where debayering would crash the application.
 
 ## Features
 - Added new Instruction "Set USB Limit" to control the usb limit inside the sequencer (if available)
