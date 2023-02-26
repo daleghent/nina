@@ -12,6 +12,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - When simple sequencer was set to "Rotate Through" mode, the estimated time calculation was incorrect when partially finished. It should now reflect the correct estimate.
 - Sending an image to framing wizard without setting a name will no longer cause the caching to fail
 - Fixed an issue for Atik OSC cameras where debayering would crash the application.
+- Using TIFF without compression selected now properly saves the files without any compression
 
 ## Features
 - Added new Instruction "Set USB Limit" to control the usb limit inside the sequencer (if available)
