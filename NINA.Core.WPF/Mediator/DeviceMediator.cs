@@ -16,6 +16,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace NINA.WPF.Base.Mediator {
         protected THandler handler;
         protected List<TConsumer> consumers = new List<TConsumer>();
 
-        public void RegisterHandler(THandler handler) {
+        public void RegisterHandler(THandler handler) {            
             if (this.handler != null) {
                 throw new Exception("Handler already registered!");
             }
@@ -42,7 +43,9 @@ namespace NINA.WPF.Base.Mediator {
         }
 
         public void RegisterConsumer(TConsumer consumer) {
-            consumers.Add(consumer);
+            lock (consumers) {
+                consumers.Add(consumer);
+            }
             if (handler != null) {
                 var info = handler.GetDeviceInfo();
                 consumer.UpdateDeviceInfo(info);
@@ -50,7 +53,9 @@ namespace NINA.WPF.Base.Mediator {
         }
 
         public void RemoveConsumer(TConsumer consumer) {
-            consumers.Remove(consumer);
+            lock (consumers) {
+                consumers.Remove(consumer);
+            }
         }
 
         public Task<IList<string>> Rescan() {
@@ -77,8 +82,10 @@ namespace NINA.WPF.Base.Mediator {
         /// </summary>
         /// <param name="deviceInfo"></param>
         public void Broadcast(TInfo deviceInfo) {
-            foreach (TConsumer c in consumers) {
-                c.UpdateDeviceInfo(deviceInfo);
+            lock (consumers) {
+                foreach (TConsumer c in consumers) {
+                    c.UpdateDeviceInfo(deviceInfo);
+                }
             }
         }
 
