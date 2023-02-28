@@ -235,7 +235,7 @@ namespace NINA.Plugin {
                             var sdkTypes = GetCoreEquipmentSDKTypes();
                             var coreCatalog = new TypeCatalog(types.Concat(sdkTypes));
 
-                            Compose(coreCatalog);
+                            Compose(coreCatalog, string.Empty);
 
                             /* Compose the plugin catalog */
 
@@ -344,7 +344,7 @@ namespace NINA.Plugin {
                                 ProgressType = ApplicationStatus.StatusProgressType.Percent
                             });
 
-                            Compose(plugin);
+                            Compose(plugin, manifest.Name);
 
                             await manifest.Initialize();
 
@@ -417,7 +417,7 @@ namespace NINA.Plugin {
             }
         }
 
-        private void Compose(ComposablePartCatalog catalog) {
+        private void Compose(ComposablePartCatalog catalog, string pluginName) {
             try {
                 var container = GetContainer(catalog);
                 var parts = new PartsImport();
@@ -427,10 +427,10 @@ namespace NINA.Plugin {
                     Application.Current?.Resources.MergedDictionaries.Add(template);
                 }
 
-                Items = Items.Concat(AssignSequenceEntity(parts.ItemImports, resourceDictionary)).ToList();
-                Conditions = Conditions.Concat(AssignSequenceEntity(parts.ConditionImports, resourceDictionary)).ToList();
-                Triggers = Triggers.Concat(AssignSequenceEntity(parts.TriggerImports, resourceDictionary)).ToList();
-                Container = Container.Concat(AssignSequenceEntity(parts.ContainerImports, resourceDictionary)).ToList();
+                Items = Items.Concat(AssignSequenceEntity(parts.ItemImports, resourceDictionary, pluginName)).ToList();
+                Conditions = Conditions.Concat(AssignSequenceEntity(parts.ConditionImports, resourceDictionary, pluginName)).ToList();
+                Triggers = Triggers.Concat(AssignSequenceEntity(parts.TriggerImports, resourceDictionary, pluginName)).ToList();
+                Container = Container.Concat(AssignSequenceEntity(parts.ContainerImports, resourceDictionary, pluginName)).ToList();
 
                 DockableVMs = DockableVMs.Concat(parts.DockableVMImports).ToList();
                 PluggableBehaviors = PluggableBehaviors.Concat(parts.PluggableBehaviorImports).ToList();
@@ -595,7 +595,7 @@ namespace NINA.Plugin {
         }
         
                    
-        private IOrderedEnumerable<T> AssignSequenceEntity<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
+        private IOrderedEnumerable<T> AssignSequenceEntity<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary,string pluginName) where T : ISequenceEntity {
             var items = new List<T>();
             foreach (var importItem in imports) {
                 try {
@@ -607,6 +607,9 @@ namespace NINA.Plugin {
                     if (importItem.Metadata.TryGetValue("Description", out var descriptionObj)) {
                         string description = descriptionObj.ToString();
                         item.Description = GrabLabel(description);
+                        if (!string.IsNullOrEmpty(pluginName)) {
+                            item.Description += $"{Environment.NewLine}({pluginName})";
+                        }                        
                     }
                     if (importItem.Metadata.TryGetValue("Icon", out var iconObj)) {
                         string icon = iconObj.ToString();
