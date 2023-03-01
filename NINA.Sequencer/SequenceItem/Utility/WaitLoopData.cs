@@ -24,7 +24,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         private Action calculateExpectedTime;
         private ComparisonOperatorEnum comparator;
         private IProfileService profileService;
- 
+
+        [JsonObject(MemberSerialization.OptIn)]
         public WaitLoopData(IProfileService profileService, bool useCustomHorizon, Action calculateExpectedTime, string name) {
             this.profileService = profileService;
             Latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
