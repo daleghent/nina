@@ -210,7 +210,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double DeclinationRate {
             get {
-                return GetProperty(nameof(Telescope.DeclinationRate), -1d);
+                return GetProperty(nameof(Telescope.DeclinationRate), 0d);
             }
             set {
                 if (CanSetDeclinationRate) {
@@ -221,7 +221,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double RightAscensionRate {
             get {
-                return GetProperty(nameof(Telescope.RightAscensionRate), -1d);
+                return GetProperty(nameof(Telescope.RightAscensionRate), 0d);
             }
             set {
                 if (CanSetRightAscensionRate) {
@@ -665,7 +665,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public bool CanSetTrackingEnabled {
             get {
-                return Connected && device.CanSetTracking;
+                return Connected && GetProperty(nameof(Telescope.CanSetTracking), false);
             }
         }
 
@@ -966,19 +966,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public TrackingRate TrackingRate {
             get {
-                if (!Connected || !device.Tracking) {
+                if (!Connected || !TrackingEnabled) {
                     return new TrackingRate() { TrackingMode = TrackingMode.Stopped };
-                } else if (!device.CanSetTracking) {
+                } else if (!CanSetTrackingEnabled) {
                     return new TrackingRate() { TrackingMode = TrackingMode.Sidereal };
                 }
 
-                var ascomTrackingRate = device.TrackingRate;
+                var ascomTrackingRate = GetProperty(nameof(Telescope.TrackingRate), DriveRates.driveSidereal);
                 if (ascomTrackingRate == DriveRates.driveSidereal && (
-                    Math.Abs(device.DeclinationRate) >= TRACKING_RATE_EPSILON) || (Math.Abs(device.RightAscensionRate) >= TRACKING_RATE_EPSILON)) {
+                    Math.Abs(DeclinationRate) >= TRACKING_RATE_EPSILON) || (Math.Abs(RightAscensionRate) >= TRACKING_RATE_EPSILON)) {
                     return new TrackingRate() {
                         TrackingMode = TrackingMode.Custom,
-                        CustomRightAscensionRate = device.RightAscensionRate,
-                        CustomDeclinationRate = device.DeclinationRate
+                        CustomRightAscensionRate = RightAscensionRate,
+                        CustomDeclinationRate = DeclinationRate
                     };
                 }
                 var trackingMode = TrackingMode.Sidereal;
