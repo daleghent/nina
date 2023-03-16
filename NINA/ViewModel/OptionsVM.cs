@@ -288,9 +288,12 @@ namespace NINA.ViewModel {
                 gps.Initialize();
                 if (gps.AutoDiscover()) {
                     loc = await gps.Connect(new System.Threading.CancellationToken());
-                    if (loc) {
+                    if (loc) {                        
                         Latitude = gps.Coords[1];
                         Longitude = gps.Coords[0];
+                        if (gps.Coords.Length > 2 && !double.IsNaN(gps.Coords[2]) && gps.Coords[2] != 0) {
+                            Elevation = gps.Coords[2];
+                        }
                     }
                 }
                 return loc;

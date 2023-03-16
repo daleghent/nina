@@ -21,6 +21,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - A new toggle in options > general > advanced is available to disable hardware acceleration. Disabling this can be useful if you are experiencing graphic glitches or the application goes blank when using a remote client to connect to the pc.
 - Added native driver for OGMA cameras
 - In Options > Imaging > Image File Pattern it is now possible to set different patterns per image type. When no pattern is set for a specific image type the main image pattern will be taken.
+- NMEA GPS import now also imports the site elevation
 
 ## Improvements
 - The Field of View value in the Framing Tab is now limited to two decimal places
