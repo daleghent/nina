@@ -15,7 +15,6 @@
 using Newtonsoft.Json;
 using NINA.Core.Model;
 using NINA.Profile.Interfaces;
-using NINA.Sequencer.Container;
 using NINA.Sequencer.Validations;
 using NINA.Astrometry;
 using NINA.Equipment.Interfaces.Mediator;
@@ -29,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
 using NINA.Core.Utility.Notification;
+using System.Windows;
 
 namespace NINA.Sequencer.SequenceItem.Telescope {
 
@@ -46,6 +46,11 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             this.telescopeMediator = telescopeMediator;
             this.guiderMediator = guiderMediator;
             Coordinates = new InputTopocentricCoordinates(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
+            WeakEventManager<IProfileService, EventArgs>.AddHandler(profileService, nameof(profileService.LocationChanged), ProfileService_LocationChanged);
+        }
+
+        private void ProfileService_LocationChanged(object sender, EventArgs e) {
+            Coordinates?.SetPosition(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
         }
 
         private SlewScopeToAltAz(SlewScopeToAltAz cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.guiderMediator) {
