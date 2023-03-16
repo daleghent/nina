@@ -28,6 +28,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 # Version 2.1 Hotfix 1
 
 ## Bugfixes
+- Fixed Slew to Alt/Az instruction not considering changes to Latitude & Longitude values
 - Loading a FITS File that contains exponential notation for double values should now have its headers be correctly read
 - Fixed an issue where the sequence was not able to be loaded when a plugin was missing
 - Fixed an issue for plugin focusers to not show the plugin specific settings section

@@ -42,6 +42,10 @@ namespace NINA.Astrometry {
             Coordinates = coordinates;
         }
 
+        public void SetPosition(Angle latitude, Angle longitude) {
+            Coordinates = new TopocentricCoordinates(Coordinates.Azimuth, Coordinates.Altitude, latitude, longitude);
+        }
+
         private TopocentricCoordinates coordinates;
 
         public TopocentricCoordinates Coordinates {
