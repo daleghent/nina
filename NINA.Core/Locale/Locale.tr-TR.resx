@@ -4301,7 +4301,7 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Ardışık bir yönerge seti gibi çalışır, ancak içeride bir Derin Gökyüzü Objesi belirtilebilir; bu, gerektiğinde içindeki tüm yönergeleri koordinatlarla ve döndürmeyle otomatik olarak doldurur.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Derin Uzay Objesi sekansı</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Bu yönerge setindeki tüm yönergeler paralel olarak çalıştırılır. Bu yönerge seti, tüm yönergeler tamamlanıncaya kadar herhangi bir koşulu veya tetikleyiciyi değerlendirmeyecektir.</value>
@@ -4798,13 +4798,13 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>Hedef seti aç</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Basit Sıralayıcı</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Sonuncu hedef seçeneklerinin sonu</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Sequence Builder Template</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Hedefi dışarıdan aktar</value>
@@ -5069,8 +5069,8 @@ Uyarı: Bu talimat, teleskopu bir hedefe MERKEZLEMEZ, sadece mevcut yönlendiril
     <value>Gelişmiş Sekans oluşturulsun mu?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Bu sekansı gelişmiş sekansa aktarmak istediğinizden emin misiniz?
-Not: Gelişmiş sekans geri döndürmeye uygun DEĞİLDİR, basit sekansa çevrilemez!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Gelişmiş Sıralayıcı</value>
@@ -5080,10 +5080,10 @@ Not: Gelişmiş sekans geri döndürmeye uygun DEĞİLDİR, basit sekansa çevri
 Bu modda sekans, ince ayrıntılı talimatlar, tetikleyiciler ve koşullar kullanılarak sıfırdan planlanabilir.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Basit sıralayıcıyı devre dışı bırak</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Basit sıralayıcıyı devre dışı bırakır ve sekans sekmesinde direkt gelişmiş sıralayıcıyı gösterir.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Sıralayıcı kontrol paneline dön</value>

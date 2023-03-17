@@ -4312,7 +4312,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Funktioniert wie ein sequentielles Anweisungsset, aber ein Deep Sky Objekt kann hiermit festgelegt werden, welches automatisch für alle Anweisungen darin die Koordinaten und die Drehung auffüllt, falls erforderlich.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Objekt Sequenz</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Alle Anweisungen in diesem Befehlssatz werden parallel ausgeführt. Es werden keinerlei Bedingungen oder Auslöser ausgewertet, bis alle Anweisungen komplett durchgeführt wurden.</value>
@@ -4806,13 +4806,13 @@ Wenn die nächste Position ein nicht aufgeklappter Befehlssatz ist, wird die Anw
     <value>Zielsatz öffnen</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Einfacher Sequenzer</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Optionen zum Ende der Sequenz</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Sequence Builder Template</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Ziel importieren</value>
@@ -5076,8 +5076,8 @@ Beispiel:
     <value>Erweiterte Sequenz erstellen?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Sicher, dass die Sequenz in eine erweiterte Sequenz umgewandelt werden soll?
-Hinweis: Erweiterte Sequenzen sind NICHT rückwärtskompatibel und es ist nicht möglich diese zur einfachen Sequenz zurück zu konvertieren!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Advanced Sequencer</value>
@@ -5087,10 +5087,10 @@ Hinweis: Erweiterte Sequenzen sind NICHT rückwärtskompatibel und es ist nicht 
 Dort kann die Sequenz mit sehr viel detaillierteren Anweisungen, Auslösern und Bedingungen von Grund auf geplant werden.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Simple Sequencer deaktivieren</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Dies deaktiviert den einfachen Sequenzer und zeigt den fortgeschrittenen Sequenzer direkt in der Sequenz-Registerkarte an.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Zum Sequenzer-Dashboard zurück wechseln</value>

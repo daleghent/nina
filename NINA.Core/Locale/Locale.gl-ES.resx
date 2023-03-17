@@ -4313,7 +4313,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Funciona como un conxunto de instrucións secuencial, pero pódese especificar dentro un obxecto ceo profundo, que encherá automaticamente todas as instrucións dentro del coas coordenadas e rotación cando sexa necesario.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Secuencia de Obxecto do Ceo Profundo</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Todas as instrucións deste conxunto de instrucións execútanse en paralelo. Este conxunto de instrucións non avaliará ningunha condición nin desencadeante ata que rematen todas as instrucións.</value>
@@ -4810,13 +4810,13 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Abrir Conxunto de Obxectivos</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Secuenciador Simple</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Opcións tras rematar o último obxectivo</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Modelo de Creador de Secuencias</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importar Obxectivo</value>
@@ -5081,8 +5081,8 @@ Exemplo:
     <value>Construír unha secuencia avanzada?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Estás seguro de exportar a secuencia á secuencia avanzada?
-Nota: as secuencias avanzadas NON son compatibles con versións anteriores e non é posible volver á secuencia simple!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Secuencia Avanzada</value>
@@ -5092,10 +5092,10 @@ Nota: as secuencias avanzadas NON son compatibles con versións anteriores e non
 Nel a secuencia pódese planificar dende cero empregando instrucións granulares finas, disparadores e condicións.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Desactivar Secuencia Simple</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Isto desactivará a secuencia simple e amosará directamente a secuencia avanzada na pestana de secuencia.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Volver ó panel de control de secuencia</value>

@@ -4306,7 +4306,7 @@ Dec: {1}</value>
     <value>Работает как последовательный набор инструкций, но глубокий объект неба может быть указан внутри, который будет автоматически заполнять все инструкции внутри него координатами и вращением при необходимости.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Серия объекта глубокого космоса</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Все инструкции в этом наборе выполняются параллельно. Этот набор инструкций не будет оценивать никаких условий или триггеров до тех пор, пока не будут выполнены все инструкции.</value>
@@ -4803,13 +4803,13 @@ Dec: {1}</value>
     <value>Открыть набор цели</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Простой планировщик</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Опции окончания последней цели</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Шаблон простой серии</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Импортировать цель</value>
@@ -5074,8 +5074,8 @@ Dec: {1}</value>
     <value>Построить расширенную серию?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Вы уверены, что хотите экспортировать серию в расширенную серию?
-Примечание: Дополнительные серии НЕ совместимы с обратной стороной и невозможно вернуться к простой серии!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Расширенная серия</value>
@@ -5085,10 +5085,10 @@ Dec: {1}</value>
 Там можно спланировать серию с нуля с помощью мелких гранулярных инструкций, триггеров и условий.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Отключить простую серию</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Это отключит простую серию и напрямую отобразит расширенную последовательность на вкладке серии.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Вернуться к панели серии</value>

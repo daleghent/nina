@@ -4313,7 +4313,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Sequence</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
@@ -4810,13 +4810,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Open target set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequencer template</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import target</value>
@@ -5082,7 +5082,7 @@ Example:
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
     <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!</value>
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Advanced Sequencer</value>
@@ -5092,10 +5092,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
 There the sequence can be planned from scratch using fine granular instructions, triggers and conditions.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Simple Sequencer</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Switch back to Sequencer dashboard</value>
