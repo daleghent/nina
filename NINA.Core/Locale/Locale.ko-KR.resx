@@ -4296,7 +4296,7 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>시퀀스 명령셋처럼 작동하며, 필요 시 딥스카이 개채를 지정해서 좌표와 회전을 포함한 명령이 자동으로 채워지게도 할 수 있습니다.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>딥스카이 개체 시퀀스</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>이 명령어세트의 모든 명령은 병렬로 실행됩니다. 명령어세트는 모든 명령이 완료될 때까지 조건 이나 트리거 를 확인하지 않습니다.</value>
@@ -4794,13 +4794,13 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>타겟 세트 열기</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>단순 시퀀서</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>마지막 타겟 옵션</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>간단 시퀀스 템플릿</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>타겟 가져오기</value>
@@ -5069,8 +5069,8 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
     <value>고급 시퀀스를 생성할까요?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>시퀀스를 고급 시퀀스로 내보내시겠습니까?
-참고: 고급 시퀀스는 하위 호환성이 없으며 단순 시퀀스로 되돌릴 수 없습니다!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>고급 시퀀서</value>
@@ -5080,10 +5080,10 @@ SharpCap을 설치하고 센서 분석을 수행한 경우 아래 드롭다운 �
 여기에서 세부적인 지침, 트리거 및 조건을 사용하여 처음부터 시퀀스를 계획할 수 있습니다.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>간단 시퀀서 비활성화</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>이렇게 하면 단순 시퀀서가 비활성화되고 시퀀스 탭에 고급 시퀀서가 직접 표시됩니다.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>시퀀서 대시보드로 다시 전환</value>

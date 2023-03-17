@@ -4299,7 +4299,7 @@ I tilfelle lengre varighet trengs, kan NINA øke temperature gradvis med angitt 
     <value>Fungerer som en seriell instruksjonsblokk, men et mål kan spesifiseres for blokken som gjør at målinformasjon automatisk brukes i de relevante instruksjonene.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Instruksjonsblokk med mål</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Alle instruksjonene i blokken utføres parallelt. Ingen betingelser eller triggere brukes før alle instruksjoner er fullført.</value>
@@ -4796,13 +4796,13 @@ Hvis blokken over er kollapset, blir gjeldende instruksjon flyttet over denne.</
     <value>Åpne målliste</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Enkel sekvens</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Valg for sekvensslutt</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Mal for ny enkel sekvens</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importer mål</value>
@@ -5066,7 +5066,8 @@ Eksempel:
     <value>Konverter til avansert sekvens?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Er du sikker på at du vil konvertere sekvensen til en avansert sekvens? Det vil ikke være mulig å konvertere tilbake!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Avansert sekvens</value>
@@ -5076,10 +5077,10 @@ Eksempel:
 I denne modusen kan sekvenser bygges opp med elementære instruksjoner, triggere og betingelser.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Skjul enkel sekvens-modus</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Dette vil skjule den enkle sekvensmodusen, og man vil komme rett inn i den avanserte modusen.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Gå tilbake til sekvens-dashbordet</value>
@@ -6517,12 +6518,12 @@ Endringer trer i kraft neste gang programmet startes.</value>
     <comment>The equipment profile that is used in the application that stores all the settings</comment>
   </data>
   <data name="LblAutomaticMountSync" xml:space="preserve">
-    <value>Automatic Sync</value>
+    <value>Automatisk synkronisering</value>
     <comment>The option to turn automatic sync of platesolving to the mount</comment>
   </data>
   <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
-    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
-This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <value>Når aktivert, vil programmet synkronisere monteringen med resultatet fra astrometrisk søk og sentrering.
+Dette bør bare deaktiveres hvis monteringen allerede har en pekemodell som man vet er god, og som man derfor ikke ønsker å endre. Når deaktivert vil ikke panelet for astrometrisk søk vise alternativet for å synkronisere montering.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
   <data name="LblCameraDitherPixels" xml:space="preserve">
@@ -6538,15 +6539,15 @@ This should only be disabled when having a good pointing model that must not be 
     <value>Guider Pixel Scale</value>
   </data>
   <data name="LblZwoDeviceId" xml:space="preserve">
-    <value>Device ID</value>
+    <value>Enhets-ID</value>
   </data>
   <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
-    <value>A name up to 8 ASCII characters long that you may assign to the connected ZWO device. This allows you to uniquely identify multiple pieces of the same model of device.</value>
+    <value>Et navn med inntil 8 tegn som kan brukes til å entydig identifisere flere enheter av samme modell.</value>
   </data>
   <data name="LblUnidirectional" xml:space="preserve">
-    <value>Unidirectional</value>
+    <value>Kun en dreieretning</value>
   </data>
   <data name="LblCalibrate" xml:space="preserve">
-    <value>Calibrate</value>
+    <value>Kalibrer</value>
   </data>
 </root>

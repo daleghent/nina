@@ -4307,7 +4307,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Funguje jako sekvenční instrukční sada, ale uvnitř lze zadat objekt hluboké oblohy, který v případě potřeby automaticky naplní všechny instrukce uvnitř souřadnicemi a otočením.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Sekvence Objektů Hlubokého Vesmíru</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Všechny pokyny v této instrukční sadě jsou spuštěny paralelně. Tato instrukční sada nevyhodnotí žádné podmínky ani spouštěče události, dokud nebudou dokončeny všechny pokyny.</value>
@@ -4804,13 +4804,13 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Otevřít Cílovou Sadu</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Jednoduchá Sekvence</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Možnosti Konce Posledního Cíle</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Jednoduchá Sekvenční Šablona</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importovat Cíle</value>
@@ -5075,8 +5075,8 @@ Příklad:
     <value>Vytvořit Pokročilou Sekvenci?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Opravdu exportovat sekvenci do rozšířené sekvence?
-Poznámka: Pokročilý sekvencer není zpětně kompatibilní a není možné se vrátit k jednoduché sekvenci!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Pokročilý Sekvencer</value>
@@ -5086,10 +5086,10 @@ Poznámka: Pokročilý sekvencer není zpětně kompatibilní a není možné se
 Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spouštěčů a podmínek.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Zakázat Jednoduchý Sekvencer</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Tím se zakáže jednoduchý sekvencer a přímo se zobrazí pokročilý sekvencer na kartě sekvence.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Přepnutí zpět na Řídicí Panel sekvenceru</value>
