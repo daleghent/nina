@@ -143,9 +143,9 @@ namespace NINA.Image.ImageAnalysis {
                         dst[RGB.G] = (ushort)(rgbValues[RGB.G] / rgbCounters[RGB.G]);
                         dst[RGB.B] = (ushort)(rgbValues[RGB.B] / rgbCounters[RGB.B]);
                         if (SaveColorChannels) {
-                            LRGBArrays.Red[counter] = dst[RGB.R];
+                            LRGBArrays.Red[counter] = dst[RGB.B];
                             LRGBArrays.Green[counter] = dst[RGB.G];
-                            LRGBArrays.Blue[counter] = dst[RGB.B];
+                            LRGBArrays.Blue[counter] = dst[RGB.R];
                         }
                         if (SaveLumChannel) {
                             LRGBArrays.Lum[counter] = (ushort)Math.Floor((dst[RGB.R] + dst[RGB.G] + dst[RGB.B]) / 3d);

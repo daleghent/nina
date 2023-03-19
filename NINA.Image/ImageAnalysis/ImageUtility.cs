@@ -338,7 +338,8 @@ namespace NINA.Image.ImageAnalysis {
             double factor,
             double blackClipping) {
             using (MyStopWatch.Measure()) {
-                var filter = ImageUtility.GetColorRemappingFilterUnlinked(redStatistics, greenStatistics, blueStatistics, factor, blackClipping, pf);
+                // Swap Red & Blue statistics due to differences in 48-bit Bitmap (RGB) & BitmapSource (BGR).
+                var filter = ImageUtility.GetColorRemappingFilterUnlinked(blueStatistics, greenStatistics, redStatistics, factor, blackClipping, pf);
                 filter.ApplyInPlace(img);
 
                 var source = ImageUtility.ConvertBitmap(img, pf);
