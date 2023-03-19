@@ -9,6 +9,7 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using FluentAssertions;
 using Moq;
 using NINA.Image.ImageAnalysis;
 using NINA.Image.ImageData;
@@ -29,6 +30,18 @@ namespace NINA.Test {
         [SetUp]
         public void Setup() {
             dataFactoryUtility = new ImageDataFactoryTestUtility();
+        }
+
+        [Test]
+        public void Pattern_Remove_TrailingAndLeading_Whitespace_FromFilesAndFolders() {
+            string filePattern = "$$DATE$$\\Telescope = $$TELESCOPE$$\\   Target = $$TARGETNAME$$ \\Type = $$IMAGETYPE$$\\ Filter = $$FILTER$$\\ $$DATE$$ @ $$TIME$$; Target = $$TARGETNAME$$; Type = $$IMAGETYPE$$; Filter = $$FILTER$$; Gain = $$GAIN$$; Bin = $$BINNING$$; Exp = $$EXPOSURETIME$$ s; Temp = $$SENSORTEMP$$ C; Frame # = $$FRAMENR$$ ";
+            metaData.Target.Name = @"C/2020 F3 NEOWISE ?//_\\-A Comet";
+            string expectedResult = "0001-01-01\\Telescope =\\Target = C-2020 F3 NEOWISE _--_---A Comet\\Type =\\Filter =\\0001-01-01 @ 00-00-00; Target = C-2020 F3 NEOWISE _--_---A Comet; Type = ; Filter = ; Gain = ; Bin = 1x1; Exp =  s; Temp =  C; Frame # = -0001";
+
+            BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, metaData);
+            string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
+
+            parsedPattern.Should().Be(parsedPattern);
         }
 
         [Test]

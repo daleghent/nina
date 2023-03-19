@@ -183,7 +183,7 @@ namespace NINA.Core.Model {
 
             var imageFileString = string.Empty;
             for (int i = 0; i < path.Length; i++) {
-                imageFileString = Path.Combine(imageFileString, Utility.CoreUtil.ReplaceInvalidFilenameChars(path[i]));
+                imageFileString = Path.Combine(imageFileString, Utility.CoreUtil.ReplaceInvalidFilenameChars(path[i]).Trim());
             }
 
             return imageFileString;
