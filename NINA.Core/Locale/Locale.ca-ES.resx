@@ -4302,7 +4302,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Funciona com un conjunt d'instruccions seqüencials, però es pot especificar un objecte de cel profund en el seu interior, que omplirà automàticament, a dins, totes les instruccions amb les coordenades i la rotació quan sigui necessari.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Instruction Set</value>
+    <value>Conjunt d'instruccions d'objectes de cel profund</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Totes les instruccions d’aquest conjunt d’instruccions s’executen en paral·lel. Aquest conjunt d’instruccions no avaluarà cap condició ni activador fins que no s’acabin totes les instruccions.</value>
@@ -4799,13 +4799,13 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Obrir conjunt d'objectius</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Legacy Sequencer</value>
+    <value>Seqüenciador heretat</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Fi de les opcions del darrer objectiu</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Legacy Sequence Template</value>
+    <value>Plantilla de seqüència heretada</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importar objectiu</value>
@@ -5070,8 +5070,8 @@ Exemple:
     <value>Voleu crear una seqüència avançada?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
+    <value>Esteu segur d'exportar la seqüència a la seqüència avançada?
+Nota: les seqüències avançades NO són ​​compatibles cap enrere i no és possible tornar a la seqüència heretada!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Seqüenciador avançat</value>
@@ -5081,10 +5081,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
 Allà, la seqüència es pot planificar des de zero mitjançant instruccions, activadors i condicions molt detallades.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Legacy Sequencer</value>
+    <value>Desactivar seqüenciador heretat</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>Això desactivarà el seqüenciador heretat i mostrarà directament el seqüenciador avançat a la pestanya de seqüència.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Torneu al tauler del seqüenciador</value>

@@ -4304,7 +4304,7 @@ W przypadku gdy potrzebny jest dłuższy czas, można go określić i aplikacja 
     <value>Działa jako zestaw sekwencyjnych instrukcji, ale możesz określić obiekt głębokiego nieba wewnątrz, który automatycznie wypełni wewnątrz wszystkie instrukcje ze współrzędnymi i obrotem, gdy będzie to konieczne.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Instruction Set</value>
+    <value>Zestaw instrukcji dla obiektów DS</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Wszystkie instrukcje w tym zestawie są wykonywane równolegle. Żadne warunki ani wyzwalacze nie są weryfikowane, dopóki wszystkie instrukcje nie zostaną wypełnione.</value>
@@ -4801,13 +4801,13 @@ Jeśli pozycja powyżej jest zestawem instrukcji, który nie jest rozszerzony, z
     <value>Otwarty zestaw obiektów</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Legacy Sequencer</value>
+    <value>Dziedziczony sekwencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Opcje końca ostatniego celu</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Legacy Sequence Template</value>
+    <value>Szablon sekwencji dziedziczonej</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importuj cel</value>
@@ -5072,8 +5072,8 @@ Przykład:
     <value>Zbudować zaawansowaną sekwencję?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
+    <value>Czy na pewno chcesz wyeksportować sekwencję do zaawansowanej sekwencji?
+Uwaga: Zaawansowane sekwencje NIE są wstecznie kompatybilne i nie jest możliwe przywrócenie do poprzedniej sekwencji!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Zaawansowany sekwencer</value>
@@ -5083,10 +5083,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
 Sekwencja może być zaplanowana od podstaw przy użyciu drobnych instrukcji, wyzwalaczy i warunków.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Legacy Sequencer</value>
+    <value>Wyłącz dziedziczony sekwencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>Spowoduje to wyłączenie dziedziczonego sekwencera i bezpośrednie wyświetlenie zaawansowanego sekwencera w zakładce sekwencyjnej.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Przełącz się z powrotem do pulpitu sekwencera</value>
