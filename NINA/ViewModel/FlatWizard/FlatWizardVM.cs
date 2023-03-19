@@ -600,18 +600,15 @@ namespace NINA.ViewModel.FlatWizard {
         public async Task<int> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter) {
             if (flatDeviceInfo?.Connected != true) throw new Exception(Loc.Instance["LblFlatDeviceNotConnected"]); ;
             var result = 0;
-            var dataPoints = new List<ScatterErrorPoint>();
-            int GetNextDataPoint() {
-                var trendLine = new ParabolicTrendline(dataPoints);
-                var solution = trendLine.Solve(filter.Settings.HistogramMeanTarget * HistogramMath.CameraBitDepthToAdu(filter.BitDepth));
-                return solution[0] > 0 ? (int)Math.Round(solution[0]) : (int)Math.Round(solution[1]);
-            }
-
-            progress.Report(new ApplicationStatus { Status = string.Format(Loc.Instance["LblFlatExposureCalcStartBrightness"], $"{filter.Settings.MinAbsoluteFlatDeviceBrightness}"), Source = Title });
 
             Task showImageTask = null;
-            var brightness = filter.Settings.MinAbsoluteFlatDeviceBrightness;
+
             HistogramMath.ExposureAduState exposureAduState;
+
+            int minBrightness = filter.Settings.MinAbsoluteFlatDeviceBrightness;
+            int maxBrightness = filter.Settings.MaxAbsoluteFlatDeviceBrightness;
+            int brightness = (minBrightness + maxBrightness) / 2;
+
             do {
                 await flatDeviceMediator.SetBrightness(brightness, flatSequenceCts.Token);
 
@@ -634,8 +631,7 @@ namespace NINA.ViewModel.FlatWizard {
                 var imageStatistics = await imageData.Statistics.Task;
                 exposureAduState = HistogramMath.GetExposureAduState(imageStatistics.Mean,
                     filter.Settings.HistogramMeanTarget, filter.BitDepth, filter.Settings.HistogramTolerance);
-                dataPoints.Add(new ScatterErrorPoint(brightness, imageStatistics.Mean, 1, 1));
-
+                
                 switch (exposureAduState) {
                     case HistogramMath.ExposureAduState.ExposureWithinBounds:
                         CalculatedHistogramMean = imageStatistics.Mean;
@@ -657,20 +653,14 @@ namespace NINA.ViewModel.FlatWizard {
                         break;
 
                     case HistogramMath.ExposureAduState.ExposureBelowLowerBound:
-                        switch (dataPoints.Count) {
-                            case int n when n < 3:
-                                brightness += filter.Settings.FlatDeviceAbsoluteStepSize;
-                                break;
-
-                            case int n when n >= 3 && n < MAX_TRIES:
-                                brightness = GetNextDataPoint();
-                                if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness  || brightness < 0) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
-                                break;
-
-                            default:
-                                await ShowErrorAndHandleInput(Loc.Instance["LblFLatUserPromptAdjustStepSize"], brightness);
-                                break;
+                        minBrightness = brightness;
+                        brightness = (minBrightness + maxBrightness) / 2;
+                        if (brightness == minBrightness)
+                            brightness++;
+                        if (brightness > maxBrightness) {
+                            await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
                         }
+
                         progress.Report(new ApplicationStatus {
                             Status = string.Format(Loc.Instance["LblFlatExposureCalcContinueBrightness"],
                                 Math.Round(imageStatistics.Mean), $"{brightness}"),
@@ -679,19 +669,13 @@ namespace NINA.ViewModel.FlatWizard {
                         break;
 
                     case HistogramMath.ExposureAduState.ExposureAboveUpperBound:
-                        switch (dataPoints.Count) {
-                            case int n when n < 3:
-                                await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
-                                break;
+                        maxBrightness = brightness;
+                        brightness = (minBrightness + maxBrightness + 1) / 2;
 
-                            case int n when n >= 3 && n < MAX_TRIES:
-                                brightness = GetNextDataPoint();
-                                if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
-                                break;
-
-                            default:
-                                await ShowErrorAndHandleInput(Loc.Instance["LblFLatUserPromptAdjustStepSize"], brightness);
-                                break;
+                        if (brightness == maxBrightness)
+                            brightness--;
+                        if (brightness < minBrightness) {
+                            await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
                         }
                         progress.Report(new ApplicationStatus {
                             Status = string.Format(Loc.Instance["LblFlatExposureCalcContinueBrightness"],
@@ -728,8 +712,9 @@ namespace NINA.ViewModel.FlatWizard {
                             break;
 
                         case FlatWizardUserPromptResult.ResetAndContinue:
-                            dataPoints.Clear();
-                            brightness = filter.Settings.MinAbsoluteFlatDeviceBrightness;
+                            minBrightness = filter.Settings.MinAbsoluteFlatDeviceBrightness;
+                            maxBrightness = filter.Settings.MaxAbsoluteFlatDeviceBrightness;
+                            brightness = (minBrightness + maxBrightness) / 2;
                             break;
 
                         case FlatWizardUserPromptResult.Cancel:
