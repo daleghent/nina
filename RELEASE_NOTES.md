@@ -3,7 +3,7 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-# Version 2.1 Hotfix 1
+# Version 2.2
 
 ## Bugfixes
 - Fixed Slew to Alt/Az instruction not considering changes to Latitude & Longitude values
