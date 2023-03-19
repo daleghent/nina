@@ -38,9 +38,7 @@ namespace NINA.Image.ImageData {
         private BitmapSource image;
 
         public BitmapSource Image {
-            get {
-                return this.image ?? OriginalImage;
-            }
+            get => this.image ?? OriginalImage;
             private set {
                 this.image = value;
                 RaisePropertyChanged();

@@ -64,9 +64,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public string Id => "PHD2_Single";
 
         public PhdEventVersion Version {
-            get {
-                return _version;
-            }
+            get => _version;
             set {
                 _version = value;
                 RaisePropertyChanged();
@@ -76,9 +74,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private ImageSource _image;
 
         public ImageSource Image {
-            get {
-                return _image;
-            }
+            get => _image;
             set {
                 _image = value;
                 RaisePropertyChanged();
@@ -88,9 +84,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private PhdEventAppState _appState;
 
         public PhdEventAppState AppState {
-            get {
-                return _appState;
-            }
+            get => _appState;
             set {
                 _appState = value;
                 RaisePropertyChanged();
@@ -116,9 +110,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private PhdEventGuidingDithered _guidingDithered;
 
         public PhdEventGuidingDithered GuidingDithered {
-            get {
-                return _guidingDithered;
-            }
+            get => _guidingDithered;
             set {
                 _guidingDithered = value;
                 RaisePropertyChanged();
@@ -132,9 +124,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             private set {
                 lock (lockobj) {
                     _connected = value;
@@ -146,20 +136,14 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private double _pixelScale;
 
         public double PixelScale {
-            get {
-                return _pixelScale;
-            }
+            get => _pixelScale;
             set {
                 _pixelScale = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string State {
-            get {
-                return AppState?.State ?? string.Empty;
-            }
-        }
+        public string State => AppState?.State ?? string.Empty;
 
         public bool HasSetupDialog => !Connected;
 
@@ -177,9 +161,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private Phd2Profile _selectedProfile;
 
         public Phd2Profile SelectedProfile {
-            get {
-                return _selectedProfile;
-            }
+            get => _selectedProfile;
             set {
                 if (value != _selectedProfile) {
                     _selectedProfile = value;
@@ -718,9 +700,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 10000);  // triage: reported deadlock hanging of phd2+nina - 10s timeout
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
         public bool CanSetShiftRate => true;
 

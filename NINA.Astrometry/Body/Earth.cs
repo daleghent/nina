@@ -16,10 +16,6 @@ namespace NINA.Astrometry.Body {
 
     public class Earth {
 
-        public static double Radius {
-            get {
-                return 6371; // https://de.wikipedia.org/wiki/Erdradius
-            }
-        }
+        public static double Radius => 6371; // https://de.wikipedia.org/wiki/Erdradius
     }
 }

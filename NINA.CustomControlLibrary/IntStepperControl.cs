@@ -31,96 +31,64 @@ namespace NINA.CustomControlLibrary {
            DependencyProperty.Register(nameof(ButtonForegroundBrush), typeof(Brush), typeof(IntStepperControl), new UIPropertyMetadata(new SolidColorBrush(Colors.White)));
 
         public Brush ButtonForegroundBrush {
-            get {
-                return (Brush)GetValue(ButtonForegroundBrushProperty);
-            }
-            set {
-                SetValue(ButtonForegroundBrushProperty, value);
-            }
+            get => (Brush)GetValue(ButtonForegroundBrushProperty);
+            set => SetValue(ButtonForegroundBrushProperty, value);
         }
 
         public static readonly DependencyProperty AddSVGProperty =
            DependencyProperty.Register(nameof(AddSVG), typeof(Geometry), typeof(IntStepperControl), new UIPropertyMetadata(null));
 
         public Geometry AddSVG {
-            get {
-                return (Geometry)GetValue(AddSVGProperty);
-            }
-            set {
-                SetValue(AddSVGProperty, value);
-            }
+            get => (Geometry)GetValue(AddSVGProperty);
+            set => SetValue(AddSVGProperty, value);
         }
 
         public static readonly DependencyProperty SubstractSVGProperty =
            DependencyProperty.Register(nameof(SubstractSVG), typeof(Geometry), typeof(IntStepperControl), new UIPropertyMetadata(null));
 
         public Geometry SubstractSVG {
-            get {
-                return (Geometry)GetValue(SubstractSVGProperty);
-            }
-            set {
-                SetValue(SubstractSVGProperty, value);
-            }
+            get => (Geometry)GetValue(SubstractSVGProperty);
+            set => SetValue(SubstractSVGProperty, value);
         }
 
         public static readonly DependencyProperty ValueProperty =
            DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntStepperControl), new UIPropertyMetadata(0));
 
         public int Value {
-            get {
-                return (int)GetValue(ValueProperty);
-            }
-            set {
-                SetValue(ValueProperty, value);
-            }
+            get => (int)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
 
         public static readonly DependencyProperty MinValueProperty =
            DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(IntStepperControl), new UIPropertyMetadata(int.MinValue));
 
         public int MinValue {
-            get {
-                return (int)GetValue(MinValueProperty);
-            }
-            set {
-                SetValue(MinValueProperty, value);
-            }
+            get => (int)GetValue(MinValueProperty);
+            set => SetValue(MinValueProperty, value);
         }
 
         public static readonly DependencyProperty MaxValueProperty =
            DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(IntStepperControl), new UIPropertyMetadata(int.MaxValue));
 
         public int MaxValue {
-            get {
-                return (int)GetValue(MaxValueProperty);
-            }
-            set {
-                SetValue(MaxValueProperty, value);
-            }
+            get => (int)GetValue(MaxValueProperty);
+            set => SetValue(MaxValueProperty, value);
         }
 
         public static readonly DependencyProperty StepSizeProperty =
            DependencyProperty.Register(nameof(StepSize), typeof(int), typeof(IntStepperControl), new UIPropertyMetadata(1));
 
         public int StepSize {
-            get {
-                return (int)GetValue(StepSizeProperty);
-            }
-            set {
-                SetValue(StepSizeProperty, value);
-            }
+            get => (int)GetValue(StepSizeProperty);
+            set => SetValue(StepSizeProperty, value);
         }
 
         public static readonly DependencyProperty UnitProperty =
            DependencyProperty.Register(nameof(Unit), typeof(string), typeof(IntStepperControl), new UIPropertyMetadata(string.Empty));
 
         public string Unit {
-            get {
-                return (string)GetValue(UnitProperty);
-            }
-            set {
-                SetValue(UnitProperty, value);
-            }
+            get => (string)GetValue(UnitProperty);
+            set => SetValue(UnitProperty, value);
         }
 
         public override void OnApplyTemplate() {

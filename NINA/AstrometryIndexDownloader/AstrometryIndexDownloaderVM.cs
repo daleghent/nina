@@ -60,9 +60,7 @@ namespace NINA.AstrometryIndexDownloader {
         private int _maximumFiles;
 
         public int MaximumFiles {
-            get {
-                return _maximumFiles;
-            }
+            get => _maximumFiles;
             set {
                 _maximumFiles = value;
                 RaisePropertyChanged();
@@ -72,9 +70,7 @@ namespace NINA.AstrometryIndexDownloader {
         private int _processedFiles;
 
         public int ProcessedFiles {
-            get {
-                return _processedFiles;
-            }
+            get => _processedFiles;
             set {
                 _processedFiles = value;
                 RaisePropertyChanged();
@@ -136,9 +132,7 @@ namespace NINA.AstrometryIndexDownloader {
         private IAsyncCommand _downloadCommand;
 
         public IAsyncCommand DownloadCommand {
-            get {
-                return _downloadCommand;
-            }
+            get => _downloadCommand;
             set {
                 _downloadCommand = value;
                 RaisePropertyChanged();
@@ -148,9 +142,7 @@ namespace NINA.AstrometryIndexDownloader {
         private RelayCommand _cancelDownloadCommand;
 
         public RelayCommand CancelDownloadCommand {
-            get {
-                return _cancelDownloadCommand;
-            }
+            get => _cancelDownloadCommand;
 
             set {
                 _cancelDownloadCommand = value;
@@ -161,9 +153,7 @@ namespace NINA.AstrometryIndexDownloader {
         private string _downloadStatus;
 
         public string DownloadStatus {
-            get {
-                return _downloadStatus;
-            }
+            get => _downloadStatus;
             set {
                 _downloadStatus = value;
                 RaisePropertyChanged();
@@ -193,9 +183,7 @@ namespace NINA.AstrometryIndexDownloader {
         private int _focalLength;
 
         public int FocalLength {
-            get {
-                return _focalLength;
-            }
+            get => _focalLength;
             set {
                 _focalLength = value;
                 RaisePropertyChanged();
@@ -208,9 +196,7 @@ namespace NINA.AstrometryIndexDownloader {
         private double _pixelSize;
 
         public double PixelSize {
-            get {
-                return _pixelSize;
-            }
+            get => _pixelSize;
             set {
                 _pixelSize = value;
                 RaisePropertyChanged();
@@ -223,9 +209,7 @@ namespace NINA.AstrometryIndexDownloader {
         private double _camWidth;
 
         public double CamWidth {
-            get {
-                return _camWidth;
-            }
+            get => _camWidth;
             set {
                 _camWidth = value;
                 RaisePropertyChanged();
@@ -238,9 +222,7 @@ namespace NINA.AstrometryIndexDownloader {
         private double _camHeight;
 
         public double CamHeight {
-            get {
-                return _camHeight;
-            }
+            get => _camHeight;
             set {
                 _camHeight = value;
                 RaisePropertyChanged();
@@ -253,9 +235,7 @@ namespace NINA.AstrometryIndexDownloader {
         private IndexFile _selectedNarrowest;
 
         public IndexFile SelectedNarrowest {
-            get {
-                return _selectedNarrowest;
-            }
+            get => _selectedNarrowest;
             set {
                 _selectedNarrowest = value;
                 RaisePropertyChanged();
@@ -265,26 +245,16 @@ namespace NINA.AstrometryIndexDownloader {
         private IndexFile _selectedWidest;
 
         public IndexFile SelectedWidest {
-            get {
-                return _selectedWidest;
-            }
+            get => _selectedWidest;
             set {
                 _selectedWidest = value;
                 RaisePropertyChanged();
             }
         }
 
-        public double ArcsecPerPixel {
-            get {
-                return AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
-            }
-        }
+        public double ArcsecPerPixel => AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
 
-        public double FieldOfView {
-            get {
-                return AstroUtil.MaxFieldOfView(ArcsecPerPixel, CamWidth, CamHeight);
-            }
-        }
+        public double FieldOfView => AstroUtil.MaxFieldOfView(ArcsecPerPixel, CamWidth, CamHeight);
 
         public string RecommendedIndexes {
             get {
@@ -627,9 +597,7 @@ namespace NINA.AstrometryIndexDownloader {
                 }
                 return _indexes;
             }
-            set {
-                _indexes = value;
-            }
+            set => _indexes = value;
         }
 
         /*public string GetDirectoryListingRegexForUrl(string url) {

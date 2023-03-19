@@ -21,9 +21,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public static class ASICameras {
 
-        public static int Count {
-            get { return ASICameraDll.GetNumOfConnectedCameras(); }
-        }
+        public static int Count => ASICameraDll.GetNumOfConnectedCameras();
 
         public static ASICamera GetCamera(int cameraId, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             if (cameraId >= Count || cameraId < 0)

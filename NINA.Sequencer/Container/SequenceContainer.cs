@@ -76,9 +76,7 @@ namespace NINA.Sequencer.Container {
 
         [JsonProperty]
         public virtual bool IsExpanded {
-            get {
-                return isExpanded;
-            }
+            get => isExpanded;
             set {
                 isExpanded = value;
                 RaisePropertyChanged(nameof(IsExpanded));

@@ -44,9 +44,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int FlatCount {
-            get {
-                return flatCount;
-            }
+            get => flatCount;
             set {
                 if (flatCount != value) {
                     flatCount = value;
@@ -59,9 +57,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double HistogramMeanTarget {
-            get {
-                return histogramMeanTarget;
-            }
+            get => histogramMeanTarget;
             set {
                 if (histogramMeanTarget != value) {
                     histogramMeanTarget = value;
@@ -74,9 +70,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double HistogramTolerance {
-            get {
-                return histogramTolerance;
-            }
+            get => histogramTolerance;
             set {
                 if (histogramTolerance != value) {
                     histogramTolerance = value;
@@ -89,9 +83,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double StepSize {
-            get {
-                return stepSize;
-            }
+            get => stepSize;
             set {
                 if (stepSize != value) {
                     stepSize = value;
@@ -104,9 +96,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public BinningMode BinningMode {
-            get {
-                return binningMode;
-            }
+            get => binningMode;
             set {
                 if (binningMode != value) {
                     binningMode = value;

@@ -158,9 +158,7 @@ namespace NINA.ViewModel.FramingAssistant {
             RaisePropertyChanged(nameof(NighttimeData));
         }
 
-        public bool IsX64 {
-            get => !DllLoader.IsX86();
-        }
+        public bool IsX64 => !DllLoader.IsX86();
 
         private bool sequencerActionsOpened;
 
@@ -542,9 +540,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         // Proxy Property for derotating the image according to the rectangle rotation
-        public double InverseRectangleRotation {
-            get => RotateSky ? (-Rectangle?.Rotation ?? 0) : 0;
-        }
+        public double InverseRectangleRotation => RotateSky ? (-Rectangle?.Rotation ?? 0) : 0;
 
         // Proxy Property to be able to recalculate rectangle on change
         public double RectangleTotalRotation {
@@ -578,17 +574,13 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
                 return skySurveyFactory;
             }
-            set {
-                skySurveyFactory = value;
-            }
+            set => skySurveyFactory = value;
         }
 
         private bool _rectangleCalculated;
 
         public bool RectangleCalculated {
-            get {
-                return _rectangleCalculated;
-            }
+            get => _rectangleCalculated;
             private set {
                 _rectangleCalculated = value;
                 RaisePropertyChanged();
@@ -625,9 +617,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Loc.Instance["LblFramingAssistant"];
@@ -677,9 +667,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private DeepSkyObject _dSO;
 
         public DeepSkyObject DSO {
-            get {
-                return _dSO;
-            }
+            get => _dSO;
             set {
                 _dSO = value;
                 _dSO?.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
@@ -716,9 +704,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private readonly IPlanetariumFactory planetariumFactory;
 
         public int RAHours {
-            get {
-                return (int)Math.Truncate(DSO.Coordinates.RA);
-            }
+            get => (int)Math.Truncate(DSO.Coordinates.RA);
             set {
                 if (value >= 0) {
                     DSO.Coordinates.RA = DSO.Coordinates.RA - RAHours + value;
@@ -773,9 +759,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public int DecDegrees {
-            get {
-                return (int)Math.Truncate(DSO.Coordinates.Dec);
-            }
+            get => (int)Math.Truncate(DSO.Coordinates.Dec);
             set {
                 if (NegativeDec) {
                     DSO.Coordinates.Dec = value - DecMinutes / 60.0d - DecSeconds / (60.0d * 60.0d);
@@ -841,9 +825,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private int _downloadProgressValue;
 
         public int DownloadProgressValue {
-            get {
-                return _downloadProgressValue;
-            }
+            get => _downloadProgressValue;
             set {
                 _downloadProgressValue = value;
                 RaisePropertyChanged();
@@ -851,9 +833,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public double FieldOfView {
-            get {
-                return profileService.ActiveProfile.FramingAssistantSettings.FieldOfView;
-            }
+            get => profileService.ActiveProfile.FramingAssistantSettings.FieldOfView;
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.FieldOfView = value;
                 RaisePropertyChanged();
@@ -861,9 +841,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public int CameraWidth {
-            get {
-                return profileService.ActiveProfile.FramingAssistantSettings.CameraWidth;
-            }
+            get => profileService.ActiveProfile.FramingAssistantSettings.CameraWidth;
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraWidth = value;
                 RaisePropertyChanged();
@@ -874,9 +852,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public int CameraHeight {
-            get {
-                return profileService.ActiveProfile.FramingAssistantSettings.CameraHeight;
-            }
+            get => profileService.ActiveProfile.FramingAssistantSettings.CameraHeight;
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraHeight = value;
                 RaisePropertyChanged();
@@ -889,9 +865,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private SkySurveySource _framingAssistantSource;
 
         public SkySurveySource FramingAssistantSource {
-            get {
-                return _framingAssistantSource;
-            }
+            get => _framingAssistantSource;
             set {
                 _framingAssistantSource = value;
                 if (profileService.ActiveProfile.FramingAssistantSettings.LastSelectedImageSource != value) {
@@ -905,9 +879,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private double _cameraPixelSize;
 
         public double CameraPixelSize {
-            get {
-                return _cameraPixelSize;
-            }
+            get => _cameraPixelSize;
             set {
                 _cameraPixelSize = value;
                 RaisePropertyChanged();
@@ -933,9 +905,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private int horizontalPanels = 1;
 
         public int HorizontalPanels {
-            get {
-                return horizontalPanels;
-            }
+            get => horizontalPanels;
             set {
                 horizontalPanels = value;
                 RaisePropertyChanged();
@@ -947,9 +917,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private int verticalPanels = 1;
 
         public int VerticalPanels {
-            get {
-                return verticalPanels;
-            }
+            get => verticalPanels;
             set {
                 verticalPanels = value;
                 RaisePropertyChanged();
@@ -958,16 +926,12 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        public bool IsMosaic {
-            get => VerticalPanels > 1 || HorizontalPanels > 1;
-        }
+        public bool IsMosaic => VerticalPanels > 1 || HorizontalPanels > 1;
 
         private double overlapPercentage = 0.2;
 
         public double OverlapPercentage {
-            get {
-                return overlapPercentage;
-            }
+            get => overlapPercentage;
             set {
                 overlapPercentage = value;
                 RaisePropertyChanged();
@@ -978,9 +942,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private double overlapPixels = 500;
 
         public double OverlapPixels {
-            get {
-                return overlapPixels;
-            }
+            get => overlapPixels;
             set {
                 overlapPixels = value;
                 RaisePropertyChanged();
@@ -1051,9 +1013,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private double _focalLength;
 
         public double FocalLength {
-            get {
-                return _focalLength;
-            }
+            get => _focalLength;
             set {
                 _focalLength = value;
                 RaisePropertyChanged();
@@ -1064,9 +1024,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private SkySurveyImage _imageParameter;
 
         public SkySurveyImage ImageParameter {
-            get {
-                return _imageParameter;
-            }
+            get => _imageParameter;
             set {
                 _imageParameter = value;
                 RaisePropertyChanged();
@@ -1076,9 +1034,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private FramingRectangle _rectangle;
 
         public FramingRectangle Rectangle {
-            get {
-                return _rectangle;
-            }
+            get => _rectangle;
             set {
                 _rectangle = value;
                 RaisePropertyChanged();
@@ -1276,9 +1232,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private XElement _selectedImageCacheInfo;
 
         public XElement SelectedImageCacheInfo {
-            get {
-                return _selectedImageCacheInfo;
-            }
+            get => _selectedImageCacheInfo;
             set {
                 _selectedImageCacheInfo = value;
                 if (_selectedImageCacheInfo != null) {

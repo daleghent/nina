@@ -24,11 +24,7 @@ namespace NINA.Equipment.Equipment.MySafetyMonitor {
         public AscomSafetyMonitor(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.SafetyMonitor) {
         }
 
-        public bool IsSafe {
-            get {
-                return GetProperty(nameof(SafetyMonitor.IsSafe), false);
-            }
-        }
+        public bool IsSafe => GetProperty(nameof(SafetyMonitor.IsSafe), false);
 
         protected override string ConnectionLostMessage => Loc.Instance["LblSafetyMonitorConnectionLost"];
 

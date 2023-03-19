@@ -124,117 +124,79 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         [DataMember]
         [JsonProperty]
         public double RADistanceGuideDisplay {
-            get {
-                return raDistanceGuideDisplay;
-            }
-            set {
-                raDistanceGuideDisplay = value;
-            }
+            get => raDistanceGuideDisplay;
+            set => raDistanceGuideDisplay = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double DecDistanceGuideDisplay {
-            get {
-                return decDistanceGuideDisplay;
-            }
-            set {
-                decDistanceGuideDisplay = value;
-            }
+            get => decDistanceGuideDisplay;
+            set => decDistanceGuideDisplay = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double Frame {
-            get {
-                return frame;
-            }
+            get => frame;
 
-            set {
-                frame = value;
-            }
+            set => frame = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double Time {
-            get {
-                return time;
-            }
+            get => time;
 
-            set {
-                time = DateTime.UtcNow
+            set => time = DateTime.UtcNow
                .Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
                .TotalSeconds;
-            }
         }
 
         [DataMember]
         [JsonProperty]
         public string Mount {
-            get {
-                return mount;
-            }
+            get => mount;
 
-            set {
-                mount = value;
-            }
+            set => mount = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double Dx {
-            get {
-                return dx;
-            }
+            get => dx;
 
-            set {
-                dx = value;
-            }
+            set => dx = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double Dy {
-            get {
-                return dy;
-            }
+            get => dy;
 
-            set {
-                dy = value;
-            }
+            set => dy = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double RADistanceRaw {
-            get {
-                return -rADistanceRaw;
-            }
+            get => -rADistanceRaw;
 
-            set {
-                rADistanceRaw = value;
-            }
+            set => rADistanceRaw = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double DECDistanceRaw {
-            get {
-                return decDistanceRaw;
-            }
+            get => decDistanceRaw;
 
-            set {
-                decDistanceRaw = value;
-            }
+            set => decDistanceRaw = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double RADistanceGuide {
-            get {
-                return rADistanceGuide;
-            }
+            get => rADistanceGuide;
 
             set {
                 rADistanceGuide = value;
@@ -245,9 +207,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         [DataMember]
         [JsonProperty]
         public double DECDistanceGuide {
-            get {
-                return decDistanceGuide;
-            }
+            get => decDistanceGuide;
 
             set {
                 decDistanceGuide = value;
@@ -266,21 +226,15 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
                 }
             }
 
-            set {
-                rADuration = value;
-            }
+            set => rADuration = value;
         }
 
         [DataMember]
         [JsonProperty]
         public string RADirection {
-            get {
-                return rADirection;
-            }
+            get => rADirection;
 
-            set {
-                rADirection = value;
-            }
+            set => rADirection = value;
         }
 
         [DataMember]
@@ -294,105 +248,71 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
                 }
             }
 
-            set {
-                dECDuration = value;
-            }
+            set => dECDuration = value;
         }
 
         [DataMember]
         [JsonProperty]
         public string DECDirection {
-            get {
-                return decDirection;
-            }
+            get => decDirection;
 
-            set {
-                decDirection = value;
-            }
+            set => decDirection = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double StarMass {
-            get {
-                return starMass;
-            }
+            get => starMass;
 
-            set {
-                starMass = value;
-            }
+            set => starMass = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double SNR {
-            get {
-                return sNR;
-            }
+            get => sNR;
 
-            set {
-                sNR = value;
-            }
+            set => sNR = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double HFD {
-            get {
-                return hFD;
-            }
+            get => hFD;
 
-            set {
-                hFD = value;
-            }
+            set => hFD = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double AvgDist {
-            get {
-                return avgDist;
-            }
+            get => avgDist;
 
-            set {
-                avgDist = value;
-            }
+            set => avgDist = value;
         }
 
         [DataMember]
         [JsonProperty]
         public bool RALimited {
-            get {
-                return rALimited;
-            }
+            get => rALimited;
 
-            set {
-                rALimited = value;
-            }
+            set => rALimited = value;
         }
 
         [DataMember]
         [JsonProperty]
         public bool DecLimited {
-            get {
-                return decLimited;
-            }
+            get => decLimited;
 
-            set {
-                decLimited = value;
-            }
+            set => decLimited = value;
         }
 
         [DataMember]
         [JsonProperty]
         public double ErrorCode {
-            get {
-                return errorCode;
-            }
+            get => errorCode;
 
-            set {
-                errorCode = value;
-            }
+            set => errorCode = value;
         }
 
         public IGuideStep Clone() {

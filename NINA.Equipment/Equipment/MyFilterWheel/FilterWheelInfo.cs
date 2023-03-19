@@ -21,16 +21,14 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         private bool isMoving;
 
         public bool IsMoving {
-            get { return isMoving; }
+            get => isMoving;
             set { isMoving = value; RaisePropertyChanged(); }
         }
 
         private FilterInfo _selectedFilter;
 
         public FilterInfo SelectedFilter {
-            get {
-                return _selectedFilter;
-            }
+            get => _selectedFilter;
             set {
                 _selectedFilter = value;
                 RaisePropertyChanged();

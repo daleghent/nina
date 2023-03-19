@@ -42,9 +42,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool Recenter {
-            get {
-                return recenter;
-            }
+            get => recenter;
             set {
                 if (recenter != value) {
                     recenter = value;
@@ -57,9 +55,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double MinutesAfterMeridian {
-            get {
-                return minutesAfterMeridian;
-            }
+            get => minutesAfterMeridian;
             set {
                 if (minutesAfterMeridian != value) {
                     minutesAfterMeridian = value;
@@ -75,9 +71,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double MaxMinutesAfterMeridian {
-            get {
-                return maxMinutesAfterMeridian;
-            }
+            get => maxMinutesAfterMeridian;
             set {
                 if (maxMinutesAfterMeridian != value) {
                     maxMinutesAfterMeridian = value;
@@ -99,9 +93,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool UseSideOfPier {
-            get {
-                return useSideOfPier;
-            }
+            get => useSideOfPier;
             set {
                 if (useSideOfPier != value) {
                     useSideOfPier = value;
@@ -114,9 +106,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int SettleTime {
-            get {
-                return settleTime;
-            }
+            get => settleTime;
             set {
                 if (settleTime != value) {
                     settleTime = value;
@@ -129,9 +119,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double PauseTimeBeforeMeridian {
-            get {
-                return pauseTimeBeforeMeridian;
-            }
+            get => pauseTimeBeforeMeridian;
             set {
                 if (pauseTimeBeforeMeridian != value) {
                     pauseTimeBeforeMeridian = value;
@@ -144,9 +132,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool AutoFocusAfterFlip {
-            get {
-                return autoFocusAfterFlip;
-            }
+            get => autoFocusAfterFlip;
             set {
                 if (autoFocusAfterFlip != value) {
                     autoFocusAfterFlip = value;
@@ -159,9 +145,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool RotateImageAfterFlip {
-            get {
-                return rotateImageAfterFlip;
-            }
+            get => rotateImageAfterFlip;
             set {
                 if (rotateImageAfterFlip != value) {
                     rotateImageAfterFlip = value;
@@ -170,6 +154,6 @@ namespace NINA.Profile {
             }
         }
 
-        
+
     }
 }

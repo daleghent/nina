@@ -23,11 +23,7 @@ namespace NINA.Core.Model {
         private int height;
         private int scaling = 0;
 
-        private int Size {
-            get {
-                return width * height;
-            }
-        }
+        private int Size => width * height;
 
         /// <summary>
         ///

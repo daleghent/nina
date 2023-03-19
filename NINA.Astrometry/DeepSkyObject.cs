@@ -34,11 +34,7 @@ namespace NINA.Astrometry {
             ReferenceDateTimer.Enabled = true;
         }
 
-        public static DeepSkyObjectDailyRefresher Instance {
-            get {
-                return instance;
-            }
-        }
+        public static DeepSkyObjectDailyRefresher Instance => instance;
 
 
         private List<WeakReference<DeepSkyObject>> DeepSkyObjects = new List<WeakReference<DeepSkyObject>>();
@@ -105,15 +101,13 @@ namespace NINA.Astrometry {
 
             DeepSkyObjectDailyRefresher.Instance.Register(this);
         }
-        public DateTime ReferenceDate { get => _referenceDate; set { _referenceDate = value; } }
+        public DateTime ReferenceDate { get => _referenceDate; set => _referenceDate = value; }
 
         public MoonInfo Moon { get; private set; }
 
         private Coordinates _coordinates;
         public override Coordinates Coordinates {
-            get {
-                return _coordinates;
-            }
+            get => _coordinates;
             set {
                 _coordinates = value;
                 if (_coordinates != null) {

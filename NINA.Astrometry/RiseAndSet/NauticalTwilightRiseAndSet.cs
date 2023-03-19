@@ -22,11 +22,7 @@ namespace NINA.Astrometry.RiseAndSet {
         public NauticalTwilightRiseAndSet(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        private double NauticalTwilightDegree {
-            get {
-                return -12;
-            }
-        }
+        private double NauticalTwilightDegree => -12;
 
         protected override double AdjustAltitude(BasicBody body) {
             return body.Altitude - NauticalTwilightDegree;

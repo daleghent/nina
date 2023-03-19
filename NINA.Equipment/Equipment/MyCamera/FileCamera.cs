@@ -70,158 +70,80 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Category { get; } = "N.I.N.A.";
 
-        public bool HasShutter {
-            get {
-                return false;
-            }
-        }
+        public bool HasShutter => false;
 
         public bool Connected { get; private set; }
 
-        public double CCDTemperature {
-            get {
-                return double.NaN;
-            }
-        }
+        public double CCDTemperature => double.NaN;
 
         public double SetCCDTemperature {
-            get {
-                return double.NaN;
-            }
+            get => double.NaN;
 
             set {
             }
         }
 
         public short BinX {
-            get {
-                return -1;
-            }
+            get => -1;
 
             set {
             }
         }
 
         public short BinY {
-            get {
-                return -1;
-            }
+            get => -1;
 
             set {
             }
         }
 
-        public string Description {
-            get {
-                return Loc.Instance["LblFileCameraDescription"];
-            }
-        }
+        public string Description => Loc.Instance["LblFileCameraDescription"];
 
-        public string DriverInfo {
-            get {
-                return string.Empty;
-            }
-        }
+        public string DriverInfo => string.Empty;
 
-        public string DriverVersion {
-            get {
-                return CoreUtil.Version;
-            }
-        }
+        public string DriverVersion => CoreUtil.Version;
 
-        public string SensorName {
-            get {
-                return "";
-            }
-        }
+        public string SensorName => "";
 
-        public SensorType SensorType {
-            get {
-                return SensorType.Monochrome;
-            }
-        }
+        public SensorType SensorType => SensorType.Monochrome;
 
         public short BayerOffsetX => 0;
 
         public short BayerOffsetY => 0;
 
-        public int CameraXSize {
-            get {
-                return -1;
-            }
-        }
+        public int CameraXSize => -1;
 
-        public int CameraYSize {
-            get {
-                return -1;
-            }
-        }
+        public int CameraYSize => -1;
 
-        public double ExposureMin {
-            get {
-                return 0;
-            }
-        }
+        public double ExposureMin => 0;
 
-        public double ExposureMax {
-            get {
-                return double.MaxValue;
-            }
-        }
+        public double ExposureMax => double.MaxValue;
 
         public double ElectronsPerADU => double.NaN;
 
-        public short MaxBinX {
-            get {
-                return 1;
-            }
-        }
+        public short MaxBinX => 1;
 
-        public short MaxBinY {
-            get {
-                return 1;
-            }
-        }
+        public short MaxBinY => 1;
 
-        public double PixelSizeX {
-            get {
-                return profileService.ActiveProfile.CameraSettings.PixelSize;
-            }
-        }
+        public double PixelSizeX => profileService.ActiveProfile.CameraSettings.PixelSize;
 
-        public double PixelSizeY {
-            get {
-                return profileService.ActiveProfile.CameraSettings.PixelSize;
-            }
-        }
+        public double PixelSizeY => profileService.ActiveProfile.CameraSettings.PixelSize;
 
-        public bool CanSetCCDTemperature {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetCCDTemperature => false;
 
         public bool CoolerOn {
-            get {
-                return false;
-            }
+            get => false;
 
             set {
             }
         }
 
-        public double CoolerPower {
-            get {
-                return double.NaN;
-            }
-        }
+        public double CoolerPower => double.NaN;
 
         private CameraStates cameraState;
 
         public CameraStates CameraState {
-            get {
-                return cameraState;
-            }
+            get => cameraState;
             set {
                 cameraState = value;
                 RaisePropertyChanged();
@@ -229,18 +151,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public int Offset {
-            get {
-                return -1;
-            }
+            get => -1;
 
             set {
             }
         }
 
         public int USBLimit {
-            get {
-                return -1;
-            }
+            get => -1;
 
             set {
             }
@@ -252,68 +170,30 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public IList<string> SupportedActions => new List<string>();
 
-        public bool CanSetOffset {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetOffset => false;
 
-        public int OffsetMin {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMin => 0;
 
-        public int OffsetMax {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMax => 0;
 
-        public bool CanSetUSBLimit {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetUSBLimit => false;
 
-        public bool CanGetGain {
-            get {
-                return false;
-            }
-        }
+        public bool CanGetGain => false;
 
-        public bool CanSetGain {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetGain => false;
 
-        public int GainMax {
-            get {
-                return -1;
-            }
-        }
+        public int GainMax => -1;
 
-        public int GainMin {
-            get {
-                return -1;
-            }
-        }
+        public int GainMin => -1;
 
         public int Gain {
-            get {
-                return -1;
-            }
+            get => -1;
 
             set {
             }
         }
 
-        public IList<int> Gains {
-            get {
-                return new List<int>();
-            }
-        }
+        public IList<int> Gains => new List<int>();
 
         private AsyncObservableCollection<BinningMode> binningModes;
 
@@ -328,56 +208,26 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
-        }
+        public bool HasSetupDialog => true;
 
-        public string Id {
-            get {
-                return "209D6981-1E09-438C-A1B6-7452F5C34A59";
-            }
-        }
+        public string Id => "209D6981-1E09-438C-A1B6-7452F5C34A59";
 
-        public string Name {
-            get {
-                return "N.I.N.A. File Camera";
-            }
-        }
+        public string Name => "N.I.N.A. File Camera";
 
-        public double Temperature {
-            get {
-                return double.NaN;
-            }
-        }
+        public double Temperature => double.NaN;
 
         public double TemperatureSetPoint {
-            get {
-                return double.NaN;
-            }
+            get => double.NaN;
 
-            set {
-                throw new NotImplementedException();
-            }
+            set => throw new NotImplementedException();
         }
 
-        public bool CanSetTemperature {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetTemperature => false;
 
-        public bool CanSubSample {
-            get {
-                return false;
-            }
-        }
+        public bool CanSubSample => false;
 
         public bool EnableSubSample {
-            get {
-                return false;
-            }
+            get => false;
 
             set {
             }
@@ -391,52 +241,28 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public int SubSampleHeight { get; set; }
 
-        public bool CanShowLiveView {
-            get {
-                return false;
-            }
-        }
+        public bool CanShowLiveView => false;
 
         public bool LiveViewEnabled {
-            get {
-                return false;
-            }
+            get => false;
             set {
             }
         }
 
-        public bool HasDewHeater {
-            get {
-                return false;
-            }
-        }
+        public bool HasDewHeater => false;
 
         public bool DewHeaterOn {
-            get {
-                return false;
-            }
+            get => false;
 
             set {
             }
         }
 
-        public bool HasBattery {
-            get {
-                return false;
-            }
-        }
+        public bool HasBattery => false;
 
-        public int BatteryLevel {
-            get {
-                return -1;
-            }
-        }
+        public int BatteryLevel => -1;
 
-        public int BitDepth {
-            get {
-                return (int)profileService.ActiveProfile.CameraSettings.BitDepth;
-            }
-        }
+        public int BitDepth => (int)profileService.ActiveProfile.CameraSettings.BitDepth;
 
         public IList<string> ReadoutModes => new List<string> { "Default" };
 
@@ -446,18 +272,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public short ReadoutModeForSnapImages {
-            get {
-                return 0;
-            }
+            get => 0;
 
             set {
             }
         }
 
         public short ReadoutModeForNormalImages {
-            get {
-                return 0;
-            }
+            get => 0;
 
             set {
             }
@@ -586,9 +408,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
         public void SetupDialog() {

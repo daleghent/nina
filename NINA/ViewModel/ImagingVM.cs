@@ -130,9 +130,7 @@ namespace NINA.ViewModel {
         }
 
         public CameraInfo CameraInfo {
-            get {
-                return cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
-            }
+            get => cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
             set {
                 cameraInfo = value;
                 RaisePropertyChanged();
@@ -140,16 +138,14 @@ namespace NINA.ViewModel {
         }
 
         public IImageControlVM ImageControl {
-            get { return _imageControl; }
+            get => _imageControl;
             set { _imageControl = value; RaisePropertyChanged(); }
         }
 
         public IImageStatisticsVM ImgStatisticsVM { get; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Loc.Instance["LblImaging"]; ;

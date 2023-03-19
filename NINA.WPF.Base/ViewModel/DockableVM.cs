@@ -52,11 +52,7 @@ namespace NINA.WPF.Base.ViewModel {
         private bool canClose;
 
 
-        public virtual string ContentId {
-            get {
-                return this.GetType().Name;
-            }
-        }
+        public virtual string ContentId => this.GetType().Name;
 
         [ObservableProperty]
         private string title;

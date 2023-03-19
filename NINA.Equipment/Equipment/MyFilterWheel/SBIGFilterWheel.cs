@@ -219,9 +219,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 }
                 throw new Exception($"No connected SBIG device");
             }
-            set {
-                connectedDevice = value;
-            }
+            set => connectedDevice = value;
         }
 
         public void Disconnect() {

@@ -36,9 +36,7 @@ namespace NINA.Sequencer.Container {
 
         public new string Name {
             get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
-            set {
-                base.Name = value;
-            }
+            set => base.Name = value;
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {

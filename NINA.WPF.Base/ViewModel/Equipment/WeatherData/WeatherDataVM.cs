@@ -307,9 +307,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
         private IWeatherData _weatherdev;
 
         public IWeatherData WeatherData {
-            get {
-                return _weatherdev;
-            }
+            get => _weatherdev;
             private set {
                 _weatherdev = value;
                 RaisePropertyChanged();

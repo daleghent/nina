@@ -145,9 +145,7 @@ namespace NINA.Imaging.ViewModel.Imaging {
         public ICommand CancelAutoFocusCommand { get; private set; }
 
         public AsyncObservableCollection<Chart> ChartList {
-            get {
-                return _chartList;
-            }
+            get => _chartList;
             set {
                 _chartList = value;
                 RaisePropertyChanged();
@@ -155,21 +153,16 @@ namespace NINA.Imaging.ViewModel.Imaging {
         }
 
         public bool ChartListSelectable {
-            get {
-                return _chartListSelectable;
-            }
+            get => _chartListSelectable;
             set {
                 _chartListSelectable = value;
                 RaisePropertyChanged();
             }
         }
 
-        public new string ContentId {
-            get {
+        public new string ContentId =>
                 //Backwards compatibility for avalondock layouts prior to 1.11
-                return "AutoFocusVM";
-            }
-        }
+                "AutoFocusVM";
 
         public Chart SelectedChart {
             get => _selectedChart;
@@ -184,9 +177,7 @@ namespace NINA.Imaging.ViewModel.Imaging {
         public IAsyncCommand StartAutoFocusCommand { get; private set; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;

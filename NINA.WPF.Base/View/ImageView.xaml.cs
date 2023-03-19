@@ -32,9 +32,7 @@ namespace NINA.WPF.Base.View {
 
         private double fittingScale = 1;
 
-        public object PART_ScrollViewerBinding {
-            get => PART_ScrollViewer;
-        }
+        public object PART_ScrollViewerBinding => PART_ScrollViewer;
 
         public ImageView() {
             InitializeComponent();
@@ -57,77 +55,77 @@ namespace NINA.WPF.Base.View {
             DependencyProperty.Register(nameof(RightMouseButtonDownCommand), typeof(ICommand), typeof(ImageView), new PropertyMetadata(null));
 
         public ICommand RightMouseButtonDownCommand {
-            get { return (ICommand)GetValue(RightMouseButtonDownCommandProperty); }
-            set { SetValue(RightMouseButtonDownCommandProperty, value); }
+            get => (ICommand)GetValue(RightMouseButtonDownCommandProperty);
+            set => SetValue(RightMouseButtonDownCommandProperty, value);
         }
 
         public static readonly DependencyProperty RightMouseButtonUpCommandProperty =
             DependencyProperty.Register(nameof(RightMouseButtonUpCommand), typeof(ICommand), typeof(ImageView), new PropertyMetadata(null));
 
         public ICommand RightMouseButtonUpCommand {
-            get { return (ICommand)GetValue(RightMouseButtonUpCommandProperty); }
-            set { SetValue(RightMouseButtonUpCommandProperty, value); }
+            get => (ICommand)GetValue(RightMouseButtonUpCommandProperty);
+            set => SetValue(RightMouseButtonUpCommandProperty, value);
         }
 
         public static readonly DependencyProperty RightMouseButtonMoveCommandProperty =
             DependencyProperty.Register(nameof(RightMouseButtonMoveCommand), typeof(ICommand), typeof(ImageView), new PropertyMetadata(null));
 
         public ICommand RightMouseButtonMoveCommand {
-            get { return (ICommand)GetValue(RightMouseButtonMoveCommandProperty); }
-            set { SetValue(RightMouseButtonMoveCommandProperty, value); }
+            get => (ICommand)GetValue(RightMouseButtonMoveCommandProperty);
+            set => SetValue(RightMouseButtonMoveCommandProperty, value);
         }
 
         public static readonly DependencyProperty ScrollEnabledProperty =
             DependencyProperty.Register(nameof(ScrollEnabled), typeof(bool), typeof(ImageView), new PropertyMetadata(true));
 
         public bool ScrollEnabled {
-            get { return (bool)GetValue(ScrollEnabledProperty); }
-            set { SetValue(ScrollEnabledProperty, value); }
+            get => (bool)GetValue(ScrollEnabledProperty);
+            set => SetValue(ScrollEnabledProperty, value);
         }
 
         public static readonly DependencyProperty ImageAreaContentProperty =
             DependencyProperty.Register(nameof(ImageAreaContent), typeof(object), typeof(ImageView));
 
         public object ImageAreaContent {
-            get { return (object)GetValue(ImageAreaContentProperty); }
-            set { SetValue(ImageAreaContentProperty, value); }
+            get => (object)GetValue(ImageAreaContentProperty);
+            set => SetValue(ImageAreaContentProperty, value);
         }
 
         public static readonly DependencyProperty ButtonHeaderContentProperty =
             DependencyProperty.Register(nameof(ButtonHeaderContent), typeof(object), typeof(ImageView));
 
         public object ButtonHeaderContent {
-            get { return (object)GetValue(ButtonHeaderContentProperty); }
-            set { SetValue(ButtonHeaderContentProperty, value); }
+            get => (object)GetValue(ButtonHeaderContentProperty);
+            set => SetValue(ButtonHeaderContentProperty, value);
         }
 
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register(nameof(Image), typeof(BitmapSource), typeof(ImageView));
 
         public BitmapSource Image {
-            get { return (BitmapSource)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
+            get => (BitmapSource)GetValue(ImageProperty);
+            set => SetValue(ImageProperty, value);
         }
 
         public double ImageRotation {
-            get { return (double)GetValue(ImageRotationProperty); }
-            set { SetValue(ImageRotationProperty, value); }
+            get => (double)GetValue(ImageRotationProperty);
+            set => SetValue(ImageRotationProperty, value);
         }
 
         public static readonly DependencyProperty ImageRotationProperty =
             DependencyProperty.Register(nameof(ImageRotation), typeof(double), typeof(ImageView), new PropertyMetadata(0d));
 
         public double RectangleOpacity {
-            get { return (double)GetValue(OpacityProperty); }
-            set { SetValue(OpacityProperty, value); }
+            get => (double)GetValue(OpacityProperty);
+            set => SetValue(OpacityProperty, value);
         }
 
         public static readonly DependencyProperty RectangleOpacityProperty =
             DependencyProperty.Register(nameof(RectangleOpacity), typeof(double), typeof(ImageView));
 
         public int RectangleFontSize {
-            get { return (int)GetValue(OpacityProperty); }
-            set { SetValue(OpacityProperty, value); }
+            get => (int)GetValue(OpacityProperty);
+            set => SetValue(OpacityProperty, value);
         }
 
         public static readonly DependencyProperty RectangleFontSizeProperty =

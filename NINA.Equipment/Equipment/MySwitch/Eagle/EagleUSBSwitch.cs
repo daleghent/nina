@@ -51,17 +51,11 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
             }
         }
 
-        public override double Maximum {
-            get => 1d;
-        }
+        public override double Maximum => 1d;
 
-        public override double Minimum {
-            get => 0d;
-        }
+        public override double Minimum => 0d;
 
-        public override double StepSize {
-            get => 1d;
-        }
+        public override double StepSize => 1d;
 
         public override string Description { get; }
 

@@ -31,7 +31,7 @@ namespace NINA.Test.Focuser {
             public TestableOvershootBacklashCompensationDecorator(IProfileService profileService, IFocuser focuser) : base(profileService, focuser) {
             }
 
-            public OvershootDirection LastDirection { get => base.lastDirection; }
+            public OvershootDirection LastDirection => base.lastDirection;
         }
 
         [SetUp]

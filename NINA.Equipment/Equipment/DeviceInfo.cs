@@ -21,23 +21,23 @@ namespace NINA.Equipment.Equipment {
 
     public class DeviceInfo : BaseINPC {
         private bool connected;
-        public bool Connected { 
-            get { return connected; } 
+        public bool Connected {
+            get => connected;
             set {
                 if (connected != value) {
                     connected = value;
                     RaisePropertyChanged();
                 }
-            }            
+            }
         }
 
         private string name;
-        public string Name { get { return name; } set { name = value; RaisePropertyChanged(); } }
+        public string Name { get => name; set { name = value; RaisePropertyChanged(); } }
 
         private string description;
 
         public string Description {
-            get { return description; }
+            get => description;
             set {
                 if (description != value) {
                     description = value;
@@ -49,7 +49,7 @@ namespace NINA.Equipment.Equipment {
         private string driverInfo;
 
         public string DriverInfo {
-            get { return driverInfo; }
+            get => driverInfo;
             set {
                 if (driverInfo != value) {
                     driverInfo = value;
@@ -61,7 +61,7 @@ namespace NINA.Equipment.Equipment {
         private string driverVersion;
 
         public string DriverVersion {
-            get { return driverVersion; }
+            get => driverVersion;
             set {
                 if (driverVersion != value) {
                     driverVersion = value;

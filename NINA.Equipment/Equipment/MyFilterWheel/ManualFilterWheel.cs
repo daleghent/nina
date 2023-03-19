@@ -44,57 +44,29 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public string Category { get; } = "N.I.N.A.";
 
         public bool Connected {
-            get {
-                return connected;
-            }
+            get => connected;
             set {
                 connected = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string Description {
-            get {
-                return Loc.Instance["LblManualFilterWheelDescription"];
-            }
-        }
+        public string Description => Loc.Instance["LblManualFilterWheelDescription"];
 
-        public string DriverInfo {
-            get {
-                return "n.A.";
-            }
-        }
+        public string DriverInfo => "n.A.";
 
-        public string DriverVersion {
-            get {
-                return "1.0";
-            }
-        }
+        public string DriverVersion => "1.0";
 
-        public short InterfaceVersion {
-            get {
-                return 1;
-            }
-        }
+        public short InterfaceVersion => 1;
 
-        public int[] FocusOffsets {
-            get {
-                return this.Filters.Select((x) => x.FocusOffset).ToArray();
-            }
-        }
+        public int[] FocusOffsets => this.Filters.Select((x) => x.FocusOffset).ToArray();
 
-        public string[] Names {
-            get {
-                return this.Filters.Select((x) => x.Name).ToArray();
-            }
-        }
+        public string[] Names => this.Filters.Select((x) => x.Name).ToArray();
 
         private short position;
 
         public short Position {
-            get {
-                return position;
-            }
+            get => position;
 
             set {
                 MyMessageBox.Show(
@@ -107,31 +79,15 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
         }
 
-        public AsyncObservableCollection<FilterInfo> Filters {
-            get {
-                return this.profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-            }
-        }
+        public AsyncObservableCollection<FilterInfo> Filters => this.profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
 
         public IList<string> SupportedActions => new List<string>();
 
-        public bool HasSetupDialog {
-            get {
-                return false;
-            }
-        }
+        public bool HasSetupDialog => false;
 
-        public string Id {
-            get {
-                return "Manual Filter Wheel";
-            }
-        }
+        public string Id => "Manual Filter Wheel";
 
-        public string Name {
-            get {
-                return Loc.Instance["LblManualFilterWheel"];
-            }
-        }
+        public string Name => Loc.Instance["LblManualFilterWheel"];
 
         public Task<bool> Connect(CancellationToken token) {
             Connected = true;

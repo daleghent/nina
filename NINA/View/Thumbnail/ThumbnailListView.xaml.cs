@@ -29,11 +29,7 @@ namespace NINA.View {
 
         private bool _autoScroll = true;
 
-        public ScrollViewer ScrollViewer {
-            get {
-                return (ScrollViewer)ListBox.GetDescendantByType(typeof(ScrollViewer));
-            }
-        }
+        public ScrollViewer ScrollViewer => (ScrollViewer)ListBox.GetDescendantByType(typeof(ScrollViewer));
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e) {
             // User scroll event : set or unset auto-scroll mode

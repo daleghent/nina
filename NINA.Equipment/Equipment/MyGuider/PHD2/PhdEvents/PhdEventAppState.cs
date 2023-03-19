@@ -22,9 +22,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
         [JsonProperty]
         public string State {
-            get {
-                return state;
-            }
+            get => state;
 
             set {
                 state = value;

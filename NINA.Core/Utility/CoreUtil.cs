@@ -39,11 +39,7 @@ namespace NINA.Core.Utility {
             }
         }
 
-        public static bool IsReleaseBuild {
-            get {
-                return new Version(Version).Revision >= 9000;
-            }
-        }
+        public static bool IsReleaseBuild => new Version(Version).Revision >= 9000;
 
         public static string DocumentationPage {
             get {
@@ -65,17 +61,9 @@ namespace NINA.Core.Utility {
             }
         }
 
-        public static string Title {
-            get {
-                return "N.I.N.A. - Nighttime Imaging 'N' Astronomy";
-            }
-        }
+        public static string Title => "N.I.N.A. - Nighttime Imaging 'N' Astronomy";
 
-        public static string UserAgent {
-            get {
-                return $"N.I.N.A./{Version} ({Environment.OSVersion}; {(Environment.Is64BitOperatingSystem ? "Win64" : "Win32")}; {(Environment.Is64BitProcess ? "x64" : "x86")})";
-            }
-        }
+        public static string UserAgent => $"N.I.N.A./{Version} ({Environment.OSVersion}; {(Environment.Is64BitOperatingSystem ? "Win64" : "Win32")}; {(Environment.Is64BitProcess ? "x64" : "x86")})";
 
         public static string GetUniqueFilePath(string fullPath) {
             int count = 1;

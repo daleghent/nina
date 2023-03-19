@@ -108,18 +108,14 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public double PixelScale {
-            get {
-                return AstroUtil.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
-            }
+            get => AstroUtil.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
 
             set {
             }
         }
 
         public int DitherSettlingTime {
-            get {
-                return profileService.ActiveProfile.GuiderSettings.SettleTime;
-            }
+            get => profileService.ActiveProfile.GuiderSettings.SettleTime;
 
             set {
                 profileService.ActiveProfile.GuiderSettings.SettleTime = value;
@@ -456,9 +452,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             }
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
         public bool CanSetShiftRate => false;
         public bool ShiftEnabled => false;

@@ -49,22 +49,14 @@ namespace NINA.Sequencer.Behaviors {
         }
 
         public string AllowedDragDropTypesString {
-            get {
-                return (string)GetValue(AllowedDragDropTypesProperty);
-            }
-            set {
-                SetValue(AllowedDragDropTypesProperty, value);
-            }
+            get => (string)GetValue(AllowedDragDropTypesProperty);
+            set => SetValue(AllowedDragDropTypesProperty, value);
         }
 
         public string OnDropCommand {
-            get {
-                return (string)GetValue(OnDropCommandProperty);
-            }
+            get => (string)GetValue(OnDropCommandProperty);
 
-            set {
-                SetValue(OnDropCommandProperty, value);
-            }
+            set => SetValue(OnDropCommandProperty, value);
         }
 
         protected override void OnAttached() {

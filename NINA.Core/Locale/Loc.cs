@@ -42,7 +42,7 @@ namespace NINA.Core.Locale {
             }
         }
 
-        public static Loc Instance { get { return lazy.Value; } }
+        public static Loc Instance => lazy.Value;
 
         public string this[string key] {
             get {

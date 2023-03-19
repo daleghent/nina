@@ -40,228 +40,152 @@ namespace NINA.View {
             DependencyProperty.Register(nameof(MyCommand), typeof(ICommand), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public ICommand MyCommand {
-            get {
-                return (ICommand)GetValue(MyCommandProperty);
-            }
-            set {
-                SetValue(MyCommandProperty, value);
-            }
+            get => (ICommand)GetValue(MyCommandProperty);
+            set => SetValue(MyCommandProperty, value);
         }
 
         public static readonly DependencyProperty MyCancelCommandProperty =
            DependencyProperty.Register(nameof(MyCancelCommand), typeof(ICommand), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public ICommand MyCancelCommand {
-            get {
-                return (ICommand)GetValue(MyCancelCommandProperty);
-            }
-            set {
-                SetValue(MyCancelCommandProperty, value);
-            }
+            get => (ICommand)GetValue(MyCancelCommandProperty);
+            set => SetValue(MyCancelCommandProperty, value);
         }
 
         public static readonly DependencyProperty MyOrientationProperty =
           DependencyProperty.Register(nameof(MyOrientation), typeof(Orientation), typeof(CameraControlView), new UIPropertyMetadata(Orientation.Horizontal));
 
         public Orientation MyOrientation {
-            get {
-                return (Orientation)GetValue(MyOrientationProperty);
-            }
-            set {
-                SetValue(MyOrientationProperty, value);
-            }
+            get => (Orientation)GetValue(MyOrientationProperty);
+            set => SetValue(MyOrientationProperty, value);
         }
 
         public static readonly DependencyProperty MyButtonImageProperty =
            DependencyProperty.Register(nameof(MyButtonImage), typeof(Geometry), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public Geometry MyButtonImage {
-            get {
-                return (Geometry)GetValue(MyButtonImageProperty);
-            }
-            set {
-                SetValue(MyButtonImageProperty, value);
-            }
+            get => (Geometry)GetValue(MyButtonImageProperty);
+            set => SetValue(MyButtonImageProperty, value);
         }
 
         public static readonly DependencyProperty MyCancelButtonImageProperty =
            DependencyProperty.Register(nameof(MyCancelButtonImage), typeof(Geometry), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public Geometry MyCancelButtonImage {
-            get {
-                return (Geometry)GetValue(MyCancelButtonImageProperty);
-            }
-            set {
-                SetValue(MyCancelButtonImageProperty, value);
-            }
+            get => (Geometry)GetValue(MyCancelButtonImageProperty);
+            set => SetValue(MyCancelButtonImageProperty, value);
         }
 
         public static readonly DependencyProperty MyButtonTextProperty =
             DependencyProperty.Register(nameof(MyButtonText), typeof(string), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public string MyButtonText {
-            get {
-                return (string)GetValue(MyButtonTextProperty);
-            }
-            set {
-                SetValue(MyButtonTextProperty, value);
-            }
+            get => (string)GetValue(MyButtonTextProperty);
+            set => SetValue(MyButtonTextProperty, value);
         }
 
         public static readonly DependencyProperty MyExposureDurationProperty =
             DependencyProperty.Register(nameof(MyExposureDuration), typeof(double), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public double MyExposureDuration {
-            get {
-                return (double)GetValue(MyExposureDurationProperty);
-            }
-            set {
-                SetValue(MyExposureDurationProperty, value);
-            }
+            get => (double)GetValue(MyExposureDurationProperty);
+            set => SetValue(MyExposureDurationProperty, value);
         }
 
         public static readonly DependencyProperty MyFiltersProperty =
             DependencyProperty.Register(nameof(MyFilters), typeof(ObservableCollection<FilterInfo>), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public IEnumerable<FilterInfo> MyFilters {
-            get {
-                return (IEnumerable<FilterInfo>)GetValue(MyFiltersProperty);
-            }
-            set {
-                SetValue(MyFiltersProperty, value);
-            }
+            get => (IEnumerable<FilterInfo>)GetValue(MyFiltersProperty);
+            set => SetValue(MyFiltersProperty, value);
         }
 
         public static readonly DependencyProperty MySelectedFilterProperty =
             DependencyProperty.Register(nameof(MySelectedFilter), typeof(FilterInfo), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public FilterInfo MySelectedFilter {
-            get {
-                return (FilterInfo)GetValue(MySelectedFilterProperty);
-            }
-            set {
-                SetValue(MySelectedFilterProperty, value);
-            }
+            get => (FilterInfo)GetValue(MySelectedFilterProperty);
+            set => SetValue(MySelectedFilterProperty, value);
         }
 
         public static readonly DependencyProperty MyBinningModesProperty =
             DependencyProperty.Register(nameof(MyBinningModes), typeof(AsyncObservableCollection<BinningMode>), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public AsyncObservableCollection<BinningMode> MyBinningModes {
-            get {
-                return (AsyncObservableCollection<BinningMode>)GetValue(MyBinningModesProperty);
-            }
-            set {
-                SetValue(MyBinningModesProperty, value);
-            }
+            get => (AsyncObservableCollection<BinningMode>)GetValue(MyBinningModesProperty);
+            set => SetValue(MyBinningModesProperty, value);
         }
 
         public static readonly DependencyProperty MySelectedBinningModeProperty =
             DependencyProperty.Register(nameof(MySelectedBinningMode), typeof(BinningMode), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public BinningMode MySelectedBinningMode {
-            get {
-                return (BinningMode)GetValue(MySelectedBinningModeProperty);
-            }
-            set {
-                SetValue(MySelectedBinningModeProperty, value);
-            }
+            get => (BinningMode)GetValue(MySelectedBinningModeProperty);
+            set => SetValue(MySelectedBinningModeProperty, value);
         }
 
         public static readonly DependencyProperty MyLoopProperty =
            DependencyProperty.Register(nameof(MyLoop), typeof(bool), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public bool MyLoop {
-            get {
-                return (bool)GetValue(MyLoopProperty);
-            }
-            set {
-                SetValue(MyLoopProperty, value);
-            }
+            get => (bool)GetValue(MyLoopProperty);
+            set => SetValue(MyLoopProperty, value);
         }
 
         public static readonly DependencyProperty MyGainsProperty =
             DependencyProperty.Register(nameof(MyGains), typeof(ICollection), typeof(CameraControlView), new UIPropertyMetadata(null));
 
         public ICollection MyGains {
-            get {
-                return (ICollection)GetValue(MyGainsProperty);
-            }
-            set {
-                SetValue(MyGainsProperty, value);
-            }
+            get => (ICollection)GetValue(MyGainsProperty);
+            set => SetValue(MyGainsProperty, value);
         }
 
         public static readonly DependencyProperty MyCanGetGainProperty =
             DependencyProperty.Register(nameof(MyCanGetGain), typeof(bool), typeof(CameraControlView), new UIPropertyMetadata(false));
 
         public bool MyCanGetGain {
-            get {
-                return (bool)GetValue(MyCanGetGainProperty);
-            }
-            set {
-                SetValue(MyCanGetGainProperty, value);
-            }
+            get => (bool)GetValue(MyCanGetGainProperty);
+            set => SetValue(MyCanGetGainProperty, value);
         }
 
         public static readonly DependencyProperty MyCanSetGainProperty =
             DependencyProperty.Register(nameof(MyCanSetGain), typeof(bool), typeof(CameraControlView), new UIPropertyMetadata(false));
 
         public bool MyCanSetGain {
-            get {
-                return (bool)GetValue(MyCanSetGainProperty);
-            }
-            set {
-                SetValue(MyCanSetGainProperty, value);
-            }
+            get => (bool)GetValue(MyCanSetGainProperty);
+            set => SetValue(MyCanSetGainProperty, value);
         }
 
         public static readonly DependencyProperty MyMinGainProperty =
             DependencyProperty.Register(nameof(MyMinGain), typeof(short), typeof(CameraControlView), new UIPropertyMetadata((short)-1));
 
         public short MyMinGain {
-            get {
-                return (short)GetValue(MyMinGainProperty);
-            }
-            set {
-                SetValue(MyMinGainProperty, value);
-            }
+            get => (short)GetValue(MyMinGainProperty);
+            set => SetValue(MyMinGainProperty, value);
         }
 
         public static readonly DependencyProperty MyMaxGainProperty =
             DependencyProperty.Register(nameof(MyMaxGain), typeof(short), typeof(CameraControlView), new UIPropertyMetadata((short)-1));
 
         public short MyMaxGain {
-            get {
-                return (short)GetValue(MyMaxGainProperty);
-            }
-            set {
-                SetValue(MyMaxGainProperty, value);
-            }
+            get => (short)GetValue(MyMaxGainProperty);
+            set => SetValue(MyMaxGainProperty, value);
         }
 
         public static readonly DependencyProperty MySelectedGainProperty =
             DependencyProperty.Register(nameof(MySelectedGain), typeof(int), typeof(CameraControlView), new UIPropertyMetadata((int)-1));
 
         public int MySelectedGain {
-            get {
-                return (int)GetValue(MySelectedGainProperty);
-            }
-            set {
-                SetValue(MySelectedGainProperty, value);
-            }
+            get => (int)GetValue(MySelectedGainProperty);
+            set => SetValue(MySelectedGainProperty, value);
         }
 
         public static readonly DependencyProperty MyDefaultGainProperty =
     DependencyProperty.Register(nameof(MyDefaultGain), typeof(int), typeof(CameraControlView), new UIPropertyMetadata((int)-1));
 
         public int MyDefaultGain {
-            get {
-                return (int)GetValue(MyDefaultGainProperty);
-            }
-            set {
-                SetValue(MyDefaultGainProperty, value);
-            }
+            get => (int)GetValue(MyDefaultGainProperty);
+            set => SetValue(MyDefaultGainProperty, value);
         }
     }
 }

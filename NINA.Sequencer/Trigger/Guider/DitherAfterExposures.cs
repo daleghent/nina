@@ -89,9 +89,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             }
         }
 
-        public int ProgressExposures {
-            get => AfterExposures > 0 ? history.ImageHistory.Count % AfterExposures : 0;
-        }
+        public int ProgressExposures => AfterExposures > 0 ? history.ImageHistory.Count % AfterExposures : 0;
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (AfterExposures > 0) {

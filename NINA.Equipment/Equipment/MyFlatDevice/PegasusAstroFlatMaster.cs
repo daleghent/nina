@@ -201,9 +201,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOpenClose => false;
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
         public IList<string> SupportedActions => new List<string>();
 

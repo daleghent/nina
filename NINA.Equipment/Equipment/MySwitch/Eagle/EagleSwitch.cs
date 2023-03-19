@@ -36,9 +36,7 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
             set { }
         }
 
-        public virtual string Description {
-            get => string.Empty;
-        }
+        public virtual string Description => string.Empty;
 
         public double Value { get; private set; }
 

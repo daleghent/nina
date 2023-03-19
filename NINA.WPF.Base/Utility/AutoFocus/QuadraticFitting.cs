@@ -31,9 +31,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         private Func<double, double> _fitting;
 
         public Func<double, double> Fitting {
-            get {
-                return _fitting;
-            }
+            get => _fitting;
             set {
                 _fitting = value;
                 RaisePropertyChanged();
@@ -43,9 +41,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         private DataPoint _minimum;
 
         public DataPoint Minimum {
-            get {
-                return _minimum;
-            }
+            get => _minimum;
             set {
                 _minimum = value;
                 RaisePropertyChanged();

@@ -115,16 +115,14 @@ namespace GalaSoft.MvvmLight.Helpers {
         /// <summary>
         /// Gets a value indicating whether the WeakAction is static or not.
         /// </summary>
-        public bool IsStatic {
-            get {
+        public bool IsStatic =>
 #if SILVERLIGHT
                 return (_action != null && _action.Target == null)
                     || _staticAction != null;
 #else
-                return _staticAction != null;
+                _staticAction != null;
 #endif
-            }
-        }
+
 
         /// <summary>
         /// Initializes an empty instance of the <see cref="WeakAction" /> class.

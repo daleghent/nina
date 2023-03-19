@@ -27,12 +27,8 @@ namespace NINA.CustomControlLibrary {
            DependencyProperty.Register(nameof(HintText), typeof(string), typeof(HintTextBox), new UIPropertyMetadata(string.Empty));
 
         public string HintText {
-            get {
-                return (string)GetValue(HintTextProperty);
-            }
-            set {
-                SetValue(HintTextProperty, value);
-            }
+            get => (string)GetValue(HintTextProperty);
+            set => SetValue(HintTextProperty, value);
         }
     }
 }

@@ -29,17 +29,9 @@ namespace NINA.Core.Utility {
 
         private Timer _timer;
 
-        public DateTime Now {
-            get {
-                return DateTime.Now;
-            }
-        }
+        public DateTime Now => DateTime.Now;
 
-        public double OxyNow {
-            get {
-                return DateTimeAxis.ToDouble(DateTime.Now);
-            }
-        }
+        public double OxyNow => DateTimeAxis.ToDouble(DateTime.Now);
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) {
             RaisePropertyChanged(nameof(Now));

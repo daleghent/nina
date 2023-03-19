@@ -75,9 +75,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> _limitedImageHistoryStack;
 
         public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistory {
-            get {
-                return _limitedImageHistoryStack;
-            }
+            get => _limitedImageHistoryStack;
             set {
                 _limitedImageHistoryStack = value;
                 RaisePropertyChanged();
@@ -87,7 +85,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> _observableImageHistoryView;
 
         public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistoryView {
-            get { return this._observableImageHistoryView; }
+            get => this._observableImageHistoryView;
             private set {
                 if (value == this._observableImageHistoryView) {
                     return;
@@ -129,9 +127,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> autoFocusPoints;
 
         public AsyncObservableCollection<ImageHistoryPoint> AutoFocusPoints {
-            get {
-                return autoFocusPoints;
-            }
+            get => autoFocusPoints;
             set {
                 autoFocusPoints = value;
                 RaisePropertyChanged();
@@ -141,9 +137,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> autoFocusPointsView;
 
         public AsyncObservableCollection<ImageHistoryPoint> AutoFocusPointsView {
-            get {
-                return autoFocusPointsView;
-            }
+            get => autoFocusPointsView;
             set {
                 autoFocusPointsView = value;
                 RaisePropertyChanged();
@@ -153,9 +147,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<string> _filterList;
 
         public AsyncObservableCollection<string> FilterList {
-            get {
-                return _filterList;
-            }
+            get => _filterList;
             set {
                 _filterList = value;
                 RaisePropertyChanged();
@@ -165,9 +157,7 @@ namespace NINA.ViewModel.ImageHistory {
         private string _selectedFilter;
 
         public string SelectedFilter {
-            get {
-                return _selectedFilter;
-            }
+            get => _selectedFilter;
             set {
                 _selectedFilter = value;
                 FilterImageHistoryList();
@@ -178,9 +168,7 @@ namespace NINA.ViewModel.ImageHistory {
         private ImageHistoryEnum _imageHistoryLeftSelected;
 
         public ImageHistoryEnum ImageHistoryLeftSelected {
-            get {
-                return _imageHistoryLeftSelected;
-            }
+            get => _imageHistoryLeftSelected;
             set {
                 _imageHistoryLeftSelected = value;
                 ImageHistoryLeftSelectedKey = value.ToString();
@@ -191,9 +179,7 @@ namespace NINA.ViewModel.ImageHistory {
         private ImageHistoryEnum _imageHistoryRightSelected;
 
         public ImageHistoryEnum ImageHistoryRightSelected {
-            get {
-                return _imageHistoryRightSelected;
-            }
+            get => _imageHistoryRightSelected;
             set {
                 _imageHistoryRightSelected = value;
                 ImageHistoryRightSelectedKey = value.ToString();
@@ -204,9 +190,7 @@ namespace NINA.ViewModel.ImageHistory {
         private string _imageHistoryLeftSelectedKey;
 
         public string ImageHistoryLeftSelectedKey {
-            get {
-                return _imageHistoryLeftSelectedKey;
-            }
+            get => _imageHistoryLeftSelectedKey;
             set {
                 _imageHistoryLeftSelectedKey = value;
                 RaisePropertyChanged();
@@ -216,9 +200,7 @@ namespace NINA.ViewModel.ImageHistory {
         private string _imageHistoryRightSelectedKey;
 
         public string ImageHistoryRightSelectedKey {
-            get {
-                return _imageHistoryRightSelectedKey;
-            }
+            get => _imageHistoryRightSelectedKey;
             set {
                 _imageHistoryRightSelectedKey = value;
                 RaisePropertyChanged();
@@ -241,7 +223,7 @@ namespace NINA.ViewModel.ImageHistory {
         private object lockObj = new object();
 
         private static int _exposureId = 0;
-        private int ExposureId { get { return Interlocked.Increment(ref _exposureId); } }
+        private int ExposureId => Interlocked.Increment(ref _exposureId);
         public int GetNextImageId() {
             return ExposureId;
         }

@@ -26,9 +26,7 @@ namespace NINA.Astrometry {
         private string id;
 
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 id = value;
                 RaisePropertyChanged();
@@ -38,9 +36,7 @@ namespace NINA.Astrometry {
         private string _name;
 
         public string Name {
-            get {
-                return _name;
-            }
+            get => _name;
             set {
                 _name = value;
                 RaisePropertyChanged();
@@ -58,9 +54,7 @@ namespace NINA.Astrometry {
         private string _dSOType;
 
         public string DSOType {
-            get {
-                return _dSOType;
-            }
+            get => _dSOType;
             set {
                 _dSOType = value;
                 RaisePropertyChanged();
@@ -70,9 +64,7 @@ namespace NINA.Astrometry {
         private string _constellation;
 
         public string Constellation {
-            get {
-                return _constellation;
-            }
+            get => _constellation;
             set {
                 _constellation = value;
                 RaisePropertyChanged();
@@ -82,9 +74,7 @@ namespace NINA.Astrometry {
         private double? _magnitude;
 
         public double? Magnitude {
-            get {
-                return _magnitude;
-            }
+            get => _magnitude;
             set {
                 _magnitude = value;
                 RaisePropertyChanged();
@@ -94,9 +84,7 @@ namespace NINA.Astrometry {
         private Angle _positionAngle;
 
         public Angle PositionAngle {
-            get {
-                return _positionAngle;
-            }
+            get => _positionAngle;
             set {
                 _positionAngle = value;
                 RaisePropertyChanged();
@@ -106,9 +94,7 @@ namespace NINA.Astrometry {
         private double? _sizeMin;
 
         public double? SizeMin {
-            get {
-                return _sizeMin;
-            }
+            get => _sizeMin;
             set {
                 _sizeMin = value;
                 RaisePropertyChanged();
@@ -118,9 +104,7 @@ namespace NINA.Astrometry {
         private double? _size;
 
         public double? Size {
-            get {
-                return _size;
-            }
+            get => _size;
             set {
                 _size = value;
                 RaisePropertyChanged();
@@ -130,9 +114,7 @@ namespace NINA.Astrometry {
         private double? _surfaceBrightness;
 
         public double? SurfaceBrightness {
-            get {
-                return _surfaceBrightness;
-            }
+            get => _surfaceBrightness;
             set {
                 _surfaceBrightness = value;
                 RaisePropertyChanged();
@@ -141,9 +123,7 @@ namespace NINA.Astrometry {
 
         [Obsolete("Use RotationPositionAngle instead")]
         public double Rotation {
-            get {
-                return AstroUtil.EuclidianModulus(360 - RotationPositionAngle, 360);
-            }
+            get => AstroUtil.EuclidianModulus(360 - RotationPositionAngle, 360);
             set {
                 RotationPositionAngle = AstroUtil.EuclidianModulus(360 - value, 360);
                 RaisePropertyChanged();
@@ -154,9 +134,7 @@ namespace NINA.Astrometry {
         private double rotationRotationPositionAngle;
 
         public double RotationPositionAngle {
-            get {
-                return rotationRotationPositionAngle;
-            }
+            get => rotationRotationPositionAngle;
             set {
                 rotationRotationPositionAngle = value;
                 RaisePropertyChanged();
@@ -167,9 +145,7 @@ namespace NINA.Astrometry {
         private DataPoint _maxAltitude;
 
         public DataPoint MaxAltitude {
-            get {
-                return _maxAltitude;
-            }
+            get => _maxAltitude;
             protected set {
                 _maxAltitude = value;
                 RaisePropertyChanged();
@@ -243,9 +219,7 @@ namespace NINA.Astrometry {
         private bool _doesTransitSouth;
 
         public bool DoesTransitSouth {
-            get {
-                return _doesTransitSouth;
-            }
+            get => _doesTransitSouth;
             protected set {
                 _doesTransitSouth = value;
                 RaisePropertyChanged();

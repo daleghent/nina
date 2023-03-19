@@ -27,9 +27,7 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
             getRoute = "getsupply";
         }
 
-        public override string Name {
-            get => "Power";
-        }
+        public override string Name => "Power";
 
         protected override async Task<double> GetValue() {
             var url = baseUrl + getRoute;

@@ -110,14 +110,10 @@ namespace NINA.ViewModel.Imaging {
         /// <summary>
         /// Backwards compatible ContentId due to refactoring
         /// </summary>
-        public new string ContentId {
-            get => typeof(ImagingVM).Name;
-        }
+        public new string ContentId => typeof(ImagingVM).Name;
 
         public CameraInfo CameraInfo {
-            get {
-                return cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
-            }
+            get => cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
             set {
                 cameraInfo = value;
                 RaisePropertyChanged();
@@ -125,9 +121,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public FilterWheelInfo FilterWheelInfo {
-            get {
-                return filterWheelInfo ?? DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
-            }
+            get => filterWheelInfo ?? DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
             set {
                 filterWheelInfo = value;
                 RaisePropertyChanged();
@@ -147,9 +141,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
+            get => _liveViewEnabled;
             set {
                 _liveViewEnabled = value;
                 RaisePropertyChanged();
@@ -157,9 +149,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool Loop {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.Loop;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.Loop;
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.Loop = value;
                 RaisePropertyChanged();
@@ -182,9 +172,7 @@ namespace NINA.ViewModel.Imaging {
         public IAsyncCommand SnapCommand { get; private set; }
 
         public double SnapExposureDuration {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.ExposureDuration;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.ExposureDuration;
 
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.ExposureDuration = value;
@@ -195,9 +183,7 @@ namespace NINA.ViewModel.Imaging {
         private FilterInfo snapFilter;
 
         public FilterInfo SnapFilter {
-            get {
-                return snapFilter;
-            }
+            get => snapFilter;
             set {
                 snapFilter = value;
                 profileService.ActiveProfile.SnapShotControlSettings.Filter = value;
@@ -206,9 +192,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public int SnapGain {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.Gain;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.Gain;
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.Gain = value;
                 RaisePropertyChanged();
@@ -216,9 +200,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool SnapSave {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.Save;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.Save;
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.Save = value;
                 RaisePropertyChanged();
@@ -229,9 +211,7 @@ namespace NINA.ViewModel.Imaging {
         private string snapTargetName = "Snapshot";
 
         public bool SnapSubSample {
-            get {
-                return _snapSubSample;
-            }
+            get => _snapSubSample;
             set {
                 _snapSubSample = value;
                 RaisePropertyChanged();
@@ -333,9 +313,7 @@ namespace NINA.ViewModel.Imaging {
         public IAsyncCommand StartLiveViewCommand { get; private set; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;
@@ -378,9 +356,7 @@ namespace NINA.ViewModel.Imaging {
         private BitmapSource _image;
 
         public BitmapSource Image {
-            get {
-                return _image;
-            }
+            get => _image;
             set {
                 _image = value;
                 RaisePropertyChanged();

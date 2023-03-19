@@ -83,11 +83,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             }
         }
 
-        public IList<TrackingMode> TrackingModeChoices {
-            get {
-                return trackingModeChoices;
-            }
-        }
+        public IList<TrackingMode> TrackingModeChoices => trackingModeChoices;
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             telescopeMediator.SetTrackingMode(TrackingMode);

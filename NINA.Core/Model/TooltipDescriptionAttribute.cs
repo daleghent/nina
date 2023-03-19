@@ -28,7 +28,7 @@ namespace NINA.Core.Model {
             this.TooltipLabelValue = tooltipLabel;
         }
 
-        public virtual string TooltipLabel { get => TooltipLabelValue; }
+        public virtual string TooltipLabel => TooltipLabelValue;
 
         protected string TooltipLabelValue { get; set; }
     }

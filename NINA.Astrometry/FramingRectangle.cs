@@ -32,9 +32,7 @@ namespace NINA.Astrometry {
         private int id;
 
         public int Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 id = value;
                 RaisePropertyChanged();
@@ -53,9 +51,7 @@ namespace NINA.Astrometry {
         private Coordinates coordinates;
 
         public Coordinates Coordinates {
-            get {
-                return coordinates;
-            }
+            get => coordinates;
             set {
                 coordinates = value;
                 RaisePropertyChanged();

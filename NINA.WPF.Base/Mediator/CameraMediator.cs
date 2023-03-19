@@ -87,17 +87,9 @@ namespace NINA.WPF.Base.Mediator {
             return blockingConsumer == null ? true : cameraConsumer == blockingConsumer;
         }
 
-        public bool AtTargetTemp {
-            get {
-                return handler.AtTargetTemp;
-            }
-        }
+        public bool AtTargetTemp => handler.AtTargetTemp;
 
-        public double TargetTemp {
-            get {
-                return handler.TargetTemp;
-            }
-        }
+        public double TargetTemp => handler.TargetTemp;
 
         public void SetDewHeater(bool onOff) {
             handler.SetDewHeater(onOff);

@@ -123,26 +123,22 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
             }
         }
 
-        public double DewPoint {
-            get {
-                return AstroUtil.ApproximateDewPoint(Temperature, Humidity);
-            }
-        }
+        public double DewPoint => AstroUtil.ApproximateDewPoint(Temperature, Humidity);
 
         private double _averagePeriod = double.NaN;
         public double AveragePeriod { get => _averagePeriod; set => _averagePeriod = value; }
 
-        public double RainRate { get => double.NaN; }
+        public double RainRate => double.NaN;
 
-        public double SkyBrightness { get => double.NaN; }
+        public double SkyBrightness => double.NaN;
 
-        public double SkyQuality { get => double.NaN; }
+        public double SkyQuality => double.NaN;
 
-        public double SkyTemperature { get => double.NaN; }
+        public double SkyTemperature => double.NaN;
 
-        public double StarFWHM { get => double.NaN; }
+        public double StarFWHM => double.NaN;
 
-        public double WindGust { get => double.NaN; }
+        public double WindGust => double.NaN;
 
         public string TWCAPIKey;
 

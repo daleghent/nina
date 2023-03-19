@@ -47,9 +47,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -62,9 +60,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ScopePositionEastWest_mm {
-            get {
-                return scopePositionEastWest_mm;
-            }
+            get => scopePositionEastWest_mm;
             set {
                 if (scopePositionEastWest_mm != value) {
                     scopePositionEastWest_mm = value;
@@ -77,9 +73,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ScopePositionNorthSouth_mm {
-            get {
-                return scopePositionNorthSouth_mm;
-            }
+            get => scopePositionNorthSouth_mm;
             set {
                 if (scopePositionNorthSouth_mm != value) {
                     scopePositionNorthSouth_mm = value;
@@ -92,9 +86,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ScopePositionUpDown_mm {
-            get {
-                return scopePositionUpDown_mm;
-            }
+            get => scopePositionUpDown_mm;
             set {
                 if (scopePositionUpDown_mm != value) {
                     scopePositionUpDown_mm = value;
@@ -107,9 +99,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double DomeRadius_mm {
-            get {
-                return domeRadius_mm;
-            }
+            get => domeRadius_mm;
             set {
                 if (domeRadius_mm != value) {
                     domeRadius_mm = value;
@@ -122,9 +112,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double GemAxis_mm {
-            get {
-                return gemAxis_mm;
-            }
+            get => gemAxis_mm;
             set {
                 if (gemAxis_mm != value) {
                     gemAxis_mm = value;
@@ -137,9 +125,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double LateralAxis_mm {
-            get {
-                return lateralAxis_mm;
-            }
+            get => lateralAxis_mm;
             set {
                 if (lateralAxis_mm != value) {
                     lateralAxis_mm = value;
@@ -152,9 +138,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double AzimuthTolerance_degrees {
-            get {
-                return azimuthTolerance_degrees;
-            }
+            get => azimuthTolerance_degrees;
             set {
                 if (azimuthTolerance_degrees != value) {
                     azimuthTolerance_degrees = value;
@@ -167,9 +151,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool FindHomeBeforePark {
-            get {
-                return findHomeBeforePark;
-            }
+            get => findHomeBeforePark;
             set {
                 if (findHomeBeforePark != value) {
                     findHomeBeforePark = value;
@@ -182,9 +164,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int DomeSyncTimeoutSeconds {
-            get {
-                return domeSyncTimeoutSeconds;
-            }
+            get => domeSyncTimeoutSeconds;
             set {
                 if (domeSyncTimeoutSeconds != value) {
                     domeSyncTimeoutSeconds = value;
@@ -197,9 +177,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool SynchronizeDuringMountSlew {
-            get {
-                return synchronizeDuringMountSlew;
-            }
+            get => synchronizeDuringMountSlew;
             set {
                 if (synchronizeDuringMountSlew != value) {
                     synchronizeDuringMountSlew = value;
@@ -212,9 +190,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool SyncSlewDomeWhenMountSlews {
-            get {
-                return syncSlewDomeWhenMountSlews;
-            }
+            get => syncSlewDomeWhenMountSlews;
             set {
                 if (syncSlewDomeWhenMountSlews != value) {
                     syncSlewDomeWhenMountSlews = value;
@@ -227,9 +203,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double RotateDegrees {
-            get {
-                return manualSlewDegrees;
-            }
+            get => manualSlewDegrees;
             set {
                 if (manualSlewDegrees != value) {
                     manualSlewDegrees = value;
@@ -242,9 +216,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool CloseOnUnsafe {
-            get {
-                return closeOnUnsafe;
-            }
+            get => closeOnUnsafe;
             set {
                 if (closeOnUnsafe != value) {
                     closeOnUnsafe = value;
@@ -309,9 +281,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public MountTypeEnum MountType {
-            get {
-                return mountType;
-            }
+            get => mountType;
             set {
                 if (mountType != value) {
                     mountType = value;
@@ -324,9 +294,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double DecOffsetHorizontal_mm {
-            get {
-                return decOffsetHorizontal_mm;
-            }
+            get => decOffsetHorizontal_mm;
             set {
                 if (decOffsetHorizontal_mm != value) {
                     decOffsetHorizontal_mm = value;
@@ -339,9 +307,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int SettleTimeSeconds {
-            get {
-                return settleTimeSeconds;
-            }
+            get => settleTimeSeconds;
             set {
                 if (settleTimeSeconds != value) {
                     settleTimeSeconds = value;

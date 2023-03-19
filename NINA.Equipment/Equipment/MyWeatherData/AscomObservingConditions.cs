@@ -26,89 +26,33 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         public AscomObservingConditions(string weatherDataId, string weatherDataName, IDeviceDispatcher deviceDispatcher) : base(weatherDataId, weatherDataName, deviceDispatcher, DeviceDispatcherType.WeatherData) {
         }
 
-        public double AveragePeriod {
-            get {
-                return GetProperty(nameof(ObservingConditions.AveragePeriod), double.NaN);
-            }
-        }
+        public double AveragePeriod => GetProperty(nameof(ObservingConditions.AveragePeriod), double.NaN);
 
-        public double CloudCover {
-            get {
-                return GetProperty(nameof(ObservingConditions.CloudCover), double.NaN);
-            }
-        }
+        public double CloudCover => GetProperty(nameof(ObservingConditions.CloudCover), double.NaN);
 
-        public double DewPoint {
-            get {
-                return GetProperty(nameof(ObservingConditions.DewPoint), double.NaN);
-            }
-        }
+        public double DewPoint => GetProperty(nameof(ObservingConditions.DewPoint), double.NaN);
 
-        public double Humidity {
-            get {
-                return GetProperty(nameof(ObservingConditions.Humidity), double.NaN);
-            }
-        }
+        public double Humidity => GetProperty(nameof(ObservingConditions.Humidity), double.NaN);
 
-        public double Pressure {
-            get {
-                return GetProperty(nameof(ObservingConditions.Pressure), double.NaN);
-            }
-        }
+        public double Pressure => GetProperty(nameof(ObservingConditions.Pressure), double.NaN);
 
-        public double RainRate {
-            get {
-                return GetProperty(nameof(ObservingConditions.RainRate), double.NaN);
-            }
-        }
+        public double RainRate => GetProperty(nameof(ObservingConditions.RainRate), double.NaN);
 
-        public double SkyBrightness {
-            get {
-                return GetProperty(nameof(ObservingConditions.SkyBrightness), double.NaN);
-            }
-        }
+        public double SkyBrightness => GetProperty(nameof(ObservingConditions.SkyBrightness), double.NaN);
 
-        public double SkyQuality {
-            get {
-                return GetProperty(nameof(ObservingConditions.SkyQuality), double.NaN);
-            }
-        }
+        public double SkyQuality => GetProperty(nameof(ObservingConditions.SkyQuality), double.NaN);
 
-        public double SkyTemperature {
-            get {
-                return GetProperty(nameof(ObservingConditions.SkyTemperature), double.NaN);
-            }
-        }
+        public double SkyTemperature => GetProperty(nameof(ObservingConditions.SkyTemperature), double.NaN);
 
-        public double StarFWHM {
-            get {
-                return GetProperty(nameof(ObservingConditions.StarFWHM), double.NaN);
-            }
-        }
+        public double StarFWHM => GetProperty(nameof(ObservingConditions.StarFWHM), double.NaN);
 
-        public double Temperature {
-            get {
-                return GetProperty(nameof(ObservingConditions.Temperature), double.NaN);
-            }
-        }
+        public double Temperature => GetProperty(nameof(ObservingConditions.Temperature), double.NaN);
 
-        public double WindDirection {
-            get {
-                return GetProperty(nameof(ObservingConditions.WindDirection), double.NaN);
-            }
-        }
+        public double WindDirection => GetProperty(nameof(ObservingConditions.WindDirection), double.NaN);
 
-        public double WindGust {
-            get {
-                return GetProperty(nameof(ObservingConditions.WindGust), double.NaN);
-            }
-        }
+        public double WindGust => GetProperty(nameof(ObservingConditions.WindGust), double.NaN);
 
-        public double WindSpeed {
-            get {
-                return GetProperty(nameof(ObservingConditions.WindSpeed), double.NaN);
-            }
-        }
+        public double WindSpeed => GetProperty(nameof(ObservingConditions.WindSpeed), double.NaN);
 
         protected override string ConnectionLostMessage => Loc.Instance["LblWeatherConnectionLost"];
 

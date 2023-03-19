@@ -82,11 +82,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
         public bool HasSetupDialog { get; } = false;
 
-        public string Id {
-            get {
-                return $"{Category}_{Name}_{id}";
-            }
-        }
+        public string Id => $"{Category}_{Name}_{id}";
 
         public string Name => $"{info.Name}";
 

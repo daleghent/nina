@@ -761,9 +761,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
         public void SetupDialog() {

@@ -30,9 +30,7 @@ namespace NINA.ViewModel {
         }
 
         public AllImageStatistics Statistics {
-            get {
-                return _statistics;
-            }
+            get => _statistics;
             set {
                 _statistics = value;
                 RaisePropertyChanged();

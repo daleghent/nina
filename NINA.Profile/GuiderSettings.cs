@@ -571,9 +571,7 @@ namespace NINA.Profile {
         private Color guideChartRightAscensionColor;        
         [DataMember]
         public Color GuideChartRightAscensionColor {
-            get {
-                return guideChartRightAscensionColor;
-            }
+            get => guideChartRightAscensionColor;
             set {
                 if (guideChartRightAscensionColor != value) {
                     guideChartRightAscensionColor = value;
@@ -585,9 +583,7 @@ namespace NINA.Profile {
         private Color guideChartDeclinationColor;        
         [DataMember]
         public Color GuideChartDeclinationColor {
-            get {
-                return guideChartDeclinationColor;
-            }
+            get => guideChartDeclinationColor;
             set {
                 if (guideChartDeclinationColor != value) {
                     guideChartDeclinationColor = value;
@@ -599,11 +595,9 @@ namespace NINA.Profile {
         private bool guideChartShowCorrections;
         [DataMember]
         public bool GuideChartShowCorrections {
-            get {
-                return guideChartShowCorrections;
-            }
+            get => guideChartShowCorrections;
             set {
-                if(guideChartShowCorrections != value) {
+                if (guideChartShowCorrections != value) {
                     guideChartShowCorrections = value;
                     RaisePropertyChanged();
                 }

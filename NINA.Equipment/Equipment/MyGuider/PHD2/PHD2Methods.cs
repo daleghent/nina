@@ -33,7 +33,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     }
 
     public class Phd2Guide : Phd2Method<Phd2GuideParameter> {
-        public override string Method { get => "guide"; }
+        public override string Method => "guide";
     }
 
     public class Phd2GuideParameter {
@@ -49,7 +49,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     }
 
     public class Phd2Dither : Phd2Method<Phd2DitherParameter> {
-        public override string Method { get => "dither"; }
+        public override string Method => "dither";
     }
 
     public class Phd2DitherParameter {
@@ -77,11 +77,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     }
 
     public class Phd2GetCameraFrameSize : Phd2Method {
-        public override string Method { get => "get_camera_frame_size"; }
+        public override string Method => "get_camera_frame_size";
     }
 
     public class Phd2FindStar : Phd2Method<Phd2FindStarParameter> {
-        public override string Method { get => "find_star"; }
+        public override string Method => "find_star";
     }
 
     public class Phd2FindStarParameter {
@@ -91,147 +91,147 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     }
 
     public class Phd2Loop : Phd2Method {
-        public override string Method { get => "loop"; }
+        public override string Method => "loop";
     }
 
     public class Phd2StopCapture : Phd2Method {
-        public override string Method { get => "stop_capture"; }
+        public override string Method => "stop_capture";
     }
 
     public class Phd2GetStarImage : Phd2Method {
-        public override string Method { get => "get_star_image"; }
+        public override string Method => "get_star_image";
     }
 
     public class Phd2GetPixelScale : Phd2Method {
-        public override string Method { get => "get_pixel_scale"; }
+        public override string Method => "get_pixel_scale";
     }
 
     public class Phd2GetExposure : Phd2Method {
-        public override string Method { get => "get_exposure"; }
+        public override string Method => "get_exposure";
     }
 
     public class Phd2GetAppState : Phd2Method {
-        public override string Method { get => "get_app_state"; }
+        public override string Method => "get_app_state";
     }
 
     public class Phd2Pause : Phd2Method<Array> {
-        public override string Method { get => "set_paused"; }
+        public override string Method => "set_paused";
     }
 
     public class Phd2GetConnected : Phd2Method {
-        public override string Method { get => "get_connected"; }
+        public override string Method => "get_connected";
     }
 
     public class Phd2SetConnected : Phd2Method<Array> {
-        public override string Method { get => "set_connected"; }
+        public override string Method => "set_connected";
     }
 
     public class Phd2ClearCalibration : Phd2Method<Array> {
-        public override string Method { get => "clear_calibration"; }
+        public override string Method => "clear_calibration";
     }
 
     public class Phd2GetProfile : Phd2Method {
-        public override string Method { get => "get_profile"; }
+        public override string Method => "get_profile";
     }
 
     public class Phd2GetProfiles : Phd2Method<Array> {
-        public override string Method { get => "get_profiles"; }
+        public override string Method => "get_profiles";
     }
 
     public class Phd2GetLockPosition : Phd2Method {
-        public override string Method { get => "get_lock_position"; }
+        public override string Method => "get_lock_position";
     }
 
     public class Phd2SetProfile : Phd2Method<Array> {
-        public override string Method { get => "set_profile"; }
+        public override string Method => "set_profile";
     }
 
     public class Phd2GetAlgoParamNames : Phd2Method<Array> {
-        public override string Method { get => "get_algo_param_names"; }
+        public override string Method => "get_algo_param_names";
     }
 
     public class Phd2GetAlgoParam : Phd2Method {
-        public override string Method { get => "get_algo_param"; }
+        public override string Method => "get_algo_param";
     }
 
     public class Phd2GetCalibrated : Phd2Method {
-        public override string Method { get => "get_calibrated"; }
+        public override string Method => "get_calibrated";
     }
 
     public class Phd2GetCalibrationData : Phd2Method<Array> {
-        public override string Method { get => "get_calibration_data"; }
+        public override string Method => "get_calibration_data";
     }
 
     public class Phd2GetCoolerStatus : Phd2Method {
-        public override string Method { get => "get_cooler_status"; }
+        public override string Method => "get_cooler_status";
     }
 
     public class Phd2GetCurrentEquipment : Phd2Method {
-        public override string Method { get => "get_current_equipment"; }
+        public override string Method => "get_current_equipment";
     }
 
     public class Phd2GetDecGuideMode : Phd2Method {
-        public override string Method { get => "get_dec_guide_mode"; }
+        public override string Method => "get_dec_guide_mode";
     }
 
     public class Phd2GetExposureDurations : Phd2Method {
-        public override string Method { get => "get_exposure_durations"; }
+        public override string Method => "get_exposure_durations";
     }
 
     public class Phd2GetGuideOutputEnabled : Phd2Method {
-        public override string Method { get => "get_guide_output_enabled"; }
+        public override string Method => "get_guide_output_enabled";
     }
 
     public class Phd2GetLockShiftEnabled : Phd2Method {
-        public override string Method { get => "get_lock_shift_enabled"; }
+        public override string Method => "get_lock_shift_enabled";
     }
 
     public class Phd2GetLockShiftParams : Phd2Method {
-        public override string Method { get => "get_lock_shift_params"; }
+        public override string Method => "get_lock_shift_params";
     }
 
     public class Phd2GetPaused : Phd2Method {
-        public override string Method { get => "get_paused"; }
+        public override string Method => "get_paused";
     }
 
     public class Phd2GetSearchRegion : Phd2Method {
-        public override string Method { get => "get_search_region"; }
+        public override string Method => "get_search_region";
     }
 
     public class Phd2GetCCDTemperature : Phd2Method {
-        public override string Method { get => "get_ccd_temperature"; }
+        public override string Method => "get_ccd_temperature";
     }
 
     public class Phd2GetUseSubFrames : Phd2Method {
-        public override string Method { get => "get_use_subframes"; }
+        public override string Method => "get_use_subframes";
     }
 
     public class Phd2SetAlgoParam : Phd2Method<Array> {
-        public override string Method { get => "set_algo_param"; }
+        public override string Method => "set_algo_param";
     }
 
     public class Phd2SetDecGuideMode : Phd2Method<Array> {
-        public override string Method { get => "set_dec_guide_mode"; }
+        public override string Method => "set_dec_guide_mode";
     }
 
     public class Phd2SetExposure : Phd2Method<Array> {
-        public override string Method { get => "set_exposure"; }
+        public override string Method => "set_exposure";
     }
 
     public class Phd2SetGuideOutputEnabled : Phd2Method<Array> {
-        public override string Method { get => "set_guide_output_enabled"; }
+        public override string Method => "set_guide_output_enabled";
     }
 
     public class Phd2SetLockPosition : Phd2Method<Array> {
-        public override string Method { get => "set_lock_position"; }
+        public override string Method => "set_lock_position";
     }
 
     public class Phd2SetLockShiftEnabled : Phd2Method<Array> {
-        public override string Method { get => "set_lock_shift_enabled"; }
+        public override string Method => "set_lock_shift_enabled";
     }
 
     public class Phd2SetLockShiftParams : Phd2Method<Phd2SetLockShiftParamsParameter> {
-        public override string Method { get => "set_lock_shift_params"; }
+        public override string Method => "set_lock_shift_params";
     }
 
     public class Phd2SetLockShiftParamsParameter {
@@ -247,7 +247,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     }
 
     public class Phd2CaptureSingleFrame : Phd2Method<Phd2CaptureSingleFrameParameter> {
-        public override string Method { get => "capture_single_frame"; }
+        public override string Method => "capture_single_frame";
     }
 
     public class Phd2CaptureSingleFrameParameter {
@@ -260,19 +260,19 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     }
 
     public class Phd2FlipCalibration : Phd2Method {
-        public override string Method { get => "flip_calibration"; }
+        public override string Method => "flip_calibration";
     }
 
     public class Phd2GuidePulse : Phd2Method<Array> {
-        public override string Method { get => "guide_pulse"; }
+        public override string Method => "guide_pulse";
     }
 
     public class Phd2SaveImage : Phd2Method {
-        public override string Method { get => "save_image"; }
+        public override string Method => "save_image";
     }
 
     public class Phd2Shutdown : Phd2Method {
-        public override string Method { get => "shutdown"; }
+        public override string Method => "shutdown";
     }
 
     public class PhdMethodResponse {

@@ -393,9 +393,7 @@ namespace NINA.ViewModel.Sequencer {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {

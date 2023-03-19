@@ -132,11 +132,7 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             return i.Count == 0;
         }
 
-        public string MiniDescription {
-            get {
-                return $"{Slope} * " + (absolute ? $"T + {Intercept}" : "DeltaT");
-            }
-        }
+        public string MiniDescription => $"{Slope} * " + (absolute ? $"T + {Intercept}" : "DeltaT");
 
         public override string ToString() {
             return $"Category: {Category}, Item: {nameof(MoveFocuserByTemperature)}, Slope: {Slope}" + (absolute ? $", Intercept {Intercept}" : " (Relative mode)");

@@ -86,9 +86,7 @@ namespace NINA.WPF.Base.ViewModel {
         public ICommand CancelCommand { get; set; }
 
         public TimeSpan RemainingTime {
-            get {
-                return _remainingTime;
-            }
+            get => _remainingTime;
             set {
                 _remainingTime = value;
                 RaisePropertyChanged();
@@ -96,9 +94,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = "MeridianFlip";
@@ -109,9 +105,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public AutomatedWorkflow Steps {
-            get {
-                return _steps;
-            }
+            get => _steps;
             set {
                 _steps = value;
                 RaisePropertyChanged();
@@ -356,9 +350,7 @@ namespace NINA.WPF.Base.ViewModel {
                 }
                 return windowServiceFactory;
             }
-            set {
-                windowServiceFactory = value;
-            }
+            set => windowServiceFactory = value;
         }
 
         /// <summary>
@@ -404,26 +396,16 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public WorkflowStep ActiveStep {
-            get {
-                return _activeStep;
-            }
+            get => _activeStep;
             set {
                 _activeStep = value;
                 RaisePropertyChanged();
             }
         }
 
-        public int Count {
-            get {
-                return _internalStack.Count;
-            }
-        }
+        public int Count => _internalStack.Count;
 
-        public bool IsReadOnly {
-            get {
-                return _internalStack.IsReadOnly;
-            }
-        }
+        public bool IsReadOnly => _internalStack.IsReadOnly;
 
         public void Add(WorkflowStep item) {
             _internalStack.Add(item);
@@ -484,9 +466,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public Func<Task<bool>> Action {
-            get {
-                return _action;
-            }
+            get => _action;
             set {
                 _action = value;
                 RaisePropertyChanged();
@@ -494,9 +474,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public bool Finished {
-            get {
-                return _finished;
-            }
+            get => _finished;
             set {
                 _finished = value;
                 RaisePropertyChanged();
@@ -504,9 +482,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public string Id {
-            get {
-                return _id;
-            }
+            get => _id;
             set {
                 _id = value;
                 RaisePropertyChanged();
@@ -514,9 +490,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public string Title {
-            get {
-                return _title;
-            }
+            get => _title;
             set {
                 _title = value;
                 RaisePropertyChanged();

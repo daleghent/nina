@@ -149,11 +149,7 @@ namespace NINA.ViewModel {
 
         public string Version => projectVersion.ToString();
 
-        public string Title {
-            get {
-                return NINA.Core.Utility.CoreUtil.Title;
-            }
-        }
+        public string Title => NINA.Core.Utility.CoreUtil.Title;
 
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private readonly ICameraMediator cameraMediator;

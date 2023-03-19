@@ -114,9 +114,7 @@ namespace NINA.Image {
 
         public bool IsBayered { get; set; }
 
-        public string FilePath {
-            get => GetFilePath();
-        }
+        public string FilePath => GetFilePath();
 
         public Uri ImagePath { get; set; }
 

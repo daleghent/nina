@@ -88,9 +88,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(Enabled))]
         public bool Enabled {
-            get {
-                return _enabled;
-            }
+            get => _enabled;
             set {
                 _enabled = value;
                 RaisePropertyChanged();
@@ -99,9 +97,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(ExposureTime))]
         public double ExposureTime {
-            get {
-                return _exposureTime;
-            }
+            get => _exposureTime;
 
             set {
                 _exposureTime = value;
@@ -111,9 +107,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(ImageType))]
         public string ImageType {
-            get {
-                return _imageType;
-            }
+            get => _imageType;
 
             set {
                 _imageType = value;
@@ -123,9 +117,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(FilterType))]
         public FilterInfo FilterType {
-            get {
-                return _filterType;
-            }
+            get => _filterType;
 
             set {
                 _filterType = value;
@@ -152,9 +144,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(Gain))]
         public int Gain {
-            get {
-                return _gain;
-            }
+            get => _gain;
             set {
                 _gain = value;
                 RaisePropertyChanged();
@@ -165,9 +155,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(Offset))]
         public int Offset {
-            get {
-                return _offset;
-            }
+            get => _offset;
             set {
                 _offset = value;
                 RaisePropertyChanged();
@@ -178,9 +166,7 @@ namespace NINA.Equipment.Model {
 
         [XmlIgnore]
         public bool EnableSubSample {
-            get {
-                return _enableSubSample;
-            }
+            get => _enableSubSample;
             set {
                 _enableSubSample = value;
                 RaisePropertyChanged();
@@ -205,9 +191,7 @@ namespace NINA.Equipment.Model {
         /// </summary>
         [XmlElement(nameof(TotalExposureCount))]
         public int TotalExposureCount {
-            get {
-                return _totalExposureCount;
-            }
+            get => _totalExposureCount;
             set {
                 _totalExposureCount = value;
                 if (_totalExposureCount < ProgressExposureCount && _totalExposureCount >= 0) {
@@ -222,9 +206,7 @@ namespace NINA.Equipment.Model {
         /// </summary>
         [XmlElement(nameof(ProgressExposureCount))]
         public int ProgressExposureCount {
-            get {
-                return _progressExposureCount;
-            }
+            get => _progressExposureCount;
             set {
                 _progressExposureCount = value;
                 if (ProgressExposureCount > TotalExposureCount) {
@@ -238,9 +220,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(Dither))]
         public bool Dither {
-            get {
-                return _dither;
-            }
+            get => _dither;
             set {
                 _dither = value;
                 RaisePropertyChanged();
@@ -252,9 +232,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(DitherAmount))]
         public int DitherAmount {
-            get {
-                return _ditherAmount;
-            }
+            get => _ditherAmount;
             set {
                 _ditherAmount = value;
                 RaisePropertyChanged();

@@ -73,11 +73,9 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public string TargetName {
-            get {
-                return targetName;
-            }
+            get => targetName;
             set {
-                if(value != targetName) { 
+                if (value != targetName) {
                     targetName = value;
                     RaisePropertyChanged();
                     RaiseCoordinatesChanged();
@@ -89,10 +87,8 @@ namespace NINA.Astrometry {
         /// Backwards compatibility property that will migrate to position angle
         /// </summary>
         [JsonProperty(propertyName: "Rotation")]
-        public double DeprecatedRotation { 
-            set { 
-                PositionAngle = 360 - value; 
-            } 
+        public double DeprecatedRotation {
+            set => PositionAngle = 360 - value;
         }
 
         private double positionAngle = 0;

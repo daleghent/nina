@@ -94,27 +94,25 @@ namespace NINA.CustomControlLibrary {
         #region Properties
 
         public PointCollection Points {
-            set { SetValue(PointsProperty, value); }
-            get { return (PointCollection)GetValue(PointsProperty); }
+            set => SetValue(PointsProperty, value);
+            get => (PointCollection)GetValue(PointsProperty);
         }
 
         public double Tension {
-            set { SetValue(TensionProperty, value); }
-            get { return (double)GetValue(TensionProperty); }
+            set => SetValue(TensionProperty, value);
+            get => (double)GetValue(TensionProperty);
         }
 
         public bool Closed {
-            set { SetValue(ClosedProperty, value); }
-            get { return (bool)GetValue(ClosedProperty); }
+            set => SetValue(ClosedProperty, value);
+            get => (bool)GetValue(ClosedProperty);
         }
 
         #endregion Properties
 
         #region DefiningGeometry
 
-        protected override System.Windows.Media.Geometry DefiningGeometry {
-            get { return _StreamGeometry; }
-        }
+        protected override System.Windows.Media.Geometry DefiningGeometry => _StreamGeometry;
 
         #endregion DefiningGeometry
 

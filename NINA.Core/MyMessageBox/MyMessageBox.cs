@@ -23,9 +23,7 @@ namespace NINA.Core.MyMessageBox {
         private string _title;
 
         public string Title {
-            get {
-                return _title;
-            }
+            get => _title;
             set {
                 _title = value;
                 RaisePropertyChanged();
@@ -35,9 +33,7 @@ namespace NINA.Core.MyMessageBox {
         private string _text;
 
         public string Text {
-            get {
-                return _text;
-            }
+            get => _text;
             set {
                 _text = value;
                 RaisePropertyChanged();
@@ -47,9 +43,7 @@ namespace NINA.Core.MyMessageBox {
         private bool? _dialogResult;
 
         public bool? DialogResult {
-            get {
-                return _dialogResult;
-            }
+            get => _dialogResult;
             set {
                 _dialogResult = value;
                 RaisePropertyChanged();
@@ -59,9 +53,7 @@ namespace NINA.Core.MyMessageBox {
         private Visibility _cancelVisibility;
 
         public Visibility CancelVisibility {
-            get {
-                return _cancelVisibility;
-            }
+            get => _cancelVisibility;
             set {
                 _cancelVisibility = value;
                 RaisePropertyChanged();
@@ -71,9 +63,7 @@ namespace NINA.Core.MyMessageBox {
         private Visibility _oKVisibility;
 
         public Visibility OKVisibility {
-            get {
-                return _oKVisibility;
-            }
+            get => _oKVisibility;
             set {
                 _oKVisibility = value;
                 RaisePropertyChanged();
@@ -83,9 +73,7 @@ namespace NINA.Core.MyMessageBox {
         private Visibility _yesVisibility;
 
         public Visibility YesVisibility {
-            get {
-                return _yesVisibility;
-            }
+            get => _yesVisibility;
             set {
                 _yesVisibility = value;
                 RaisePropertyChanged();
@@ -95,9 +83,7 @@ namespace NINA.Core.MyMessageBox {
         private Visibility _noVisibility;
 
         public Visibility NoVisibility {
-            get {
-                return _noVisibility;
-            }
+            get => _noVisibility;
             set {
                 _noVisibility = value;
                 RaisePropertyChanged();

@@ -139,9 +139,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private bool dynamicFoV;
 
         public bool DynamicFoV {
-            get {
-                return dynamicFoV;
-            }
+            get => dynamicFoV;
             set {
                 dynamicFoV = value;
                 RaisePropertyChanged();

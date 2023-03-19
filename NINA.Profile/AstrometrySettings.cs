@@ -52,9 +52,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double Latitude {
-            get {
-                return latitude;
-            }
+            get => latitude;
             set {
                 if (latitude != value) {
                     latitude = value;
@@ -67,9 +65,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double Longitude {
-            get {
-                return longitude;
-            }
+            get => longitude;
             set {
                 if (longitude != value) {
                     longitude = value;

@@ -41,9 +41,7 @@ namespace NINA.PlateSolving {
 
         public Coordinates Coordinates {
             get => coordinates;
-            set {
-                coordinates = value?.Transform(Epoch.J2000);
-            }
+            set => coordinates = value?.Transform(Epoch.J2000);
         }
 
         public override string ToString() {

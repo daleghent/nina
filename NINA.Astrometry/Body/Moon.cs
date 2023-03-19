@@ -21,22 +21,10 @@ namespace NINA.Astrometry.Body {
         public Moon(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        public override double Radius {
-            get {
-                return 1738; // https://de.wikipedia.org/wiki/Monddurchmesser
-            }
-        }
+        public override double Radius => 1738; // https://de.wikipedia.org/wiki/Monddurchmesser
 
-        protected override string Name {
-            get {
-                return "Moon";
-            }
-        }
+        protected override string Name => "Moon";
 
-        protected override NOVAS.Body BodyNumber {
-            get {
-                return NOVAS.Body.Moon;
-            }
-        }
+        protected override NOVAS.Body BodyNumber => NOVAS.Body.Moon;
     }
 }

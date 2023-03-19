@@ -48,170 +48,64 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             _hasUnknownEpoch = false;
         }
 
-        public Core.Enum.AlignmentMode AlignmentMode {
-            get {
-                return (Core.Enum.AlignmentMode)GetProperty(nameof(Telescope.AlignmentMode), ASCOM.Common.DeviceInterfaces.AlignmentMode.GermanPolar);
-            }
-        }
+        public Core.Enum.AlignmentMode AlignmentMode => (Core.Enum.AlignmentMode)GetProperty(nameof(Telescope.AlignmentMode), ASCOM.Common.DeviceInterfaces.AlignmentMode.GermanPolar);
 
-        public double Altitude {
-            get {
-                return GetProperty(nameof(Telescope.Altitude), double.NaN);
-            }
-        }
+        public double Altitude => GetProperty(nameof(Telescope.Altitude), double.NaN);
 
         public string AltitudeString => double.IsNaN(Altitude) ? string.Empty : AstroUtil.DegreesToDMS(Altitude);
 
-        public double Azimuth {
-            get {
-                return GetProperty(nameof(Telescope.Azimuth), double.NaN);
-            }
-        }
+        public double Azimuth => GetProperty(nameof(Telescope.Azimuth), double.NaN);
 
         public string AzimuthString => double.IsNaN(Azimuth) ? string.Empty : AstroUtil.DegreesToDMS(Azimuth);
 
-        public double ApertureArea {
-            get {
-                return GetProperty(nameof(Telescope.ApertureArea), -1d);
-            }
-        }
+        public double ApertureArea => GetProperty(nameof(Telescope.ApertureArea), -1d);
 
-        public double ApertureDiameter {
-            get {
-                return GetProperty(nameof(Telescope.ApertureDiameter), -1d);
-            }
-        }
+        public double ApertureDiameter => GetProperty(nameof(Telescope.ApertureDiameter), -1d);
 
-        public bool AtHome {
-            get {
-                return GetProperty(nameof(Telescope.AtHome), false);
-            }
-        }
+        public bool AtHome => GetProperty(nameof(Telescope.AtHome), false);
 
-        public bool AtPark {
-            get {
-                return GetProperty(nameof(Telescope.AtPark), false);
-            }
-        }
+        public bool AtPark => GetProperty(nameof(Telescope.AtPark), false);
 
-        public bool CanFindHome {
-            get {
-                return GetProperty(nameof(Telescope.CanFindHome), false);
-            }
-        }
+        public bool CanFindHome => GetProperty(nameof(Telescope.CanFindHome), false);
 
-        public bool CanPark {
-            get {
-                return GetProperty(nameof(Telescope.CanPark), false);
-            }
-        }
+        public bool CanPark => GetProperty(nameof(Telescope.CanPark), false);
 
-        public bool CanPulseGuide {
-            get {
-                return GetProperty(nameof(Telescope.CanPulseGuide), false);
-            }
-        }
+        public bool CanPulseGuide => GetProperty(nameof(Telescope.CanPulseGuide), false);
 
-        public bool CanSetDeclinationRate {
-            get {
-                return GetProperty(nameof(Telescope.CanSetDeclinationRate), false);
-            }
-        }
+        public bool CanSetDeclinationRate => GetProperty(nameof(Telescope.CanSetDeclinationRate), false);
 
-        public bool CanSetGuideRates {
-            get {
-                return GetProperty(nameof(Telescope.CanSetGuideRates), false);
-            }
-        }
+        public bool CanSetGuideRates => GetProperty(nameof(Telescope.CanSetGuideRates), false);
 
-        public bool CanSetPark {
-            get {
-                return GetProperty(nameof(Telescope.CanSetPark), false);
-            }
-        }
+        public bool CanSetPark => GetProperty(nameof(Telescope.CanSetPark), false);
 
-        public bool CanSetPierSide {
-            get {
-                return GetProperty(nameof(Telescope.CanSetPierSide), false);
-            }
-        }
+        public bool CanSetPierSide => GetProperty(nameof(Telescope.CanSetPierSide), false);
 
-        public bool CanSetRightAscensionRate {
-            get {
-                return GetProperty(nameof(Telescope.CanSetRightAscensionRate), false);
-            }
-        }
+        public bool CanSetRightAscensionRate => GetProperty(nameof(Telescope.CanSetRightAscensionRate), false);
 
-        public bool CanSetTrackingRate {
-            get {
-                return GetProperty(nameof(Telescope.CanSetTracking), false);
-            }
-        }
+        public bool CanSetTrackingRate => GetProperty(nameof(Telescope.CanSetTracking), false);
 
-        public bool CanSlew {
-            get {
-                return GetProperty(nameof(Telescope.CanSlew), false);
-            }
-        }
+        public bool CanSlew => GetProperty(nameof(Telescope.CanSlew), false);
 
-        public bool CanSlewAltAz {
-            get {
-                return GetProperty(nameof(Telescope.CanSlewAltAz), false);
-            }
-        }
+        public bool CanSlewAltAz => GetProperty(nameof(Telescope.CanSlewAltAz), false);
 
-        public bool CanSlewAltAzAsync {
-            get {
-                return GetProperty(nameof(Telescope.CanSlewAltAzAsync), false);
-            }
-        }
+        public bool CanSlewAltAzAsync => GetProperty(nameof(Telescope.CanSlewAltAzAsync), false);
 
-        public bool CanSlewAsync {
-            get {
-                return GetProperty(nameof(Telescope.CanSlewAsync), false);
-            }
-        }
+        public bool CanSlewAsync => GetProperty(nameof(Telescope.CanSlewAsync), false);
 
-        public bool CanSync {
-            get {
-                return GetProperty(nameof(Telescope.CanSync), false);
-            }
-        }
+        public bool CanSync => GetProperty(nameof(Telescope.CanSync), false);
 
-        public bool CanSyncAltAz {
-            get {
-                return GetProperty(nameof(Telescope.CanSyncAltAz), false);
-            }
-        }
+        public bool CanSyncAltAz => GetProperty(nameof(Telescope.CanSyncAltAz), false);
 
-        public bool CanUnpark {
-            get {
-                return GetProperty(nameof(Telescope.CanUnpark), false);
-            }
-        }
+        public bool CanUnpark => GetProperty(nameof(Telescope.CanUnpark), false);
 
-        public Coordinates Coordinates {
-            get {
-                return new Coordinates(RightAscension, Declination, EquatorialSystem, Coordinates.RAType.Hours);
-            }
-        }
+        public Coordinates Coordinates => new Coordinates(RightAscension, Declination, EquatorialSystem, Coordinates.RAType.Hours);
 
-        public double Declination {
-            get {
-                return GetProperty(nameof(Telescope.Declination), -1d);
-            }
-        }
+        public double Declination => GetProperty(nameof(Telescope.Declination), -1d);
 
-        public string DeclinationString {
-            get {
-                return AstroUtil.DegreesToDMS(Declination);
-            }
-        }
+        public string DeclinationString => AstroUtil.DegreesToDMS(Declination);
 
         public double DeclinationRate {
-            get {
-                return GetProperty(nameof(Telescope.DeclinationRate), 0d);
-            }
+            get => GetProperty(nameof(Telescope.DeclinationRate), 0d);
             set {
                 if (CanSetDeclinationRate) {
                     SetProperty(nameof(Telescope.DeclinationRate), value);
@@ -220,9 +114,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public double RightAscensionRate {
-            get {
-                return GetProperty(nameof(Telescope.RightAscensionRate), 0d);
-            }
+            get => GetProperty(nameof(Telescope.RightAscensionRate), 0d);
             set {
                 if (CanSetRightAscensionRate) {
                     SetProperty(nameof(Telescope.RightAscensionRate), value);
@@ -242,11 +134,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public bool DoesRefraction {
-            get {
-                return GetProperty(nameof(Telescope.DoesRefraction), false);
-            }
-        }
+        public bool DoesRefraction => GetProperty(nameof(Telescope.DoesRefraction), false);
 
         private Epoch equatorialSystem = Epoch.J2000;
 
@@ -258,47 +146,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public double FocalLength {
-            get {
-                return GetProperty(nameof(Telescope.FocalLength), -1d);
-            }
-        }
+        public double FocalLength => GetProperty(nameof(Telescope.FocalLength), -1d);
 
-        public short InterfaceVersion {
-            get {
-                return GetProperty<short>(nameof(Telescope.InterfaceVersion), -1);
-            }
-        }
+        public short InterfaceVersion => GetProperty<short>(nameof(Telescope.InterfaceVersion), -1);
 
-        public double RightAscension {
-            get {
-                return GetProperty(nameof(Telescope.RightAscension), -1d);
-            }
-        }
+        public double RightAscension => GetProperty(nameof(Telescope.RightAscension), -1d);
 
-        public string RightAscensionString {
-            get {
-                return AstroUtil.HoursToHMS(RightAscension);
-            }
-        }
+        public string RightAscensionString => AstroUtil.HoursToHMS(RightAscension);
 
-        public double SiderealTime {
-            get {
-                return GetProperty(nameof(Telescope.SiderealTime), -1d);
-            }
-        }
+        public double SiderealTime => GetProperty(nameof(Telescope.SiderealTime), -1d);
 
-        public string SiderealTimeString {
-            get {
-                return AstroUtil.HoursToHMS(SiderealTime);
-            }
-        }
+        public string SiderealTimeString => AstroUtil.HoursToHMS(SiderealTime);
 
-        public bool Slewing {
-            get {
-                return GetProperty(nameof(Telescope.Slewing), false);
-            }
-        }
+        public bool Slewing => GetProperty(nameof(Telescope.Slewing), false);
 
         public bool IsPulseGuiding {
             get {
@@ -345,46 +205,28 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public DateTime UTCDate {
-            get {
-                return GetProperty(nameof(Telescope.UTCDate), DateTime.MinValue);
-            }
-            set {
-                SetProperty(nameof(Telescope.UTCDate), value);
-            }
+            get => GetProperty(nameof(Telescope.UTCDate), DateTime.MinValue);
+            set => SetProperty(nameof(Telescope.UTCDate), value);
         }
 
         public double SiteElevation {
             get => GetProperty(nameof(Telescope.SiteElevation), 0d);
-            set {
-                SetProperty(nameof(Telescope.SiteElevation), value);
-            }
+            set => SetProperty(nameof(Telescope.SiteElevation), value);
         }
 
         public double SiteLatitude {
-            get {
-                return GetProperty(nameof(Telescope.SiteLatitude), -1d);
-            }
-            set {
-                SetProperty(nameof(Telescope.SiteLatitude), value);
-            }
+            get => GetProperty(nameof(Telescope.SiteLatitude), -1d);
+            set => SetProperty(nameof(Telescope.SiteLatitude), value);
         }
 
         public double SiteLongitude {
-            get {
-                return GetProperty(nameof(Telescope.SiteLongitude), -1d);
-            }
-            set {
-                SetProperty(nameof(Telescope.SiteLongitude), value);
-            }
+            get => GetProperty(nameof(Telescope.SiteLongitude), -1d);
+            set => SetProperty(nameof(Telescope.SiteLongitude), value);
         }
 
         public short SlewSettleTime {
-            get {
-                return GetProperty<short>(nameof(Telescope.SlewSettleTime), -1);
-            }
-            set {
-                SetProperty(nameof(Telescope.SlewSettleTime), value);
-            }
+            get => GetProperty<short>(nameof(Telescope.SlewSettleTime), -1);
+            set => SetProperty(nameof(Telescope.SlewSettleTime), value);
         }
 
         public double TargetDeclination {
@@ -395,9 +237,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 }
                 return val;
             }
-            set {
-                SetProperty(nameof(Telescope.TargetDeclination), value);
-            }
+            set => SetProperty(nameof(Telescope.TargetDeclination), value);
         }
 
         public double TargetRightAscension {
@@ -408,9 +248,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 }
                 return val;
             }
-            set {
-                SetProperty(nameof(Telescope.TargetRightAscension), value);
-            }
+            set => SetProperty(nameof(Telescope.TargetRightAscension), value);
         }
 
         private Coordinates _targetCoordinates;
@@ -663,16 +501,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public bool CanSetTrackingEnabled {
-            get {
-                return Connected && GetProperty(nameof(Telescope.CanSetTracking), false);
-            }
-        }
+        public bool CanSetTrackingEnabled => Connected && GetProperty(nameof(Telescope.CanSetTracking), false);
 
         public bool TrackingEnabled {
-            get {
-                return GetProperty(nameof(Telescope.Tracking), false);
-            }
+            get => GetProperty(nameof(Telescope.Tracking), false);
             set {
                 if (CanSetTrackingEnabled) {
                     if (SetProperty(nameof(Telescope.Tracking), value)) {
@@ -790,11 +622,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public string TimeToMeridianFlipString {
-            get {
-                return AstroUtil.HoursToHMS(TimeToMeridianFlip);
-            }
-        }
+        public string TimeToMeridianFlipString => AstroUtil.HoursToHMS(TimeToMeridianFlip);
 
         public bool CanMovePrimaryAxis {
             get {
@@ -958,11 +786,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         private ImmutableList<TrackingMode> trackingModes = ImmutableList.Create<TrackingMode>();
 
-        public IList<TrackingMode> TrackingModes {
-            get {
-                return trackingModes;
-            }
-        }
+        public IList<TrackingMode> TrackingModes => trackingModes;
 
         public TrackingRate TrackingRate {
             get {
@@ -1000,9 +824,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public TrackingMode TrackingMode {
-            get {
-                return TrackingRate.TrackingMode;
-            }
+            get => TrackingRate.TrackingMode;
             set {
                 if (value == TrackingMode.Custom) {
                     throw new ArgumentException("TrackingMode cannot be set to Custom. Use SetCustomTrackingRate");
@@ -1037,7 +859,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                             RaisePropertyChanged(nameof(TrackingRate));
                             RaisePropertyChanged(nameof(TrackingEnabled));
                         }
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         Logger.Error(ex);
                         Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
                     }

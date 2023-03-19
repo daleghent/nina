@@ -26,11 +26,7 @@ namespace NINA.Core.Utility {
 
         private SerialPort port;
 
-        public string PortName {
-            get {
-                return port.PortName;
-            }
-        }
+        public string PortName => port.PortName;
 
         public bool Open() {
             bool success = false;

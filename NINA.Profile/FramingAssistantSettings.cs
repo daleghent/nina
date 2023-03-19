@@ -53,9 +53,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int CameraHeight {
-            get {
-                return cameraHeight;
-            }
+            get => cameraHeight;
             set {
                 if (cameraHeight != value) {
                     cameraHeight = value;
@@ -68,9 +66,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int CameraWidth {
-            get {
-                return cameraWidth;
-            }
+            get => cameraWidth;
             set {
                 if (cameraWidth != value) {
                     cameraWidth = value;
@@ -83,9 +79,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double FieldOfView {
-            get {
-                return fieldOfView;
-            }
+            get => fieldOfView;
             set {
                 if (fieldOfView != value) {
                     fieldOfView = value;
@@ -98,9 +92,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double Opacity {
-            get {
-                return opacity;
-            }
+            get => opacity;
             set {
                 if (opacity != value) {
                     opacity = value;

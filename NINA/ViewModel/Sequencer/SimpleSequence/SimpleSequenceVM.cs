@@ -241,9 +241,7 @@ namespace NINA.ViewModel {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {
@@ -320,17 +318,9 @@ namespace NINA.ViewModel {
             }
         }
 
-        public SimpleStartContainer StartOptions {
-            get {
-                return Sequencer.MainContainer.Items[0] as SimpleStartContainer;
-            }
-        }
+        public SimpleStartContainer StartOptions => Sequencer.MainContainer.Items[0] as SimpleStartContainer;
 
-        public SimpleEndContainer EndOptions {
-            get {
-                return Sequencer.MainContainer.Items[2] as SimpleEndContainer;
-            }
-        }
+        public SimpleEndContainer EndOptions => Sequencer.MainContainer.Items[2] as SimpleEndContainer;
 
         public TargetAreaContainer Targets {
             get {
@@ -682,9 +672,7 @@ namespace NINA.ViewModel {
         private TimeSpan estimatedDownloadTime = TimeSpan.Zero;
 
         public TimeSpan EstimatedDownloadTime {
-            get {
-                return estimatedDownloadTime;
-            }
+            get => estimatedDownloadTime;
             set {
                 if (value < TimeSpan.Zero) {
                     value = TimeSpan.Zero;
@@ -698,9 +686,7 @@ namespace NINA.ViewModel {
         private DateTime overallStartTime;
 
         public DateTime OverallStartTime {
-            get {
-                return overallStartTime;
-            }
+            get => overallStartTime;
             private set {
                 overallStartTime = value;
                 RaisePropertyChanged();
@@ -711,9 +697,7 @@ namespace NINA.ViewModel {
         private DateTime _eta;
 
         public DateTime OverallEndTime {
-            get {
-                return _eta;
-            }
+            get => _eta;
             private set {
                 _eta = value;
                 RaisePropertyChanged();
@@ -723,9 +707,7 @@ namespace NINA.ViewModel {
         private TimeSpan overallDuration;
 
         public TimeSpan OverallDuration {
-            get {
-                return overallDuration;
-            }
+            get => overallDuration;
             private set {
                 overallDuration = value;
                 RaisePropertyChanged();
@@ -759,9 +741,7 @@ namespace NINA.ViewModel {
                 }
                 return windowServiceFactory;
             }
-            set {
-                windowServiceFactory = value;
-            }
+            set => windowServiceFactory = value;
         }
 
         private void BuildSequence() {
@@ -955,9 +935,7 @@ namespace NINA.ViewModel {
         private NighttimeData nighttimeData;
 
         public NighttimeData NighttimeData {
-            get {
-                return nighttimeData;
-            }
+            get => nighttimeData;
             set {
                 if (nighttimeData != value) {
                     nighttimeData = value;

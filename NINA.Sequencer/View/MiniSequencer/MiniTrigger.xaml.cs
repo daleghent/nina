@@ -42,8 +42,8 @@ namespace NINA.View.Sequencer.MiniSequencer {
             DependencyProperty.Register(nameof(TriggerProgressContent), typeof(object), typeof(MiniTrigger));
 
         public object TriggerProgressContent {
-            get { return (object)GetValue(TriggerProgressContentProperty); }
-            set { SetValue(TriggerProgressContentProperty, value); }
+            get => (object)GetValue(TriggerProgressContentProperty);
+            set => SetValue(TriggerProgressContentProperty, value);
         }
     }
 }

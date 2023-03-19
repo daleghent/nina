@@ -136,7 +136,7 @@ namespace NINA.Image.ImageData {
 
     public class CameraParameter {
         public string Name { get; set; } = string.Empty;
-        public string Binning { get => $"{BinX}x{BinY}"; }
+        public string Binning => $"{BinX}x{BinY}";
         public int BinX { get; set; } = 1;
         public int BinY { get; set; } = 1;
         public double PixelSize { get; set; } = double.NaN;
@@ -197,7 +197,7 @@ namespace NINA.Image.ImageData {
     public class TargetParameter {
         public string Name { get; set; } = string.Empty;
         [Obsolete("Use PositionAngle instead")]
-        public double Rotation { get => AstroUtil.EuclidianModulus(360 - PositionAngle, 360); set { PositionAngle = AstroUtil.EuclidianModulus(360 - value, 360); } }
+        public double Rotation { get => AstroUtil.EuclidianModulus(360 - PositionAngle, 360); set => PositionAngle = AstroUtil.EuclidianModulus(360 - value, 360); }
         public double PositionAngle { get; set; } = double.NaN;
         private Coordinates coordinates = null;
 

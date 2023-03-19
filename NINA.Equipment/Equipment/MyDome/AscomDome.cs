@@ -104,12 +104,8 @@ namespace NINA.Equipment.Equipment.MyDome {
         public bool AtHome => GetProperty(nameof(Dome.AtHome), false);
 
         public bool DriverFollowing {
-            get {
-                return GetProperty(nameof(Dome.Slaved), false);
-            }
-            set {
-                SetProperty(nameof(Dome.Slaved), value);
-            }
+            get => GetProperty(nameof(Dome.Slaved), false);
+            set => SetProperty(nameof(Dome.Slaved), value);
         }
 
         public bool Slewing => GetProperty(nameof(Dome.Slewing), false);

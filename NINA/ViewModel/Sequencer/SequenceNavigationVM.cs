@@ -46,9 +46,7 @@ namespace NINA.ViewModel.Sequencer {
         /// <summary>
         /// Backwards compatible ContentId due to sequencer replacement
         /// </summary>
-        public override string ContentId {
-            get => "SequenceVM";
-        }
+        public override string ContentId => "SequenceVM";
 
         public SequenceNavigationVM(
                 IProfileService profileService,
@@ -127,13 +125,9 @@ namespace NINA.ViewModel.Sequencer {
         public ICommand SwitchToAdvancedSequenceCommand { get; private set; }
         public ICommand SwitchToTargetSetCommand { get; private set; }
 
-        public ISimpleSequenceVM SimpleSequenceVM {
-            get => simpleSequenceVM;
-        }
+        public ISimpleSequenceVM SimpleSequenceVM => simpleSequenceVM;
 
-        public ISequence2VM Sequence2VM {
-            get => sequence2VM;
-        }
+        public ISequence2VM Sequence2VM => sequence2VM;
 
         public bool SimpleSequenceHasTargets => ((SimpleSequenceVM)simpleSequenceVM).Targets.Items.Count > 0;
 

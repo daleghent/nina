@@ -20,7 +20,7 @@ namespace NINA.Equipment.Equipment.MySafetyMonitor {
         private bool isSafe;
 
         public bool IsSafe {
-            get { return isSafe; }
+            get => isSafe;
             set { isSafe = value; RaisePropertyChanged(); }
         }
 

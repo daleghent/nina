@@ -45,8 +45,8 @@ namespace NINA.Core.Utility.Extensions {
             public int top;
             public int right;
             public int bottom;
-            public int width { get { return right - left; } }
-            public int height { get { return bottom - top; } }
+            public int width => right - left;
+            public int height => bottom - top;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Auto)]

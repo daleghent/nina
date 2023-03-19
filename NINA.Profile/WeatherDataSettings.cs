@@ -39,9 +39,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 id = value;
                 RaisePropertyChanged();
@@ -52,9 +50,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string OpenWeatherMapAPIKey {
-            get {
-                return openWeatherMapAPIKey;
-            }
+            get => openWeatherMapAPIKey;
             set {
                 openWeatherMapAPIKey = value;
                 RaisePropertyChanged();
@@ -65,9 +61,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string TheWeatherCompanyAPIKey {
-            get {
-                return theWeatherCompanyAPIKey;
-            }
+            get => theWeatherCompanyAPIKey;
             set {
                 theWeatherCompanyAPIKey = value;
                 RaisePropertyChanged();
@@ -78,9 +72,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string WeatherUndergroundAPIKey {
-            get {
-                return weatherUndergroundAPIKey;
-            }
+            get => weatherUndergroundAPIKey;
             set {
                 weatherUndergroundAPIKey = value;
                 RaisePropertyChanged();
@@ -91,9 +83,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string WeatherUndergroundStation {
-            get {
-                return weatherUndergroundStation;
-            }
+            get => weatherUndergroundStation;
             set {
                 weatherUndergroundStation = value;
                 RaisePropertyChanged();

@@ -55,17 +55,13 @@ namespace NINA.WPF.Base.Utility {
         /// <summary>
         /// Gets the internal cache of loaded dictionaries.
         /// </summary>
-        public static Dictionary<Uri, WeakReference> SharedDictionaries {
-            get { return sharedDictionaries; }
-        }
+        public static Dictionary<Uri, WeakReference> SharedDictionaries => sharedDictionaries;
 
         /// <summary>
         /// Gets or sets the uniform resource identifier (URI) to load resources from.
         /// </summary>
         public new Uri Source {
-            get {
-                return this.sourceUri;
-            }
+            get => this.sourceUri;
 
             set {
                 this.sourceUri = new Uri(value.OriginalString, UriKind.RelativeOrAbsolute);

@@ -53,9 +53,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -98,9 +96,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public ObserveAllCollection<FilterInfo> FilterWheelFilters {
-            get {
-                return filterWheelFilters;
-            }
+            get => filterWheelFilters;
             set {
                 if (filterWheelFilters != value) {
                     if (filterWheelFilters != null) {

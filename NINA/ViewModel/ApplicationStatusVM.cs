@@ -37,9 +37,7 @@ namespace NINA.ViewModel {
         private string _status;
 
         public string Status {
-            get {
-                return _status;
-            }
+            get => _status;
             private set {
                 _status = value;
                 RaisePropertyChanged();
@@ -49,9 +47,7 @@ namespace NINA.ViewModel {
         private ObservableCollection<ApplicationStatus> _applicationStatus = new ObservableCollection<ApplicationStatus>();
 
         public ObservableCollection<ApplicationStatus> ApplicationStatus {
-            get {
-                return _applicationStatus;
-            }
+            get => _applicationStatus;
             set {
                 _applicationStatus = value;
                 RaisePropertyChanged();

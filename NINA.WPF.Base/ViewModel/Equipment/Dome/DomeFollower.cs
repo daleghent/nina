@@ -247,9 +247,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private bool isSynchronized = false;
 
         public bool IsSynchronized {
-            get {
-                return this.isSynchronized;
-            }
+            get => this.isSynchronized;
             private set {
                 if (this.isSynchronized != value) {
                     this.isSynchronized = value;
@@ -261,9 +259,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private bool following = false;
 
         public bool IsFollowing {
-            get {
-                return this.following;
-            }
+            get => this.following;
             private set {
                 if (this.following != value) {
                     this.following = value;

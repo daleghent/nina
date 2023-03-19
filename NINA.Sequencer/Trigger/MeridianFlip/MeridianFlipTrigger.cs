@@ -91,30 +91,22 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         protected DateTime earliestFlipTime;
 
         public virtual double MinutesAfterMeridian {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian;
             set { }
         }
 
         public virtual double PauseTimeBeforeMeridian {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian;
             set { }
         }
 
         public virtual double MaxMinutesAfterMeridian {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian;
             set { }
         }
 
         public virtual bool UseSideOfPier {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier;
             set { }
         }
 
@@ -135,9 +127,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         }
 
         public virtual double TimeToMeridianFlip {
-            get {
-                return telescopeMediator.GetInfo().TimeToMeridianFlip;
-            }
+            get => telescopeMediator.GetInfo().TimeToMeridianFlip;
             set { }
         }
 

@@ -48,16 +48,14 @@ namespace GalaSoft.MvvmLight.Helpers {
         /// <summary>
         /// Get a value indicating whether the WeakFunc is static or not.
         /// </summary>
-        public bool IsStatic {
-            get {
+        public bool IsStatic =>
 #if SILVERLIGHT
                 return (_func != null && _func.Target == null)
                     || _staticFunc != null;
 #else
-                return _staticFunc != null;
+                _staticFunc != null;
 #endif
-            }
-        }
+
 
         /// <summary>
         /// Gets the name of the method that this WeakFunc represents.

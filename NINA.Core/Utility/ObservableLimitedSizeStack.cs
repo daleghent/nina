@@ -124,11 +124,7 @@ namespace NINA.Core.Utility {
             }
         }
 
-        public bool IsReadOnly {
-            get {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public LinkedListNode<T> First() {
             _lock.EnterReadLock();

@@ -22,12 +22,9 @@ namespace NINA.Astrometry.RiseAndSet {
         public AstronomicalTwilightRiseAndSet(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        private double AstronomicalTwilightDegree {
-            get {
+        private double AstronomicalTwilightDegree =>
                 //http://aa.usno.navy.mil/faq/docs/RST_defs.php #Paragraph Astronomical twilight
-                return -18;
-            }
-        }
+                -18;
 
         protected override double AdjustAltitude(BasicBody body) {
             return body.Altitude - AstronomicalTwilightDegree;

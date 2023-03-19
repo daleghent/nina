@@ -69,9 +69,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public PlateSolverEnum PlateSolverType {
-            get {
-                return plateSolverType;
-            }
+            get => plateSolverType;
             set {
                 if (plateSolverType != value) {
                     plateSolverType = value;
@@ -84,9 +82,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public BlindSolverEnum BlindSolverType {
-            get {
-                return blindSolverType;
-            }
+            get => blindSolverType;
             set {
                 if (blindSolverType != value) {
                     blindSolverType = value;
@@ -99,9 +95,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string AstrometryURL {
-            get {
-                return astrometryURL;
-            }
+            get => astrometryURL;
             set {
                 // Clear out any whitespace characters in the URL
                 string url = Regex.Replace(value, @"\s", string.Empty);
@@ -117,9 +111,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string AstrometryAPIKey {
-            get {
-                return astrometryAPIKey;
-            }
+            get => astrometryAPIKey;
             set {
                 // Whitespace characters are not valid characaters in an Astrometry.net API key.
                 // Help the user by removing any that might be present. Copy and pasting from the astrometry.net API page
@@ -137,9 +129,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string CygwinLocation {
-            get {
-                return Environment.ExpandEnvironmentVariables(cygwinLocation);
-            }
+            get => Environment.ExpandEnvironmentVariables(cygwinLocation);
             set {
                 if (cygwinLocation != value) {
                     cygwinLocation = value;
@@ -152,9 +142,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double SearchRadius {
-            get {
-                return searchRadius;
-            }
+            get => searchRadius;
             set {
                 if (searchRadius != value) {
                     searchRadius = value;
@@ -167,9 +155,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string PS2Location {
-            get {
-                return Environment.ExpandEnvironmentVariables(pS2Location);
-            }
+            get => Environment.ExpandEnvironmentVariables(pS2Location);
             set {
                 if (pS2Location != value) {
                     pS2Location = value;
@@ -182,9 +168,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string PS3Location {
-            get {
-                return Environment.ExpandEnvironmentVariables(pS3Location);
-            }
+            get => Environment.ExpandEnvironmentVariables(pS3Location);
             set {
                 if (pS3Location != value) {
                     pS3Location = value;
@@ -197,9 +181,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int Regions {
-            get {
-                return regions;
-            }
+            get => regions;
             set {
                 if (regions != value) {
                     regions = value;
@@ -212,9 +194,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ExposureTime {
-            get {
-                return exposureTime;
-            }
+            get => exposureTime;
             set {
                 if (exposureTime != value) {
                     exposureTime = value;
@@ -227,9 +207,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double Threshold {
-            get {
-                return threshold;
-            }
+            get => threshold;
             set {
                 if (threshold != value) {
                     threshold = value;
@@ -242,9 +220,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double RotationTolerance {
-            get {
-                return rotationTolerance;
-            }
+            get => rotationTolerance;
             set {
                 if (rotationTolerance != value) {
                     rotationTolerance = value;
@@ -257,9 +233,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int NumberOfAttempts {
-            get {
-                return numberOfAttempts;
-            }
+            get => numberOfAttempts;
             set {
                 if (numberOfAttempts != value) {
                     numberOfAttempts = value;
@@ -272,9 +246,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ReattemptDelay {
-            get {
-                return reattemptDelay;
-            }
+            get => reattemptDelay;
             set {
                 if (reattemptDelay != value) {
                     reattemptDelay = value;
@@ -287,9 +259,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public FilterInfo Filter {
-            get {
-                return filter;
-            }
+            get => filter;
             set {
                 if (filter != value) {
                     filter = value;
@@ -302,9 +272,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string AspsLocation {
-            get {
-                return Environment.ExpandEnvironmentVariables(aspsLocation);
-            }
+            get => Environment.ExpandEnvironmentVariables(aspsLocation);
             set {
                 if (aspsLocation != value) {
                     aspsLocation = value;
@@ -317,9 +285,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string ASTAPLocation {
-            get {
-                return Environment.ExpandEnvironmentVariables(aSTAPLocation);
-            }
+            get => Environment.ExpandEnvironmentVariables(aSTAPLocation);
             set {
                 if (aSTAPLocation != value) {
                     aSTAPLocation = value;
@@ -332,9 +298,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int DownSampleFactor {
-            get {
-                return downSampleFactor;
-            }
+            get => downSampleFactor;
             set {
                 if (downSampleFactor != value) {
                     downSampleFactor = value;
@@ -347,9 +311,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int MaxObjects {
-            get {
-                return maxObjects;
-            }
+            get => maxObjects;
             set {
                 if (maxObjects != value) {
                     maxObjects = value;
@@ -362,9 +324,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool Sync {
-            get {
-                return sync;
-            }
+            get => sync;
             set {
                 if (sync != value) {
                     sync = value;
@@ -377,9 +337,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool SlewToTarget {
-            get {
-                return slewToTarget;
-            }
+            get => slewToTarget;
             set {
                 if (slewToTarget != value) {
                     slewToTarget = value;
@@ -392,9 +350,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public short Binning {
-            get {
-                return binning;
-            }
+            get => binning;
             set {
                 if (binning != value) {
                     binning = value;
@@ -407,9 +363,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int Gain {
-            get {
-                return gain;
-            }
+            get => gain;
             set {
                 if (gain != value) {
                     gain = value;
@@ -424,9 +378,7 @@ namespace NINA.Profile {
         [DataMember]
 
         public bool BlindFailoverEnabled {
-            get {
-                return blindFailoverEnabled;
-            }
+            get => blindFailoverEnabled;
             set {
                 if (blindFailoverEnabled != value) {
                     blindFailoverEnabled = value;

@@ -47,16 +47,16 @@ namespace NINA.Core.Utility.ValidationRules {
     public class FloatRangeChecker : DependencyObject {
 
         public float Minimum {
-            get { return (float)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get => (float)GetValue(MinimumProperty);
+            set => SetValue(MinimumProperty, value);
         }
 
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(float), typeof(FloatRangeChecker), new UIPropertyMetadata(float.MinValue));
 
         public float Maximum {
-            get { return (float)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get => (float)GetValue(MaximumProperty);
+            set => SetValue(MaximumProperty, value);
         }
 
         public static readonly DependencyProperty MaximumProperty =

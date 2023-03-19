@@ -39,9 +39,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -54,9 +52,7 @@ namespace NINA.Profile {
         [DataMember]
         public bool Reverse {
             get => !reverse2;
-            set {
-                reverse2 = !value;
-            }
+            set => reverse2 = !value;
         }
 
         private bool reverse2;
@@ -66,9 +62,7 @@ namespace NINA.Profile {
         /// As this was changed to follow the standard of counter clockwise orientation, the reverse setting is flipped for migration purposes
         /// </summary>
         public bool Reverse2 {
-            get {
-                return reverse2;
-            }
+            get => reverse2;
             set {
                 if (reverse2 != value) {
                     reverse2 = value;
@@ -82,9 +76,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public RotatorRangeTypeEnum RangeType {
-            get {
-                return rangeType;
-            }
+            get => rangeType;
             set {
                 if (rangeType != value) {
                     rangeType = value;
@@ -97,9 +89,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public float RangeStartMechanicalPosition {
-            get {
-                return rangeStartMechanicalPosition;
-            }
+            get => rangeStartMechanicalPosition;
             set {
                 if (rangeStartMechanicalPosition != value) {
                     rangeStartMechanicalPosition = value;

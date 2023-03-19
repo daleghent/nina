@@ -147,9 +147,7 @@ namespace NINA.ViewModel {
                 || !string.IsNullOrWhiteSpace(profileService.ActiveProfile.ImageFileSettings.FilePatternDARKFLAT);
         }
 
-        public bool IsX64 {
-            get => !DllLoader.IsX86();
-        }
+        public bool IsX64 => !DllLoader.IsX86();
 
         public void AddImagePattern(ImagePattern pattern) {
             customPatterns.Add(pattern);
@@ -219,25 +217,15 @@ namespace NINA.ViewModel {
             }
         }
 
-        public string FilePatternPreview {
-            get => ImagePatterns.GetImageFileString(FilePattern).Replace("\\", " › ");
-        }
+        public string FilePatternPreview => ImagePatterns.GetImageFileString(FilePattern).Replace("\\", " › ");
 
-        public string FilePatternPreviewDARK {
-            get => ImagePatterns.GetImageFileString(FilePatternDARK, "DARK").Replace("\\", " › ");
-        }
+        public string FilePatternPreviewDARK => ImagePatterns.GetImageFileString(FilePatternDARK, "DARK").Replace("\\", " › ");
 
-        public string FilePatternPreviewBIAS {
-            get => ImagePatterns.GetImageFileString(FilePatternBIAS, "BIAS").Replace("\\", " › ");
-        }
+        public string FilePatternPreviewBIAS => ImagePatterns.GetImageFileString(FilePatternBIAS, "BIAS").Replace("\\", " › ");
 
-        public string FilePatternPreviewFLAT {
-            get => ImagePatterns.GetImageFileString(FilePatternFLAT, "FLAT").Replace("\\", " › ");
-        }
+        public string FilePatternPreviewFLAT => ImagePatterns.GetImageFileString(FilePatternFLAT, "FLAT").Replace("\\", " › ");
 
-        public string FilePatternPreviewDARKFLAT {
-            get => ImagePatterns.GetImageFileString(FilePatternDARKFLAT, "DARKFLAT").Replace("\\", " › ");
-        }
+        public string FilePatternPreviewDARKFLAT => ImagePatterns.GetImageFileString(FilePatternDARKFLAT, "DARKFLAT").Replace("\\", " › ");
 
         private List<ImagePattern> customPatterns;
 
@@ -654,9 +642,7 @@ namespace NINA.ViewModel {
         };
 
         public ObservableCollection<CultureInfo> AvailableLanguages {
-            get {
-                return _availableLanguages;
-            }
+            get => _availableLanguages;
             set {
                 _availableLanguages = value;
                 RaisePropertyChanged();
@@ -664,9 +650,7 @@ namespace NINA.ViewModel {
         }
 
         public CultureInfo Language {
-            get {
-                return profileService.ActiveProfile.ApplicationSettings.Language;
-            }
+            get => profileService.ActiveProfile.ApplicationSettings.Language;
             set {
                 profileService.ChangeLocale(value);
                 RaisePropertyChanged();
@@ -674,9 +658,7 @@ namespace NINA.ViewModel {
         }
 
         public FontFamily ApplicationFontFamily {
-            get {
-                return NINA.Properties.Settings.Default.ApplicationFontFamily;
-            }
+            get => NINA.Properties.Settings.Default.ApplicationFontFamily;
             set {
                 NINA.Properties.Settings.Default.ApplicationFontFamily = value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -693,9 +675,7 @@ namespace NINA.ViewModel {
         private FamilyTypeface familyTypeface;
 
         public FamilyTypeface FamilyTypeface {
-            get {
-                return familyTypeface;
-            }
+            get => familyTypeface;
             set {
                 familyTypeface = value;
                 FontStretch = familyTypeface.Stretch;
@@ -707,9 +687,7 @@ namespace NINA.ViewModel {
         }
 
         public bool SingleDockLayout {
-            get {
-                return NINA.Properties.Settings.Default.SingleDockLayout;
-            }
+            get => NINA.Properties.Settings.Default.SingleDockLayout;
             set {
                 NINA.Properties.Settings.Default.SingleDockLayout = value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -719,9 +697,7 @@ namespace NINA.ViewModel {
         }
 
         public FontStretch FontStretch {
-            get {
-                return NINA.Properties.Settings.Default.FontStretch;
-            }
+            get => NINA.Properties.Settings.Default.FontStretch;
             set {
                 NINA.Properties.Settings.Default.FontStretch = value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -730,9 +706,7 @@ namespace NINA.ViewModel {
         }
 
         public FontStyle FontStyle {
-            get {
-                return NINA.Properties.Settings.Default.FontStyle;
-            }
+            get => NINA.Properties.Settings.Default.FontStyle;
             set {
                 NINA.Properties.Settings.Default.FontStyle = value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -741,9 +715,7 @@ namespace NINA.ViewModel {
         }
 
         public FontWeight FontWeight {
-            get {
-                return NINA.Properties.Settings.Default.FontWeight;
-            }
+            get => NINA.Properties.Settings.Default.FontWeight;
             set {
                 NINA.Properties.Settings.Default.FontWeight = value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -766,43 +738,30 @@ namespace NINA.ViewModel {
 
 #pragma warning restore CS0612 // Type or member is obsolete
 
-        public TIFFCompressionTypeEnum[] TIFFCompressionTypes {
-            get {
-                return Enum.GetValues(typeof(TIFFCompressionTypeEnum))
+        public TIFFCompressionTypeEnum[] TIFFCompressionTypes => Enum.GetValues(typeof(TIFFCompressionTypeEnum))
                     .Cast<TIFFCompressionTypeEnum>()
                     .ToArray();
-            }
-        }
 
-        public XISFCompressionTypeEnum[] XISFCompressionTypes {
-            get {
-                return Enum.GetValues(typeof(XISFCompressionTypeEnum))
+        public XISFCompressionTypeEnum[] XISFCompressionTypes => Enum.GetValues(typeof(XISFCompressionTypeEnum))
                     .Cast<XISFCompressionTypeEnum>()
                     .ToArray();
-            }
-        }
 
-        public XISFChecksumTypeEnum[] XISFChecksumTypes {
-            get {
+        public XISFChecksumTypeEnum[] XISFChecksumTypes =>
                 /*
-                 * NOTE: PixInsight does not yet support opening files with SHA3 checksums, despite then
-                 * being defined as part of the XISF 1.0 specification. We will not permit the user to choose
-                 * these as a checksum type until PixInsight also supports them.
-                 */
-                return Enum.GetValues(typeof(XISFChecksumTypeEnum))
+* NOTE: PixInsight does not yet support opening files with SHA3 checksums, despite then
+* being defined as part of the XISF 1.0 specification. We will not permit the user to choose
+* these as a checksum type until PixInsight also supports them.
+*/
+                Enum.GetValues(typeof(XISFChecksumTypeEnum))
                     .Cast<XISFChecksumTypeEnum>()
                     .Where(p => p != XISFChecksumTypeEnum.SHA3_256)
                     .Where(p => p != XISFChecksumTypeEnum.SHA3_512)
                     .ToArray();
-            }
-        }
 
         private ImagePatterns _imagePatterns;
 
         public ImagePatterns ImagePatterns {
-            get {
-                return _imagePatterns;
-            }
+            get => _imagePatterns;
             set {
                 _imagePatterns = value;
                 RaisePropertyChanged();
@@ -834,9 +793,7 @@ namespace NINA.ViewModel {
         }
 
         public AutoUpdateSourceEnum AutoUpdateSource {
-            get {
-                return (AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource;
-            }
+            get => (AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource;
             set {
                 NINA.Properties.Settings.Default.AutoUpdateSource = (int)value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -846,9 +803,7 @@ namespace NINA.ViewModel {
         }
 
         public bool UseSavedProfileSelection {
-            get {
-                return Properties.Settings.Default.UseSavedProfileSelection;
-            }
+            get => Properties.Settings.Default.UseSavedProfileSelection;
             set {
                 NINA.Properties.Settings.Default.UseSavedProfileSelection = value;
                 CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
@@ -867,17 +822,15 @@ namespace NINA.ViewModel {
         }
 
         public int SaveQueueSize {
-            get {
-                return Properties.Settings.Default.SaveQueueSize;
-            }
+            get => Properties.Settings.Default.SaveQueueSize;
             set {
-                if(value < 1) { value = 1; }
-                if(value != SaveQueueSize) {
+                if (value < 1) { value = 1; }
+                if (value != SaveQueueSize) {
                     NINA.Properties.Settings.Default.SaveQueueSize = value;
                     CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
                     RaisePropertyChanged();
                     RequiresRestart = true;
-                }                
+                }
             }
         }
 
@@ -892,9 +845,7 @@ namespace NINA.ViewModel {
         }
 
         public bool RequiresRestart {
-            get {
-                return requiresRestart;
-            }
+            get => requiresRestart;
             set {
                 requiresRestart = value;
                 RaisePropertyChanged();
@@ -902,9 +853,7 @@ namespace NINA.ViewModel {
         }
 
         public LogLevelEnum LogLevel {
-            get {
-                return profileService.ActiveProfile.ApplicationSettings.LogLevel;
-            }
+            get => profileService.ActiveProfile.ApplicationSettings.LogLevel;
             set {
                 profileService.ActiveProfile.ApplicationSettings.LogLevel = value;
                 Logger.SetLogLevel(value);
@@ -915,9 +864,7 @@ namespace NINA.ViewModel {
         private FilterInfo _selectedFilter;
 
         public FilterInfo SelectedFilter {
-            get {
-                return _selectedFilter;
-            }
+            get => _selectedFilter;
             set {
                 _selectedFilter = value;
                 RaisePropertyChanged();
@@ -931,9 +878,7 @@ namespace NINA.ViewModel {
         private readonly IPlanetariumFactory planetariumFactory;
 
         public ProfileMeta SelectedProfile {
-            get {
-                return _selectedProfile;
-            }
+            get => _selectedProfile;
             set {
                 _selectedProfile = value;
                 RaisePropertyChanged();

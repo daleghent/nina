@@ -119,9 +119,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double TemperatureSetPoint {
             get => this.Camera.TemperatureSetPoint;
-            set {
-                this.Camera.TemperatureSetPoint = value;
-            }
+            set => this.Camera.TemperatureSetPoint = value;
         }
 
         public short BinX {

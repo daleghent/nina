@@ -177,9 +177,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
         private IFilterWheel _fW;
 
         public IFilterWheel FW {
-            get {
-                return _fW;
-            }
+            get => _fW;
             private set {
                 _fW = value;
                 RaisePropertyChanged();
@@ -189,9 +187,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
         private FilterInfo targetFilter;
 
         public FilterInfo TargetFilter {
-            get {
-                return targetFilter;
-            }
+            get => targetFilter;
             set {
                 targetFilter = value;
                 RaisePropertyChanged();

@@ -24,35 +24,35 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canSetTemperature;
 
         public bool CanSetTemperature {
-            get { return canSetTemperature; }
+            get => canSetTemperature;
             set { if (canSetTemperature != value) { canSetTemperature = value; RaisePropertyChanged(); } }
         }
 
         private bool hasShutter;
 
         public bool HasShutter {
-            get { return hasShutter; }
+            get => hasShutter;
             set { if (hasShutter != value) { hasShutter = value; RaisePropertyChanged(); } }
         }
 
         private double temperature;
 
         public double Temperature {
-            get { return temperature; }
+            get => temperature;
             set { if (temperature != value) { temperature = value; RaisePropertyChanged(); } }
         }
 
         private int gain = -1;
 
         public int Gain {
-            get { return gain; }
+            get => gain;
             set { if (gain != value) { gain = value; RaisePropertyChanged(); } }
         }
 
         private int defaultGain = -1;
 
         public int DefaultGain {
-            get { return defaultGain; }
+            get => defaultGain;
             set {
                 if (value != defaultGain) {
                     defaultGain = value;
@@ -64,23 +64,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private double electronsPerADU;
 
         public double ElectronsPerADU {
-            get { return electronsPerADU; }
+            get => electronsPerADU;
             set { if (electronsPerADU != value) { electronsPerADU = value; RaisePropertyChanged(); } }
         }
 
         private short binxX;
 
         public short BinX {
-            get { return binxX; }
+            get => binxX;
             set { if (binxX != value) { binxX = value; RaisePropertyChanged(); } }
         }
 
         private int bitDepth;
 
         public int BitDepth {
-            get {
-                return bitDepth;
-            }
+            get => bitDepth;
             set {
                 if (bitDepth != value) {
                     bitDepth = value;
@@ -92,49 +90,49 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private short binY;
 
         public short BinY {
-            get { return binY; }
+            get => binY;
             set { if (binY != value) { binY = value; RaisePropertyChanged(); } }
         }
 
         private bool canSetOffset;
 
         public bool CanSetOffset {
-            get { return canSetOffset; }
+            get => canSetOffset;
             set { if (canSetOffset != value) { canSetOffset = value; RaisePropertyChanged(); } }
         }
 
         private bool canGetGain;
 
         public bool CanGetGain {
-            get { return canGetGain; }
+            get => canGetGain;
             set { if (canGetGain != value) { canGetGain = value; RaisePropertyChanged(); } }
         }
 
         public int offsetMin;
 
         public int OffsetMin {
-            get { return offsetMin; }
+            get => offsetMin;
             set { if (offsetMin != value) { offsetMin = value; RaisePropertyChanged(); } }
         }
 
         public int offsetMax;
 
         public int OffsetMax {
-            get { return offsetMax; }
+            get => offsetMax;
             set { if (offsetMax != value) { offsetMax = value; RaisePropertyChanged(); } }
         }
 
         private int offset;
 
         public int Offset {
-            get { return offset; }
+            get => offset;
             set { if (offset != value) { offset = value; RaisePropertyChanged(); } }
         }
 
         private int defaultOffset = -1;
 
         public int DefaultOffset {
-            get { return defaultOffset; }
+            get => defaultOffset;
             set {
                 if (value != defaultOffset) {
                     defaultOffset = value;
@@ -146,58 +144,56 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private int usbLimit;
 
         public int USBLimit {
-            get { return usbLimit; }
+            get => usbLimit;
             set { if (usbLimit != value) { usbLimit = value; RaisePropertyChanged(); } }
         }
 
         private bool isSubSampleEnabled;
 
         public bool IsSubSampleEnabled {
-            get { return isSubSampleEnabled; }
+            get => isSubSampleEnabled;
             set { if (isSubSampleEnabled != value) { isSubSampleEnabled = value; RaisePropertyChanged(); } }
         }
 
         private CameraStates cameraState = CameraStates.NoState;
 
         public CameraStates CameraState {
-            get { return cameraState; }
+            get => cameraState;
             set { if (cameraState != value) { cameraState = value; RaisePropertyChanged(); } }
         }
 
         private int xSize;
 
         public int XSize {
-            get { return xSize; }
+            get => xSize;
             set { if (xSize != value) { xSize = value; RaisePropertyChanged(); } }
         }
 
         private int ySize;
 
         public int YSize {
-            get { return ySize; }
+            get => ySize;
             set { if (ySize != value) { ySize = value; RaisePropertyChanged(); } }
         }
 
         private double pixelSize;
 
         public double PixelSize {
-            get { return pixelSize; }
+            get => pixelSize;
             set { if (pixelSize != value) { pixelSize = value; RaisePropertyChanged(); } }
         }
 
         private int battery;
 
         public int Battery {
-            get { return battery; }
+            get => battery;
             set { if (battery != value) { battery = value; RaisePropertyChanged(); } }
         }
 
         private int gainMin;
 
         public int GainMin {
-            get {
-                return gainMin;
-            }
+            get => gainMin;
             set {
                 if (gainMin != value) {
                     gainMin = value;
@@ -209,9 +205,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private int gainMax;
 
         public int GainMax {
-            get {
-                return gainMax;
-            }
+            get => gainMax;
             set {
                 if (gainMax != value) {
                     gainMax = value;
@@ -223,9 +217,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canSetGain;
 
         public bool CanSetGain {
-            get {
-                return canSetGain;
-            }
+            get => canSetGain;
             set {
                 if (canSetGain != value) {
                     canSetGain = value;
@@ -237,9 +229,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private IList<int> gains = new List<int>();
 
         public IList<int> Gains {
-            get {
-                return gains;
-            }
+            get => gains;
             set {
                 gains = value;
                 RaisePropertyChanged();
@@ -249,9 +239,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool coolerOn;
 
         public bool CoolerOn {
-            get {
-                return coolerOn;
-            }
+            get => coolerOn;
             set {
                 if (coolerOn != value) {
                     coolerOn = value;
@@ -263,9 +251,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private double _coolerPower;
 
         public double CoolerPower {
-            get {
-                return _coolerPower;
-            }
+            get => _coolerPower;
             set {
                 _coolerPower = value;
                 RaisePropertyChanged();
@@ -275,9 +261,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool hasDewHeater;
 
         public bool HasDewHeater {
-            get {
-                return hasDewHeater;
-            }
+            get => hasDewHeater;
             set {
                 hasDewHeater = value;
                 RaisePropertyChanged();
@@ -287,9 +271,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool dewHeaterOn;
 
         public bool DewHeaterOn {
-            get {
-                return dewHeaterOn;
-            }
+            get => dewHeaterOn;
             set {
                 dewHeaterOn = value;
                 RaisePropertyChanged();
@@ -299,42 +281,42 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canSubSample;
 
         public bool CanSubSample {
-            get { return canSubSample; }
+            get => canSubSample;
             set { if (canSubSample != value) { canSubSample = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleX;
 
         public int SubSampleX {
-            get { return subSampleX; }
+            get => subSampleX;
             set { if (subSampleX != value) { subSampleX = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleY;
 
         public int SubSampleY {
-            get { return subSampleY; }
+            get => subSampleY;
             set { if (subSampleY != value) { subSampleY = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleWidth;
 
         public int SubSampleWidth {
-            get { return subSampleWidth; }
+            get => subSampleWidth;
             set { if (subSampleWidth != value) { subSampleWidth = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleHeight;
 
         public int SubSampleHeight {
-            get { return subSampleHeight; }
+            get => subSampleHeight;
             set { if (subSampleHeight != value) { subSampleHeight = value; RaisePropertyChanged(); } }
         }
 
         private double temperatureSetPoint;
 
         public double TemperatureSetPoint {
-            get { return temperatureSetPoint; }
+            get => temperatureSetPoint;
             set { if (temperatureSetPoint != value) { temperatureSetPoint = value; RaisePropertyChanged(); } }
         }
 
@@ -526,19 +508,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canSetUSBLimit;
 
         public bool CanSetUSBLimit {
-            get { return canSetUSBLimit; }
+            get => canSetUSBLimit;
             set { if (canSetUSBLimit != value) { canSetUSBLimit = value; RaisePropertyChanged(); } }
         }
 
         private int uSBLimitMin;
         public int USBLimitMin {
-            get { return uSBLimitMin; }
+            get => uSBLimitMin;
             set { if (uSBLimitMin != value) { uSBLimitMin = value; RaisePropertyChanged(); } }
         }
 
         private int uSBLimitMax;
         public int USBLimitMax {
-            get { return uSBLimitMax; }
+            get => uSBLimitMax;
             set { if (uSBLimitMax != value) { uSBLimitMax = value; RaisePropertyChanged(); } }
         }
     }

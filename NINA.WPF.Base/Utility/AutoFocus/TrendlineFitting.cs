@@ -31,9 +31,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         private Trendline _leftTrend;
 
         public Trendline LeftTrend {
-            get {
-                return _leftTrend;
-            }
+            get => _leftTrend;
             set {
                 _leftTrend = value;
                 RaisePropertyChanged();
@@ -43,9 +41,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         private Trendline _rightTrend;
 
         public Trendline RightTrend {
-            get {
-                return _rightTrend;
-            }
+            get => _rightTrend;
             set {
                 _rightTrend = value;
                 RaisePropertyChanged();
@@ -55,9 +51,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         private DataPoint _intersection;
 
         public DataPoint Intersection {
-            get {
-                return _intersection;
-            }
+            get => _intersection;
             set {
                 _intersection = value;
                 RaisePropertyChanged();
@@ -67,9 +61,7 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         private ScatterErrorPoint _minimum;
 
         public ScatterErrorPoint Minimum {
-            get {
-                return _minimum;
-            }
+            get => _minimum;
             set {
                 _minimum = value;
                 RaisePropertyChanged();

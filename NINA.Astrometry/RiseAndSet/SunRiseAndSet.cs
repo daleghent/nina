@@ -22,12 +22,9 @@ namespace NINA.Astrometry.RiseAndSet {
         public SunRiseAndSet(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        private double SunRiseDegree {
-            get {
+        private double SunRiseDegree =>
                 //http://aa.usno.navy.mil/faq/docs/RST_defs.php #Paragraph Sunrise and sunset
-                return AstroUtil.ArcminToDegree(-50);
-            }
-        }
+                AstroUtil.ArcminToDegree(-50);
 
         protected override double AdjustAltitude(BasicBody body) {
             return body.Altitude - SunRiseDegree;

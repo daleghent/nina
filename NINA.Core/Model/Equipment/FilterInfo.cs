@@ -58,9 +58,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_name))]
         [JsonProperty(PropertyName = nameof(_name))]
         public string Name {
-            get {
-                return _name;
-            }
+            get => _name;
 
             set {
                 _name = value;
@@ -71,9 +69,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_focusOffset))]
         [JsonProperty(PropertyName = nameof(_focusOffset))]
         public int FocusOffset {
-            get {
-                return _focusOffset;
-            }
+            get => _focusOffset;
 
             set {
                 _focusOffset = value;
@@ -84,9 +80,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_position))]
         [JsonProperty(PropertyName = nameof(_position))]
         public short Position {
-            get {
-                return _position;
-            }
+            get => _position;
 
             set {
                 _position = value;
@@ -97,9 +91,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_autoFocusExposureTime))]
         [JsonProperty(PropertyName = nameof(_autoFocusExposureTime))]
         public double AutoFocusExposureTime {
-            get {
-                return _autoFocusExposureTime;
-            }
+            get => _autoFocusExposureTime;
 
             set {
                 _autoFocusExposureTime = value;
@@ -110,9 +102,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_autoFocusFilter))]
         [JsonProperty(PropertyName = nameof(_autoFocusFilter))]
         public bool AutoFocusFilter {
-            get {
-                return _autoFocusFilter;
-            }
+            get => _autoFocusFilter;
 
             set {
                 _autoFocusFilter = value;
@@ -123,9 +113,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(FlatWizardFilterSettings), IsRequired = false)]
         [JsonProperty(PropertyName = nameof(FlatWizardFilterSettings))]
         public FlatWizardFilterSettings FlatWizardFilterSettings {
-            get {
-                return _flatWizardFilterSettings;
-            }
+            get => _flatWizardFilterSettings;
             set {
                 _flatWizardFilterSettings = value;
                 RaisePropertyChanged();
@@ -135,9 +123,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_autoFocusBinning), IsRequired = false)]
         [JsonProperty(PropertyName = nameof(_autoFocusBinning))]
         public BinningMode AutoFocusBinning {
-            get {
-                return _autoFocusBinning;
-            }
+            get => _autoFocusBinning;
             set {
                 _autoFocusBinning = value;
                 RaisePropertyChanged();
@@ -147,9 +133,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_autoFocusGain), IsRequired = false)]
         [JsonProperty(PropertyName = nameof(_autoFocusGain))]
         public int AutoFocusGain {
-            get {
-                return _autoFocusGain;
-            }
+            get => _autoFocusGain;
             set {
                 _autoFocusGain = value;
                 RaisePropertyChanged();
@@ -159,9 +143,7 @@ namespace NINA.Core.Model.Equipment {
         [DataMember(Name = nameof(_autoFocusOffset), IsRequired = false)]
         [JsonProperty(PropertyName = nameof(_autoFocusOffset))]
         public int AutoFocusOffset {
-            get {
-                return _autoFocusOffset;
-            }
+            get => _autoFocusOffset;
             set {
                 _autoFocusOffset = value;
                 RaisePropertyChanged();

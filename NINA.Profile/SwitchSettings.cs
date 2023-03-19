@@ -49,9 +49,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -64,9 +62,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string EagleUrl {
-            get {
-                return eagleUrl;
-            }
+            get => eagleUrl;
             set {
                 if (eagleUrl != value) {
                     eagleUrl = value;

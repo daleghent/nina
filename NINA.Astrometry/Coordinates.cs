@@ -42,26 +42,16 @@ namespace NINA.Astrometry {
         [XmlElement(nameof(RA))]
         public double RA {
             get => raAngle.Hours;
-            set {
-                raAngle = Angle.ByHours(value);
-            }
+            set => raAngle = Angle.ByHours(value);
         }
 
         [XmlIgnore]
-        public string RAString {
-            get {
-                return AstroUtil.DegreesToHMS(RADegrees);
-            }
-        }
+        public string RAString => AstroUtil.DegreesToHMS(RADegrees);
 
         /// <summary>
         /// Right Ascension in degrees
         /// </summary>
-        public double RADegrees {
-            get {
-                return raAngle.Degree;
-            }
-        }
+        public double RADegrees => raAngle.Degree;
 
         /// <summary>
         /// Declination in Degrees
@@ -69,17 +59,11 @@ namespace NINA.Astrometry {
         [XmlElement(nameof(Dec))]
         public double Dec {
             get => decAngle.Degree;
-            set {
-                decAngle = Angle.ByDegree(value);
-            }
+            set => decAngle = Angle.ByDegree(value);
         }
 
         [XmlIgnore]
-        public string DecString {
-            get {
-                return AstroUtil.DegreesToDMS(Dec);
-            }
-        }
+        public string DecString => AstroUtil.DegreesToDMS(Dec);
 
         /// <summary>
         /// Epoch the coordinates are stored in. Either J2000 or JNOW

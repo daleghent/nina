@@ -65,9 +65,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Culture {
-            get {
-                return Language.Name;
-            }
+            get => Language.Name;
             set {
                 Language = new CultureInfo(value);
                 RaisePropertyChanged();
@@ -77,9 +75,7 @@ namespace NINA.Profile {
         private CultureInfo language;
 
         public CultureInfo Language {
-            get {
-                return language;
-            }
+            get => language;
             set {
                 if (language != value) {
                     language = value;
@@ -92,9 +88,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public LogLevelEnum LogLevel {
-            get {
-                return logLevel;
-            }
+            get => logLevel;
             set {
                 if (logLevel != value) {
                     logLevel = value;
@@ -107,9 +101,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double DevicePollingInterval {
-            get {
-                return devicePollingInterval;
-            }
+            get => devicePollingInterval;
             set {
                 if (devicePollingInterval != value) {
                     devicePollingInterval = value;
@@ -122,9 +114,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SkyAtlasImageRepository {
-            get {
-                return skyAtlasImageRepository;
-            }
+            get => skyAtlasImageRepository;
             set {
                 if (skyAtlasImageRepository != value) {
                     skyAtlasImageRepository = value;
@@ -137,9 +127,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SkySurveyCacheDirectory {
-            get {
-                return skySurveyCacheDirectory;
-            }
+            get => skySurveyCacheDirectory;
             set {
                 if (skySurveyCacheDirectory != value) {
                     skySurveyCacheDirectory = value;
@@ -152,9 +140,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool PerDeviceThreadingEnabled {
-            get {
-                return perDeviceThreadingEnabled;
-            }
+            get => perDeviceThreadingEnabled;
             set {
                 if (perDeviceThreadingEnabled != value) {
                     perDeviceThreadingEnabled = value;
@@ -175,9 +161,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors {
-            get {
-                return selectedPluggableBehaviors;
-            }
+            get => selectedPluggableBehaviors;
             set {
                 if (selectedPluggableBehaviors != value) {
                     if (selectedPluggableBehaviors != null) {
@@ -196,11 +180,9 @@ namespace NINA.Profile {
 
         [DataMember]
         public int PageSize {
-            get {
-                return pageSize;
-            }
+            get => pageSize;
             set {
-                if(value < 1) { value = 1; }                
+                if (value < 1) { value = 1; }
                 if (pageSize != value) {
                     pageSize = value;
                     RaisePropertyChanged();

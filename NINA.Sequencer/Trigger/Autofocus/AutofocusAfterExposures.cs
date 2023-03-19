@@ -99,9 +99,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
         }
 
-        public int ProgressExposures {
-            get => history.ImageHistory.Count % AfterExposures;
-        }
+        public int ProgressExposures => history.ImageHistory.Count % AfterExposures;
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             lastTriggerId = history.ImageHistory.Count;

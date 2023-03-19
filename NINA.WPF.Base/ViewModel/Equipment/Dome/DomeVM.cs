@@ -326,9 +326,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private IDome dome;
 
         public IDome Dome {
-            get {
-                return dome;
-            }
+            get => dome;
             private set {
                 dome = value;
                 RaisePropertyChanged();
@@ -543,9 +541,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private double targetAzimuthDegrees;
 
         public double TargetAzimuthDegrees {
-            get {
-                return targetAzimuthDegrees;
-            }
+            get => targetAzimuthDegrees;
 
             set {
                 targetAzimuthDegrees = value;
@@ -554,9 +550,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         public double RotateDegrees {
-            get {
-                return profileService.ActiveProfile.DomeSettings.RotateDegrees;
-            }
+            get => profileService.ActiveProfile.DomeSettings.RotateDegrees;
 
             set {
                 if (profileService.ActiveProfile.DomeSettings.RotateDegrees != value) {
@@ -675,9 +669,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
 
         public TelescopeInfo TelescopeInfo {
-            get {
-                return telescopeInfo;
-            }
+            get => telescopeInfo;
             private set {
                 telescopeInfo = value;
                 RaisePropertyChanged();
@@ -687,9 +679,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private SafetyMonitorInfo safetyMonitorInfo = DeviceInfo.CreateDefaultInstance<SafetyMonitorInfo>();
 
         public SafetyMonitorInfo SafetyMonitorInfo {
-            get {
-                return safetyMonitorInfo;
-            }
+            get => safetyMonitorInfo;
             private set {
                 safetyMonitorInfo = value;
                 RaisePropertyChanged();

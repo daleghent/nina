@@ -61,9 +61,7 @@ namespace NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
         public void SetupDialog() {

@@ -37,9 +37,7 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
         private bool nameChangeInProgress = false;
 
         public override string Name {
-            get {
-                return name;
-            }
+            get => name;
             set {
                 if (canSetName) {
                     _ = SetName(value);

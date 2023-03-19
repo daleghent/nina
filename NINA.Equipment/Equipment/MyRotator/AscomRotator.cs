@@ -30,11 +30,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
         public AscomRotator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.Rotator) {
         }
 
-        public bool CanReverse {
-            get {
-                return GetProperty(nameof(Rotator.CanReverse), false);
-            }
-        }
+        public bool CanReverse => GetProperty(nameof(Rotator.CanReverse), false);
 
         public bool Reverse {
             get {
@@ -50,11 +46,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
             }
         }
 
-        public bool IsMoving {
-            get {
-                return GetProperty(nameof(Rotator.IsMoving), false);
-            }
-        }
+        public bool IsMoving => GetProperty(nameof(Rotator.IsMoving), false);
 
         private bool synced;
 
@@ -68,21 +60,11 @@ namespace NINA.Equipment.Equipment.MyRotator {
 
         private float offset = 0;
 
-        public float Position {
-            get => AstroUtil.EuclidianModulus(MechanicalPosition + offset, 360);
-        }
+        public float Position => AstroUtil.EuclidianModulus(MechanicalPosition + offset, 360);
 
-        public float MechanicalPosition {
-            get {
-                return GetProperty(nameof(Rotator.Position), float.NaN);
-            }
-        }
+        public float MechanicalPosition => GetProperty(nameof(Rotator.Position), float.NaN);
 
-        public float StepSize {
-            get {
-                return GetProperty(nameof(Rotator.StepSize), float.NaN);
-            }
-        }
+        public float StepSize => GetProperty(nameof(Rotator.StepSize), float.NaN);
 
         protected override string ConnectionLostMessage => Loc.Instance["LblRotatorConnectionLost"];
 

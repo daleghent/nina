@@ -96,9 +96,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return true;
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
         public bool CanSetShiftRate => false;
         public bool ShiftEnabled => false;

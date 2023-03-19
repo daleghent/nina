@@ -21,22 +21,10 @@ namespace NINA.Astrometry.Body {
         public Sun(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        public override double Radius {
-            get {
-                return 696342; // https://de.wikipedia.org/wiki/Sonnenradius
-            }
-        }
+        public override double Radius => 696342; // https://de.wikipedia.org/wiki/Sonnenradius
 
-        protected override string Name {
-            get {
-                return "Sun";
-            }
-        }
+        protected override string Name => "Sun";
 
-        protected override NOVAS.Body BodyNumber {
-            get {
-                return NOVAS.Body.Sun;
-            }
-        }
+        protected override NOVAS.Body BodyNumber => NOVAS.Body.Sun;
     }
 }

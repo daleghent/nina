@@ -51,17 +51,9 @@ namespace NINA.Plugin {
             }
         }
 
-        public string License {
-            get {
-                return GetCustomMetadata("License");
-            }
-        }
+        public string License => GetCustomMetadata("License");
 
-        public string LicenseURL {
-            get {
-                return GetCustomMetadata("LicenseURL");
-            }
-        }
+        public string LicenseURL => GetCustomMetadata("LicenseURL");
 
         public string Author {
             get {
@@ -70,23 +62,11 @@ namespace NINA.Plugin {
             }
         }
 
-        public string Homepage {
-            get {
-                return GetCustomMetadata("Homepage");
-            }
-        }
+        public string Homepage => GetCustomMetadata("Homepage");
 
-        public string Repository {
-            get {
-                return GetCustomMetadata("Repository");
-            }
-        }
+        public string Repository => GetCustomMetadata("Repository");
 
-        public string ChangelogURL {
-            get {
-                return GetCustomMetadata("ChangelogURL");
-            }
-        }
+        public string ChangelogURL => GetCustomMetadata("ChangelogURL");
 
         public string[] Tags {
             get {
@@ -109,16 +89,12 @@ namespace NINA.Plugin {
             }
         }
 
-        public IPluginInstallerDetails Installer {
-            get {
-                return new PluginInstallerDetails() {
-                    // The installer details are irrelevant in this scope and have to be filled out by the plugin maintainer
-                    // Things like the download URL and the checksum will change each new Version anyways
-                    URL = string.Empty,
-                    Checksum = string.Empty
-                };
-            }
-        }
+        public IPluginInstallerDetails Installer => new PluginInstallerDetails() {
+            // The installer details are irrelevant in this scope and have to be filled out by the plugin maintainer
+            // Things like the download URL and the checksum will change each new Version anyways
+            URL = string.Empty,
+            Checksum = string.Empty
+        };
 
         public IPluginDescription Descriptions {
             get {

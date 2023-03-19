@@ -29,7 +29,7 @@ namespace NINA.Image.ImageAnalysis {
         private ushort[] grayMap;
 
         public ushort[] RedMap16 {
-            get { return redMap; }
+            get => redMap;
             set {
                 // check the map
                 if ((value == null) || (value.Length != 65536))
@@ -40,7 +40,7 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public ushort[] GreenMap16 {
-            get { return greenMap; }
+            get => greenMap;
             set {
                 // check the map
                 if ((value == null) || (value.Length != 65536))
@@ -51,7 +51,7 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public ushort[] BlueMap16 {
-            get { return blueMap; }
+            get => blueMap;
             set {
                 // check the map
                 if ((value == null) || (value.Length != 65536))
@@ -62,7 +62,7 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public ushort[] GrayMap16 {
-            get { return grayMap; }
+            get => grayMap;
             set {
                 // check the map
                 if ((value == null) || (value.Length != 65536))

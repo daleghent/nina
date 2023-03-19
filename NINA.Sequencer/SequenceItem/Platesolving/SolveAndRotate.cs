@@ -114,7 +114,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         /// Backwards compatibility property that will migrate to position angle
         /// </summary>
         [JsonProperty(propertyName: "Rotation")]
-        public double DeprecatedRotation { set { PositionAngle = 360 - value; } }
+        public double DeprecatedRotation { set => PositionAngle = 360 - value; }
 
         private double positionAngle = 0;
         public double PositionAngle {

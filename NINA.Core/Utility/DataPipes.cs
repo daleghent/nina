@@ -47,8 +47,8 @@ namespace NINA.Core.Utility {
         #region Source (DependencyProperty)
 
         public object Source {
-            get { return (object)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get => (object)GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
 
         public static readonly DependencyProperty SourceProperty =
@@ -68,8 +68,8 @@ namespace NINA.Core.Utility {
         #region Target (DependencyProperty)
 
         public object Target {
-            get { return (object)GetValue(TargetProperty); }
-            set { SetValue(TargetProperty, value); }
+            get => (object)GetValue(TargetProperty);
+            set => SetValue(TargetProperty, value);
         }
 
         public static readonly DependencyProperty TargetProperty =

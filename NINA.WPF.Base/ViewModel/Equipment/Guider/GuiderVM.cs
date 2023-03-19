@@ -111,9 +111,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             }
         }
 
-        public double MainCameraPixelScale {
-            get => AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
-        }
+        public double MainCameraPixelScale => AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
 
         public double MainCameraDitherPixels {
             get {
@@ -178,9 +176,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         }
 
         public int HistorySize {
-            get {
-                return profileService.ActiveProfile.GuiderSettings.PHD2HistorySize;
-            }
+            get => profileService.ActiveProfile.GuiderSettings.PHD2HistorySize;
             set {
                 profileService.ActiveProfile.GuiderSettings.PHD2HistorySize = value;
                 GuideStepsHistory.HistorySize = value;
@@ -321,9 +317,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         }
 
         public GuiderScaleEnum GuiderScale {
-            get {
-                return profileService.ActiveProfile.GuiderSettings.PHD2GuiderScale;
-            }
+            get => profileService.ActiveProfile.GuiderSettings.PHD2GuiderScale;
             set {
                 profileService.ActiveProfile.GuiderSettings.PHD2GuiderScale = value;
                 GuideStepsHistory.Scale = value;
@@ -331,9 +325,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         }
 
         public double GuiderMaxY {
-            get {
-                return profileService.ActiveProfile.GuiderSettings.MaxY;
-            }
+            get => profileService.ActiveProfile.GuiderSettings.MaxY;
             set {
                 profileService.ActiveProfile.GuiderSettings.MaxY = value;
                 GuideStepsHistory.MaxY = value;
@@ -409,9 +401,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         private GuideStepsHistory guideStepsHistory;
 
         public GuideStepsHistory GuideStepsHistory {
-            get {
-                return guideStepsHistory;
-            }
+            get => guideStepsHistory;
             private set {
                 guideStepsHistory = value;
                 RaisePropertyChanged();

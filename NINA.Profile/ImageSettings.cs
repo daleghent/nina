@@ -48,9 +48,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double AutoStretchFactor {
-            get {
-                return autoStretchFactor;
-            }
+            get => autoStretchFactor;
             set {
                 if (autoStretchFactor != value) {
                     autoStretchFactor = value;
@@ -63,9 +61,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double BlackClipping {
-            get {
-                return blackClipping;
-            }
+            get => blackClipping;
             set {
                 if (blackClipping != value) {
                     blackClipping = value;
@@ -78,9 +74,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool AnnotateImage {
-            get {
-                return annotateImage;
-            }
+            get => annotateImage;
             set {
                 if (annotateImage != value) {
                     annotateImage = value;
@@ -166,9 +160,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool AnnotateUnlimitedStars {
-            get {
-                return annotateUnlimitedStars;
-            }
+            get => annotateUnlimitedStars;
             set {
                 if (annotateUnlimitedStars != value) {
                     annotateUnlimitedStars = value;
@@ -181,9 +173,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public StarSensitivityEnum StarSensitivity {
-            get {
-                return starSensitivity;
-            }
+            get => starSensitivity;
             set {
                 if (starSensitivity != value) {
                     starSensitivity = value;
@@ -196,9 +186,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public NoiseReductionEnum NoiseReduction {
-            get {
-                return noiseReduction;
-            }
+            get => noiseReduction;
             set {
                 if (noiseReduction != value) {
                     noiseReduction = value;
@@ -211,9 +199,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SharpCapSensorAnalysisFolder {
-            get {
-                return sharpCapSensorAnalysisFolder;
-            }
+            get => sharpCapSensorAnalysisFolder;
             set {
                 if (sharpCapSensorAnalysisFolder != value) {
                     sharpCapSensorAnalysisFolder = value;
@@ -226,9 +212,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool DetectStars {
-            get {
-                return detectStars;
-            }
+            get => detectStars;
             set {
                 if (detectStars != value) {
                     detectStars = value;
@@ -241,9 +225,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool AutoStretch {
-            get {
-                return autoStretch;
-            }
+            get => autoStretch;
             set {
                 if (autoStretch != value) {
                     autoStretch = value;

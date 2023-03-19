@@ -46,8 +46,8 @@ namespace NINA.Sequencer {
 
         private CollectionViewSource targetsView;
         private CollectionViewSource targetsMenuView;
-        public ICollectionView TargetsView { get => targetsView.View; }
-        public ICollectionView TargetsMenuView { get => targetsMenuView.View; }
+        public ICollectionView TargetsView => targetsView.View;
+        public ICollectionView TargetsMenuView => targetsMenuView.View;
 
         private string viewFilter = string.Empty;
         private ISequenceSettings activeSequenceSettings;
@@ -257,7 +257,7 @@ namespace NINA.Sequencer {
         public string Grouping => (SubGroups.Length > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
         public string[] SubGroups { get; set; }
 
-        public string Name { get => Container.Name; }
+        public string Name => Container.Name;
 
         /// <summary>
         /// The weight is calculated based on the following parameters

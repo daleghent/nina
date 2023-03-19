@@ -66,9 +66,7 @@ namespace NINA.WPF.Base.Interfaces.Mediator {
 
         public IRenderedImage Image { get; }
 
-        public ReadOnlyCollection<ImagePattern> Patterns {
-            get => new ReadOnlyCollection<ImagePattern>(patterns);
-        }
+        public ReadOnlyCollection<ImagePattern> Patterns => new ReadOnlyCollection<ImagePattern>(patterns);
         public void AddImagePattern(ImagePattern p) {
             patterns.Add(p);
         }

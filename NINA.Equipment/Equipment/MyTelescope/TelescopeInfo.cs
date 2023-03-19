@@ -24,9 +24,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double siderealTime;
 
         public double SiderealTime {
-            get {
-                return siderealTime;
-            }
+            get => siderealTime;
             set {
                 if (siderealTime != value) {
                     siderealTime = value;
@@ -38,9 +36,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double rightAscension;
 
         public double RightAscension {
-            get {
-                return rightAscension;
-            }
+            get => rightAscension;
             set {
                 if (rightAscension != value) {
                     rightAscension = value;
@@ -52,9 +48,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double declination;
 
         public double Declination {
-            get {
-                return declination;
-            }
+            get => declination;
             set {
                 if (declination != value) {
                     declination = value;
@@ -66,9 +60,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double siteLatitude;
 
         public double SiteLatitude {
-            get {
-                return siteLatitude;
-            }
+            get => siteLatitude;
             set {
                 if (siteLatitude != value) {
                     siteLatitude = value;
@@ -80,9 +72,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double siteLongitude;
 
         public double SiteLongitude {
-            get {
-                return siteLongitude;
-            }
+            get => siteLongitude;
             set {
                 if (siteLongitude != value) {
                     siteLongitude = value;
@@ -94,9 +84,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double siteElevation;
 
         public double SiteElevation {
-            get {
-                return siteElevation;
-            }
+            get => siteElevation;
             set {
                 if (siteElevation != value) {
                     siteElevation = value;
@@ -108,9 +96,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string rightAscensionString;
 
         public string RightAscensionString {
-            get {
-                return rightAscensionString;
-            }
+            get => rightAscensionString;
             set {
                 if (rightAscensionString != value) {
                     rightAscensionString = value;
@@ -122,9 +108,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string declinationString;
 
         public string DeclinationString {
-            get {
-                return declinationString;
-            }
+            get => declinationString;
             set {
                 if (declinationString != value) {
                     declinationString = value;
@@ -136,9 +120,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private Coordinates coordinates;
 
         public Coordinates Coordinates {
-            get {
-                return coordinates;
-            }
+            get => coordinates;
             set {
                 if (coordinates != value) {
                     coordinates = value;
@@ -150,9 +132,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double timeToMeridianFlip;
 
         public double TimeToMeridianFlip {
-            get {
-                return timeToMeridianFlip;
-            }
+            get => timeToMeridianFlip;
             set {
                 if (timeToMeridianFlip != value) {
                     timeToMeridianFlip = value;
@@ -164,9 +144,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private PierSide sideOfPier;
 
         public PierSide SideOfPier {
-            get {
-                return sideOfPier;
-            }
+            get => sideOfPier;
             set {
                 if (sideOfPier != value) {
                     sideOfPier = value;
@@ -178,7 +156,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double altitude = double.NaN;
 
         public double Altitude {
-            get { return altitude; }
+            get => altitude;
             set {
                 if (altitude != value) {
                     altitude = value;
@@ -190,7 +168,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string altitudeString = string.Empty;
 
         public string AltitudeString {
-            get { return altitudeString; }
+            get => altitudeString;
             set {
                 if (altitudeString != value) {
                     altitudeString = value;
@@ -202,7 +180,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double azimuth = double.NaN;
 
         public double Azimuth {
-            get { return azimuth; }
+            get => azimuth;
             set {
                 if (azimuth != value) {
                     azimuth = value;
@@ -214,7 +192,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string azimuthString = string.Empty;
 
         public string AzimuthString {
-            get { return azimuthString; }
+            get => azimuthString;
             set {
                 if (azimuthString != value) {
                     azimuthString = value;
@@ -226,7 +204,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string siderealTimeString;
 
         public string SiderealTimeString {
-            get { return siderealTimeString; }
+            get => siderealTimeString;
             set {
                 if (siderealTimeString != value) {
                     siderealTimeString = value;
@@ -238,7 +216,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string hoursToMeridianString;
 
         public string HoursToMeridianString {
-            get { return hoursToMeridianString; }
+            get => hoursToMeridianString;
             set {
                 if (hoursToMeridianString != value) {
                     hoursToMeridianString = value;
@@ -250,7 +228,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool atPark;
 
         public bool AtPark {
-            get { return atPark; }
+            get => atPark;
             set {
                 if (atPark != value) {
                     atPark = value;
@@ -262,7 +240,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private TrackingRate trackingRate;
 
         public TrackingRate TrackingRate {
-            get { return trackingRate; }
+            get => trackingRate;
             set {
                 if (trackingRate != value) {
                     trackingRate = value;
@@ -275,7 +253,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool trackingEnabled;
 
         public bool TrackingEnabled {
-            get { return trackingEnabled; }
+            get => trackingEnabled;
             set {
                 if (trackingEnabled != value) {
                     trackingEnabled = value;
@@ -287,7 +265,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private IList<TrackingMode> trackingModes;
 
         public IList<TrackingMode> TrackingModes {
-            get { return trackingModes; }
+            get => trackingModes;
             set {
                 if (trackingModes != value) {
                     trackingModes = value;
@@ -299,7 +277,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool atHome;
 
         public bool AtHome {
-            get { return atHome; }
+            get => atHome;
             set {
                 if (atHome != value) {
                     atHome = value;
@@ -311,7 +289,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canFindHome;
 
         public bool CanFindHome {
-            get { return canFindHome; }
+            get => canFindHome;
             set {
                 if (canFindHome != value) {
                     canFindHome = value;
@@ -323,7 +301,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canPark;
 
         public bool CanPark {
-            get { return canPark; }
+            get => canPark;
             set {
                 if (canPark != value) {
                     canPark = value;
@@ -335,7 +313,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canSetPark;
 
         public bool CanSetPark {
-            get { return canSetPark; }
+            get => canSetPark;
             set {
                 if (canSetPark != value) {
                     canSetPark = value;
@@ -347,7 +325,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canSetTracking;
 
         public bool CanSetTrackingEnabled {
-            get { return canSetTracking; }
+            get => canSetTracking;
             set {
                 if (canSetTracking != value) {
                     canSetTracking = value;
@@ -359,7 +337,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canSetDeclinationRate;
 
         public bool CanSetDeclinationRate {
-            get { return canSetDeclinationRate; }
+            get => canSetDeclinationRate;
             set {
                 if (canSetDeclinationRate != value) {
                     canSetDeclinationRate = value;
@@ -371,7 +349,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canSetRightAscensionRate;
 
         public bool CanSetRightAscensionRate {
-            get { return canSetRightAscensionRate; }
+            get => canSetRightAscensionRate;
             set {
                 if (canSetRightAscensionRate != value) {
                     canSetRightAscensionRate = value;
@@ -383,7 +361,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private Epoch equatorialSystem;
 
         public Epoch EquatorialSystem {
-            get { return equatorialSystem; }
+            get => equatorialSystem;
             set {
                 if (equatorialSystem != value) {
                     equatorialSystem = value;
@@ -395,7 +373,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool hasUnknownEpoch;
 
         public bool HasUnknownEpoch {
-            get { return hasUnknownEpoch; }
+            get => hasUnknownEpoch;
             set {
                 if (hasUnknownEpoch != value) {
                     hasUnknownEpoch = value;
@@ -407,7 +385,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private string timeToMeridianFlipString;
 
         public string TimeToMeridianFlipString {
-            get { return timeToMeridianFlipString; }
+            get => timeToMeridianFlipString;
             set {
                 if (timeToMeridianFlipString != value) {
                     timeToMeridianFlipString = value;
@@ -419,7 +397,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private Coordinates targetCoordinates;
 
         public Coordinates TargetCoordinates {
-            get { return targetCoordinates; }
+            get => targetCoordinates;
             set {
                 if (targetCoordinates != value) {
                     targetCoordinates = value;
@@ -431,9 +409,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private PierSide? targetSideOfPier;
 
         public PierSide? TargetSideOfPier {
-            get {
-                return targetSideOfPier;
-            }
+            get => targetSideOfPier;
             set {
                 if (targetSideOfPier != value) {
                     targetSideOfPier = value;
@@ -445,7 +421,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool slewing;
 
         public bool Slewing {
-            get { return slewing; }
+            get => slewing;
             set {
                 if (slewing != value) {
                     slewing = value;
@@ -457,7 +433,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double guideRateRightAscensionArcsecPerSec;
 
         public double GuideRateRightAscensionArcsecPerSec {
-            get { return guideRateRightAscensionArcsecPerSec; }
+            get => guideRateRightAscensionArcsecPerSec;
             set {
                 if (guideRateRightAscensionArcsecPerSec != value) {
                     guideRateRightAscensionArcsecPerSec = value;
@@ -469,7 +445,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private double guideRateDeclinationArcsecPerSec;
 
         public double GuideRateDeclinationArcsecPerSec {
-            get { return guideRateDeclinationArcsecPerSec; }
+            get => guideRateDeclinationArcsecPerSec;
             set {
                 if (guideRateDeclinationArcsecPerSec != value) {
                     guideRateDeclinationArcsecPerSec = value;
@@ -481,7 +457,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canMovePrimaryAxis;
 
         public bool CanMovePrimaryAxis {
-            get { return canMovePrimaryAxis; }
+            get => canMovePrimaryAxis;
             set {
                 if (canMovePrimaryAxis != value) {
                     canMovePrimaryAxis = value;
@@ -493,7 +469,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private bool canMoveSecondaryAxis;
 
         public bool CanMoveSecondaryAxis {
-            get { return canMoveSecondaryAxis; }
+            get => canMoveSecondaryAxis;
             set {
                 if (canMoveSecondaryAxis != value) {
                     canMoveSecondaryAxis = value;
@@ -505,7 +481,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private IList<(double, double)> primaryAxisRates;
 
         public IList<(double, double)> PrimaryAxisRates {
-            get { return primaryAxisRates; }
+            get => primaryAxisRates;
             set {
                 if (primaryAxisRates != value) {
                     primaryAxisRates = value;
@@ -517,7 +493,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private IList<(double, double)> secondaryAxisRates;
 
         public IList<(double, double)> SecondaryAxisRates {
-            get { return secondaryAxisRates; }
+            get => secondaryAxisRates;
             set {
                 if (secondaryAxisRates != value) {
                     secondaryAxisRates = value;

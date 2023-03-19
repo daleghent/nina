@@ -49,9 +49,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string StellariumHost {
-            get {
-                return stellariumHost;
-            }
+            get => stellariumHost;
             set {
                 if (stellariumHost != value) {
                     stellariumHost = value;
@@ -64,9 +62,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int StellariumPort {
-            get {
-                return stellariumPort;
-            }
+            get => stellariumPort;
             set {
                 if (stellariumPort != value) {
                     stellariumPort = value;
@@ -79,9 +75,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string CdCHost {
-            get {
-                return cdCHost;
-            }
+            get => cdCHost;
             set {
                 if (cdCHost != value) {
                     cdCHost = value;
@@ -94,9 +88,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int CdCPort {
-            get {
-                return cdCPort;
-            }
+            get => cdCPort;
             set {
                 if (cdCPort != value) {
                     cdCPort = value;
@@ -109,9 +101,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string TSXHost {
-            get {
-                return tsxHost;
-            }
+            get => tsxHost;
             set {
                 if (tsxHost != value) {
                     tsxHost = value;
@@ -124,9 +114,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int TSXPort {
-            get {
-                return tsxPort;
-            }
+            get => tsxPort;
             set {
                 if (tsxPort != value) {
                     tsxPort = value;
@@ -139,9 +127,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool TSXUseSelectedObject {
-            get {
-                return tsxUseSelectedObject;
-            }
+            get => tsxUseSelectedObject;
             set {
                 if (tsxUseSelectedObject != value) {
                     tsxUseSelectedObject = value;
@@ -154,9 +140,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string HNSKYHost {
-            get {
-                return hnskyHost;
-            }
+            get => hnskyHost;
             set {
                 if (hnskyHost != value) {
                     hnskyHost = value;
@@ -169,9 +153,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int HNSKYPort {
-            get {
-                return hnskyPort;
-            }
+            get => hnskyPort;
             set {
                 if (hnskyPort != value) {
                     hnskyPort = value;
@@ -184,9 +166,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string C2AHost {
-            get {
-                return c2aHost;
-            }
+            get => c2aHost;
             set {
                 if (c2aHost != value) {
                     c2aHost = value;
@@ -199,9 +179,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int C2APort {
-            get {
-                return c2aPort;
-            }
+            get => c2aPort;
             set {
                 if (c2aPort != value) {
                     c2aPort = value;
@@ -214,9 +192,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SkytechXHost {
-            get {
-                return skytechxHost;
-            }
+            get => skytechxHost;
             set {
                 if (skytechxHost != value) {
                     skytechxHost = value;
@@ -229,9 +205,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int SkytechXPort {
-            get {
-                return skytechxPort;
-            }
+            get => skytechxPort;
             set {
                 if (skytechxPort != value) {
                     skytechxPort = value;
@@ -244,9 +218,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public PlanetariumEnum PreferredPlanetarium {
-            get {
-                return preferredPlanetarium;
-            }
+            get => preferredPlanetarium;
             set {
                 if (preferredPlanetarium != value) {
                     preferredPlanetarium = value;

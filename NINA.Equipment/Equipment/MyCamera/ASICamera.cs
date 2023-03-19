@@ -213,9 +213,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private short bin = 1;
 
         public short BinX {
-            get {
-                return bin;
-            }
+            get => bin;
             set {
                 bin = value;
                 RaisePropertyChanged();
@@ -223,20 +221,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public short BinY {
-            get {
-                return bin;
-            }
+            get => bin;
             set {
                 bin = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string Description {
-            get {
-                return string.Empty;
-            }
-        }
+        public string Description => string.Empty;
 
         public string DriverInfo {
             get {
@@ -252,40 +244,20 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string SensorName {
-            get {
-                return string.Empty;
-            }
-        }
+        public string SensorName => string.Empty;
 
         public SensorType SensorType { get; private set; } = SensorType.Monochrome;
 
         public short BayerOffsetX { get; } = 0;
         public short BayerOffsetY { get; } = 0;
 
-        public int CameraXSize {
-            get {
-                return Info.MaxWidth;
-            }
-        }
+        public int CameraXSize => Info.MaxWidth;
 
-        public int CameraYSize {
-            get {
-                return Info.MaxHeight;
-            }
-        }
+        public int CameraYSize => Info.MaxHeight;
 
-        public double ExposureMin {
-            get {
-                return (double)GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_EXPOSURE) / 1000000;
-            }
-        }
+        public double ExposureMin => (double)GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_EXPOSURE) / 1000000;
 
-        public double ExposureMax {
-            get {
-                return (double)GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_EXPOSURE) / 1000000;
-            }
-        }
+        public double ExposureMax => (double)GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_EXPOSURE) / 1000000;
 
         public double ElectronsPerADU => Info.ElecPerADU;
 
@@ -303,17 +275,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public double PixelSizeX {
-            get {
-                return Info.PixelSize;
-            }
-        }
+        public double PixelSizeX => Info.PixelSize;
 
-        public double PixelSizeY {
-            get {
-                return Info.PixelSize;
-            }
-        }
+        public double PixelSizeY => Info.PixelSize;
 
         private int minTemperatureSetpoint = 0;
         private int maxTemperatureSetpoint = 0;
@@ -322,12 +286,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public IList<string> SupportedActions => new List<string>();
 
-        public int BitDepth {
-            get {
+        public int BitDepth =>
                 //currently ASI camera values are stretched to fit 16 bit
-                return 16;
-            }
-        }
+                16;
 
         public bool CoolerOn {
             get {
@@ -341,22 +302,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public double CoolerPower {
-            get {
-                return (double)GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_COOLER_POWER_PERC);
-            }
-        }
+        public double CoolerPower => (double)GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_COOLER_POWER_PERC);
 
-        public bool HasDewHeater {
-            get {
-                return GetControlIsWritable(ASICameraDll.ASI_CONTROL_TYPE.ASI_ANTI_DEW_HEATER) == true ? true : false;
-            }
-        }
+        public bool HasDewHeater => GetControlIsWritable(ASICameraDll.ASI_CONTROL_TYPE.ASI_ANTI_DEW_HEATER) == true ? true : false;
 
         public bool DewHeaterOn {
-            get {
-                return GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_ANTI_DEW_HEATER) == 0 ? false : true;
-            }
+            get => GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_ANTI_DEW_HEATER) == 0 ? false : true;
             set {
                 if (SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_ANTI_DEW_HEATER, value ? 1 : 0)) {
                     RaisePropertyChanged();
@@ -386,13 +337,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             ASICameraDll.StopExposure(_cameraId);
         }
 
-        private List<ASICameraDll.ASI_IMG_TYPE> SupportedImageTypes {
-            get { return Info.SupportedVideoFormat.TakeWhile(x => x != ASICameraDll.ASI_IMG_TYPE.ASI_IMG_END).ToList(); }
-        }
+        private List<ASICameraDll.ASI_IMG_TYPE> SupportedImageTypes => Info.SupportedVideoFormat.TakeWhile(x => x != ASICameraDll.ASI_IMG_TYPE.ASI_IMG_END).ToList();
 
-        private List<int> SupportedBinFactors {
-            get { return Info.SupportedBins.TakeWhile(x => x != 0).ToList(); }
-        }
+        private List<int> SupportedBinFactors => Info.SupportedBins.TakeWhile(x => x != 0).ToList();
 
         public void Disconnect() {
             _info = null;
@@ -518,22 +465,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             return Controls.FirstOrDefault(x => x.ControlType == controlType);
         }
 
-        public bool CanGetGain {
-            get {
-                return true;
-            }
-        }
+        public bool CanGetGain => true;
 
-        public bool CanSetGain {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetGain => true;
 
         public int Gain {
-            get {
-                return GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN);
-            }
+            get => GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN);
             set {
                 if (SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN, value)) {
                     RefreshCameraInfoCache();
@@ -542,34 +479,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int GainMax {
-            get {
-                return GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN);
-            }
-        }
+        public int GainMax => GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN);
 
-        public int GainMin {
-            get {
-                return GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN);
-            }
-        }
+        public int GainMin => GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAIN);
 
-        public bool CanSetOffset {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetOffset => true;
 
-        public bool CanSetUSBLimit {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetUSBLimit => true;
 
         public int Offset {
-            get {
-                return GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET);
-            }
+            get => GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET);
             set {
                 if (SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET, value)) {
                     RaisePropertyChanged();
@@ -577,22 +496,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int OffsetMin {
-            get {
-                return GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET);
-            }
-        }
+        public int OffsetMin => GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET);
 
-        public int OffsetMax {
-            get {
-                return GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET);
-            }
-        }
+        public int OffsetMax => GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OFFSET);
 
         public int USBLimit {
-            get {
-                return GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD);
-            }
+            get => GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD);
             set {
                 if (SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD, value)) {
                     RaisePropertyChanged();
@@ -600,23 +509,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int USBLimitMin {
-            get {
-                return GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD);
-            }
-        }
+        public int USBLimitMin => GetControlMinValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD);
 
-        public int USBLimitMax {
-            get {
-                return GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD);
-            }
-        }
+        public int USBLimitMax => GetControlMaxValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_BANDWIDTHOVERLOAD);
 
-        public int USBLimitStep {
-            get {
-                return 1;
-            }
-        }
+        public int USBLimitStep => 1;
 
         private int GetControlValue(ASICameraDll.ASI_CONTROL_TYPE type) {
             var control = GetControl(type);
@@ -681,11 +578,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return false;
-            }
-        }
+        public bool HasSetupDialog => false;
 
         public CameraStates CameraState {
             get {
@@ -701,11 +594,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public IList<int> Gains {
-            get {
-                return new List<int>();
-            }
-        }
+        public IList<int> Gains => new List<int>();
 
         public void SetupDialog() {
         }
@@ -922,28 +811,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
             _auto = GetAutoSetting();
         }
 
-        public string Name { get { return _props.Name; } }
-        public string Description { get { return _props.Description; } }
-        public int MinValue { get { return _props.MinValue; } }
-        public int MaxValue { get { return _props.MaxValue; } }
-        public int DefaultValue { get { return _props.DefaultValue; } }
-        public ASICameraDll.ASI_CONTROL_TYPE ControlType { get { return _props.ControlType; } }
-        public bool IsAutoAvailable { get { return _props.IsAutoSupported != ASICameraDll.ASI_BOOL.ASI_FALSE; } }
-        public bool IsWritable { get { return _props.IsWritable != ASICameraDll.ASI_BOOL.ASI_FALSE; } }
+        public string Name => _props.Name;
+        public string Description => _props.Description;
+        public int MinValue => _props.MinValue;
+        public int MaxValue => _props.MaxValue;
+        public int DefaultValue => _props.DefaultValue;
+        public ASICameraDll.ASI_CONTROL_TYPE ControlType => _props.ControlType;
+        public bool IsAutoAvailable => _props.IsAutoSupported != ASICameraDll.ASI_BOOL.ASI_FALSE;
+        public bool IsWritable => _props.IsWritable != ASICameraDll.ASI_BOOL.ASI_FALSE;
 
         public int Value {
-            get {
-                return ASICameraDll.GetControlValue(_cameraId, _props.ControlType, out var isAuto);
-            }
-            set {
-                ASICameraDll.SetControlValue(_cameraId, _props.ControlType, value, IsAuto);
-            }
+            get => ASICameraDll.GetControlValue(_cameraId, _props.ControlType, out var isAuto);
+            set => ASICameraDll.SetControlValue(_cameraId, _props.ControlType, value, IsAuto);
         }
 
         public bool IsAuto {
-            get {
-                return _auto;
-            }
+            get => _auto;
             set {
                 _auto = value;
                 ASICameraDll.SetControlValue(_cameraId, _props.ControlType, Value, value);

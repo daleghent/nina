@@ -166,10 +166,8 @@ namespace NINA.Sequencer {
             this.entityOptions = entityOptions;
         }
 
-        public bool Enabled { 
-            get {
-                return entityOptions.GetValueBoolean(this.Entity.GetType().FullName, true);
-            }
+        public bool Enabled {
+            get => entityOptions.GetValueBoolean(this.Entity.GetType().FullName, true);
             set {
                 entityOptions.SetValueBoolean(this.Entity.GetType().FullName, value);
                 RaisePropertyChanged();

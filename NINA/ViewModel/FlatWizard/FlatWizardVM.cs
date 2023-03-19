@@ -251,17 +251,9 @@ namespace NINA.ViewModel.FlatWizard {
             }
         }
 
-        public string SlewToZenithTooltip {
-            get {
-                return !telescopeInfo.Connected ? Loc.Instance["LblTelescopeNotConnected"] : "";
-            }
-        }
+        public string SlewToZenithTooltip => !telescopeInfo.Connected ? Loc.Instance["LblTelescopeNotConnected"] : "";
 
-        public bool SlewToZenithTooltipEnabled {
-            get {
-                return !telescopeInfo.Connected;
-            }
-        }
+        public bool SlewToZenithTooltipEnabled => !telescopeInfo.Connected;
 
         private string targetName;
 

@@ -31,9 +31,7 @@ namespace NINA.Image.ImageAnalysis {
         /// <summary>
         /// Format translations dictionary.
         /// </summary>
-        public override Dictionary<PixelFormat, PixelFormat> FormatTranslations {
-            get { return formatTranslations; }
-        }
+        public override Dictionary<PixelFormat, PixelFormat> FormatTranslations => formatTranslations;
 
         /// <summary>
         /// Low threshold.
@@ -47,8 +45,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </remarks>
         ///
         public byte LowThreshold {
-            get { return lowThreshold; }
-            set { lowThreshold = value; }
+            get => lowThreshold;
+            set => lowThreshold = value;
         }
 
         /// <summary>
@@ -63,8 +61,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </remarks>
         ///
         public byte HighThreshold {
-            get { return highThreshold; }
-            set { highThreshold = value; }
+            get => highThreshold;
+            set => highThreshold = value;
         }
 
         /// <summary>

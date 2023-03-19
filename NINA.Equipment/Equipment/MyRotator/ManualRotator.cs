@@ -70,41 +70,17 @@ namespace NINA.Equipment.Equipment.MyRotator {
 
         public float TargetPosition { get; set; }
 
-        public bool HasSetupDialog {
-            get {
-                return false;
-            }
-        }
+        public bool HasSetupDialog => false;
 
-        public string Id {
-            get {
-                return "Manual Rotator";
-            }
-        }
+        public string Id => "Manual Rotator";
 
-        public string Name {
-            get {
-                return Loc.Instance["LblManualRotator"];
-            }
-        }
+        public string Name => Loc.Instance["LblManualRotator"];
 
-        public string Description {
-            get {
-                return Loc.Instance["LblManualRotatorDescription"];
-            }
-        }
+        public string Description => Loc.Instance["LblManualRotatorDescription"];
 
-        public string DriverInfo {
-            get {
-                return "n.A.";
-            }
-        }
+        public string DriverInfo => "n.A.";
 
-        public string DriverVersion {
-            get {
-                return "1.0";
-            }
-        }
+        public string DriverVersion => "1.0";
 
         public Task<bool> Connect(CancellationToken token) {
             Connected = true;
@@ -127,16 +103,10 @@ namespace NINA.Equipment.Equipment.MyRotator {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
-        public float Rotation {
-            get {
-                return Math.Abs(TargetPosition - Position);
-            }
-        }
+        public float Rotation => Math.Abs(TargetPosition - Position);
 
         public float AbsTargetPosition {
             get {
@@ -155,7 +125,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
             }
         }
 
-        public float MechanicalPosition { get => Position; }
+        public float MechanicalPosition => Position;
 
         public void Sync(float skyAngle) {
             Position = skyAngle;

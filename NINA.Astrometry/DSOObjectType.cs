@@ -26,9 +26,7 @@ namespace NINA.Astrometry {
         private bool _selected;
 
         public bool Selected {
-            get {
-                return _selected;
-            }
+            get => _selected;
             set {
                 _selected = value;
                 RaisePropertyChanged();
@@ -38,9 +36,7 @@ namespace NINA.Astrometry {
         private string _name;
 
         public string Name {
-            get {
-                return _name;
-            }
+            get => _name;
             set {
                 _name = value;
                 RaisePropertyChanged();

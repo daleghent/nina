@@ -33,8 +33,8 @@ namespace NINA.Core.Utility {
         }
 
         public event EventHandler CanExecuteChanged {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
         protected void RaiseCanExecuteChanged() {
@@ -105,12 +105,10 @@ namespace NINA.Core.Utility {
             RaisePropertyChanged(nameof(IsRunning));
             RaiseCanExecuteChanged();
         }
-        public bool IsRunning {
-            get => Execution?.IsNotCompleted ?? false;
-        }
+        public bool IsRunning => Execution?.IsNotCompleted ?? false;
 
         // Raises PropertyChanged
-        public NotifyTaskCompletion<TResult> Execution { get { return _execution; } private set { _execution = value; RaisePropertyChanged(); } }
+        public NotifyTaskCompletion<TResult> Execution { get => _execution; private set { _execution = value; RaisePropertyChanged(); } }
     }
 
     public static class RelayCommandExtensions {

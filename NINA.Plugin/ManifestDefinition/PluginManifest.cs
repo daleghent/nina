@@ -23,8 +23,7 @@ namespace NINA.Plugin.ManifestDefinition {
     [Serializable]
     public class PluginManifest : IPluginManifest {
 
-        public static string Schema {
-            get => @"{
+        public static string Schema => @"{
                 '$schema': 'http://json-schema.org/draft-07/schema#',
                 'type': 'object',
                 'properties': {
@@ -223,7 +222,6 @@ namespace NINA.Plugin.ManifestDefinition {
                 },
                 'required': ['Name', 'Identifier', 'Version', 'Author', 'Repository', 'License', 'LicenseURL', 'MinimumApplicationVersion', 'Descriptions', 'Installer']
             }";
-        }
 
         [JsonProperty(Required = Required.Always)]
         public string Name { get; set; }

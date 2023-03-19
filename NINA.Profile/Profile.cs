@@ -216,9 +216,7 @@ namespace NINA.Profile {
 
         [IgnoreDataMember]
         public string Location {
-            get {
-                return Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles", $"{Id}.profile");
-            }
+            get => Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles", $"{Id}.profile");
             protected set { }
         }
 

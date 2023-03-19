@@ -47,16 +47,16 @@ namespace NINA.Core.Utility.ValidationRules {
     public class ShortRangeChecker : DependencyObject {
 
         public short Minimum {
-            get { return (short)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get => (short)GetValue(MinimumProperty);
+            set => SetValue(MinimumProperty, value);
         }
 
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(short), typeof(ShortRangeChecker), new UIPropertyMetadata(short.MinValue));
 
         public short Maximum {
-            get { return (short)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get => (short)GetValue(MaximumProperty);
+            set => SetValue(MaximumProperty, value);
         }
 
         public static readonly DependencyProperty MaximumProperty =

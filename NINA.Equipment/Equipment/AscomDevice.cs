@@ -53,11 +53,7 @@ namespace NINA.Equipment.Equipment {
 
         protected object lockObj = new object();
 
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
-        }
+        public bool HasSetupDialog => true;
 
         public string Id { get; }
 

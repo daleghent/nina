@@ -26,9 +26,7 @@ namespace NINA.Image.ImageData {
         private List<DetectedStar> _starList = new List<DetectedStar>();
 
         public double HFR {
-            get {
-                return this._hfr;
-            }
+            get => this._hfr;
             set {
                 this._hfr = value;
                 this.RaisePropertyChanged();
@@ -36,9 +34,7 @@ namespace NINA.Image.ImageData {
         }
 
         public double HFRStDev {
-            get {
-                return this._hfrStDev;
-            }
+            get => this._hfrStDev;
             set {
                 this._hfrStDev = value;
                 this.RaisePropertyChanged();
@@ -46,9 +42,7 @@ namespace NINA.Image.ImageData {
         }
 
         public int DetectedStars {
-            get {
-                return this._detectedStars;
-            }
+            get => this._detectedStars;
             set {
                 this._detectedStars = value;
                 this.RaisePropertyChanged();
@@ -56,9 +50,7 @@ namespace NINA.Image.ImageData {
         }
 
         public List<DetectedStar> StarList {
-            get {
-                return this._starList;
-            }
+            get => this._starList;
             set {
                 this._starList = value;
                 this.RaisePropertyChanged();

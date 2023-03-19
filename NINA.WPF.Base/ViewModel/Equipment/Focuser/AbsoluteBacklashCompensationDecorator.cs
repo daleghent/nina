@@ -38,11 +38,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         /// <summary>
         /// Returns the adjusted position based on the amount of backlash compensation
         /// </summary>
-        public override int Position {
-            get {
-                return base.Position - offset;
-            }
-        }
+        public override int Position => base.Position - offset;
 
         public override Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
             var startPosition = base.Position;

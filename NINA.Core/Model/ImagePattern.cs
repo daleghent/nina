@@ -23,11 +23,7 @@ namespace NINA.Core.Model {
 
     public class ImagePatterns {
 
-        public ReadOnlyCollection<ImagePattern> Items {
-            get {
-                return patterns.Values.OrderBy(x => x.Key).ToList().AsReadOnly();
-            }
-        }
+        public ReadOnlyCollection<ImagePattern> Items => patterns.Values.OrderBy(x => x.Key).ToList().AsReadOnly();
 
         private Dictionary<string, ImagePattern> patterns;
 

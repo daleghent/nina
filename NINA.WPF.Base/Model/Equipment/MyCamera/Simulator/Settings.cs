@@ -29,9 +29,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         }
 
         public CameraType Type {
-            get {
-                return pluginOptionsAccessor.GetValueEnum(nameof(Type), CameraType.RANDOM);
-            }
+            get => pluginOptionsAccessor.GetValueEnum(nameof(Type), CameraType.RANDOM);
             set {
                 pluginOptionsAccessor.SetValueEnum(nameof(Type), value);
                 RaisePropertyChanged();

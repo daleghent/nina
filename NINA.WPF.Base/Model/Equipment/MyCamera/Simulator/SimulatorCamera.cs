@@ -66,159 +66,81 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public string Category { get; } = "N.I.N.A.";
 
-        public bool HasShutter {
-            get {
-                return false;
-            }
-        }
+        public bool HasShutter => false;
 
         public bool Connected { get; private set; }
 
-        public double CCDTemperature {
-            get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
-            }
-        }
+        public double CCDTemperature => SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
 
         public double SetCCDTemperature {
-            get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
-            }
+            get => SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
 
             set {
             }
         }
 
         public short BinX {
-            get {
-                return (short)(SimulatorImage?.RawImageData?.MetaData?.Camera?.BinX ?? 1);
-            }
+            get => (short)(SimulatorImage?.RawImageData?.MetaData?.Camera?.BinX ?? 1);
 
             set {
             }
         }
 
         public short BinY {
-            get {
-                return (short)(SimulatorImage?.RawImageData?.MetaData?.Camera?.BinY ?? 1);
-            }
+            get => (short)(SimulatorImage?.RawImageData?.MetaData?.Camera?.BinY ?? 1);
 
             set {
             }
         }
 
-        public string Description {
-            get {
-                return "A basic simulator to generate random noise for a specific median or load in an image that will be displayed on capture";
-            }
-        }
+        public string Description => "A basic simulator to generate random noise for a specific median or load in an image that will be displayed on capture";
 
-        public string DriverInfo {
-            get {
-                return string.Empty;
-            }
-        }
+        public string DriverInfo => string.Empty;
 
-        public string DriverVersion {
-            get {
-                return CoreUtil.Version;
-            }
-        }
+        public string DriverVersion => CoreUtil.Version;
 
-        public string SensorName {
-            get {
-                return "Simulated Sensor";
-            }
-        }
+        public string SensorName => "Simulated Sensor";
 
-        public SensorType SensorType {
-            get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera.SensorType ?? SensorType.Monochrome;
-            }
-        }
+        public SensorType SensorType => SimulatorImage?.RawImageData?.MetaData?.Camera.SensorType ?? SensorType.Monochrome;
 
         public short BayerOffsetX => 0;
 
         public short BayerOffsetY => 0;
 
-        public int CameraXSize {
-            get {
-                return SimulatorImage?.RawImageData?.Properties?.Width ?? Settings.RandomSettings.ImageWidth;
-            }
-        }
+        public int CameraXSize => SimulatorImage?.RawImageData?.Properties?.Width ?? Settings.RandomSettings.ImageWidth;
 
-        public int CameraYSize {
-            get {
-                return SimulatorImage?.RawImageData?.Properties?.Height ?? Settings.RandomSettings.ImageHeight;
-            }
-        }
+        public int CameraYSize => SimulatorImage?.RawImageData?.Properties?.Height ?? Settings.RandomSettings.ImageHeight;
 
-        public double ExposureMin {
-            get {
-                return 0;
-            }
-        }
+        public double ExposureMin => 0;
 
-        public double ExposureMax {
-            get {
-                return double.MaxValue;
-            }
-        }
+        public double ExposureMax => double.MaxValue;
 
         public double ElectronsPerADU => double.NaN;
 
-        public short MaxBinX {
-            get {
-                return 1;
-            }
-        }
+        public short MaxBinX => 1;
 
-        public short MaxBinY {
-            get {
-                return 1;
-            }
-        }
+        public short MaxBinY => 1;
 
-        public double PixelSizeX {
-            get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
-            }
-        }
+        public double PixelSizeX => SimulatorImage?.RawImageData?.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
 
-        public double PixelSizeY {
-            get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
-            }
-        }
+        public double PixelSizeY => SimulatorImage?.RawImageData?.MetaData?.Camera?.PixelSize ?? profileService.ActiveProfile.CameraSettings.PixelSize;
 
-        public bool CanSetCCDTemperature {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetCCDTemperature => false;
 
         public bool CoolerOn {
-            get {
-                return false;
-            }
+            get => false;
 
             set {
             }
         }
 
-        public double CoolerPower {
-            get {
-                return double.NaN;
-            }
-        }
+        public double CoolerPower => double.NaN;
 
-        public CameraStates CameraState { get => CameraStates.NoState; }
+        public CameraStates CameraState => CameraStates.NoState;
 
         private int offset;
         public int Offset {
-            get {
-                return offset;
-            }
+            get => offset;
             set {
                 offset = value;
                 RaisePropertyChanged();
@@ -239,53 +161,21 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         public int USBLimitMin => 0;
         public int USBLimitStep => 1;
 
-        public bool CanSetOffset {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetOffset => true;
 
-        public int OffsetMin {
-            get {
-                return 1000;
-            }
-        }
+        public int OffsetMin => 1000;
 
-        public int OffsetMax {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMax => 0;
 
-        public bool CanSetUSBLimit {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetUSBLimit => true;
 
-        public bool CanGetGain {
-            get {
-                return true;
-            }
-        }
+        public bool CanGetGain => true;
 
-        public bool CanSetGain {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetGain => true;
 
-        public int GainMax {
-            get {
-                return 10000;
-            }
-        }
+        public int GainMax => 10000;
 
-        public int GainMin {
-            get {
-                return 0;
-            }
-        }
+        public int GainMin => 0;
 
         private int gain;
         public int Gain {
@@ -297,11 +187,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
-        public IList<int> Gains {
-            get {
-                return new List<int>();
-            }
-        }
+        public IList<int> Gains => new List<int>();
 
         private AsyncObservableCollection<BinningMode> binningModes;
 
@@ -316,17 +202,9 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
-        }
+        public bool HasSetupDialog => true;
 
-        public string Id {
-            get {
-                return "4C0BBF74-0D95-41F6-AAD8-D6D58668CF2C";
-            }
-        }
+        public string Id => "4C0BBF74-0D95-41F6-AAD8-D6D58668CF2C";
 
         public string Name {
             get {
@@ -340,38 +218,20 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
-        public double Temperature {
-            get {
-                return SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
-            }
-        }
+        public double Temperature => SimulatorImage?.RawImageData?.MetaData?.Camera.Temperature ?? double.NaN;
 
         public double TemperatureSetPoint {
-            get {
-                return double.NaN;
-            }
+            get => double.NaN;
 
-            set {
-                throw new NotImplementedException();
-            }
+            set => throw new NotImplementedException();
         }
 
-        public bool CanSetTemperature {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetTemperature => false;
 
-        public bool CanSubSample {
-            get {
-                return false;
-            }
-        }
+        public bool CanSubSample => false;
 
         public bool EnableSubSample {
-            get {
-                return false;
-            }
+            get => false;
 
             set {
             }
@@ -385,29 +245,19 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public int SubSampleHeight { get; set; }
 
-        public bool CanShowLiveView {
-            get {
-                return true;
-            }
-        }
+        public bool CanShowLiveView => true;
 
         private bool _liveViewEnabled;
 
         public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
+            get => _liveViewEnabled;
             set {
                 _liveViewEnabled = value;
                 RaisePropertyChanged();
             }
         }
 
-        public bool HasDewHeater {
-            get {
-                return true;
-            }
-        }
+        public bool HasDewHeater => true;
 
         private bool dewHeaterOn;
         public bool DewHeaterOn {
@@ -419,23 +269,11 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
-        public bool HasBattery {
-            get {
-                return false;
-            }
-        }
+        public bool HasBattery => false;
 
-        public int BatteryLevel {
-            get {
-                return -1;
-            }
-        }
+        public int BatteryLevel => -1;
 
-        public int BitDepth {
-            get {
-                return (int)profileService.ActiveProfile.CameraSettings.BitDepth;
-            }
-        }
+        public int BitDepth => (int)profileService.ActiveProfile.CameraSettings.BitDepth;
 
         public IList<string> ReadoutModes => new List<string> { "Default" };
 
@@ -445,18 +283,14 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
         }
 
         public short ReadoutModeForSnapImages {
-            get {
-                return 0;
-            }
+            get => 0;
 
             set {
             }
         }
 
         public short ReadoutModeForNormalImages {
-            get {
-                return 0;
-            }
+            get => 0;
 
             set {
             }
@@ -626,9 +460,7 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
         public void SetupDialog() {

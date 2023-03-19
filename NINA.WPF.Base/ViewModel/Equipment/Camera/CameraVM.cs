@@ -99,9 +99,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;
@@ -118,9 +116,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private bool _tempChangeRunning;
 
         public bool TempChangeRunning {
-            get {
-                return _tempChangeRunning;
-            }
+            get => _tempChangeRunning;
             set {
                 if (_tempChangeRunning != value) {
                     _tempChangeRunning = value;
@@ -265,9 +261,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private double _targetTemp;
 
         public double TargetTemp {
-            get {
-                return _targetTemp;
-            }
+            get => _targetTemp;
             set {
                 if (_targetTemp != value) {
                     _targetTemp = value;
@@ -280,9 +274,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private double _coolingDuration;
 
         public double CoolingDuration {
-            get {
-                return _coolingDuration;
-            }
+            get => _coolingDuration;
             set {
                 if (_coolingDuration != value) {
                     _coolingDuration = value;
@@ -295,9 +287,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private double _warmingDuration;
 
         public double WarmingDuration {
-            get {
-                return _warmingDuration;
-            }
+            get => _warmingDuration;
             set {
                 if (_warmingDuration != value) {
                     _warmingDuration = value;
@@ -310,9 +300,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         private ICamera _cam;
 
         public ICamera Cam {
-            get {
-                return _cam;
-            }
+            get => _cam;
             private set {
                 _cam = value;
                 RaisePropertyChanged();
@@ -908,11 +896,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
-        public bool AtTargetTemp {
-            get {
-                return Math.Abs(cameraInfo.Temperature - TargetTemp) <= 2;
-            }
-        }
+        public bool AtTargetTemp => Math.Abs(cameraInfo.Temperature - TargetTemp) <= 2;
 
         public double ExposureMin {
             get {

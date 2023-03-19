@@ -32,23 +32,11 @@ namespace NINA.Equipment.Equipment.MyFocuser {
 
         public IFocuserFacade Device => device;
 
-        public bool IsMoving {
-            get {
-                return GetProperty(nameof(Focuser.IsMoving), false);
-            }
-        }
+        public bool IsMoving => GetProperty(nameof(Focuser.IsMoving), false);
 
-        public int MaxIncrement {
-            get {
-                return GetProperty(nameof(Focuser.MaxIncrement), -1);
-            }
-        }
+        public int MaxIncrement => GetProperty(nameof(Focuser.MaxIncrement), -1);
 
-        public int MaxStep {
-            get {
-                return GetProperty(nameof(Focuser.MaxStep), -1);
-            }
-        }
+        public int MaxStep => GetProperty(nameof(Focuser.MaxStep), -1);
 
         private bool _isAbsolute;
 
@@ -65,17 +53,9 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
         }
 
-        public double StepSize {
-            get {
-                return GetProperty(nameof(Focuser.StepSize), double.NaN);
-            }
-        }
+        public double StepSize => GetProperty(nameof(Focuser.StepSize), double.NaN);
 
-        public bool TempCompAvailable {
-            get {
-                return GetProperty(nameof(Focuser.TempCompAvailable), false);
-            }
-        }
+        public bool TempCompAvailable => GetProperty(nameof(Focuser.TempCompAvailable), false);
 
         public bool TempComp {
             get {
@@ -92,11 +72,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
         }
 
-        public double Temperature {
-            get {
-                return GetProperty(nameof(Focuser.Temperature), double.NaN);
-            }
-        }
+        public double Temperature => GetProperty(nameof(Focuser.Temperature), double.NaN);
 
         public Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
             if (_isAbsolute) {

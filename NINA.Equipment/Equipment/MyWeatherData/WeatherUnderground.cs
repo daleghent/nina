@@ -131,17 +131,17 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         private double _averagePeriod;
         public double AveragePeriod { get => _averagePeriod; set => _averagePeriod = value; }
 
-        public double RainRate { get => double.NaN; }
+        public double RainRate => double.NaN;
 
-        public double SkyBrightness { get => double.NaN; }
+        public double SkyBrightness => double.NaN;
 
-        public double SkyQuality { get => double.NaN; }
+        public double SkyQuality => double.NaN;
 
-        public double SkyTemperature { get => double.NaN; }
+        public double SkyTemperature => double.NaN;
 
-        public double StarFWHM { get => double.NaN; }
+        public double StarFWHM => double.NaN;
 
-        public double WindGust { get => double.NaN; }
+        public double WindGust => double.NaN;
 
         public string WUAPIKey;
 

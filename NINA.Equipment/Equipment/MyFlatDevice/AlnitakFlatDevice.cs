@@ -87,9 +87,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
         public bool LightOn {
             get {

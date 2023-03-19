@@ -121,7 +121,7 @@ namespace NINA.Astrometry {
         public Coordinates Coordinates { get; }
         public Point Point { get; }
         public double Rotation { get; }
-        public double PositionAngle { get => AstroUtil.EuclidianModulus(360 - Rotation, 360); }
+        public double PositionAngle => AstroUtil.EuclidianModulus(360 - Rotation, 360);
 
         public double PixelScaleX { get; }
         public double PixelScaleY { get; }

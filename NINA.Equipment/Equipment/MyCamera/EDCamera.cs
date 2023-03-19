@@ -172,7 +172,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set { }
         }
 
-        public CameraStates CameraState { get => CameraStates.NoState; }
+        public CameraStates CameraState => CameraStates.NoState;
 
         public IList<string> SupportedActions => new List<string>();
 

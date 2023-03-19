@@ -23,7 +23,7 @@ namespace NINA.Core.Utility {
         private Type _enumType;
 
         public Type EnumType {
-            get { return this._enumType; }
+            get => this._enumType;
             set {
                 if (value != this._enumType) {
                     if (null != value) {

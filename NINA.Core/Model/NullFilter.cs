@@ -17,10 +17,6 @@ namespace NINA.Core.Model {
     public class NullFilter {
         public static NullFilter Instance { get; } = new NullFilter();
 
-        public string Name {
-            get {
-                return "(" + Locale.Loc.Instance["LblCurrent"] + ")";
-            }
-        }
+        public string Name => "(" + Locale.Loc.Instance["LblCurrent"] + ")";
     }
 }

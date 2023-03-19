@@ -64,9 +64,7 @@ namespace NINA.ViewModel {
                 }
                 return windowServiceFactory;
             }
-            set {
-                windowServiceFactory = value;
-            }
+            set => windowServiceFactory = value;
         }
 
         public async Task<bool> CheckUpdate() {
@@ -169,9 +167,7 @@ namespace NINA.ViewModel {
         private int _progress;
 
         public int Progress {
-            get {
-                return _progress;
-            }
+            get => _progress;
             set {
                 _progress = value;
                 RaisePropertyChanged();
@@ -181,9 +177,7 @@ namespace NINA.ViewModel {
         private bool downloadReady = false;
 
         public bool Downloading {
-            get {
-                return downloadReady;
-            }
+            get => downloadReady;
             set {
                 downloadReady = value;
                 RaisePropertyChanged();
@@ -193,9 +187,7 @@ namespace NINA.ViewModel {
         private bool _updateReady = false;
 
         public bool UpdateReady {
-            get {
-                return _updateReady;
-            }
+            get => _updateReady;
             set {
                 _updateReady = value;
                 RaisePropertyChanged();
@@ -205,9 +197,7 @@ namespace NINA.ViewModel {
         private bool updateAvailable = false;
 
         public bool UpdateAvailable {
-            get {
-                return updateAvailable;
-            }
+            get => updateAvailable;
             set {
                 updateAvailable = value;
                 RaisePropertyChanged();
@@ -227,9 +217,7 @@ namespace NINA.ViewModel {
         private string changelog = string.Empty;
 
         public string Changelog {
-            get {
-                return changelog;
-            }
+            get => changelog;
             set {
                 changelog = value;
                 RaisePropertyChanged();
@@ -299,8 +287,7 @@ namespace NINA.ViewModel {
 
         public class VersionInfo {
 
-            public static string Schema {
-                get => @"{
+            public static string Schema => @"{
 	                '$schema': 'http://json-schema.org/draft-07/schema#',
                     'additionalProperties': false,
                     'properties': {
@@ -335,7 +322,6 @@ namespace NINA.ViewModel {
                     },
   	                'required': ['version', 'checksum', 'file', 'checksum_x86', 'file_x86', 'changelog']
                 }";
-            }
 
             [JsonProperty(PropertyName = "version")]
             public Version Version;

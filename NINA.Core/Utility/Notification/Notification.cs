@@ -229,9 +229,7 @@ namespace NINA.Core.Utility.Notification {
         private Geometry _symbol;
 
         public Geometry Symbol {
-            get {
-                return _symbol;
-            }
+            get => _symbol;
             set {
                 _symbol = value;
                 RaisePropertyChanged();
@@ -241,9 +239,7 @@ namespace NINA.Core.Utility.Notification {
         private Brush _color;
 
         public Brush Color {
-            get {
-                return _color;
-            }
+            get => _color;
             set {
                 _color = value;
                 RaisePropertyChanged();
@@ -253,9 +249,7 @@ namespace NINA.Core.Utility.Notification {
         private Brush _background;
 
         public Brush Background {
-            get {
-                return _background;
-            }
+            get => _background;
             set {
                 _background = value;
                 RaisePropertyChanged();

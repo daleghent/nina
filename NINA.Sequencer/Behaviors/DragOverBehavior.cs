@@ -42,75 +42,43 @@ namespace NINA.Sequencer.Behaviors {
         private FrameworkElement hitElement;
 
         public bool Enabled {
-            get {
-                return (bool)GetValue(EnabledProperty);
-            }
-            set {
-                SetValue(EnabledProperty, value);
-            }
+            get => (bool)GetValue(EnabledProperty);
+            set => SetValue(EnabledProperty, value);
         }
 
         public double DragBelowSize {
-            get {
-                return (double)GetValue(DragBelowSizeProperty);
-            }
-            set {
-                SetValue(DragBelowSizeProperty, value);
-            }
+            get => (double)GetValue(DragBelowSizeProperty);
+            set => SetValue(DragBelowSizeProperty, value);
         }
 
         public double DragAboveSize {
-            get {
-                return (double)GetValue(DragAboveSizeProperty);
-            }
-            set {
-                SetValue(DragAboveSizeProperty, value);
-            }
+            get => (double)GetValue(DragAboveSizeProperty);
+            set => SetValue(DragAboveSizeProperty, value);
         }
 
         public DragOverDisplayAnchor DragOverDisplayAnchor {
-            get {
-                return (DragOverDisplayAnchor)GetValue(DragOverDisplayAnchorProperty);
-            }
-            set {
-                SetValue(DragOverDisplayAnchorProperty, value);
-            }
+            get => (DragOverDisplayAnchor)GetValue(DragOverDisplayAnchorProperty);
+            set => SetValue(DragOverDisplayAnchorProperty, value);
         }
 
         public string DragOverTopText {
-            get {
-                return (string)GetValue(DragOverTopTextProperty);
-            }
-            set {
-                SetValue(DragOverTopTextProperty, value);
-            }
+            get => (string)GetValue(DragOverTopTextProperty);
+            set => SetValue(DragOverTopTextProperty, value);
         }
 
         public string DragOverBottomText {
-            get {
-                return (string)GetValue(DragOverBottomTextProperty);
-            }
-            set {
-                SetValue(DragOverBottomTextProperty, value);
-            }
+            get => (string)GetValue(DragOverBottomTextProperty);
+            set => SetValue(DragOverBottomTextProperty, value);
         }
 
         public string DragOverCenterText {
-            get {
-                return (string)GetValue(DragOverCenterTextProperty);
-            }
-            set {
-                SetValue(DragOverCenterTextProperty, value);
-            }
+            get => (string)GetValue(DragOverCenterTextProperty);
+            set => SetValue(DragOverCenterTextProperty, value);
         }
 
         public bool AllowDragCenter {
-            get {
-                return (bool)GetValue(AllowDragCenterProperty);
-            }
-            set {
-                SetValue(AllowDragCenterProperty, value);
-            }
+            get => (bool)GetValue(AllowDragCenterProperty);
+            set => SetValue(AllowDragCenterProperty, value);
         }
 
         public DropTargetEnum DropTarget { get; set; }

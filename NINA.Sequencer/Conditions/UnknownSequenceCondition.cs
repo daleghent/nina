@@ -34,9 +34,7 @@ namespace NINA.Sequencer.Conditions {
 
         public new string Name {
             get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
-            private set {
-                base.Name = value;
-            }
+            private set => base.Name = value;
         }
 
         public IList<string> Issues => new List<string>() { Loc.Instance["LblUnknownInstructionValidation"] };

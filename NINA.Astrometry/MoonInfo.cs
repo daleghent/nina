@@ -21,16 +21,12 @@ namespace NINA.Astrometry {
         private DataPoint _maxMoonAltitude;
 
         public Coordinates Coordinates {
-            get { return _coordinates; }
-            set {
-                _coordinates = value;
-            }
+            get => _coordinates;
+            set => _coordinates = value;
         }
 
         public DataPoint MaxAltitude {
-            get {
-                return _maxMoonAltitude;
-            }
+            get => _maxMoonAltitude;
             set {
                 _maxMoonAltitude = value;
                 RaisePropertyChanged();
@@ -38,11 +34,7 @@ namespace NINA.Astrometry {
         }
 
         private List<DataPoint> datapoints;
-        public List<DataPoint> DataPoints {
-            get { 
-                return datapoints; 
-            }
-        }
+        public List<DataPoint> DataPoints => datapoints;
 
         private static Dictionary<DateTime, List<DataPoint>> Points = new Dictionary<DateTime, List<DataPoint>>();
 
@@ -65,9 +57,7 @@ namespace NINA.Astrometry {
         private double _separation;
 
         public double Separation {
-            get {
-                return _separation;
-            }
+            get => _separation;
             set {
                 _separation = value;
                 SeparationText = Math.Round(Separation, 0).ToString().PadLeft(3, '0') + "°";
@@ -78,7 +68,7 @@ namespace NINA.Astrometry {
         private string _separationText;
 
         public string SeparationText {
-            get { return _separationText; }
+            get => _separationText;
             set {
                 _separationText = value;
                 RaisePropertyChanged();
@@ -87,19 +77,17 @@ namespace NINA.Astrometry {
 
         private bool _displayMoon;
         public bool DisplayMoon {
-            get { return _displayMoon; }
+            get => _displayMoon;
             set {
                 _displayMoon = value;
-                if(value) {                    
+                if (value) {
                     CalculateMoonData();
                 }
                 RaisePropertyChanged();
             }
         }
 
-        public AstroUtil.MoonPhase Phase {
-            get { return AstroUtil.GetMoonPhase(DateTime.Now); }            
-        }
+        public AstroUtil.MoonPhase Phase => AstroUtil.GetMoonPhase(DateTime.Now);
 
         public Color Color {
             get {

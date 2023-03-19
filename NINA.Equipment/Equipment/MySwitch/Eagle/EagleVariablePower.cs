@@ -33,17 +33,11 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
 
         public override string Description { get; }
 
-        public override double Maximum {
-            get => 12d;
-        }
+        public override double Maximum => 12d;
 
-        public override double Minimum {
-            get => 0d;
-        }
+        public override double Minimum => 0d;
 
-        public override double StepSize {
-            get => 3d;
-        }
+        public override double StepSize => 3d;
 
         protected override async Task<double> GetValue() {
             var url = baseUrl + getRoute;

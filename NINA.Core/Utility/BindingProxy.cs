@@ -27,8 +27,8 @@ namespace NINA.Core.Utility {
         #endregion Overrides of Freezable
 
         public object Data {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get => (object)GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Data. This enables animation, styling,

@@ -44,7 +44,7 @@ namespace NINA.MGEN2 {
 
         public int SensorSizeY { get; } = 582;
 
-        public bool Connected { get => this.FTDI?.IsOpen ?? false; }
+        public bool Connected => this.FTDI?.IsOpen ?? false;
 
         public double PixelSize => 4.85;
 

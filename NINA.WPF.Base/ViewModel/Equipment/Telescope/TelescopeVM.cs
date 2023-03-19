@@ -346,9 +346,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private ITelescope _telescope;
 
         public ITelescope Telescope {
-            get {
-                return _telescope;
-            }
+            get => _telescope;
             private set {
                 _telescope = value;
                 RaisePropertyChanged();
@@ -840,9 +838,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private IProgress<ApplicationStatus> progress;
 
         public double TargetRightAscencionSeconds {
-            get {
-                return _targetRightAscencionSeconds;
-            }
+            get => _targetRightAscencionSeconds;
 
             set {
                 _targetRightAscencionSeconds = value;
@@ -1024,9 +1020,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private AsyncObservableCollection<TrackingMode> supportedTrackingModes = new AsyncObservableCollection<TrackingMode>();
 
         public AsyncObservableCollection<TrackingMode> SupportedTrackingModes {
-            get {
-                return supportedTrackingModes;
-            }
+            get => supportedTrackingModes;
             set {
                 supportedTrackingModes = value;
                 RaisePropertyChanged();

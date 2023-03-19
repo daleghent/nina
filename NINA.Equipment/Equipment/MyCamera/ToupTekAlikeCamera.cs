@@ -66,11 +66,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Category { get; }
 
-        public bool HasShutter {
-            get {
-                return false;
-            }
-        }
+        public bool HasShutter => false;
 
         public double Temperature {
             get {
@@ -100,9 +96,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool BinAverageEnabled {
-            get {
-                return profileService.ActiveProfile.CameraSettings.BinAverageEnabled == true;
-            }
+            get => profileService.ActiveProfile.CameraSettings.BinAverageEnabled == true;
             set {
                 if (profileService.ActiveProfile.CameraSettings.BinAverageEnabled != value) {
                     profileService.ActiveProfile.CameraSettings.BinAverageEnabled = value;
@@ -134,19 +128,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public short BinY {
-            get {
-                return BinX;
-            }
-            set {
-                BinX = value;
-            }
+            get => BinX;
+            set => BinX = value;
         }
 
-        public string SensorName {
-            get {
-                return string.Empty;
-            }
-        }
+        public string SensorName => string.Empty;
 
         public SensorType SensorType { get; private set; }
 
@@ -207,9 +193,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canGetTemperature;
 
         public bool CanGetTemperature {
-            get {
-                return canGetTemperature;
-            }
+            get => canGetTemperature;
             private set {
                 canGetTemperature = value;
                 RaisePropertyChanged();
@@ -219,9 +203,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canSetTemperature;
 
         public bool CanSetTemperature {
-            get {
-                return canSetTemperature;
-            }
+            get => canSetTemperature;
             private set {
                 canSetTemperature = value;
                 RaisePropertyChanged();
@@ -256,9 +238,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private double coolerPower = 0.0;
 
         public double CoolerPower {
-            get {
-                return coolerPower;
-            }
+            get => coolerPower;
             private set {
                 coolerPower = value;
                 RaisePropertyChanged();
@@ -349,33 +329,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public CameraStates CameraState { get => CameraStates.NoState; }
+        public CameraStates CameraState => CameraStates.NoState;
 
-        public bool CanSubSample {
-            get {
-                return true;
-            }
-        }
+        public bool CanSubSample => true;
 
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
         public int SubSampleY { get; set; }
         public int SubSampleWidth { get; set; }
         public int SubSampleHeight { get; set; }
-        public bool CanShowLiveView { get => false; }
+        public bool CanShowLiveView => false;
         public bool LiveViewEnabled { get; set; }
 
-        public bool HasBattery {
-            get {
-                return false;
-            }
-        }
+        public bool HasBattery => false;
 
-        public int BatteryLevel {
-            get {
-                return -1;
-            }
-        }
+        public int BatteryLevel => -1;
 
         public int Offset {
             get {
@@ -391,17 +359,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int OffsetMin {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMin => 0;
 
-        public int OffsetMax {
-            get {
-                return 31 * (1 << nativeBitDepth - 8);
-            }
-        }
+        public int OffsetMax => 31 * (1 << nativeBitDepth - 8);
 
         public int USBLimit {
             get {
@@ -419,47 +379,25 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int USBLimitMin {
-            get {
-                return 0;
-            }
-        }
+        public int USBLimitMin => 0;
 
-        public int USBLimitMax {
-            get {
-                return (int)sdk.MaxSpeed;
-            }
-        }
+        public int USBLimitMax => (int)sdk.MaxSpeed;
 
         private bool canSetOffset;
 
         public bool CanSetOffset {
-            get {
-                return canSetOffset;
-            }
+            get => canSetOffset;
             set {
                 canSetOffset = value;
                 RaisePropertyChanged();
             }
         }
 
-        public bool CanSetUSBLimit {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetUSBLimit => true;
 
-        public bool CanGetGain {
-            get {
-                return sdk.get_ExpoAGain(out var gain);
-            }
-        }
+        public bool CanGetGain => sdk.get_ExpoAGain(out var gain);
 
-        public bool CanSetGain {
-            get {
-                return GainMax != GainMin;
-            }
-        }
+        public bool CanSetGain => GainMax != GainMin;
 
         public int GainMax {
             get {
@@ -519,11 +457,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public IList<int> Gains {
-            get {
-                return new List<int>();
-            }
-        }
+        public IList<int> Gains => new List<int>();
 
         private AsyncObservableCollection<BinningMode> binningModes;
 
@@ -545,9 +479,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private string id;
 
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 id = value;
                 RaisePropertyChanged();
@@ -557,9 +489,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private string name;
 
         public string Name {
-            get {
-                return name;
-            }
+            get => name;
             set {
                 name = value;
                 RaisePropertyChanged();
@@ -569,9 +499,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             set {
                 _connected = value;
                 if (!_connected) {
@@ -586,26 +514,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private string description;
 
         public string Description {
-            get {
-                return description;
-            }
+            get => description;
             set {
                 description = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string DriverInfo {
-            get {
-                return $"{Category} SDK";
-            }
-        }
+        public string DriverInfo => $"{Category} SDK";
 
-        public string DriverVersion {
-            get {
-                return sdk?.Version() ?? string.Empty;
-            }
-        }
+        public string DriverVersion => sdk?.Version() ?? string.Empty;
 
         public void AbortExposure() {
             StopExposure();
@@ -1057,11 +975,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private TaskCompletionSource<bool> imageReadyTCS;
         private int nativeBitDepth;
-        public int BitDepth {
-            get {
-                return profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : nativeBitDepth;
-            }
-        }
+        public int BitDepth => profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : nativeBitDepth;
 
         private void OnEventDisconnected() {
             StopExposure();
@@ -1112,7 +1026,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             });
         }
 
-        public int USBLimitStep { get => 1; }
+        public int USBLimitStep => 1;
 
         public string Action(string actionName, string actionParameters) {
             switch (actionName) {

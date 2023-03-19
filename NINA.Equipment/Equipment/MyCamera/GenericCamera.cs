@@ -32,9 +32,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.Id = Category + "_" + id.ToString();
         }
 
-        public bool Connected {
-            get => sdk.Connected;
-        }
+        public bool Connected => sdk.Connected;
 
         private void Initialize() {
             BinningModes = new AsyncObservableCollection<BinningMode>();
@@ -72,7 +70,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private bool supportBitScaling;
-        public int BitDepth { get => supportBitScaling && profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : sdk.GetBitDepth(); }        
+        public int BitDepth => supportBitScaling && profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : sdk.GetBitDepth();
 
         public SensorType SensorType { get; private set; }
 
@@ -82,26 +80,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double PixelSizeX { get; private set; }
 
-        public double PixelSizeY { get => PixelSizeX; }
+        public double PixelSizeY => PixelSizeX;
 
-        public double ExposureMin {
-            get {
-                return sdk.GetMinExposureTime();
-            }
-        }
+        public double ExposureMin => sdk.GetMinExposureTime();
 
-        public double ExposureMax {
-            get {
-                return Math.Ceiling(sdk.GetMaxExposureTime());
-            }
-        }
+        public double ExposureMax => Math.Ceiling(sdk.GetMaxExposureTime());
 
         private short bin = 1;
 
         public short BinX {
-            get {
-                return bin;
-            }
+            get => bin;
             set {
                 if (value <= 0) { value = 1; }
                 if (value > MaxBinX) { value = MaxBinX; }
@@ -111,9 +99,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public short BinY {
-            get {
-                return bin;
-            }
+            get => bin;
             set {
                 if (value <= 0) { value = 1; }
                 if (value > MaxBinY) { value = MaxBinY; }
@@ -128,22 +114,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short MaxBinY { get; private set; }
 
-        public bool CanGetGain {
-            get {
-                return true;
-            }
-        }
+        public bool CanGetGain => true;
 
-        public bool CanSetGain {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetGain => true;
 
         public int Gain {
-            get {
-                return sdk.GetGain();
-            }
+            get => sdk.GetGain();
             set {
                 if (sdk.SetGain(value)) {
                     RaisePropertyChanged();
@@ -151,34 +127,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int GainMax {
-            get {
-                return sdk.GetMaxGain();
-            }
-        }
+        public int GainMax => sdk.GetMaxGain();
 
-        public int GainMin {
-            get {
-                return sdk.GetMinGain();
-            }
-        }
+        public int GainMin => sdk.GetMinGain();
 
-        public bool CanSetOffset {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetOffset => true;
 
-        public bool CanSetUSBLimit {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetUSBLimit => true;
 
         public int Offset {
-            get {
-                return sdk.GetOffset();
-            }
+            get => sdk.GetOffset();
             set {
                 if (sdk.SetOffset(value)) {
                     RaisePropertyChanged();
@@ -186,22 +144,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int OffsetMin {
-            get {
-                return sdk.GetMinOffset();
-            }
-        }
+        public int OffsetMin => sdk.GetMinOffset();
 
-        public int OffsetMax {
-            get {
-                return sdk.GetMaxOffset();
-            }
-        }
+        public int OffsetMax => sdk.GetMaxOffset();
 
         public int USBLimit {
-            get {
-                return sdk.GetUSBLimit();
-            }
+            get => sdk.GetUSBLimit();
             set {
                 if (sdk.SetUSBLimit(value)) {
                     RaisePropertyChanged();
@@ -209,23 +157,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int USBLimitMin {
-            get {
-                return sdk.GetMinUSBLimit();
-            }
-        }
+        public int USBLimitMin => sdk.GetMinUSBLimit();
 
-        public int USBLimitMax {
-            get {
-                return sdk.GetMaxUSBLimit();
-            }
-        }
+        public int USBLimitMax => sdk.GetMaxUSBLimit();
 
-        public int USBLimitStep {
-            get {
-                return 1;
-            }
-        }
+        public int USBLimitStep => 1;
 
         public IList<string> SupportedActions => new List<string>();
 
@@ -337,9 +273,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public bool HasDewHeater { get; private set; }
 
         public bool DewHeaterOn {
-            get {
-                return sdk.IsDewHeaterOn();
-            }
+            get => sdk.IsDewHeaterOn();
             set {
                 var strength = value ? profileService.ActiveProfile.CameraSettings.GenericCameraDewHeaterStrength : 0;
                 if (sdk.SetDewHeater(strength)) {
@@ -404,7 +338,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasAdjustableFan { get => sdk.HasAdjustableFan(); }
+        public bool HasAdjustableFan => sdk.HasAdjustableFan();
 
         public int FanSpeed {
             get {
@@ -469,7 +403,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         #region "Subsample"
 
-        public bool CanSubSample { get => true; }
+        public bool CanSubSample => true;
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
         public int SubSampleY { get; set; }
@@ -481,7 +415,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         #region "LiveView"
 
         // Live view is deprecated
-        public bool CanShowLiveView { get => false; }
+        public bool CanShowLiveView => false;
 
         public void StartLiveView(CaptureSequence sequence) {
             if (EnableSubSample) {
@@ -589,28 +523,24 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         #region "Unsupported Features"
 
-        public CameraStates CameraState { get => CameraStates.NoState; }
+        public CameraStates CameraState => CameraStates.NoState;
 
-        public bool HasSetupDialog { get => false; }
+        public bool HasSetupDialog => false;
 
         public void SetupDialog() {
         }
 
-        public string SensorName { get => string.Empty; }
+        public string SensorName => string.Empty;
 
-        public bool HasShutter { get => false; }
+        public bool HasShutter => false;
 
-        public bool HasBattery { get => false; }
-        public int BatteryLevel { get => -1; }
+        public bool HasBattery => false;
+        public int BatteryLevel => -1;
         public double ElectronsPerADU => double.NaN;
         public short BayerOffsetX { get; } = 0;
         public short BayerOffsetY { get; } = 0;
 
-        public IList<int> Gains {
-            get {
-                return new List<int>();
-            }
-        }
+        public IList<int> Gains => new List<int>();
 
         public string Action(string actionName, string actionParameters) {
             throw new NotImplementedException();

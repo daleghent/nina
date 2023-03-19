@@ -42,8 +42,8 @@ namespace NINA.View.Sequencer.MiniSequencer {
             DependencyProperty.Register(nameof(ConditionProgressContent), typeof(object), typeof(MiniCondition));
 
         public object ConditionProgressContent {
-            get { return (object)GetValue(ConditionProgressContentProperty); }
-            set { SetValue(ConditionProgressContentProperty, value); }
+            get => (object)GetValue(ConditionProgressContentProperty);
+            set => SetValue(ConditionProgressContentProperty, value);
         }
     }
 }

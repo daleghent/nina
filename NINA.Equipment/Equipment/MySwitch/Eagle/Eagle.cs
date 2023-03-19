@@ -34,17 +34,11 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
 
         public string Category { get; } = "PrimaLuceLab";
 
-        public bool HasSetupDialog {
-            get => true;
-        }
+        public bool HasSetupDialog => true;
 
-        public string Id {
-            get => "EAGLE";
-        }
+        public string Id => "EAGLE";
 
-        public string Name {
-            get => "EAGLE";
-        }
+        public string Name => "EAGLE";
 
         private bool connected;
 
@@ -56,17 +50,11 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
             }
         }
 
-        public string Description {
-            get => "EAGLE";
-        }
+        public string Description => "EAGLE";
 
-        public string DriverInfo {
-            get => string.Empty;
-        }
+        public string DriverInfo => string.Empty;
 
-        public string DriverVersion {
-            get => string.Empty;
-        }
+        public string DriverVersion => string.Empty;
 
         public ICollection<ISwitch> Switches { get; private set; } = new List<ISwitch>();
 
@@ -148,9 +136,7 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
         private IProfileService profileService;

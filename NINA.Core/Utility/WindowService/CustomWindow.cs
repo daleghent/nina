@@ -27,8 +27,8 @@ namespace NINA.Core.Utility.WindowService {
         DependencyProperty.Register(nameof(CloseCommand), typeof(ICommand), typeof(Window), null);
 
         public ICommand CloseCommand {
-            get { return (ICommand)GetValue(CloseCommandProperty); }
-            set { SetValue(CloseCommandProperty, value); }
+            get => (ICommand)GetValue(CloseCommandProperty);
+            set => SetValue(CloseCommandProperty, value);
         }
 
         private void FixLayout() {

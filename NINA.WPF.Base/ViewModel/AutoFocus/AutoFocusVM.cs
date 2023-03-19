@@ -94,9 +94,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public AFCurveFittingEnum AutoFocusChartCurveFitting {
-            get {
-                return _autoFocusChartCurveFitting;
-            }
+            get => _autoFocusChartCurveFitting;
             set {
                 _autoFocusChartCurveFitting = value;
                 RaisePropertyChanged();
@@ -104,9 +102,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public AFMethodEnum AutoFocusChartMethod {
-            get {
-                return _autoFocusChartMethod;
-            }
+            get => _autoFocusChartMethod;
             set {
                 _autoFocusChartMethod = value;
                 RaisePropertyChanged();
@@ -117,9 +113,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         public double ContrastStdev { get; private set; }
 
         public DataPoint FinalFocusPoint {
-            get {
-                return _finalFocusPoint;
-            }
+            get => _finalFocusPoint;
             set {
                 _finalFocusPoint = value;
                 RaisePropertyChanged();
@@ -127,9 +121,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public AsyncObservableCollection<ScatterErrorPoint> FocusPoints {
-            get {
-                return _focusPoints;
-            }
+            get => _focusPoints;
             set {
                 _focusPoints = value;
                 RaisePropertyChanged();
@@ -137,9 +129,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public GaussianFitting GaussianFitting {
-            get {
-                return _gaussianFitting;
-            }
+            get => _gaussianFitting;
             set {
                 _gaussianFitting = value;
                 RaisePropertyChanged();
@@ -147,9 +137,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public HyperbolicFitting HyperbolicFitting {
-            get {
-                return _hyperbolicFitting;
-            }
+            get => _hyperbolicFitting;
             set {
                 _hyperbolicFitting = value;
                 RaisePropertyChanged();
@@ -157,9 +145,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public ReportAutoFocusPoint LastAutoFocusPoint {
-            get {
-                return _lastAutoFocusPoint;
-            }
+            get => _lastAutoFocusPoint;
             set {
                 _lastAutoFocusPoint = value;
                 RaisePropertyChanged();
@@ -167,9 +153,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         public AsyncObservableCollection<DataPoint> PlotFocusPoints {
-            get {
-                return _plotFocusPoints;
-            }
+            get => _plotFocusPoints;
             set {
                 _plotFocusPoints = value;
                 RaisePropertyChanged();

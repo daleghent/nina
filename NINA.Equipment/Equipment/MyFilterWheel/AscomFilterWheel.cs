@@ -34,34 +34,18 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             this.profileService = profileService;
         }
 
-        public int[] FocusOffsets {
-            get {
-                return GetProperty(nameof(FilterWheel.FocusOffsets), new int[] { });
-            }
-        }
+        public int[] FocusOffsets => GetProperty(nameof(FilterWheel.FocusOffsets), new int[] { });
 
-        public string[] Names {
-            get {
-                return GetProperty(nameof(FilterWheel.Names), new string[] { });
-            }
-        }
+        public string[] Names => GetProperty(nameof(FilterWheel.Names), new string[] { });
 
         public short Position {
-            get {
-                return GetProperty<short>(nameof(FilterWheel.Position), -1);
-            }
-            set {
-                SetProperty(nameof(Focuser.Position), value);
-            }
+            get => GetProperty<short>(nameof(FilterWheel.Position), -1);
+            set => SetProperty(nameof(Focuser.Position), value);
         }
 
         private IProfileService profileService;
 
-        public AsyncObservableCollection<FilterInfo> Filters {
-            get {
-                return profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-            }
-        }
+        public AsyncObservableCollection<FilterInfo> Filters => profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
 
         protected override string ConnectionLostMessage => Loc.Instance["LblFilterwheelConnectionLost"];
 

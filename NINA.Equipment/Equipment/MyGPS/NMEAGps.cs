@@ -52,17 +52,9 @@ namespace NINA.Equipment.Equipment.MyGPS {
 
         public string Id => $"#{gpsId} (#{portName})";
 
-        public string Name {
-            get {
-                return "NMEA GPS Device";
-            }
-        }
+        public string Name => "NMEA GPS Device";
 
-        public string Description {
-            get {
-                return string.Empty;
-            }
-        }
+        public string Description => string.Empty;
 
         public string DriverInfo {
             get {
@@ -78,11 +70,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return false;
-            }
-        }
+        public bool HasSetupDialog => false;
 
         public void SetupDialog() {
             //TODO : allow the user to select a specific com port maybe?
@@ -103,9 +91,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
         }
 
         public bool Connected {
-            get {
-                return connected;
-            }
+            get => connected;
             set {
                 connected = value;
                 RaisePropertyChanged();

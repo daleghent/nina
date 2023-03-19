@@ -38,11 +38,7 @@ namespace NINA.Image.FileFormat.FITS {
 
         private Dictionary<string, FITSHeaderCard> _headerCards = new Dictionary<string, FITSHeaderCard>();
 
-        public ICollection<FITSHeaderCard> HeaderCards {
-            get {
-                return _headerCards.Values;
-            }
-        }
+        public ICollection<FITSHeaderCard> HeaderCards => _headerCards.Values;
 
         public void Add(string keyword, string value, string comment) {
             if (!_headerCards.ContainsKey(keyword)) {

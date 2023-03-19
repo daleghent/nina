@@ -52,8 +52,8 @@ namespace NINA.Sequencer {
 
         private CollectionViewSource templatesView;
         private CollectionViewSource templatesMenuView;
-        public ICollectionView TemplatesView { get => templatesView.View; }
-        public ICollectionView TemplatesMenuView { get => templatesMenuView.View; }
+        public ICollectionView TemplatesView => templatesView.View;
+        public ICollectionView TemplatesMenuView => templatesMenuView.View;
 
         private string viewFilter = string.Empty;
 

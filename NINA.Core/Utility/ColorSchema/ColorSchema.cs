@@ -362,9 +362,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color PrimaryColor {
-            get {
-                return primaryColor;
-            }
+            get => primaryColor;
             set {
                 if (primaryColor != value) {
                     primaryColor = value;
@@ -375,9 +373,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color SecondaryColor {
-            get {
-                return secondaryColor;
-            }
+            get => secondaryColor;
             set {
                 if (secondaryColor != value) {
                     secondaryColor = value;
@@ -388,9 +384,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color BorderColor {
-            get {
-                return borderColor;
-            }
+            get => borderColor;
             set {
                 if (borderColor != value) {
                     borderColor = value;
@@ -401,9 +395,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color BackgroundColor {
-            get {
-                return backgroundColor;
-            }
+            get => backgroundColor;
             set {
                 if (backgroundColor != value) {
                     backgroundColor = value;
@@ -414,9 +406,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color SecondaryBackgroundColor {
-            get {
-                return secondaryBackgroundColor;
-            }
+            get => secondaryBackgroundColor;
             set {
                 if (secondaryBackgroundColor != value) {
                     secondaryBackgroundColor = value;
@@ -427,9 +417,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color TertiaryBackgroundColor {
-            get {
-                return tertiaryBackgroundColor;
-            }
+            get => tertiaryBackgroundColor;
             set {
                 if (tertiaryBackgroundColor != value) {
                     tertiaryBackgroundColor = value;
@@ -440,9 +428,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color ButtonBackgroundColor {
-            get {
-                return buttonBackgroundColor;
-            }
+            get => buttonBackgroundColor;
             set {
                 if (buttonBackgroundColor != value) {
                     buttonBackgroundColor = value;
@@ -453,9 +439,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color ButtonBackgroundSelectedColor {
-            get {
-                return buttonBackgroundSelectedColor;
-            }
+            get => buttonBackgroundSelectedColor;
             set {
                 if (buttonBackgroundSelectedColor != value) {
                     buttonBackgroundSelectedColor = value;
@@ -466,9 +450,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color ButtonForegroundColor {
-            get {
-                return buttonForegroundColor;
-            }
+            get => buttonForegroundColor;
             set {
                 if (buttonForegroundColor != value) {
                     buttonForegroundColor = value;
@@ -479,9 +461,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color ButtonForegroundDisabledColor {
-            get {
-                return buttonForegroundDisabledColor;
-            }
+            get => buttonForegroundDisabledColor;
             set {
                 if (buttonForegroundDisabledColor != value) {
                     buttonForegroundDisabledColor = value;
@@ -492,9 +472,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color NotificationWarningColor {
-            get {
-                return notificationWarningColor;
-            }
+            get => notificationWarningColor;
             set {
                 if (notificationWarningColor != value) {
                     notificationWarningColor = value;
@@ -505,9 +483,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color NotificationErrorColor {
-            get {
-                return notificationErrorColor;
-            }
+            get => notificationErrorColor;
             set {
                 if (notificationErrorColor != value) {
                     notificationErrorColor = value;
@@ -518,9 +494,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color NotificationWarningTextColor {
-            get {
-                return notificationWarningTextColor;
-            }
+            get => notificationWarningTextColor;
             set {
                 if (notificationWarningTextColor != value) {
                     notificationWarningTextColor = value;
@@ -531,9 +505,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [DataMember]
         public Color NotificationErrorTextColor {
-            get {
-                return notificationErrorTextColor;
-            }
+            get => notificationErrorTextColor;
             set {
                 if (notificationErrorTextColor != value) {
                     notificationErrorTextColor = value;
@@ -544,9 +516,7 @@ namespace NINA.Core.Utility.ColorSchema {
 
         [XmlIgnore]
         [IgnoreDataMember]
-        public bool IsEditable {
-            get => Name == "Custom" || Name == "Alternative Custom";
-        }
+        public bool IsEditable => Name == "Custom" || Name == "Alternative Custom";
 
         public ColorSchema() {
         }

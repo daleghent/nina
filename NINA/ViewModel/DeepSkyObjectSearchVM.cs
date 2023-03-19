@@ -35,9 +35,7 @@ namespace NINA.ViewModel {
         private NotifyTask<List<IAutoCompleteItem>> targetSearchResult;
 
         public NotifyTask<List<IAutoCompleteItem>> TargetSearchResult {
-            get {
-                return targetSearchResult;
-            }
+            get => targetSearchResult;
             set {
                 targetSearchResult = value;
                 RaisePropertyChanged();
@@ -101,9 +99,7 @@ namespace NINA.ViewModel {
         private IAutoCompleteItem selectedTargetSearchResult;
 
         public IAutoCompleteItem SelectedTargetSearchResult {
-            get {
-                return selectedTargetSearchResult;
-            }
+            get => selectedTargetSearchResult;
             set {
                 selectedTargetSearchResult = value;
                 if (selectedTargetSearchResult != null) {
@@ -121,9 +117,7 @@ namespace NINA.ViewModel {
         private bool showPopup;
 
         public bool ShowPopup {
-            get {
-                return showPopup;
-            }
+            get => showPopup;
             set {
                 showPopup = value;
                 RaisePropertyChanged();

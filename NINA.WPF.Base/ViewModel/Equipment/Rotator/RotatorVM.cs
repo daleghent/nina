@@ -290,7 +290,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         private float targetPosition;
 
         public float TargetPosition {
-            get { return targetPosition; }
+            get => targetPosition;
             set { targetPosition = value; RaisePropertyChanged(); }
         }
 

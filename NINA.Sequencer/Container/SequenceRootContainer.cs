@@ -128,9 +128,7 @@ namespace NINA.Sequencer.Container {
         private string sequenceTitle;
 
         public string SequenceTitle {
-            get {
-                return string.IsNullOrEmpty(sequenceTitle) ? Name : sequenceTitle;
-            }
+            get => string.IsNullOrEmpty(sequenceTitle) ? Name : sequenceTitle;
             set {
                 if (sequenceTitle != value) {
                     sequenceTitle = value;

@@ -34,12 +34,8 @@ namespace NINA.CustomControlLibrary {
            DependencyProperty.Register(nameof(Unit), typeof(string), typeof(UnitTextBox), new UIPropertyMetadata(string.Empty));
 
         public string Unit {
-            get {
-                return (string)GetValue(UnitTextProperty);
-            }
-            set {
-                SetValue(UnitTextProperty, value);
-            }
+            get => (string)GetValue(UnitTextProperty);
+            set => SetValue(UnitTextProperty, value);
         }
 
         public void SecondTextBox_Click(object sender, EventArgs e) {

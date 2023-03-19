@@ -39,7 +39,7 @@ namespace NINA.WPF.Base.ViewModel {
             });
         }
 
-        public string Title { get => Loc.Instance["LblPlateSolving"]; }
+        public string Title => Loc.Instance["LblPlateSolving"];
 
         private PlateSolveResult plateSolveResult;
 
@@ -62,9 +62,7 @@ namespace NINA.WPF.Base.ViewModel {
         }
 
         public PlateSolveResult PlateSolveResult {
-            get {
-                return plateSolveResult;
-            }
+            get => plateSolveResult;
 
             set {
                 plateSolveResult = value;

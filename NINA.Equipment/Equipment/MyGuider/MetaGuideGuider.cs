@@ -78,9 +78,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private bool connected;
 
         public bool Connected {
-            get {
-                return connected;
-            }
+            get => connected;
             private set {
                 if (connected != value) {
                     connected = value;
@@ -93,9 +91,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double pixelScale;
 
         public double PixelScale {
-            get {
-                return pixelScale;
-            }
+            get => pixelScale;
             set {
                 if (pixelScale != value) {
                     pixelScale = value;
@@ -107,9 +103,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private string state = "Not Ready";
 
         public string State {
-            get {
-                return state;
-            }
+            get => state;
             set {
                 if (state != value) {
                     state = value;
@@ -121,9 +115,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private volatile bool isLocked = false;
 
         public bool IsLocked {
-            get {
-                return this.isLocked;
-            }
+            get => this.isLocked;
             private set {
                 if (this.isLocked != value) {
                     this.isLocked = value;
@@ -136,9 +128,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private volatile bool isGuiding = false;
 
         public bool IsGuiding {
-            get {
-                return this.isGuiding;
-            }
+            get => this.isGuiding;
             private set {
                 if (this.isGuiding != value) {
                     this.isGuiding = value;
@@ -151,9 +141,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double intensity;
 
         public double Intensity {
-            get {
-                return intensity;
-            }
+            get => intensity;
             set {
                 if (intensity != value) {
                     intensity = value;
@@ -165,9 +153,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double fwhm;
 
         public double FWHM {
-            get {
-                return fwhm;
-            }
+            get => fwhm;
             set {
                 if (fwhm != value) {
                     fwhm = value;
@@ -179,9 +165,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double seeing;
 
         public double Seeing {
-            get {
-                return seeing;
-            }
+            get => seeing;
             set {
                 if (seeing != value) {
                     seeing = value;
@@ -193,9 +177,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private CalibrationState calibrationState;
 
         public CalibrationState CalibrationState {
-            get {
-                return calibrationState;
-            }
+            get => calibrationState;
             set {
                 if (calibrationState != value) {
                     calibrationState = value;
@@ -207,9 +189,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double focalLength;
 
         public double FocalLength {
-            get {
-                return focalLength;
-            }
+            get => focalLength;
             set {
                 if (focalLength != value) {
                     focalLength = value;
@@ -221,9 +201,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double pixelSize;
 
         public double PixelSize {
-            get {
-                return pixelSize;
-            }
+            get => pixelSize;
             set {
                 if (pixelSize != value) {
                     pixelSize = value;
@@ -381,9 +359,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return await WaitOnEventChangeCondition(() => !this.IsGuiding && !this.IsLocked, ct);
         }
 
-        public bool CanClearCalibration {
-            get => false;
-        }
+        public bool CanClearCalibration => false;
 
         public bool CanSetShiftRate => false;
         public bool ShiftEnabled => false;

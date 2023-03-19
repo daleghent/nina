@@ -54,16 +54,16 @@ namespace NINA.View.Sequencer {
             DependencyProperty.Register(nameof(SequenceContainerContent), typeof(object), typeof(SequenceBlockView));
 
         public object SequenceContainerContent {
-            get { return (object)GetValue(SequenceContainerContentProperty); }
-            set { SetValue(SequenceContainerContentProperty, value); }
+            get => (object)GetValue(SequenceContainerContentProperty);
+            set => SetValue(SequenceContainerContentProperty, value);
         }
 
         public static readonly DependencyProperty ShowDetailsProperty =
             DependencyProperty.Register(nameof(ShowDetails), typeof(bool), typeof(SequenceBlockView), new PropertyMetadata(true));
 
         public bool ShowDetails {
-            get { return (bool)GetValue(ShowDetailsProperty); }
-            set { SetValue(ShowDetailsProperty, value); }
+            get => (bool)GetValue(ShowDetailsProperty);
+            set => SetValue(ShowDetailsProperty, value);
         }
 
         private void MenuItemTarget_Click(object sender, RoutedEventArgs e) {

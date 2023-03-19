@@ -57,9 +57,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int RAHours {
-            get {
-                return (int)Math.Truncate(coordinates.RA);
-            }
+            get => (int)Math.Truncate(coordinates.RA);
             set {
                 if (value >= 0) {
                     coordinates.RA = coordinates.RA - RAHours + value;
@@ -118,9 +116,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int DecDegrees {
-            get {
-                return (int)Math.Truncate(coordinates.Dec);
-            }
+            get => (int)Math.Truncate(coordinates.Dec);
             set {
                 if (NegativeDec) {
                     coordinates.Dec = value - DecMinutes / 60.0d - DecSeconds / (60.0d * 60.0d);

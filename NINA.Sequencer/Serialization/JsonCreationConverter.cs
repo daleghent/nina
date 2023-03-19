@@ -34,9 +34,7 @@ namespace NINA.Sequencer.Serialization {
             return typeof(T).IsAssignableFrom(objectType);
         }
 
-        public override bool CanWrite {
-            get { return false; }
-        }
+        public override bool CanWrite => false;
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,

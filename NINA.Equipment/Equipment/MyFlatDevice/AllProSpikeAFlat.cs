@@ -34,17 +34,11 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             this._profileService = profileService;
         }
 
-        public CoverState CoverState {
-            get => CoverState.NeitherOpenNorClosed;
-        }
+        public CoverState CoverState => CoverState.NeitherOpenNorClosed;
 
-        public int MaxBrightness {
-            get => 1000;
-        }
+        public int MaxBrightness => 1000;
 
-        public int MinBrightness {
-            get => 0;
-        }
+        public int MinBrightness => 0;
 
         public bool LightOn {
             get {
@@ -94,29 +88,17 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public string PortName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public bool SupportsOpenClose {
-            get => false;
-        }
+        public bool SupportsOpenClose => false;
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
-        public bool HasSetupDialog {
-            get => false;
-        }
+        public bool HasSetupDialog => false;
 
-        public string Id {
-            get => "AFE4C45C-47DB-471B-B570-9044FF6F6374";
-        }
+        public string Id => "AFE4C45C-47DB-471B-B570-9044FF6F6374";
 
-        public string Name {
-            get => $"{Loc.Instance["LblAllProSpikeAFlatPanel"]}";
-        }
+        public string Name => $"{Loc.Instance["LblAllProSpikeAFlatPanel"]}";
 
-        public string Category {
-            get => "AllPro Software";
-        }
+        public string Category => "AllPro Software";
 
         private bool _connected;
 
@@ -138,13 +120,9 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public string DriverInfo {
-            get => "AllPro-provided USB driver";
-        }
+        public string DriverInfo => "AllPro-provided USB driver";
 
-        public string DriverVersion {
-            get => "Last modified 2015/01/13";
-        }
+        public string DriverVersion => "Last modified 2015/01/13";
 
         public async Task<bool> Connect(CancellationToken ct) {
             return await Task.Run(() => {

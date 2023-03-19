@@ -183,9 +183,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 throw new Exception($"No connected SBIG device");
             }
-            set {
-                connectedDevice = value;
-            }
+            set => connectedDevice = value;
         }
 
         public void Disconnect() {
@@ -368,9 +366,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short MaxBinY {
             get => MaxBinX;
-            private set {
-                MaxBinX = value;
-            }
+            private set => MaxBinX = value;
         }
 
         private double _pixelSizeX;
@@ -776,9 +772,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool TrackingCcdAscomServerEnabled {
-            get {
-                return profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerEnabled == true;
-            }
+            get => profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerEnabled == true;
             set {
                 if (profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerEnabled != value) {
                     Task.Run(async () => {
@@ -795,9 +789,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool TrackingCcdAscomServerLoggingEnabled {
-            get {
-                return profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled == true;
-            }
+            get => profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled == true;
             set {
                 if (profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled != value) {
                     profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled = value;

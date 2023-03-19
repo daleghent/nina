@@ -144,9 +144,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set { }
         }
 
-        public int BitDepth {
-            get => (int)Info.Bpp;
-        }
+        public int BitDepth => (int)Info.Bpp;
 
         public CameraStates CameraState {
             get => Info.CamState;

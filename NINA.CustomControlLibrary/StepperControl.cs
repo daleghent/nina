@@ -57,104 +57,72 @@ namespace NINA.CustomControlLibrary {
            DependencyProperty.Register(nameof(ButtonForegroundBrush), typeof(Brush), typeof(StepperControl), new UIPropertyMetadata(new SolidColorBrush(Colors.White)));
 
         public Brush ButtonForegroundBrush {
-            get {
-                return (Brush)GetValue(ButtonForegroundBrushProperty);
-            }
-            set {
-                SetValue(ButtonForegroundBrushProperty, value);
-            }
+            get => (Brush)GetValue(ButtonForegroundBrushProperty);
+            set => SetValue(ButtonForegroundBrushProperty, value);
         }
 
         public static readonly DependencyProperty AddSVGProperty =
            DependencyProperty.Register(nameof(AddSVG), typeof(Geometry), typeof(StepperControl), new UIPropertyMetadata(null));
 
         public Geometry AddSVG {
-            get {
-                return (Geometry)GetValue(AddSVGProperty);
-            }
-            set {
-                SetValue(AddSVGProperty, value);
-            }
+            get => (Geometry)GetValue(AddSVGProperty);
+            set => SetValue(AddSVGProperty, value);
         }
 
         public static readonly DependencyProperty SubstractSVGProperty =
            DependencyProperty.Register(nameof(SubstractSVG), typeof(Geometry), typeof(StepperControl), new UIPropertyMetadata(null));
 
         public Geometry SubstractSVG {
-            get {
-                return (Geometry)GetValue(SubstractSVGProperty);
-            }
-            set {
-                SetValue(SubstractSVGProperty, value);
-            }
+            get => (Geometry)GetValue(SubstractSVGProperty);
+            set => SetValue(SubstractSVGProperty, value);
         }
 
         public static readonly DependencyProperty ValueProperty =
            DependencyProperty.Register(nameof(Value), typeof(double), typeof(StepperControl), new UIPropertyMetadata(0.0d));
 
         public double Value {
-            get {
-                return (double)GetValue(ValueProperty);
-            }
-            set {
-                SetValue(ValueProperty, value);
-            }
+            get => (double)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
 
         public static readonly DependencyProperty MinValueProperty =
            DependencyProperty.Register(nameof(MinValue), typeof(double), typeof(StepperControl), new UIPropertyMetadata(double.MinValue));
 
         public double MinValue {
-            get {
-                return (double)GetValue(MinValueProperty);
-            }
-            set {
-                SetValue(MinValueProperty, value);
-            }
+            get => (double)GetValue(MinValueProperty);
+            set => SetValue(MinValueProperty, value);
         }
 
         public static readonly DependencyProperty MaxValueProperty =
            DependencyProperty.Register(nameof(MaxValue), typeof(double), typeof(StepperControl), new UIPropertyMetadata(double.MaxValue));
 
         public double MaxValue {
-            get {
-                return (double)GetValue(MaxValueProperty);
-            }
-            set {
-                SetValue(MaxValueProperty, value);
-            }
+            get => (double)GetValue(MaxValueProperty);
+            set => SetValue(MaxValueProperty, value);
         }
 
         public static readonly DependencyProperty StepSizeProperty =
            DependencyProperty.Register(nameof(StepSize), typeof(double), typeof(StepperControl), new UIPropertyMetadata(1.0d));
 
         public double StepSize {
-            get {
-                return (double)GetValue(StepSizeProperty);
-            }
-            set {
-                SetValue(StepSizeProperty, value);
-            }
+            get => (double)GetValue(StepSizeProperty);
+            set => SetValue(StepSizeProperty, value);
         }
 
         public static readonly DependencyProperty UnitProperty =
            DependencyProperty.Register(nameof(Unit), typeof(string), typeof(StepperControl), new UIPropertyMetadata(string.Empty));
 
         public string Unit {
-            get {
-                return (string)GetValue(UnitProperty);
-            }
-            set {
-                SetValue(UnitProperty, value);
-            }
+            get => (string)GetValue(UnitProperty);
+            set => SetValue(UnitProperty, value);
         }
 
         /// <summary>
         /// Customizing Hook to overwrite the default Textbox. "Value" still needs proper binding for the increment/decrement buttons to work properly
         /// </summary>
         public FrameworkElement InnerContent {
-            get { return (FrameworkElement)GetValue(InnerContentProperty); }
-            set { SetValue(InnerContentProperty, value); }
+            get => (FrameworkElement)GetValue(InnerContentProperty);
+            set => SetValue(InnerContentProperty, value);
         }
 
         public static readonly DependencyProperty InnerContentProperty =
@@ -247,116 +215,80 @@ namespace NINA.CustomControlLibrary {
            DependencyProperty.Register(nameof(ButtonForegroundBrush), typeof(Brush), typeof(PrecisionStepperControl), new UIPropertyMetadata(new SolidColorBrush(Colors.White)));
 
         public Brush ButtonForegroundBrush {
-            get {
-                return (Brush)GetValue(ButtonForegroundBrushProperty);
-            }
-            set {
-                SetValue(ButtonForegroundBrushProperty, value);
-            }
+            get => (Brush)GetValue(ButtonForegroundBrushProperty);
+            set => SetValue(ButtonForegroundBrushProperty, value);
         }
 
         public static readonly DependencyProperty AddSVGProperty =
            DependencyProperty.Register(nameof(AddSVG), typeof(Geometry), typeof(PrecisionStepperControl), new UIPropertyMetadata(null));
 
         public Geometry AddSVG {
-            get {
-                return (Geometry)GetValue(AddSVGProperty);
-            }
-            set {
-                SetValue(AddSVGProperty, value);
-            }
+            get => (Geometry)GetValue(AddSVGProperty);
+            set => SetValue(AddSVGProperty, value);
         }
 
         public static readonly DependencyProperty SubstractSVGProperty =
            DependencyProperty.Register(nameof(SubstractSVG), typeof(Geometry), typeof(PrecisionStepperControl), new UIPropertyMetadata(null));
 
         public Geometry SubstractSVG {
-            get {
-                return (Geometry)GetValue(SubstractSVGProperty);
-            }
-            set {
-                SetValue(SubstractSVGProperty, value);
-            }
+            get => (Geometry)GetValue(SubstractSVGProperty);
+            set => SetValue(SubstractSVGProperty, value);
         }
 
         public static readonly DependencyProperty ValueProperty =
            DependencyProperty.Register(nameof(Value), typeof(double), typeof(PrecisionStepperControl), new UIPropertyMetadata(0.0d));
 
         public double Value {
-            get {
-                return (double)GetValue(ValueProperty);
-            }
-            set {
-                SetValue(ValueProperty, Math.Round(value, Precision));
-            }
+            get => (double)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, Math.Round(value, Precision));
         }
 
         public static readonly DependencyProperty MinValueProperty =
            DependencyProperty.Register(nameof(MinValue), typeof(double), typeof(PrecisionStepperControl), new UIPropertyMetadata(double.MinValue));
 
         public double MinValue {
-            get {
-                return (double)GetValue(MinValueProperty);
-            }
-            set {
-                SetValue(MinValueProperty, value);
-            }
+            get => (double)GetValue(MinValueProperty);
+            set => SetValue(MinValueProperty, value);
         }
 
         public static readonly DependencyProperty MaxValueProperty =
            DependencyProperty.Register(nameof(MaxValue), typeof(double), typeof(PrecisionStepperControl), new UIPropertyMetadata(double.MaxValue));
 
         public double MaxValue {
-            get {
-                return (double)GetValue(MaxValueProperty);
-            }
-            set {
-                SetValue(MaxValueProperty, value);
-            }
+            get => (double)GetValue(MaxValueProperty);
+            set => SetValue(MaxValueProperty, value);
         }
 
         public static readonly DependencyProperty StepSizeProperty =
            DependencyProperty.Register(nameof(StepSize), typeof(double), typeof(PrecisionStepperControl), new UIPropertyMetadata(1.0d));
 
         public double StepSize {
-            get {
-                return (double)GetValue(StepSizeProperty);
-            }
-            set {
-                SetValue(StepSizeProperty, value);
-            }
+            get => (double)GetValue(StepSizeProperty);
+            set => SetValue(StepSizeProperty, value);
         }
 
         public static readonly DependencyProperty PrecisionProperty =
            DependencyProperty.Register(nameof(Precision), typeof(int), typeof(PrecisionStepperControl), new UIPropertyMetadata(4));
 
         public int Precision {
-            get {
-                return (int)GetValue(PrecisionProperty);
-            }
-            set {
-                SetValue(PrecisionProperty, value);
-            }
+            get => (int)GetValue(PrecisionProperty);
+            set => SetValue(PrecisionProperty, value);
         }
 
         public static readonly DependencyProperty UnitProperty =
            DependencyProperty.Register(nameof(Unit), typeof(string), typeof(PrecisionStepperControl), new UIPropertyMetadata(string.Empty));
 
         public string Unit {
-            get {
-                return (string)GetValue(UnitProperty);
-            }
-            set {
-                SetValue(UnitProperty, value);
-            }
+            get => (string)GetValue(UnitProperty);
+            set => SetValue(UnitProperty, value);
         }
 
         /// <summary>
         /// Customizing Hook to overwrite the default Textbox. "Value" still needs proper binding for the increment/decrement buttons to work properly
         /// </summary>
         public FrameworkElement InnerContent {
-            get { return (FrameworkElement)GetValue(InnerContentProperty); }
-            set { SetValue(InnerContentProperty, value); }
+            get => (FrameworkElement)GetValue(InnerContentProperty);
+            set => SetValue(InnerContentProperty, value);
         }
 
         public static readonly DependencyProperty InnerContentProperty =
