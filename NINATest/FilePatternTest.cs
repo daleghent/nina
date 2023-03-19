@@ -41,7 +41,7 @@ namespace NINATest {
             BaseImageData result = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
-            parsedPattern.Should().Be(parsedPattern);
+            parsedPattern.Should().Be(expectedResult);
         }
 
         [Test]
