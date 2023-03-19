@@ -15,6 +15,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Fixed an issue for Atik OSC cameras where debayering would crash the application.
 - Using TIFF without compression selected now properly saves the files without any compression
 - "Clear all" button on notifications will now also properly clear all pending notifications
+- Image file patterns will now remove trailing and leading white spaces for directories and file names.
 
 ## Features
 - Added new Instruction "Set USB Limit" to control the usb limit inside the sequencer (if available)
