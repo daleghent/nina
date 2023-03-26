@@ -175,10 +175,15 @@ namespace NINA.Plugin {
                         } catch (Exception ex) {
                             Logger.Error("Failed to deploy plugin file to destination", ex);
                         }
-                    }
-                    Directory.Delete(staging, true);
+                    }                    
                 } catch (Exception ex) {
                     Logger.Error("Pluging deployment from staging failed", ex);
+                } finally {
+                    try {
+                        Directory.Delete(staging, true);
+                    } catch(Exception ex) {
+                        Logger.Error("Deleting staging folder failed", ex);
+                    }                    
                 }
             }
         }
