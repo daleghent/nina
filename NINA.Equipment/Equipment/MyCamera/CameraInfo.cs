@@ -523,5 +523,23 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 RaisePropertyChanged();
             }
         }
+        private bool canSetUSBLimit;
+
+        public bool CanSetUSBLimit {
+            get { return canSetUSBLimit; }
+            set { if (canSetUSBLimit != value) { canSetUSBLimit = value; RaisePropertyChanged(); } }
+        }
+
+        private int uSBLimitMin;
+        public int USBLimitMin {
+            get { return uSBLimitMin; }
+            set { if (uSBLimitMin != value) { uSBLimitMin = value; RaisePropertyChanged(); } }
+        }
+
+        private int uSBLimitMax;
+        public int USBLimitMax {
+            get { return uSBLimitMax; }
+            set { if (uSBLimitMax != value) { uSBLimitMax = value; RaisePropertyChanged(); } }
+        }
     }
 }

@@ -933,6 +933,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the USB limit for the camera if available.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_SetUSBLimit_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_SetUSBLimit_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set USB Limit.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_SetUSBLimit_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_SetUSBLimit_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warms the camera for the given duration.
         /// </summary>
         internal static string Lbl_SequenceItem_Camera_WarmCamera_Description {
@@ -2061,6 +2079,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera cannot set USB limit.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_CannotSetUSBLimit {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_CannotSetUSBLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The flat device does not support opening or closing the cover.
         /// </summary>
         internal static string Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose {
@@ -2093,6 +2120,15 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_Validation_InvalidSwitchValue {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Validation_InvalidSwitchValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value for USB limit for the camera.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_InvalidUSBLimit {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_InvalidUSBLimit", resourceCulture);
             }
         }
         
@@ -6684,6 +6720,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Dew Heater Strength.
+        /// </summary>
+        internal static string LblDewHeaterStrength {
+            get {
+                return ResourceManager.GetString("LblDewHeaterStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dewpoint.
         /// </summary>
         internal static string LblDewpoint {
@@ -9969,6 +10014,28 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hardware Acceleration.
+        /// </summary>
+        internal static string LblHardwareAcceleration {
+            get {
+                return ResourceManager.GetString("LblHardwareAcceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will enable or disable hardware accelerated rendering of the application.
+        ///In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+        ///Keep in mind that disabling hardware acceleration might reduce overall application performance.
+        ///
+        ///Changing the value will require an app restart to take affect..
+        /// </summary>
+        internal static string LblHardwareAccelerationTooltip {
+            get {
+                return ResourceManager.GetString("LblHardwareAccelerationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         internal static string LblHeight {
@@ -10055,6 +10122,24 @@ namespace NINA.Core.Locale {
         internal static string LblHighest {
             get {
                 return ResourceManager.GetString("LblHighest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High Fullwell Mode.
+        /// </summary>
+        internal static string LblHighFullwellMode {
+            get {
+                return ResourceManager.GetString("LblHighFullwellMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables the high fullwell mode for extended fullwell.
+        /// </summary>
+        internal static string LblHighFullwellModeTooltip {
+            get {
+                return ResourceManager.GetString("LblHighFullwellModeTooltip", resourceCulture);
             }
         }
         

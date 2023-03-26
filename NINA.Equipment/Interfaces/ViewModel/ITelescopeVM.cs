@@ -52,6 +52,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
+        bool SetCustomTrackingRate(SiderealShiftTrackingRate rate);
+
         Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
 
         void StopSlew();

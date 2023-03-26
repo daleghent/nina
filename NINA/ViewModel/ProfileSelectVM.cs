@@ -25,14 +25,11 @@ using NINA.Profile;
 namespace NINA.ViewModel {
 
     public class ProfileSelectVM : BaseINPC {
-        private CancellationTokenSource _cancelTokenSource;
-        private IProfile _defaultProfile;
 
         public ProfileSelectVM(IProfileService profileService) {
             this.profileService = profileService;
-            Profiles = profileService.Profiles;
+            Profiles = profileService.Profiles.OrderBy(x => x.Name).ToList();
             selectedProfileMeta = profileService.Profiles.Where(x => x.Id == profileService.ActiveProfile.Id).First();
-            _defaultProfile = ActiveProfile;
         }
 
         private IProfileService profileService;
@@ -94,47 +91,6 @@ namespace NINA.ViewModel {
                 return ActiveProfile.TelescopeSettings.Id;
             }
         }
-
-        private IWindowServiceFactory windowServiceFactory;
-
-        public IWindowServiceFactory WindowServiceFactory {
-            get {
-                if (windowServiceFactory == null) {
-                    windowServiceFactory = new WindowServiceFactory();
-                }
-                return windowServiceFactory;
-            }
-            set {
-                windowServiceFactory = value;
-            }
-        }
-
         public bool UseSavedProfile { get; set; } = Properties.Settings.Default.UseSavedProfileSelection;
-
-        public void SelectProfile() {
-            _cancelTokenSource?.Dispose();
-            _cancelTokenSource = new CancellationTokenSource();
-            try {
-                if (!UseSavedProfile && !profileService.ProfileWasSpecifiedFromCommandLineArgs) {
-                    var ws = WindowServiceFactory.Create();
-                    ws.OnDialogResultChanged += (s, e) => {
-                        var dialogResult = (DialogResultEventArgs)e;
-                        if (dialogResult.DialogResult != true) {
-                            try { _cancelTokenSource?.Cancel(); } catch { }
-                            profileService.SelectProfile(new ProfileMeta() { Id = _defaultProfile.Id, Name = _defaultProfile.Name, Location = _defaultProfile.Location, Description = _defaultProfile.Description });
-                        } else {
-                            if (UseSavedProfile == true) {
-                                Properties.Settings.Default.UseSavedProfileSelection = true;
-                                CoreUtil.SaveSettings(Properties.Settings.Default);
-                            }
-                        }
-                    };
-                    ws.ShowDialog(this, Loc.Instance["LblChooseProfile"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.SingleBorderWindow);
-                }
-            } catch (OperationCanceledException) {
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-        }
     }
 }

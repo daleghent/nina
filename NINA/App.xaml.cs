@@ -16,6 +16,8 @@ using NINA.Core.Utility;
 using NINA.Profile;
 using NINA.Profile.Interfaces;
 using NINA.Utility;
+using NINA.View;
+using NINA.ViewModel;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using System;
@@ -30,6 +32,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace NINA {
 
@@ -143,14 +146,30 @@ namespace NINA {
                 Logger.Error("There was an issue loading the user settings and the application tried to delete the file and reload default settings.", userSettingsException);
             }
 
-            _mainWindowViewModel = CompositionRoot.Compose(_profileService);
             EventManager.RegisterClassHandler(typeof(TextBox),
                 TextBox.GotFocusEvent,
                 new RoutedEventHandler(TextBox_GotFocus));
 
+
+            if (!NINA.Properties.Settings.Default.HardwareAcceleration) {
+                Logger.Info("Disabling Hardware Acceleration");
+                RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
+            }
+
+            if (_profileService.Profiles.Count > 1 && !NINA.Properties.Settings.Default.UseSavedProfileSelection && !_profileService.ProfileWasSpecifiedFromCommandLineArgs) {
+                Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                var profileSelection = new ProfileSelectVM(_profileService);
+                var profileSelectionWindow = new ProfileSelectView();
+                profileSelectionWindow.DataContext = profileSelection;
+                profileSelectionWindow.ShowDialog();
+            }
+
+            _mainWindowViewModel = CompositionRoot.Compose(_profileService);
             var mainWindow = new MainWindow();
+            this.MainWindow = mainWindow;
             mainWindow.DataContext = _mainWindowViewModel;
             mainWindow.Show();
+            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             ProfileService.ActivateInstanceWatcher(_profileService, mainWindow);
 
             StartupActions();

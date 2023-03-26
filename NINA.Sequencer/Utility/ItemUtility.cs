@@ -32,7 +32,7 @@ namespace NINA.Sequencer.Utility {
         public static ContextCoordinates RetrieveContextCoordinates(ISequenceContainer parent) {
             if (parent != null) {
                 var container = parent as IDeepSkyObjectContainer;
-                if (container != null) {
+                if (container != null && container.Target != null && container.Target.InputCoordinates != null && container.Target.DeepSkyObject != null) {
                     return new ContextCoordinates(
                         container.Target.InputCoordinates.Coordinates, 
                         container.Target.Rotation,
@@ -285,8 +285,9 @@ namespace NINA.Sequencer.Utility {
             double targetAltitude = data.Offset;
             if (data.UseCustomHorizon) {
                 // For computing rise/set time, use minimum horizon altitude
-                if (data.Horizon == null) return;
-                targetAltitude = data.Horizon.GetMinAltitude();
+                if (data.Horizon != null) {
+                    targetAltitude = data.Horizon.GetMinAltitude();
+                }
             }
 
             RiseSetMeridian rsm = CalculateTimeAtAltitude(coord, data.Latitude, data.Longitude, targetAltitude + offset);

@@ -25,6 +25,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Sequencer.Utility;
 using System.Runtime.Serialization;
+using NINA.Equipment.Equipment.MyGuider.SkyGuard.SkyGuardMessages;
+using NINA.Sequencer.SequenceItem.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -119,27 +121,31 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
+            var check = true;
             // See if the moon's illumination is outside of the user's wishes
             switch (Comparator) {
                 case ComparisonOperatorEnum.LESS_THAN:
-                    if (CurrentMoonIllumination < UserMoonIllumination) { return false; }
+                    if (CurrentMoonIllumination < UserMoonIllumination) { check = false; }
                     break;
 
                 case ComparisonOperatorEnum.LESS_THAN_OR_EQUAL:
-                    if (CurrentMoonIllumination <= UserMoonIllumination) { return false; }
+                    if (CurrentMoonIllumination <= UserMoonIllumination) { check = false; }
                     break;
 
                 case ComparisonOperatorEnum.GREATER_THAN:
-                    if (CurrentMoonIllumination > UserMoonIllumination) { return false; }
+                    if (CurrentMoonIllumination > UserMoonIllumination) { check = false; }
                     break;
 
                 case ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL:
-                    if (CurrentMoonIllumination >= UserMoonIllumination) { return false; }
+                    if (CurrentMoonIllumination >= UserMoonIllumination) { check = false; }
                     break;
             }
 
-            // Everything is fine
-            return true;
+            if (!check && IsActive()) {
+                Logger.Info($"{nameof(MoonIlluminationCondition)} finished. Current {Comparator} Target: {CurrentMoonIllumination} {Comparator} {UserMoonIllumination}");
+            }
+
+            return check;
         }
 
         private void CalculateCurrentMoonState() {

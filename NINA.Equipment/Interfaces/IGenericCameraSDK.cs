@@ -79,7 +79,7 @@ namespace NINA.Equipment.Interfaces {
         bool IsExposureReady();
 
         bool HasDewHeater();
-        bool SetDewHeater(bool onoff);
+        bool SetDewHeater(int power);        
         bool IsDewHeaterOn();
 
         void StartVideoCapture(double exposureTime, int width, int height);
@@ -89,5 +89,8 @@ namespace NINA.Equipment.Interfaces {
         List<string> GetReadoutModes();
         int GetReadoutMode();
         void SetReadoutMode(int modeIndex);
+        bool HasAdjustableFan();
+        bool SetFanPercentage(int fanPercentage);
+        int GetFanPercentage();
     }
 }

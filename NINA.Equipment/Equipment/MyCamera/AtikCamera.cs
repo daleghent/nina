@@ -157,9 +157,23 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short BayerOffsetY { get; private set; } = 0;
 
-        public int CameraXSize => Info.nPixelsX;
+        public int CameraXSize {
+            get {
+                if(SensorType != SensorType.Monochrome) {
+                    return Info.nPixelsX - Info.nPixelsX % 8; 
+                }
+                return Info.nPixelsX; 
+            }
+        }
 
-        public int CameraYSize => Info.nPixelsY;
+        public int CameraYSize {
+            get {
+                if (SensorType != SensorType.Monochrome) {
+                    return Info.nPixelsY - Info.nPixelsY % 2;
+                }
+                return Info.nPixelsY;
+            }
+        }
 
         private double _exposureMin = 0d;
         public double ExposureMin {

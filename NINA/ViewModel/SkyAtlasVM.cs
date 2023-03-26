@@ -90,7 +90,24 @@ namespace NINA.ViewModel {
                 InitializeFilters();
                 ResetFilters(null);
             };
+            profileService.HorizonChanged += ProfileService_HorizonChanged;
+            profileService.LocationChanged += ProfileService_LocationChanged;
             nighttimeCalculator.OnReferenceDayChanged += NighttimeCalculator_OnReferenceDayChanged;
+        }
+
+        private void ProfileService_LocationChanged(object sender, EventArgs e) {
+            try {
+                SearchResult = null;
+                NighttimeCalculator_OnReferenceDayChanged(sender, e);
+                InitializeFilters(); 
+                ResetFilters(null);
+            } catch { }
+        }
+
+        private void ProfileService_HorizonChanged(object sender, EventArgs e) {
+            try {
+                SearchResult = null;
+            } catch { }
         }
 
         private void NighttimeCalculator_OnReferenceDayChanged(object sender, EventArgs e) {

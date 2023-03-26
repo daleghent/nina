@@ -4292,7 +4292,7 @@
     <value>順次命令セットのように動作しますが、内部でディープスカイオブジェクトを指定することができ、 必要に応じて内部のすべての命令に座標と回転が自動的に入力されます。</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>ディープスカイオブジェクトのシーケンス</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>この命令セット内のすべての命令は並列に実行されます。すべての命令が終了するまで、この命令セットはどの条件やトリガーも評価しません。</value>
@@ -4789,13 +4789,13 @@
     <value>目標セットを開く</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>シンプルシーケンサー</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>最後の目標終了のオプション</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>シーケンスビルダーテンプレート</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>目標のインポート</value>
@@ -5059,8 +5059,8 @@
     <value>高度なシーケンスを作成しますか？</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>シーケンスを高度なシーケンスにエクスポートしますがよろしいですか？
-注意: 高度なシーケンスは下位互換性がないため、単純なシーケンスに戻すことはできません!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>高度なシーケンサー</value>
@@ -5070,10 +5070,10 @@
 これにより、細粒度命令・トリガー・条件を使用して、シーケンスをゼロから計画できます。</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>単純なシーケンサーを無効にする</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>これにより単純なシーケンサーが無効になり、高度なシーケンサーがシーケンスタブに直接表示されます。</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>シーケンサーダッシュボードへの切り替え</value>
@@ -6470,5 +6470,74 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   </data>
   <data name="LblGauges" xml:space="preserve">
     <value>計測結果</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>利用可能な場合はカメラのUSB制限を設定します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>USB制限を設定</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>カメラはUSB制限を設定できません</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>カメラのUSB制限値が無効</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>高飽和モード</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>拡張されたフルウェルの、高飽和モードを有効にします</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>結露防止ヒーターの電力設定</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>ハードウェア加速</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>アプリケーションのハードウェア・アクセラレーション・レンダリングを有効または無効にします。
+レンダリングに問題がある場合、もしくはリモートソフトウェアを使用していて（モニターが付いていないとき）アプリケーションの画面がブランクになる場合、ハードウェア・アクセラレーションを無効にする方が良いかもしれません。 
+ ただし、ハードウェア・アクセラレーションを無効にすると、全体的なアプリケーションのパフォーマンスが低下する可能性があることに留意してください。
+
+設定を変更して適用するには、アプリを再起動する必要があります。</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>自動同期</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>有効にすると、プレートソルブと中央化の操作中に、アプリケーションは赤道儀に同期コマンドを送信します。
+優れた導入と追尾が可能で、どのような場合でもこの性能が損なわれないような機器を持っている場合にのみ、これを無効にするべきです。
+無効にすると、画像タブのプレートソルブパネルに、同期トグルが表示されません。</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>カメラのディザリングスケール</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>カメラのピクセルスケール</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>ガイドカメラのディザリングピクセル数</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>ガイドカメラのピクセルスケール</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>デバイスID</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>接続されたZWOデバイスに割り当てられる、最大8文字までのASCII文字の名前。 これにより、同じデバイス型の複数の装置を一意に識別できます。</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>単方向性</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>キャリブレート</value>
   </data>
 </root>

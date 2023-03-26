@@ -390,6 +390,9 @@ namespace NINA.Core.Utility.Notification {
         }
 
         public void ClearMessages(IClearStrategy clearStrategy) {
+            if (clearStrategy is ClearAll) {
+                _notificationsPending?.Clear();
+            }
             var notifications = clearStrategy.GetNotificationsToRemove(_notifications);
             foreach (var notification in notifications) {
                 CloseNotification(notification);

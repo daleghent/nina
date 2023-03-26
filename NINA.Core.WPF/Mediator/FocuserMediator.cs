@@ -43,16 +43,20 @@ namespace NINA.WPF.Base.Mediator {
         public void BroadcastSuccessfulAutoFocusRun(AutoFocusInfo info) {
             Logger.Info($"Autofocus notification received - Temperature {info.Temperature}");
             handler.SetFocusedTemperature(info.Temperature);
-            foreach (IFocuserConsumer c in consumers) {
-                c.UpdateEndAutoFocusRun(info);
+            lock (consumers) {
+                foreach (IFocuserConsumer c in consumers) {
+                    c.UpdateEndAutoFocusRun(info);
+                }
             }
         }
 
         public void BroadcastUserFocused(FocuserInfo info) {
             Logger.Info($"User Focused notification received - Temperature {info.Temperature}");
             handler.SetFocusedTemperature(info.Temperature);
-            foreach (IFocuserConsumer c in consumers) {
-                c.UpdateUserFocused(info);
+            lock (consumers) {
+                foreach (IFocuserConsumer c in consumers) {
+                    c.UpdateUserFocused(info);
+                }
             }
         }
     }

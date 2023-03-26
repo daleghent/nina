@@ -4307,7 +4307,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Funguje jako sekvenční instrukční sada, ale uvnitř lze zadat objekt hluboké oblohy, který v případě potřeby automaticky naplní všechny instrukce uvnitř souřadnicemi a otočením.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Sekvence Objektů Hlubokého Vesmíru</value>
+    <value>Sada instrukcí pro DSO</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Všechny pokyny v této instrukční sadě jsou spuštěny paralelně. Tato instrukční sada nevyhodnotí žádné podmínky ani spouštěče události, dokud nebudou dokončeny všechny pokyny.</value>
@@ -4804,13 +4804,13 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Otevřít Cílovou Sadu</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Jednoduchá Sekvence</value>
+    <value>Zastaralý Sekvencér</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Možnosti Konce Posledního Cíle</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Jednoduchá Sekvenční Šablona</value>
+    <value>Šablona Zastaralé Sekvence</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importovat Cíle</value>
@@ -5075,8 +5075,8 @@ Příklad:
     <value>Vytvořit Pokročilou Sekvenci?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Opravdu exportovat sekvenci do rozšířené sekvence?
-Poznámka: Pokročilý sekvencer není zpětně kompatibilní a není možné se vrátit k jednoduché sekvenci!</value>
+    <value>Jste si jisti, že sekvenci exportujete do pokročilé sekvence?
+Poznámka: Pokročilé sekvence NEJSOU zpětně kompatibilní a není možné se vrátit ke starší sekvenci!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Pokročilý Sekvencer</value>
@@ -5086,10 +5086,10 @@ Poznámka: Pokročilý sekvencer není zpětně kompatibilní a není možné se
 Tam lze sekvenci naplánovat od nuly pomocí jemných podrobných pokynů, spouštěčů a podmínek.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Zakázat Jednoduchý Sekvencer</value>
+    <value>Vypnout Starší Sekvencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Tím se zakáže jednoduchý sekvencer a přímo se zobrazí pokročilý sekvencer na kartě sekvence.</value>
+    <value>Tím se vypne starší sekvencer a na kartě sekvence se zobrazí přímo pokročilý sekvencer.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Přepnutí zpět na Řídicí Panel sekvenceru</value>
@@ -6494,5 +6494,73 @@ Toto se vyhodnotí PO nastavení "Zaparkovat montáž před pohybem štěrbiny".
   </data>
   <data name="LblGauges" xml:space="preserve">
     <value>Měřiče</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Nastaví limit USB pro kameru, pokud je k dispozici</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Nastavit limit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Kamera nemůže nastavit limit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Nesprávná hodnota limitu USB pro kameru</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>Režim High Fullwell</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Povoluje režim high fullwell pro rozšířený fullwell</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Cílový Výkon Ohřívače</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Hardwarová Akcelerace</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>Tím povolíte nebo zakážete hardwarovou akceleraci renderování aplikace.
+V případě, že máte problémy s renderováním nebo se aplikace při používání vzdáleného softwaru zobrazí jako černá, když není připojen žádný monitor, může být zakázání hardwarové akcelerace přínosné.
+Mějte na paměti, že vypnutí hardwarové akcelerace může snížit celkový výkon aplikace.
+
+Změna hodnoty bude vyžadovat restart aplikace, aby se projevila.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatická Synchronizace</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>Pokud je tato funkce povolena, aplikace odešle příkaz k synchronizaci do montáže během operací astrometrie &amp; centrování. 
+Tato funkce by měla být vypnuta pouze v případě, že máte k dispozici vynikající montáž, která by neměla být nijak upravována. Pokud je synchronizace vypnuta, přepínač se nezobrazí na panelu Astrometrie a na kartě Snímání.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Pixely Ditheringu Kamery</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Měřítko Kamery Pixel</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Pixely Ditheringu Pointace</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Měřítko Pointace Pixel</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>ID Zařízení</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>Název dlouhý až 8 znaků ASCII, který můžete přiřadit připojenému zařízení ZWO. To umožňuje jednoznačně identifikovat více kusů stejného modelu zařízení.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Jednosměrný</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Kalibrace</value>
   </data>
 </root>

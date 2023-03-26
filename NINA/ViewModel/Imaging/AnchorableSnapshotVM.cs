@@ -40,7 +40,7 @@ using NINA.Equipment.Equipment.MyFilterWheel;
 
 namespace NINA.ViewModel.Imaging {
 
-    internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IFilterWheelConsumer, IAnchorableSnapshotVM {
+    internal partial class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IFilterWheelConsumer, IAnchorableSnapshotVM {
         private CancellationTokenSource _captureImageToken;
         private CancellationTokenSource _liveViewCts;
         private bool _liveViewEnabled;
@@ -223,6 +223,15 @@ namespace NINA.ViewModel.Imaging {
                 RaisePropertyChanged();
             }
         }
+                
+        private string snapTargetName = "Snapshot";
+        public string SnapTargetName {
+            get => snapTargetName;
+            set {
+                snapTargetName = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public bool SnapSubSample {
             get {
@@ -392,13 +401,18 @@ namespace NINA.ViewModel.Imaging {
                 if (Loop) IsLooping = true;
                 Task<IRenderedImage> prepareTask = null;
                 var savedFullImageWhileLooping = false;
+                var count = 0;
                 do {
                     var seq = new CaptureSequence(SnapExposureDuration, ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
                     seq.EnableSubSample = SnapSubSample;
                     seq.SubSambleRectangle = SubSampleRectangle;
                     seq.Gain = SnapGain;
+                    seq.ProgressExposureCount = count;
+                    seq.TotalExposureCount = count + 1;
 
-                    var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress);
+                    var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress, snapTargetName);
+                    count++;
+
                     if (exposureData == null) {
                         return false;
                     }
@@ -410,7 +424,7 @@ namespace NINA.ViewModel.Imaging {
                     }
                     prepareTask = imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
-                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });                        
                         await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
                         imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageTypes.SNAPSHOT);
                     }

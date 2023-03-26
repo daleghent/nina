@@ -114,5 +114,9 @@ namespace NINA.WPF.Base.Mediator {
         public bool IsFreeToCapture(ICameraConsumer cameraConsumer) {
             return IsFreeToCapture((object)cameraConsumer);
         }
+
+        public void SetUSBLimit(int usbLimit) {
+            handler.SetUSBLimit(usbLimit);
+        }
     }
 }

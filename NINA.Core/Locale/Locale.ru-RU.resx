@@ -4306,7 +4306,7 @@ Dec: {1}</value>
     <value>Работает как последовательный набор инструкций, но глубокий объект неба может быть указан внутри, который будет автоматически заполнять все инструкции внутри него координатами и вращением при необходимости.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Серия объекта глубокого космоса</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Все инструкции в этом наборе выполняются параллельно. Этот набор инструкций не будет оценивать никаких условий или триггеров до тех пор, пока не будут выполнены все инструкции.</value>
@@ -4803,13 +4803,13 @@ Dec: {1}</value>
     <value>Открыть набор цели</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Простой планировщик</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Опции окончания последней цели</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Шаблон простой серии</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Импортировать цель</value>
@@ -5074,8 +5074,8 @@ Dec: {1}</value>
     <value>Построить расширенную серию?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Вы уверены, что хотите экспортировать серию в расширенную серию?
-Примечание: Дополнительные серии НЕ совместимы с обратной стороной и невозможно вернуться к простой серии!</value>
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Расширенная серия</value>
@@ -5085,10 +5085,10 @@ Dec: {1}</value>
 Там можно спланировать серию с нуля с помощью мелких гранулярных инструкций, триггеров и условий.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Отключить простую серию</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Это отключит простую серию и напрямую отобразит расширенную последовательность на вкладке серии.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Вернуться к панели серии</value>
@@ -6493,5 +6493,73 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   </data>
   <data name="LblGauges" xml:space="preserve">
     <value>Gauges</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Sets the USB limit for the camera if available</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Set USB Limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>Camera cannot set USB limit</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>Invalid value for USB limit for the camera</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>High Fullwell Mode</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Enables the high fullwell mode for extended fullwell</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Target Dew Heater Strength</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Hardware Acceleration</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>This will enable or disable hardware accelerated rendering of the application.
+In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+Keep in mind that disabling hardware acceleration might reduce overall application performance.
+
+Changing the value will require an app restart to take affect.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Automatic Sync</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
+This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Camera Dither Pixels</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Camera Pixel Scale</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Guider Dither Pixels</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Guider Pixel Scale</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>Device ID</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>A name up to 8 ASCII characters long that you may assign to the connected ZWO device. This allows you to uniquely identify multiple pieces of the same model of device.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Unidirectional</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Calibrate</value>
   </data>
 </root>

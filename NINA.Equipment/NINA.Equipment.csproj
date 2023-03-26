@@ -205,6 +205,8 @@
     <Compile Include="Equipment\MyCamera\SBIGCamera.cs" />
     <Compile Include="Equipment\MyCamera\SBIGCameraASCOMService.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlike\MallinCamSDKWrapper.cs" />
+    <Compile Include="Equipment\MyCamera\ToupTekAlike\OgmaSDKWrapper.cs" />
+    <Compile Include="Equipment\MyFilterWheel\PlayerOneFilterWheel.cs" />
     <Compile Include="Equipment\MyFilterWheel\SBIGFilterWheel.cs" />
     <Compile Include="Equipment\MyGuider\RMSError.cs" />
     <Compile Include="Equipment\MySwitch\Eagle4\Eagle12VPower.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="SDK\CameraSDKs\ASTPANSDK\ASTPANProvider.cs" />
     <Compile Include="SDK\CameraSDKs\ASTPANSDK\ASTPANSDK.cs" />
     <Compile Include="SDK\CameraSDKs\ASTPANSDK\IASTPANPInvokeProxy.cs" />
+    <Compile Include="SDK\CameraSDKs\PlayerOneSDK\PlayerOneFilterWheelSDK.cs" />
     <Compile Include="SDK\CameraSDKs\ToupTekAlike\MallinCamSDK\mallincam.cs" />
     <Compile Include="SDK\CameraSDKs\PlayerOneSDK\IPlayerOnePInvokeProxy.cs" />
     <Compile Include="SDK\CameraSDKs\PlayerOneSDK\PlayerOneControl.cs" />
@@ -418,6 +421,7 @@
     <Compile Include="SDK\CameraSDKs\FLISDK\FLICameras.cs" />
     <Compile Include="SDK\CameraSDKs\FLISDK\FLICameraSDK.cs" />
     <Compile Include="SDK\CameraSDKs\FLISDK\FLIFilterWheels.cs" />
+    <Compile Include="SDK\CameraSDKs\ToupTekAlike\OgmaSDK\ogmacam.cs" />
     <Compile Include="SDK\CameraSDKs\ToupTekAlike\OmegonSDK\omegonprocam.cs" />
     <Compile Include="SDK\CameraSDKs\QHYSDK\IQhyccdSdk.cs" />
     <Compile Include="SDK\CameraSDKs\QHYSDK\QHYCameras.cs" />

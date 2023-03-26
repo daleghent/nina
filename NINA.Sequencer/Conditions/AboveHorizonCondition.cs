@@ -21,6 +21,8 @@ using System.ComponentModel.Composition;
 using NINA.Sequencer.SequenceItem.Utility;
 using static NINA.Sequencer.Utility.ItemUtility;
 using NINA.Core.Utility;
+using NINA.Core.Enum;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -84,7 +86,13 @@ namespace NINA.Sequencer.Conditions {
 
          public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             CalculateExpectedTime();
-            return Data.CurrentAltitude >= Data.GetTargetAltitudeWithHorizon(DateTime.Now);
+            var targetAltitude = Data.GetTargetAltitudeWithHorizon(DateTime.Now);
+            var check = Data.CurrentAltitude >= targetAltitude;
+
+            if (!check && IsActive()) {
+                Logger.Info($"{nameof(AboveHorizonCondition)} finished. Current / Target: {Data.CurrentAltitude}° / {targetAltitude}°");
+            }
+            return check;
         }
 
         public double GetCurrentAltitude(DateTime time, ObserverInfo observer) {

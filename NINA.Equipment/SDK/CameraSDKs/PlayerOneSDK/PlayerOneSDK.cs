@@ -236,7 +236,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool SetUSBLimit(int value) {
-            return SetControlValue(POAConfig.POA_FRAME_LIMIT, value);
+            return SetControlValue(POAConfig.POA_USB_BANDWIDTH_LIMIT, value);
         }
 
         public int GetUSBLimit() {
@@ -304,19 +304,19 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
         public bool SetTargetTemperature(double temperature) {
 
-            var minTemperatureSetpoint = GetMinControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
-            var maxTemperatureSetpoint = GetMaxControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
+            var minTemperatureSetpoint = GetMinControlValue(POAConfig.POA_TARGET_TEMP).intValue;
+            var maxTemperatureSetpoint = GetMaxControlValue(POAConfig.POA_TARGET_TEMP).intValue;
 
             if (temperature > maxTemperatureSetpoint) {
                 temperature = maxTemperatureSetpoint;
             } else if (temperature < minTemperatureSetpoint) {
                 temperature = minTemperatureSetpoint;
             }
-            return SetControlValue(POAConfig.POA_TARGET_TEMP, temperature);
+            return SetControlValue(POAConfig.POA_TARGET_TEMP, (int)(temperature));
         }
 
         public double GetTargetTemperature() {
-            return GetControlValue(POAConfig.POA_TARGET_TEMP).floatValue;
+            return GetControlValue(POAConfig.POA_TARGET_TEMP).intValue;
         }
 
         public double GetTemperature() {
@@ -324,7 +324,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool SetCooler(bool onOff) {
-            return SetControlValue(POAConfig.POA_COOLER, onOff ? 1 : 0);
+            return SetControlValue(POAConfig.POA_COOLER, onOff);
         }
 
         public bool GetCoolerOnOff() {
@@ -332,7 +332,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public double GetCoolerPower() {
-            return GetControlValue(POAConfig.POA_COOLER_POWER).floatValue;
+            var power = GetControlValue(POAConfig.POA_COOLER_POWER).intValue;
+            return power;
         }
 
         private bool SetControlValue(POAConfig type, bool value) {
@@ -443,15 +444,16 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public bool HasDewHeater() {
-            return false;
+            return HasTemperatureControl();
         }
 
         public bool IsDewHeaterOn() {
-            return false;
+            var power = GetControlValue(POAConfig.POA_HEATER_POWER);
+            return power.intValue > 0;
         }
 
-        public bool SetDewHeater(bool onoff) {
-            throw new NotImplementedException();
+        public bool SetDewHeater(int power) {
+            return SetControlValue(POAConfig.POA_HEATER_POWER, power);
         }
 
         public void StartVideoCapture(double exposureTime, int width, int height) {
@@ -491,6 +493,18 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             if(hasSensorModes) { 
                 CheckAndThrowError(playerOnePInvoke.POASetSensorMode(id, modeIndex));
             }
+        }
+
+        public bool HasAdjustableFan() {
+            return HasTemperatureControl();
+        }
+
+        public bool SetFanPercentage(int fanPercentage) {
+            return SetControlValue(POAConfig.POA_FAN_POWER, fanPercentage);
+        }
+
+        public int GetFanPercentage() {
+            return GetControlValue(POAConfig.POA_FAN_POWER).intValue;
         }
     }
 }

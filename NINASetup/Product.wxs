@@ -35,7 +35,7 @@
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <!--https://learn.microsoft.com/en-us/windows/win32/msi/reinstallmode-->
-    <Property Id="REINSTALLMODE" Value="dmus"/>
+    <Property Id="REINSTALLMODE" Value="dmus" />
 
     <!--Todo does not find file-->
     <Icon Id="Logo_Nina.ico" SourceFile="Logo_Nina.ico" />
@@ -111,6 +111,7 @@
 			<ComponentGroupRef Id="External_x64_MallinCam_files" />
 			<ComponentGroupRef Id="External_x64_PlayerOne_files" />
 			<ComponentGroupRef Id="External_x64_ASTPAN_files" />
+      <ComponentGroupRef Id="External_x64_OGMA_files" />
 			<?else?>
 			<ComponentGroupRef Id="External_x86_FTDI_files" />
 			<ComponentGroupRef Id="External_x86_AllPro_files" />
@@ -133,6 +134,7 @@
 			<ComponentGroupRef Id="External_x86_MallinCam_files" />
 			<ComponentGroupRef Id="External_x86_PlayerOne_files" />
 			<ComponentGroupRef Id="External_x86_ASTPAN_files" />
+      <ComponentGroupRef Id="External_x86_OGMA_files" />
 			<?endif?>
 			<ComponentGroupRef Id="Utility_ColorSchema_files" />
 			<ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -262,6 +264,7 @@
 							<Directory Id="External_x64_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x64_PlayerOne" Name="PlayerOne" />
 							<Directory Id="External_x64_ASTPAN" Name="ASTPAN" />
+							<Directory Id="External_x64_OGMA" Name="OGMA" />
 						</Directory>
 						<Directory Id="External_x86" Name="x86">
 							<Directory Id="External_x86_AllPro" Name="AllPro" />
@@ -287,6 +290,7 @@
 							<Directory Id="External_x86_MallinCam" Name="MallinCam" />
 							<Directory Id="External_x86_PlayerOne" Name="PlayerOne" />
 							<Directory Id="External_x86_ASTPAN" Name="ASTPAN" />
+							<Directory Id="External_x86_OGMA" Name="OGMA" />
 						</Directory>
 					</Directory>
 					<Directory Id="Utility" Name="Utility">
@@ -309,6 +313,7 @@
 					<Directory Id="es_ES" Name="es-ES" />
 					<Directory Id="en_US" Name="en-US" />
 					<Directory Id="en_GB" Name="en-GB" />
+          <Directory Id="eu_ES" Name="eu-ES" />
 					<Directory Id="de_DE" Name="de-DE" />
 					<Directory Id="ja_JP" Name="ja-JP" />
 					<Directory Id="da_DK" Name="da-DK" />
@@ -1464,6 +1469,9 @@
 			<Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524">
 				<File Id="External_x64_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOneCamera.dll" />
 			</Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOnePW.dll" Guid="dc6474ad-afcc-4253-b164-040b65fc4dda">
+			  <File Id="External_x64_PlayerOne_PlayerOnePW.dll" Name="PlayerOnePW.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOnePW.dll" />
+			</Component>
 		</ComponentGroup>
 	</Fragment>
 
@@ -1474,6 +1482,13 @@
 	    </Component>
 	  </ComponentGroup>
 	</Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x64_OGMA_files" Directory="External_x64_OGMA">
+      <Component Id="External_x64_OGMA_ogmacam.dll" Guid="*">
+        <File Id="External_x64_OGMA_ogmacam.dll" Name="ogmacam.dll" Source="$(var.NINA_TargetDir)External\x64\OGMA\ogmacam.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
 
 	<?else?>
 
@@ -1684,6 +1699,13 @@
 	    </Component>
 	  </ComponentGroup>
 	</Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x86_OGMA_files" Directory="External_x86_OGMA">
+      <Component Id="External_x86_OGMA_ogmacam.dll" Guid="*">
+        <File Id="External_x86_OGMA_ogmacam.dll" Name="ogmacam.dll" Source="$(var.NINA_TargetDir)External\x86\OGMA\ogmacam.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
 
 	<?endif?>
 

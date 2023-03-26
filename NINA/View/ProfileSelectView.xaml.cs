@@ -12,17 +12,50 @@
 
 #endregion "copyright"
 
+using Microsoft.Win32;
+using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 
 namespace NINA.View {
 
     /// <summary>
     /// Interaction logic for ProfileSelectView.xaml
     /// </summary>
-    public partial class ProfileSelectView : UserControl {
+    public partial class ProfileSelectView : Window {
 
         public ProfileSelectView() {
             InitializeComponent();
+            SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
+        }
+
+        private void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e) {
+            var tmp = this.WindowState;
+            this.WindowState = WindowState.Minimized;
+            this.WindowState = tmp;
+        }
+
+        protected override void OnSourceInitialized(EventArgs e) {
+            base.OnSourceInitialized(e);
+            ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
+
+            //this.WindowState = Properties.Settings.Default.WindowState;
+            this.Top = Properties.Settings.Default.WindowTop;
+            this.Left = Properties.Settings.Default.WindowLeft;
+
+        }
+
+        private IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) {
+            if (msg == 0x0084 /*WM_NCHITTEST*/ ) {
+                // This prevents a crash in WindowChromeWorker._HandleNCHitTest
+                try {
+                    lParam.ToInt32();
+                } catch (OverflowException) {
+                    handled = true;
+                }
+            }
+            return IntPtr.Zero;
         }
     }
 }

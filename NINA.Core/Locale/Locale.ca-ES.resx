@@ -4302,7 +4302,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Funciona com un conjunt d'instruccions seqüencials, però es pot especificar un objecte de cel profund en el seu interior, que omplirà automàticament, a dins, totes les instruccions amb les coordenades i la rotació quan sigui necessari.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Seqüència per objectius de cel profund</value>
+    <value>Conjunt d'instruccions d'objectes de cel profund</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>Totes les instruccions d’aquest conjunt d’instruccions s’executen en paral·lel. Aquest conjunt d’instruccions no avaluarà cap condició ni activador fins que no s’acabin totes les instruccions.</value>
@@ -4799,13 +4799,13 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Obrir conjunt d'objectius</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Seqüenciador Simple</value>
+    <value>Seqüenciador heretat</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Fi de les opcions del darrer objectiu</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Plantilla per a seqüència simple</value>
+    <value>Plantilla de seqüència heretada</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importar objectiu</value>
@@ -5070,8 +5070,8 @@ Exemple:
     <value>Voleu crear una seqüència avançada?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Esteu segurs que voleu exportar la seqüència a la seqüència avançada?
-Nota: les seqüències avançades NO són ​​compatibles amb la versió anterior i no és possible tornar a la seqüència simple!</value>
+    <value>Esteu segur d'exportar la seqüència a la seqüència avançada?
+Nota: les seqüències avançades NO són ​​compatibles cap enrere i no és possible tornar a la seqüència heretada!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Seqüenciador avançat</value>
@@ -5081,10 +5081,10 @@ Nota: les seqüències avançades NO són ​​compatibles amb la versió anter
 Allà, la seqüència es pot planificar des de zero mitjançant instruccions, activadors i condicions molt detallades.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Desactivar seqüenciador simple</value>
+    <value>Desactivar seqüenciador heretat</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>Això desactivarà el seqüenciador simple i mostrarà directament el seqüenciador avançat a la pestanya Seqüència.</value>
+    <value>Això desactivarà el seqüenciador heretat i mostrarà directament el seqüenciador avançat a la pestanya de seqüència.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Torneu al tauler del seqüenciador</value>
@@ -6489,5 +6489,73 @@ Això s'avalua DESPRÉS del paràmetre "Aparcar la muntura abans de moure la per
   </data>
   <data name="LblGauges" xml:space="preserve">
     <value>Indicadors</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>Estableix el límit USB per a la càmera si està disponible</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>Estableix el límit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>La càmera no pot establir un límit USB</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>El valor del límit USB per a la càmera no és vàlid</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>Mode Fullwell alt</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>Activa el mode fullwell alt per a un fullwell llarg</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>Objectiu de Potència de l'escalfador de rosada</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>Acceleració del Hardware</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>Això activarà o desactivarà la representació accelerada de maquinari de l'aplicació.
+En cas que tingueu problemes de renderització o que l'aplicació es torni en blanc quan utilitzeu un programari remot mentre no hi ha cap monitor connectat, pot ser útil desactivar l'acceleració del maquinari.
+Tingueu en compte que desactivar l'acceleració de maquinari pot reduir el rendiment general de l'aplicació.
+
+Si canvieu el valor, caldrà reiniciar l'aplicació perquè tingui efecte.</value>
+  </data>
+  <data name="LblProfile" xml:space="preserve">
+    <value>Perfil</value>
+    <comment>The equipment profile that is used in the application that stores all the settings</comment>
+  </data>
+  <data name="LblAutomaticMountSync" xml:space="preserve">
+    <value>Sincronització automàtica</value>
+    <comment>The option to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
+    <value>Quan està habilitada, l'aplicació enviarà una ordre de sincronització a la muntura durant les operacions de platesolve i centrat.
+Això només s'ha de desactivar quan es disposa d'un bon model del cel i no s'ha de modificar de cap manera. Quan està desactivat, el tauler de resolució de plaques a la pestanya d'imatge tampoc no mostrarà el commutador de sincronització.</value>
+    <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Píxels de la càmera per la tramada</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Escala de Píxels de la càmera</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Píxels de tramada de la guia</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Escala de Píxels de guia</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>ID del dispositiu</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>Un nom de 8 caràcters ASCII que podeu assignar al dispositiu ZWO connectat. Això us permet identificar de manera única diverses peces del mateix model de dispositiu.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Unidireccional</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Calibrar</value>
   </data>
 </root>

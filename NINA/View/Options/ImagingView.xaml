@@ -29,7 +29,7 @@
         <GroupBox DataContext="{Binding ImageFileSettings}" Header="{ns:Loc LblFileSettings}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
@@ -206,40 +206,229 @@
                         Stretch="Uniform" />
                 </Button>
 
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Text="{ns:Loc LblImageFilePattern}" />
-                <TextBox
-                    x:Name="ImageFilePatternTextBox"
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    VerticalAlignment="Center"
-                    AllowDrop="True"
-                    DragEnter="TextBox_DragEnter"
-                    Drop="TextBox_Drop"
-                    PreviewDragOver="TextBox_PreviewDragOver"
-                    Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap" />
 
-                <TextBlock
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Margin="0,5,0,0"
-                    VerticalAlignment="Center"
-                    Text="{ns:Loc LblImagePatternPreview}" />
-                <TextBox
-                    x:Name="ImagePatternPreviewTextBox"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Margin="0,5,0,0"
-                    VerticalAlignment="Center"
-                    IsReadOnly="True"
-                    Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreview, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap" />
+
+                <Expander
+                    Grid.Row="4"
+                    Grid.ColumnSpan="3"
+                    IsExpanded="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternsExpanded, UpdateSourceTrigger=PropertyChanged}">
+                    <Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" SharedSizeGroup="ImagingFileColumn1" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblImageFilePattern}" />
+                            <TextBox
+                                x:Name="ImageFilePatternTextBox"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                AllowDrop="True"
+                                DragEnter="TextBox_DragEnter"
+                                Drop="TextBox_Drop"
+                                PreviewDragOver="TextBox_PreviewDragOver"
+                                Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </Expander.Header>
+                    <Expander.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="115" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="20,5,0,0"
+                                VerticalAlignment="Center"
+                                Text="FLAT" />
+                            <ninactrl:HintTextBox
+                                x:Name="FilePatternFLATTextBox"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Height="Auto"
+                                Margin="5,5,0,0"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Stretch"
+                                AllowDrop="True"
+                                DragEnter="TextBox_DragEnter"
+                                Drop="TextBox_Drop"
+                                HintText="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
+                                PreviewDragOver="TextBox_PreviewDragOver"
+                                Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternFLAT, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="20,5,0,0"
+                                VerticalAlignment="Center"
+                                Text="DARK" />
+                            <ninactrl:HintTextBox
+                                x:Name="FilePatternDARKTextBox"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Height="Auto"
+                                Margin="5,5,0,0"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Stretch"
+                                AllowDrop="True"
+                                DragEnter="TextBox_DragEnter"
+                                Drop="TextBox_Drop"
+                                HintText="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
+                                PreviewDragOver="TextBox_PreviewDragOver"
+                                Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARK, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Margin="20,5,0,0"
+                                VerticalAlignment="Center"
+                                Text="BIAS" />
+                            <ninactrl:HintTextBox
+                                x:Name="FilePatternBIASTextBox"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Height="Auto"
+                                Margin="5,5,0,0"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Stretch"
+                                AllowDrop="True"
+                                DragEnter="TextBox_DragEnter"
+                                Drop="TextBox_Drop"
+                                HintText="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
+                                PreviewDragOver="TextBox_PreviewDragOver"
+                                Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternBIAS, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Margin="20,5,0,0"
+                                VerticalAlignment="Center"
+                                Text="DARKFLAT" />
+                            <ninactrl:HintTextBox
+                                x:Name="FilePatternDARKFLATTextBox"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Margin="5,5,0,0"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Stretch"
+                                AllowDrop="True"
+                                DragEnter="TextBox_DragEnter"
+                                Drop="TextBox_Drop"
+                                HintText="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
+                                PreviewDragOver="TextBox_PreviewDragOver"
+                                Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARKFLAT, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </Expander.Content>
+                </Expander>
+
+
+
+                <Grid Grid.Row="5" Grid.ColumnSpan="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblImagePatternPreview}" />
+                    <TextBox
+                        x:Name="ImagePatternPreviewTextBox"
+                        Grid.Column="1"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreview, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="20,5,0,0"
+                        VerticalAlignment="Center"
+                        Text="FLAT"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternFLAT, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreviewFLAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternFLAT, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="20,5,0,0"
+                        VerticalAlignment="Center"
+                        Text="DARK"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARK, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreviewDARK, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARK, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+
+
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="20,5,0,0"
+                        VerticalAlignment="Center"
+                        Text="BIAS"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternBIAS, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreviewBIAS, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternBIAS, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="20,5,0,0"
+                        VerticalAlignment="Center"
+                        Text="DARKFLAT"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARKFLAT, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+                    <TextBox
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreviewDARKFLAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARKFLAT, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
+                </Grid>
 
                 <Grid
                     Grid.Row="6"

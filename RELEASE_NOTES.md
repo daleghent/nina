@@ -3,6 +3,47 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.2
+
+## Bugfixes
+- Fixed Slew to Alt/Az instruction not considering changes to Latitude & Longitude values
+- Loading a FITS File that contains exponential notation for double values should now have its headers be correctly read
+- Fixed an issue where the sequence was not able to be loaded when a plugin was missing
+- Fixed an issue for plugin focusers to not show the plugin specific settings section
+- When simple sequencer was set to "Rotate Through" mode, the estimated time calculation was incorrect when partially finished. It should now reflect the correct estimate.
+- Sending an image to framing wizard without setting a name will no longer cause the caching to fail
+- Fixed an issue for Atik OSC cameras where debayering would crash the application.
+- Using TIFF without compression selected now properly saves the files without any compression
+- "Clear all" button on notifications will now also properly clear all pending notifications
+- Image file patterns will now remove trailing and leading white spaces for directories and file names.
+
+## Features
+- Added new Instruction "Set USB Limit" to control the usb limit inside the sequencer (if available)
+- A new toggle in options > general > advanced is available to disable hardware acceleration. Disabling this can be useful if you are experiencing graphic glitches or the application goes blank when using a remote client to connect to the pc.
+- Added native driver for OGMA cameras
+- In Options > Imaging > Image File Pattern it is now possible to set different patterns per image type. When no pattern is set for a specific image type the main image pattern will be taken.
+- NMEA GPS import now also imports the site elevation
+
+## Improvements
+- The Field of View value in the Framing Tab is now limited to two decimal places
+- Camera simulator can now set arbitrary values for Offset and USB limit
+- Conditions now log on info level when they are done
+- Profile Chooser on startup will now be shown before the whole application is initializing
+    - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
+- Options > Equipment > Telescope > "Do not sync" is renamed to "Automatic Sync" and the toggle value is reversed. To not send syncs to the mount this should be turned off. The behavior is unchanged, only the UI shows it in reversed logic.
+- Snapshot panel in imaging tab now has a targetname field to enter a value manually to be used for the $$TARGETNAME$$ image pattern when the toggle to save the image is enabled
+
+### Altair, Mallincam, Omegon, Risingcam and Touptek 
+- Added High Fullwell Mode control for cameras that support it (also added for custom device actions)
+- Added target dew heater strength control to be able to reduce the strength of the dew heater if supported (also added for custom device actions)
+- High Gain, Ultra Mode, High Fullwell and Dew Heater Strength settings are now stored in the profile and will be restored on next connect
+
+### PlayerOne
+- Added temperature control for cooled camera series
+- Cooled cameras can now control dew heater and fan strength
+- Native driver for Player One Filter Wheels is now available
+- Fixed an issue that USB limit could not be set correctly
+
 # Version 2.1
 
 ## Bugfixes

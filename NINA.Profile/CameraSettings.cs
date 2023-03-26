@@ -63,6 +63,15 @@ namespace NINA.Profile {
             trackingCameraASCOMServerPipeName = "NINA.ASCOM.Camera.SBIG.Tracker";
             sbigUseExternalCcdTracker = false;
             trackingCameraASCOMServerLoggingEnabled = false;
+
+
+            touptekAlikeHighGain = true;
+            touptekAlikeUltraMode = true;
+            touptekAlikeHighFullwell = false;
+            touptekAlikeDewHeaterStrength = -1;
+
+            genericCameraDewHeaterStrength = 10;
+            genericCameraFanSpeed = 70;
         }
 
         private string id;
@@ -653,5 +662,81 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        #region GenericCamera
+
+        private int genericCameraDewHeaterStrength;
+        [DataMember]
+        public int GenericCameraDewHeaterStrength {
+            get => genericCameraDewHeaterStrength;
+            set {
+                if (genericCameraDewHeaterStrength != value) {
+                    genericCameraDewHeaterStrength = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private int genericCameraFanSpeed;
+        [DataMember]
+        public int GenericCameraFanSpeed {
+            get => genericCameraFanSpeed;
+            set {
+                if (genericCameraFanSpeed != value) {
+                    genericCameraFanSpeed = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        
+        #endregion
+
+        #region TouptekAlike
+        private bool touptekAlikeHighGain;
+        [DataMember]
+        public bool TouptekAlikeHighGain {
+            get => touptekAlikeHighGain;
+            set {
+                if (touptekAlikeHighGain != value) {
+                    touptekAlikeHighGain = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private bool touptekAlikeUltraMode;
+        [DataMember]
+        public bool TouptekAlikeUltraMode {
+            get => touptekAlikeUltraMode;
+            set {
+                if (touptekAlikeUltraMode != value) {
+                    touptekAlikeUltraMode = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private bool touptekAlikeHighFullwell;
+        [DataMember]
+        public bool TouptekAlikeHighFullwell {
+            get => touptekAlikeHighFullwell;
+            set {
+                if (touptekAlikeHighFullwell != value) {
+                    touptekAlikeHighFullwell = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private int touptekAlikeDewHeaterStrength;
+        [DataMember]
+        public int TouptekAlikeDewHeaterStrength {
+            get => touptekAlikeDewHeaterStrength;
+            set {
+                if (touptekAlikeDewHeaterStrength != value) {
+                    touptekAlikeDewHeaterStrength = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        #endregion
     }
 }

@@ -331,14 +331,15 @@
                                 </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
+                                    Atik="{StaticResource Default}"
                                     Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
                                     FailedToLoadTemplate="{StaticResource Failed}"
+                                    Generic="{StaticResource Default}"
                                     LegacySbig="{StaticResource Default}"
                                     Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraDetails}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}"
-                                    Atik="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -513,6 +514,22 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasHighFullwell, Converter={StaticResource VisibilityConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblHighFullwellMode}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding HighFullwellMode}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblHighFullwellModeTooltip}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
                                     <DockPanel Margin="0,0,0,6">
                                         <TextBlock
                                             MinWidth="100"
@@ -528,6 +545,28 @@
                                                 </ToolTip>
                                             </CheckBox.ToolTip>
                                         </CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDewHeaterStrength}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="1" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding MaxDewHeaterStrength}" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="{Binding MaxDewHeaterStrength}"
+                                            MinValue="0"
+                                            StepSize="1"
+                                            Value="{Binding TargetDewHeaterStrength, Mode=TwoWay}" />
                                     </DockPanel>
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding MaxFanSpeed, Converter={StaticResource ZeroToVisibilityConverter}}">
                                         <StackPanel MinWidth="100" Orientation="Horizontal">
@@ -680,8 +719,8 @@
                                         <ComboBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            SelectedIndex="{Binding GainPreset}"
-                                            ItemsSource="{Binding GainPresets}" />
+                                            ItemsSource="{Binding GainPresets}"
+                                            SelectedIndex="{Binding GainPreset}" />
                                     </DockPanel>
 
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasExposureSpeed, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
@@ -692,8 +731,8 @@
                                         <ComboBox
                                             Width="200"
                                             HorizontalAlignment="Right"
-                                            SelectedIndex="{Binding ExposureSpeed}"
-                                            ItemsSource="{Binding ExposureSpeeds}" />
+                                            ItemsSource="{Binding ExposureSpeeds}"
+                                            SelectedIndex="{Binding ExposureSpeed}" />
                                     </DockPanel>
 
                                     <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
@@ -716,16 +755,66 @@
                                 </StackPanel>
                             </DataTemplate>
 
+                            <DataTemplate x:Key="Generic">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasDewHeater, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDewHeaterStrength}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="10" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="100" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="100"
+                                            MinValue="10"
+                                            StepSize="10"
+                                            Value="{Binding TargetDewHeaterStrength, Mode=TwoWay}" />
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasAdjustableFan, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFanSpeed}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="10" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="100" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="100"
+                                            MinValue="10"
+                                            StepSize="10"
+                                            Value="{Binding TargetFanSpeed, Mode=TwoWay}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
+
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
+                                Atik="{StaticResource Atik}"
                                 Canon="{StaticResource Canon}"
                                 Default="{StaticResource Default}"
                                 FailedToLoadTemplate="{StaticResource Failed}"
+                                Generic="{StaticResource Generic}"
                                 LegacySbig="{StaticResource LegacySbig}"
                                 Postfix="{x:Static wpfutil:DataTemplatePostfix.CameraSettings}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}"
-                                Atik="{StaticResource Atik}" />
+                                Touptek="{StaticResource Altair}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

@@ -737,7 +737,7 @@ namespace NINA.ViewModel.FramingAssistant {
             get {
                 var minutes = (Math.Abs(DSO.Coordinates.RA * 60.0d) % 60);
 
-                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.RA * 60.0d * 60.0d) % 60), 5);
                 if (seconds > 59) {
                     minutes += 1;
                 }
@@ -796,7 +796,7 @@ namespace NINA.ViewModel.FramingAssistant {
             get {
                 var minutes = (Math.Abs(DSO.Coordinates.Dec * 60.0d) % 60);
 
-                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60));
+                var seconds = (int)Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60), 5);
                 if (seconds > 59) {
                     minutes += 1;
                 }
@@ -1141,7 +1141,7 @@ namespace NINA.ViewModel.FramingAssistant {
                         } else {
                             var skySurvey = SkySurveyFactory.Create(FramingAssistantSource);
 
-                            skySurveyImage = await skySurvey.GetImage(DSO?.Name, DSO?.Coordinates,
+                            skySurveyImage = await skySurvey.GetImage(DSO?.Name ?? string.Empty, DSO?.Coordinates,
                                 AstroUtil.DegreeToArcmin(FieldOfView), boundWidth, boundHeight, _loadImageSource.Token, _progress);
                         }
                     }

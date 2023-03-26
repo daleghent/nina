@@ -387,6 +387,10 @@ namespace NINA.Image.ImageData {
                     case TIFFCompressionTypeEnum.ZIP:
                         encoder.Compression = TiffCompressOption.Zip;
                         break;
+
+                    default:
+                        encoder.Compression = TiffCompressOption.None;
+                        break;
                 }
 
                 var metadata = new BitmapMetadata("tiff");

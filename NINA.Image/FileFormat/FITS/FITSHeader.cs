@@ -455,7 +455,7 @@ namespace NINA.Image.FileFormat.FITS {
         }
 
         private double ParseDouble(string value) {
-            if (double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var dbl)) {
+            if (double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var dbl)) {
                 return dbl;
             } else {
                 return double.NaN;

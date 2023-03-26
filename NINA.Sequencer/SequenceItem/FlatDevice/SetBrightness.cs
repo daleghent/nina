@@ -70,8 +70,13 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return flatDeviceMediator.SetBrightness(Brightness, token);
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            await flatDeviceMediator.SetBrightness(Brightness, token);
+
+            var brightnessState = flatDeviceMediator.GetInfo().Brightness;
+            if (brightnessState != Brightness) {
+                throw new SequenceEntityFailedException($"Failed to set brightness. Current brightness: {brightnessState}");
+            }
         }
 
         public bool Validate() {

@@ -121,6 +121,12 @@ namespace NINA.ViewModel {
             } catch (Exception) {
                 ASTPANSDKVersion = Loc.Instance["LblNotInstalled"];
             }
+
+            try {
+                OgmaSDKVersion = Ogmacam.Version();
+            } catch (Exception) {
+                OgmaSDKVersion = Loc.Instance["LblNotInstalled"];
+            }
         }
 
         public string AltairSDKVersion { get; }
@@ -138,5 +144,6 @@ namespace NINA.ViewModel {
         public string MallinCamSDKVersion { get; }
         public string PlayerOneSDKVersion { get; }
         public string ASTPANSDKVersion { get; }
+        public string OgmaSDKVersion { get; }
     }
 }

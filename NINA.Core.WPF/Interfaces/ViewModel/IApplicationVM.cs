@@ -19,7 +19,6 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IApplicationVM {
         ICommand CheckASCOMPlatformVersionCommand { get; }
-        ICommand CheckProfileCommand { get; }
         ICommand CheckUpdateCommand { get; }
         ICommand ClosingCommand { get; }
         ICommand ExitCommand { get; }

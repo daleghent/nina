@@ -64,5 +64,6 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void ReleaseCaptureBlock(object cameraConsumer);
 
         bool IsFreeToCapture(object cameraConsumer);
+        void SetUSBLimit(int usbLimit);
     }
 }
