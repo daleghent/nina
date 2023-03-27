@@ -27,6 +27,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,12 @@ namespace NINA {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+        [DllImport("kernel32.dll")]
+        static extern bool AttachConsole(uint dwProcessId);
+        [DllImport("kernel32.dll")]
+        static extern bool FreeConsole(uint dwProcessId);
+        const uint ATTACH_PARENT_PROCESS = 0x0ffffffff;
+
         private CommandLineOptions _commandLineOptions;
         private ProfileService _profileService;
         private IMainWindowVM _mainWindowViewModel;
@@ -115,8 +122,11 @@ namespace NINA {
         }
 
         protected override void OnStartup(StartupEventArgs e) {
+            AttachConsole(ATTACH_PARENT_PROCESS);
             _commandLineOptions = new CommandLineOptions(e.Args);
+            FreeConsole(ATTACH_PARENT_PROCESS);
             if (_commandLineOptions.HasErrors) {
+
                 Shutdown(-1);
                 return;
             }

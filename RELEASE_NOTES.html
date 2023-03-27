@@ -38,6 +38,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>ZWO EFWs must have firmware version 3.0.9 or later to support storing persistent device IDs.</li>
 </ul>
 </li>
+<li>The command line options have been revisited. Previously <code>/profileid &lt;profile id&gt;</code> was available. This has been changed to <code>--profileid &lt;profile id&gt;</code></li>
 </ul>
 <h2 id="net-7">.NET 7</h2>
 <ul>
@@ -45,7 +46,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Issues due to the technology shift are expected during the early nightly versions, as the complete app has to undergo a full retest!</li>
 <li>Plugins of prior versions are disabled and need to be patched and target the new version specifically to ensure full compatibility with .NET 7</li>
 </ul>
-<h1 id="improvements">Improvements</h1>
+<h2 id="improvements">Improvements</h2>
 <ul>
 <li>Profile Chooser on startup will now be shown before the whole application is initializing
 <ul>
@@ -55,6 +56,16 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application</li>
 <li>ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.</li>
 </ul>
+<h2 id="commandline-options">Commandline Options</h2>
+<ul>
+<li>Multiple command line options have been added to be able to adjust some of the startup parameters for the application</li>
+</ul>
+<pre><code>-p, --profileid     Load profile for a given id at startup.
+-s, --sequencefile  Load a sequence file at startup.
+-r, --runsequence   (Default: false) Automatically start a sequence loaded with -s and switch to Imaging tab.
+-h, --help          Display this help screen.
+-v, --version       Display version information
+</code></pre>
 <h1 id="version-2.1-hotfix-1">Version 2.1 Hotfix 1</h1>
 <h2 id="bugfixes">Bugfixes</h2>
 <ul>

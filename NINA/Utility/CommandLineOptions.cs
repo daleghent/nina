@@ -1,6 +1,5 @@
 ﻿using CommandLine;
 using CommandLine.Text;
-using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -11,10 +10,10 @@ namespace NINA.Utility {
     public class CommandLineOptions : ICommandLineOptions {
 
         class Options {
-            [Option(shortName: 'p', longName: "profileid", Required = false, HelpText = "Load profile at startup.")]            
+            [Option(shortName: 'p', longName: "profileid", Required = false, HelpText = "Load profile by given id at startup.")]            
             public string? ProfileId { get; set; }
 
-            [Option(shortName: 's', longName: "sequencefile", Required = false, HelpText = "Load sequence file at startup.")]
+            [Option(shortName: 's', longName: "sequencefile", Required = false, HelpText = "Load a sequence file at startup.")]
             public string? SequenceFile { get; set; }
 
             [Option(shortName: 'r', longName: "runsequence", Default = false, HelpText = "Automatically start a sequence loaded with -s and switch to Imaging tab.")]
@@ -46,6 +45,8 @@ namespace NINA.Utility {
             HasErrors = true;
 
            var helpText = HelpText.AutoBuild(result);
+            Console.WriteLine(string.Empty);
+            Console.WriteLine(string.Empty);
             Console.WriteLine(helpText);
         }
     }

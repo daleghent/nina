@@ -13,17 +13,28 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - ZWO: Persistent device IDs (Aliases) are now supported for ZWO cameras and filter wheels. If one is already set in either of these devices and has not yet connected to it under NINA 3.0, the device will need to be selected again and connected in NINA's Camera or Filter Wheel equipment selection list. This change makes it easier to support setups where multiple ZWO cameras and filter wheels are present.
     - Device IDs are limited to 8 ASCII characters in length.
     - ZWO EFWs must have firmware version 3.0.9 or later to support storing persistent device IDs.
+- The command line options have been revisited. Previously `/profileid <profile id>` was available. This has been changed to `--profileid <profile id>`
 
 ## .NET 7
 - The application has been lifted to utilize .NET 7. This is much more than just a Version shift of the previously used .NET Framework 4.8 as .NET 6 is based on .NET Core which is a complete rewrite of the .NET Framework by Microsoft and thus a major technical upgrade for N.I.N.A.
 - Issues due to the technology shift are expected during the early nightly versions, as the complete app has to undergo a full retest!
 - Plugins of prior versions are disabled and need to be patched and target the new version specifically to ensure full compatibility with .NET 7
 
-# Improvements
+## Improvements
 - Profile Chooser on startup will now be shown before the whole application is initializing
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
 - The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
 - ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.
+
+## Commandline Options
+- Multiple command line options have been added to be able to adjust some of the startup parameters for the application
+```
+-p, --profileid     Load profile for a given id at startup.
+-s, --sequencefile  Load a sequence file at startup.
+-r, --runsequence   (Default: false) Automatically start a sequence loaded with -s and switch to Imaging tab.
+-h, --help          Display this help screen.
+-v, --version       Display version information
+```
 
 # Version 2.1 Hotfix 1
 
