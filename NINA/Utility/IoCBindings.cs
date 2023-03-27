@@ -71,10 +71,12 @@ namespace NINA.Utility {
     
     internal class IoCBindings {
         private readonly IProfileService _profileService;
+        private readonly ICommandLineOptions _commandLineArguments;
 
-        public IoCBindings(IProfileService profileService) { 
+        public IoCBindings(IProfileService profileService, ICommandLineOptions commandLineOptions) { 
             _profileService = profileService;
-        }
+            _commandLineArguments = commandLineOptions;
+    }
 
         public IServiceProvider Load() {
             try {
@@ -88,6 +90,8 @@ namespace NINA.Utility {
 
                 services.AddSingleton<IDeviceDispatcher, DeviceDispatcher>();
                 services.AddSingleton<IApplicationVM, ApplicationVM>();
+
+                services.AddSingleton<ICommandLineOptions>(f => _commandLineArguments);
 
                 // Equipment Providers
                 services.AddScoped<IEquipmentProviders<ICamera>, PluginEquipmentProviders<ICamera>>();

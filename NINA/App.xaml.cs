@@ -40,6 +40,7 @@ namespace NINA {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+        private CommandLineOptions _commandLineOptions;
         private ProfileService _profileService;
         private IMainWindowVM _mainWindowViewModel;
 
@@ -114,6 +115,12 @@ namespace NINA {
         }
 
         protected override void OnStartup(StartupEventArgs e) {
+            _commandLineOptions = new CommandLineOptions(e.Args);
+            if (_commandLineOptions.HasErrors) {
+                Shutdown(-1);
+                return;
+            }
+
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
             var userSettingsException = InitializeUserSettings();
@@ -124,13 +131,9 @@ namespace NINA {
 
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
 
-            var startWithProfileId = e
-               .Args
-               .SkipWhile(x => !x.Equals("/profileid", StringComparison.OrdinalIgnoreCase))
-               .Skip(1)
-               .FirstOrDefault();
             _profileService = (ProfileService)Current.Resources["ProfileService"];
 
+            var startWithProfileId = _commandLineOptions.ProfileId;
             if (!_profileService.TryLoad(startWithProfileId)) {
                 ProfileService.ActivateInstanceOfNinaReferencingProfile(startWithProfileId);
                 Shutdown();
@@ -164,7 +167,7 @@ namespace NINA {
                 profileSelectionWindow.ShowDialog();
             }
 
-            _mainWindowViewModel = CompositionRoot.Compose(_profileService);
+            _mainWindowViewModel = CompositionRoot.Compose(_profileService, _commandLineOptions);
             var mainWindow = new MainWindow();
             this.MainWindow = mainWindow;
             mainWindow.DataContext = _mainWindowViewModel;
@@ -180,8 +183,10 @@ namespace NINA {
         }
 
         protected override void OnExit(ExitEventArgs e) {
-            _mainWindowViewModel.DeviceDispatcher?.Dispose();
-            this.RefreshJumpList(_profileService);
+            if (e?.ApplicationExitCode != -1) {
+                _mainWindowViewModel.DeviceDispatcher?.Dispose();
+                this.RefreshJumpList(_profileService);
+            }
         }
 
         private void LogResource(ResourceDictionary res, string indentation) {
