@@ -98,8 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Locale\Locale.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.Designer.cs</LastGenOutput>
+      <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
