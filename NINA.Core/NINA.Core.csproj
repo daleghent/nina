@@ -96,6 +96,12 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Locale\Locale.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Locale.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if $(Configuration) == SignedRelease (&#xD;&#xA;   echo  &quot;Trying to sign $(TargetPath)&quot;&#xD;&#xA;   signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)&#xD;&#xA; &#xD;&#xA;)" />
   </Target>
