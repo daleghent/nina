@@ -36,7 +36,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 -v, --version       Display version information
 ```
 
-# Version 2.1 Hotfix 1
+## Bugfixes
+- The profile chooser on startup did not remember the on/off selection to save the selected profile
+
+# Version 2.2
 
 ## Bugfixes
 - Fixed Slew to Alt/Az instruction not considering changes to Latitude & Longitude values
