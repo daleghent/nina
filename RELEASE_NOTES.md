@@ -5,6 +5,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 # Version 2.3
 
+## Bugfixes
+- The profile chooser on startup did not remember the on/off selection to save the selected profile
+
 # Version 2.2
 
 ## Bugfixes

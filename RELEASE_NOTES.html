@@ -27,8 +27,12 @@
 <p>If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.<br />
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a></p>
 <h1 id="version-2.3">Version 2.3</h1>
-<h1 id="version-2.2">Version 2.2</h1>
 <h2 id="bugfixes">Bugfixes</h2>
+<ul>
+<li>The profile chooser on startup did not remember the on/off selection to save the selected profile</li>
+</ul>
+<h1 id="version-2.2">Version 2.2</h1>
+<h2 id="bugfixes-1">Bugfixes</h2>
 <ul>
 <li>Fixed Slew to Alt/Az instruction not considering changes to Latitude &amp; Longitude values</li>
 <li>Loading a FITS File that contains exponential notation for double values should now have its headers be correctly read</li>
@@ -76,7 +80,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Fixed an issue that USB limit could not be set correctly</li>
 </ul>
 <h1 id="version-2.1">Version 2.1</h1>
-<h2 id="bugfixes-1">Bugfixes</h2>
+<h2 id="bugfixes-2">Bugfixes</h2>
 <ul>
 <li>When an interrupt happens during a meridian flip it in a sequence it is no longer ignored while the flip is running</li>
 <li>Fix an issue where for some coordinates, the coordinates were off by one arcminute after reloading it into the sequence from file, due to double precision rounding issues</li>
@@ -104,7 +108,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Add access to the device instances</li>
 </ul>
 <h1 id="version-2.0-hotfix-2">Version 2.0 Hotfix 2</h1>
-<h2 id="bugfixes-2">Bugfixes</h2>
+<h2 id="bugfixes-3">Bugfixes</h2>
 <ul>
 <li>Fixed QHY Camera selection being lost on rescan</li>
 <li>Imaging Platesolve Panel will preset initial gain from platesolve settings</li>
@@ -160,7 +164,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>New Plugin Eventhooks to react on Befor/After MeridianFlip and After Dithers</li>
 </ul>
 <h1 id="version-2.0-hf-1">Version 2.0 HF 1</h1>
-<h2 id="bugfixes-3">Bugfixes</h2>
+<h2 id="bugfixes-4">Bugfixes</h2>
 <ul>
 <li>Changed the default value for ASCOM Camera BayerOffsetX/BayerOffsetY to be 0, instead of -1, when not available via the driver</li>
 <li>Corrections made to assorted entries in the NINA object database</li>
@@ -568,7 +572,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers</li>
 <li>QHY: Legacy CCD and A-series cameras can now select Normal or Fast readout speeds when using the native driver</li>
 </ul>
-<h2 id="bugfixes-4">Bugfixes</h2>
+<h2 id="bugfixes-5">Bugfixes</h2>
 <ul>
 <li>The telescope will no longer go on a journey to the celestial pole before going to the park position</li>
 <li>Parking the telescope from the Equipment &gt; Telescope screen will no longer cause the UI to freeze while the telescope is in the process of parking</li>
@@ -622,7 +626,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Rotators will now display the sky angle as the current position, when rotation via plate solving was invoked</li>
 <li>Added toggle to reverse direction for rotators</li>
 </ul>
-<h2 id="bugfixes-5">Bugfixes</h2>
+<h2 id="bugfixes-6">Bugfixes</h2>
 <ul>
 <li>When using a DSLR and Astrometry.net the uploaded file is now correctly sent as FITS instead of raw format</li>
 <li>Log files now show correct operating system version</li>
@@ -1066,7 +1070,7 @@ Thank you for your support!</p>
 </ul>
 </li>
 </ul>
-<h2 id="bugfixes-6">Bugfixes</h2>
+<h2 id="bugfixes-7">Bugfixes</h2>
 <ul>
 <li>Fixed when FramingAssistant was not opened before and a DSO was selected from the SkyAtlas as Framing Source an error could occur</li>
 <li>Fixed scrolling through Framing Assistant Offline Sky Map while cursor was inside Rectangle ignored zooming</li>
@@ -1174,7 +1178,7 @@ the background itself will be moved like in an orrery</li>
 <li>Previously the auto update was always just looking for released versions. Now multiple sources (Release, Beta and Nightly) can be selected and the auto updater updates to the respective version accordingls.</li>
 <li>Additionally the changelog for the new version will now be displayed prior to updating, too.</li>
 </ul>
-<h2 id="bugfixes-7">Bugfixes</h2>
+<h2 id="bugfixes-8">Bugfixes</h2>
 <ul>
 <li>Corrected Max Binning level for ASI Cameras</li>
 <li>Focuser move command fixed where lots of move commands where sent by accident</li>
@@ -1295,7 +1299,7 @@ Thank you for your support!</p>
 <li>Latitude and Longitude can now be synced from application to telescope and vica versa (when supported).</li>
 <li>Serial Relay (via USB) interaction for Nikon Bulb</li>
 </ul>
-<h2 id="bugfixes-8">Bugfixes</h2>
+<h2 id="bugfixes-9">Bugfixes</h2>
 <ul>
 <li>Fixed Canon issue that a second exposure is accidentally triggered, causing the camera to be stuck</li>
 <li>Fixed memory leak when using Free Image RAW Converter</li>

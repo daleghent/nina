@@ -91,6 +91,12 @@ namespace NINA.ViewModel {
                 return ActiveProfile.TelescopeSettings.Id;
             }
         }
-        public bool UseSavedProfile { get; set; } = Properties.Settings.Default.UseSavedProfileSelection;
+        public bool UseSavedProfile {
+            get => Properties.Settings.Default.UseSavedProfileSelection;
+            set {
+                Properties.Settings.Default.UseSavedProfileSelection = value;
+                CoreUtil.SaveSettings(NINA.Properties.Settings.Default);
+            }
+        }
     }
 }
