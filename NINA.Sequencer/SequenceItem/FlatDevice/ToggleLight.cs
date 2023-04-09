@@ -99,7 +99,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(ToggleLight)}";
+            return $"Category: {Category}, Item: {nameof(ToggleLight)}, Light: {(OnOff ? "On" : "Off")}";
         }
     }
 }

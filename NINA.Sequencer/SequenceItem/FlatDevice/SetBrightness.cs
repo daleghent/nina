@@ -98,7 +98,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(SetBrightness)}";
+            return $"Category: {Category}, Item: {nameof(SetBrightness)}, {nameof(Brightness)}: {Brightness}";
         }
     }
 }
