@@ -363,6 +363,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public bool CanSetShiftRate => false;
         public bool ShiftEnabled => false;
+        public bool CanGetLockPosition => false;
         public SiderealShiftTrackingRate ShiftRate => SiderealShiftTrackingRate.Disabled;
 
         public Task<bool> ClearCalibration(CancellationToken ct) {
@@ -561,6 +562,11 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public void SendCommandBlind(string command, bool raw) {
             throw new NotImplementedException();
         }
+
+        public Task<LockPosition> GetLockPosition() {
+            throw new NotImplementedException();
+        }
+
     }
 
     public class MetaGuideGuideStep : IGuideStep {
