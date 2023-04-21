@@ -240,7 +240,7 @@
     <Compile Include="Equipment\MyDome\AscomDome.cs" />
     <Compile Include="Equipment\MyDome\DomeInfo.cs" />
     <Compile Include="Equipment\MyDome\DomeSynchronization.cs" />
-    <Compile Include="Equipment\MyGuider\PHD2\LockPosition.cs" />
+    <Compile Include="Equipment\MyGuider\LockPosition.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\Phd2Profile.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\PhdAppState.cs" />
     <Compile Include="Equipment\MyGuider\PHD2\PhdEvents\PhdEvent.cs" />
