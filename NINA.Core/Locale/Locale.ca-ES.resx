@@ -6558,4 +6558,7 @@ Això només s'ha de desactivar quan es disposa d'un bon model del cel i no s'ha
   <data name="LblCalibrate" xml:space="preserve">
     <value>Calibrar</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>No s'ha pogut observar un missatge GGA del dispositiu GPS. La informació d'ubicació no es pot actualitzar.</value>
+  </data>
 </root>

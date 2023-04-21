@@ -6550,4 +6550,7 @@ Dette bør bare deaktiveres hvis monteringen allerede har en pekemodell som man 
   <data name="LblCalibrate" xml:space="preserve">
     <value>Kalibrer</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>Failed to observe a GGA message from the GPS device. Location information cannot be updated.</value>
+  </data>
 </root>

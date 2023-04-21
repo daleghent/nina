@@ -6558,4 +6558,7 @@ Opcję tę należy wyłączyć tylko wtedy, gdy dostępny jest dobry wzorzec map
   <data name="LblCalibrate" xml:space="preserve">
     <value>Kalibruj</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>Nie udało się pobrać informacji z urządzenia GPS. Dane o lokalizacji nie mogą być aktualizowane.</value>
+  </data>
 </root>

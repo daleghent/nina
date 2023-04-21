@@ -6540,4 +6540,7 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblCalibrate" xml:space="preserve">
     <value>キャリブレート</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>GPSデバイスからのGGAメッセージの監視ができませんでした。位置情報を更新できません。</value>
+  </data>
 </root>

@@ -6558,4 +6558,7 @@ Esto solo debería desactivarse si tienes un buen modelado de cielo que no debe 
   <data name="LblCalibrate" xml:space="preserve">
     <value>Calibrar</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>No se pudo mostrar un mensaje GGA desde el dispositivo GPS. No se puede actualizar la información de ubicación.</value>
+  </data>
 </root>

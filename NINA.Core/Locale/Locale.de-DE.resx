@@ -6561,4 +6561,7 @@ This should only be disabled when having a good pointing model that must not be 
   <data name="LblCalibrate" xml:space="preserve">
     <value>Calibrate</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>Failed to observe a GGA message from the GPS device. Location information cannot be updated.</value>
+  </data>
 </root>

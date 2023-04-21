@@ -6563,4 +6563,7 @@ Tato funkce by měla být vypnuta pouze v případě, že máte k dispozici vyni
   <data name="LblCalibrate" xml:space="preserve">
     <value>Kalibrace</value>
   </data>
+  <data name="LblGPSNoGGA" xml:space="preserve">
+    <value>Nepodařilo se získat zprávu GGA z GPS zařízení. Informace o poloze nelze aktualizovat.</value>
+  </data>
 </root>
