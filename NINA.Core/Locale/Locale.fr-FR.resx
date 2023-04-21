@@ -1666,23 +1666,20 @@ HFR calculé: {2}</value>
   <data name="LblGeneral" xml:space="preserve">
     <value>Général</value>
   </data>
-  <data name="LblGPSConnected" xml:space="preserve">
-    <value>GPS connecté au port</value>
+  <data name="LblGnssConnectFail" xml:space="preserve">
+    <value>Failed to connect to {0}</value>
   </data>
-  <data name="LblGPSConnectFail" xml:space="preserve">
-    <value>Ne peut connecter le GPS au port</value>
+  <data name="LblGnssLocationSet" xml:space="preserve">
+    <value>Location set from {0}</value>
   </data>
-  <data name="LblGPSLocationSet" xml:space="preserve">
-    <value>Localisation appliqué à partir du GPS</value>
+  <data name="LblGnssNoFix" xml:space="preserve">
+    <value>{0} reports that it does not have a fix</value>
   </data>
-  <data name="LblGPSNoFix" xml:space="preserve">
-    <value>GPS n'arrive pas à résoudre la position</value>
+  <data name="LblGnssNotFound" xml:space="preserve">
+    <value>No {0} device detected</value>
   </data>
-  <data name="LblGPSNotFound" xml:space="preserve">
-    <value>Aucun module GPS connecté</value>
-  </data>
-  <data name="LblGPSTooltip" xml:space="preserve">
-    <value>Importer la position à l'aide d'un appareil GPS NMEA</value>
+  <data name="LblGnssTooltip" xml:space="preserve">
+    <value>Import location from a GNSS device</value>
   </data>
   <data name="LblGuider" xml:space="preserve">
     <value>Guidage</value>
@@ -6565,7 +6562,25 @@ This should only be disabled when having a good pointing model that must not be 
   <data name="LblCalibrate" xml:space="preserve">
     <value>Calibrate</value>
   </data>
-  <data name="LblGPSNoGGA" xml:space="preserve">
-    <value>Failed to observe a GGA message from the GPS device. Location information cannot be updated.</value>
+  <data name="LblNmeaSerialGnss" xml:space="preserve">
+    <value>NMEA Serial GNSS</value>
+  </data>
+  <data name="LblPrimaLuceLabEagle" xml:space="preserve">
+    <value>PrimaLuceLab Eagle</value>
+  </data>
+  <data name="LblGnssGgaMissingError" xml:space="preserve">
+    <value>Did not observe a GGA sentence within {0} seconds</value>
+  </data>
+  <data name="LblGnssGgaQualityError" xml:space="preserve">
+    <value>GGA sentence indicates the fix quality is {0}</value>
+  </data>
+  <data name="LblGnss" xml:space="preserve">
+    <value>GNSS</value>
+  </data>
+  <data name="LblPegasusUranusNotFound" xml:space="preserve">
+    <value>PegasusAstro Uranus Meteo not found</value>
+  </data>
+  <data name="LblPegausAstroUranus" xml:space="preserve">
+    <value>PegasusAstro Uranus Meteo</value>
   </data>
 </root>
