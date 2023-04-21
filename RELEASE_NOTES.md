@@ -25,6 +25,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
 - The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
 - ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.
+- GNSS devices: Support for retrieving site location information has been expanded to enable different types of sources:
+    - NMEA serial GNSS devices
+    - PegasusAstro Uranus Meteo
+    - PrimaLuceLab Eagle's GPS and Eagle Manager X
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application

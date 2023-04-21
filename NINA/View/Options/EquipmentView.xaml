@@ -36,6 +36,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <GroupBox DataContext="{Binding CameraSettings}" Header="{ns:Loc LblCamera}">
                 <StackPanel Orientation="Vertical">
@@ -713,6 +714,31 @@
                             </DockPanel>
                         </UniformGrid>
                     </UniformGrid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox
+                Grid.Row="3"
+                DataContext="{Binding GnssSettings}"
+                Header="{ns:Loc LblGnss}">
+                <StackPanel Orientation="Vertical">
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDevice}" />
+                            <ComboBox
+                                Name="PART_GnssSourceList"
+                                Grid.Column="1"
+                                MinWidth="150"
+                                Margin="10,0,0,0"
+                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:GnssSourceEnum}}}"
+                                SelectedItem="{Binding GnssSource}" />
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </GroupBox>
 
