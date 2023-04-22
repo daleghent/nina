@@ -226,7 +226,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                         SupportedActions = Guider.SupportedActions,
                         RMSError = new RMSError(),
                         PixelScale = Guider.PixelScale
-                    };
+                    });
                     BroadcastGuiderInfo();
                     Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);
                     RaisePropertyChanged(nameof(Guider));
