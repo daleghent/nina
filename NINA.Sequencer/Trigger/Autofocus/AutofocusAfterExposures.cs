@@ -99,9 +99,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
         }
 
-        public int ProgressExposures {
-            get => history.ImageHistory.Count % AfterExposures;
-        }
+        public int ProgressExposures { get; private set; }
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             lastTriggerId = history.ImageHistory.Count;
@@ -110,9 +108,13 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
-            if (!(nextItem is IExposureItem)) { return false; }
+            if (!(nextItem is IExposureItem exposureItem)) { return false; }
+            if (exposureItem.ImageType != "LIGHT") { return false; }
 
+            var lightImageHistory = history.ImageHistory.Where(x => x.Type == "LIGHT").ToList();
+            ProgressExposures = lightImageHistory.Count % AfterExposures;
             RaisePropertyChanged(nameof(ProgressExposures));
+
             var shouldTrigger =
                 lastTriggerId < history.ImageHistory.Count
                 && history.ImageHistory.Count > 0

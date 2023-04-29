@@ -5,6 +5,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 # Version 2.3
 
+## Improvements
+- Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
+
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
 
