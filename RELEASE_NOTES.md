@@ -8,6 +8,11 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Improvements
 - Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
 
+# Version 2.3
+
+## Improvements
+- Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
+
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
 - Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
