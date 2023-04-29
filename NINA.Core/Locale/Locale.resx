@@ -6587,4 +6587,7 @@ This should only be disabled when having a good pointing model that must not be 
   <data name="LblPegausAstroUranus" xml:space="preserve">
     <value>PegasusAstro Uranus Meteo</value>
   </data>
+  <data name="LblIsValidIpPortRule" xml:space="preserve">
+    <value>Port number must be between {0} and {1}</value>
+  </data>
 </root>

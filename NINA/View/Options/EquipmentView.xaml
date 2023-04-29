@@ -853,7 +853,7 @@
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="CdCPort">
                                                             <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
+                                                                <rules:IsValidIpPortRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
                                                     </Setter.Value>
@@ -864,7 +864,7 @@
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="StellariumPort">
                                                             <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
+                                                                <rules:IsValidIpPortRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
                                                     </Setter.Value>
@@ -875,7 +875,7 @@
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="TSXPort">
                                                             <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
+                                                                <rules:IsValidIpPortRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
                                                     </Setter.Value>
@@ -886,7 +886,7 @@
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="HNSKYPort">
                                                             <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
+                                                                <rules:IsValidIpPortRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
                                                     </Setter.Value>
@@ -897,7 +897,7 @@
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="C2APort">
                                                             <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
+                                                                <rules:IsValidIpPortRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
                                                     </Setter.Value>
@@ -908,7 +908,7 @@
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="SkytechXPort">
                                                             <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
+                                                                <rules:IsValidIpPortRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
                                                     </Setter.Value>
