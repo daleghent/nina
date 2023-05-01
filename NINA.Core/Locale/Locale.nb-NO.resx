@@ -1989,9 +1989,6 @@ Forventet HFR: {2}</value>
   <data name="LblMetaGuideSetup" xml:space="preserve">
     <value>MetaGuide-oppsett</value>
   </data>
-  <data name="LblMetaGuideIP" xml:space="preserve">
-    <value>MetaGuide IP</value>
-  </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
     <value>MetaGuide Port</value>
   </data>
@@ -6567,5 +6564,14 @@ Dette bør bare deaktiveres hvis monteringen allerede har en pekemodell som man 
   </data>
   <data name="LblPegausAstroUranus" xml:space="preserve">
     <value>PegasusAstro Uranus Meteo</value>
+  </data>
+  <data name="LblIsValidIpPortRule" xml:space="preserve">
+    <value>Port number must be between {0} and {1}</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfaces" xml:space="preserve">
+    <value>Use all interfaces</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfacesTooltip" xml:space="preserve">
+    <value>Listen on all interfaces for MegaGuide broadcasts. By default, N.I.N.A. will listen on loopback (127.0.0.1) only</value>
   </data>
 </root>

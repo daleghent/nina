@@ -1652,19 +1652,19 @@
     <value>一般</value>
   </data>
   <data name="LblGnssConnectFail" xml:space="preserve">
-    <value>Failed to connect to {0}</value>
+    <value>{0} への接続に失敗しました</value>
   </data>
   <data name="LblGnssLocationSet" xml:space="preserve">
-    <value>Location set from {0}</value>
+    <value>{0} から設定した位置情報</value>
   </data>
   <data name="LblGnssNoFix" xml:space="preserve">
-    <value>{0} reports that it does not have a fix</value>
+    <value>{0} は修正がないことを報告しています</value>
   </data>
   <data name="LblGnssNotFound" xml:space="preserve">
-    <value>No {0} device detected</value>
+    <value>デバイス {0} が検出されませんでした</value>
   </data>
   <data name="LblGnssTooltip" xml:space="preserve">
-    <value>Import location from a GNSS device</value>
+    <value>GNSSデバイスから位置情報をインポート</value>
   </data>
   <data name="LblGuider" xml:space="preserve">
     <value>ガイダー</value>
@@ -1980,9 +1980,6 @@
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
     <value>MetaGuide設定</value>
-  </data>
-  <data name="LblMetaGuideIP" xml:space="preserve">
-    <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
     <value>MetaGuide ポート</value>
@@ -6538,24 +6535,33 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>キャリブレート</value>
   </data>
   <data name="LblNmeaSerialGnss" xml:space="preserve">
-    <value>NMEA Serial GNSS</value>
+    <value>NMEAシリアルGNSS</value>
   </data>
   <data name="LblPrimaLuceLabEagle" xml:space="preserve">
     <value>PrimaLuceLab Eagle</value>
   </data>
   <data name="LblGnssGgaMissingError" xml:space="preserve">
-    <value>Did not observe a GGA sentence within {0} seconds</value>
+    <value>{0} 秒以内にGGAセンテンスを受信しませんでした</value>
   </data>
   <data name="LblGnssGgaQualityError" xml:space="preserve">
-    <value>GGA sentence indicates the fix quality is {0}</value>
+    <value>GGAセンテンスは修正品質が {0} であることを示しています</value>
   </data>
   <data name="LblGnss" xml:space="preserve">
     <value>GNSS</value>
   </data>
   <data name="LblPegasusUranusNotFound" xml:space="preserve">
-    <value>PegasusAstro Uranus Meteo not found</value>
+    <value>PegasusAstro Uranus Meteoが見つかりません</value>
   </data>
   <data name="LblPegausAstroUranus" xml:space="preserve">
     <value>PegasusAstro Uranus Meteo</value>
+  </data>
+  <data name="LblIsValidIpPortRule" xml:space="preserve">
+    <value>ポート番号は {0} から {1} の間でなければなりません。</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfaces" xml:space="preserve">
+    <value>Use all interfaces</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfacesTooltip" xml:space="preserve">
+    <value>Listen on all interfaces for MegaGuide broadcasts. By default, N.I.N.A. will listen on loopback (127.0.0.1) only</value>
   </data>
 </root>
