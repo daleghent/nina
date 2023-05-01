@@ -12,23 +12,22 @@
 
 #endregion "copyright"
 
-using NINA.Profile.Interfaces;
+using NINA.Astrometry;
+using NINA.Core.Interfaces;
+using NINA.Core.Locale;
+using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Equipment.MyGuider.MetaGuide;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
 using Nito.AsyncEx;
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Core.Interfaces;
-using NINA.Core.Locale;
-using NINA.Equipment.Equipment.MyGuider.MetaGuide;
-using NINA.Equipment.Interfaces;
-using NINA.Core.Model;
-using NINA.Astrometry;
-using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -244,7 +243,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 this.connecting = true;
             }
 
-            IPAddress ipAddress = IPAddress.Parse(this.profileService.ActiveProfile.GuiderSettings.MetaGuideIP);
+            bool useIpAddressAny = this.profileService.ActiveProfile.GuiderSettings.MetaGuideUseIpAddressAny;
             int port = this.profileService.ActiveProfile.GuiderSettings.MetaGuidePort;
             this.clientCTS = new CancellationTokenSource();
             this.listener = new MetaGuideListener();
@@ -252,7 +251,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             this.listener.OnGuide += Listener_OnGuide;
             this.listener.OnDisconnected += Listener_OnDisconnected;
 
-            this.listenerTask = this.listener.RunListener(ipAddress, port, this.clientCTS.Token);
+            this.listenerTask = this.listener.RunListener(useIpAddressAny, port, this.clientCTS.Token);
             this.listenerTask.GetAwaiter().OnCompleted(() => this.Disconnect());
             bool connectionSuccess = false;
 
@@ -260,6 +259,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 var connectTimeoutTokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(METAGUIDE_CONNECT_TIMEOUT_MS));
                 var connectCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(connectTimeoutTokenSource.Token, token);
                 connectionSuccess = await WaitOnEventChangeCondition(() => this.latestStatus != null, connectCancellationTokenSource.Token);
+
                 lock (this.lockobj) {
                     if (!connectionSuccess) {
                         Logger.Error("Failed to connect to MetaGuide. Check to make sure it is running, that broadcast is enabled in Setup -> Extra, and that the broadcast address and port match up with NINA settings.");
@@ -368,6 +368,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public bool CanSetShiftRate => true;
 
         private bool shiftEnabled;
+
         public bool ShiftEnabled {
             get => shiftEnabled;
             private set {
@@ -377,6 +378,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         private SiderealShiftTrackingRate shiftRate = SiderealShiftTrackingRate.Disabled;
+
         public SiderealShiftTrackingRate ShiftRate {
             get => shiftRate;
             private set {
@@ -605,7 +607,6 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public Task<LockPosition> GetLockPosition() {
             throw new NotImplementedException();
         }
-
     }
 
     public class MetaGuideGuideStep : IGuideStep {
