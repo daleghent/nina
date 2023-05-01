@@ -1181,6 +1181,9 @@
     <Content Include="Database\Migration\8.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\10.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\ASTPAN\ASTPANCamera.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
