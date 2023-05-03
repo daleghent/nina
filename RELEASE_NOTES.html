@@ -39,6 +39,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 </li>
 <li>The command line options have been revisited. Previously <code>/profileid &lt;profile id&gt;</code> was available. This has been changed to <code>--profileid &lt;profile id&gt;</code></li>
+<li>Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.</li>
 </ul>
 <h2 id="net-7">.NET 7</h2>
 <ul>
@@ -73,6 +74,28 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 -h, --help          Display this help screen.
 -v, --version       Display version information
 </code></pre>
+<h2 id="flat-wizard-rework">Flat Wizard Rework</h2>
+<h3 id="flat-wizard-screen">Flat Wizard screen</h3>
+<ul>
+<li>Binning and Gain settings have been moved down to the other settings and can now also be set filter specific</li>
+<li>Additionally it is now also possible to specify a camera offset</li>
+<li>A step size is no longer required. Instead the algorithm will now start at (Min+Max/2) and constantly divide further to find the exposure time.</li>
+<li>Selection for dark frames is hidden when choosing sky flats. When using sky flats the exposure time will constantly change making dark flats useless.</li>
+<li>Internally the flat wizard will now use the new advanced sequencer instructions</li>
+</ul>
+<h3 id="trained-flat-exposure-list">Trained Flat Exposure List</h3>
+<ul>
+<li>The settings page to view and maintain the trained flat exposures for the flat device has been reworked</li>
+<li>Instead of multiple grids the list of trained exposures is now displayed in one uniform grid</li>
+<li>This new format should be easier to understand and make it much simpler to manually adjust values</li>
+<li>All settings from a previous version will be automatically upgraded to the new format</li>
+</ul>
+<h3 id="new-instructions-for-advanced-sequencer">New Instructions for advanced sequencer</h3>
+<ul>
+<li>Auto Exposure Flat: An instruction to find an exposure time for a static flat brightness</li>
+<li>Auto Brightness Flat: An instruction to find a flat panel brightness for a static exposure time</li>
+<li>Sky Flat: Similar to the Flat Wizard sky flat, this will take flat frames that have a constantly adjusted exposure time while progressing to compensate for illumination changes due to sun altitude.</li>
+</ul>
 <h1 id="version-2.3">Version 2.3</h1>
 <h2 id="improvements-1">Improvements</h2>
 <ul>

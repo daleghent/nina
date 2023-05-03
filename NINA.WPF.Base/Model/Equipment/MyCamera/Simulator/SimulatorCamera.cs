@@ -163,9 +163,9 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
         public bool CanSetOffset => true;
 
-        public int OffsetMin => 1000;
+        public int OffsetMin => 0;
 
-        public int OffsetMax => 0;
+        public int OffsetMax => 1000;
 
         public bool CanSetUSBLimit => true;
 

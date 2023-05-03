@@ -49,6 +49,7 @@ using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Imaging;
+using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Plugins;
 using NINA.ViewModel.Sequencer;
 using NINA.WPF.Base.Interfaces;
@@ -248,7 +249,6 @@ namespace NINA.Utility {
                 services.AddSingleton<IImageHistoryVM, ImageHistoryVM>();
                 services.AddSingleton<IImageStatisticsVM, ImageStatisticsVM>();
 
-                services.AddSingleton<IFlatWizardUserPromptVM, FlatWizardUserPromptVM>();
                 services.AddSingleton<ITwilightCalculator, TwilightCalculator>();
                 services.AddSingleton<IMicroCacheFactory, DefaultMicroCacheFactory>();
                 services.AddSingleton<ISbigSdk, SbigSdk>();
@@ -317,9 +317,10 @@ namespace NINA.Utility {
                                                      f.GetService<IImagingMediator>(),
                                                      f.GetService<IApplicationStatusMediator>()),
                                   new ImageStatisticsVM(f.GetService<IProfileService>()),
-                                  f.GetService<IImageHistoryVM>()), f.GetService<IFlatWizardUserPromptVM>(),
+                                  f.GetService<IImageHistoryVM>()),
                     f.GetService<ICameraMediator>(), f.GetService<IFilterWheelMediator>(), f.GetService<ITelescopeMediator>(),
                     f.GetService<IFlatDeviceMediator>(), f.GetService<IImageGeometryProvider>(), f.GetService<IApplicationStatusMediator>(), f.GetService<IMyMessageBoxVM>(),
+                    f.GetService<INighttimeCalculator>(),
                     f.GetService<ITwilightCalculator>(),
                     f.GetService<IImageSaveMediator>()));
 
