@@ -623,8 +623,7 @@ namespace NINA.ViewModel.FlatWizard {
             }
         }
 
-        private async Task CaptureImages(CaptureSequence sequence, PauseToken pt) {
-            Task showImageTask = null;
+        private async Task CaptureImages(CaptureSequence sequence, PauseToken pt) {            
             while (sequence.ProgressExposureCount < sequence.TotalExposureCount) {
                 progress.Report(new ApplicationStatus {
                     Status3 = Loc.Instance["LblExposures"],
@@ -652,8 +651,7 @@ namespace NINA.ViewModel.FlatWizard {
                 flatSequenceCts.Token.ThrowIfCancellationRequested();
             }
 
-            progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
-            await showImageTask;
+            progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });            
         }
 
         public IWindowService WindowService { get; set; } = new WindowService();
