@@ -40,6 +40,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </li>
 <li>The command line options have been revisited. Previously <code>/profileid &lt;profile id&gt;</code> was available. This has been changed to <code>--profileid &lt;profile id&gt;</code></li>
 <li>Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.</li>
+<li>&quot;Loop for time&quot; condition and &quot;Wait for time&quot; instruction have been redesigned. When choosing dawn or dusk times the rollover will no longer happen at noon, but instead at the opposite of the chosen time. (e.g. when choosing dusk, the rollover will be at dawn)</li>
 </ul>
 <h2 id="net-7">.NET 7</h2>
 <ul>
@@ -55,6 +56,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 </li>
 <li>The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application</li>
+<li>N.I.N.A. will attempt to synchronize the mount's clock with that of the computer's. Not all mount drivers support this feature. A warning will be displayed if the difference between the clocks is more than 10 seconds and the mount time cannot be set</li>
 <li>ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.</li>
 <li>GNSS devices: Support for retrieving site location information has been expanded to enable different types of sources:
 <ul>

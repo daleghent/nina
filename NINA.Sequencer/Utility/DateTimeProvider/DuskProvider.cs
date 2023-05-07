@@ -39,9 +39,24 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         public DateTime GetDateTime(ISequenceEntity context) {
             var night = nighttimeCalculator.Calculate().TwilightRiseAndSet.Set;
             if (!night.HasValue) {
-                throw new Exception("No dusk");
+                throw new Exception("No astronomical dusk");
             }
             return night.Value;
+        }
+
+        public TimeOnly GetRolloverTime(ISequenceEntity context) {
+            var astronomicaldawn = nighttimeCalculator.Calculate().TwilightRiseAndSet.Rise;
+            if (!astronomicaldawn.HasValue) {
+                var nauticaldawn = nighttimeCalculator.Calculate().NauticalTwilightRiseAndSet.Rise;
+                if (!nauticaldawn.HasValue) {
+                    var dawn = nighttimeCalculator.Calculate().SunRiseAndSet.Rise;
+                    if (!dawn.HasValue) {
+                        return new TimeOnly(12, 0, 0);
+                    }
+                    return TimeOnly.FromDateTime(dawn.Value);
+                }
+            }
+            return TimeOnly.FromDateTime(astronomicaldawn.Value);
         }
     }
 }

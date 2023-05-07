@@ -137,7 +137,7 @@ namespace NINA.Plugin {
             this.twilightCalculator = twilightCalculator;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
-                new TimeProvider(),
+                new TimeProvider(nighttimeCalculator),
                 new SunsetProvider(nighttimeCalculator),
                 new NauticalDuskProvider(nighttimeCalculator),
                 new DuskProvider(nighttimeCalculator),

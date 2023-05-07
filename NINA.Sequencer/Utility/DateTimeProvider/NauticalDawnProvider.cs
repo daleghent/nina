@@ -43,5 +43,18 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
             }
             return night.Value;
         }
+
+        public TimeOnly GetRolloverTime(ISequenceEntity context) {
+            var nauticalDusk = nighttimeCalculator.Calculate().NauticalTwilightRiseAndSet.Set;
+            if (!nauticalDusk.HasValue) {
+                var dusk = nighttimeCalculator.Calculate().SunRiseAndSet.Set;
+                if (!dusk.HasValue) {
+                    return new TimeOnly(12, 0, 0);
+                }
+                return TimeOnly.FromDateTime(dusk.Value);
+                
+            }
+            return TimeOnly.FromDateTime(nauticalDusk.Value);
+        }
     }
 }
