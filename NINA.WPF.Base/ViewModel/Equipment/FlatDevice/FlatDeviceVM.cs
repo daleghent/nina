@@ -12,33 +12,30 @@
 
 #endregion "copyright"
 
-using NINA.Equipment.Equipment.MyCamera;
-using NINA.Equipment.Equipment.MyFilterWheel;
-using NINA.Equipment.Equipment.MyFlatDevice;
-using NINA.Profile.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.MyMessageBox;
 using NINA.Core.Utility;
-using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Utility.Notification;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Profile;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.Core.Model.Equipment;
-using NINA.Core.Locale;
-using NINA.Core.MyMessageBox;
-using NINA.Core.Model;
-using NINA.WPF.Base.Interfaces.Mediator;
-using NINA.Profile;
-using NINA.Equipment.Interfaces.ViewModel;
-using NINA.Equipment.Interfaces;
-using NINA.Equipment.Equipment;
-using Nito.AsyncEx;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
@@ -98,11 +95,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         private void FlatDeviceSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-
         }
 
         private void FilterWheelSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-
         }
 
         private async void ProfileChanged(object sender, EventArgs e) {
@@ -132,7 +127,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         }
 
         public Task<bool> SetBrightness(int value, IProgress<ApplicationStatus> progress, CancellationToken token) {
-
             if (FlatDevice == null || !FlatDevice.Connected) return Task.FromResult(false);
             return Task.Run(async () => {
                 try {
@@ -142,7 +136,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     if (value > FlatDevice.MaxBrightness) {
                         value = FlatDevice.MaxBrightness;
                     }
-                    if(FlatDevice.Brightness == value) {
+                    if (FlatDevice.Brightness == value) {
                         return true;
                     }
                     Logger.Info($"Setting brightness to {value}");
@@ -294,13 +288,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 await waitForUpdate;
                 return result;
+            } catch (FlatDeviceCoverErrorException) {
+                Logger.Error("Flat device reports the cover is in an Error state");
+                Notification.ShowError(string.Format(Loc.Instance["LblFlatDeviceCoverError"], FlatDevice.Name));
+                return false;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 return false;
             } finally {
                 ssOpen.Release();
                 progress?.Report(new ApplicationStatus());
-
             }
         }
 
@@ -319,17 +316,21 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 await waitForUpdate;
                 return result;
+            } catch (FlatDeviceCoverErrorException) {
+                Logger.Error("Flat device reports the cover is in an Error state");
+                Notification.ShowError(string.Format(Loc.Instance["LblFlatDeviceCoverError"], FlatDevice.Name));
+                return false;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 return false;
             } finally {
                 ssClose.Release();
                 progress?.Report(new ApplicationStatus());
-
             }
         }
 
         private IFlatDevice flatDevice;
+
         public IFlatDevice FlatDevice {
             get => flatDevice;
             private set {
@@ -385,7 +386,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             if (FlatDevice == null || FlatDevice.Connected == false) return Task.FromResult(false);
             return Task.Run(async () => {
                 try {
-                    if(FlatDevice.LightOn == onOff) {
+                    if (FlatDevice.LightOn == onOff) {
                         return true;
                     }
                     Logger.Info($"Toggling light to {onOff}");
