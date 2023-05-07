@@ -6667,10 +6667,10 @@ Increase panel brightness or maximum exposure time.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_LightTooBright" xml:space="preserve">
     <value>Failed to determine exposure time for sky flats - sky is too bright. 
-Increase minimum exposure time or wait until it is darker.</value>
+Decrease minimum exposure time or wait until it is darker.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_LightTooDim" xml:space="preserve">
     <value>Failed to determine exposure time for sky flats - sky is too dim.
-Decrease minimum exposure time or wait until it is brighter.</value>
+Increase minimum exposure time or wait until it is brighter.</value>
   </data>
 </root>
