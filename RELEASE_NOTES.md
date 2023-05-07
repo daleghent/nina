@@ -25,6 +25,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Profile Chooser on startup will now be shown before the whole application is initializing
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
 - The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
+- N.I.N.A. will attempt to synchronize the mount's clock with that of the computer's. Not all mount drivers support this feature. A warning will be displayed if the difference between the clocks is more than 10 seconds and the mount time cannot be set
 - ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.
 - GNSS devices: Support for retrieving site location information has been expanded to enable different types of sources:
     - NMEA serial GNSS devices
