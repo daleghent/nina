@@ -6664,4 +6664,13 @@ Zmniejsz minimalny czas ekspozycji lub poczekaj aż będzie ciemniejsze.</value>
     <value>Nie udało się określić czasu ekspozycji dla Flat horyzontu - niebo jest zbyt ciemne.
 Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
   </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>Błędny</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} reports that the cover is in an errored state</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>Nieobecny</value>
+  </data>
 </root>

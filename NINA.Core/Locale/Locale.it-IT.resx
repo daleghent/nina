@@ -6673,4 +6673,13 @@ Decrease minimum exposure time or wait until it is darker.</value>
     <value>Failed to determine exposure time for sky flats - sky is too dim.
 Increase minimum exposure time or wait until it is brighter.</value>
   </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>Errored</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} reports that the cover is in an errored state</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>Not present</value>
+  </data>
 </root>

@@ -6669,4 +6669,13 @@ Zkraťte minimální dobu expozice nebo počkejte, až se setmí.</value>
     <value>Nepodařilo se určit expoziční čas pro flaty z oblohy - obloha je příliš tmavá.
 Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</value>
   </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} hlásí, že kryt je v chybném stavu</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>Nepřítomen</value>
+  </data>
 </root>

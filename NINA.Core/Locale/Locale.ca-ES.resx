@@ -6665,4 +6665,13 @@ Disminueix el temps d'exposició mínim o espera fins que estigui més fosc.</va
     <value>No s'ha pogut determinar el temps d'exposició dels Flats del cel: el cel és massa fosc.
 Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</value>
   </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>Errored</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} reports that the cover is in an errored state</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>Not present</value>
+  </data>
 </root>

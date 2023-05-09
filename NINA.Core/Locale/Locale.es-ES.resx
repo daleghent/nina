@@ -6664,4 +6664,13 @@ Reducir el tiempo mínimo de exposición o esperar hasta que sea más oscuro.</v
     <value>No se pudo determinar el tiempo de exposición de los planos contra el cielo: el cielo es demasiado oscuro.
 Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.</value>
   </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>Se ha encontrado un error</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} informa que la tapa está en un estado erróneo</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>No presente</value>
+  </data>
 </root>
