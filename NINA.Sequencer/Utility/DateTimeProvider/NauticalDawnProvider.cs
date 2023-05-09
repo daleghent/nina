@@ -45,16 +45,11 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         }
 
         public TimeOnly GetRolloverTime(ISequenceEntity context) {
-            var nauticalDusk = nighttimeCalculator.Calculate().NauticalTwilightRiseAndSet.Set;
-            if (!nauticalDusk.HasValue) {
-                var dusk = nighttimeCalculator.Calculate().SunRiseAndSet.Set;
-                if (!dusk.HasValue) {
-                    return new TimeOnly(12, 0, 0);
-                }
-                return TimeOnly.FromDateTime(dusk.Value);
-                
+            var dusk = nighttimeCalculator.Calculate().SunRiseAndSet.Set;
+            if (!dusk.HasValue) {
+                return new TimeOnly(12, 0, 0);
             }
-            return TimeOnly.FromDateTime(nauticalDusk.Value);
+            return TimeOnly.FromDateTime(dusk.Value);
         }
     }
 }

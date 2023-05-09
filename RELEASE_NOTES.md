@@ -15,7 +15,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
     - ZWO EFWs must have firmware version 3.0.9 or later to support storing persistent device IDs.
 - The command line options have been revisited. Previously `/profileid <profile id>` was available. This has been changed to `--profileid <profile id>`
 - Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.
-- "Loop for time" condition and "Wait for time" instruction have been redesigned. When choosing dawn or dusk times the rollover will no longer happen at noon, but instead at the opposite of the chosen time. (e.g. when choosing dusk, the rollover will be at dawn)
+- "Loop for time" condition and "Wait for time" instruction have been redesigned. When choosing dawn or dusk times the rollover will no longer happen at noon, but instead at sunrise or sunset. (e.g. when choosing dusk, the rollover will be at dawn)
 
 ## .NET 7
 - The application has been lifted to utilize .NET 7. This is much more than just a Version shift of the previously used .NET Framework 4.8 as .NET 6 is based on .NET Core which is a complete rewrite of the .NET Framework by Microsoft and thus a major technical upgrade for N.I.N.A.
