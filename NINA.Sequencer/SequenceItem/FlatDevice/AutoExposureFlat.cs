@@ -311,7 +311,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 Source = Loc.Instance["Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Name"]
             });
 
-            var sequence = new CaptureSequence(exposureTime, CaptureSequence.ImageTypes.FLAT, GetSwitchFilterItem().Filter, GetExposureItem().Binning, 1) { Gain = GetExposureItem().Gain /*, Offset = GetExposureItem().Offset*/ };
+            var sequence = new CaptureSequence(exposureTime, CaptureSequence.ImageTypes.FLAT, GetSwitchFilterItem().Filter, GetExposureItem().Binning, 1) { Gain = GetExposureItem().Gain, Offset = GetExposureItem().Offset };
 
             var image = await imagingMediator.CaptureImage(sequence, ct, progress);
 
@@ -323,9 +323,11 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
             var check = HistogramMath.GetExposureAduState(mean, HistogramTargetPercentage, image.BitDepth, HistogramTolerancePercentage);
 
+            DeterminedHistogramADU = mean;
+            this.GetExposureItem().ExposureTime = exposureTime;
+
             switch (check) {
                 case HistogramMath.ExposureAduState.ExposureWithinBounds:
-                    DeterminedHistogramADU = mean;
                     Logger.Info($"Found exposure time at {exposureTime}s with histogram ADU {mean}");
                     progress?.Report(new ApplicationStatus() {
                         Status = string.Format(Loc.Instance["Lbl_SequenceItem_FlatDevice_AutoExposureFlat_FoundTime"], exposureTime)

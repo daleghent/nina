@@ -238,7 +238,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 Source = Loc.Instance["Lbl_SequenceItem_FlatDevice_SkyFlat_Name"]
             });
 
-            var sequence = new CaptureSequence(exposureTime, CaptureSequence.ImageTypes.FLAT, GetSwitchFilterItem().Filter, GetExposureItem().Binning, 1) { Gain = GetExposureItem().Gain /*, Offset = GetExposureItem().Offset*/ };
+            var sequence = new CaptureSequence(exposureTime, CaptureSequence.ImageTypes.FLAT, GetSwitchFilterItem().Filter, GetExposureItem().Binning, 1) { Gain = GetExposureItem().Gain, Offset = GetExposureItem().Offset };
 
             var image = await imagingMediator.CaptureImage(sequence, ct, progress);
 
@@ -404,8 +404,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var a = Math.Pow(10, k / tau);
 
             var calculatedExposureTime = firstExposureTime;
-
-            Task showImageTask = null;
             var time = firstExposureTime;
 
             IProgress<ApplicationStatus> progress = new Progress<ApplicationStatus>(

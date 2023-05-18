@@ -310,7 +310,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             setBrightnes.Brightness = brightness;
             await setBrightnes.Run(progress, ct);
 
-            var sequence = new CaptureSequence(GetExposureItem().ExposureTime, CaptureSequence.ImageTypes.FLAT, GetSwitchFilterItem().Filter, GetExposureItem().Binning, 1) { Gain = GetExposureItem().Gain /*, Offset = GetExposureItem().Offset*/ };
+            var sequence = new CaptureSequence(GetExposureItem().ExposureTime, CaptureSequence.ImageTypes.FLAT, GetSwitchFilterItem().Filter, GetExposureItem().Binning, 1) { Gain = GetExposureItem().Gain, Offset = GetExposureItem().Offset };
 
             var image = await imagingMediator.CaptureImage(sequence, ct, progress);
 
@@ -322,9 +322,10 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
             var check = HistogramMath.GetExposureAduState(mean, HistogramTargetPercentage, image.BitDepth, HistogramTolerancePercentage);
 
+            DeterminedHistogramADU = mean;
+
             switch (check) {
                 case HistogramMath.ExposureAduState.ExposureWithinBounds:
-                    DeterminedHistogramADU = mean;
                     Logger.Info($"Found brightness at panel brightness {brightness} with histogram ADU {mean}");
                     progress?.Report(new ApplicationStatus() {
                         Status = string.Format(Loc.Instance["Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_FoundBrightness"], brightness),
