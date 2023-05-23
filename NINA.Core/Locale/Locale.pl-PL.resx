@@ -1476,7 +1476,7 @@ Jeśli wyzwalacz jest wyłączony, ten krok jest pomijany</value>
     <value>Otwórz</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Zdejmij osłonę dla plików flat oraz dark flat</value>
+    <value>Zdejmij pokrywę dla klatek Dark Flat</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Ustaw</value>

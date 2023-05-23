@@ -1475,7 +1475,7 @@
     <value>Άνοιγμα</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Ανοίξτε το κάλυμμα για τα dark flats στον οδηγό flat</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Ρύθμιση</value>

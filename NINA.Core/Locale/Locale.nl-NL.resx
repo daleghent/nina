@@ -1474,7 +1474,7 @@ Wanneer deze instelling is gedeactiveerd zal de applicatie de Start Belichting o
     <value>Openen</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats in flat wizard</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Instellen</value>

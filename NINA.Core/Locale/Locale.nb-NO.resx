@@ -1477,7 +1477,7 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Åpne</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Åpne deksel for mørke flatbilder i flatbilde-hjelperen</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Sett</value>

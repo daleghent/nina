@@ -1480,7 +1480,7 @@ Quan es desactivi aquest, l'aplicació només saltarà a l'inici de l'exposició
     <value>Obert</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Coberta oberta per a dark flats a l'assistent flats</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Fixar</value>
@@ -6666,12 +6666,12 @@ Disminueix el temps d'exposició mínim o espera fins que estigui més fosc.</va
 Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</value>
   </data>
   <data name="LblFlatDeviceError" xml:space="preserve">
-    <value>Errored</value>
+    <value>S'ha produït un error</value>
   </data>
   <data name="LblFlatDeviceCoverError" xml:space="preserve">
-    <value>{0} reports that the cover is in an errored state</value>
+    <value>{0} informa que la tapa es troba en un estat d'error</value>
   </data>
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
-    <value>Not present</value>
+    <value>No present</value>
   </data>
 </root>

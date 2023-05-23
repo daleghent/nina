@@ -1477,7 +1477,7 @@ Dec: {1}</value>
     <value>Открыть</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Откройте крышку для дарков и дарк флэтов</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Задать</value>

@@ -1479,7 +1479,7 @@ Quando o obturador manual for desactivado, a aplicação ignora o Inicar Exposi�
     <value>Abrir</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Abrir a tampa para dark flats no assistente de flats</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Definir</value>
