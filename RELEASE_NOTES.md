@@ -62,6 +62,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Auto Brightness Flat: An instruction to find a flat panel brightness for a static exposure time
 - Sky Flat: Similar to the Flat Wizard sky flat, this will take flat frames that have a constantly adjusted exposure time while progressing to compensate for illumination changes due to sun altitude.
 
+## Bugfixes
+- Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
+
 # Version 2.3
 
 ## Improvements

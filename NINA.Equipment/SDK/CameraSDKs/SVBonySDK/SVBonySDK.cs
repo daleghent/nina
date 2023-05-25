@@ -186,18 +186,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         private Task<ushort[]> exposureTask;
         private object lockobj = new object();
         public void StartExposure(double exposureTime, int width, int height) {
-            var transformedExposureTime = (long)(exposureTime * 1000000d);
-            if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
-            SetControlValue(SVB_CONTROL_TYPE.SVB_EXPOSURE, (int)transformedExposureTime);
-
-            CheckAndThrowError(sVBonyPInvoke.SVBSendSoftTrigger(id));
+            
 
 
             lock(lockobj) {
+                var previousExposureToken = exposureCts?.Token;
                 try { exposureCts?.Dispose(); } catch (Exception) { }
 
                 exposureCts = new CancellationTokenSource();
-                exposureTask = GetExposureInternal(exposureTime, width, height);
+                exposureTask = GetExposureInternal(exposureTime, width, height, previousExposureToken);
             }
         }
         
@@ -226,39 +223,65 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             }
         }
 
-        private async Task<ushort[]> GetExposureInternal(double exposureTime, int width, int height) {            
-            if(exposureTime > 0.1) {
-                try {
-                    await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), exposureCts.Token);
-                } catch (OperationCanceledException) {
-                    return null;
-                }
-            }
-            var transformedExposureTime = (int)(exposureTime * 1000000d);
-
+        private async Task<ushort[]> GetExposureInternal(double exposureTime, int width, int height, CancellationToken? previousExposureCancellation) {
             int size = width * height;
             ushort[] buffer = new ushort[size];
             int buffersize = width * height * 2;
 
+            var transformedExposureTime = (long)(exposureTime * 1000000d);
+            if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
+
+            SetControlValue(SVB_CONTROL_TYPE.SVB_EXPOSURE, (int)transformedExposureTime);
+
+            if(previousExposureCancellation?.IsCancellationRequested == true) { 
+                // Restart capture mode on cancelled exposure
+                ushort[] tempbuffer = new ushort[size];
+                CheckAndLogError(sVBonyPInvoke.SVBStopVideoCapture(id));
+                CheckAndLogError(sVBonyPInvoke.SVBStartVideoCapture(id));
+
+                while (sVBonyPInvoke.SVBGetVideoDataMono16(id, tempbuffer, buffersize, (int)(exposureTime * 2 * 100) + 500) == SVB_ERROR_CODE.SVB_SUCCESS) {
+                    // See if there are still temp images in the buffer
+                    await Task.Delay(100);
+                };
+            }
+
+            CheckAndThrowError(sVBonyPInvoke.SVBSendSoftTrigger(id));
+
+
             try {
+                if (exposureTime > 0.1) {
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), exposureCts.Token);
+                }
+
                 while (true) {
                     if (!Connected) {
                         break;
                     }
 
-                    if (exposureCts.Token.IsCancellationRequested) {
-                        break;
-                    }
+                    exposureCts.Token.ThrowIfCancellationRequested();
 
                     if (sVBonyPInvoke.SVBGetVideoDataMono16(id, buffer, buffersize, (int)(exposureTime * 2 * 100) + 500) == SVB_ERROR_CODE.SVB_SUCCESS) {
                         return buffer;
                     }
                     await Task.Delay(10, exposureCts.Token);
                 }
+            } catch(OperationCanceledException) { 
             } catch (AccessViolationException ex) {
                 Logger.Error($"{nameof(SVBonySDK)} - Access Violation Exception occurred during frame download!", ex);
             } catch (Exception ex) {
                 Logger.Error($"{nameof(SVBonySDK)} - Unexpected exception occurred during frame download!", ex);
+            }
+
+            if (exposureCts.Token.IsCancellationRequested) {
+                // Restart video capture on cancellation
+                CheckAndLogError(sVBonyPInvoke.SVBStopVideoCapture(id));
+                CheckAndLogError(sVBonyPInvoke.SVBStartVideoCapture(id));
+                await Task.Delay(100);
+
+                while (sVBonyPInvoke.SVBGetVideoDataMono16(id, buffer, buffersize, (int)(exposureTime * 2 * 100) + 500) == SVB_ERROR_CODE.SVB_SUCCESS) {
+                    // See if there are still temp images in the buffer
+                    await Task.Delay(100);
+                };
             }
 
             return null;
