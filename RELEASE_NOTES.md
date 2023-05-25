@@ -10,6 +10,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
+- Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
 
 # Version 2.2
 
