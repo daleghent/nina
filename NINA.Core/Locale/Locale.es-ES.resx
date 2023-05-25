@@ -1475,7 +1475,7 @@ Cuando este disparador está desactivado, la aplicación se saltará "empezar ex
     <value>Abrir</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats</value>
+    <value>Abrir la tapa para tomar dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Fijar</value>

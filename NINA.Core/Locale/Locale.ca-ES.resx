@@ -1480,7 +1480,7 @@ Quan es desactivi aquest, l'aplicació només saltarà a l'inici de l'exposició
     <value>Obert</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats</value>
+    <value>Obre la tapa per a Dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Fixar</value>
