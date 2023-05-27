@@ -64,6 +64,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Bugfixes
 - Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
+- Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning
+- Added automatic retry of exposure start when POA_ERROR_EXPOSING error happens
 
 # Version 2.3
 
