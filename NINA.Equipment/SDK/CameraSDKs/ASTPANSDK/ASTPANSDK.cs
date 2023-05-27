@@ -355,6 +355,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
 
         public bool SetROI(int startX, int startY, int width, int height, int binning) {
             var (oldX, oldY, oldWidth, oldHeight, oldBin) = GetROI();
+            var (maxWidth, maxHeight) = GetDimensions();
 
             if (oldX != startX || oldY != startY || oldWidth != width || oldHeight != height || oldBin != binning) {
 
@@ -362,8 +363,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
                 startY = startY / binning;
                 width = width / binning;
                 height = height / binning;
-                width = width - width % 8;
-                height = height - height % 2;
+                if ((!(binning == 1 && maxWidth == width && maxHeight == height)) && GetSensorInfo() != SensorType.Monochrome) {
+                    width = width - width % 2;
+                    height = height - height % 2;
+                }
 
                 config.Wr_StartPosX = startX;
                 config.Wr_StartPosY = startY;
