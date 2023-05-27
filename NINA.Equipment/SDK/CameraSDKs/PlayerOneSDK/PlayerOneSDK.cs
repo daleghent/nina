@@ -139,7 +139,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
             SetControlValue(POAConfig.POA_EXPOSURE, (int)transformedExposureTime);
 
-            CheckAndThrowError(playerOnePInvoke.POAStartExposure(id, POABool.POA_TRUE));                  
+            var error = playerOnePInvoke.POAStartExposure(id, POABool.POA_TRUE);
+            if(error == POAErrors.POA_ERROR_EXPOSING) {
+                // Retry exposure start
+                Logger.Debug("PlayerOne - Retry exposure start");
+                CheckAndLogError(playerOnePInvoke.POAStopExposure(id));
+                error = playerOnePInvoke.POAStartExposure(id, POABool.POA_TRUE);
+            }
+            CheckAndThrowError(error);                  
         }
 
         public bool IsExposureReady() {
