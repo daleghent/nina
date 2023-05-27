@@ -159,6 +159,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
         public bool SetROI(int startX, int startY, int width, int height, int binning) {
             var (oldX, oldY, oldWidth, oldHeight, oldBin) = GetROI();
+            var (maxWidth, maxHeight) = GetDimensions();
 
             if (oldX != startX || oldY != startY || oldWidth != width || oldHeight != height || oldBin != binning) {
                 CheckAndLogError(sVBonyPInvoke.SVBStopVideoCapture(id));
@@ -166,8 +167,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
                 startY = startY / binning;
                 width = width / binning;
                 height = height / binning;
-                width = width - width % 8;
-                height = height - height % 2;
+                if ((!(binning == 1 && maxWidth == width && maxHeight == height)) && GetSensorInfo() != SensorType.Monochrome) {
+                    width = width - width % 2;
+                    height = height - height % 2;
+                }
                 Logger.Debug($"Setting ROI to {startX}x{startY}:{width}x{height} with binning {binning}");
                 var result = CheckAndLogError(sVBonyPInvoke.SVBSetROIFormat(id, startX, startY, width, height, binning));
                 CheckAndLogError(sVBonyPInvoke.SVBStartVideoCapture(id));

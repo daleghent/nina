@@ -105,14 +105,17 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
         public bool SetROI(int startX, int startY, int width, int height, int binning) {
             var (oldX, oldY, oldWidth, oldHeight, oldBin) = GetROI();
+            var (maxWidth, maxHeight) = GetDimensions();
 
             if (oldX != startX || oldY != startY || oldWidth != width || oldHeight != height || oldBin != binning) {                
                 startX = startX / binning;
                 startY = startY / binning;
                 width = width / binning;
                 height = height / binning;
-                width = width - width % 8;
-                height = height - height % 2;
+                if((!(binning == 1 && maxWidth == width && maxHeight == height)) && GetSensorInfo() != SensorType.Monochrome) { 
+                    width = width - width % 2;
+                    height = height - height % 2;
+                }
                 Logger.Debug($"Setting ROI to {startX}x{startY}:{width}x{height} with binning {binning}");
                 var result = CheckAndLogError(playerOnePInvoke.POASetImageBin(id, binning));
                 result = result && CheckAndLogError(playerOnePInvoke.POASetImageStartPos(id, startX, startY));
