@@ -32,6 +32,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
     - NMEA serial GNSS devices
     - PegasusAstro Uranus Meteo
     - PrimaLuceLab Eagle's GPS and Eagle Manager X
+- In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
