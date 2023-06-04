@@ -7,6 +7,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Improvements
 - Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
+- In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.
 
 # Version 2.3
 
