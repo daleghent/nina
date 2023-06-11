@@ -165,8 +165,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             int buffersize = width * height * 2;
 
             try {
-                CheckAndThrowError(playerOnePInvoke.POAImageReady(id, out var ready));
-                while (!(ready ==  POABool.POA_TRUE)) {
+                var ready = IsExposureReady();
+                while (!ready) {
                     if (!Connected) {
                         break;
                     }
@@ -175,10 +175,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
                         break;
                     }
                     await CoreUtil.Wait(TimeSpan.FromMilliseconds(10), ct);
-                    CheckAndThrowError(playerOnePInvoke.POAImageReady(id, out ready));
+                    ready = IsExposureReady();
 
                 }
-                if (ready == POABool.POA_TRUE) {
+                if (ready) {
                     if (playerOnePInvoke.POAGetImageData(id, buffer, buffersize, (int)(exposureTime * 2 * 100) + 500) == POAErrors.POA_OK) {
                         return buffer;
                     }
@@ -467,15 +467,34 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
         }
 
         public void StartVideoCapture(double exposureTime, int width, int height) {
-            throw new NotImplementedException();
+            CheckAndLogError(playerOnePInvoke.POAGetCameraState(id, out var state));
+            if (state == POACameraState.STATE_EXPOSING) {
+                StopExposure();
+            }
+
+            playerOnePInvoke.POASetTrgModeEnable(id, POABool.POA_FALSE);
+
+            var transformedExposureTime = (long)(exposureTime * 1000000d);
+            if (transformedExposureTime > int.MaxValue) { transformedExposureTime = int.MaxValue; }
+            SetControlValue(POAConfig.POA_EXPOSURE, (int)transformedExposureTime);
+
+            var error = playerOnePInvoke.POAStartExposure(id, POABool.POA_FALSE);
+            if (error == POAErrors.POA_ERROR_EXPOSING) {
+                // Retry exposure start
+                Logger.Debug("PlayerOne - Retry exposure start");
+                CheckAndLogError(playerOnePInvoke.POAStopExposure(id));
+                error = playerOnePInvoke.POAStartExposure(id, POABool.POA_FALSE);
+            }
+            CheckAndThrowError(error);
         }
 
         public void StopVideoCapture() {
-            throw new NotImplementedException();
+            StopExposure();
+            playerOnePInvoke.POASetTrgModeEnable(id, POABool.POA_TRUE);
         }
 
         public Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
-            throw new NotImplementedException();
+            return GetExposure(exposureTime, width, height, ct);
         }
 
         private bool hasSensorModes = false;
