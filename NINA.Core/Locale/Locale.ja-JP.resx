@@ -6653,4 +6653,7 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>存在しない</value>
   </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>画像を水平方向に反転します</value>
+  </data>
 </root>

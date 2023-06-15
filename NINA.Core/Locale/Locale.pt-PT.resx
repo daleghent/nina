@@ -6677,4 +6677,7 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>Not present</value>
   </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>Flips image horizontally</value>
+  </data>
 </root>

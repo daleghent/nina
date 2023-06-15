@@ -6678,4 +6678,7 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>Nepřítomen</value>
   </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>Převrátit obrázek horizontálně</value>
+  </data>
 </root>

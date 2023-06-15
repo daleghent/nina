@@ -6673,4 +6673,7 @@ Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.<
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>No presente</value>
   </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>Invierte la imagen horizontalmente</value>
+  </data>
 </root>

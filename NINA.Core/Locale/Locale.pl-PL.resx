@@ -6673,4 +6673,7 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>Nieobecny</value>
   </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>Odbij obraz w poziomie</value>
+  </data>
 </root>
