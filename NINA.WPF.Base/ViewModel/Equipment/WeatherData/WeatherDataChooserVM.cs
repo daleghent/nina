@@ -61,7 +61,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                 }
 
                 devices.Add(new OpenWeatherMap(this.profileService));
-                devices.Add(new UltimatePowerboxV2(profileService));
                 devices.Add(new TheWeatherCompany(this.profileService));
                 devices.Add(new WeatherUnderground(this.profileService));
 

@@ -52,8 +52,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                     }
                 }
 
-                devices.Add(new UltimatePowerboxV2(profileService));
-
                 try {
                     devices.AddRange(ascomInteraction.GetFocusers());
                 } catch (Exception ex) {
