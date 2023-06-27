@@ -34,7 +34,7 @@
     <PackageReference Include="Fastenshtein" Version="1.0.0.8" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.2" />
-    <PackageReference Include="Nito.Disposables" Version="2.3.0" />
+    <PackageReference Include="Nito.Disposables" Version="2.4.0" />
   </ItemGroup>
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
