@@ -92,7 +92,6 @@ namespace NINA.Utility {
                 services.AddSingleton<IProfileService>(f => _profileService);
                 services.AddSingleton<IProfile>(f => f.GetService<ProfileService>().ActiveProfile);
 
-                services.AddSingleton<IDeviceDispatcher, DeviceDispatcher>();
                 services.AddSingleton<IApplicationVM, ApplicationVM>();
 
                 services.AddSingleton<ICommandLineOptions>(f => _commandLineArguments);

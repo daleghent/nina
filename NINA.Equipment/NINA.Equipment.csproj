@@ -57,19 +57,6 @@
     </PackageReference>
     <PackageReference Include="SharpGIS.NmeaParser" Version="2.2.2" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Equipment\AscomDeviceFacades.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AscomDeviceFacades.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Equipment\AscomDeviceFacades.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AscomDeviceFacades.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>$(AssemblyName)</Title>
