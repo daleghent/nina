@@ -268,7 +268,7 @@
                                 Width="*"
                                 Binding="{Binding PositionAngle, StringFormat=\{0:0.00\}}"
                                 CellStyle="{StaticResource CenteredDataGridCell}"
-                                Header="{ns:Loc LblOrientation}"
+                                Header="{ns:Loc LblRotation}"
                                 IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
