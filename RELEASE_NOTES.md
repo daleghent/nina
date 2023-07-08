@@ -34,6 +34,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
     - PegasusAstro Uranus Meteo
     - PrimaLuceLab Eagle's GPS and Eagle Manager X
 - In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.
+- Further parallelization of post image capture actions. This should especially speed up capturing using a dslr native driver where the time consuming raw conversion will no longer hold up the next exposure.
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
