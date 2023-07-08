@@ -219,6 +219,10 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
             var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
+            if (IsLightSequence()) {
+                imageHistoryVM.Add(exposureData.MetaData.Image.Id, ImageType);
+            }
+
             if (imageProcessingTask != null) {
                 await imageProcessingTask;
             }
@@ -241,6 +245,10 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
                 var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
 
+                if (IsLightSequence()) {
+                    imageHistoryVM.PopulateStatistics(imageData.MetaData.Image.Id, await imageData.Statistics);
+                }
+
                 if (dsoContainer != null) {
                     var target = dsoContainer.Target;
                     if (target != null) {
@@ -260,9 +268,6 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
                 await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
 
-                if (IsLightSequence()) {
-                    imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
-                }
             } catch (Exception ex) {
                 Logger.Error(ex);
             }

@@ -188,7 +188,11 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             
             var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
-            if(imageProcessingTask != null) {
+            if (IsLightSequence()) {
+                imageHistoryVM.Add(exposureData.MetaData.Image.Id, ImageType);
+            }
+
+            if (imageProcessingTask != null) {
                 await imageProcessingTask;
             }
             imageProcessingTask = ProcessImageData(dsoContainer, exposureData, progress, token);
@@ -200,7 +204,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         private async Task ProcessImageData(IDeepSkyObjectContainer dsoContainer, IExposureData exposureData, IProgress<ApplicationStatus> progress, CancellationToken token) {
-            try { 
+            try {
                 var imageParams = new PrepareImageParameters(null, false);
                 if (IsLightSequence()) {
                     imageParams = new PrepareImageParameters(true, true);
@@ -209,6 +213,10 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 var imageData = await exposureData.ToImageData(progress, token);
 
                 var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
+
+                if (IsLightSequence()) {
+                    imageHistoryVM.PopulateStatistics(imageData.MetaData.Image.Id, await imageData.Statistics);
+                }
 
                 if (dsoContainer != null) {
                     var target = dsoContainer.Target;
@@ -229,10 +237,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
                 await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
 
-                if (IsLightSequence()) {
-                    imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
-                }
-            } catch(Exception ex) { 
+            } catch (Exception ex) {
                 Logger.Error(ex);
             }
         }

@@ -35,8 +35,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Accord.Statistics.Running;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace NINA.Sequencer.Container {
 
