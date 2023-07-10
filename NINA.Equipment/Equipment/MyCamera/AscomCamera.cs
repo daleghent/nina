@@ -694,7 +694,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private IList<int> offsets = new List<int>();
         private bool offsetValueMode = true;
-        private bool canSetOffset = true;
+        private bool canSetOffset = false;
 
         public bool CanSetOffset {
             get => canSetOffset;
@@ -803,6 +803,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         protected override Task PostConnect() {
+            if(device.SensorType == ASCOM.Common.DeviceInterfaces.SensorType.Color) {
+                Disconnect();
+                throw new Exception(Loc.Instance["LblASCOMColorSensorTypeNotSupported"]);
+            }
             Initialize();
             return Task.CompletedTask;
         }

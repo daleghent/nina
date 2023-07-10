@@ -6687,4 +6687,7 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblFlipImageTooltip" xml:space="preserve">
     <value>Flips image horizontally</value>
   </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>The ASCOM Sensor Type is currently configured to return already debayered images, which is not supported. Please adjust the driver settings to return bayered images instead!</value>
+  </data>
 </root>
