@@ -6668,12 +6668,33 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
     <value>Błędny</value>
   </data>
   <data name="LblFlatDeviceCoverError" xml:space="preserve">
-    <value>{0} reports that the cover is in an errored state</value>
+    <value>{0} zgłasza, że pokrywa ma błąd</value>
   </data>
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>Nieobecny</value>
   </data>
   <data name="LblFlipImageTooltip" xml:space="preserve">
     <value>Odbij obraz w poziomie</value>
+  </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>Typ czujnika ASCOM jest obecnie skonfigurowany do zwracania obrazów, co nie jest obsługiwane. Dostosuj ustawienia sterownika, aby zamiast tego zwracać debajeryzację obrazów!</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
+    <value>Location sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
+    <value>Sync to application</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
+    <value>Sync to telescope</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
+    <value>No sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
+    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
   </data>
 </root>

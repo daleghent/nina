@@ -6449,7 +6449,7 @@
     <value>如果安全监视器未连接，则NINA将拒绝打开天窗或平顶</value>
   </data>
   <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to open but the safety monitor device is disconnected. Opening has been aborted.</value>
+    <value>天窗和圆顶被要求打开，但安全监视器尚未连接，打开程序已被终止。</value>
   </data>
   <data name="LblShutterSettingsWarning" xml:space="preserve">
     <value>NOTICE: These settings relate to the safety of your equipment. They must be set with careful consideration and with the familiarity you have with your specific setup. They govern only N.I.N.A.'s control of the equipment and are NOT in effect if N.I.N.A. is not running or is not connected to the equipment in question. Dome or roof safety mechanisms should always have a hardware backup and electrical interlocks to prevent any undesired shutter or roof movement. It is your responsibility to ensure that these settings do not conflict with your dome driver's settings.</value>
@@ -6584,19 +6584,19 @@ This should only be disabled when having a good pointing model that must not be 
     <value>监听全部的MegaGuide广播端口。默认情况下，NINA将只监听回环地址（127.0.0.1）上的端口。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Description" xml:space="preserve">
-    <value>This instruction will automatically determine flat exposures similar to the flat wizard for a fixed panel brightness,.</value>
+    <value>与平场助手相同，这条指令将在【固定平场板亮度】的前提下自动测定平场曝光时间。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Name" xml:space="preserve">
     <value>自动调节平场曝光</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_Description" xml:space="preserve">
-    <value>This instruction will automatically determine flat panel brightness similar to the flat wizard for a fixed exposure time.</value>
+    <value>与平场助手相同，这条指令将在【固定曝光时长】的前提下自动测定平场板的亮度。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_Name" xml:space="preserve">
     <value>自动调节平场板亮度</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>This instruction will automatically determine exposure times similar to the flat wizard for sky flats.</value>
+    <value>与平场助手中的天光平场相同，这条指令将自动测定平场曝光的时间。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
     <value>天空平场</value>
@@ -6614,13 +6614,13 @@ This should only be disabled when having a good pointing model that must not be 
     <value>将亮度设置为 {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_DetermineBrightness" xml:space="preserve">
-    <value>Determining brightness using {0}. Attempt {1} / {2}.</value>
+    <value>当前平场板亮度 {0}，测试中... 尝试 {1} / {2}。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_FoundBrightness" xml:space="preserve">
     <value>确定平场板亮度为 {0}。正在拍摄平场。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_DetermineTime" xml:space="preserve">
-    <value>Determining exposure time using {0} s. Attempt {1} / {2}.</value>
+    <value>当前曝光时间 {0} s，测试中... 尝试 {1} / {2}。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_FoundTime" xml:space="preserve">
     <value>确定曝光时间为 {0} 秒。正在拍摄平场。</value>
@@ -6652,7 +6652,7 @@ This should only be disabled when having a good pointing model that must not be 
 增加平场板亮度或最大曝光时间。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_DetermineTime" xml:space="preserve">
-    <value>Determining exposure time using {0} s. Attempt {1} / {2}.</value>
+    <value>当前曝光时间 {0} s，测试中... 尝试 {1} / {2}。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_FoundTime" xml:space="preserve">
     <value>确定曝光时间为 {0} 秒。正在拍摄天空平场。</value>
@@ -6669,12 +6669,33 @@ This should only be disabled when having a good pointing model that must not be 
     <value>错误</value>
   </data>
   <data name="LblFlatDeviceCoverError" xml:space="preserve">
-    <value>{0} reports that the cover is in an errored state</value>
+    <value>{0} 报告镜头盖当前状态错误</value>
   </data>
   <data name="LblFlatDeviceNotPresent" xml:space="preserve">
     <value>不存在</value>
   </data>
   <data name="LblFlipImageTooltip" xml:space="preserve">
     <value>水平翻转图像</value>
+  </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>ASCOM传感器当前返回 debayer 后的图像，这不受支持。请调整驱动设置以返回带 bayer 的图像！</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
+    <value>Location sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
+    <value>Sync to application</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
+    <value>Sync to telescope</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
+    <value>No sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
+    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
   </data>
 </root>

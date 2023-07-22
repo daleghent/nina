@@ -6681,4 +6681,25 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
   <data name="LblFlipImageTooltip" xml:space="preserve">
     <value>Převrátit obrázek horizontálně</value>
   </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>Typ snímače ASCOM je v současné době nakonfigurován tak, aby vracel již debayerované snímky, což není podporováno. Upravte prosím nastavení ovladače tak, aby místo toho vracel bayered snímky!</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
+    <value>Location sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
+    <value>Sync to application</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
+    <value>Sync to telescope</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
+    <value>No sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
+    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
+  </data>
 </root>
