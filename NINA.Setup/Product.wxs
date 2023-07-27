@@ -631,47 +631,17 @@
       <Component Id="ASCOM.Com.dll" Guid="96ef84b2-d757-4080-b3b3-4ea4b3b45adb">
         <File Id="ASCOM.Com.dll" Name="ASCOM.Com.dll" Source="$(var.NINA_TargetDir)ASCOM.Com.dll" />
       </Component>
-      <Component Id="CoreWCF.WebHttp.dll" Guid="92a4c435-056f-4646-aa29-a83599eedf13">
-        <File Id="CoreWCF.WebHttp.dll" Name="CoreWCF.WebHttp.dll" Source="$(var.NINA_TargetDir)CoreWCF.WebHttp.dll" />
-      </Component>
-      <Component Id="CoreWCF.Primitives.dll" Guid="e76863d2-a52c-43cf-94a1-d81d247fbdeb">
-        <File Id="CoreWCF.Primitives.dll" Name="CoreWCF.Primitives.dll" Source="$(var.NINA_TargetDir)CoreWCF.Primitives.dll" />
-      </Component>
       <Component Id="System.DirectoryServices.Protocols.dll" Guid="53c3a297-469b-4c46-a8db-ea774170e687">
         <File Id="System.DirectoryServices.Protocols.dll" Name="System.DirectoryServices.Protocols.dll" Source="$(var.NINA_TargetDir)System.DirectoryServices.Protocols.dll" />
       </Component>
-      <Component Id="Microsoft.IdentityModel.Tokens.dll" Guid="03bf8137-692a-4aa2-9837-48ad39610012">
-        <File Id="Microsoft.IdentityModel.Tokens.dll" Name="Microsoft.IdentityModel.Tokens.dll" Source="$(var.NINA_TargetDir)Microsoft.IdentityModel.Tokens.dll" />
-      </Component>
-      <Component Id="Microsoft.IdentityModel.Logging.dll" Guid="1283473f-f4a2-46c9-9a1d-ec00b809ab31">
-        <File Id="Microsoft.IdentityModel.Logging.dll" Name="Microsoft.IdentityModel.Logging.dll" Source="$(var.NINA_TargetDir)Microsoft.IdentityModel.Logging.dll" />
-      </Component>
-      <Component Id="Microsoft.IdentityModel.Xml.dll" Guid="f78248c0-60d5-4d1f-ba50-7e3939150c6f">
-        <File Id="Microsoft.IdentityModel.Xml.dll" Name="Microsoft.IdentityModel.Xml.dll" Source="$(var.NINA_TargetDir)Microsoft.IdentityModel.Xml.dll" />
-      </Component>
       <Component Id="System.Web.Services.Description.dll" Guid="3f3cf997-4dde-4953-8e7c-53eca09d9f5e">
         <File Id="System.Web.Services.Description.dll" Name="System.Web.Services.Description.dll" Source="$(var.NINA_TargetDir)System.Web.Services.Description.dll" />
-      </Component>
-      <Component Id="CoreWCF.Http.dll" Guid="24eff66e-3c15-493c-9214-c4fd8de9489a">
-        <File Id="CoreWCF.Http.dll" Name="CoreWCF.Http.dll" Source="$(var.NINA_TargetDir)CoreWCF.Http.dll" />
-      </Component>
-      <Component Id="Swashbuckle.AspNetCore.Swagger.dll" Guid="dc4e77e7-7f36-4007-8974-39842f9ad3fd">
-        <File Id="Swashbuckle.AspNetCore.Swagger.dll" Name="Swashbuckle.AspNetCore.Swagger.dll" Source="$(var.NINA_TargetDir)Swashbuckle.AspNetCore.Swagger.dll" />
-      </Component>
-      <Component Id="Microsoft.OpenApi.dll" Guid="6f792c9b-9a16-448d-896e-05136b31e8d4">
-        <File Id="Microsoft.OpenApi.dll" Name="Microsoft.OpenApi.dll" Source="$(var.NINA_TargetDir)Microsoft.OpenApi.dll" />
-      </Component>
-      <Component Id="Microsoft.IdentityModel.Tokens.Saml.dll" Guid="ac2e2245-b026-41f1-a534-4ef803e06b91">
-        <File Id="Microsoft.IdentityModel.Tokens.Saml.dll" Name="Microsoft.IdentityModel.Tokens.Saml.dll" Source="$(var.NINA_TargetDir)Microsoft.IdentityModel.Tokens.Saml.dll" />
       </Component>
       <Component Id="OxyPlot.Wpf.Shared.dll" Guid="1397eef9-0f27-4c92-be3c-f66dfdcd2b50">
         <File Id="OxyPlot.Wpf.Shared.dll" Name="OxyPlot.Wpf.Shared.dll" Source="$(var.NINA_TargetDir)OxyPlot.Wpf.Shared.dll" />
       </Component>
       <Component Id="OxyPlot.Contrib.Wpf.dll" Guid="2421a0b7-9318-4572-a72a-c828cf15ffa8">
         <File Id="OxyPlot.Contrib.Wpf.dll" Name="OxyPlot.Contrib.Wpf.dll" Source="$(var.NINA_TargetDir)OxyPlot.Contrib.Wpf.dll" />
-      </Component>
-      <Component Id="Microsoft.IdentityModel.Abstractions.dll" Guid="1ad8f0d0-8397-41b6-8473-e7cdaa8bc22b">
-        <File Id="Microsoft.IdentityModel.Abstractions.dll" Name="Microsoft.IdentityModel.Abstractions.dll" Source="$(var.NINA_TargetDir)Microsoft.IdentityModel.Abstractions.dll" />
       </Component>
       <Component Id="MdXaml.Plugins.dll" Guid="b1a6f459-2b0a-4887-a162-7e7dd6b3bc93">
         <File Id="MdXaml.Plugins.dll" Name="MdXaml.Plugins.dll" Source="$(var.NINA_TargetDir)MdXaml.Plugins.dll" />
@@ -682,21 +652,6 @@
       <Component Id="NINA.deps.json" Guid="ebb9f539-e635-49fc-be16-da5f18897774">
         <File Id="NINA.deps.json" Name="NINA.deps.json" Source="$(var.NINA_TargetDir)NINA.deps.json" />
       </Component>
-      <Component Id="Microsoft.AspNetCore.JsonPatch.dll" Guid="b6b8c607-88e0-422d-bc6d-c251d50801f2">
-        <File Id="Microsoft.AspNetCore.JsonPatch.dll" Name="Microsoft.AspNetCore.JsonPatch.dll" Source="$(var.NINA_TargetDir)Microsoft.AspNetCore.JsonPatch.dll" />
-      </Component>
-      <Component Id="Newtonsoft.Json.Bson.dll" Guid="1e2838a0-ef03-4e65-af53-b49b06db3452">
-        <File Id="Newtonsoft.Json.Bson.dll" Name="Newtonsoft.Json.Bson.dll" Source="$(var.NINA_TargetDir)Newtonsoft.Json.Bson.dll" />
-      </Component>
-      <Component Id="Swashbuckle.AspNetCore.SwaggerUI.dll" Guid="3ffd0b52-f2a6-49c4-97b7-fbb930d382dd">
-        <File Id="Swashbuckle.AspNetCore.SwaggerUI.dll" Name="Swashbuckle.AspNetCore.SwaggerUI.dll" Source="$(var.NINA_TargetDir)Swashbuckle.AspNetCore.SwaggerUI.dll" />
-      </Component>
-      <Component Id="Swashbuckle.AspNetCore.SwaggerGen.dll" Guid="a128369d-9110-4073-94b6-f0dbac2be86c">
-        <File Id="Swashbuckle.AspNetCore.SwaggerGen.dll" Name="Swashbuckle.AspNetCore.SwaggerGen.dll" Source="$(var.NINA_TargetDir)Swashbuckle.AspNetCore.SwaggerGen.dll" />
-      </Component>
-      <Component Id="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" Guid="4b837550-4b54-4795-8db6-4e5ff54b74de">
-        <File Id="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" Name="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" Source="$(var.NINA_TargetDir)Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll" />
-      </Component>
       <Component Id="CommunityToolkit.Mvvm.dll" Guid="c5716412-f553-42d7-ab5a-6c4bebf65cc5">
         <File Id="CommunityToolkit.Mvvm.dll" Name="CommunityToolkit.Mvvm.dll" Source="$(var.NINA_TargetDir)CommunityToolkit.Mvvm.dll" />
       </Component>
@@ -705,6 +660,12 @@
       </Component>
       <Component Id="CommandLine.dll" Guid="0d8ac625-7515-4fab-b6ca-d1ce200c749f">
         <File Id="CommandLine.dll" Name="CommandLine.dll" Source="$(var.NINA_TargetDir)CommandLine.dll" />
+      </Component>
+      <Component Id="Microsoft.Extensions.DependencyInjection.dll" Guid="082c4359-5a69-47f4-8043-130071793997">
+        <File Id="Microsoft.Extensions.DependencyInjection.dll" Name="Microsoft.Extensions.DependencyInjection.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.dll" />
+      </Component>
+      <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Guid="fc905efb-a8f2-4bf6-8937-f1b5e2e6754d">
+        <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Name="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

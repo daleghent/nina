@@ -17,6 +17,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.
 - "Loop for time" condition and "Wait for time" instruction have been redesigned. When choosing dawn or dusk times the rollover will no longer happen at noon, but instead at sunrise or sunset. (e.g. when choosing dusk, the rollover will be at dawn)
 - The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implemenatation and should be used instead.
+- SGP Server API has been removed from the core application. Instead this is available as a plugin via "SGP Server Emulation"
 
 ## .NET 7
 - The application has been lifted to utilize .NET 7. This is much more than just a Version shift of the previously used .NET Framework 4.8 as .NET 6 is based on .NET Core which is a complete rewrite of the .NET Framework by Microsoft and thus a major technical upgrade for N.I.N.A.
