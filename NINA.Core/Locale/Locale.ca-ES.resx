@@ -6681,21 +6681,21 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
     <value>El tipus de sensor ASCOM està configurat actualment per retornar imatges ja debaieritzades, això fa que que no sigui compatible. Si us plau, ajusteu, en el seu lloc, la configuració del controlador per retornar imatges bairetitzades!</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
-    <value>Location sync</value>
+    <value>Sincronització d'ubicació</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
-    <value>Prompt</value>
+    <value>Avís</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
-    <value>Sync to application</value>
+    <value>Sincronització amb l'aplicació</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
-    <value>Sync to telescope</value>
+    <value>Sincronització amb el telescopi</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
-    <value>No sync</value>
+    <value>Sense sincronització</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
-    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
+    <value>Quan es connecta el telescopi, es defineix com es comportarà quan la ubicació de la montura i de l' aplicació siguin diferents.</value>
   </data>
 </root>

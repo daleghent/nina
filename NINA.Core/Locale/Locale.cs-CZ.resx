@@ -6685,21 +6685,21 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
     <value>Typ snímače ASCOM je v současné době nakonfigurován tak, aby vracel již debayerované snímky, což není podporováno. Upravte prosím nastavení ovladače tak, aby místo toho vracel bayered snímky!</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
-    <value>Location sync</value>
+    <value>Synchronizace polohy</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
-    <value>Prompt</value>
+    <value>Pokyn</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
-    <value>Sync to application</value>
+    <value>Synchronizovat do aplikace</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
-    <value>Sync to telescope</value>
+    <value>Synchronizovat do dalekohledu</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
-    <value>No sync</value>
+    <value>Bez synch</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
-    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
+    <value>Při připojení dalekohledu se definuje chování, jak postupovat v případě, že se poloha montáže a poloha aplikace liší.</value>
   </data>
 </root>
