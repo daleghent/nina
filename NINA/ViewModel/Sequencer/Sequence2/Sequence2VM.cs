@@ -338,8 +338,8 @@ namespace NINA.ViewModel.Sequencer {
                 Sequencer.MainContainer.ClearHasChanged();
 
                 if (commandLineOptions.RunSequence) {
-                    Logger.Info("Starting sequence");
-                    _ = StartSequence(null);
+                    Logger.Info("Starting sequence from command line options");
+                    _ = StartSequenceCommand.ExecuteAsync(commandLineOptions.RunSequence);
                     applicationMediator.ChangeTab(ApplicationTab.IMAGING);
                 }
             }
@@ -444,6 +444,10 @@ namespace NINA.ViewModel.Sequencer {
         private CancellationTokenSource cts;
 
         public async Task<bool> StartSequence(object arg) {
+            bool skipValidationPrompt = false;
+            if(arg != null && arg is bool b) {
+                skipValidationPrompt = b;
+            }
             cts?.Dispose();
             cts = new CancellationTokenSource();
             IsRunning = true;
@@ -458,7 +462,7 @@ namespace NINA.ViewModel.Sequencer {
                 Sequencer.MainContainer.Items[2].Status = SequenceEntityStatus.CREATED;
 
                 Logger.Info("Advanced Sequence started");
-                await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
+                await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token, skipValidationPrompt);
                 return true;
             } finally {
                 Logger.Info("Advanced Sequence finished");
