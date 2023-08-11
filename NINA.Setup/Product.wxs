@@ -1620,13 +1620,9 @@
       <Component Id="System.DirectoryServices.AccountManagement.dll" Guid="81cd0edf-0e2b-4555-863d-56d27217f176">
         <File Id="System.DirectoryServices.AccountManagement.dll" Name="System.DirectoryServices.AccountManagement.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.DirectoryServices.AccountManagement.dll" />
       </Component>
-      <Component Id="System.ServiceProcess.ServiceController.dll" Guid="4ec13580-32fb-46d1-a5c0-0abf108f1c34">
-        <File Id="System.ServiceProcess.ServiceController.dll" Name="System.ServiceProcess.ServiceController.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.ServiceProcess.ServiceController.dll" />
+      <Component Id="System.DirectoryServices.dll_net7.0" Guid="8348E483-D63E-403D-8A48-5DE2A3D72F52">
+        <File Id="System.DirectoryServices.dll_net7.0" Name="System.DirectoryServices.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.DirectoryServices.dll" />
       </Component>
-      <Component Id="System.Speech.dll" Guid="07b9e4d4-b2cf-46a2-b66d-bbb0235ef916">
-        <File Id="System.Speech.dll" Name="System.Speech.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Speech.dll" />
-      </Component>
-
       <Component Id="System.DirectoryServices.Protocols.dll_net7.0" Guid="173919bc-5b82-4426-bcae-15ee1739d7dc">
         <File Id="System.DirectoryServices.Protocols.dll_net7.0" Name="System.DirectoryServices.Protocols.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.DirectoryServices.Protocols.dll" />
       </Component>
@@ -1639,7 +1635,18 @@
       <Component Id="System.Runtime.Caching.dll_net7.0" Guid="57e25300-9a6b-496c-91f7-8abea95aa07d">
         <File Id="System.Runtime.Caching.dll_net7.0" Name="System.Runtime.Caching.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Runtime.Caching.dll" />
       </Component>
-
+      <Component Id="System.Security.Cryptography.Pkcs.dll_net7.0" Guid="02CCA076-5433-40C6-AD13-3D4D1D2B3339">
+        <File Id="System.Security.Cryptography.Pkcs.dll_net7.0" Name="System.Security.Cryptography.Pkcs.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll" />
+      </Component>
+      <Component Id="System.ServiceProcess.ServiceController.dll" Guid="4ec13580-32fb-46d1-a5c0-0abf108f1c34">
+        <File Id="System.ServiceProcess.ServiceController.dll" Name="System.ServiceProcess.ServiceController.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.ServiceProcess.ServiceController.dll" />
+      </Component>
+      <Component Id="System.Speech.dll" Guid="07b9e4d4-b2cf-46a2-b66d-bbb0235ef916">
+        <File Id="System.Speech.dll" Name="System.Speech.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Speech.dll" />
+      </Component>
+      <Component Id="System.Threading.AccessControl.dll_net7.0" Guid="B91D9659-B54D-4E6C-A985-15A0B941580F">
+        <File Id="System.Threading.AccessControl.dll" Name="System.Threading.AccessControl.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Threading.AccessControl.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
 
