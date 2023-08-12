@@ -8,6 +8,6 @@ pipelines:
             image: mcr.microsoft.com/dotnet/sdk:7.0
             caches:
               - dotnetcore
-            script:
-              ## Create artifact folders
-              - dotnet test .\NINA.Test\NINA.Test.csproj -c Debug
+            script:              
+              - ls
+              - dotnet test ./NINA.Test/NINA.Test.csproj -c Debug
