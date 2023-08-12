@@ -9,10 +9,7 @@ pipelines:
             caches:
               - dotnetcore
             script:              
+              # Clone extenral folder LFS files
               - git submodule update --init --recursive
-              - ls
-              - ls ./NINA
-              - ls ./NINA/External
-              - ls ./NINA/External/x64
-              - ls ./NINA/External/x64/AllPro
+              # Build and run test project
               - dotnet test ./NINA.Test/NINA.Test.csproj -c Debug

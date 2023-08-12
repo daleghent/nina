@@ -69,9 +69,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Switch\" />
-    <Folder Include="WeatherData\" />
-  </ItemGroup>
-
 </Project>
