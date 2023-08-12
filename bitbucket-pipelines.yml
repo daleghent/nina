@@ -9,11 +9,6 @@ pipelines:
             caches:
               - dotnetcore
             script:              
-              - ls
-              - ls ./NINA
-              - ls ./NINA/External
-              - ls ./NINA/External/x64
-              - ls ./NINA/External/x64/AllPro
               - git submodule update --init --recursive
               - ls
               - ls ./NINA
