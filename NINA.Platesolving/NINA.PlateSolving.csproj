@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Configurations>Debug;Release;SignedRelease</Configurations>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignedRelease|AnyCPU'">
     <OutputPath>bin\SignedRelease\</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
@@ -28,23 +28,30 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj" />
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj" />
+    <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj" />
+    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj" />
+    <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <PropertyGroup>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>This assembly contains the Platesolving components of N.I.N.A. to invoke different platesolvers.</Description>
     <Title>$(AssemblyName)</Title>
     <Version>3.0.0.1032-nightly</Version>
     <Authors>Stefan Berg and the N.I.N.A. Contributors</Authors>
     <Product>N.I.N.A. - Nighttime Imaging 'N' Astronomy</Product>
-    <Description>Interfaces to communicate with Lacerta MGEN2 and MGEN3 Autoguider Units</Description>
     <Copyright>Copyright ©  2016 - 2023 Stefan Berg and the N.I.N.A. contributors</Copyright>
     <PackageProjectUrl>https://nighttime-imaging.eu/</PackageProjectUrl>
     <PackageIcon>ninasplash.png</PackageIcon>
     <RepositoryUrl>https://www.bitbucket.org/Isbeorn/nina.git</RepositoryUrl>
     <PackageOutputPath>$(SolutionDir)publish</PackageOutputPath>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if $(Configuration) == SignedRelease (&#xD;&#xA;   echo  &quot;Trying to sign $(TargetPath)&quot;&#xD;&#xA;   signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)&#xD;&#xA;  &#xD;&#xA;  &#xD;&#xA;)" />
+    <Exec Command="if $(Configuration) == SignedRelease (&#xD;&#xA;   echo  &quot;Trying to sign $(TargetPath)&quot;&#xD;&#xA;   signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)&#xD;&#xA;  &#xD;&#xA; &#xD;&#xA;)" />
   </Target>
 </Project>
