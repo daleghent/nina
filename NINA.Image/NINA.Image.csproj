@@ -59,6 +59,6 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>  
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if $(Configuration) == SignedRelease (&#xD;&#xA;&#xD;&#xA;  if exist &quot;$(SolutionDir)Accord.Imaging\bin\SignedRelease\netstandard2.0\Accord.Imaging.dll&quot; (&#xD;&#xA;&#xD;&#xA;    echo F | xcopy &quot;$(SolutionDir)Accord.Imaging\bin\SignedRelease\netstandard2.0\Accord.Imaging.dll&quot; &quot;$(ProjectDir)bin\SignedRelease\Accord.Imaging\bin\SignedRelease\netstandard2.0\Accord.Imaging.dll&quot; /h/i/c/k/e/r/y   &#xD;&#xA;  )&#xD;&#xA;&#xD;&#xA;        echo  &quot;Trying to sign $(TargetPath)&quot;&#xD;&#xA;        signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)&#xD;&#xA;      &#xD;&#xA;&#xD;&#xA;)" />
+    <Exec Command="  if exist &quot;$(SolutionDir)Accord.Imaging\bin\SignedRelease\netstandard2.0\Accord.Imaging.dll&quot; echo F | xcopy &quot;$(SolutionDir)Accord.Imaging\bin\SignedRelease\netstandard2.0\Accord.Imaging.dll&quot; &quot;$(ProjectDir)bin\SignedRelease\Accord.Imaging\bin\SignedRelease\netstandard2.0\Accord.Imaging.dll&quot; /h/i/c/k/e/r/y   &#xD;&#xA;&#xD;&#xA;  if $(Configuration) == SignedRelease signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)" />
   </Target>
 </Project>
