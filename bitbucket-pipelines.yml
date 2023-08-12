@@ -1,6 +1,6 @@
 pipelines:
   custom:   
-    publish:
+    unittests:
         - step:
             name: dotnet unit tests
             clone:
