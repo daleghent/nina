@@ -8,6 +8,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Improvements
 - Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
 - In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.
+- When clicking on the load adv. sequence button, it is now possible to also load in a template or a target
 
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
