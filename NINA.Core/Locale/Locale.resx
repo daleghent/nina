@@ -1484,7 +1484,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Open</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats in flat wizard</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Set</value>
@@ -1666,23 +1666,20 @@ Calculated HFR: {2}
   <data name="LblGeneral" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="LblGPSConnected" xml:space="preserve">
-    <value>GPS connected on port</value>
+  <data name="LblGnssConnectFail" xml:space="preserve">
+    <value>Failed to connect to {0}</value>
   </data>
-  <data name="LblGPSConnectFail" xml:space="preserve">
-    <value>Cannot Connect to GPS on port</value>
+  <data name="LblGnssLocationSet" xml:space="preserve">
+    <value>Location set from {0}</value>
   </data>
-  <data name="LblGPSLocationSet" xml:space="preserve">
-    <value>Location set from GPS</value>
+  <data name="LblGnssNoFix" xml:space="preserve">
+    <value>{0} reports that it does not have a fix</value>
   </data>
-  <data name="LblGPSNoFix" xml:space="preserve">
-    <value>GPS has No Fix</value>
+  <data name="LblGnssNotFound" xml:space="preserve">
+    <value>No {0} device detected</value>
   </data>
-  <data name="LblGPSNotFound" xml:space="preserve">
-    <value>No GPS module detected</value>
-  </data>
-  <data name="LblGPSTooltip" xml:space="preserve">
-    <value>Import location using an NMEA GPS device</value>
+  <data name="LblGnssTooltip" xml:space="preserve">
+    <value>Import location from a GNSS device</value>
   </data>
   <data name="LblGuider" xml:space="preserve">
     <value>Guider</value>
@@ -1998,9 +1995,6 @@ Calculated HFR: {2}
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
     <value>MetaGuide Setup</value>
-  </data>
-  <data name="LblMetaGuideIP" xml:space="preserve">
-    <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
     <value>MetaGuide Port</value>
@@ -4313,7 +4307,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Sequence</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
@@ -4810,13 +4804,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import Target</value>
@@ -5082,7 +5076,7 @@ Example:
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
     <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!</value>
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Advanced Sequencer</value>
@@ -5092,10 +5086,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
 There the sequence can be planned from scratch using fine granular instructions, triggers and conditions.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Simple Sequencer</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Switch back to Sequencer Dashboard</value>
@@ -6692,5 +6686,32 @@ Increase minimum exposure time or wait until it is brighter.</value>
   </data>
   <data name="LblFlipImageTooltip" xml:space="preserve">
     <value>Flips image horizontally</value>
+  </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>The ASCOM Sensor Type is currently configured to return already debayered images, which is not supported. Please adjust the driver settings to return bayered images instead!</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
+    <value>Location sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
+    <value>Sync to application</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
+    <value>Sync to telescope</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
+    <value>No sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
+    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
+  </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Peak Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Peak RA: {0} ({1}")</value>
   </data>
 </root>

@@ -1483,7 +1483,7 @@
     <value>打开</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>在平场助手拍摄暗平场时关闭镜头盖</value>
+    <value>拍摄暗平场时打开镜头盖</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>设定</value>
@@ -1665,23 +1665,20 @@
   <data name="LblGeneral" xml:space="preserve">
     <value>通用</value>
   </data>
-  <data name="LblGPSConnected" xml:space="preserve">
-    <value>GPS 已在端口上连接</value>
+  <data name="LblGnssConnectFail" xml:space="preserve">
+    <value>无法连接到 {0}</value>
   </data>
-  <data name="LblGPSConnectFail" xml:space="preserve">
-    <value>无法连接到端口上的 GPS</value>
+  <data name="LblGnssLocationSet" xml:space="preserve">
+    <value>从 {0} 设置位置</value>
   </data>
-  <data name="LblGPSLocationSet" xml:space="preserve">
-    <value>从 GPS 设置位置</value>
+  <data name="LblGnssNoFix" xml:space="preserve">
+    <value>共有 {0} 项错误无法修复</value>
   </data>
-  <data name="LblGPSNoFix" xml:space="preserve">
-    <value>GPS 无定位</value>
+  <data name="LblGnssNotFound" xml:space="preserve">
+    <value>未检测到 {0} 设备</value>
   </data>
-  <data name="LblGPSNotFound" xml:space="preserve">
-    <value>未检测到 GPS 模块</value>
-  </data>
-  <data name="LblGPSTooltip" xml:space="preserve">
-    <value>使用 NMEA GPS 导入位置</value>
+  <data name="LblGnssTooltip" xml:space="preserve">
+    <value>从GNSS设备导入位置</value>
   </data>
   <data name="LblGuider" xml:space="preserve">
     <value>导星</value>
@@ -1997,9 +1994,6 @@
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
     <value>MetaGuide 设置</value>
-  </data>
-  <data name="LblMetaGuideIP" xml:space="preserve">
-    <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
     <value>MetaGuide 端口</value>
@@ -4304,7 +4298,7 @@
     <value>它的工作原理类似于一个顺序指令集，但可以在内部指定一个深空对象，它将在必要时用坐标和旋转角度来自动填充其中的所有指令。</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Instruction Set</value>
+    <value>深空目标指令集</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>此指令集中的所有指令并行运行。在所有指令完成之前，此指令集不会计算任何条件或触发器。</value>
@@ -4801,13 +4795,13 @@
     <value>打开目标组</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Legacy Sequencer</value>
+    <value>简单序列</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>最后目标结束后选项</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Legacy Sequence Template</value>
+    <value>简单序列模板</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>导入目标</value>
@@ -5072,8 +5066,8 @@
     <value>是否建立高级序列？</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
+    <value>你确定要将序列导出到高级序列器吗？
+注意：高级序列器不能向下兼容，无法恢复成简单序列！</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>高级序列</value>
@@ -5083,10 +5077,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
 可以从零开始使用细分的指令、触发器和循环条件对序列进行规划。</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Legacy Sequencer</value>
+    <value>禁用简单序列</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>这将禁用简单序列，并在序列选项卡中直接显示高级序列器。</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>回到序列器主面板</value>
@@ -5685,10 +5679,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>可倾斜的叉式</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>DEC Horizontal Offset</value>
+    <value>相对赤纬轴水平偏移</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>OTA中心相对于赤纬轴（叉式底座上的电机）的水平偏移量。正方向是“向右”，即北半球向东，南半球向西。</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>圆顶半径设置不正确。计算得出的望远镜位置已经超出圆顶。</value>
@@ -5770,13 +5764,13 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>180 度</value>
   </data>
   <data name="LblRotatorRangeHalfTooltip" xml:space="preserve">
-    <value>Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range.</value>
+    <value>支持180°旋转范围。这个范围以外的取向将被调整180度以适合于配置范围。</value>
   </data>
   <data name="LblRotatorRangeQuarter" xml:space="preserve">
     <value>90 度</value>
   </data>
   <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
-    <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
+    <value>支持90度的旋转范围。这主要用于正方形传感器。 在此范围之外的指向已被调整以适应配置的范围。</value>
   </data>
   <data name="LblRotatorRangeAdjusted" xml:space="preserve">
     <value>调整后的旋转器角度为 {0}</value>
@@ -5812,7 +5806,7 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>服务管道名称</value>
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
-    <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
+    <value>从此服务中读取的ASCOM驱动，应使和正在使用的管道保持相同的名称配置</value>
   </data>
   <data name="LblSBIGUseExternalTrackingCCD" xml:space="preserve">
     <value>使用外部跟踪CCD</value>
@@ -6162,7 +6156,7 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>字符串</value>
   </data>
   <data name="LblBlind" xml:space="preserve">
-    <value>Blind</value>
+    <value>盲解析</value>
   </data>
   <data name="LblAction" xml:space="preserve">
     <value>操作</value>
@@ -6293,7 +6287,7 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>加载  插件 {0} 版本 {1} 作者 {2}</value>
   </data>
   <data name="LblMGENSetup" xml:space="preserve">
-    <value>MGEN Setup</value>
+    <value>MGEN设置</value>
   </data>
   <data name="LblSingleImagingLayout" xml:space="preserve">
     <value>统一 UI 布局</value>
@@ -6341,7 +6335,7 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>从文件中加载 UI 布局</value>
   </data>
   <data name="LblTotal" xml:space="preserve">
-    <value>Total</value>
+    <value>总</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_ExposureInfo" xml:space="preserve">
     <value>曝光信息</value>
@@ -6353,16 +6347,16 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>没有滤镜</value>
   </data>
   <data name="LblAtikExposureSpeed" xml:space="preserve">
-    <value>Exposure speed</value>
+    <value>曝光速度</value>
   </data>
   <data name="LblAtikGainPreset" xml:space="preserve">
-    <value>Gain preset</value>
+    <value>增益预设</value>
   </data>
   <data name="LblAtikWindowHeaterPowerLevel" xml:space="preserve">
-    <value>Heater power level</value>
+    <value>加热功率</value>
   </data>
   <data name="LblSkyGuardTimeLapsDitherChecked" xml:space="preserve">
-    <value>Dither Settling</value>
+    <value>抖动稳定中</value>
   </data>
   <data name="LblAutoFocusPointLimitReached" xml:space="preserve">
     <value>自动对焦失败。已达到最大测量点数。</value>
@@ -6374,9 +6368,9 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
     <value>将图像顺时针旋转90°。后续图像也将同样旋转。 只改变图像显示，不影响保存的数据。</value>
   </data>
   <data name="LblFramingPlateSolvePromptText" xml:space="preserve">
-    <value>Image needs to be solved for framing.
-Please confirm the meta data to use for solving.
-Once confirmed choose which solver should be used.</value>
+    <value>此图像需要被解析后才可用于构图。
+请确认用于解析的基础数据。
+确认后，这些参数将被用于解析。</value>
   </data>
   <data name="LblPlateSolveRequired" xml:space="preserve">
     <value>需要解析</value>
@@ -6385,118 +6379,149 @@ Once confirmed choose which solver should be used.</value>
     <value>若选择盲解析，将忽略图像坐标并使用设定的盲解析工具。</value>
   </data>
   <data name="LblFramingSolveWithPlateSolver" xml:space="preserve">
-    <value>When plate solver is selected, the coordinates will be used as reference coordinates and used for the plate solver that is set up in the options.</value>
+    <value>选择解析工具后，此坐标将在解析时用于参考，并使用选项卡中设置的解析工具进行解析。</value>
   </data>
   <data name="LblGuideGraphDeclinationColor" xml:space="preserve">
-    <value>Guide Graph Dec Color</value>
+    <value>赤纬导星曲线的颜色</value>
   </data>
   <data name="LblGuideGraphRightAscensionColor" xml:space="preserve">
-    <value>Guide Graph RA Color</value>
+    <value>赤经导星曲线的颜色</value>
   </data>
   <data name="LblGuideGraphShowCorrections" xml:space="preserve">
-    <value>Guide Graph Show Corrections</value>
+    <value>在导星曲线图中显示修正量</value>
   </data>
   <data name="LblRotateImageAfterFlip" xml:space="preserve">
-    <value>Rotate image after flip</value>
+    <value>中天翻转后旋转图像</value>
   </data>
   <data name="LblRotateImageAfterFlipTooltip" xml:space="preserve">
-    <value>When enabled, this will rotate the image by 180° in the imaging tab after the flip. This is for displaying purposes only and won't affect the image data.</value>
+    <value>如果启用，在中天翻转后，“主控台-图像”标签中的图像将进行180°旋转，仅作用于预览，不作用于拍摄的图像数据。</value>
   </data>
   <data name="LblDisableGuidingOnFilterChange" xml:space="preserve">
-    <value>Disable guiding during filter change</value>
+    <value>更换滤镜期间暂停导星</value>
   </data>
   <data name="LblDisableGuidingOnFilterChangeTooltip" xml:space="preserve">
-    <value>When this option is enabled, every time a filter is changed the guiding will be disabled while the filter is being changed and re-enabled afterwards.</value>
+    <value>若此选项启用，每次切换滤镜时将停止导星，并在切换完毕后重新启用。</value>
   </data>
   <data name="LblEphemerisNotFound" xml:space="preserve">
-    <value>Ephemeris file to calculate celestial trajectories not found. Please run a repair on your N.I.N.A. installation.</value>
+    <value>用于计算天体轨道的星历表文件丢失，请重新安装NINA进行修复。</value>
   </data>
   <data name="LblPHD2InstanceNumber" xml:space="preserve">
-    <value>PHD2 instance number</value>
+    <value>PHD2实例编号</value>
   </data>
   <data name="LblDomeMountGeometry" xml:space="preserve">
-    <value>Dome &amp; mount geometry</value>
+    <value>圆顶、支架的几何参数</value>
   </data>
   <data name="LblDomeNotConnectedError" xml:space="preserve">
-    <value>The dome driver is not connected!</value>
+    <value>圆顶驱动未连接！</value>
   </data>
   <data name="LblDomeShutterCoordination" xml:space="preserve">
-    <value>Shutter coordination</value>
+    <value>天窗坐标</value>
   </data>
   <data name="LblMountDisconnectedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to move but the mount is disconnected. Mount status cannot be determined. This can be unsafe!</value>
+    <value>天窗或平顶收到移动命令但望远镜已断开连接。望远镜状态无法确定。这可能不安全。</value>
   </data>
   <data name="LblMountUnparkedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to move but the mount is unparked. This can be unsafe!</value>
+    <value>天窗或平顶收到移动命令但赤道仪不在零位，这可能不安全。</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovement" xml:space="preserve">
-    <value>Park dome before shutter operation</value>
+    <value>在天窗移动前停放圆顶</value>
   </data>
   <data name="LblParkDomeBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Sends the dome to its park position before attempting to open or cloose the shutter</value>
+    <value>在尝试打开或关闭天窗之前，将圆顶移动到停放位置</value>
   </data>
   <data name="LblParkMountBeforeShutterMovement" xml:space="preserve">
-    <value>Park mount before shutter operation</value>
+    <value>在移动天窗前停放望远镜</value>
   </data>
   <data name="LblParkMountBeforeShutterMovementTooltip" xml:space="preserve">
-    <value>Attempt to park the mount before opening or closing the shutter</value>
+    <value>尝试在打开或关闭天窗前停放望远镜</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparked" xml:space="preserve">
-    <value>Refuse open or close if mount is unparked</value>
+    <value>如望远镜已经停放，则拒绝打开或关闭圆顶</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfMountUnparkedTooltip" xml:space="preserve">
-    <value>Causes N.I.N.A. to refuse to open or close the shutter or roof if the mount is in an unparked state.
-This is evaluated AFTER the "Park mount before moving the shutter" setting.</value>
+    <value>如果望远镜未停放，N.I.N.A.将拒绝开关天窗或圆顶。
+这一操作的判断顺序位于“在移动天窗前停放望远镜”《之后》。</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDevice" xml:space="preserve">
-    <value>Refuse open if a Safety Monitor is not connected</value>
+    <value>当安全监视器未连接时拒绝打开天窗</value>
   </data>
   <data name="LblRefuseUnsafeShutterMoveIfNoSafetyDeviceTooltip" xml:space="preserve">
-    <value>Causes N.I.N.A. to refuse to open the shutter or roof if a Safety Monitor device is not connected.</value>
+    <value>如果安全监视器未连接，则NINA将拒绝打开天窗或平顶</value>
   </data>
   <data name="LblSafetyDeviceDisconnectedOnShutterMoveError" xml:space="preserve">
-    <value>The shutter or roof was ordered to open but the safety monitor device is disconnected. Opening has been aborted.</value>
+    <value>天窗和圆顶被要求打开，但安全监视器尚未连接，打开程序已被终止。</value>
   </data>
   <data name="LblShutterSettingsWarning" xml:space="preserve">
     <value>NOTICE: These settings relate to the safety of your equipment. They must be set with careful consideration and with the familiarity you have with your specific setup. They govern only N.I.N.A.'s control of the equipment and are NOT in effect if N.I.N.A. is not running or is not connected to the equipment in question. Dome or roof safety mechanisms should always have a hardware backup and electrical interlocks to prevent any undesired shutter or roof movement. It is your responsibility to ensure that these settings do not conflict with your dome driver's settings.</value>
   </data>
   <data name="LblCollapseSidebarTooltip" xml:space="preserve">
-    <value>Collapses the left sidebars to only show smaller icons without text</value>
+    <value>折叠左边栏，仅显示图标</value>
   </data>
   <data name="LblExpandSidebarTooltip" xml:space="preserve">
-    <value>Expands the left sidebars to show larger icons with text</value>
+    <value>展开左边栏，显示大图标和文字</value>
   </data>
   <data name="Lbl_Sequencer_InstructionsSidebar_SettingsModeTooltip" xml:space="preserve">
-    <value>Enable settings mode. When this mode is enabled each instruction can be disabled or enabled. A disabled instruction will then not be shown inside the sidebar outside of settings mode.</value>
+    <value>启用设置模式。当启用此模式时，每个指令都可以被禁用或启用。 侧边栏中不会显示禁用的指令。</value>
   </data>
   <data name="LblCollapseAll" xml:space="preserve">
-    <value>Collapse All</value>
+    <value>折叠所有</value>
   </data>
   <data name="LblExpandAll" xml:space="preserve">
-    <value>Expand All</value>
+    <value>展开所有</value>
   </data>
   <data name="LblRotating" xml:space="preserve">
-    <value>Rotating</value>
+    <value>旋转中</value>
   </data>
   <data name="LblASCOMTelescopeDriveRateInvalid" xml:space="preserve">
-    <value>The drive rate {0} is invalid to move the telescope axis. Please enter a different rate.</value>
+    <value>驱动速率 {0} 无效，无法移动赤道仪。请输入另外一个速率。</value>
   </data>
   <data name="LblFilterChangeFailed" xml:space="preserve">
-    <value>Failed to move filter wheel to filter {0} at position {1}</value>
+    <value>无法移动滤镜轮 {0} 到指定的位置 {1}</value>
     <comment>First parameter is filter name and second parameter is filter position number</comment>
   </data>
   <data name="LblSwitches" xml:space="preserve">
-    <value>Switches</value>
+    <value>开关</value>
   </data>
   <data name="LblGauges" xml:space="preserve">
-    <value>Gauges</value>
+    <value>仪表盘</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Description" xml:space="preserve">
+    <value>如果可用，设置相机的 USB 限制</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetUSBLimit_Name" xml:space="preserve">
+    <value>设置 USB 限制</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CannotSetUSBLimit" xml:space="preserve">
+    <value>相机无法设置 USB 限制</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidUSBLimit" xml:space="preserve">
+    <value>相机的 USB 限制值无效</value>
+  </data>
+  <data name="LblHighFullwellMode" xml:space="preserve">
+    <value>大满阱模式</value>
+  </data>
+  <data name="LblHighFullwellModeTooltip" xml:space="preserve">
+    <value>开启大满阱模式以扩充满阱</value>
+  </data>
+  <data name="LblDewHeaterStrength" xml:space="preserve">
+    <value>防结露加热强度</value>
+  </data>
+  <data name="LblHardwareAcceleration" xml:space="preserve">
+    <value>硬件加速</value>
+  </data>
+  <data name="LblHardwareAccelerationTooltip" xml:space="preserve">
+    <value>This will enable or disable hardware accelerated rendering of the application.
+In case you are having rendering issues, or the application is turning blank when using a remote software while there is no monitor attached disabling hardware acceleration might be beneficial.
+Keep in mind that disabling hardware acceleration might reduce overall application performance.
+
+Changing the value will require an app restart to take affect.</value>
   </data>
   <data name="LblProfile" xml:space="preserve">
-    <value>Profile</value>
+    <value>配置文件</value>
     <comment>The equipment profile that is used in the application that stores all the settings</comment>
   </data>
   <data name="LblAutomaticMountSync" xml:space="preserve">
-    <value>Automatic Sync</value>
+    <value>自动同步</value>
     <comment>The option to turn automatic sync of platesolving to the mount</comment>
   </data>
   <data name="LblAutomaticMountSyncTooltip" xml:space="preserve">
@@ -6505,27 +6530,172 @@ This should only be disabled when having a good pointing model that must not be 
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
   </data>
   <data name="LblCameraDitherPixels" xml:space="preserve">
-    <value>Camera Dither Pixels</value>
+    <value>主相机抖动像素数</value>
   </data>
   <data name="LblCameraPixelScale" xml:space="preserve">
-    <value>Camera Pixel Scale</value>
+    <value>主相机像素比例尺</value>
   </data>
   <data name="LblGuiderDitherPixels" xml:space="preserve">
-    <value>Guider Dither Pixels</value>
+    <value>导星抖动像素</value>
   </data>
   <data name="LblGuiderPixelScale" xml:space="preserve">
-    <value>Guider Pixel Scale</value>
+    <value>导星相机像素比例尺</value>
   </data>
   <data name="LblZwoDeviceId" xml:space="preserve">
-    <value>Device ID</value>
+    <value>设备ID</value>
   </data>
   <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
-    <value>A name up to 8 ASCII characters long that you may assign to the connected ZWO device. This allows you to uniquely identify multiple pieces of the same model of device.</value>
+    <value>你可以对连接的ZWO设备命名，最长为8个ASCII字符，用于区分多个同型号的设备。</value>
   </data>
   <data name="LblUnidirectional" xml:space="preserve">
-    <value>Unidirectional</value>
+    <value>单向</value>
   </data>
   <data name="LblCalibrate" xml:space="preserve">
-    <value>Calibrate</value>
+    <value>校准</value>
+  </data>
+  <data name="LblNmeaSerialGnss" xml:space="preserve">
+    <value>NMEA协议的GNSS串行设备</value>
+  </data>
+  <data name="LblPrimaLuceLabEagle" xml:space="preserve">
+    <value>PrimaLuceLab Eagle</value>
+  </data>
+  <data name="LblGnssGgaMissingError" xml:space="preserve">
+    <value>在 {0} 秒内没有检测到GGA语句</value>
+  </data>
+  <data name="LblGnssGgaQualityError" xml:space="preserve">
+    <value>GGA语句显示定位质量为 {0}</value>
+  </data>
+  <data name="LblGnss" xml:space="preserve">
+    <value>GNSS（全球导航卫星系统）</value>
+  </data>
+  <data name="LblPegasusUranusNotFound" xml:space="preserve">
+    <value>未找到 PegasusAstro Uranus Meteo</value>
+  </data>
+  <data name="LblPegausAstroUranus" xml:space="preserve">
+    <value>PegasusAstro Uranus Meteo</value>
+  </data>
+  <data name="LblIsValidIpPortRule" xml:space="preserve">
+    <value>端口号必须介于 {0} 和 {1} 之间</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfaces" xml:space="preserve">
+    <value>使用所有端口</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfacesTooltip" xml:space="preserve">
+    <value>监听全部的MegaGuide广播端口。默认情况下，NINA将只监听回环地址（127.0.0.1）上的端口。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Description" xml:space="preserve">
+    <value>与平场助手相同，这条指令将在【固定平场板亮度】的前提下自动测定平场曝光时间。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Name" xml:space="preserve">
+    <value>自动调节平场曝光</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_Description" xml:space="preserve">
+    <value>与平场助手相同，这条指令将在【固定曝光时长】的前提下自动测定平场板的亮度。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_Name" xml:space="preserve">
+    <value>自动调节平场板亮度</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
+    <value>与平场助手中的天光平场相同，这条指令将自动测定平场曝光的时间。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
+    <value>天空平场</value>
+  </data>
+  <data name="LblClosingCover" xml:space="preserve">
+    <value>正在关闭镜头盖</value>
+  </data>
+  <data name="LblOpeningCover" xml:space="preserve">
+    <value>正在打开镜头盖</value>
+  </data>
+  <data name="LblSettingBrightness" xml:space="preserve">
+    <value>设置亮度为 {0}</value>
+  </data>
+  <data name="LblToggleLight" xml:space="preserve">
+    <value>将亮度设置为 {0}</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_DetermineBrightness" xml:space="preserve">
+    <value>当前平场板亮度 {0}，测试中... 尝试 {1} / {2}。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_FoundBrightness" xml:space="preserve">
+    <value>确定平场板亮度为 {0}。正在拍摄平场。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_DetermineTime" xml:space="preserve">
+    <value>当前曝光时间 {0} s，测试中... 尝试 {1} / {2}。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_FoundTime" xml:space="preserve">
+    <value>确定曝光时间为 {0} 秒。正在拍摄平场。</value>
+  </data>
+  <data name="LblFlatWizardFailed" xml:space="preserve">
+    <value>平场助手运行失败。
+原因： {0}</value>
+    <comment>When flat wizard fails in single mode</comment>
+  </data>
+  <data name="LblFlatWizardFailedForFilter" xml:space="preserve">
+    <value>滤镜 {0} 的平场助手运行失败。
+原因：{1}</value>
+    <comment>When flat wizard fails in multi mode</comment>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_LightTooBright" xml:space="preserve">
+    <value>无法确定平场板亮度 - 光源太亮。
+降低平场板的最小亮度或曝光时间。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_LightTooDim" xml:space="preserve">
+    <value>无法确定平场板亮度 - 光源太暗。
+增加平场板最大亮度或曝光时间。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_LightTooBright" xml:space="preserve">
+    <value>无法确定平场曝光时间 - 光源太亮。
+降低平场板亮度或最小曝光时间。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_LightTooDim" xml:space="preserve">
+    <value>无法确定平场曝光时间 - 光源太暗。
+增加平场板亮度或最大曝光时间。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_DetermineTime" xml:space="preserve">
+    <value>当前曝光时间 {0} s，测试中... 尝试 {1} / {2}。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_FoundTime" xml:space="preserve">
+    <value>确定曝光时间为 {0} 秒。正在拍摄天空平场。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_LightTooBright" xml:space="preserve">
+    <value>无法确定天空平场曝光时间 - 天空太亮。
+降低最小曝光时间或等待天空更暗。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_LightTooDim" xml:space="preserve">
+    <value>无法确定天空平场曝光时间 - 天空太暗。
+增加最大曝光时间或等待天空变亮。</value>
+  </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} 报告镜头盖当前状态错误</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>不存在</value>
+  </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>水平翻转图像</value>
+  </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>ASCOM传感器当前返回 debayer 后的图像，这不受支持。请调整驱动设置以返回带 bayer 的图像！</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
+    <value>位置同步</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
+    <value>关键词</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
+    <value>同步到应用程序</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
+    <value>同步到望远镜</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
+    <value>不同步</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
+    <value>当连接到望远镜时，若望远镜和程序的地理位置不一致，程序行为由该选项控制</value>
   </data>
 </root>
