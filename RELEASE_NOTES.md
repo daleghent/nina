@@ -76,6 +76,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Improvements
 - Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
+- When clicking on the load adv. sequence button, it is now possible to also load in a template or a target
 
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
