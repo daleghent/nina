@@ -32,11 +32,6 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame</li>
 <li>In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.</li>
 </ul>
-<h1 id="version-2.3-1">Version 2.3</h1>
-<h2 id="improvements-1">Improvements</h2>
-<ul>
-<li>Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame</li>
-</ul>
 <h2 id="bugfixes">Bugfixes</h2>
 <ul>
 <li>The profile chooser on startup did not remember the on/off selection to save the selected profile</li>
@@ -66,7 +61,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>In Options &gt; Imaging &gt; Image File Pattern it is now possible to set different patterns per image type. When no pattern is set for a specific image type the main image pattern will be taken.</li>
 <li>NMEA GPS import now also imports the site elevation</li>
 </ul>
-<h2 id="improvements-2">Improvements</h2>
+<h2 id="improvements-1">Improvements</h2>
 <ul>
 <li>The Field of View value in the Framing Tab is now limited to two decimal places</li>
 <li>Camera simulator can now set arbitrary values for Offset and USB limit</li>
@@ -103,7 +98,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>ASCOM Switch target values now adhere to the step size of a switch and round to the nearest value if the user provided a value outside of the step size</li>
 <li>Fixed an issue where SynchronizeDomeTrigger would run into an exception when evaluating if it should trigger when the dome and telescope is not connected</li>
 </ul>
-<h2 id="improvements-3">Improvements</h2>
+<h2 id="improvements-2">Improvements</h2>
 <ul>
 <li>Player One Cameras that support different sensor modes can now switch between these via ReadoutModes when using the native driver</li>
 <li>Player One Cameras that have a temperature probe but not cooler will now show the temperature</li>
@@ -129,7 +124,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Flat Wizard Sky Flat Mode no longer closes a flat device cover when connected</li>
 <li>AutofocusAfterTemperatureChangeTrigger did not set initial temperature correctly when focuser was not connected on sequence start</li>
 </ul>
-<h2 id="improvements-4">Improvements</h2>
+<h2 id="improvements-3">Improvements</h2>
 <ul>
 <li>Guide Chart Colors can now be customized in the guider tab</li>
 <li>Plugin load times have been improved</li>
@@ -186,7 +181,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>When the filter is changed while the Smart Exposure or Simple Sequencer Exposure is already running, the first exposure afterwards no longer uses the previous filter but switches to the expected new filter</li>
 <li>Fixed an issue where the Camera Cooling Charts could get stuck and not update anymore</li>
 </ul>
-<h2 id="improvements-5">Improvements</h2>
+<h2 id="improvements-4">Improvements</h2>
 <ul>
 <li>Improved error message presentation if the selected sky survey image serivce fails to accept a request</li>
 <li>The image save queue size can now be adjusted to allow for more concurrent image processing and save operations. Do be careful when changing this, as it will increase overall system resource usage during fast image captures</li>
@@ -539,7 +534,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 <h4 id="included-camera-sdk-versions-can-now-be-found-inside-the-about-page-of-n.i.n.a">Included Camera SDK Versions can now be found inside the about page of N.I.N.A.</h4>
 <h1 id="version-1.10-hf3">Version 1.10 HF3</h1>
-<h2 id="improvements-6">Improvements</h2>
+<h2 id="improvements-5">Improvements</h2>
 <ul>
 <li>The camera temperature setpoint is now displayed <em>only</em> when the cooler is active</li>
 <li>A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available</li>
@@ -579,7 +574,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li><strong>ZWO:</strong> 1.16.3</li>
 </ul>
 <h1 id="version-1.10-hf2">Version 1.10 HF2</h1>
-<h2 id="improvements-7">Improvements</h2>
+<h2 id="improvements-6">Improvements</h2>
 <ul>
 <li>Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.</li>
 <li>Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers</li>
@@ -624,7 +619,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>New translation for Greek (Ελληνικά) has been added</li>
 <li>Added a new sky survey <a href="http://alasky.u-strasbg.fr/hips-image-services/hips2fits" target="_blank">Hips 2 Fits</a> as an option in framing assistant. This survey seems to provide a much faster image compared to the other surveys.</li>
 </ul>
-<h2 id="improvements-8">Improvements</h2>
+<h2 id="improvements-7">Improvements</h2>
 <ul>
 <li>Canon CR3 image format is now supported (use FreeImage as your RAW converter)</li>
 <li>Adding support for the EOS R5 and EOS R6</li>
@@ -1101,7 +1096,7 @@ Thank you for your support!</p>
 <li>Some Sky Surveys did not work in some locales due to decimal pointer settings</li>
 <li>Fixed race condition when using DCRaw when the previous temp image was not finished processed and the new image tried to replace the previous temp image</li>
 </ul>
-<h2 id="improvements-9">Improvements</h2>
+<h2 id="improvements-8">Improvements</h2>
 <ul>
 <li>When EOS Utility is running in the background, the x64 N.I.N.A. client will scan for this app and prevent a crash due to the EOS utility being open. Instead a notification will show up to close the EOS Utility.</li>
 <li>N.I.N.A. SQLite Database will be created on demand and migrated to new versions on application startup instead of just being overwritten by the installer.</li>
@@ -1209,7 +1204,7 @@ the background itself will be moved like in an orrery</li>
 <li>Fixed Platesolve result reporting wrong Dec Error.</li>
 <li>Platesolve recenter now considers proper angular distance calculation instead of relying just on Right Ascension.</li>
 </ul>
-<h2 id="improvements-10">Improvements</h2>
+<h2 id="improvements-9">Improvements</h2>
 <ul>
 <li>Clear button for PHD2 Graph</li>
 <li>Hide camera cooler controls when not available for current camera model</li>
@@ -1317,7 +1312,7 @@ Thank you for your support!</p>
 <li>Fixed Canon issue that a second exposure is accidentally triggered, causing the camera to be stuck</li>
 <li>Fixed memory leak when using Free Image RAW Converter</li>
 </ul>
-<h2 id="improvements-11">Improvements</h2>
+<h2 id="improvements-10">Improvements</h2>
 <ul>
 <li>Guider is also connected when pushing &quot;Connect All&quot;</li>
 <li>Changed FilterWheel UI for switching filters</li>
