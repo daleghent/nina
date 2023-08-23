@@ -64,7 +64,6 @@ namespace NINA.Profile.Interfaces {
         ushort? AtikExposureSpeed { get; set; }
         int? AtikWindowHeaterPowerLevel { get; set; }
 
-        bool TouptekAlikeHighGain { get; set; }
         bool TouptekAlikeUltraMode { get; set; }
         bool TouptekAlikeHighFullwell { get; set; }
         int TouptekAlikeDewHeaterStrength { get; set; }

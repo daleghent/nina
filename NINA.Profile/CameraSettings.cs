@@ -65,7 +65,6 @@ namespace NINA.Profile {
             trackingCameraASCOMServerLoggingEnabled = false;
 
 
-            touptekAlikeHighGain = true;
             touptekAlikeUltraMode = true;
             touptekAlikeHighFullwell = false;
             touptekAlikeDewHeaterStrength = -1;
@@ -692,17 +691,6 @@ namespace NINA.Profile {
         #endregion
 
         #region TouptekAlike
-        private bool touptekAlikeHighGain;
-        [DataMember]
-        public bool TouptekAlikeHighGain {
-            get => touptekAlikeHighGain;
-            set {
-                if (touptekAlikeHighGain != value) {
-                    touptekAlikeHighGain = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
         private bool touptekAlikeUltraMode;
         [DataMember]
         public bool TouptekAlikeUltraMode {
