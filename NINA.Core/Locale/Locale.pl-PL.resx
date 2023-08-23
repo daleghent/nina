@@ -6697,4 +6697,10 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>Podczas podłączania teleskopu określa się zachowanie w przypadku, gdy pozycja montażowa i pozycja aplikacji są różne.</value>
   </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Szczyt Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Szczyt RA: {0} ({1}")</value>
+  </data>
 </root>

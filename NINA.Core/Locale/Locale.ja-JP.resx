@@ -6677,4 +6677,10 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
   </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>赤緯のピーク: {0}({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>赤経のピーク: {0}({1}")</value>
+  </data>
 </root>

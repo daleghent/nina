@@ -6697,4 +6697,10 @@ Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.<
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>Esto define cómo se comportará el telescopio cuando la ubicación de la montura y la de la aplicación sean diferentes.</value>
   </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Pico en Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Pico en AR: {0} ({1}")</value>
+  </data>
 </root>

@@ -6701,4 +6701,10 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
   </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Peak Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Peak RA: {0} ({1}")</value>
+  </data>
 </root>

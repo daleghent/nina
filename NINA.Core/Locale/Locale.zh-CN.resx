@@ -6698,4 +6698,10 @@ This should only be disabled when having a good pointing model that must not be 
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>当连接到望远镜时，若望远镜和程序的地理位置不一致，程序行为由该选项控制</value>
   </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Peak Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Peak RA: {0} ({1}")</value>
+  </data>
 </root>

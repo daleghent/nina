@@ -6702,4 +6702,10 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>Při připojení dalekohledu se definuje chování, jak postupovat v případě, že se poloha montáže a poloha aplikace liší.</value>
   </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Vrchol Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Vrchol RA: {0} ({1}")</value>
+  </data>
 </root>
