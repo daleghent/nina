@@ -256,7 +256,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                     DeterminedHistogramADU = mean;
                     Logger.Info($"Found exposure time at {exposureTime}s with histogram ADU {mean}");
                     progress?.Report(new ApplicationStatus() {
-                        Status = string.Format(Loc.Instance["Lbl_SequenceItem_FlatDevice_SkyFlat_FoundTime"], exposureTime)
+                        Status = string.Format(Loc.Instance["Lbl_SequenceItem_FlatDevice_SkyFlat_FoundTime"], exposureTime),
+                        Source = Loc.Instance["Lbl_SequenceItem_FlatDevice_SkyFlat_Name"]
                     });
                     return exposureTime;
                 case HistogramMath.ExposureAduState.ExposureBelowLowerBound:
@@ -492,7 +493,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
                 await imageSaveMediator.Enqueue(imageData, prepTask, progress, token);
 
-                progress.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblSavingImage"] });
                 var trot = stopWatch.Elapsed - ti - TimeSpan.FromMilliseconds(time * 1000d);
                 if (trot.TotalMilliseconds < 0) trot = TimeSpan.FromMilliseconds(0);
 
