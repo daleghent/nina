@@ -455,6 +455,11 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                     }
                 }
 
+                var root = ItemUtility.GetRootContainer(this.Parent);
+                if (root != null) {
+                    imageData.MetaData.Sequence.Title = root.SequenceTitle;
+                }
+
                 var imageStatistics = await imageData.Statistics.Task;
                 switch (
                         HistogramMath.GetExposureAduState(
