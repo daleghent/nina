@@ -703,9 +703,12 @@ namespace NINA.Test {
             //Arrange
             var metaData = new ImageMetaData();
             var now = DateTime.Now;
+            var mid = now + TimeSpan.FromTicks(1000000);
+
             XNamespace ns = "http://www.pixinsight.com/xisf";
             metaData.Image.ImageType = "TEST";
             metaData.Image.ExposureStart = now;
+            metaData.Image.ExposureMidPoint = mid;
             metaData.Image.ExposureTime = 10.23;
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
@@ -714,6 +717,7 @@ namespace NINA.Test {
                 new FITSHeaderCard("EXPTIME", metaData.Image.ExposureTime, "[s] Exposure duration"),
                 new FITSHeaderCard("DATE-LOC", metaData.Image.ExposureStart.ToLocalTime(), "Time of observation (local)"),
                 new FITSHeaderCard("DATE-OBS", metaData.Image.ExposureStart.ToUniversalTime(), "Time of observation (UTC)"),
+                new FITSHeaderCard("DATE-AVG", metaData.Image.ExposureMidPoint, "Averaged midpoint time (UTC)"),
             };
 
             var expectedProperties = new[] {

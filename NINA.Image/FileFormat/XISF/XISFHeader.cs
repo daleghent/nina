@@ -93,6 +93,10 @@ namespace NINA.Image.FileFormat.XISF {
                 metaData.Image.ExposureStart = DateTime.Parse(value);
             }
 
+            if(TryGetFITSProperty("DATE-AVG", out value)) {
+                metaData.Image.ExposureMidPoint = DateTime.Parse(value);
+            }
+
             if (TryGetImageProperty(XISFImageProperty.Instrument.ExposureTime, out value)) {
                 metaData.Image.ExposureTime = double.Parse(value, CultureInfo.InvariantCulture);
             }
@@ -385,6 +389,10 @@ namespace NINA.Image.FileFormat.XISF {
             if (metaData.Image.ExposureStart > DateTime.MinValue) {
                 AddImageProperty(XISFImageProperty.Observation.Time.Start, metaData.Image.ExposureStart.ToUniversalTime(), "Time of observation (UTC)");
                 AddImageFITSKeyword("DATE-LOC", metaData.Image.ExposureStart.ToLocalTime(), "Time of observation (local)");
+            }
+
+            if (metaData.Image.ExposureMidPoint > DateTime.MinValue) {
+                AddImageFITSKeyword("DATE-AVG", metaData.Image.ExposureMidPoint, "Averaged midpoint time (UTC)");
             }
 
             if (!double.IsNaN(metaData.Image.ExposureTime)) {
