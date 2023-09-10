@@ -83,6 +83,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Info.Id = cameraId;
 
             Logger.Debug($"QHYCCD: Found camera {Info.Id}");
+            _gpsSettings = new Hashtable();
         }
 
         public string Category { get; } = "QHYCCD";
