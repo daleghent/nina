@@ -219,6 +219,9 @@ namespace ZWOptical.ASISDK {
         [DllImport(DLLNAME, EntryPoint = "ASIGetStartPos", CallingConvention = CallingConvention.Cdecl)]
         private static extern ASI_ERROR_CODE ASIGetStartPos(int iCameraID, out int piStartX, out int piStartY);
 
+        [DllImport(DLLNAME, EntryPoint = "ASIGetDroppedFrames", CallingConvention = CallingConvention.Cdecl)]
+        private static extern ASI_ERROR_CODE ASIGetDroppedFrames(int iCameraID, out int piDropFrames);
+
         [DllImport(DLLNAME, EntryPoint = "ASIStartVideoCapture", CallingConvention = CallingConvention.Cdecl)]
         private static extern ASI_ERROR_CODE ASIStartVideoCapture(int iCameraID);
 
@@ -365,13 +368,13 @@ namespace ZWOptical.ASISDK {
             return new Point(x, y);
         }
 
-        /*public static int GetDroppedFrames(int cameraId) {
+        public static int GetDroppedFrames(int cameraId) {
             int result;
             CheckReturn(ASIGetDroppedFrames(cameraId, out result), MethodBase.GetCurrentMethod(), cameraId);
             return result;
         }
 
-        public static bool EnableDarkSubtract(int cameraId, string darkFilePath) {
+        /*public static bool EnableDarkSubtract(int cameraId, string darkFilePath) {
             ASI_BOOL result;
             CheckReturn(ASIEnableDarkSubtract(cameraId, darkFilePath, out result), MethodBase.GetCurrentMethod(), cameraId, darkFilePath);
             return result != ASI_BOOL.ASI_FALSE;
