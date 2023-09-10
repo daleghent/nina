@@ -6699,9 +6699,9 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
     <value>Quan es connecta el telescopi, es defineix com es comportarà quan la ubicació de la montura i de l' aplicació siguin diferents.</value>
   </data>
   <data name="LblPHD2PeakDec" xml:space="preserve">
-    <value>Peak Dec: {0} ({1}")</value>
+    <value>Pic Dec: {0} ({1}")</value>
   </data>
   <data name="LblPHD2PeakRA" xml:space="preserve">
-    <value>Peak RA: {0} ({1}")</value>
+    <value>Peak AR: {0} ({1}")</value>
   </data>
 </root>
