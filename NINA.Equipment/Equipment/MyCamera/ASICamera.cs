@@ -806,9 +806,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                     ushort[] arr = new ushort[size];
                     int buffersize = width * height * 2;
+                    DateTime startDateTime = DateTime.UtcNow;
                     if (!GetVideoData(arr, buffersize)) {
                         throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
                     }
+
+                    DateTime midpointDateTime = startDateTime + TimeSpan.FromTicks((DateTime.UtcNow - startDateTime).Ticks / 2);
+                    var metaData = new ImageMetaData();
+                    metaData.Image.ExposureMidPoint = midpointDateTime;
+                    // get dropped frames
+                    DroppedFrames = ASICameraDll.GetDroppedFrames(_cameraId);
 
                     return exposureDataFactory.CreateImageArrayExposureData(
                         input: arr,
@@ -816,7 +823,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         height: height,
                         bitDepth: BitDepth,
                         isBayered: SensorType != SensorType.Monochrome,
-                        metaData: new ImageMetaData());
+                        metaData: metaData);
                 } catch (OperationCanceledException) {
                 } catch (CameraDownloadFailedException ex) {
                     Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
@@ -845,11 +852,47 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             }
         }
+        public int DroppedFrames { get; private set; }
 
         public bool HasBattery => false;
 
         public string Action(string actionName, string actionParameters) {
-            throw new NotImplementedException();
+            switch (actionName) {
+                case "GetDroppedFrames": { 
+                    return DroppedFrames.ToString();
+                    }
+                case "HighSpeedMode": {
+                        var value = StringToBoolean(actionParameters);
+                        if(value.HasValue) { 
+                            SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_HIGH_SPEED_MODE, value.Value ? 1 : 0);
+                        }
+                        return "";
+                    }
+                case "HardwareBin": {
+                        var value = StringToBoolean(actionParameters);
+                        if (value.HasValue) {
+                            SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_HARDWARE_BIN, value.Value ? 1 : 0);
+                        }
+                        return "";
+                    }
+                default:
+                    return "";
+            }
+        }
+
+        private bool? StringToBoolean(string input) {
+            if (string.IsNullOrWhiteSpace(input)) { return null; }
+
+            string[] booleanFalse = { "0", "off", "no", "false", "f" };
+            string[] booleanTrue = { "1", "on", "yes", "true", "t" };
+
+            if (booleanFalse.Contains(input.ToLower())) {
+                return false;
+            }
+            if (booleanTrue.Contains(input.ToLower())) {
+                return true;
+            }
+            return null;
         }
 
         public string SendCommandString(string command, bool raw) {
