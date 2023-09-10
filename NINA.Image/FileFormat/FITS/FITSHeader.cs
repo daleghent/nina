@@ -21,7 +21,6 @@ using System.IO;
 using System.Text;
 using NINA.Core.Utility;
 using NINA.Image.ImageData;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Windows.Input;
 
 namespace NINA.Image.FileFormat.FITS {
