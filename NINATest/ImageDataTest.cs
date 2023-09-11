@@ -35,7 +35,7 @@ namespace NINATest {
         public void Setup() {
             MetaData = new ImageMetaData() {
                 Image = {
-                    ExposureStart  = new DateTime(2019,1,1,12,2,3,333),
+                    ExposureStart  = new DateTime(2019,1,1,12,2,3,333, DateTimeKind.Utc),
                     ExposureNumber  = 5,
                     ImageType  = "LIGHT",
                     Binning  = "1x1",
@@ -429,10 +429,10 @@ namespace NINATest {
             File.Delete(file);
 
             var expectedPattern = $"{MetaData.FilterWheel.Filter}" +
-                $"#{MetaData.Image.ExposureStart.ToString("yyyy-MM-dd")}" +
-                $"#{MetaData.Image.ExposureStart.AddHours(-12).ToString("yyyy-MM-dd")}" +
-                $"#{MetaData.Image.ExposureStart.ToString("yyyy-MM-dd_HH-mm-ss")}" +
-                $"#{MetaData.Image.ExposureStart.ToString("HH-mm-ss")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("yyyy-MM-dd")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().AddHours(-12).ToString("yyyy-MM-dd")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("yyyy-MM-dd_HH-mm-ss")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("HH-mm-ss")}" +
                 $"#{MetaData.Image.ExposureNumber.ToString("0000")}" +
                 $"#{MetaData.Image.ImageType}" +
                 $"#{MetaData.Camera.Binning}" +
@@ -474,7 +474,7 @@ namespace NINATest {
                 $"#$$RMSARCSEC$$" +
                 $"#$$FOCUSERPOSITION$$" +
                 $"#$$APPLICATIONSTARTDATE$$";
-
+            var date = new DateTime(2020, 1, 1, 12, 0, 0, DateTimeKind.Utc);
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
@@ -482,11 +482,11 @@ namespace NINATest {
                 TIFFCompressionType = NINA.Core.Enum.TIFFCompressionTypeEnum.LZW
             };
 
-            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, new ImageMetaData());
+            var sut = dataFactoryUtility.ImageDataFactory.CreateBaseImageData(data, 3, 3, 16, false, new ImageMetaData() { Image = new ImageParameter() { ExposureStart = date } });
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
-            var expectedPattern = $"#0001-01-01##0001-01-01_00-00-00#00-00-00#-0001##1x1#########{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}.tif";
+            var expectedPattern = $"#{date.ToLocalTime():yyyy-MM-dd}#{date.ToLocalTime():yyyy-MM-dd}#{date.ToLocalTime():yyyy-MM-dd_HH-mm-ss}#{date.ToLocalTime():HH-mm-ss}#-0001##1x1#########{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}.tif";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}");
         }
@@ -529,10 +529,10 @@ namespace NINATest {
             File.Delete(file);
 
             var expectedPattern = $"{MetaData.FilterWheel.Filter}" +
-                $"#{MetaData.Image.ExposureStart.ToString("yyyy-MM-dd")}" +
-                $"#{MetaData.Image.ExposureStart.AddHours(-12).ToString("yyyy-MM-dd")}" +
-                $"#{MetaData.Image.ExposureStart.ToString("yyyy-MM-dd_HH-mm-ss")}" +
-                $"#{MetaData.Image.ExposureStart.ToString("HH-mm-ss")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("yyyy-MM-dd")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().AddHours(-12).ToString("yyyy-MM-dd")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("yyyy-MM-dd_HH-mm-ss")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("HH-mm-ss")}" +
                 $"#{MetaData.Image.ExposureNumber.ToString("0000")}" +
                 $"#{MetaData.Image.ImageType}" +
                 $"#{MetaData.Camera.Binning}" +
@@ -590,10 +590,10 @@ namespace NINATest {
             File.Delete(file);
 
             var expectedPattern = $"{MetaData.FilterWheel.Filter}" +
-                $"#{MetaData.Image.ExposureStart.ToString("yyyy-MM-dd")}" +
-                $"#{MetaData.Image.ExposureStart.AddHours(-12).ToString("yyyy-MM-dd")}" +
-                $"#{MetaData.Image.ExposureStart.ToString("yyyy-MM-dd_HH-mm-ss")}" +
-                $"#{MetaData.Image.ExposureStart.ToString("HH-mm-ss")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("yyyy-MM-dd")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().AddHours(-12).ToString("yyyy-MM-dd")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("yyyy-MM-dd_HH-mm-ss")}" +
+                $"#{MetaData.Image.ExposureStart.ToLocalTime().ToString("HH-mm-ss")}" +
                 $"#{MetaData.Image.ExposureNumber.ToString("0000")}" +
                 $"#{MetaData.Image.ImageType}" +
                 $"#{MetaData.Camera.Binning}" +
