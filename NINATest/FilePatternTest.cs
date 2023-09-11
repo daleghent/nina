@@ -16,6 +16,7 @@ using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
 using NUnit.Framework;
+using System;
 
 namespace NINATest {
 
