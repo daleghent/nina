@@ -356,7 +356,7 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.72.0" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
     <PackageReference Include="MdXaml" Version="1.21.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
