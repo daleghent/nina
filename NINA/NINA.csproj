@@ -1184,6 +1184,9 @@
     <Content Include="Database\Migration\10.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x64\Altair\altaircam.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\ASTPAN\ASTPANCamera.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1240,6 +1243,9 @@
       <TargetPath>vcomp140.dll</TargetPath>
     </ContentWithTargetPath>
     <Content Include="External\x64\SVBony\SVBCameraSDK.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x86\Altair\altaircam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x86\ASTPAN\ASTPANCamera.dll">
@@ -1544,7 +1550,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="External\x64\Altair\" />
     <Folder Include="External\x64\Canon\" />
     <Folder Include="External\x64\Nikon\Type0001\" />
     <Folder Include="External\x64\Nikon\Type0002\" />
@@ -1576,21 +1581,11 @@
     <Folder Include="External\x64\Nikon\Type0028\" />
     <Folder Include="External\x64\Nikon\Type0029\" />
     <Folder Include="External\x64\Nikon\Type0030\" />
-    <Folder Include="External\x86\Altair\" />
     <Folder Include="External\x86\Canon\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-			if exist "$(ProjectDir)External\x64\Altair" (
-			echo "Copy Altair x64 DLLs"
-			xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
-			)
-			if exist "$(ProjectDir)External\x86\Altair" (
-			echo "Copy Altair x86 DLLs"
-			xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
-			)
-
 			if exist "$(ProjectDir)External\x64\Canon" (
 			echo "Copy Canon x64 DLLs"
 			xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
