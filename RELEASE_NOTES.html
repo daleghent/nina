@@ -32,6 +32,13 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame</li>
 <li>In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.</li>
 <li>When clicking on the load adv. sequence button, it is now possible to also load in a template or a target</li>
+<li>QHY Cameras with GPS modules can enable the GPS mode via device actions. When enabled the GPS meta data will be put into the FITS header.</li>
+<li>FITS string value headers can now store longer string values and will utilize the full size of the header card</li>
+<li>Player One cameras can now start live view mode for plugins that can do so</li>
+<li>Exposure Mid Point is now captured and stored in the FITS header with the keyword DATE-AVG</li>
+<li>Log files now automatically create a new log session when hitting the size limit</li>
+<li>Database entries for the IC catalog have been expanded</li>
+<li>Introduced a GetLockPosition() method in IGuider, and the associated CanGetLockPosition property in GuiderInfo. Implementation currently only done for PhD2. This is available for plugins to be used.</li>
 </ul>
 <h2 id="bugfixes">Bugfixes</h2>
 <ul>
@@ -39,6 +46,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure</li>
 <li>Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning</li>
 <li>Added automatic retry of exposure start for PlayerOne driver when POA_ERROR_EXPOSING error happens</li>
+<li>Prevent an endless loop in the Canon native driver on image download that would cause the app to hang</li>
+<li>When a condition is canceled it no longer incorrectly logs the canellation as an error</li>
 </ul>
 <h1 id="version-2.2">Version 2.2</h1>
 <h2 id="bugfixes-1">Bugfixes</h2>
