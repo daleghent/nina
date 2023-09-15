@@ -126,8 +126,7 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="Auto" MinWidth="250" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
@@ -274,12 +273,8 @@
                         Text="{ns:Loc LblNoPluginsFound}" />
                 </StackPanel>
             </Grid>
-            <GridSplitter
-                Grid.Column="1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" />
             <Grid
-                Grid.Column="2"
+                Grid.Column="1"
                 Margin="5"
                 DataContext="{Binding SelectedAvailablePlugin}"
                 Visibility="{Binding DataContext.AvailablePlugins, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=local:AvailablePluginsView}}">

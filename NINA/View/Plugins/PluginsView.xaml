@@ -120,8 +120,7 @@
 
                         <Grid Visibility="{Binding InstalledPlugins, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="Auto" MinWidth="250" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
@@ -203,8 +202,8 @@
                                                                     Height="25"
                                                                     Margin="2.5"
                                                                     VerticalAlignment="Center"
-                                                                    IsChecked="{Binding Path=Value, Mode=OneWay}"
                                                                     IsEnabled="False"
+                                                                    IsChecked="{Binding Path=Value, Mode=OneWay}"
                                                                     Style="{StaticResource CheckmarkCheckbox}"
                                                                     Visibility="{Binding Value, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                                                             </DataTemplate>
@@ -217,12 +216,16 @@
                                 </GroupBox>
                             </Border>
 
-                            <GridSplitter
+                            <mdxam:MarkdownScrollViewer
                                 Grid.Column="1"
+                                Margin="0,5,0,5"
                                 HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch" />
+                                HorizontalContentAlignment="Stretch"
+                                Markdown="{Binding Descriptions.LongDescription}"
+                                MarkdownStyle="{StaticResource MarkdownStyle}"
+                                VerticalScrollBarVisibility="Disabled" />
                             <ScrollViewer
-                                Grid.Column="2"
+                                Grid.Column="1"
                                 Margin="5"
                                 DataContext="{Binding SelectedInstalledPlugin.Key}"
                                 VerticalScrollBarVisibility="Auto">
