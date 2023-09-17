@@ -39,6 +39,9 @@ namespace NINA.Plugin {
         /// <param name="manifest"></param>
         public void Uninstall(IPluginManifest manifest) {
             try {
+                if (!Directory.Exists(Constants.BaseDeletionFolder)) {
+                    Directory.CreateDirectory(Constants.BaseDeletionFolder);
+                }
                 if (!Directory.Exists(Constants.DeletionFolder)) {
                     Directory.CreateDirectory(Constants.DeletionFolder);
                 }
@@ -49,7 +52,7 @@ namespace NINA.Plugin {
                     var file = FindFileInRootFolderByGuid(manifest);
                     if (!string.IsNullOrWhiteSpace(file)) {
                         var dir = Path.GetDirectoryName(file);
-                        if (dir == Constants.UserExtensionsFolder) {
+                        if (dir == Constants.VersionedUserExtensionsFolder) {
                             File.Move(file, Path.Combine(Constants.DeletionFolder, Path.GetRandomFileName()));
                         } else {
                             // This should only happen when the directory where the plugin resides does not match the conventions or was renamed
@@ -68,8 +71,14 @@ namespace NINA.Plugin {
         public async Task Install(IPluginManifest manifest, bool update, CancellationToken ct) {
             var tempFile = Path.Combine(Path.GetTempPath(), manifest.Name + ".dll");
             try {
+                if (!Directory.Exists(Constants.BaseStagingFolder)) {
+                    Directory.CreateDirectory(Constants.BaseStagingFolder);
+                }
                 if (!Directory.Exists(Constants.StagingFolder)) {
                     Directory.CreateDirectory(Constants.StagingFolder);
+                }
+                if (!Directory.Exists(Constants.BaseDeletionFolder)) {
+                    Directory.CreateDirectory(Constants.BaseDeletionFolder);
                 }
                 if (!Directory.Exists(Constants.DeletionFolder)) {
                     Directory.CreateDirectory(Constants.DeletionFolder);
@@ -165,7 +174,7 @@ namespace NINA.Plugin {
         /// <param name="manifest"></param>
         /// <returns></returns>
         private string FindFileInRootFolderByGuid(IPluginManifest manifest) {
-            foreach (var file in Directory.GetFiles(Constants.UserExtensionsFolder, "*.dll", SearchOption.AllDirectories)) {
+            foreach (var file in Directory.GetFiles(Constants.VersionedUserExtensionsFolder, "*.dll", SearchOption.AllDirectories)) {
                 try {
                     var metaData = PluginAssemblyReader.GrabPluginMetaData(file);
 
@@ -219,7 +228,7 @@ namespace NINA.Plugin {
         }
 
         private string GetDestinationFolderFromManifest(IPluginManifest manifest) {
-            return Path.Combine(Constants.UserExtensionsFolder, CoreUtil.ReplaceAllInvalidFilenameChars(manifest.Name));
+            return Path.Combine(Constants.VersionedUserExtensionsFolder, CoreUtil.ReplaceAllInvalidFilenameChars(manifest.Name));
         }
 
         private Task InstallArchive(IPluginManifest manifest, string tempFile) {

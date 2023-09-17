@@ -71,6 +71,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.</li>
 <li>Further parallelization of post image capture actions. This should especially speed up capturing using a dslr native driver where the time consuming raw conversion will no longer hold up the next exposure.</li>
 <li>Added an option to Options &gt; Equipment &gt; Telescope to define automatic sync direction of location. This can be used to supress a user prompt for automatic connection and control.</li>
+<li>Plugin folder in <code>%localappdata%\NINA\Plugins</code> now contain a subfolder with the <code>Major.Minor.Revision</code> version of the application containing plugins for the current version. This will make it simpler to upgrade and downgrade application versions without having to exchange plugins for developers. From user perspective nothing will change as everything is automatically migrated.</li>
 </ul>
 <h2 id="commandline-options">Commandline Options</h2>
 <ul>
