@@ -22,6 +22,7 @@ using System.Windows.Threading;
 using NINA.Core.Utility.Http;
 using NINA.Astrometry;
 using System.Collections.Generic;
+using NINA.Equipment.Equipment.MyGuider.PHD2;
 
 namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 {
@@ -187,7 +188,10 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 Logger.Debug("This method is not implemented");
                 return false;
             }
-        } 
+        }
+
+        public bool CanGetLockPosition => false;
+
 
         public bool ShiftEnabled {
             get {
@@ -686,8 +690,9 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
                 if (response.StatusCode != HttpStatusCode.OK)
                     throw new Exception($"The url: {url} is not accessible, please check in the setup of SkyGuardGuider");
 
-                StreamReader mySR = new StreamReader(request.GetResponse().GetResponseStream());
-                return mySR.ReadToEnd();
+                using (StreamReader reader = new StreamReader(response.GetResponseStream())) {
+                    return reader.ReadToEnd();
+                }
             }
             catch (InvalidOperationException operationEx)
             {
@@ -1164,6 +1169,11 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         public Task<bool> SetShiftRate(SiderealShiftTrackingRate shiftTrackingRate, CancellationToken ct) {
             throw new NotImplementedException();
         }
+
+        public Task<LockPosition> GetLockPosition() {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion

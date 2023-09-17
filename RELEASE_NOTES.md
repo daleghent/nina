@@ -3,6 +3,28 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.3
+
+## Improvements
+- Autofocus triggers will now only trigger when the next exposure would be a LIGHT frame
+- In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.
+- When clicking on the load adv. sequence button, it is now possible to also load in a template or a target
+- QHY Cameras with GPS modules can enable the GPS mode via device actions. When enabled the GPS meta data will be put into the FITS header.
+- FITS string value headers can now store longer string values and will utilize the full size of the header card
+- Player One cameras can now start live view mode for plugins that can do so
+- Exposure Mid Point is now captured and stored in the FITS header with the keyword DATE-AVG
+- Log files now automatically create a new log session when hitting the size limit
+- Database entries for the IC catalog have been expanded
+- Introduced a GetLockPosition() method in IGuider, and the associated CanGetLockPosition property in GuiderInfo. Implementation currently only done for PhD2. This is available for plugins to be used.
+
+## Bugfixes
+- The profile chooser on startup did not remember the on/off selection to save the selected profile
+- Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
+- Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning
+- Added automatic retry of exposure start for PlayerOne driver when POA_ERROR_EXPOSING error happens
+- Prevent an endless loop in the Canon native driver on image download that would cause the app to hang
+- When a condition is canceled it no longer incorrectly logs the canellation as an error
+
 # Version 2.2
 
 ## Bugfixes

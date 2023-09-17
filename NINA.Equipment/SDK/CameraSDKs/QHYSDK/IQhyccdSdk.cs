@@ -108,5 +108,17 @@ namespace QHYCCD {
         uint StopQHYCCDLive();
 
         uint GetQHYCCDMemLength();
+
+        uint SetQHYCCDGPSVCOXFreq(ushort freq);
+
+        uint SetQHYCCDGPSLedCalMode(byte mode);
+
+        uint SetQHYCCDGPSMasterSlave(byte mode);
+
+        void SetQHYCCDGPSPOSA(uint pos, byte width);
+
+        void SetQHYCCDGPSPOSB(uint pos, byte width);
+
+        uint GetQHYCCDPreciseExposureInfo(ref uint pixelPeriod, ref uint linePeriod, ref uint framePeriod, ref uint clocksPerLine, ref uint linesPerFrame, ref uint actualExposureTime, ref byte isLongExposureMode);
     }
 }

@@ -1484,7 +1484,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Open</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats in flat wizard</value>
+    <value>Open cover for dark flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Set</value>
@@ -1666,23 +1666,20 @@ Calculated HFR: {2}
   <data name="LblGeneral" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="LblGPSConnected" xml:space="preserve">
-    <value>GPS connected on port</value>
+  <data name="LblGnssConnectFail" xml:space="preserve">
+    <value>Failed to connect to {0}</value>
   </data>
-  <data name="LblGPSConnectFail" xml:space="preserve">
-    <value>Cannot Connect to GPS on port</value>
+  <data name="LblGnssLocationSet" xml:space="preserve">
+    <value>Location set from {0}</value>
   </data>
-  <data name="LblGPSLocationSet" xml:space="preserve">
-    <value>Location set from GPS</value>
+  <data name="LblGnssNoFix" xml:space="preserve">
+    <value>{0} reports that it does not have a fix</value>
   </data>
-  <data name="LblGPSNoFix" xml:space="preserve">
-    <value>GPS has No Fix</value>
+  <data name="LblGnssNotFound" xml:space="preserve">
+    <value>No {0} device detected</value>
   </data>
-  <data name="LblGPSNotFound" xml:space="preserve">
-    <value>No GPS module detected</value>
-  </data>
-  <data name="LblGPSTooltip" xml:space="preserve">
-    <value>Import location using an NMEA GPS device</value>
+  <data name="LblGnssTooltip" xml:space="preserve">
+    <value>Import location from a GNSS device</value>
   </data>
   <data name="LblGuider" xml:space="preserve">
     <value>Guider</value>
@@ -1998,9 +1995,6 @@ Calculated HFR: {2}
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
     <value>MetaGuide Setup</value>
-  </data>
-  <data name="LblMetaGuideIP" xml:space="preserve">
-    <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
     <value>MetaGuide Port</value>
@@ -4313,7 +4307,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Sequence</value>
+    <value>Deep Sky Object Instruction Set</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
@@ -4810,13 +4804,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Legacy Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Legacy Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import Target</value>
@@ -5082,7 +5076,7 @@ Example:
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
     <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!</value>
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the legacy sequence!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
     <value>Advanced Sequencer</value>
@@ -5092,10 +5086,10 @@ Note: Advanced sequences are NOT backwards compatible and it is not possible to 
 There the sequence can be planned from scratch using fine granular instructions, triggers and conditions.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Simple Sequencer</value>
+    <value>Disable Legacy Sequencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>This will disable the legacy sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
     <value>Switch back to Sequencer Dashboard</value>
@@ -6544,5 +6538,180 @@ Changing the value will require an app restart to take affect.</value>
     <value>When enabled the application will send a sync command to the mount during platesolve &amp; center operations. 
 This should only be disabled when having a good pointing model that must not be altered in any way. When disabled the plate solve panel in imaging tab will also not show the sync toggle.</value>
     <comment>The option tooltip to turn automatic sync of platesolving to the mount</comment>
+  </data>
+  <data name="LblCameraDitherPixels" xml:space="preserve">
+    <value>Camera Dither Pixels</value>
+  </data>
+  <data name="LblCameraPixelScale" xml:space="preserve">
+    <value>Camera Pixel Scale</value>
+  </data>
+  <data name="LblGuiderDitherPixels" xml:space="preserve">
+    <value>Guider Dither Pixels</value>
+  </data>
+  <data name="LblGuiderPixelScale" xml:space="preserve">
+    <value>Guider Pixel Scale</value>
+  </data>
+  <data name="LblZwoDeviceId" xml:space="preserve">
+    <value>Device ID</value>
+  </data>
+  <data name="LblZwoDeviceIdTooltip" xml:space="preserve">
+    <value>A name up to 8 ASCII characters long that you may assign to the connected ZWO device. This allows you to uniquely identify multiple pieces of the same model of device.</value>
+  </data>
+  <data name="LblUnidirectional" xml:space="preserve">
+    <value>Unidirectional</value>
+  </data>
+  <data name="LblCalibrate" xml:space="preserve">
+    <value>Calibrate</value>
+  </data>
+  <data name="LblNmeaSerialGnss" xml:space="preserve">
+    <value>NMEA Serial GNSS</value>
+  </data>
+  <data name="LblPrimaLuceLabEagle" xml:space="preserve">
+    <value>PrimaLuceLab Eagle</value>
+  </data>
+  <data name="LblGnssGgaMissingError" xml:space="preserve">
+    <value>Did not observe a GGA sentence within {0} seconds</value>
+  </data>
+  <data name="LblGnssGgaQualityError" xml:space="preserve">
+    <value>GGA sentence indicates the fix quality is {0}</value>
+  </data>
+  <data name="LblGnss" xml:space="preserve">
+    <value>GNSS</value>
+  </data>
+  <data name="LblPegasusUranusNotFound" xml:space="preserve">
+    <value>PegasusAstro Uranus Meteo not found</value>
+  </data>
+  <data name="LblPegausAstroUranus" xml:space="preserve">
+    <value>PegasusAstro Uranus Meteo</value>
+  </data>
+  <data name="LblIsValidIpPortRule" xml:space="preserve">
+    <value>Port number must be between {0} and {1}</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfaces" xml:space="preserve">
+    <value>Use all interfaces</value>
+  </data>
+  <data name="LblMetaGuideListenAllInterfacesTooltip" xml:space="preserve">
+    <value>Listen on all interfaces for MegaGuide broadcasts. By default, N.I.N.A. will listen on loopback (127.0.0.1) only</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Description" xml:space="preserve">
+    <value>This instruction will automatically determine flat exposures similar to the flat wizard for a fixed panel brightness,.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_Name" xml:space="preserve">
+    <value>Auto Exposure Flat</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_Description" xml:space="preserve">
+    <value>This instruction will automatically determine flat panel brightness similar to the flat wizard for a fixed exposure time.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_Name" xml:space="preserve">
+    <value>Auto Brightness Flat</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
+    <value>This instruction will automatically determine exposure times similar to the flat wizard for sky flats.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
+    <value>Sky Flat</value>
+  </data>
+  <data name="LblClosingCover" xml:space="preserve">
+    <value>Closing Cover</value>
+  </data>
+  <data name="LblOpeningCover" xml:space="preserve">
+    <value>Opening Cover</value>
+  </data>
+  <data name="LblSettingBrightness" xml:space="preserve">
+    <value>Setting brightness to {0}</value>
+  </data>
+  <data name="LblToggleLight" xml:space="preserve">
+    <value>Toggling light to {0}</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_DetermineBrightness" xml:space="preserve">
+    <value>Determining brightness using {0}. Attempt {1} / {2}.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_FoundBrightness" xml:space="preserve">
+    <value>Found brightness at panel brightness {0}. Capturing flats.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_DetermineTime" xml:space="preserve">
+    <value>Determining exposure time using {0} s. Attempt {1} / {2}.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_FoundTime" xml:space="preserve">
+    <value>Found exposure time at {0} s. Capturing flats.</value>
+  </data>
+  <data name="LblFlatWizardFailed" xml:space="preserve">
+    <value>Flat Wizard failed.
+Reason: {0}</value>
+    <comment>When flat wizard fails in single mode</comment>
+  </data>
+  <data name="LblFlatWizardFailedForFilter" xml:space="preserve">
+    <value>Flat Wizard failed for filter {0}.
+Reason: {1}</value>
+    <comment>When flat wizard fails in multi mode</comment>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_LightTooBright" xml:space="preserve">
+    <value>Failed to determine brightness for flats - light source is too bright.
+Decrease minimum panel brightness or exposure time.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoBrightnessFlat_LightTooDim" xml:space="preserve">
+    <value>Failed to determine brightness for flats - light source is too dim.
+Increase maximum panel brightness or exposure time.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_LightTooBright" xml:space="preserve">
+    <value>Failed to determine exposure time for flats - light source is too bright.
+Decrease panel brightness or minimum exposure time.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_AutoExposureFlat_LightTooDim" xml:space="preserve">
+    <value>Failed to determine exposure time for flats - light source is too dim.
+Increase panel brightness or maximum exposure time.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_DetermineTime" xml:space="preserve">
+    <value>Determining exposure time using {0} s. Attempt {1} / {2}.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_FoundTime" xml:space="preserve">
+    <value>Found exposure time at {0} s. Capturing sky flats.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_LightTooBright" xml:space="preserve">
+    <value>Failed to determine exposure time for sky flats - sky is too bright. 
+Decrease minimum exposure time or wait until it is darker.</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_LightTooDim" xml:space="preserve">
+    <value>Failed to determine exposure time for sky flats - sky is too dim.
+Increase minimum exposure time or wait until it is brighter.</value>
+  </data>
+  <data name="LblFlatDeviceError" xml:space="preserve">
+    <value>Errored</value>
+  </data>
+  <data name="LblFlatDeviceCoverError" xml:space="preserve">
+    <value>{0} reports that the cover is in an errored state</value>
+  </data>
+  <data name="LblFlatDeviceNotPresent" xml:space="preserve">
+    <value>Not present</value>
+  </data>
+  <data name="LblFlipImageTooltip" xml:space="preserve">
+    <value>Flips image horizontally</value>
+  </data>
+  <data name="LblASCOMColorSensorTypeNotSupported" xml:space="preserve">
+    <value>The ASCOM Sensor Type is currently configured to return already debayered images, which is not supported. Please adjust the driver settings to return bayered images instead!</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection" xml:space="preserve">
+    <value>Location sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToApplication" xml:space="preserve">
+    <value>Sync to application</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_ToTelescope" xml:space="preserve">
+    <value>Sync to telescope</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_NoSync" xml:space="preserve">
+    <value>No sync</value>
+  </data>
+  <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
+    <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
+  </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Peak Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Peak RA: {0} ({1}")</value>
   </data>
 </root>

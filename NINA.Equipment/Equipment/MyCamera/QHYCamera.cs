@@ -35,6 +35,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Exceptions;
 using NINA.Core.Model;
 using System.Collections;
+using NINA.Astrometry;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -82,6 +83,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Info.Id = cameraId;
 
             Logger.Debug($"QHYCCD: Found camera {Info.Id}");
+            _gpsSettings = new Hashtable();
         }
 
         public string Category { get; } = "QHYCCD";
@@ -522,6 +524,35 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        private Hashtable _gpsSettings;
+
+        public void SetGPS() {
+            if ((string)_gpsSettings["SetGPS"] == "True") {
+                if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CAM_GPS, 1)) {
+                    Logger.Debug("Failed to set GPS");
+                }
+                if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSVCOXFreq"])) {
+                    Sdk.SetQHYCCDGPSVCOXFreq(ushort.Parse((string)_gpsSettings["SetQHYCCDGPSVCOXFreq"]));
+                }
+                if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSLedCalMode"])) {
+                    Sdk.SetQHYCCDGPSLedCalMode(byte.Parse((string)_gpsSettings["SetQHYCCDGPSLedCalMode"]));
+                }
+                if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSMasterSlave"])) {
+                    Sdk.SetQHYCCDGPSMasterSlave(byte.Parse((string)_gpsSettings["SetQHYCCDGPSMasterSlave"]));
+                }
+                if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSPOSA"])) {
+                    Sdk.SetQHYCCDGPSPOSA(uint.Parse((string)_gpsSettings["SetQHYCCDGPSPOSA"]), 40);
+                }
+                if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSPOSB"])) {
+                    Sdk.SetQHYCCDGPSPOSB(uint.Parse((string)_gpsSettings["SetQHYCCDGPSPOSB"]), 40);
+                }
+            } else {
+                if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CAM_GPS, 0)) {
+                    Logger.Debug("Failed to unset GPS");
+                }
+            }
+        }
+
         public int USBLimit {
             get {
                 double rv;
@@ -877,12 +908,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     /*
                      * Initialize cooler's target temperature to 0C
                      */
-                    Info.CoolerTargetTemp = 0;
+                    if (!reconnect) { 
+                        Info.CoolerTargetTemp = 0;
+                    }
 
                     /*
                      * Force any TEC cooler to off upon startup
                      */
-                    CoolerOn = false;
+                    if(!reconnect) { 
+                        CoolerOn = false;
+                    }
 
                     /*
                      * Start the thread that operates the TEC
@@ -901,7 +936,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * it manually using QHYCCD_CAMERA_INFO.CurBin. We initialize the
                  * camera with 1x1 binning.
                  */
-                Info.CurBin = 1;
+                if (!reconnect) { 
+                    Info.CurBin = 1;
+                }
                 SetBinning(Info.CurBin, Info.CurBin);
 
                 HasShutter = Sdk.IsControl(QhySdk.CONTROL_ID.CAM_MECHANICALSHUTTER);
@@ -958,6 +995,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     Logger.Info($"QHYCCD: Camera FPGA versions: {QhyFPGAVersion}");
                 }
 
+                // Check and set GPS based on settings
+                SetGPS();
+
+                /*
                 /*
                  * Announce that this camera is now initialized and ready
                  */
@@ -1049,6 +1090,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
 
+                // Try getting more info from the camera
+                var metaData = new ImageMetaData();
+                ExtractPreciseExposureInfo(metaData);
+                // Add gps info to the metaData
+                ExtractGpsMetaData(ImgData, metaData);
+
                 CameraState = CameraStates.Idle;
 
                 return exposureDataFactory.CreateImageArrayExposureData(
@@ -1057,7 +1104,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     height: (int)height,
                     bitDepth: BitDepth,
                     isBayered: SensorType != SensorType.Monochrome && (BinX == 1 && BinY == 1),
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
             }, ct);
         }
 
@@ -1344,6 +1391,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
 
+                // Try getting more info from the camera
+                var metaData = new ImageMetaData();
+                ExtractPreciseExposureInfo(metaData);
+                // Add gps info to the metaData
+                ExtractGpsMetaData(ImgData, metaData);
                 CameraState = CameraStates.Idle;
 
                 return exposureDataFactory.CreateImageArrayExposureData(
@@ -1352,8 +1404,109 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     height: (int)height,
                     bitDepth: BitDepth,
                     isBayered: SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
             }, ct);
+        }
+
+        private void ExtractPreciseExposureInfo(ImageMetaData metaData) {
+            uint pixelPeriod = 0, linePeriod = 0, framePeriod = 0, clocksPerLine = 0, linesPerFrame = 0, actualExposureTime = 0;
+            byte isLongExposureMode = 0;
+            var rv = Sdk.GetQHYCCDPreciseExposureInfo(ref pixelPeriod, ref linePeriod, ref framePeriod, ref clocksPerLine, ref linesPerFrame, ref actualExposureTime, ref isLongExposureMode);
+            if (rv == QhySdk.QHYCCD_SUCCESS) {
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_EXP", actualExposureTime / 1e6, "Actual exposure time in seconds"));
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_PP", pixelPeriod, "pixelPeriod"));
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_LP", linePeriod, "linePeriod"));
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_FP", framePeriod, "framePeriod"));
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_CPL", clocksPerLine, "clocksPerLine"));
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_LPF", linesPerFrame, "linesPerFrame"));
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_AET", actualExposureTime, "actualExposureTime"));
+                metaData.GenericHeaders.Add(new BoolMetaDataHeader("QHY_LEM", isLongExposureMode == 1, "isLongExposureMode"));
+            } else {
+                Logger.Debug("QHY precise info not found.");
+            }
+        }
+
+        private void ExtractGpsMetaData(ushort[] flatArray, ImageMetaData metaData) {
+            if ((string)_gpsSettings["SetGPS"] != "True") return;
+            //State of the GPS
+            byte[] imgData = new byte[flatArray.Length * sizeof(ushort)];
+            Buffer.BlockCopy(flatArray, 0, imgData, 0, imgData.Length);
+
+            //PPS count
+            var pps = 256 * 256 * imgData[41] + 256 * imgData[42] + imgData[43];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_PPS", pps, "QHY pps"));
+            //Frame number
+            var seqNumber = 256 * 256 * 256 * imgData[0] + 256 * 256 * imgData[1] + 256 * imgData[2] + imgData[3];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SEQ", seqNumber, "QHY sequence nr"));
+            //The width of the image
+            var width = 256 * imgData[5] + imgData[6];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_W", width, "QHY width"));
+            //Height of the image
+            var height = 256 * imgData[7] + imgData[8];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_H", height, "QHY height"));
+            //latitude
+            var temp = 256 * 256 * 256 * imgData[9] + 256 * 256 * imgData[10] + 256 * imgData[11] + imgData[12];
+            var south = temp > 1000000000;
+            var deg = (temp % 1000000000) / 10000000;
+            var min = (temp % 10000000) / 100000;
+            var fractMin = (temp % 100000) / 100000.0;
+            var latitude = (deg + (min + fractMin) / 60.0) * (south ? -1 : 1);
+            metaData.GenericHeaders.Add(new DoubleMetaDataHeader("GPS_LAT", latitude, "latitude"));
+            //longitude
+            temp = 256 * 256 * 256 * imgData[13] + 256 * 256 * imgData[14] + 256 * imgData[15] + imgData[16];
+            var west = temp > 1000000000;
+            deg = (temp % 1000000000) / 1000000;
+            min = (temp % 1000000) / 10000;
+            fractMin = (temp % 10000) / 10000.0;
+            var longitude = (deg + (min + fractMin) / 60.0) * (west ? -1 : 1);
+            metaData.GenericHeaders.Add(new DoubleMetaDataHeader("GPS_LON", longitude, "longitude"));
+            //Shutter start time
+            var start_flag = (imgData[17] / 16) % 4;
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SFLAG", start_flag, "QHY start_flag"));
+            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_SSTAT", receiverStatus(start_flag), "QHY start_flag"));
+            var start_sec = (256 * 256 * 256 * imgData[18]) + (256 * 256 * imgData[19]) + (256 * imgData[20]) + imgData[21];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SSEC", start_sec, "QHY start_sec"));
+            var start_us = ((256 * 256 * imgData[22]) + (256 * imgData[23]) + imgData[24]) / 10;
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SUS", start_us, "QHY start_us"));
+            //metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_ST", julianSecToDateTime(start_sec, start_us), "QHY start_time"));
+            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_SUTC", julianSecToDateTime(start_sec, start_us).ToUniversalTime(), "QHY start_time"));
+            //Shutter end time
+            var end_flag = (imgData[25] / 16) % 4;
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_EFLAG", end_flag, "QHY end_flag"));
+            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_ESTAT", receiverStatus(end_flag), "QHY end_flag"));
+            var end_sec = (256 * 256 * 256 * imgData[26]) + (256 * 256 * imgData[27]) + (256 * imgData[28]) + imgData[29];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_ESEC", end_sec, "QHY end_sec"));
+            var end_us = ((256 * 256 * imgData[30]) + (256 * imgData[31]) + imgData[32]) / 10;
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_EUS", end_us, "QHY end_us"));
+            //metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_ET", julianSecToDateTime(end_sec, end_us), "QHY end_time"));
+            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_EUTC", julianSecToDateTime(end_sec, end_us).ToUniversalTime(), "QHY end_time"));
+            //The current time
+            var now_flag = (imgData[33] / 16) % 4;
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_NFLAG", now_flag, "QHY now_flag"));
+            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_NSTAT", receiverStatus(now_flag), "QHY now_flag"));
+            var now_sec = (256 * 256 * 256 * imgData[34]) + (256 * 256 * imgData[35]) + (256 * imgData[36]) + imgData[37];
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_NSEC", now_sec, "QHY now_sec"));
+            var now_us = ((256 * 256 * imgData[38]) + (256 * imgData[39]) + imgData[40]) / 10;
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_NUS", now_us, "QHY now_us"));
+            //metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_NT", julianSecToDateTime(now_sec, now_us), "QHY now_time"));
+            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_NUTC", julianSecToDateTime(now_sec, now_us).ToUniversalTime(), "QHY now_time"));
+            //Exposure time
+            var exposure = ((end_sec - start_sec) * 1000 * 1000) + (end_us - start_us);
+            metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_EXP", exposure, "QHY exposure"));
+        }
+
+        private DateTime julianSecToDateTime(double sec, double us) {
+            return NOVAS.JulianToDateTime(2450000.5d + ((sec + (us / 1e6d)) / 86400d));
+        }
+
+        private string receiverStatus(int flag) {
+            switch (flag) {
+                case 0: return "just powered on";
+                case 1: return "not locked";
+                case 2: return "not locked but data valid"; // position and time
+                case 3: return "locked and valid";
+                default: return "Unknown";
+            }
         }
 
         public bool QhyIncludeOverscan {
@@ -1449,7 +1602,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public string Action(string actionName, string actionParameters) {
-            throw new NotImplementedException();
+            switch (actionName) {
+                case "Reset":
+                    _gpsSettings = new Hashtable();
+                    break;
+                default:
+                    Logger.Debug("Adding setting " + actionName + " to " + actionParameters);
+                    _gpsSettings[actionName] = actionParameters;
+                    break;
+            }
+            return "done";
         }
 
         public string SendCommandString(string command, bool raw) {

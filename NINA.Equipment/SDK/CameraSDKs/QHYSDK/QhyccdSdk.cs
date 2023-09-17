@@ -364,6 +364,42 @@ namespace QHYCCD {
             return GetQHYCCDMemLength(handle);
         }
 
+        public uint SetQHYCCDGPSVCOXFreq(ushort freq) {
+            lock (lockobj) {
+                return SetQHYCCDGPSVCOXFreq(handle, freq);
+            }
+        }
+
+        public uint SetQHYCCDGPSLedCalMode(byte mode) {
+            lock (lockobj) {
+                return SetQHYCCDGPSLedCalMode(handle, mode);
+            }
+        }
+
+        public uint SetQHYCCDGPSMasterSlave(byte mode) {
+            lock (lockobj) {
+                return SetQHYCCDGPSMasterSlave(handle, mode);
+            }
+        }
+
+        public void SetQHYCCDGPSPOSA(uint pos, byte width) {
+            lock (lockobj) {
+                SetQHYCCDGPSPOSA(handle, pos, width);
+            }
+        }
+
+        public void SetQHYCCDGPSPOSB(uint pos, byte width) {
+            lock (lockobj) {
+                SetQHYCCDGPSPOSB(handle, pos, width);
+            }
+        }
+
+        public uint GetQHYCCDPreciseExposureInfo(ref uint pixelPeriod, ref uint linePeriod, ref uint framePeriod, ref uint clocksPerLine, ref uint linesPerFrame, ref uint actualExposureTime, ref byte isLongExposureMode) {
+            lock (lockobj) {
+                return GetQHYCCDPreciseExposureInfo(handle, ref pixelPeriod, ref linePeriod, ref framePeriod, ref clocksPerLine, ref linesPerFrame, ref actualExposureTime, ref isLongExposureMode);
+            }
+        }
+
         #endregion Utility Methods
 
         #region Exception Generator
@@ -1006,6 +1042,24 @@ namespace QHYCCD {
 
         [DllImport(DLLNAME, EntryPoint = "GetQHYCCDMemLength", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         private static extern unsafe uint GetQHYCCDMemLength(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDGPSVCOXFreq", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDGPSVCOXFreq(IntPtr handle, ushort freq);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDGPSLedCalMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDGPSLedCalMode(IntPtr handle, byte mode);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDGPSMasterSlave", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDGPSMasterSlave(IntPtr handle, byte mode);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDGPSPOSA", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe void SetQHYCCDGPSPOSA(IntPtr handle, uint pos, byte width);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDGPSPOSB", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe void SetQHYCCDGPSPOSB(IntPtr handle, uint pos, byte width);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDPreciseExposureInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDPreciseExposureInfo(IntPtr handle, ref uint pixelPeriod, ref uint linePeriod, ref uint framePeriod, ref uint clocksPerLine, ref uint linesPerFrame, ref uint actualExposureTime, ref byte isLongExposureMode);
 
         #endregion DLL Imports
 

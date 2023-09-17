@@ -210,7 +210,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(WaitForTime)}, Time: {Hours}:{Minutes}:{Seconds}h";
+            return $"Category: {Category}, Item: {nameof(WaitForTime)}, Time: {Hours}:{Minutes}:{Seconds}h, Offset: {MinutesOffset}";
         }
     }
 }

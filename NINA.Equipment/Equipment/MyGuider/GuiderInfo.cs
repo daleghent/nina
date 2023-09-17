@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -37,6 +39,16 @@ namespace NINA.Equipment.Equipment.MyGuider {
             }
         }
 
+        private bool _canGetLockPosition;
+
+        public bool CanGetLockPosition {
+            get => _canGetLockPosition;
+            set {
+                _canGetLockPosition = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private IList<string> supportedActions;
 
         public IList<string> SupportedActions {
@@ -55,6 +67,15 @@ namespace NINA.Equipment.Equipment.MyGuider {
             get => rmsError;
             set {
                 rmsError = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double pixelScale;
+        public double PixelScale {
+            get => pixelScale;
+            set {
+                pixelScale = value;
                 RaisePropertyChanged();
             }
         }

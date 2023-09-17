@@ -163,10 +163,12 @@ namespace NINA.ViewModel {
                 ImageMetaData metaData,
                 CaptureSequence sequence,
                 DateTime start,
+                DateTime midpoint,
                 RMS rms,
                 string targetName) {
             metaData.Image.Id = this.imageHistoryVM.GetNextImageId();
             metaData.Image.ExposureStart = start;
+            metaData.Image.ExposureMidPoint = midpoint;
             metaData.Image.Binning = sequence.Binning.Name;
             metaData.Image.ExposureNumber = sequence.ProgressExposureCount;
             metaData.Image.ExposureTime = sequence.ExposureTime;
@@ -214,8 +216,9 @@ namespace NINA.ViewModel {
                         var rmsHandle = this.guiderMediator.StartRMSRecording();
 
                         /*Capture*/
-                        var exposureStart = DateTime.Now;
+                        var exposureStart = DateTime.UtcNow;
                         await cameraMediator.Capture(sequence, token, progress);
+                        DateTime midpointDateTime = exposureStart + TimeSpan.FromTicks((DateTime.UtcNow - exposureStart).Ticks / 2);
 
                         /* Stop RMS Recording */
                         var rms = this.guiderMediator.StopRMSRecording(rmsHandle);
@@ -231,7 +234,7 @@ namespace NINA.ViewModel {
                             return null;
                         }
 
-                        AddMetaData(data.MetaData, sequence, exposureStart, rms, targetName);
+                        AddMetaData(data.MetaData, sequence, exposureStart, midpointDateTime, rms, targetName);
 
                         if (!skipProcessing) {
                             //Wait for previous prepare image task to complete
