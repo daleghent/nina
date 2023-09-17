@@ -154,7 +154,7 @@ namespace NINA.Plugin {
 
         private void DeployFromStaging() {
             var staging = Constants.StagingFolder;
-            var destination = Constants.VersionedUserExtensionsFolder;
+            var destination = Constants.UserExtensionsFolder;
 
             if (Directory.Exists(staging)) {
                 try {
@@ -197,8 +197,8 @@ namespace NINA.Plugin {
 
         private void CleanupEmptyFolders() {
             try {
-                if (Directory.Exists(Constants.VersionedUserExtensionsFolder)) {
-                    foreach (var dir in Directory.GetDirectories(Constants.VersionedUserExtensionsFolder)) {
+                if (Directory.Exists(Constants.UserExtensionsFolder)) {
+                    foreach (var dir in Directory.GetDirectories(Constants.UserExtensionsFolder)) {
                         if (!Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories).Any()) {
                             Directory.Delete(dir);
                         }
@@ -255,7 +255,7 @@ namespace NINA.Plugin {
 
 
                             var baseUserExtensionsDirectory = new DirectoryInfo(Constants.BaseUserExtensionsFolder);
-                            var userExtensionsDirectory = new DirectoryInfo(Constants.VersionedUserExtensionsFolder);
+                            var userExtensionsDirectory = new DirectoryInfo(Constants.UserExtensionsFolder);
 
 
                             if(baseUserExtensionsDirectory.Exists) {
