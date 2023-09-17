@@ -51,4 +51,4 @@ using System.Reflection;
 //Develop: 1.8.0.1022 (Displayed as "1.8 NIGHTLY #022")
 [assembly: AssemblyVersion("2.3.0.9001")]
 [assembly: AssemblyFileVersion("2.3.0.9001")]
-[assembly: AssemblyInformationalVersion("2.3.0.9001")]
+//[assembly: AssemblyInformationalVersion("2.3.0.9001")]
