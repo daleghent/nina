@@ -133,7 +133,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     if (Telescope.CanPark) {
                         if (!Telescope.AtPark) {
                             progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToPark"] });
-                            Telescope.Park();
+                            await Telescope.Park(token);
 
                             // Detect if the parking process was cancelled by an external force, such as the user hitting the stop button
                             // in another app or in the driver's own UI, external to NINA.
@@ -239,23 +239,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     if (Telescope.CanUnpark) {
                         try {
                             progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToUnpark"] });
-                            Telescope.Unpark();
-
-                            while (Telescope.AtPark) {
-                                if (token.IsCancellationRequested) {
-                                    Logger.Warning("Unpark cancelled");
-                                    throw new OperationCanceledException();
-                                }
-
-                                await CoreUtil.Delay(TimeSpan.FromSeconds(2), token);
-                            }
+                            await Telescope.Unpark(token);
 
                             success = true;
                             await updateTimer.WaitForNextUpdate(token);
                         } catch (OperationCanceledException) {
                             Notification.ShowWarning(Loc.Instance["LblTelescopeUnparkCancelled"]);
+                            Logger.Warning("Unpark cancelled");
                         } catch (Exception e) {
                             Notification.ShowError(e.Message);
+                            Logger.Error(e);
                         } finally {
                             progress?.Report(new ApplicationStatus { Status = string.Empty });
                         }
@@ -283,7 +276,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             if (!Telescope.AtPark) {
                                 try {
                                     progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToFindHome"] });
-                                    Telescope.FindHome();
+                                    await Telescope.FindHome(token);
 
                                     // Detect if the homing process was cancelled by an external force, such as the user hitting the stop button
                                     // in another app or in the driver's own UI, external to NINA.
@@ -307,9 +300,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     success = true;
                                 } catch (OperationCanceledException) {
                                     Notification.ShowWarning(Loc.Instance["LblTelescopeFindHomeCancelled"]);
+                                    Logger.Warning("Find Home cancelled");
                                 } catch (Exception e) {
                                     reason = e.Message;
                                     Notification.ShowError(e.Message);
+                                    Logger.Error(e);
                                 } finally {
                                     IsParkingOrHoming = false;
                                     progress?.Report(new ApplicationStatus { Status = string.Empty });

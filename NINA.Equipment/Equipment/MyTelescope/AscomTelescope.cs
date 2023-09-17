@@ -29,6 +29,7 @@ using TelescopeAxes = NINA.Core.Enum.TelescopeAxes;
 using GuideDirections = NINA.Core.Enum.GuideDirections;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using ASCOM.Common;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
@@ -483,12 +484,18 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public void Park() {
+        public async Task Park(CancellationToken token) {
             if (CanPark) {
-                device.Park();
+                try {
+                    await device.ParkAsync(token);
+                } catch (OperationCanceledException) {
+                    throw;
+                } catch (Exception e) {
+                    Logger.Error(e);
+                    Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
+                }
             }
         }
-
         public void Setpark() {
             if (CanSetPark) {
                 try {
@@ -519,15 +526,8 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 try {
                     TrackingEnabled = true;
                     TargetCoordinates = coordinates.Transform(EquatorialSystem);
-                    if (CanSlewAsync) {
-                        device.SlewToCoordinatesAsync(TargetCoordinates.RA, TargetCoordinates.Dec);
-                    } else {
-                        device.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
-                    }
 
-                    while (Slewing) {
-                        await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval), token);
-                    }
+                    await device.SlewToCoordinatesTaskAsync(TargetCoordinates.RA, TargetCoordinates.Dec, token);
 
                     return true;
                 } catch (OperationCanceledException) {
@@ -568,10 +568,12 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             return success;
         }
 
-        public void FindHome() {
+        public async Task FindHome(CancellationToken token) {
             if (CanFindHome) {
                 try {
-                    device.FindHome();
+                    await device.FindHomeAsync(token);
+                } catch(OperationCanceledException) {
+                    throw;
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
@@ -579,10 +581,12 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public void Unpark() {
+        public async Task Unpark(CancellationToken token) {
             if (CanUnpark) {
                 try {
-                    device.Unpark();
+                    await device.UnparkAsync(token);
+                } catch(OperationCanceledException) {
+                    throw;
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowExternalError(e.Message, Loc.Instance["LblASCOMDriverError"]);
