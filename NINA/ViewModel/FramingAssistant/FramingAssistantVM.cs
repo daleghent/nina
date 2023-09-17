@@ -816,7 +816,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public double DecSeconds {
             get {
-                var seconds = Math.Round(DSO.Coordinates.Dec * 60.0d * 60.0d % 60, 5);
+                var seconds = Math.Round((Math.Abs(DSO.Coordinates.Dec * 60.0d * 60.0d) % 60), 5);
                 if (seconds >= 60d) {
                     seconds = 0;
                 }
