@@ -623,15 +623,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             BroadcastCameraInfo();
         }
 
-        public IAsyncEnumerable<int> GetValues() {
-            return new AsyncEnumerable<int>(async yield => {
-                await _cam.DownloadLiveView(new CancellationToken()).ConfigureAwait(false);
-
-                // Yes, it's even needed for 'yield.ReturnAsync'
-                await yield.ReturnAsync(123).ConfigureAwait(false);
-            });
-        }
-
         public IAsyncEnumerable<IExposureData> LiveView(CaptureSequence sequence, CancellationToken ct) {
             return new AsyncEnumerable<IExposureData>(async yield => {
                 if (CameraInfo.Connected) {
