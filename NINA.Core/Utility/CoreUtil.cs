@@ -300,7 +300,7 @@ namespace NINA.Core.Utility {
                 var destinationFile = Path.Combine(target.FullName, fi.Name);
                 try {
                     Logger.Info($"Copy file from {fi} to {destinationFile}");
-                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                    fi.CopyTo(destinationFile, true);
                 } catch(Exception ex) {
                     Logger.Error($"Failed to copy file {fi} to {destinationFile}.", ex);
                 }
