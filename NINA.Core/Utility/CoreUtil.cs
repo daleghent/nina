@@ -297,8 +297,14 @@ namespace NINA.Core.Utility {
 
             // Copy each file into the new directory.
             foreach (FileInfo fi in source.GetFiles()) {
-                Logger.Info($"Copy file from {fi} to {Path.Combine(target.FullName, fi.Name)}");
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                var destinationFile = Path.Combine(target.FullName, fi.Name);
+                try {
+                    Logger.Info($"Copy file from {fi} to {destinationFile}");
+                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                } catch(Exception ex) {
+                    Logger.Error($"Failed to copy file {fi} to {destinationFile}.", ex);
+                }
+                
             }
 
             // Copy each subdirectory using recursion.
