@@ -292,16 +292,18 @@ namespace NINA.Core.Utility {
             if (source == target) { return; }
             if (maxDepth < 0) { return; }
 
+            Logger.Info($"Creating directory {target.FullName}");
             Directory.CreateDirectory(target.FullName);
 
             // Copy each file into the new directory.
             foreach (FileInfo fi in source.GetFiles()) {
-                Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+                Logger.Info($"Copy file from {fi} to {Path.Combine(target.FullName, fi.Name)}");
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
             }
 
             // Copy each subdirectory using recursion.
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories()) {
+                Logger.Info($"Creating sub directory {diSourceSubDir.Name}");
                 DirectoryInfo nextTargetSubDir =
                     target.CreateSubdirectory(diSourceSubDir.Name);
                 CopyDirectory(diSourceSubDir, nextTargetSubDir, --maxDepth);
