@@ -707,6 +707,7 @@
                         Panel.ZIndex="10"
                         Background="{StaticResource BackgroundBrush}"
                         Grid.IsSharedSizeScope="True"
+                        ItemContainerStyle="{StaticResource ListBoxItemNoHighlight}"
                         ItemsSource="{Binding TemplateController.TemplatesView}"
                         Visibility="{Binding TemplateController.TemplatesLoading, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <ListBox.Template>
@@ -724,7 +725,7 @@
 
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type sequencer:TemplatedSequenceContainer}">
-                                <Border MinHeight="30">
+                                <Border MinHeight="30" Margin="0,5,0,0">
                                     <i:Interaction.Behaviors>
                                         <behaviors:DragDropBehavior />
                                     </i:Interaction.Behaviors>
@@ -1068,6 +1069,7 @@
                         Panel.ZIndex="10"
                         Background="{StaticResource BackgroundBrush}"
                         Grid.IsSharedSizeScope="True"
+                        ItemContainerStyle="{StaticResource ListBoxItemNoHighlight}"
                         ItemsSource="{Binding TargetController.TargetsView}"
                         Visibility="{Binding TargetController.TargetsLoading, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <ListBox.Template>
