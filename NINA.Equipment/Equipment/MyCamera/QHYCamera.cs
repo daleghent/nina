@@ -1601,6 +1601,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Action(string actionName, string actionParameters) {
             switch (actionName) {
+                case "SetGPS":
+                    Logger.Debug("Adding setting " + actionName + " to " + actionParameters);
+                    _gpsSettings[actionName] = actionParameters;
+                    SetGPS();
+                    break;
                 case "Reset":
                     _gpsSettings = new Hashtable();
                     break;
