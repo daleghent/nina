@@ -16,6 +16,7 @@ using System;
 using NINA.Sequencer.Trigger;
 using Newtonsoft.Json.Linq;
 using NINA.Core.Utility;
+using NINA.Sequencer.SequenceItem;
 
 namespace NINA.Sequencer.Serialization {
 
@@ -32,6 +33,10 @@ namespace NINA.Sequencer.Serialization {
                 try {
                     var method = factory.GetType().GetMethod(nameof(factory.GetTrigger)).MakeGenericMethod(new Type[] { t });
                     var obj = method.Invoke(factory, null);
+                    if (obj == null) {
+                        Logger.Error($"Encountered unknown sequence trigger: {token?.ToString()}");
+                        return new UnknownSequenceTrigger(token?.ToString());
+                    }
                     return (ISequenceTrigger)obj;
                 } catch (Exception e) {
                     Logger.Error($"Encountered unknown sequence trigger: {token?.ToString()}", e);
