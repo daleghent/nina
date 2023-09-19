@@ -288,10 +288,11 @@ namespace NINA.Core.Utility {
 
             CopyDirectory(diSource, diTarget);
         }
-        public static void CopyDirectory(DirectoryInfo source, DirectoryInfo target, int maxDepth = 10) {
+        public static void CopyDirectory(DirectoryInfo source, DirectoryInfo target, int maxDepth = 15) {
             if (source == target) { return; }
             if (maxDepth < 0) { return; }
 
+            --maxDepth;
             Logger.Info($"Creating directory {target.FullName}");
             Directory.CreateDirectory(target.FullName);
 
@@ -312,7 +313,7 @@ namespace NINA.Core.Utility {
                 Logger.Info($"Creating sub directory {diSourceSubDir.Name}");
                 DirectoryInfo nextTargetSubDir =
                     target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyDirectory(diSourceSubDir, nextTargetSubDir, --maxDepth);
+                CopyDirectory(diSourceSubDir, nextTargetSubDir, maxDepth);
             }
         }
     }
