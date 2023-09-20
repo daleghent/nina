@@ -12,8 +12,10 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using NINA.Core.Model;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -314,6 +316,22 @@ namespace NINA.Core.Utility {
                 DirectoryInfo nextTargetSubDir =
                     target.CreateSubdirectory(diSourceSubDir.Name);
                 CopyDirectory(diSourceSubDir, nextTargetSubDir, maxDepth);
+            }
+        }
+        public static IList<T> DeserializeList<T>(string collection) {
+            try {
+                return JsonConvert.DeserializeObject<IList<T>>(collection, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto }) ?? new List<T>();
+            } catch (Exception) {
+                return new List<T>();
+            }
+
+        }
+
+        public static string SerializeList<T>(IList<T> l) {
+            try {
+                return JsonConvert.SerializeObject(l, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto }) ?? "";
+            } catch (Exception) {
+                return "";
             }
         }
     }
