@@ -706,22 +706,17 @@
                         HorizontalContentAlignment="Stretch"
                         Panel.ZIndex="10"
                         Background="{StaticResource BackgroundBrush}"
+                        BorderThickness="0"
                         Grid.IsSharedSizeScope="True"
                         ItemContainerStyle="{StaticResource ListBoxItemNoHighlight}"
                         ItemsSource="{Binding TemplateController.TemplatesView}"
+                        VirtualizingPanel.IsVirtualizing="True"
+                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                         Visibility="{Binding TemplateController.TemplatesLoading, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
-                        <ListBox.Template>
-                            <ControlTemplate>
-                                <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
-                                    <ItemsPresenter />
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </ListBox.Template>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+
+                        <ItemsControl.GroupStyle>
+                            <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
+                        </ItemsControl.GroupStyle>
 
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type sequencer:TemplatedSequenceContainer}">
@@ -1061,6 +1056,7 @@
                         Visibility="{Binding TargetController.TargetsLoading, Converter={StaticResource VisibilityConverter}}"
                         Value="{Binding TargetController.TargetsLoadingProgress}" />
 
+
                     <ListBox
                         Grid.Row="3"
                         Margin="5,0,0,0"
@@ -1068,22 +1064,16 @@
                         HorizontalContentAlignment="Stretch"
                         Panel.ZIndex="10"
                         Background="{StaticResource BackgroundBrush}"
+                        BorderThickness="0"
                         Grid.IsSharedSizeScope="True"
                         ItemContainerStyle="{StaticResource ListBoxItemNoHighlight}"
                         ItemsSource="{Binding TargetController.TargetsView}"
+                        VirtualizingPanel.IsVirtualizing="True"
+                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                         Visibility="{Binding TargetController.TargetsLoading, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
-                        <ListBox.Template>
-                            <ControlTemplate>
-                                <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
-                                    <ItemsPresenter />
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </ListBox.Template>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+                        <ItemsControl.GroupStyle>
+                            <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
+                        </ItemsControl.GroupStyle>
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
