@@ -1050,12 +1050,12 @@
                             Height="35"
                             Margin="5,0,5,0"
                             Command="{Binding AddPluginRepositoryCommand}"
-                            CommandParameter="{Binding Text, ElementName=GainInput}"
                             Style="{StaticResource BackgroundButton}">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
+                                SnapsToDevicePixels="False"
                                 Stretch="Uniform" />
                         </Button>
                     </Grid>

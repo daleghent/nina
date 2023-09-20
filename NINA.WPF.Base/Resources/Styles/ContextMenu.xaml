@@ -19,7 +19,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <Grid SnapsToDevicePixels="True">
+                    <Grid UseLayoutRounding="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -143,7 +143,7 @@
                         Background="{StaticResource BackgroundBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="1"
-                        SnapsToDevicePixels="True">
+                        UseLayoutRounding="True">
                         <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuScrollViewer}">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </ScrollViewer>
@@ -217,7 +217,7 @@
                         Width="7"
                         Height="7"
                         Data="M 0 0 L 7 7 M 0 7 L 7 0"
-                        SnapsToDevicePixels="False"
+                        UseLayoutRounding="True"
                         Stroke="{StaticResource BorderBrush}"
                         StrokeThickness="2"
                         Visibility="Hidden" />
@@ -302,7 +302,7 @@
                         Background="{StaticResource BackgroundBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="1"
-                        SnapsToDevicePixels="True">
+                        UseLayoutRounding="True">
                         <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuScrollViewer}">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </ScrollViewer>

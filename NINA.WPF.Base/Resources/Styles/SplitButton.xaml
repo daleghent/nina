@@ -262,7 +262,7 @@
                     <Grid
                         x:Name="MainGrid"
                         IsEnabled="{TemplateBinding IsEnabled}"
-                        SnapsToDevicePixels="True">
+                        UseLayoutRounding="True">
                         <xceed:ButtonChrome
                             x:Name="ControlChrome"
                             Background="{TemplateBinding Background}"

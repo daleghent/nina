@@ -59,7 +59,7 @@
                                 <Border
                                     Name="SelectedItemBorder"
                                     Padding="1"
-                                    SnapsToDevicePixels="true">
+                                    UseLayoutRounding="True">
                                     <Border.Style>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="BorderBrush" Value="Transparent" />

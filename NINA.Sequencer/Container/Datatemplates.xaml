@@ -31,7 +31,7 @@
                             <Grid
                                 x:Name="Head"
                                 Background="{StaticResource TertiaryBackgroundBrush}"
-                                SnapsToDevicePixels="True">
+                                UseLayoutRounding="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30" />
                                     <ColumnDefinition Width="30" />
@@ -60,7 +60,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     RecognizesAccessKey="True"
-                                    SnapsToDevicePixels="True">
+                                    UseLayoutRounding="True">
                                     <i:Interaction.Behaviors>
                                         <behaviors:DragDropBehavior />
                                     </i:Interaction.Behaviors>
@@ -90,7 +90,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Focusable="False"
-                        SnapsToDevicePixels="true">
+                        UseLayoutRounding="True">
                         <DockPanel>
                             <ToggleButton
                                 x:Name="HeaderSite"
@@ -151,7 +151,7 @@
                             <Grid
                                 x:Name="Head"
                                 Background="{StaticResource TertiaryBackgroundBrush}"
-                                SnapsToDevicePixels="True">
+                                UseLayoutRounding="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30" />
                                     <ColumnDefinition Width="30" />
@@ -180,7 +180,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     RecognizesAccessKey="True"
-                                    SnapsToDevicePixels="True">
+                                    UseLayoutRounding="True">
                                     <i:Interaction.Behaviors>
                                         <behaviors:DragDropBehavior />
                                     </i:Interaction.Behaviors>
@@ -210,7 +210,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Focusable="False"
-                        SnapsToDevicePixels="true">
+                        UseLayoutRounding="True">
                         <DockPanel>
                             <ToggleButton
                                 x:Name="HeaderSite"

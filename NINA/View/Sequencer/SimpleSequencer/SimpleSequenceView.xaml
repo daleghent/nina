@@ -256,6 +256,7 @@
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
+                                UseLayoutRounding="True"
                                 Stretch="Uniform" />
                         </Button>
                     </StackPanel>
@@ -439,6 +440,7 @@
                             Margin="5"
                             Data="{StaticResource AddSVG}"
                             Fill="{StaticResource ButtonForegroundBrush}"
+                            UseLayoutRounding="True"
                             Stretch="Uniform" />
                     </Button>
                     <Button

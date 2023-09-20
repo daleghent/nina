@@ -142,7 +142,7 @@
                                     <Grid
                                         x:Name="Head"
                                         Background="{StaticResource SecondaryBackgroundBrush}"
-                                        SnapsToDevicePixels="True">
+                                        UseLayoutRounding="True">
                                         <Grid.Resources>
                                             <Path
                                                 x:Key="TelescopeIcon"
@@ -189,7 +189,7 @@
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             RecognizesAccessKey="True"
-                                            SnapsToDevicePixels="True">
+                                            UseLayoutRounding="True">
                                             <i:Interaction.Behaviors>
                                                 <behaviors:DragDropBehavior />
                                             </i:Interaction.Behaviors>
@@ -225,7 +225,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Focusable="False"
-                                SnapsToDevicePixels="true">
+                                UseLayoutRounding="True">
                                 <DockPanel>
                                     <ToggleButton
                                         x:Name="HeaderSite"
@@ -602,6 +602,7 @@
                                                                     Margin="5"
                                                                     Data="{StaticResource AddSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
+                                                                    UseLayoutRounding="True"
                                                                     Stretch="Uniform" />
                                                                 <Button.ToolTip>
                                                                     <ToolTip>

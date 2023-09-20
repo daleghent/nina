@@ -56,7 +56,8 @@
                                 Margin="5"
                                 Data="{TemplateBinding AddSVG}"
                                 Fill="{TemplateBinding ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </ControlTemplate>

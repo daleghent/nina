@@ -331,6 +331,7 @@
                                         Margin="5"
                                         Data="{StaticResource AddSVG}"
                                         Fill="{StaticResource PrimaryBrush}"
+                                        UseLayoutRounding="True"
                                         Stretch="Uniform" />
                                     <Button.ToolTip>
                                         <ToolTip>

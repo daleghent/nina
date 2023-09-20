@@ -48,7 +48,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Grid SnapsToDevicePixels="True">
+                    <Grid UseLayoutRounding="True">
                         <Border
                             Name="HeaderBorder"
                             Background="{TemplateBinding Panel.Background}"
@@ -134,7 +134,7 @@
                         Name="Border"
                         Padding="2"
                         Background="Transparent"
-                        SnapsToDevicePixels="true">
+                        UseLayoutRounding="True">
                         <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>

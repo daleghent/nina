@@ -162,7 +162,7 @@
                     <Grid
                         ClipToBounds="False"
                         KeyboardNavigation.TabNavigation="Local"
-                        SnapsToDevicePixels="true">
+                        UseLayoutRounding="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
@@ -246,7 +246,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid SnapsToDevicePixels="true">
+                                <Grid UseLayoutRounding="True">
                                     <Border
                                         x:Name="Bd"
                                         Padding="{TemplateBinding Padding}"
@@ -325,7 +325,7 @@
                     <Grid
                         ClipToBounds="True"
                         KeyboardNavigation.TabNavigation="Local"
-                        SnapsToDevicePixels="True">
+                        UseLayoutRounding="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
@@ -372,7 +372,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid SnapsToDevicePixels="true">
+                                <Grid UseLayoutRounding="True">
                                     <Border
                                         x:Name="Bd"
                                         Padding="{TemplateBinding Padding}"

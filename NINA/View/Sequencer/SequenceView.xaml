@@ -140,6 +140,7 @@
                                         Margin="5"
                                         Data="{StaticResource AddSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
+                                        UseLayoutRounding="True"
                                         Stretch="Uniform" />
                                     <TextBlock
                                         FontStyle="Italic"
@@ -295,9 +296,7 @@
                     Navigation="{StaticResource Navigation}"
                     Simple="{StaticResource Simple}" />
             </Grid.Resources>
-            <ContentPresenter
-                Content="{Binding ActiveSequencerVM}"
-                ContentTemplateSelector="{StaticResource ContentSelector}" />
+            <ContentPresenter Content="{Binding ActiveSequencerVM}" ContentTemplateSelector="{StaticResource ContentSelector}" />
         </Grid>
     </Grid>
 </UserControl>
