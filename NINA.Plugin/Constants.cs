@@ -27,5 +27,6 @@ namespace NINA.Plugin {
         public static readonly string UserExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
         public static readonly string StagingFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginStaging");
         public static readonly string DeletionFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginDeletion");
+        public static readonly string MainPluginRepository = "https://nighttime-imaging.eu/wp-json/nina/v1";
     }
 }

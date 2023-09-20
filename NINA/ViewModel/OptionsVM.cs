@@ -47,6 +47,7 @@ using NINA.Image.ImageAnalysis;
 using NINA.WPF.Base.Interfaces;
 using System.Collections.Generic;
 using System.Windows.Data;
+using NINA.WPF.Base.InputBox;
 
 namespace NINA.ViewModel {
 
@@ -74,6 +75,15 @@ namespace NINA.ViewModel {
             this.PluggableStarDetection = starDetectionSelector;
             this.PluggableStarAnnotator = starAnnotatorSelector;
             this.PluggableAutoFocusVMFactory = autoFocusVMFactorySelector;
+
+            PluginRepositories = new AsyncObservableCollection<string>(CoreUtil.DeserializeList<string>(Properties.Settings.Default.PluginRepositories));
+            if (!PluginRepositories.Any(x => x == Constants.MainPluginRepository)) {
+                // We enforce that the main plugin repository is always present
+                PluginRepositories.Insert(0, Constants.MainPluginRepository);
+            }
+
+            RemovePluginRepositoryCommand = new RelayCommand(RemovePluginRepository);
+            AddPluginRepositoryCommand = new RelayCommand(AddPluginRepository);
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
             OpenSequenceTemplateDiagCommand = new RelayCommand(OpenSequenceTemplateDiag);
@@ -164,6 +174,8 @@ namespace NINA.ViewModel {
             ImagePatterns = patterns;
             RaisePropertyChanged(nameof(FilePatternPreview));
         }
+
+        public AsyncObservableCollection<string> PluginRepositories { get; set; }
 
         public string FilePattern {
             get => profileService.ActiveProfile.ImageFileSettings.FilePattern;
@@ -582,6 +594,52 @@ namespace NINA.ViewModel {
             }
         }
 
+        private void AddPluginRepository(object obj) {
+            var box = new InputBox(Loc.Instance["LblPluginRepositoryEnterUrl"], "https://<repository url>");
+            box.Owner = Application.Current.MainWindow;
+            box.Width = 350;
+            box.Height = 150;
+            box.Show();
+            box.Closing += (sender, e) => {
+                var d = sender as InputBox;
+                if (d.Canceled) {
+                    return;
+                }
+                var url = box.InputText;
+                bool isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out var uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+                if (!isValidUrl) {
+                    Notification.ShowError(string.Format(Loc.Instance["LblPluginRepositoryUrlInvalid"], url));
+                    Logger.Error($"Plugin Repository Url is invalid: {url}");
+                    return;
+                }
+                try {
+                    this.PluginRepositories.Add(url);
+                    Properties.Settings.Default.PluginRepositories = CoreUtil.SerializeList<string>(this.PluginRepositories.ToList());
+                    CoreUtil.SaveSettings(Properties.Settings.Default);
+                } catch (Exception ex) {
+                    Notification.ShowError(ex.Message);
+                    Logger.Error(ex);
+                }
+            };            
+        }
+
+        private void RemovePluginRepository(object obj) {
+            if (obj is string url) {
+                try {
+                    if(url == Constants.MainPluginRepository) {
+                        // Removing the main repository is ignored
+                        return;
+                    }
+                    this.PluginRepositories.Remove(url);
+                    Properties.Settings.Default.PluginRepositories = CoreUtil.SerializeList<string>(this.PluginRepositories.ToList());
+                    CoreUtil.SaveSettings(Properties.Settings.Default);
+                } catch (Exception ex) {
+                    Notification.ShowError(ex.Message);
+                    Logger.Error(ex);
+                }
+            }
+        }
+
         public ICommand DownloadIndexesCommand { get; private set; }
 
         public ICommand OpenCygwinFileDiagCommand { get; private set; }
@@ -628,6 +686,9 @@ namespace NINA.ViewModel {
         public ICommand SiteFromPlanetariumCommand { get; private set; }
 
         public ICommand SelectProfileCommand { get; private set; }
+
+        public ICommand RemovePluginRepositoryCommand { get; }
+        public ICommand AddPluginRepositoryCommand { get; }
 
         private ObservableCollection<CultureInfo> _availableLanguages = new ObservableCollection<CultureInfo>() {
             new CultureInfo("en-GB"),

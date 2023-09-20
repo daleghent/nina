@@ -173,6 +173,9 @@
     <Compile Include="Behaviors\MouseFollowBehavior.cs" />
     <Compile Include="Behaviors\MouseWheelCommandBehavior.cs" />
     <Compile Include="Exceptions\SkySurveyUnavailableException.cs" />
+    <Compile Include="InputBox\InputBox.xaml.cs">
+      <DependentUpon>InputBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IAutoFocusVMFactory.cs" />
     <Compile Include="Interfaces\IMeridianFlipVMFactory.cs" />
     <Compile Include="Interfaces\Mediator\IApplicationMediator.cs" />
@@ -358,6 +361,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="InputBox\InputBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Model\Equipment\MyCamera\Simulator\SetupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
