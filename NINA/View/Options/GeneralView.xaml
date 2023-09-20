@@ -1055,7 +1055,7 @@
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
-                                SnapsToDevicePixels="False"
+                                UseLayoutRounding="True"
                                 Stretch="Uniform" />
                         </Button>
                     </Grid>

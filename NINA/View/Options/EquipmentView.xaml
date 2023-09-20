@@ -38,7 +38,14 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <GroupBox DataContext="{Binding CameraSettings}" Header="{ns:Loc LblCamera}">
+            <GroupBox DataContext="{Binding CameraSettings}">
+                <GroupBox.Header>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblCamera}" />
+                </GroupBox.Header>
                 <StackPanel Orientation="Vertical">
                     <UniformGrid Columns="2">
                         <UniformGrid
@@ -343,41 +350,48 @@
             <GroupBox
                 Grid.RowSpan="2"
                 Grid.Column="1"
-                DataContext="{Binding FilterWheelSettings}"
-                Header="{ns:Loc LblFilterWheel}">
+                DataContext="{Binding FilterWheelSettings}">
+
+                <GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="20"
+                            Text="{ns:Loc LblFilterWheel}" />
+                        <Button
+                            Grid.Column="1"
+                            Width="35"
+                            Height="35"
+                            Margin="5,0,5,0"
+                            Command="{Binding Data.AddFilterCommand, Source={StaticResource proxy}}"
+                            Style="{StaticResource BackgroundButton}">
+                            <Path 
+                                Margin="5"
+                                Data="{StaticResource AddSVG}"
+                                Fill="{StaticResource PrimaryBrush}"
+                                UseLayoutRounding="True"
+                                Stretch="Uniform" />
+                        </Button>
+                    </Grid>
+                </GroupBox.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition />
-                        <RowDefinition Height="50" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,5,0,0"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock
-                                MinWidth="200"
-                                MinHeight="20"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblDisableGuidingOnFilterChange}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblDisableGuidingOnFilterChangeTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DisableGuidingOnFilterChange}" />
-                        </UniformGrid>
-                    </UniformGrid>
                     <DataGrid
-                        Grid.Row="1"
                         Margin="0,10,0,0"
                         AutoGenerateColumns="False"
                         CanUserAddRows="False"
                         HeadersVisibility="Column"
                         HorizontalScrollBarVisibility="Disabled"
                         ItemsSource="{Binding FilterWheelFilters}"
-                        SelectedItem="{Binding DataContext.SelectedFilter, ElementName=UC}"
                         SelectionMode="Single"
                         VerticalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
@@ -418,37 +432,47 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="40"
+                                Header=""
+                                IsReadOnly="True">
+
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            Width="25"
+                                            Height="25"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding Data.RemoveFilterCommand, Source={StaticResource proxy}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource BackgroundButton}">
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource TrashCanSVG}"
+                                                Fill="{StaticResource PrimaryBrush}"
+                                                Stretch="Uniform" />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="2" DataContext="{Binding DataContext, ElementName=UC}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <Button
-                                Width="40"
-                                Margin="0,5,0,5"
-                                Command="{Binding AddFilterCommand}">
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource AddSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <Button
-                                Grid.Column="1"
-                                Width="40"
-                                Margin="1,5,0,5"
-                                Command="{Binding RemoveFilterCommand}">
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource TrashCanSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                            </Button>
-                        </StackPanel>
-                    </Grid>
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="0,5,0,0"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            MinWidth="200"
+                            MinHeight="20"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblDisableGuidingOnFilterChange}">
+                            <TextBlock.ToolTip>
+                                <TextBlock Text="{ns:Loc LblDisableGuidingOnFilterChangeTooltip}" />
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DisableGuidingOnFilterChange}" />
+                    </StackPanel>
                 </Grid>
             </GroupBox>
             <GroupBox

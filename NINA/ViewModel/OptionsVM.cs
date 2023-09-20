@@ -403,16 +403,12 @@ namespace NINA.ViewModel {
         }
 
         private void RemoveFilter(object obj) {
-            var filters = ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-            if (SelectedFilter == null && filters.Count > 0) {
-                SelectedFilter = filters.Last();
-            }
-            filters.Remove(SelectedFilter);
-            if (filters.Count > 0) {
-                SelectedFilter = filters.Last();
-            }
-            for (short i = 0; i < filters.Count; i++) {
-                filters[i].Position = i;
+            if(obj is FilterInfo filter) {
+                var filters = ActiveProfile.FilterWheelSettings.FilterWheelFilters;                
+                filters.Remove(filter);                
+                for (short i = 0; i < filters.Count; i++) {
+                    filters[i].Position = i;
+                }
             }
         }
 
