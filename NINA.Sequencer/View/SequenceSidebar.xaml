@@ -1088,7 +1088,7 @@
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" SharedSizeGroup="InfoColumn" />
-                                            <ColumnDefinition Width="*" SharedSizeGroup="AltitudeChartColumn" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel
                                             Grid.ColumnSpan="2"
