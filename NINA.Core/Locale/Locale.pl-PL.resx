@@ -5554,7 +5554,7 @@ Dotyczy tylko sterownika kamery ASCOM!</value>
     <value>Sprawdź aktualizacje</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Zainstaluj za pośrednictwem menedżera wtyczek N.I.N.A. lub ręcznie pobierz i skopiuj plik DLL do %localappdata%\NINA\Plugins z:</value>
+    <value>Zainstaluj za pośrednictwem menedżera wtyczek N.I.N.A. lub ręcznie pobierz i skopiuj plik DLL do %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; z:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Zainstaluj za pośrednictwem menedżera wtyczek N.I.N.A. lub pobierz ręcznie i uruchom konfigurację z:</value>

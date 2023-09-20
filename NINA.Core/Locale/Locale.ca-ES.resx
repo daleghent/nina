@@ -5555,7 +5555,7 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Cerca actualitzacions</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarregueu manualment i copieu el fitxer DLL a %localappdata%\NINA\Plugins des de:</value>
+    <value>Instalar a través del gestor de complements (plugins) de N.I.N.A. o descarregar y copiar manualmente l'arxiu DLL a %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; des de:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarregueu manualment i executeu la configuració des de:</value>

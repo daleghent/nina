@@ -5560,7 +5560,7 @@ Má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Zkontrolovat aktualizace</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Nainstalujte prostřednictvím správce N.I.N.A.plugin nebo ručně stáhněte a zkopírujte soubor DLL do %localappdata%\NINA\Plugins z:</value>
+    <value>Instalujte pomocí správce pluginů N.I.N.A. nebo ručně stáhněte a zkopírujte soubor DLL do %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; z:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Nainstalujte prostřednictvím správce N.I.N.A. pluginů nebo ručně stáhněte a spusťte instalační program z:</value>

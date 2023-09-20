@@ -5559,7 +5559,7 @@ Só é relevante quando estiver a usar um driver de câmera ASCOM!</value>
     <value>Procurar atualizações</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Instalar com recurso ao gestor de plugins do N.I.N.A ou efetue o download manualmente e copie o ficheiro DLL para a pasta %localappdata%\NINA\Plugins a partir de:</value>
+    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; from:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Instalar com recurso ao gestor de plugins do N.I.N.A ou efetue o download manualmente e corra a instalação a partir de:</value>

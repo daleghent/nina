@@ -5572,7 +5572,7 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
     <value>업데이트 확인</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>N.I.N.A. 플러그인 관리자에서 설치하거나 여기에서 DLL 파일을 수동으로 다운로드하여 %localappdata%\NINA\Plugins에 복사합니다.</value>
+    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; from:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>N.I.N.A. 플러그인 관리자에서 설치하거나 수동으로 다운로드한 다음 여기에서 설정합니다.</value>

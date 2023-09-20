@@ -5555,7 +5555,7 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>Comprobar actualizaciones</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Instalar a través del gestor de complementos (plugins) de N.I.N.A. o descargar manualmente y copiar el archivo DLL en %localappdata%\NINA\Plugins de:</value>
+    <value>Instalar a través del gestor de complementos (plugins) de N.I.N.A. o descargar manualmente y copiar el archivo DLL en %localappdata%\NINA\Plugins desde:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Instalar a través del gestor de plugins de N.I.N.A. o descargar manualmente y ejecutar la configuración desde:</value>

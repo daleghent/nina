@@ -5557,7 +5557,7 @@
     <value>检查更新</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>通过 N.I.N.A. 插件管理器安装，或手动下载并复制DLL 文件到 %localappdata%\NINA\Plugins ，下载地址：</value>
+    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; from:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>通过 N.I.N.A. 插件管理器安装，或手动下载并运行安装程序，下载地址：</value>

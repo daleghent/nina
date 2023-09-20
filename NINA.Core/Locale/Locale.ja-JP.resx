@@ -5539,7 +5539,7 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
     <value>アップデートを確認</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>N.I.N.A.プラグインマネージャからインストールするか、ここからDLLファイルを手動でダウンロードし、 %localappdata%\NINA\Plugins にコピーします。</value>
+    <value>N.I.N.A.プラグインマネージャーからインストールするか、手動でDLLファイルをダウンロードし、 %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt;  にコピーしてください。ダウンロード場所：</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>N.I.N.A.プラグインマネージャからインストールするか、手動でダウンロードし、ここからセットアップを実行してください。</value>
