@@ -815,7 +815,7 @@
                                     x:Key="ContentSelector"
                                     Atik="{StaticResource Atik}"
                                     Canon="{StaticResource Canon}"
-                                    Default="{StaticResource Generic}"
+                                    Default="{StaticResource Default}"
                                     FailedToLoadTemplate="{StaticResource Failed}"
                                     Generic="{StaticResource Generic}"
                                     LegacySbig="{StaticResource LegacySbig}"
