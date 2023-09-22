@@ -693,6 +693,7 @@
             <GroupBox
                 Grid.Row="1"
                 Grid.Column="1"
+                VerticalAlignment="Top"
                 DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
                 Header="{ns:Loc LblAlternativeUIColorSchema}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
@@ -884,7 +885,14 @@
                 </ScrollViewer>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Header="{ns:Loc LblAstrometry}">
+            <GroupBox Grid.Row="2">
+                <GroupBox.Header>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblAstrometry}" />
+                </GroupBox.Header>
                 <StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -1039,7 +1047,6 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
-                            MinHeight="40"
                             Margin="0,10,0,0"
                             VerticalAlignment="Center"
                             FontSize="20"
@@ -1055,8 +1062,8 @@
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
-                                UseLayoutRounding="True"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </GroupBox.Header>
