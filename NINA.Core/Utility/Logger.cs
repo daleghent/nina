@@ -31,7 +31,7 @@ namespace NINA.Core.Utility {
             var logDate = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             var logDir = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Logs");
             var processId = Environment.ProcessId;
-            var logFilePath = Path.Combine(logDir, $"{logDate}-{CoreUtil.Version}.{processId}-.log");
+            var logFilePath = Path.Combine(logDir, $"{logDate}-{CoreUtil.Version}.{processId}.log");
 
             levelSwitch = new LoggingLevelSwitch();
             levelSwitch.MinimumLevel = Serilog.Events.LogEventLevel.Information;
@@ -49,7 +49,7 @@ namespace NINA.Core.Utility {
                     outputTemplate: "{Timestamp:yyyy-MM-ddTHH:mm:ss.ffff}|{LegacyLogLevel}|{Message:lj}{NewLine}{Exception}")
                 .WriteTo.File(logFilePath,
                     rollOnFileSizeLimit: true,
-                    rollingInterval: RollingInterval.Day,
+                    rollingInterval: RollingInterval.Infinite,
                     outputTemplate: "{Timestamp:yyyy-MM-ddTHH:mm:ss.ffff}|{LegacyLogLevel}|{Message:lj}{NewLine}{Exception}",
                     shared: false,
                     buffered: false,
@@ -63,18 +63,23 @@ namespace NINA.Core.Utility {
             /* Initial log of App Version, OS Info, Ascom Version, .NET Version */
             var sb = new StringBuilder();
             var os = Environment.OSVersion;
+            var computerInfo = new Microsoft.VisualBasic.Devices.ComputerInfo();
             sb.AppendLine(PadBoth("", 70, '-'));
-            sb.AppendLine(PadBoth("NINA - Nighttime Imaging 'N' Astronomy", 70, '-'));
-            sb.AppendLine(PadBoth(string.Format("Running NINA Version {0}", CoreUtil.Version), 70, '-'));
+            sb.AppendLine(PadBoth(CoreUtil.Title, 70, '-'));
+            sb.AppendLine(PadBoth(string.Format("Version {0}", CoreUtil.Version), 70, '-'));
             sb.AppendLine(PadBoth(DateTime.Now.ToString("s"), 70, '-'));
-            sb.AppendLine(PadBoth(".NET Version {0}", 70, '-', Environment.Version.ToString()));
-            sb.AppendLine(PadBoth("Oparating System Information", 70, '-'));
-            sb.AppendLine(PadBoth("Is 64bit OS {0}", 70, '-', Environment.Is64BitOperatingSystem.ToString()));
-            sb.AppendLine(PadBoth("Is 64bit Process {0}", 70, '-', Environment.Is64BitProcess.ToString()));
+            sb.AppendLine(PadBoth("Is 64bit {0}", 70, '-', Environment.Is64BitProcess.ToString()));
+            sb.AppendLine(PadBoth("", 70, '-'));
+            sb.AppendLine(PadBoth("{0}", 70, '-', os.VersionString));
             sb.AppendLine(PadBoth("Platform {0:G}", 70, '-', os.Platform.ToString()));
-            sb.AppendLine(PadBoth("Version {0}", 70, '-', os.VersionString));
             sb.AppendLine(PadBoth("Major {0} Minor {1}", 70, '-', os.Version.Major.ToString(), os.Version.Minor.ToString()));
             sb.AppendLine(PadBoth("Service Pack {0}", 70, '-', os.ServicePack));
+            sb.AppendLine(PadBoth("Is 64bit OS {0}", 70, '-', Environment.Is64BitOperatingSystem.ToString()));
+            sb.AppendLine(PadBoth(".NET Version {0}", 70, '-', Environment.Version.ToString()));
+            sb.AppendLine(PadBoth("", 70, '-'));
+            sb.AppendLine(PadBoth("Processor Count {0}", 70, '-', Environment.ProcessorCount.ToString()));
+            sb.AppendLine(PadBoth("Total Physical Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalPhysicalMemory / 1024d / 1024d / 1024d, 2).ToString()));
+            sb.AppendLine(PadBoth("Total Virtual Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalVirtualMemory / 1024d / 1024d / 1024d, 2).ToString()));
             sb.AppendLine(PadBoth("", 70, '-'));
             sb.Append("DATE|LEVEL|SOURCE|MEMBER|LINE|MESSAGE");
 
