@@ -132,11 +132,10 @@
                 </Button>
             </Grid>
         </Grid>
-        <ScrollViewer
+        <sequencer:MiniSequencer
             Grid.Row="0"
             Margin="5,5,5,5"
-            VerticalScrollBarVisibility="Auto">
-            <sequencer:MiniSequencer VerticalContentAlignment="Top" DataContext="{Binding Sequencer.MainContainer}" />
-        </ScrollViewer>
+            VerticalContentAlignment="Top"
+            DataContext="{Binding Sequencer.MainContainer}" />
     </Grid>
 </UserControl>
