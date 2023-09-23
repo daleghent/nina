@@ -672,7 +672,7 @@ public class Ogmacam : IDisposable {
 
     /* get the version of this dll/so, which is: 54.23312.20230910 */
     public static string Version() {
-        return Ogmacam_Version();
+        return Marshal.PtrToStringUni(Ogmacam_Version());
     }
 
     private static DeviceV2[] Ptr2Device(IntPtr p, uint cnt) {
