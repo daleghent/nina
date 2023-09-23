@@ -535,6 +535,7 @@ namespace NINA.ViewModel {
         }
 
         private void InitializeObjectTypeFilters() {
+            ObjectTypes.Clear();
             var task = new DatabaseInteraction().GetObjectTypes(new System.Threading.CancellationToken());
             var list = task.Result?.OrderBy(x => x).ToList();
             foreach (var type in list) {
