@@ -340,7 +340,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     duration
                 );
 
-                string path = Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss") + ".json");
+                string path = Path.Combine(ReportDirectory, $"{DateTime.Now:yyyy-MM-dd--HH-mm-ss}--{profileService.ActiveProfile.Id}.json");
                 File.WriteAllText(path, JsonConvert.SerializeObject(report));
                 return report;
             } catch (Exception ex) {

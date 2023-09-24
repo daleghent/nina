@@ -205,12 +205,12 @@ namespace NINA.Imaging.ViewModel.Imaging {
         private object lockobj = new object();
 
         private void InitializeChartList() {
-            var files = Directory.GetFiles(Path.Combine(WPF.Base.ViewModel.AutoFocus.AutoFocusVM.ReportDirectory));
+            var files = Directory.GetFiles(Path.Combine(WPF.Base.ViewModel.AutoFocus.AutoFocusVM.ReportDirectory), $"*{profileService.ActiveProfile.Id}*");
             var l = new SortedSet<Chart>(new ChartComparer());
 
             foreach (string file in files) {
                 var item = new Chart(Path.GetFileName(file), file);
-                l.Add(item);
+                l.Add(item);      
             }
             lock (lockobj) {
                 ChartList = new AsyncObservableCollection<Chart>(l);

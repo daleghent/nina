@@ -40,6 +40,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Plugin folder in `%localappdata%\NINA\Plugins` now contain a subfolder with the `Major.Minor.Revision` version of the application containing plugins for the current version. This will make it simpler to upgrade and downgrade application versions without having to exchange plugins for developers. From user perspective nothing will change as everything is automatically migrated.
 - Sequencer Sidebar Tab for Templates and Targets now indicate a load progress when the list is refreshed and should also load faster.
 - In Options you can now specify custom plugin repositories for privately hosted plugins
+- Autofocus report JSON files now append the profile id in their filename and get filtered in the application by only using the relevant files from the current profile
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
