@@ -6704,4 +6704,13 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
   <data name="LblPHD2PeakRA" xml:space="preserve">
     <value>Peak AR: {0} ({1}")</value>
   </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Repositoris de complements</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Introduïu l'URL del dipòsit de complements (plugins)</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>L'Url del dipòsit de complements (plugins) no és vàlid: {0}</value>
+  </data>
 </root>

@@ -6683,4 +6683,13 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblPHD2PeakRA" xml:space="preserve">
     <value>赤経のピーク: {0}({1}")</value>
   </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>プラグインリポジトリ</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>プラグインリポジトリのURLを入力</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>プラグインリポジトリのURLが無効です: {0}</value>
+  </data>
 </root>

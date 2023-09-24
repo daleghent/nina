@@ -6703,4 +6703,13 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
   <data name="LblPHD2PeakRA" xml:space="preserve">
     <value>Szczyt RA: {0} ({1}")</value>
   </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Repozytoria wtyczek</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Wprowadź adres URL repozytorium wtyczki</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>Adres URL repozytorium wtyczek jest nieprawidłowy: {0}</value>
+  </data>
 </root>

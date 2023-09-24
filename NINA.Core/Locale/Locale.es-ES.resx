@@ -6703,4 +6703,13 @@ Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.<
   <data name="LblPHD2PeakRA" xml:space="preserve">
     <value>Pico en AR: {0} ({1}")</value>
   </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Repositorios de plugins</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Introducir URL del repositorio de plugins</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>La Url del repositorio de plugins no es válida: {0}</value>
+  </data>
 </root>

@@ -6714,4 +6714,13 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblPHD2PeakRA" xml:space="preserve">
     <value>Peak RA: {0} ({1}")</value>
   </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Plugin Repositories</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Enter Plugin Repository URL</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>Plugin Repository Url is invalid: {0}</value>
+  </data>
 </root>

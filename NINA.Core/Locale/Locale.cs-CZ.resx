@@ -6708,4 +6708,13 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
   <data name="LblPHD2PeakRA" xml:space="preserve">
     <value>Vrchol RA: {0} ({1}")</value>
   </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Úložiště Pluginů</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Zadej URL Úložiště Pluginu</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>Url Úložiště Pluginu je neplatná: {0}</value>
+  </data>
 </root>
