@@ -31,7 +31,7 @@ namespace NINA.Core.Utility {
             var logDate = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             var logDir = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Logs");
             var processId = Environment.ProcessId;
-            var logFilePath = Path.Combine(logDir, $"{logDate}-{CoreUtil.Version}.{processId}.log");
+            var logFilePath = Path.Combine(logDir, $"{logDate}-{CoreUtil.Version}.{processId}-.log");
 
             levelSwitch = new LoggingLevelSwitch();
             levelSwitch.MinimumLevel = Serilog.Events.LogEventLevel.Information;
@@ -49,7 +49,7 @@ namespace NINA.Core.Utility {
                     outputTemplate: "{Timestamp:yyyy-MM-ddTHH:mm:ss.ffff}|{LegacyLogLevel}|{Message:lj}{NewLine}{Exception}")
                 .WriteTo.File(logFilePath,
                     rollOnFileSizeLimit: true,
-                    rollingInterval: RollingInterval.Infinite,
+                    rollingInterval: RollingInterval.Day,
                     outputTemplate: "{Timestamp:yyyy-MM-ddTHH:mm:ss.ffff}|{LegacyLogLevel}|{Message:lj}{NewLine}{Exception}",
                     shared: false,
                     buffered: false,
