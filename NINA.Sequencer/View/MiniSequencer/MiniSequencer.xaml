@@ -40,9 +40,21 @@
             <DataTemplate x:Key="ConditionTemplate2" DataType="{x:Type cond:SequenceCondition}">
                 <local:MiniCondition />
             </DataTemplate>
+            <DataTemplate x:Key="SequenceItemTemplate" DataType="{x:Type sequenceItem:SequenceItem}">
+                <local:MiniSequenceItem />
+            </DataTemplate>
+            <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
+                <local:MiniContainer />
+            </DataTemplate>
+            <DataTemplate x:Key="DeepSkyObjectContainerTemplate" DataType="{x:Type cont:DeepSkyObjectContainer}">
+                <local:MiniContainer />
+            </DataTemplate>
             <local:MiniSequencerDataTemplateSelector
                 x:Key="ConditionsAndTriggerSelector"
+                DeepSkyObjectContainer="{StaticResource DeepSkyObjectContainerTemplate}"
                 SequenceCondition="{StaticResource ConditionTemplate2}"
+                SequenceContainer="{StaticResource SequenceContainerTemplate}"
+                SequenceItem="{StaticResource SequenceItemTemplate}"
                 SequenceTrigger="{StaticResource TriggerTemplate2}" />
         </ResourceDictionary>
     </UserControl.Resources>
