@@ -108,13 +108,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Boolean)) {
-                    var oldValue = (Boolean)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Boolean)) {
+                        var oldValue = (Boolean)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -144,13 +145,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Byte)) {
-                    var oldValue = (Byte)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Byte)) {
+                        var oldValue = (Byte)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -180,13 +182,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(SByte)) {
-                    var oldValue = (SByte)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(SByte)) {
+                        var oldValue = (SByte)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -216,13 +219,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Char)) {
-                    var oldValue = (Char)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Char)) {
+                        var oldValue = (Char)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -252,13 +256,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Decimal)) {
-                    var oldValue = (Decimal)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Decimal)) {
+                        var oldValue = (Decimal)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -288,13 +293,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Double)) {
-                    var oldValue = (Double)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Double)) {
+                        var oldValue = (Double)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -324,13 +330,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Single)) {
-                    var oldValue = (Single)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Single)) {
+                        var oldValue = (Single)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -360,13 +367,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Int32)) {
-                    var oldValue = (Int32)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Int32)) {
+                        var oldValue = (Int32)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -396,13 +404,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(UInt32)) {
-                    var oldValue = (UInt32)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(UInt32)) {
+                        var oldValue = (UInt32)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -432,13 +441,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Int64)) {
-                    var oldValue = (Int64)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Int64)) {
+                        var oldValue = (Int64)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -468,13 +478,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(UInt64)) {
-                    var oldValue = (UInt64)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(UInt64)) {
+                        var oldValue = (UInt64)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -504,13 +515,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Int16)) {
-                    var oldValue = (Int16)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Int16)) {
+                        var oldValue = (Int16)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -540,13 +552,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(UInt16)) {
-                    var oldValue = (UInt16)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(UInt16)) {
+                        var oldValue = (UInt16)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -576,13 +589,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(String)) {
-                    var oldValue = (String)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(String)) {
+                        var oldValue = (String)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -612,13 +626,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(DateTime)) {
-                    var oldValue = (DateTime)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(DateTime)) {
+                        var oldValue = (DateTime)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
@@ -648,13 +663,14 @@ namespace NINA.Profile {
                 pluginStorage[pluginId] = new Dictionary<string, object>();
             }
 
-            var oldValueObj = pluginStorage[pluginId][key];
-            if(oldValueObj != null) {
-                if(oldValueObj.GetType() == typeof(Guid)) {
-                    var oldValue = (Guid)oldValueObj;
-                    if(oldValue == value) {
-                        Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
-                        return;
+            if(pluginStorage[pluginId].TryGetValue(key, out var oldValueObj)) {
+                if(oldValueObj != null) {
+                    if(oldValueObj.GetType() == typeof(Guid)) {
+                        var oldValue = (Guid)oldValueObj;
+                        if(oldValue == value) {
+                            Logger.Trace($"Skip setting plugin {pluginId} field {key} with value {value} as it is equals to old value {oldValue}");
+                            return;
+                        }
                     }
                 }
             }
