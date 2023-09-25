@@ -725,13 +725,13 @@
                                         <behaviors:DragDropBehavior />
                                     </i:Interaction.Behaviors>
                                     <Border>
-                                        <ninactrl:DetachingExpander
+                                        <Expander
                                             x:Name="expander"
                                             Margin="5,0,5,0"
                                             HorizontalContentAlignment="Stretch"
                                             Background="Transparent"
                                             Template="{StaticResource DownExpander}">
-                                            <ninactrl:DetachingExpander.Resources>
+                                            <Expander.Resources>
                                                 <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
                                                     <Grid>
                                                         <Grid.RowDefinitions>
@@ -819,8 +819,8 @@
                                                     DeepSkyObjectContainer="{StaticResource DeepSkyObjectContainerTemplate}"
                                                     SequenceContainer="{StaticResource SequenceContainerTemplate}"
                                                     SequenceItem="{StaticResource SequenceItemTemplate}" />
-                                            </ninactrl:DetachingExpander.Resources>
-                                            <ninactrl:DetachingExpander.Header>
+                                            </Expander.Resources>
+                                            <Expander.Header>
                                                 <DockPanel
                                                     Margin="0,5,0,5"
                                                     HorizontalAlignment="Stretch"
@@ -853,14 +853,14 @@
                                                         Foreground="{StaticResource ButtonForegroundBrush}"
                                                         Text="{Binding Container.Name}" />
                                                 </DockPanel>
-                                            </ninactrl:DetachingExpander.Header>
-                                            <ninactrl:DetachingExpander.Content>
+                                            </Expander.Header>
+                                            <Expander.Content>
                                                 <ItemsControl
                                                     Margin="0,5,0,5"
                                                     ItemTemplateSelector="{StaticResource TemplateSelector}"
                                                     ItemsSource="{Binding Container.Items}" />
-                                            </ninactrl:DetachingExpander.Content>
-                                        </ninactrl:DetachingExpander>
+                                            </Expander.Content>
+                                        </Expander>
 
                                         <Border.Style>
                                             <Style TargetType="Border">

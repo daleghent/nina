@@ -216,10 +216,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style x:Key="SequenceContainerExpander" TargetType="ninactrl:DetachingExpander">
+            <Style x:Key="SequenceContainerExpander" TargetType="Expander">
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="ninactrl:DetachingExpander">
+                        <ControlTemplate TargetType="Expander">
                             <Border
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -280,7 +280,7 @@
         </ContentPresenter.Resources>
         <ContentPresenter.ContentTemplate>
             <DataTemplate DataType="{x:Type cont:SequenceContainer}">
-                <ninactrl:DetachingExpander
+                <Expander
                     Padding="0,0,0,0"
                     Background="{StaticResource BackgroundBrush}"
                     BorderBrush="{StaticResource BorderBrush}"
@@ -295,7 +295,7 @@
                             DragAboveSize="25"
                             DragBelowSize="15" />
                     </i:Interaction.Behaviors>
-                    <ninactrl:DetachingExpander.Header>
+                    <Expander.Header>
                         <Grid
                             Name="PART_Header"
                             Grid.Row="0"
@@ -536,9 +536,9 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-                    </ninactrl:DetachingExpander.Header>
+                    </Expander.Header>
 
-                    <ninactrl:DetachingExpander.Content>
+                    <Expander.Content>
                         <DockPanel
                             HorizontalAlignment="Stretch"
                             IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}"
@@ -877,8 +877,8 @@
                                 </ninactrl:HitTestGroupBox>
                             </Grid>
                         </DockPanel>
-                    </ninactrl:DetachingExpander.Content>
-                </ninactrl:DetachingExpander>
+                    </Expander.Content>
+                </Expander>
             </DataTemplate>
         </ContentPresenter.ContentTemplate>
     </ContentPresenter>

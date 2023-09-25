@@ -81,10 +81,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="DSOExpander" TargetType="ninactrl:DetachingExpander">
+    <Style x:Key="DSOExpander" TargetType="Expander">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ninactrl:DetachingExpander">
+                <ControlTemplate TargetType="Expander">
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -201,10 +201,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="ExposureInfoExpander" TargetType="ninactrl:DetachingExpander">
+    <Style x:Key="ExposureInfoExpander" TargetType="Expander">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ninactrl:DetachingExpander">
+                <ControlTemplate TargetType="Expander">
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -293,8 +293,8 @@
 
                         </Grid.RowDefinitions>
 
-                        <ninactrl:DetachingExpander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
-                            <ninactrl:DetachingExpander.Header>
+                        <Expander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
+                            <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Border MinHeight="25">
                                         <TextBlock
@@ -341,7 +341,7 @@
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ninactrl:DetachingExpander}, Path=IsExpanded}" Value="True">
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Expander}, Path=IsExpanded}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -349,7 +349,7 @@
                                         </StackPanel.Style>
                                     </StackPanel>
                                 </StackPanel>
-                            </ninactrl:DetachingExpander.Header>
+                            </Expander.Header>
                             <Grid>
                                 <Grid.Resources>
                                     <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
@@ -593,13 +593,13 @@
                                     DataContext="{Binding Target.DeepSkyObject}"
                                     NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                             </Grid>
-                        </ninactrl:DetachingExpander>
+                        </Expander>
 
-                        <ninactrl:DetachingExpander
+                        <Expander
                             Grid.Row="1"
                             IsExpanded="{Binding ExposureInfoListExpanded}"
                             Style="{StaticResource ExposureInfoExpander}">
-                            <ninactrl:DetachingExpander.Header>
+                            <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Border MinHeight="25">
                                         <TextBlock
@@ -615,7 +615,7 @@
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ninactrl:DetachingExpander}, Path=IsExpanded}" Value="True">
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Expander}, Path=IsExpanded}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -623,7 +623,7 @@
                                         </StackPanel.Style>
                                     </StackPanel>
                                 </StackPanel>
-                            </ninactrl:DetachingExpander.Header>
+                            </Expander.Header>
                             <DataGrid
                                 Grid.ColumnSpan="2"
                                 AutoGenerateColumns="False"
@@ -800,7 +800,7 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </ninactrl:DetachingExpander>
+                        </Expander>
                     </Grid>
                 </Border>
             </view:SequenceContainerView.SequenceContainerContent>

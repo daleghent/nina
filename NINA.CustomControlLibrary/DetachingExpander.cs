@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace NINA.CustomControlLibrary {
-
+    [Obsolete]
     public class DetachingExpander : Expander {
         public object _content;
 
