@@ -20,7 +20,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
-    xmlns:seqItem="clr-namespace:NINA.Sequencer.SequenceItem"
     xmlns:utility="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
@@ -40,7 +39,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid
-        Margin="0,5,0,0"
+        Margin="-21,0,0,0"
         Background="{StaticResource BackgroundBrush}"
         IsHitTestVisible="True">
         <Grid.Resources>
@@ -284,8 +283,7 @@
             MinHeight="40"
             HorizontalAlignment="Stretch"
             Background="{StaticResource BackgroundBrush}"
-            BorderBrush="{StaticResource SecondaryBackgroundBrush}"
-            BorderThickness="0,0,3,3">
+            BorderThickness="0,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -331,8 +329,8 @@
                                         Margin="5"
                                         Data="{StaticResource AddSVG}"
                                         Fill="{StaticResource PrimaryBrush}"
-                                        UseLayoutRounding="True"
-                                        Stretch="Uniform" />
+                                        Stretch="Uniform"
+                                        UseLayoutRounding="True" />
                                     <Button.ToolTip>
                                         <ToolTip>
                                             <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_AddTrigger_Tooltip}" />
@@ -381,18 +379,6 @@
                 <Grid Grid.Row="1" Visibility="{Binding ShowDetails, ElementName=UC, Converter={StaticResource VisibilityConverter}}">
                     <Border BorderBrush="{StaticResource TertiaryBackgroundBrush}" BorderThickness="0,2,0,0" />
                 </Grid>
-                <ItemsControl
-                    Grid.Row="2"
-                    Margin="20,10,0,10"
-                    ItemsSource="{Binding Items}">
-                    <ItemsControl.Resources>
-                        <ResourceDictionary>
-                            <DataTemplate DataType="{x:Type seqItem:SequenceItem}">
-                                <local:SequenceBlockView />
-                            </DataTemplate>
-                        </ResourceDictionary>
-                    </ItemsControl.Resources>
-                </ItemsControl>
             </Grid>
         </Border>
     </Grid>

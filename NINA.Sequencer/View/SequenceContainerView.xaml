@@ -602,8 +602,8 @@
                                                                     Margin="5"
                                                                     Data="{StaticResource AddSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    UseLayoutRounding="True"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <Button.ToolTip>
                                                                     <ToolTip>
                                                                         <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_AddTrigger_Tooltip}" />

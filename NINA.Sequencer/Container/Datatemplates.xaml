@@ -261,6 +261,15 @@
         </Setter>
     </Style>
 
+    <HierarchicalDataTemplate DataType="{x:Type local:SequenceRootContainer}" ItemsSource="{Binding Items}">
+        <view:SequenceRootContainerView
+            x:Name="MainSequenceContainer"
+            Grid.RowSpan="1"
+            Margin="0,0,0,0"
+            Panel.ZIndex="-10"
+            DataContext="{Binding UpdateSourceTrigger=PropertyChanged}" />
+    </HierarchicalDataTemplate>
+
     <DataTemplate DataType="{x:Type local:ParallelContainer}">
         <view:SequenceContainerView>
             <view:SequenceContainerView.SequenceContainerContent>
@@ -801,34 +810,18 @@
         <view:SequenceContainerView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type local:TargetAreaContainer}">
+    <HierarchicalDataTemplate DataType="{x:Type local:TargetAreaContainer}" ItemsSource="{Binding Items}">
         <Border
-            Margin="-40,0,0,0"
+            Margin="-19,0,0,0"
             BorderBrush="{StaticResource TertiaryBackgroundBrush}"
-            BorderThickness="0,2,0,2">
-            <Grid Margin="40,0,0,0" Background="{StaticResource BackgroundBrush}">
-                <Grid.MinHeight>
-                    <MultiBinding>
-                        <MultiBinding.Converter>
-                            <converter:TargetAreaMinHeightConverter />
-                        </MultiBinding.Converter>
-                        <Binding Path="ViewportHeight" RelativeSource="{RelativeSource AncestorType=ScrollViewer}" />
-                        <Binding RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
-                        <Binding Path="ActualHeight" RelativeSource="{RelativeSource AncestorType=Grid}" />
-                        <!--  Dummy Binding to update min height when scroll viewer content size changes  -->
-                        <Binding
-                            Path="ExtentHeight"
-                            RelativeSource="{RelativeSource AncestorType=ScrollViewer}"
-                            UpdateSourceTrigger="PropertyChanged" />
-                    </MultiBinding>
-                </Grid.MinHeight>
-                <ItemsControl MinHeight="35" ItemsSource="{Binding Items}" />
+            BorderThickness="0,5,0,0">
+            <Grid Background="{StaticResource BackgroundBrush}" Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
                 <StackPanel
+                    Margin="0,100,0,100"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Opacity="0.4"
-                    Orientation="Vertical"
-                    Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
+                    Orientation="Vertical">
                     <Path
                         MaxWidth="80"
                         MaxHeight="80"
@@ -849,40 +842,48 @@
                 </i:Interaction.Behaviors>
             </Grid>
         </Border>
-    </DataTemplate>
+    </HierarchicalDataTemplate>
 
-    <DataTemplate DataType="{x:Type local:StartAreaContainer}">
-        <Grid MinHeight="35" Background="{StaticResource BackgroundBrush}">
-            <ItemsControl MinHeight="35" ItemsSource="{Binding Items}" />
+    <HierarchicalDataTemplate DataType="{x:Type local:StartAreaContainer}" ItemsSource="{Binding Items}">
+        <Grid
+            MinHeight="100"
+            Margin="-19,0,0,0"
+            Background="{StaticResource BackgroundBrush}"
+            Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontStyle="Italic"
                 Opacity="0.4"
-                Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_StartArea}"
-                Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
+                Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_StartArea}" />
             <i:Interaction.Behaviors>
                 <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
                 <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
             </i:Interaction.Behaviors>
         </Grid>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type local:EndAreaContainer}">
-        <Grid MinHeight="35" Background="{StaticResource BackgroundBrush}">
-            <ItemsControl MinHeight="35" ItemsSource="{Binding Items}" />
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontStyle="Italic"
-                Opacity="0.4"
-                Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_EndArea}"
-                Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
-            <i:Interaction.Behaviors>
-                <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
-            </i:Interaction.Behaviors>
-        </Grid>
-    </DataTemplate>
+    </HierarchicalDataTemplate>
+    <HierarchicalDataTemplate DataType="{x:Type local:EndAreaContainer}" ItemsSource="{Binding Items}">
+        <Border
+            Margin="-19,0,0,0"
+            BorderBrush="{StaticResource TertiaryBackgroundBrush}"
+            BorderThickness="0,5,0,0">
+            <Grid
+                MinHeight="100"
+                Background="{StaticResource BackgroundBrush}"
+                Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontStyle="Italic"
+                    Opacity="0.4"
+                    Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_EndArea}" />
+                <i:Interaction.Behaviors>
+                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
+                </i:Interaction.Behaviors>
+            </Grid>
+        </Border>
+    </HierarchicalDataTemplate>
 
     <DataTemplate DataType="{x:Type local:UnknownSequenceContainer}">
         <view:SequenceBlockView />
