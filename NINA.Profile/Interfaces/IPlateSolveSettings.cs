@@ -42,5 +42,8 @@ namespace NINA.Profile.Interfaces {
         bool Sync { get; set; }
         bool SlewToTarget { get; set; }
         bool BlindFailoverEnabled { get; set; }
+
+        string TheSkyXHost { get; set; }
+        int TheSkyXPort { get; set; }
     }
 }
