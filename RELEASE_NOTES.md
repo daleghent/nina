@@ -41,6 +41,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Sequencer Sidebar Tab for Templates and Targets now indicate a load progress when the list is refreshed and should also load faster.
 - In Options you can now specify custom plugin repositories for privately hosted plugins
 - Autofocus report JSON files now append the profile id in their filename and get filtered in the application by only using the relevant files from the current profile
+- Mini sequencer will now auto scroll to active items
+- The SkyX Imagelink is now available as a plate solver
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
