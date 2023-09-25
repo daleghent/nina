@@ -174,6 +174,7 @@
             ItemsSource="{Binding Items}"
             ScrollViewer.CanContentScroll="True"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectedItemChanged="TreeView_SelectedItemChanged"
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.ScrollUnit="Pixel"
@@ -218,7 +219,7 @@
                                         HorizontalAlignment="Stretch" />
                                 </Grid>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="true">
+                                    <!--<Trigger Property="IsSelected" Value="true">
                                         <Setter TargetName="Bd" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                                         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
                                     </Trigger>
@@ -229,13 +230,16 @@
                                         </MultiTrigger.Conditions>
                                         <Setter TargetName="Bd" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
                                         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-                                    </MultiTrigger>
+                                    </MultiTrigger>-->
                                     <Trigger Property="IsEnabled" Value="false">
                                         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                                     </Trigger>
                                     <DataTrigger Binding="{Binding Status}" Value="{x:Static enum:SequenceEntityStatus.DISABLED}">
                                         <Setter Property="IsExpanded" Value="False" />
                                         <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Status}" Value="{x:Static enum:SequenceEntityStatus.RUNNING}">
+                                        <Setter Property="IsSelected" Value="True" />
                                     </DataTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
