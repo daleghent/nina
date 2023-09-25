@@ -70,6 +70,9 @@ namespace NINA.PlateSolving {
                 case PlateSolverEnum.ASPS:
                     return new AllSkyPlateSolver(plateSolveSettings.AspsLocation);
 
+                case PlateSolverEnum.TSX_IMAGELINK:
+                    return new TheSkyXImageLinkSolver(plateSolveSettings.TheSkyXHost, plateSolveSettings.TheSkyXPort);
+
                 default:
                     return new ASTAPSolver(plateSolveSettings.ASTAPLocation);
             }

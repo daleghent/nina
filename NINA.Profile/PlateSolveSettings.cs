@@ -65,6 +65,9 @@ namespace NINA.Profile {
             aSTAPLocation = File.Exists(defaultASTAPLocation)
                  ? defaultASTAPLocation
                  : string.Empty;
+
+            this._theSkyXHost = "localhost";
+            this._theSkyXPort = 3040;
         }
 
         [DataMember]
@@ -384,6 +387,33 @@ namespace NINA.Profile {
                     blindFailoverEnabled = value;
                     RaisePropertyChanged();
                 }
+            }
+        }
+
+        private string _theSkyXHost;
+        [DataMember]
+        public string TheSkyXHost {
+            get => this._theSkyXHost;
+            set {
+                if (this._theSkyXHost != value) {
+                    this._theSkyXHost = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+
+        private int _theSkyXPort;
+
+        [DataMember]
+        public int TheSkyXPort {
+            get => this._theSkyXPort;
+            set {
+                if (this._theSkyXPort != value) {
+                    this._theSkyXPort = value;
+                    RaisePropertyChanged();
+                }
+
             }
         }
     }
