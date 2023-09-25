@@ -16,7 +16,6 @@ using System;
 using NINA.Sequencer.Trigger;
 using Newtonsoft.Json.Linq;
 using NINA.Core.Utility;
-using NINA.Sequencer.SequenceItem;
 
 namespace NINA.Sequencer.Serialization {
 
@@ -30,6 +29,9 @@ namespace NINA.Sequencer.Serialization {
         public override ISequenceTrigger Create(Type objectType, JObject jObject) {
             if (jObject.TryGetValue("$type", out var token)) {
                 var t = GetType(jObject.GetValue("$type").ToString());
+                if (t == null) {
+                    return new UnknownSequenceTrigger(token?.ToString());
+                }
                 try {
                     var method = factory.GetType().GetMethod(nameof(factory.GetTrigger)).MakeGenericMethod(new Type[] { t });
                     var obj = method.Invoke(factory, null);

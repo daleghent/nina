@@ -29,6 +29,9 @@ namespace NINA.Sequencer.Serialization {
         public override ISequenceContainer Create(Type objectType, JObject jObject) {
             if (jObject.TryGetValue("$type", out var token)) {
                 var t = GetType(jObject.GetValue("$type").ToString());
+                if (t == null) {
+                    return new UnknownSequenceContainer(token?.ToString());
+                }
                 try {
                     var method = factory.GetType().GetMethod(nameof(factory.GetContainer)).MakeGenericMethod(new Type[] { t });
                     var obj = method.Invoke(factory, null);
