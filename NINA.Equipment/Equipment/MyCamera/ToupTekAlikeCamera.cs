@@ -1047,8 +1047,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         }
                     }
                     break;
-                case ToupTekActions.BinAverage:
-                    if (true) {
+                case ToupTekActions.BinAverage: { 
                         var flag = StringToBoolean(actionParameters);
                         if (flag.HasValue) {
                             Logger.Info($"Device Action {actionName}: {flag.Value}");
@@ -1059,7 +1058,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             return "0";
                         }
                     }
-                    break;
                 case ToupTekActions.FanSpeed:
                     if (MaxFanSpeed > 0) {
                         if(int.TryParse(actionParameters, out var flag)) {

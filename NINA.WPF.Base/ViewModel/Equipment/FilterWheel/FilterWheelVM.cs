@@ -308,7 +308,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             return Task.CompletedTask;
         }
 
-        private readonly FilterWheelChooserVM _filterWheelChooserVM;
         private readonly IFilterWheelMediator filterWheelMediator;
         private readonly IFocuserMediator focuserMediator;
         private readonly IGuiderMediator guiderMediator;

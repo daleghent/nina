@@ -135,7 +135,6 @@ namespace NINA {
                 Debug.Print($"Time to create MainWindowVM {sw.Elapsed}");
 
                 return mainWindowVM;
-                return null;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;

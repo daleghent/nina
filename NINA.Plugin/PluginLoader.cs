@@ -220,7 +220,7 @@ namespace NINA.Plugin {
         }
 
         public Task Load() {
-            return Task.Run(async () => {
+            return Task.Run(() => {
                 lock (lockobj) {
                     if (!initialized) {
                         try {

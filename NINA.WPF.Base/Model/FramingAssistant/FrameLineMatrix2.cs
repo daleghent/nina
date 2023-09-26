@@ -262,7 +262,7 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
         private void DrawDecLineCollection(Graphics g, FrameLine frameLine) {
             if (frameLine.Collection.Count > 1) {
                 var position = frameLine.Collection.FirstOrDefault(x => x.X > 0 && x.Y > 0);
-                if (position != null) {
+                if (position != PointF.Empty) {
                     var text = $"{string.Format("{0:N2}", frameLine.Angle.Degree)}°";
                     var size = g.MeasureString(text, gridAnnotationFont);
                     g.DrawString(text, gridAnnotationFont, gridAnnotationBrush, (position.X), (position.Y));

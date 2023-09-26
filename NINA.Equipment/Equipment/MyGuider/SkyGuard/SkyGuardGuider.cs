@@ -316,7 +316,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
             }
             catch (FileNotFoundException ex)
             {
-                Logger.Error(Loc.Instance["LblSkyGuardPathNotFound"]);
+                Logger.Error(Loc.Instance["LblSkyGuardPathNotFound"], ex);
                 Notification.ShowError(Loc.Instance["LblSkyGuardPathNotFound"]);
                 throw;
             }
@@ -894,7 +894,6 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                 NewTimeOut();
 
-                string isDitheringInProgress;
                 SkyGuardStatusMessage isDitheringInProgressStatus = new SkyGuardStatusMessage();
 
                 string guidingStatusResponse = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetGuidingStatus");

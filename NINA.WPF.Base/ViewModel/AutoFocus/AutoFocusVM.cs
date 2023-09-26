@@ -585,7 +585,6 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             var maximumFocusPoints = profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint * profileService.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps * 10;
 
             int numberOfAttempts = 0;
-            System.Drawing.Rectangle oldSubSample = new System.Drawing.Rectangle();
             int initialFocusPosition = focuserMediator.GetInfo().Position;
             double initialHFR = double.NaN;
 
