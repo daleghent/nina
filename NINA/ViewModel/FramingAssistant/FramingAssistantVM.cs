@@ -240,14 +240,18 @@ namespace NINA.ViewModel.FramingAssistant {
                     sequenceMediator.AddSimpleTarget(dso);
                 }
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
-            SetSequencerTargetCommand = new RelayCommand((object o) => {
+            SetSequencerTargetCommand = new RelayCommand(async (object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
-
-                var template = o as IDeepSkyObjectContainer;
-                foreach (var container in GetDSOContainerListFromFraming(template)) {
-                    Logger.Info($"Adding target to advanced sequencer: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
-                    sequenceMediator.AddAdvancedTarget(container);
-                }
+                await Task.Run(async () => {
+                    await Task.Delay(1000);
+                    var template = o as IDeepSkyObjectContainer;
+                    await Application.Current.Dispatcher.BeginInvoke(() => {
+                        foreach (var container in GetDSOContainerListFromFraming(template)) {
+                            Logger.Info($"Adding target to advanced sequencer: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
+                            sequenceMediator.AddAdvancedTarget(container);
+                        }
+                    });
+                });
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
 
             AddTargetToTargetListCommand = new RelayCommand((object o) => {
