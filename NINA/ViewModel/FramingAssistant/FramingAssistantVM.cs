@@ -243,7 +243,8 @@ namespace NINA.ViewModel.FramingAssistant {
             SetSequencerTargetCommand = new RelayCommand(async (object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
                 await Task.Run(async () => {
-                    await Task.Delay(1000);
+                    // This is needed for the tab to start loading and the virtualizing stack panel to allocate proper space. otherwise we run into problems
+                    await Task.Delay(100);
                     var template = o as IDeepSkyObjectContainer;
                     await Application.Current.Dispatcher.BeginInvoke(() => {
                         foreach (var container in GetDSOContainerListFromFraming(template)) {
