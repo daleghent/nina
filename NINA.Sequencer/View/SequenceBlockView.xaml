@@ -330,7 +330,7 @@
                             SequenceTrigger="{StaticResource NoAttempts}" />
                     </StackPanel.Resources>
 
-                    <ContentControl ContentTemplateSelector="{StaticResource AttemptsDataTemplateSelector}" />
+                    <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource AttemptsDataTemplateSelector}" />
                 </StackPanel>
 
                 <ContentPresenter
@@ -486,7 +486,7 @@
                         SequenceTrigger="{StaticResource NoAttempts}" />
                 </WrapPanel.Resources>
 
-                <ContentControl ContentTemplateSelector="{StaticResource AttemptsDataTemplateSelector}" />
+                <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource AttemptsDataTemplateSelector}" />
 
                 <StackPanel Margin="25,0,0,0" Orientation="Horizontal">
 
