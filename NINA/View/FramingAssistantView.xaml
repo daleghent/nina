@@ -741,26 +741,32 @@
                         </Grid>
                     </GroupBox>
 
-                    <Grid>
+                    <Grid Visibility="{Binding RectangleCalculated, Converter={StaticResource VisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="1">
+                        <ninactrl:AsyncProcessButton
+                            Height="30"
+                            Margin="5,0,5,0"
+                            HorizontalAlignment="Stretch"
+                            ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
+                            ButtonText="{ns:Loc LblDetermineRotationFromCamera}"
+                            CancelButtonImage="{StaticResource CancelSVG}"
+                            CancelCommand="{Binding CancelGetRotationFromCameraCommand}"
+                            CancelToolTip="{ns:Loc LblDetermineRotationFromCameraCancel}"
+                            Command="{Binding GetRotationFromCameraCommand}"
+                            ToolTip="{ns:Loc LblDetermineRotationFromCameraTooltip}" />
+                        <Grid Grid.Row="1" Margin="5,5,5,0">
                             <ninactrl:CancellableButton
-                                Height="25"
-                                Margin="5"
+                                Height="30"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding CancelSlewToCoordinatesCommand}"
                                 CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding SlewToCoordinatesCommand}" />
                             <xceed:SplitButton
-                                Height="25"
-                                Margin="5"
+                                Height="30"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding SlewToCoordinatesCommand}"
                                 CommandParameter="Center"
@@ -804,24 +810,10 @@
                                 </xceed:SplitButton.DropDownContent>
                             </xceed:SplitButton>
                         </Grid>
-                        <Grid>
-                            <ninactrl:AsyncProcessButton
-                                Height="25"
-                                Margin="5"
-                                HorizontalAlignment="Stretch"
-                                ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
-                                ButtonText="{ns:Loc LblDetermineRotationFromCamera}"
-                                CancelButtonImage="{StaticResource CancelSVG}"
-                                CancelCommand="{Binding CancelGetRotationFromCameraCommand}"
-                                CancelToolTip="{ns:Loc LblDetermineRotationFromCameraCancel}"
-                                Command="{Binding GetRotationFromCameraCommand}"
-                                ToolTip="{ns:Loc LblDetermineRotationFromCameraTooltip}" />
-                        </Grid>
                         <xceed:SplitButton
-                            Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                            Height="25"
-                            Margin="5,0,5,0"
+                            Grid.Row="2"
+                            Height="30"
+                            Margin="5,5,5,0"
                             Command="{Binding GetDSOTemplatesCommand}"
                             DropDownContentBackground="{StaticResource BackgroundBrush}"
                             IsOpen="{Binding SequencerActionsOpened, Mode=TwoWay}">
