@@ -400,6 +400,12 @@ namespace QHYCCD {
             }
         }
 
+        public uint GetQHYCCDRollingShutterEndOffset(uint row, ref double offset) {
+            lock (lockobj) {
+                return GetQHYCCDRollingShutterEndOffset(handle, row, ref offset);
+            }
+        }
+
         #endregion Utility Methods
 
         #region Exception Generator
@@ -1060,6 +1066,9 @@ namespace QHYCCD {
 
         [DllImport(DLLNAME, EntryPoint = "GetQHYCCDPreciseExposureInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         private static extern unsafe uint GetQHYCCDPreciseExposureInfo(IntPtr handle, ref uint pixelPeriod, ref uint linePeriod, ref uint framePeriod, ref uint clocksPerLine, ref uint linesPerFrame, ref uint actualExposureTime, ref byte isLongExposureMode);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDRollingShutterEndOffset", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDRollingShutterEndOffset(IntPtr handle, uint row, ref double offset);
 
         #endregion DLL Imports
 

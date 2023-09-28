@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -120,5 +121,7 @@ namespace QHYCCD {
         void SetQHYCCDGPSPOSB(uint pos, byte width);
 
         uint GetQHYCCDPreciseExposureInfo(ref uint pixelPeriod, ref uint linePeriod, ref uint framePeriod, ref uint clocksPerLine, ref uint linesPerFrame, ref uint actualExposureTime, ref byte isLongExposureMode);
+        
+        uint GetQHYCCDRollingShutterEndOffset(uint row, ref double offset);
     }
 }
