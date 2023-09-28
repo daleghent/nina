@@ -528,6 +528,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if ((string)_gpsSettings["SetGPS"] == "True") {
                 if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CAM_GPS, 1)) {
                     Logger.Debug("Failed to set GPS");
+                    _gpsSettings["SetGPS"] = "False";
                 }
                 if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSVCOXFreq"])) {
                     Sdk.SetQHYCCDGPSVCOXFreq(ushort.Parse((string)_gpsSettings["SetQHYCCDGPSVCOXFreq"]));
@@ -1140,7 +1141,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 sizex = (uint)CameraXSize / (uint)BinX;
                 sizey = (uint)CameraYSize / (uint)BinY;
             }
-
+            if (!QhyIncludeOverscan) {
+                startx += Info.EffectiveArea.StartX;
+                starty += Info.EffectiveArea.StartY;
+            } else {
+                startx += Info.FullArea.StartX;
+                starty += Info.FullArea.StartY;
+            }
             uint rv;
             Logger.Debug($"QHYCCD: Setting image resolution: startx={startx}, starty={starty}, sizex={sizex}, sizey={sizey}");
             if ((rv = Sdk.SetResolution(startx, starty, sizex, sizey)) != QhySdk.QHYCCD_SUCCESS) {
@@ -1421,6 +1428,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 metaData.GenericHeaders.Add(new BoolMetaDataHeader("QHY_LEM", isLongExposureMode == 1, "isLongExposureMode"));
             } else {
                 Logger.Debug("QHY precise info not found.");
+            }
+
+            double offsetRow0 = 0d;
+            rv = Sdk.GetQHYCCDRollingShutterEndOffset(0, ref offsetRow0);
+            if (rv == QhySdk.QHYCCD_SUCCESS) {
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_OFF0", offsetRow0, "RollingShutterEndOffset row 0"));
             }
         }
 
