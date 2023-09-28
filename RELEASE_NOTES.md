@@ -3,6 +3,18 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.3 Hotfix 1
+
+## Bugfixes
+- Database migration and creation on first time upgrade or installation will now be much faster
+- Fixed Issue in QHY Driver when overscan area was being shown in video mode.
+- Side Of Pier during Meridian Flip will not be flipped when the current position is already a counter weight down position (e.g. when having a pause before meridian time set)
+- Do not throw an error when TrackingRate SET is throwing a PropertyNotImplementedException
+- Fixed an issue when changing the profiles that the ObjectTypes in Framing Assistant were duplicated
+
+## Improvements
+- In Options it is now possible to specify custom plugin repositories. Only add software repositories from sources that you trust! 
+
 # Version 2.3
 
 ## Improvements
