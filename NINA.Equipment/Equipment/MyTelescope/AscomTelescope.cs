@@ -30,6 +30,7 @@ using GuideDirections = NINA.Core.Enum.GuideDirections;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using ASCOM.Common;
+using ASCOM;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
@@ -892,24 +893,29 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         // Set the mode regardless of whether it is the same as what is currently set
                         // Some ASCOM drivers incorrectly report custom rates as Sidereal, and this can help force set the tracking mode to the desired value
                         var currentTrackingMode = TrackingRate.TrackingMode;
-                        switch (value) {
-                            case TrackingMode.Sidereal:
-                                device.TrackingRate = DriveRate.Sidereal;
-                                break;
+                        try {
+                            switch (value) {
+                                case TrackingMode.Sidereal:
+                                    device.TrackingRate = DriveRate.Sidereal;
+                                    break;
 
-                            case TrackingMode.Lunar:
-                                device.TrackingRate = DriveRate.Lunar;
-                                break;
+                                case TrackingMode.Lunar:
+                                    device.TrackingRate = DriveRate.Lunar;
+                                    break;
 
-                            case TrackingMode.Solar:
-                                device.TrackingRate = DriveRate.Solar;
-                                break;
+                                case TrackingMode.Solar:
+                                    device.TrackingRate = DriveRate.Solar;
+                                    break;
 
-                            case TrackingMode.King:
-                                device.TrackingRate = DriveRate.King;
-                                break;
+                                case TrackingMode.King:
+                                    device.TrackingRate = DriveRate.King;
+                                    break;
+                            }
+                        } catch (PropertyNotImplementedException pnie) {
+                            // TrackingRate Write can throw a PropertyNotImplementedException.
+                            Logger.Debug(pnie.Message);
                         }
-                        device.Tracking = (value != TrackingMode.Stopped);
+                    device.Tracking = (value != TrackingMode.Stopped);
 
                         if (currentTrackingMode != value) {
                             RaisePropertyChanged();
