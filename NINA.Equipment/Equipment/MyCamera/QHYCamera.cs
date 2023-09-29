@@ -1143,13 +1143,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 sizex = (uint)CameraXSize / (uint)BinX;
                 sizey = (uint)CameraYSize / (uint)BinY;
             }
-            if (!QhyIncludeOverscan) {
-                startx += Info.EffectiveArea.StartX;
-                starty += Info.EffectiveArea.StartY;
-            } else {
-                startx += Info.FullArea.StartX;
-                starty += Info.FullArea.StartY;
-            }
+            
             uint rv;
             Logger.Debug($"QHYCCD: Setting image resolution: startx={startx}, starty={starty}, sizex={sizex}, sizey={sizey}");
             if ((rv = Sdk.SetResolution(startx, starty, sizex, sizey)) != QhySdk.QHYCCD_SUCCESS) {
