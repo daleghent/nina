@@ -14,6 +14,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Improvements
 - In Options it is now possible to specify custom plugin repositories. Only add software repositories from sources that you trust! 
+- Sequencer Target Sidebar will now load much faster when having a large number of targets
 
 # Version 2.3
 
