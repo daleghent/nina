@@ -379,6 +379,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Database\Migration\11.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
