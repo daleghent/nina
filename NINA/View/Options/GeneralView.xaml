@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2023 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -707,6 +707,7 @@
             <GroupBox
                 Grid.Row="1"
                 Grid.Column="1"
+                VerticalAlignment="Top"
                 DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
                 Header="{ns:Loc LblAlternativeUIColorSchema}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
@@ -898,7 +899,14 @@
                 </ScrollViewer>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Header="{ns:Loc LblAstrometry}">
+            <GroupBox Grid.Row="2">
+                <GroupBox.Header>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblAstrometry}" />
+                </GroupBox.Header>
                 <StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -1053,7 +1061,6 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
-                            MinHeight="40"
                             Margin="0,10,0,0"
                             VerticalAlignment="Center"
                             FontSize="20"
@@ -1064,13 +1071,13 @@
                             Height="35"
                             Margin="5,0,5,0"
                             Command="{Binding AddPluginRepositoryCommand}"
-                            CommandParameter="{Binding Text, ElementName=GainInput}"
                             Style="{StaticResource BackgroundButton}">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </GroupBox.Header>
