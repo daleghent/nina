@@ -225,9 +225,7 @@ namespace NINA.ViewModel {
                         token.ThrowIfCancellationRequested();
 
                         if (data == null) {
-                            Logger.Error(new CameraDownloadFailedException(sequence));
-                            Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
-                            return null;
+                            throw new CameraDownloadFailedException(sequence);
                         }
 
                         AddMetaData(data.MetaData, sequence, exposureStart, midpointDateTime, rms, targetName);
@@ -244,6 +242,9 @@ namespace NINA.ViewModel {
                     } catch (OperationCanceledException) {
                         cameraMediator.AbortExposure();
                         throw;
+                    } catch (CameraDownloadFailedException ex) {
+                        Logger.Error(ex.Message);
+                        Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
                     } catch (CameraExposureFailedException ex) {
                         Logger.Error(ex.Message);
                         Notification.ShowError(ex.Message);

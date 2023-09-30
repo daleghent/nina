@@ -38,6 +38,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
 using NINA.Core.Enum;
+using NINA.Equipment.Exceptions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -737,8 +738,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                             Console.WriteLine("Parent token cancelled: " + token.IsCancellationRequested);
                             Console.WriteLine("Child token cancelled: " + exposureReadyCts.Token.IsCancellationRequested);
                             if (!token.IsCancellationRequested) {
-                                Logger.Error($"Camera Timeout - Camera did not set image as ready after exposuretime + {profileService.ActiveProfile.CameraSettings.Timeout} seconds");
-                                Notification.ShowError(string.Format(Loc.Instance["LblCameraTimeout"], profileService.ActiveProfile.CameraSettings.Timeout));
+                                var downloadFailedException = new CameraDownloadFailedException(sequence, $"Camera Timeout - Camera did not set image as ready after exposuretime + {profileService.ActiveProfile.CameraSettings.Timeout} seconds");
+                                Logger.Error(downloadFailedException);
+                                throw downloadFailedException;
                             }
                         } finally {
                             try { progressCountCts?.Cancel(); } catch { }
