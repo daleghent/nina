@@ -530,6 +530,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if ((string)_gpsSettings["SetGPS"] == "True") {
                 if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CAM_GPS, 1)) {
                     Logger.Debug("Failed to set GPS");
+                    _gpsSettings["SetGPS"] = "False";
                 }
                 if (!string.IsNullOrEmpty((string)_gpsSettings["SetQHYCCDGPSVCOXFreq"])) {
                     Sdk.SetQHYCCDGPSVCOXFreq(ushort.Parse((string)_gpsSettings["SetQHYCCDGPSVCOXFreq"]));
@@ -1142,7 +1143,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 sizex = (uint)CameraXSize / (uint)BinX;
                 sizey = (uint)CameraYSize / (uint)BinY;
             }
-
+            
             uint rv;
             Logger.Debug($"QHYCCD: Setting image resolution: startx={startx}, starty={starty}, sizex={sizex}, sizey={sizey}");
             if ((rv = Sdk.SetResolution(startx, starty, sizex, sizey)) != QhySdk.QHYCCD_SUCCESS) {
@@ -1424,6 +1425,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } else {
                 Logger.Debug("QHY precise info not found.");
             }
+
+            double offsetRow0 = 0d;
+            rv = Sdk.GetQHYCCDRollingShutterEndOffset(0, ref offsetRow0);
+            if (rv == QhySdk.QHYCCD_SUCCESS) {
+                metaData.GenericHeaders.Add(new DoubleMetaDataHeader("QHY_OFF0", offsetRow0, "RollingShutterEndOffset row 0"));
+            }
         }
 
         private void ExtractGpsMetaData(ushort[] flatArray, ImageMetaData metaData) {
@@ -1603,6 +1610,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Action(string actionName, string actionParameters) {
             switch (actionName) {
+                case "SetGPS":
+                    Logger.Debug("Adding setting " + actionName + " to " + actionParameters);
+                    _gpsSettings[actionName] = actionParameters;
+                    SetGPS();
+                    break;
                 case "Reset":
                     _gpsSettings = new Hashtable();
                     break;

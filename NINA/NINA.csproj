@@ -1160,6 +1160,9 @@
     <Content Include="Database\Migration\1.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\11.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Database\Migration\2.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

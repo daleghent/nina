@@ -30,6 +30,7 @@ using GuideDirections = NINA.Core.Enum.GuideDirections;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.ASCOMFacades;
+using ASCOM;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
@@ -483,7 +484,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     localSiderealTime: Angle.ByHours(SiderealTime));
                 if (profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
                     var sop = SideOfPier;
-                    Logger.Debug($"Mount side of pier is currently {sop}, and target is {targetSideOfPier}");
+                    Logger.Info($"Mount side of pier is currently {sop}, and target is {targetSideOfPier}");
                     if (targetSideOfPier == sop) {
                         Logger.Info($"Current Side of Pier ({sop}) is equal to Target Side of Pier ({targetSideOfPier}). No flip is required");
                         // No flip required
@@ -491,9 +492,26 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     }
                 }
 
+
                 targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
                 TargetCoordinates = targetCoordinates;
-                bool pierSideSuccess = !CanSetPierSide;  // If we can't set the side of pier, consider our work done up front already
+                // If we can't set the side of pier, consider our work done up front already                
+                bool pierSideSuccess = !CanSetPierSide;
+
+                // check for the CURRENT mount position
+                // This is not necessarily equals to the target position after the flip (e.g. pause before meridian stops tracking)
+                var currentExpectedSideOfPier = NINA.Astrometry.MeridianFlip.ExpectedPierSide(
+                    coordinates: this.Coordinates,
+                    localSiderealTime: Angle.ByHours(SiderealTime));
+                var currentSoP = this.SideOfPier;
+                if (currentExpectedSideOfPier == currentSoP) {
+                    // we are not yet past meridian - the mount is in Counter Weight DOWN position
+                    // Hence it should be avoided setting SoP as a SoP change slew could result in a Counter Weight UP position
+                    Logger.Info($"Current side of pier is {currentSoP}, which should be a counter weight down position already. Setting side of pier will be skipped for safety and just a slew to target will be attempted.");
+                    pierSideSuccess = true;
+                } 
+
+
                 bool slewSuccess = false;
                 int retries = 0;
                 do {
@@ -1013,22 +1031,27 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         // Set the mode regardless of whether it is the same as what is currently set
                         // Some ASCOM drivers incorrectly report custom rates as Sidereal, and this can help force set the tracking mode to the desired value
                         var currentTrackingMode = TrackingRate.TrackingMode;
-                        switch (value) {
-                            case TrackingMode.Sidereal:
-                                device.TrackingRate = DriveRates.driveSidereal;
-                                break;
+                        try {
+                            switch (value) {
+                                case TrackingMode.Sidereal:
+                                    device.TrackingRate = DriveRates.driveSidereal;
+                                    break;
 
-                            case TrackingMode.Lunar:
-                                device.TrackingRate = DriveRates.driveLunar;
-                                break;
+                                case TrackingMode.Lunar:
+                                    device.TrackingRate = DriveRates.driveLunar;
+                                    break;
 
-                            case TrackingMode.Solar:
-                                device.TrackingRate = DriveRates.driveSolar;
-                                break;
+                                case TrackingMode.Solar:
+                                    device.TrackingRate = DriveRates.driveSolar;
+                                    break;
 
-                            case TrackingMode.King:
-                                device.TrackingRate = DriveRates.driveKing;
-                                break;
+                                case TrackingMode.King:
+                                    device.TrackingRate = DriveRates.driveKing;
+                                    break;
+                            }
+                        } catch(PropertyNotImplementedException pnie) {
+                            // TrackingRate Write can throw a PropertyNotImplementedException.
+                            Logger.Debug(pnie.Message);
                         }
                         device.Tracking = (value != TrackingMode.Stopped);
 

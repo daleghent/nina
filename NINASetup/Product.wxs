@@ -726,6 +726,9 @@
       <Component Id="Database_Migration_10.sql" Guid="*">
         <File Id="Database_Migration_10.sql" Name="10.sql" Source="$(var.NINA_TargetDir)Database\Migration\10.sql" />
       </Component>
+      <Component Id="Database_Migration_11.sql" Guid="30063995-6A29-43DF-AF13-2B2CF01FD1E9">
+        <File Id="Database_Migration_11.sql" Name="11.sql" Source="$(var.NINA_TargetDir)Database\Migration\11.sql" />
+      </Component>
 		</ComponentGroup>
 	</Fragment>
 	<Fragment>
