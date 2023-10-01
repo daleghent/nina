@@ -245,6 +245,7 @@ namespace NINA.ViewModel {
                     } catch (CameraDownloadFailedException ex) {
                         Logger.Error(ex.Message);
                         Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
+                        throw;
                     } catch (CameraExposureFailedException ex) {
                         Logger.Error(ex.Message);
                         Notification.ShowError(ex.Message);
