@@ -1075,7 +1075,12 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 throw new NotSupportedException("Custom tracking rate not supported");
             }
 
-            this.device.TrackingRate = DriveRates.driveSidereal;
+            try {
+                this.device.TrackingRate = DriveRates.driveSidereal;
+            } catch (PropertyNotImplementedException pnie) {
+                // TrackingRate Write can throw a PropertyNotImplementedException.
+                Logger.Debug(pnie.Message);
+            }
             this.device.Tracking = true;
             this.device.RightAscensionRate = rightAscensionRate;
             this.device.DeclinationRate = declinationRate;
