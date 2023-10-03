@@ -44,6 +44,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -95,6 +96,7 @@ namespace NINA.ViewModel {
             OpenPS3FileDiagCommand = new RelayCommand(OpenPS3FileDiag);
             OpenASPSFileDiagCommand = new RelayCommand(OpenASPSFileDiag);
             OpenASTAPFileDiagCommand = new RelayCommand(OpenASTAPFileDiag);
+            OpenPinPointCatalogDiagCommand = new RelayCommand(OpenPinPointCatalogDiag);
             OpenHorizonFilePathDiagCommand = new RelayCommand(OpenHorizonFilePathDiag);
             OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
             ToggleColorsCommand = new RelayCommand(ToggleColors);
@@ -546,6 +548,16 @@ namespace NINA.ViewModel {
             }
         }
 
+        private void OpenPinPointCatalogDiag(object o) {
+            var dialog = new FolderBrowserDialog {
+                RootFolder = Environment.SpecialFolder.MyComputer
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath)) {
+                ActiveProfile.PlateSolveSettings.PinPointCatalogRoot = dialog.SelectedPath;
+            }
+        }
+
         public static Microsoft.Win32.OpenFileDialog GetFilteredFileDialog(string path, string filename, string filter) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
 
@@ -588,7 +600,7 @@ namespace NINA.ViewModel {
 
         private void AddPluginRepository(object obj) {
             var box = new InputBox(Loc.Instance["LblPluginRepositoryEnterUrl"], "https://<repository url>");
-            box.Owner = Application.Current.MainWindow;
+            box.Owner = System.Windows.Application.Current.MainWindow;
             box.Width = 350;
             box.Height = 150;
             box.Show();
@@ -645,6 +657,8 @@ namespace NINA.ViewModel {
         public ICommand OpenHorizonFilePathDiagCommand { get; private set; }
 
         public ICommand OpenASTAPFileDiagCommand { get; private set; }
+
+        public ICommand OpenPinPointCatalogDiagCommand { get; private set; }
 
         public ICommand OpenImageFileDiagCommand { get; private set; }
         public ICommand SensorAnalysisFolderChangedCommand { get; private set; }
@@ -792,9 +806,13 @@ namespace NINA.ViewModel {
             ActiveProfile.ColorSchemaSettings.ToggleSchema();
         }
 
+        public static Dc3PoinPointCatalogEnum[] Dc3PoinPointCatalogs => Enum.GetValues(typeof(Dc3PoinPointCatalogEnum))
+                    .Cast<Dc3PoinPointCatalogEnum>()
+                    .ToArray();
+
 #pragma warning disable CS0612 // Type or member is obsolete
 
-        public FileTypeEnum[] FileTypes => Enum.GetValues(typeof(FileTypeEnum))
+        public static FileTypeEnum[] FileTypes => Enum.GetValues(typeof(FileTypeEnum))
                     .Cast<FileTypeEnum>()
                     .Where(p => p != FileTypeEnum.RAW)
                     .Where(p => p != FileTypeEnum.TIFF_LZW)
@@ -803,15 +821,15 @@ namespace NINA.ViewModel {
 
 #pragma warning restore CS0612 // Type or member is obsolete
 
-        public TIFFCompressionTypeEnum[] TIFFCompressionTypes => Enum.GetValues(typeof(TIFFCompressionTypeEnum))
+        public static TIFFCompressionTypeEnum[] TIFFCompressionTypes => Enum.GetValues(typeof(TIFFCompressionTypeEnum))
                     .Cast<TIFFCompressionTypeEnum>()
                     .ToArray();
 
-        public XISFCompressionTypeEnum[] XISFCompressionTypes => Enum.GetValues(typeof(XISFCompressionTypeEnum))
+        public static XISFCompressionTypeEnum[] XISFCompressionTypes => Enum.GetValues(typeof(XISFCompressionTypeEnum))
                     .Cast<XISFCompressionTypeEnum>()
                     .ToArray();
 
-        public XISFChecksumTypeEnum[] XISFChecksumTypes =>
+        public static XISFChecksumTypeEnum[] XISFChecksumTypes =>
                 /*
 * NOTE: PixInsight does not yet support opening files with SHA3 checksums, despite then
 * being defined as part of the XISF 1.0 specification. We will not permit the user to choose

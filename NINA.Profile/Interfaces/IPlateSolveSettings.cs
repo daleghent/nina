@@ -45,5 +45,12 @@ namespace NINA.Profile.Interfaces {
 
         string TheSkyXHost { get; set; }
         int TheSkyXPort { get; set; }
+
+        Dc3PoinPointCatalogEnum PinPointCatalogType { get; set; }
+        string PinPointCatalogRoot { get; set; }
+        double PinPointMaxMagnitude { get; set; }
+        double PinPointExpansion { get; set; }
+        string PinPointAllSkyApiKey { get; set; }
+        string PinPointAllSkyApiHost { get; set; }
     }
 }
