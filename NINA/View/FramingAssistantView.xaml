@@ -555,7 +555,7 @@
                             </Grid>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="{ns:Loc LblTargets}">
+                    <GroupBox Header="{ns:Loc LblTargets}" Visibility="{Binding RectangleCalculated, Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Vertical">
                             <Grid Margin="0,0,0,6" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>

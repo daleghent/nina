@@ -43,6 +43,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Autofocus report JSON files now append the profile id in their filename and get filtered in the application by only using the relevant files from the current profile
 - Mini sequencer will now auto scroll to active items
 - The SkyX Imagelink is now available as a plate solver
+- Framing tab will now remember the last selected rotation value between sessions
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application

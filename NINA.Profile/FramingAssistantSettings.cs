@@ -33,7 +33,8 @@ namespace NINA.Profile {
             cameraWidth = 4500;
             fieldOfView = 3;
             lastSelectedImageSource = SkySurveySource.HIPS2FITS;
-            Opacity = 0.2;
+            opacity = 0.2;
+            lastRotationAngle = 0;
         }
 
         private SkySurveySource lastSelectedImageSource;
@@ -96,6 +97,19 @@ namespace NINA.Profile {
             set {
                 if (opacity != value) {
                     opacity = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double lastRotationAngle;
+
+        [DataMember]
+        public double LastRotationAngle {
+            get => lastRotationAngle;
+            set {
+                if (lastRotationAngle != value) {
+                    lastRotationAngle = value;
                     RaisePropertyChanged();
                 }
             }
