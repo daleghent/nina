@@ -44,6 +44,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Mini sequencer will now auto scroll to active items
 - The SkyX Imagelink is now available as a plate solver
 - Framing tab will now remember the last selected rotation value between sessions
+- When switching profiles the "Switch Filter" instruction will rematch the filter selection based on the name or the index
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
