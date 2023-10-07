@@ -6712,4 +6712,13 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
   <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
     <value>Adres URL repozytorium wtyczek jest nieprawidłowy: {0}</value>
   </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>Link do obrazu TheSkyX</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>Host TheSkyX</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>Port TheSkyX</value>
+  </data>
 </root>

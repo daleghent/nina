@@ -6713,4 +6713,13 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
   <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
     <value>L'Url del dipòsit de complements (plugins) no és vàlid: {0}</value>
   </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>Enllaç a Imatge TheSkyX</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>Servidor TheSkyX</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>Port TheSkyX</value>
+  </data>
 </root>

@@ -6723,4 +6723,13 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
     <value>Plugin Repository Url is invalid: {0}</value>
   </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>TheSkyX Imagelink</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>TheSkyX Host</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>TheSkyX Port</value>
+  </data>
 </root>

@@ -6692,4 +6692,13 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
     <value>プラグインリポジトリのURLが無効です: {0}</value>
   </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>TheSkyXのイメージリンク</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>TheSkyXのホスト</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>TheSkyXのポート</value>
+  </data>
 </root>

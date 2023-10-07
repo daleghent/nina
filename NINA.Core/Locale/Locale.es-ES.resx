@@ -6712,4 +6712,13 @@ Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.<
   <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
     <value>La Url del repositorio de plugins no es válida: {0}</value>
   </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>Enlace de SkyX</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>Servidor SkyX</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>Puerto SkyX</value>
+  </data>
 </root>

@@ -6717,4 +6717,13 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
   <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
     <value>Url Úložiště Pluginu je neplatná: {0}</value>
   </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>TheSkyX ObrazovýZdroj</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>TheSkyX Host</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>TheSkyX Port</value>
+  </data>
 </root>
