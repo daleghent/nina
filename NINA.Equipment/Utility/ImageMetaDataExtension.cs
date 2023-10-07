@@ -50,11 +50,13 @@ namespace NINA.Equipment.Utility {
                 data.Camera.SensorType = info.SensorType;
 
                 if (data.Camera.SensorType != SensorType.Monochrome) {
-                    if (data.Camera.BayerPattern == BayerPatternEnum.Auto) {
+                    if (data.Camera.BayerPattern == BayerPatternEnum.None) { // Treat it like a monochrome camera (for mono-bin modes on OSCs)
+                        data.Camera.SensorType = SensorType.Monochrome;
+                    } else if (data.Camera.BayerPattern == BayerPatternEnum.Auto) { // Take the sensor type from the camera driver
                         data.Camera.SensorType = info.SensorType;
                         data.Camera.BayerOffsetX = info.BayerOffsetX;
                         data.Camera.BayerOffsetY = info.BayerOffsetY;
-                    } else {
+                    } else { // Take the sensor type from the user-configured bayer pattern
                         data.Camera.SensorType = (SensorType)data.Camera.BayerPattern;
                         data.Camera.BayerOffsetX = 0;
                         data.Camera.BayerOffsetY = 0;

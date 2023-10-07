@@ -217,9 +217,9 @@
                         Width="7"
                         Height="7"
                         Data="M 0 0 L 7 7 M 0 7 L 7 0"
-                        UseLayoutRounding="True"
                         Stroke="{StaticResource BorderBrush}"
                         StrokeThickness="2"
+                        UseLayoutRounding="True"
                         Visibility="Hidden" />
                 </Border>
                 <ContentPresenter

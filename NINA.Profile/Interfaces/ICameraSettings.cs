@@ -70,5 +70,7 @@ namespace NINA.Profile.Interfaces {
 
         int GenericCameraDewHeaterStrength { get; set; }
         int GenericCameraFanSpeed { get; set; }
+
+        bool? ZwoAsiMonoBinMode { get; set; }
     }
 }

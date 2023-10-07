@@ -248,6 +248,29 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public SensorType SensorType { get; private set; } = SensorType.Monochrome;
 
+        private bool hasZwoAsiMonoBinMode = false;
+
+        public bool HasZwoAsiMonoBinMode {
+            get => hasZwoAsiMonoBinMode;
+            set {
+                hasZwoAsiMonoBinMode = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool ZwoAsiMonoBinMode {
+            get {
+                var value = GetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_MONO_BIN);
+                return value != 0;
+            }
+            set {
+                if (SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_MONO_BIN, value ? 1 : 0)) {
+                    profileService.ActiveProfile.CameraSettings.ZwoAsiMonoBinMode = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public short BayerOffsetX { get; } = 0;
         public short BayerOffsetY { get; } = 0;
 
@@ -397,13 +420,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                     }
 
+                    var metaData = new ImageMetaData();
+
+                    if (HasZwoAsiMonoBinMode && ZwoAsiMonoBinMode && BinX > 1) {
+                        metaData.Camera.BayerPattern = BayerPatternEnum.None;
+                    }
+
                     return exposureDataFactory.CreateImageArrayExposureData(
                         input: arr,
                         width: width,
                         height: height,
                         bitDepth: BitDepth,
-                        isBayered: SensorType != SensorType.Monochrome,
-                        metaData: new ImageMetaData());
+                        isBayered: SensorType != SensorType.Monochrome && metaData.Camera.BayerPattern != BayerPatternEnum.None,
+                        metaData: metaData);
                 } catch (OperationCanceledException) {
                 } catch (CameraDownloadFailedException ex) {
                     Notification.ShowExternalError(ex.Message, Loc.Instance["LblZWODriverError"]);
@@ -623,16 +652,24 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAMMA, 50);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_HIGH_SPEED_MODE, 0);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_HARDWARE_BIN, 0);
-            SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_MONO_BIN, 0);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_OVERCLOCK, 0);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_PATTERN_ADJUST, 0);
+
+            // Assumption that all color models support mono binning mode
+            HasZwoAsiMonoBinMode = Info.IsColorCam == ASICameraDll.ASI_BOOL.ASI_TRUE;
+
+            if (HasZwoAsiMonoBinMode && profileService.ActiveProfile.CameraSettings.ZwoAsiMonoBinMode == true) {
+                ZwoAsiMonoBinMode = true;
+            } else {
+                ZwoAsiMonoBinMode = false;
+            }
 
             var id = ASICameraDll.GetId(_cameraId);
             Logger.Info($"Camera ID: {id}");
         }
 
         public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => {
+            return await Task.Run(() => {
                 var success = false;
                 try {
                     ASICameraDll.OpenCamera(_cameraId);
@@ -734,6 +771,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     DateTime midpointDateTime = startDateTime + TimeSpan.FromTicks((DateTime.UtcNow - startDateTime).Ticks / 2);
                     var metaData = new ImageMetaData();
                     metaData.Image.ExposureMidPoint = midpointDateTime;
+
+                    if (HasZwoAsiMonoBinMode && ZwoAsiMonoBinMode && BinX > 1) {
+                        metaData.Camera.BayerPattern = BayerPatternEnum.None;
+                    }
+
                     // get dropped frames
                     DroppedFrames = ASICameraDll.GetDroppedFrames(_cameraId);
 
@@ -742,7 +784,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         width: width,
                         height: height,
                         bitDepth: BitDepth,
-                        isBayered: SensorType != SensorType.Monochrome,
+                        isBayered: SensorType != SensorType.Monochrome && metaData.Camera.BayerPattern != BayerPatternEnum.None,
                         metaData: metaData);
                 } catch (OperationCanceledException) {
                 } catch (CameraDownloadFailedException ex) {

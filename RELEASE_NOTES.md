@@ -30,6 +30,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
 - N.I.N.A. will attempt to synchronize the mount's clock with that of the computer's. Not all mount drivers support this feature. A warning will be displayed if the difference between the clocks is more than 10 seconds and the mount time cannot be set
 - ZWO: Native driver for ZWO EFWs now supports setting the Unidirectional option as well as initiate a calibration run.
+- ZWO: The native driver for ZWO cameras now supports managing the [Mono Bin](https://astronomy-imaging-camera.com/tutorials/everything-you-need-to-know-about-astrophotography-pixel-binning-the-fundamentals/) feature of models with color sensors.
 - GNSS devices: Support for retrieving site location information has been expanded to enable different types of sources:
     - NMEA serial GNSS devices
     - PegasusAstro Uranus Meteo

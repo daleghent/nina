@@ -6732,4 +6732,10 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblTSXPort" xml:space="preserve">
     <value>TheSkyX Port</value>
   </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>Mono bin</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>When on, the camera will average binned pixels to create monochrome output</value>
+  </data>
 </root>

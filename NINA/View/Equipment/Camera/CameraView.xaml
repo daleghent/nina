@@ -742,6 +742,22 @@
 
                                 <DataTemplate x:Key="Zwo">
                                     <StackPanel Orientation="Vertical">
+                                        <DockPanel Margin="0,0,0,6" Visibility="{Binding HasZwoAsiMonoBinMode, Converter={StaticResource VisibilityConverter}}">
+                                            <TextBlock
+                                                MinWidth="100"
+                                                VerticalAlignment="Center"
+                                                Text="{ns:Loc LblZwoMonoBinMode}" />
+                                            <CheckBox
+                                                HorizontalAlignment="Right"
+                                                IsChecked="{Binding ZwoAsiMonoBinMode}">
+                                                <CheckBox.ToolTip>
+                                                    <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                        <TextBlock Text="{ns:Loc LblZwoMonoBinModeTooltip}" />
+                                                    </ToolTip>
+                                                </CheckBox.ToolTip>
+                                            </CheckBox>
+                                        </DockPanel>
+
                                         <DockPanel Margin="0,0,0,6">
                                             <TextBlock
                                                 MinWidth="100"

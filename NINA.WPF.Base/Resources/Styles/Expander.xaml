@@ -15,10 +15,10 @@
                     <Border>
                         <Rectangle
                             Margin="0"
-                            UseLayoutRounding="True"
                             Stroke="Black"
                             StrokeDashArray="1 2"
-                            StrokeThickness="1" />
+                            StrokeThickness="1"
+                            UseLayoutRounding="True" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

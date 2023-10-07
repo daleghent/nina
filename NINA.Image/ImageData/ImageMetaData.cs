@@ -42,7 +42,10 @@ namespace NINA.Image.ImageData {
         /// <param name="profile"></param>
         public void FromProfile(IProfile profile) {
             Camera.PixelSize = profile.CameraSettings.PixelSize;
-            Camera.BayerPattern = profile.CameraSettings.BayerPattern;
+
+            if (Camera.BayerPattern != BayerPatternEnum.None) {
+                Camera.BayerPattern = profile.CameraSettings.BayerPattern;
+            }
 
             Telescope.Name = profile.TelescopeSettings.Name;
             Telescope.FocalLength = profile.TelescopeSettings.FocalLength;

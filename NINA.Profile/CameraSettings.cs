@@ -71,6 +71,8 @@ namespace NINA.Profile {
 
             genericCameraDewHeaterStrength = 10;
             genericCameraFanSpeed = 70;
+
+            zwoAsiMonoBinMode = false;
         }
 
         private string id;
@@ -657,6 +659,19 @@ namespace NINA.Profile {
             set {
                 if (trackingCameraASCOMServerLoggingEnabled != value) {
                     trackingCameraASCOMServerLoggingEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool? zwoAsiMonoBinMode;
+
+        [DataMember]
+        public bool? ZwoAsiMonoBinMode {
+            get => zwoAsiMonoBinMode;
+            set {
+                if (zwoAsiMonoBinMode != value) {
+                    zwoAsiMonoBinMode = value;
                     RaisePropertyChanged();
                 }
             }
