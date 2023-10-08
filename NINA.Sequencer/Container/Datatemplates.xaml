@@ -811,10 +811,24 @@
     </DataTemplate>
 
     <HierarchicalDataTemplate DataType="{x:Type local:TargetAreaContainer}" ItemsSource="{Binding Items}">
-        <Border
-            Margin="-19,15,0,15"
-            BorderBrush="{StaticResource TertiaryBackgroundBrush}"
-            BorderThickness="0,5,0,0">
+        <StackPanel Margin="-19,0,0,0" Orientation="Vertical">
+            <Grid Height="35">
+                <Rectangle
+                    Width="25"
+                    Height="25"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Fill="{StaticResource TertiaryBackgroundBrush}"
+                    RenderTransformOrigin="0.5 0.5">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="45" />
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Border
+                    VerticalAlignment="Center"
+                    BorderBrush="{StaticResource TertiaryBackgroundBrush}"
+                    BorderThickness="0,5,0,0" />
+            </Grid>
             <Grid Background="{StaticResource BackgroundBrush}" Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
                 <StackPanel
                     Margin="0,100,0,100"
@@ -835,37 +849,53 @@
                         Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_TargetArea}"
                         TextAlignment="Center" />
                 </StackPanel>
+                <i:Interaction.Behaviors>
+                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropIntoCommand" />
+                </i:Interaction.Behaviors>
             </Grid>
-            <i:Interaction.Behaviors>
-                <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropIntoCommand" />
-            </i:Interaction.Behaviors>
-        </Border>
+        </StackPanel>
     </HierarchicalDataTemplate>
 
     <HierarchicalDataTemplate DataType="{x:Type local:StartAreaContainer}" ItemsSource="{Binding Items}">
-        <Grid
-            MinHeight="100"
-            Margin="-19,15,0,15"
-            Background="{StaticResource BackgroundBrush}"
-            Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontStyle="Italic"
-                Opacity="0.4"
-                Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_StartArea}" />
-            <i:Interaction.Behaviors>
-                <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
-            </i:Interaction.Behaviors>
-        </Grid>
+        <StackPanel Margin="-19,0,0,0" Orientation="Vertical">
+            <Grid Height="17.5" />
+            <Grid
+                MinHeight="100"
+                Background="{StaticResource BackgroundBrush}"
+                Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontStyle="Italic"
+                    Opacity="0.4"
+                    Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_StartArea}" />
+                <i:Interaction.Behaviors>
+                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
+                </i:Interaction.Behaviors>
+            </Grid>
+        </StackPanel>
     </HierarchicalDataTemplate>
     <HierarchicalDataTemplate DataType="{x:Type local:EndAreaContainer}" ItemsSource="{Binding Items}">
-        <Border
-            Margin="-19,15,0,15"
-            BorderBrush="{StaticResource TertiaryBackgroundBrush}"
-            BorderThickness="0,5,0,0">
+        <StackPanel Margin="-19,0,0,0" Orientation="Vertical">
+            <Grid Height="35">
+                <Rectangle
+                    Width="25"
+                    Height="25"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Fill="{StaticResource TertiaryBackgroundBrush}"
+                    RenderTransformOrigin="0.5 0.5">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="45" />
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Border
+                    VerticalAlignment="Center"
+                    BorderBrush="{StaticResource TertiaryBackgroundBrush}"
+                    BorderThickness="0,5,0,0" />
+            </Grid>
             <Grid
                 MinHeight="100"
                 Background="{StaticResource BackgroundBrush}"
@@ -876,12 +906,12 @@
                     FontStyle="Italic"
                     Opacity="0.4"
                     Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_EndArea}" />
+                <i:Interaction.Behaviors>
+                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
+                </i:Interaction.Behaviors>
             </Grid>
-            <i:Interaction.Behaviors>
-                <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
-                <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
-            </i:Interaction.Behaviors>
-        </Border>
+        </StackPanel>
     </HierarchicalDataTemplate>
 
     <DataTemplate DataType="{x:Type local:UnknownSequenceContainer}">
