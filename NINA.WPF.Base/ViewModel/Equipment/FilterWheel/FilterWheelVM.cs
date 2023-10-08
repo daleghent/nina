@@ -31,6 +31,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
@@ -252,6 +253,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
                             BroadcastFilterWheelInfo();
 
+                            await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                             Logger.Info($"Successfully connected Filter Wheel. Id: {FW.Id} Name: {FW.Name} Driver Version: {FW.DriverVersion}");
 
                             return true;
@@ -295,7 +297,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             return true;
         }
 
-        public Task Disconnect() {
+        public async Task Disconnect() {
             if (FW != null) {
                 try { _changeFilterCancellationSource?.Cancel(); } catch { }
                 FW.Disconnect();
@@ -303,9 +305,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                 FilterWheelInfo = DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
                 RaisePropertyChanged(nameof(FW));
                 BroadcastFilterWheelInfo();
+                await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                 Logger.Info("Disconnected Filter Wheel");
             }
-            return Task.CompletedTask;
+            return;
         }
 
         private readonly IFilterWheelMediator filterWheelMediator;
@@ -313,6 +316,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
         private readonly IGuiderMediator guiderMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private FilterWheelInfo filterWheelInfo;
+
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
 
         public FilterWheelInfo FilterWheelInfo {
             get {

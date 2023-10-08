@@ -34,7 +34,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
-using Newtonsoft.Json.Linq;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
@@ -502,6 +502,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             Notification.ShowSuccess(Loc.Instance["LblTelescopeConnected"]);
                             profileService.ActiveProfile.TelescopeSettings.Id = Telescope.Id;
 
+                            await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                             Logger.Info($"Successfully connected Telescope. Id: {telescope.Id} Name: {telescope.Name} Driver Version: {telescope.DriverVersion}");
 
                             return true;
@@ -744,6 +745,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             Telescope = null;
             TelescopeInfo.Reset();
             BroadcastTelescopeInfo();
+            await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
         }
 
         public void MoveAxis(TelescopeAxes axis, double rate) {
@@ -1021,6 +1023,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private AsyncObservableCollection<TrackingMode> supportedTrackingModes = new AsyncObservableCollection<TrackingMode>();
+
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
 
         public AsyncObservableCollection<TrackingMode> SupportedTrackingModes {
             get => supportedTrackingModes;

@@ -85,6 +85,11 @@ namespace NINA.ViewModel {
 
         private IImageHistoryVM imageHistoryVM;
 
+        public event EventHandler<ImagePreparedEventArgs> ImagePrepared {
+            add { this._imageControl.ImagePrepared += value; }
+            remove { this._imageControl.ImagePrepared -= value; }
+        }
+
         public ImagingVM(IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,

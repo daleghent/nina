@@ -39,6 +39,7 @@ using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
 using NINA.Core.Enum;
 using NINA.Equipment.Exceptions;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -428,6 +429,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                                 TargetTemp = this.profileService.ActiveProfile.CameraSettings.Temperature ?? -10;
                             }
 
+                            await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                             Logger.Info($"Successfully connected Camera. Id: {Cam.Id} Name: {Cam.Name} Driver Version: {Cam.DriverVersion}");
 
                             return true;
@@ -622,6 +624,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             Cam = null;
             CameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
             BroadcastCameraInfo();
+            await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
         }
 
         public IAsyncEnumerable<IExposureData> LiveView(CaptureSequence sequence, CancellationToken ct) {
@@ -740,6 +743,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                             if (!token.IsCancellationRequested) {
                                 var downloadFailedException = new CameraDownloadFailedException(sequence, $"Camera Timeout - Camera did not set image as ready after exposuretime + {profileService.ActiveProfile.CameraSettings.Timeout} seconds");
                                 Logger.Error(downloadFailedException);
+                                await (DownloadTimeout?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                                 throw downloadFailedException;
                             }
                         } finally {
@@ -965,6 +969,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
         private IApplicationStatusMediator applicationStatusMediator;
         private double exposureTime;
+
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
+        public event Func<object, EventArgs, Task> DownloadTimeout;
 
         public IAsyncCommand ConnectCommand { get; private set; }
 
