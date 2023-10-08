@@ -280,7 +280,7 @@
         </ContentPresenter.Resources>
         <ContentPresenter.ContentTemplate>
             <DataTemplate DataType="{x:Type cont:SequenceContainer}">
-                <Expander
+                <ninactrl:DetachingExpander
                     Padding="0,0,0,0"
                     Background="{StaticResource BackgroundBrush}"
                     BorderBrush="{StaticResource BorderBrush}"
@@ -295,7 +295,7 @@
                             DragAboveSize="25"
                             DragBelowSize="15" />
                     </i:Interaction.Behaviors>
-                    <Expander.Header>
+                    <ninactrl:DetachingExpander.Header>
                         <Grid
                             Name="PART_Header"
                             Grid.Row="0"
@@ -536,9 +536,9 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-                    </Expander.Header>
+                    </ninactrl:DetachingExpander.Header>
 
-                    <Expander.Content>
+                    <ninactrl:DetachingExpander.Content>
                         <DockPanel
                             HorizontalAlignment="Stretch"
                             IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}"
@@ -877,8 +877,8 @@
                                 </ninactrl:HitTestGroupBox>
                             </Grid>
                         </DockPanel>
-                    </Expander.Content>
-                </Expander>
+                    </ninactrl:DetachingExpander.Content>
+                </ninactrl:DetachingExpander>
             </DataTemplate>
         </ContentPresenter.ContentTemplate>
     </ContentPresenter>
