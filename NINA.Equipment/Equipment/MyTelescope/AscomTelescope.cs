@@ -545,7 +545,14 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     TrackingEnabled = true;
                     TargetCoordinates = coordinates.Transform(EquatorialSystem);
 
-                    await device.SlewToCoordinatesTaskAsync(TargetCoordinates.RA, TargetCoordinates.Dec, token);
+                    if (CanSlewAsync) {
+                        await device.SlewToCoordinatesTaskAsync(TargetCoordinates.RA, TargetCoordinates.Dec, token);
+                    } else {
+                        device.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
+                        while (Slewing) {
+                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval), token);
+                        }
+                    }
 
                     return true;
                 } catch (OperationCanceledException) {
