@@ -47,7 +47,10 @@
     </UserControl.Resources>
     <StackPanel Margin="0,0,0,1" Orientation="Vertical">
         <i:Interaction.Behaviors>
-            <behaviors:DragOverBehavior DragAboveSize="25" DragBelowSize="25" />
+            <behaviors:DragOverBehavior
+                AllowDragCenter="False"
+                DragAboveSize="25"
+                DragBelowSize="15" />
         </i:Interaction.Behaviors>
         <Border MinHeight="25">
             <i:Interaction.Triggers>
