@@ -216,10 +216,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style x:Key="SequenceContainerExpander" TargetType="Expander">
+            <Style x:Key="SequenceContainerExpander" TargetType="{x:Type ninactrl:DetachingExpander}">
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="Expander">
+                        <ControlTemplate TargetType="{x:Type ninactrl:DetachingExpander}">
                             <Border
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
