@@ -32,6 +32,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
 using System.Linq;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
@@ -304,6 +305,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                         TargetPosition = Position;
                         profileService.ActiveProfile.FocuserSettings.Id = Focuser.Id;
 
+                        await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                         Logger.Info($"Successfully connected Focuser. Id: {Focuser.Id} Name: {Focuser.Name} Driver Version: {Focuser.DriverVersion}");
 
                         return true;
@@ -406,6 +408,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             FocuserInfo = DeviceInfo.CreateDefaultInstance<FocuserInfo>();
             BroadcastFocuserInfo();
             RaisePropertyChanged(nameof(Focuser));
+            await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
         }
 
         public Task<bool> Connect() {
@@ -417,6 +420,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         }
 
         private IFocuser focuser;
+
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
 
         public IFocuser Focuser {
             get => focuser;

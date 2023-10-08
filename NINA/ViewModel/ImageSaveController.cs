@@ -12,6 +12,7 @@
 using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.Utility;
+using NINA.Core.Utility.Extensions;
 using NINA.Core.Utility.Notification;
 using NINA.Image.FileFormat;
 using NINA.Image.Interfaces;
@@ -46,6 +47,10 @@ namespace NINA.ViewModel {
         private IApplicationStatusMediator applicationStatusMediator;
         private AsyncProducerConsumerQueue<PrepareSaveItem> queue;
 
+        public event Func<object, BeforeImageSavedEventArgs, Task> BeforeImageSaved;
+        public event Func<object, BeforeFinalizeImageSavedEventArgs, Task> BeforeFinalizeImageSaved;
+        public event EventHandler<ImageSavedEventArgs> ImageSaved;
+
         public Task Enqueue(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
             var mergedCts = CancellationTokenSource.CreateLinkedTokenSource(token, workerCTS.Token);
             Logger.Debug($"Enqueuing image to be saved with id {imageData.MetaData.Image.Id}");
@@ -64,7 +69,7 @@ namespace NINA.ViewModel {
                     writeTimeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = Loc.Instance["LblSavingImage"] });
 
-                    await imageSaveMediator.OnBeforeImageSaved(new BeforeImageSavedEventArgs(item.Data, item.PrepareTask));
+                    await (BeforeImageSaved?.InvokeAsync(this, new BeforeImageSavedEventArgs(item.Data, item.PrepareTask)) ?? Task.CompletedTask);
 
                     var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), writeTimeoutCts.Token);
                     writeTimeoutCts.Token.ThrowIfCancellationRequested();
@@ -72,7 +77,7 @@ namespace NINA.ViewModel {
                     var preparedData = await item.PrepareTask;
 
                     var beforeFinalizeArgs = new BeforeFinalizeImageSavedEventArgs(preparedData);
-                    await imageSaveMediator.OnBeforeFinalizeImageSaved(beforeFinalizeArgs);
+                    await (BeforeFinalizeImageSaved?.InvokeAsync(this, beforeFinalizeArgs) ?? Task.CompletedTask);
                     var customPatterns = beforeFinalizeArgs.Patterns;
 
                     var patternTemplate = profileService.ActiveProfile.ImageFileSettings.GetFilePattern(item.Data.MetaData.Image.ImageType);
@@ -81,18 +86,18 @@ namespace NINA.ViewModel {
                     var stats = await preparedData.RawImageData.Statistics;
 
                     // Run this in a separate task to limit risk of deadlocks
-                    _ = Task.Run(() => imageSaveMediator.OnImageSaved(
+                    _ = Task.Run(() => ImageSaved?.Invoke(this, 
                           new ImageSavedEventArgs() {
-                              MetaData = preparedData.RawImageData.MetaData,
-                              PathToImage = new Uri(path),
-                              Image = preparedData.Image,
-                              FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
-                              Statistics = stats,
-                              StarDetectionAnalysis = preparedData.RawImageData.StarDetectionAnalysis,
-                              Duration = preparedData.RawImageData.MetaData.Image.ExposureTime,
-                              IsBayered = preparedData.RawImageData.Properties.IsBayered,
-                              Filter = preparedData.RawImageData.MetaData.FilterWheel.Filter
-                          }
+                            MetaData = preparedData.RawImageData.MetaData,
+                            PathToImage = new Uri(path),
+                            Image = preparedData.Image,
+                            FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
+                            Statistics = stats,
+                            StarDetectionAnalysis = preparedData.RawImageData.StarDetectionAnalysis,
+                            Duration = preparedData.RawImageData.MetaData.Image.ExposureTime,
+                            IsBayered = preparedData.RawImageData.Properties.IsBayered,
+                            Filter = preparedData.RawImageData.MetaData.FilterWheel.Filter
+                        }
                       ), workerCTS.Token);
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {

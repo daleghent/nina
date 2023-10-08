@@ -32,6 +32,7 @@ using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using Nito.AsyncEx;
 using System.Linq;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
@@ -318,6 +319,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         private CancellationTokenSource _moveCts;
         private readonly SemaphoreSlim ss = new SemaphoreSlim(1, 1);
 
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
+
         public async Task<bool> Connect() {
             await ss.WaitAsync();
             try {
@@ -376,6 +380,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                             profileService.ActiveProfile.RotatorSettings.Id = Rotator.Id;
                             profileService.ActiveProfile.RotatorSettings.Reverse2 = this.Rotator.Reverse;
 
+                            await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                             Logger.Info($"Successfully connected Rotator. Id: {Rotator.Id} Name: {Rotator.Name} Driver Version: {Rotator.DriverVersion}");
 
                             return true;
@@ -416,6 +421,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     Rotator = null;
                     RotatorInfo = DeviceInfo.CreateDefaultInstance<RotatorInfo>();
                     BroadcastRotatorInfo();
+                    await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                     Logger.Info("Disconnected Rotator");
                 }
             } catch (Exception ex) {

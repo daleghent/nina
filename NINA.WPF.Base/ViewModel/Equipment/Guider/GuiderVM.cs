@@ -37,6 +37,7 @@ using Nito.AsyncEx;
 using System.Linq;
 using NINA.Astrometry;
 using NINA.Profile;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
@@ -247,6 +248,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
                     RaisePropertyChanged(nameof(MainCameraPixelScale));
                     RaisePropertyChanged(nameof(MainCameraDitherPixels));
+
+                    await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                 }
             } catch (OperationCanceledException) {
                 connected = false;
@@ -295,13 +298,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 foreach (RMS rms in rmsRecords) {
                     rms.AddDataPoint(step.RADistanceRaw, step.DECDistanceRaw);
                 }
-                guiderMediator?.RaiseGuideEvent(e);
+                GuideEvent?.Invoke(this, e);
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
         }
 
-        public Task Disconnect() {
+        public async Task Disconnect() {
             try {
                 if (Guider != null) {
                     Guider.PropertyChanged -= Guider_PropertyChanged;
@@ -311,10 +314,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                 Guider = null;
                 GuiderInfo.Reset();
                 BroadcastGuiderInfo();
+                await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
             } catch(Exception ex) {
                 Logger.Error(ex);
             }
-            return Task.CompletedTask;
         }
 
         private GuiderInfo guiderInfo;
@@ -398,7 +401,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = Loc.Instance["LblDither"], Source = Title });
                     GuideStepsHistory.AddDitherIndicator();
                     await Guider.Dither(prog, token);
-                    await guiderMediator.RaiseAfterDither(new EventArgs());
+                    await (AfterDither?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                 } finally {
                     Guider.GuideEvent += Guider_GuideEvent;
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = string.Empty, Source = Title });
@@ -539,6 +542,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
         private IGuiderMediator guiderMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private CancellationTokenSource _cancelConnectGuiderSource;
+
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
+        public event Func<object, EventArgs, Task> AfterDither;
+        public event EventHandler<IGuideStep> GuideEvent;
 
         public IAsyncCommand ConnectCommand { get; private set; }
         public IAsyncCommand RescanDevicesCommand { get; private set; }

@@ -33,6 +33,7 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Core.Utility.Extensions;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
@@ -200,6 +201,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
         private DeviceUpdateTimer updateTimer;
         private CancellationTokenSource connectSwitchCts;
 
+        public event Func<object, EventArgs, Task> Connected;
+        public event Func<object, EventArgs, Task> Disconnected;
+
         public async Task<bool> Connect() {
             await ss.WaitAsync();
             try {
@@ -263,6 +267,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                             RaisePropertyChanged(nameof(WritableSwitches));
                             BroadcastSwitchInfo();
 
+                            await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                             Logger.Info($"Successfully connected Switch. Id: {switchHub.Id} Name: {switchHub.Name} Driver Version: {switchHub.DriverVersion}");
 
                             return true;
@@ -301,6 +306,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                 SwitchHub = null;
                 SwitchInfo = DeviceInfo.CreateDefaultInstance<SwitchInfo>();
                 BroadcastSwitchInfo();
+                await (Disconnected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
                 Logger.Info("Disconnected Switch");
             }
         }
