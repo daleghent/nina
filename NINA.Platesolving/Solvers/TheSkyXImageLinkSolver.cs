@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using ASCOM;
+using NINA.Astrometry;
 using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Core.Utility;
@@ -75,6 +76,9 @@ namespace NINA.PlateSolving.Solvers {
                         result.PositionAngle = imageLinkResults.ImagePositionAngle;
 
                         result.Pixscale = imageLinkResults.ImageScale;
+                        if (!double.IsNaN(result.Pixscale)) {
+                            result.Radius = AstroUtil.ArcsecToDegree(Math.Sqrt(Math.Pow(imageProperties.ImageWidth * result.Pixscale, 2) + Math.Pow(imageProperties.ImageHeight * result.Pixscale, 2)) / 2d);
+                        }
                         result.Coordinates = new Astrometry.Coordinates(imageLinkResults.ImageCenterRAJ2000, imageLinkResults.ImageCenterDecJ2000, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Hours);
 
                         progress?.Report(new ApplicationStatus() { Status = "Plate solve completed." });
