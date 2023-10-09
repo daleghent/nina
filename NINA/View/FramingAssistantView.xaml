@@ -346,6 +346,7 @@
                                     <ninactrl:UnitTextBox
                                         MinWidth="40"
                                         Margin="5,0,0,0"
+                                        DataObject.Pasting="UnitTextBox_Pasting"
                                         TextAlignment="Right"
                                         Unit="h">
                                         <TextBox.Text>
@@ -360,6 +361,7 @@
                                         Grid.Column="1"
                                         MinWidth="40"
                                         Margin="5,0,0,0"
+                                        DataObject.Pasting="UnitTextBox_Pasting"
                                         TextAlignment="Right"
                                         Unit="m">
                                         <TextBox.Text>
@@ -374,6 +376,7 @@
                                         Grid.Column="2"
                                         MinWidth="40"
                                         Margin="5,0,0,0"
+                                        DataObject.Pasting="UnitTextBox_Pasting"
                                         TextAlignment="Right"
                                         Unit="s">
                                         <TextBox.Text>
@@ -404,6 +407,7 @@
                                     <ninactrl:UnitTextBox
                                         MinWidth="40"
                                         Margin="5,0,0,0"
+                                        DataObject.Pasting="UnitTextBox_Pasting"
                                         TextAlignment="Right"
                                         Unit="d">
                                         <TextBox.Text>
@@ -423,6 +427,7 @@
                                         MinWidth="40"
                                         Margin="5,0,0,0"
                                         HorizontalAlignment="Stretch"
+                                        DataObject.Pasting="UnitTextBox_Pasting"
                                         TextAlignment="Right"
                                         Unit="m">
                                         <TextBox.Text>
@@ -438,6 +443,7 @@
                                         Grid.Column="2"
                                         MinWidth="40"
                                         Margin="5,0,0,0"
+                                        DataObject.Pasting="UnitTextBox_Pasting"
                                         TextAlignment="Right"
                                         Unit="s">
                                         <TextBox.Text>
