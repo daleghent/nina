@@ -90,6 +90,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
+- Selecting a date in sky atlas no longer sets the date one day earlier than selected
 
 # Version 2.2
 
