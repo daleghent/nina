@@ -81,6 +81,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
 - Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning
 - Added automatic retry of exposure start when POA_ERROR_EXPOSING error happens
+- Selecting a date in sky atlas no longer sets the date one day earlier than selected
+- Radius will now always be calculated and displayed in the plate solver window
+- AF after Exposures will now properly consider previous autofocus runs and reset its counter accordingly
 
 # Version 2.3
 
@@ -90,7 +93,6 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Bugfixes
 - The profile chooser on startup did not remember the on/off selection to save the selected profile
-- Selecting a date in sky atlas no longer sets the date one day earlier than selected
 
 # Version 2.2
 
