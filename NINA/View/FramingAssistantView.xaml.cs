@@ -105,6 +105,7 @@ namespace NINA.View {
                 var coordinates = new Coordinates(Angle.ByDegree(raDeg), Angle.ByDegree(decDeg), Epoch.J2000);
                 
                 var dso = new DeepSkyObject(viewModel.DSO?.Name ?? "", coordinates, default, default);
+                dso.RotationPositionAngle = 360 - viewModel.ActiveProfile.FramingAssistantSettings.LastRotationAngle;
                 _ = viewModel.SetCoordinates(dso);
                                 
                 e.Handled = true;
