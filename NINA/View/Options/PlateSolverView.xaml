@@ -1041,7 +1041,7 @@
                                     VerticalAlignment="Center"
                                     Text="{Binding TheSkyXPort}" />
                             </StackPanel>
-                        </StackPanel>                    
+                        </StackPanel>
                     </Grid>
 
                     <!--  DC3 PinPoint  -->
@@ -1078,44 +1078,39 @@
                             </Style>
                         </Grid.Style>
 
-                        <StackPanel Orientation="Vertical">
-                            <UniformGrid Columns="2">
-                                <UniformGrid
-                                    Margin="0,6,0,6"
-                                    VerticalAlignment="Center"
-                                    Columns="2">
-                                    <TextBlock
-                                        Width="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPinPointCatType}" />
-                                    <ComboBox
-                                        MinWidth="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        ItemsSource="{Binding DataContext.Dc3PoinPointCatalogs, ElementName=UC}"
-                                        SelectedItem="{Binding PinPointCatalogType, Mode=TwoWay}">
-                                    </ComboBox>
-                                </UniformGrid>
-                            </UniformGrid>
-
-                            <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                        <StackPanel Grid.IsSharedSizeScope="True" Orientation="Vertical">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Pinpoint_Label" />
                                     <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblPinPointCatType}" />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ItemsSource="{Binding DataContext.Dc3PoinPointCatalogs, ElementName=UC}"
+                                    SelectedItem="{Binding PinPointCatalogType, Mode=TwoWay}" />
+                            </Grid>
+
+                            <Grid Margin="0,6,0,0" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Pinpoint_Label" />
                                     <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
-                                    Width="130"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblPinPointCatalogRoot}" />
                                 <TextBox
                                     Grid.Column="1"
-                                    Grid.ColumnSpan="2"
                                     MinWidth="130"
+                                    Margin="5,0,0,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center">
                                     <TextBox.Text>
@@ -1142,108 +1137,105 @@
                                 </Button>
                             </Grid>
 
-                            <UniformGrid Columns="2">
-                                <UniformGrid
-                                    Margin="0,6,0,6"
+                            <Grid Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Pinpoint_Label" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Columns="2">
-                                    <TextBlock
-                                        Width="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPinPointMaxMagnitude}" />
-                                    <TextBox
-                                        MinWidth="55"
-                                        MaxWidth="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        ToolTip="{ns:Loc LblPinPointMaxMagnitudeToolTip}">
-                                        <TextBox.Text>
-                                            <Binding Path="PinPointMaxMagnitude" UpdateSourceTrigger="LostFocus">
-                                                <Binding.ValidationRules>
-                                                    <rules:DoubleRangeRule>
-                                                        <rules:DoubleRangeRule.ValidRange>
-                                                            <rules:DoubleRangeChecker Minimum="2" Maximum="20" />
-                                                        </rules:DoubleRangeRule.ValidRange>
-                                                    </rules:DoubleRangeRule>
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                    </TextBox>
-                                </UniformGrid>
-                            </UniformGrid>
+                                    Text="{ns:Loc LblPinPointMaxMagnitude}" />
+                                <TextBox
+                                    Grid.Column="1"
+                                    MinWidth="55"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    ToolTip="{ns:Loc LblPinPointMaxMagnitudeToolTip}">
+                                    <TextBox.Text>
+                                        <Binding Path="PinPointMaxMagnitude" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:DoubleRangeRule>
+                                                    <rules:DoubleRangeRule.ValidRange>
+                                                        <rules:DoubleRangeChecker Maximum="20" Minimum="2" />
+                                                    </rules:DoubleRangeRule.ValidRange>
+                                                </rules:DoubleRangeRule>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
 
-                            <UniformGrid Columns="2">
-                                <UniformGrid
-                                    Margin="0,6,0,6"
-                                    VerticalAlignment="Center"
-                                    Columns="2">
-                                    <TextBlock
-                                        Width="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPinPointExpansion}" />
-                                    <ninactrl:UnitTextBox
-                                        MinWidth="55"
-                                        MaxWidth="55"
-                                        Unit="%"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        ToolTip="{ns:Loc LblPinPointExpansionToolTip}">
-                                        <TextBox.Text>
-                                            <Binding Path="PinPointExpansion" UpdateSourceTrigger="LostFocus">
-                                                <Binding.ValidationRules>
-                                                    <rules:DoubleRangeRule>
-                                                        <rules:DoubleRangeRule.ValidRange>
-                                                            <rules:DoubleRangeChecker Minimum="0" Maximum="80" />
-                                                        </rules:DoubleRangeRule.ValidRange>
-                                                    </rules:DoubleRangeRule>
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                    </ninactrl:UnitTextBox>
-                                </UniformGrid>
-                            </UniformGrid>
 
-                            <UniformGrid Columns="2">
-                                <UniformGrid
-                                    Margin="0,6,0,6"
+                            <Grid Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Pinpoint_Label" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Columns="2">
-                                    <TextBlock
-                                        Width="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPinPointAllSkyApiKey}" />
-                                    <TextBox
-                                        MinWidth="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding PinPointAllSkyApiKey}"
-                                        ToolTip="{ns:Loc LblPinPointAllSkyApiKeyToolTip}">
-                                    </TextBox>
-                                </UniformGrid>
-                            </UniformGrid>
+                                    Text="{ns:Loc LblPinPointExpansion}" />
+                                <ninactrl:UnitTextBox
+                                    Grid.Column="1"
+                                    MinWidth="55"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    ToolTip="{ns:Loc LblPinPointExpansionToolTip}"
+                                    Unit="%">
+                                    <TextBox.Text>
+                                        <Binding Path="PinPointExpansion" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:DoubleRangeRule>
+                                                    <rules:DoubleRangeRule.ValidRange>
+                                                        <rules:DoubleRangeChecker Maximum="80" Minimum="0" />
+                                                    </rules:DoubleRangeRule.ValidRange>
+                                                </rules:DoubleRangeRule>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </ninactrl:UnitTextBox>
+                            </Grid>
 
-                            <UniformGrid Columns="2">
-                                <UniformGrid
-                                    Margin="0,6,0,6"
+                            <Grid Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Pinpoint_Label" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Columns="2">
-                                    <TextBlock
-                                        Width="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPinPointAllSkyApiHost}" />
-                                    <TextBox
-                                        MinWidth="130"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding PinPointAllSkyApiHost}"
-                                        ToolTip="{ns:Loc LblPinPointAllSkyApiHostToolTip}">
-                                    </TextBox>
-                                </UniformGrid>
-                            </UniformGrid>
+                                    Text="{ns:Loc LblPinPointAllSkyApiKey}" />
+                                <TextBox
+                                    Grid.Column="1"
+                                    MinWidth="130"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding PinPointAllSkyApiKey}"
+                                    ToolTip="{ns:Loc LblPinPointAllSkyApiKeyToolTip}" />
+                            </Grid>
+
+                            <Grid Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Pinpoint_Label" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblPinPointAllSkyApiHost}" />
+                                <TextBox
+                                    Grid.Column="1"
+                                    MinWidth="130"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding PinPointAllSkyApiHost}"
+                                    ToolTip="{ns:Loc LblPinPointAllSkyApiHostToolTip}" />
+                            </Grid>
 
                         </StackPanel>
                     </Grid>
