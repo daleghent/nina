@@ -66,7 +66,7 @@ namespace NINA.View {
                     return;
                 }
 
-                var hmsMatch = Regex.Matches(input, @"(([0-9]{1,2})([h|:| ]\s*|[?]{2})([0-9]{1,2})([m|:| ]\s*|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|:| ]\s*|[?]{2}))");
+                var hmsMatch = Regex.Matches(input, AstroUtil.HMSPattern);
 
                 double raDeg = double.NaN;
                 double decDeg = double.NaN;
@@ -77,7 +77,7 @@ namespace NINA.View {
                     }
                 }
                 
-                var dmsMatch = Regex.Matches(input, @"([\+|-]?([0-9]{1,2})([d|°|:| ]\s*|[?]{2})([0-9]{1,2})([m|'|:| ]\s*|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|""|:| ]\s*|[?]{2}))");
+                var dmsMatch = Regex.Matches(input, AstroUtil.DMSPattern);
                 if (dmsMatch.Count > 0) {
                     decDeg = AstroUtil.DMSToDegrees(dmsMatch.Last().Value);
                     if (dmsMatch.Count > 1 && double.IsNaN(raDeg)) {
