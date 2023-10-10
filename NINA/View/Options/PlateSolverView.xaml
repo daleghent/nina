@@ -305,6 +305,9 @@
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
@@ -376,6 +379,9 @@
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -561,6 +567,9 @@
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
@@ -663,6 +672,9 @@
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
@@ -738,6 +750,9 @@
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -838,6 +853,9 @@
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -965,8 +983,8 @@
                             </UniformGrid>
                         </StackPanel>
                     </Grid>
-                    
-                    <!--TSX Imagelink-->
+
+                    <!--  TSX Imagelink  -->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -990,6 +1008,9 @@
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="5">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="7">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -1020,6 +1041,210 @@
                                     VerticalAlignment="Center"
                                     Text="{Binding TheSkyXPort}" />
                             </StackPanel>
+                        </StackPanel>                    
+                    </Grid>
+
+                    <!--  DC3 PinPoint  -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="1">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="2">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="3">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="4">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="5">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_PlateSolverList, Path=SelectedIndex}" Value="6">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <StackPanel Orientation="Vertical">
+                            <UniformGrid Columns="2">
+                                <UniformGrid
+                                    Margin="0,6,0,6"
+                                    VerticalAlignment="Center"
+                                    Columns="2">
+                                    <TextBlock
+                                        Width="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblPinPointCatType}" />
+                                    <ComboBox
+                                        MinWidth="80"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        ItemsSource="{Binding DataContext.Dc3PoinPointCatalogs, ElementName=UC}"
+                                        SelectedItem="{Binding PinPointCatalogType, Mode=TwoWay}">
+                                    </ComboBox>
+                                </UniformGrid>
+                            </UniformGrid>
+
+                            <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Width="130"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblPinPointCatalogRoot}" />
+                                <TextBox
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    MinWidth="130"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center">
+                                    <TextBox.Text>
+                                        <Binding Path="PinPointCatalogRoot" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:DirectoryExistsRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <Button
+                                    Grid.Column="3"
+                                    Width="20"
+                                    Height="20"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding DataContext.OpenPinPointCatalogDiagCommand, ElementName=UC}">
+                                    <Path
+                                        Margin="2,10,2,0"
+                                        Data="{StaticResource DotsSVG}"
+                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                        Stretch="Uniform" />
+                                </Button>
+                            </Grid>
+
+                            <UniformGrid Columns="2">
+                                <UniformGrid
+                                    Margin="0,6,0,6"
+                                    VerticalAlignment="Center"
+                                    Columns="2">
+                                    <TextBlock
+                                        Width="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblPinPointMaxMagnitude}" />
+                                    <TextBox
+                                        MinWidth="55"
+                                        MaxWidth="55"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        ToolTip="{ns:Loc LblPinPointMaxMagnitudeToolTip}">
+                                        <TextBox.Text>
+                                            <Binding Path="PinPointMaxMagnitude" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:DoubleRangeRule>
+                                                        <rules:DoubleRangeRule.ValidRange>
+                                                            <rules:DoubleRangeChecker Minimum="2" Maximum="20" />
+                                                        </rules:DoubleRangeRule.ValidRange>
+                                                    </rules:DoubleRangeRule>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </UniformGrid>
+                            </UniformGrid>
+
+                            <UniformGrid Columns="2">
+                                <UniformGrid
+                                    Margin="0,6,0,6"
+                                    VerticalAlignment="Center"
+                                    Columns="2">
+                                    <TextBlock
+                                        Width="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblPinPointExpansion}" />
+                                    <ninactrl:UnitTextBox
+                                        MinWidth="55"
+                                        MaxWidth="55"
+                                        Unit="%"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        ToolTip="{ns:Loc LblPinPointExpansionToolTip}">
+                                        <TextBox.Text>
+                                            <Binding Path="PinPointExpansion" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:DoubleRangeRule>
+                                                        <rules:DoubleRangeRule.ValidRange>
+                                                            <rules:DoubleRangeChecker Minimum="0" Maximum="80" />
+                                                        </rules:DoubleRangeRule.ValidRange>
+                                                    </rules:DoubleRangeRule>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </ninactrl:UnitTextBox>
+                                </UniformGrid>
+                            </UniformGrid>
+
+                            <UniformGrid Columns="2">
+                                <UniformGrid
+                                    Margin="0,6,0,6"
+                                    VerticalAlignment="Center"
+                                    Columns="2">
+                                    <TextBlock
+                                        Width="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblPinPointAllSkyApiKey}" />
+                                    <TextBox
+                                        MinWidth="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding PinPointAllSkyApiKey}"
+                                        ToolTip="{ns:Loc LblPinPointAllSkyApiKeyToolTip}">
+                                    </TextBox>
+                                </UniformGrid>
+                            </UniformGrid>
+
+                            <UniformGrid Columns="2">
+                                <UniformGrid
+                                    Margin="0,6,0,6"
+                                    VerticalAlignment="Center"
+                                    Columns="2">
+                                    <TextBlock
+                                        Width="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblPinPointAllSkyApiHost}" />
+                                    <TextBox
+                                        MinWidth="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding PinPointAllSkyApiHost}"
+                                        ToolTip="{ns:Loc LblPinPointAllSkyApiHostToolTip}">
+                                    </TextBox>
+                                </UniformGrid>
+                            </UniformGrid>
+
                         </StackPanel>
                     </Grid>
                 </Grid>
