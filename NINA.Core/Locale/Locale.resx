@@ -6813,4 +6813,7 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblPinPointErrorMessage" xml:space="preserve">
     <value>PinPoint Error Message</value>
   </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>Unable to set mount elevation to {0}!</value>
+  </data>
 </root>
