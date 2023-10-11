@@ -135,5 +135,29 @@ namespace NINA.Test.Sequencer.Trigger.Guider {
             test2.Should().BeFalse();
             test3.Should().BeTrue();
         }
+
+        [Test]
+        public async Task ShouldTrigger_WithExecute_FlowTest_WhenHistoryIsCleared() {
+            var history = new List<ImageHistoryPoint>();
+            for (int i = 0; i < 10; i++) {
+                history.Add(new ImageHistoryPoint(i, null, "LIGHT"));
+            }
+            historyMock.SetupGet(x => x.ImageHistory).Returns(history);
+
+            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object, profileServiceMock.Object);
+            sut.AfterExposures = 1;
+
+            var test1 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+            await sut.Execute(default, default, default);
+            var test2 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+
+            history.Clear();
+            history.Add(new ImageHistoryPoint(100, null, "LIGHT"));
+            var test3 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
+
+            test1.Should().BeTrue();
+            test2.Should().BeFalse();
+            test3.Should().BeTrue();
+        }
     }
 }
