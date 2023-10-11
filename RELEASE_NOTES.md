@@ -44,6 +44,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Autofocus report JSON files now append the profile id in their filename and get filtered in the application by only using the relevant files from the current profile
 - Mini sequencer will now auto scroll to active items
 - The SkyX Imagelink is now available as a plate solver
+- DC-3 Dreams PinPoint is now available as a plate solver
 - Framing tab will now remember the last selected rotation value between sessions
 - When switching profiles the "Switch Filter" instruction will rematch the filter selection based on the name or the index
 - In framing tab you can now paste in full text coordinates into the RA/Dec text fields and they will be parsed into the separate boxes - e.g. when pasting the following string into the textbox the coordinates will be fully populated: `RA: 05h43m05s.90 DEC: +52°10′58″.0`
