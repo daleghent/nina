@@ -48,6 +48,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Framing tab will now remember the last selected rotation value between sessions
 - When switching profiles the "Switch Filter" instruction will rematch the filter selection based on the name or the index
 - In framing tab you can now paste in full text coordinates into the RA/Dec text fields and they will be parsed into the separate boxes - e.g. when pasting the following string into the textbox the coordinates will be fully populated: `RA: 05h43m05s.90 DEC: +52°10′58″.0`
+- When sending location to the telescope the elevation is now handled separately and a different error message is shown
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
@@ -85,6 +86,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Selecting a date in sky atlas no longer sets the date one day earlier than selected
 - Radius will now always be calculated and displayed in the plate solver window
 - AF after Exposures will now properly consider previous autofocus runs and reset its counter accordingly
+- Dither after exposures will no longer fail to run when clearing the image statistics history
+- Sky Atlas date picker now correctly sets the selected date instead of the day before the selected one
 
 # Version 2.3
 
