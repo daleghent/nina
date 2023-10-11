@@ -30,6 +30,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Model;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -421,6 +422,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
 
                     var metaData = new ImageMetaData();
+                    metaData.FromCamera(this);
 
                     if (HasZwoAsiMonoBinMode && ZwoAsiMonoBinMode && BinX > 1) {
                         metaData.Camera.BayerPattern = BayerPatternEnum.None;
@@ -765,11 +767,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     int buffersize = width * height * 2;
                     DateTime startDateTime = DateTime.UtcNow;
                     if (!GetVideoData(arr, buffersize)) {
-                        throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
+                        throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                     }
 
                     DateTime midpointDateTime = startDateTime + TimeSpan.FromTicks((DateTime.UtcNow - startDateTime).Ticks / 2);
                     var metaData = new ImageMetaData();
+                    metaData.FromCamera(this);
                     metaData.Image.ExposureMidPoint = midpointDateTime;
 
                     if (HasZwoAsiMonoBinMode && ZwoAsiMonoBinMode && BinX > 1) {

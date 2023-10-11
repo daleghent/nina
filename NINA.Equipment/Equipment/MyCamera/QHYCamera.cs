@@ -36,6 +36,7 @@ using NINA.Equipment.Exceptions;
 using NINA.Core.Model;
 using System.Collections;
 using NINA.Astrometry;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -1084,13 +1085,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 if (rv != QhySdk.QHYCCD_SUCCESS) {
                     Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv }");
-                    throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
+                    throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                 }
 
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
 
                 // Try getting more info from the camera
                 var metaData = new ImageMetaData();
+                metaData.FromCamera(this);
                 ExtractPreciseExposureInfo(metaData);
                 // Add gps info to the metaData
                 ExtractGpsMetaData(ImgData, metaData);
@@ -1383,7 +1385,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     } else if (rv > numPixels) {
                         // rv returns how many bytes have been downloaded if there is still more to do. 0 indicates completion
                         Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv}");
-                        throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
+                        throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                     } else {
                         break;
                     }
@@ -1392,6 +1394,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 // Try getting more info from the camera
                 var metaData = new ImageMetaData();
+                metaData.FromCamera(this);
                 ExtractPreciseExposureInfo(metaData);
                 // Add gps info to the metaData
                 ExtractGpsMetaData(ImgData, metaData);

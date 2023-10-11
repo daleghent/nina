@@ -22,6 +22,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp;
+using NINA.Equipment.Utility;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
@@ -639,13 +640,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 try {
                     CameraStatus = SBIGCameraStatus.DOWNLOAD;
                     var exposureData = sdk.DownloadExposure(ConnectedDevice.DeviceId, this.exposureCcd, ct);
+                    var metaData = new ImageMetaData();
+                    metaData.FromCamera(this);
                     return exposureDataFactory.CreateImageArrayExposureData(
                         input: exposureData.Data,
                         width: exposureData.Width,
                         height: exposureData.Height,
                         bitDepth: BitDepth,
                         isBayered: SensorType != SensorType.Monochrome && BinX == 1 && BinY == 1,
-                        metaData: new ImageMetaData());
+                        metaData: metaData);
                 } catch (OperationCanceledException) {
                 } catch (Exception e) {
                     Logger.Error(e);

@@ -30,6 +30,7 @@ using NINA.Equipment.Interfaces;
 using System.Drawing;
 using System.Collections;
 using System.Linq;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -848,13 +849,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             }
 
+            var metaData = new ImageMetaData();
+            metaData.FromCamera(this);
             var imageData = exposureDataFactory.CreateImageArrayExposureData(
                     input: data,
                     width: width,
                     height: height,
                     bitDepth: this.BitDepth,
                     isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
 
             return imageData;
         }

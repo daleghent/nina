@@ -30,6 +30,7 @@ using NINA.Core.Locale;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -731,13 +732,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 BGFlushStart();
 
+                var metaData = new ImageMetaData();
+                metaData.FromCamera(this);
                 return exposureDataFactory.CreateImageArrayExposureData(
                     input: imgData,
                     width: width,
                     height: height,
                     bitDepth: this.BitDepth,
                     isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
             }, ct);
         }
 

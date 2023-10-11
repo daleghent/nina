@@ -34,6 +34,7 @@ using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.SkySurvey;
 using System.Windows.Forms;
 using System.Linq;
+using NINA.Equipment.Utility;
 
 namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
@@ -354,13 +355,15 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                         input[i] = (ushort)randNormal;
                     }
 
+                    var metaData = new ImageMetaData();
+                    metaData.FromCamera(this);
                     return exposureDataFactory.CreateImageArrayExposureData(
                         input: input,
                         width: width,
                         height: height,
                         bitDepth: this.BitDepth,
                         isBayered: false,
-                        metaData: new ImageMetaData());
+                        metaData: metaData);
 
                 case CameraType.IMAGE:
                     if (SimulatorImage == null && !string.IsNullOrWhiteSpace(Settings.ImageSettings.ImagePath)) {
