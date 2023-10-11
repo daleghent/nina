@@ -264,6 +264,7 @@ namespace NINA.Profile {
         }
 
         public event EventHandler LocationChanged;
+        public event EventHandler BeforeProfileChanging;
 
         public event EventHandler ProfileChanged;
 
@@ -327,6 +328,11 @@ namespace NINA.Profile {
             lock (lockobj) {
                 using (MyStopWatch.Measure()) {
                     try {
+                        var eventHandlerBeforeProfileChanging = BeforeProfileChanging;
+                        if (eventHandlerBeforeProfileChanging != null) {
+                            Application.Current.Dispatcher?.Invoke(eventHandlerBeforeProfileChanging, this, new EventArgs());
+
+                        }
                         var old = activeProfile;
                         var p = Profile.Load(info.Location);
 
