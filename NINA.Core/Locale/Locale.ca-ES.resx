@@ -6722,4 +6722,88 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
   <data name="LblTSXPort" xml:space="preserve">
     <value>Port TheSkyX</value>
   </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>Mono bin</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>Quan estigui activada, la càmera farà una mitjana dels píxels agrupats per crear una sortida monocroma</value>
+  </data>
+  <data name="LblPinPoint" xml:space="preserve">
+    <value>PinPoint</value>
+  </data>
+  <data name="LblPinPointCatalogRoot" xml:space="preserve">
+    <value>Arrel del Catàleg</value>
+  </data>
+  <data name="LblPinPointFailedInitialize" xml:space="preserve">
+    <value>No s'ha pogut inicialitzar el motor astromètric PinPoint</value>
+  </data>
+  <data name="LblPinPointNotInstalled" xml:space="preserve">
+    <value>No s'ha pogut inicialitzar el motor astromètric PinPoint. Sembla que ell o el seu component de 64 bits no estiguin instal·lats.</value>
+  </data>
+  <data name="LblPinPointReferenceCatalog" xml:space="preserve">
+    <value>Catàleg de referència</value>
+  </data>
+  <data name="LblPinPointCatAtas" xml:space="preserve">
+    <value>ATLAS / PanSTARRS+Gaia</value>
+  </data>
+  <data name="LblPinPointCatGscact" xml:space="preserve">
+    <value>Estrella de la guia millorada 1.1</value>
+  </data>
+  <data name="LblPinPointCatTycho2" xml:space="preserve">
+    <value>ESA Tycho-2</value>
+  </data>
+  <data name="LblPinPointCatType" xml:space="preserve">
+    <value>Catàleg de Referència</value>
+  </data>
+  <data name="LblPinPointCatUcac2" xml:space="preserve">
+    <value>USNO UCAC2</value>
+  </data>
+  <data name="LblPinPointCatUcac3" xml:space="preserve">
+    <value>USNO UCAC3</value>
+  </data>
+  <data name="LblPinPointCatUcac4" xml:space="preserve">
+    <value>USNO UCAC4</value>
+  </data>
+  <data name="LblPinPointCatUsnoA" xml:space="preserve">
+    <value>USN A2.0</value>
+  </data>
+  <data name="LblPinPointCatUsnoB" xml:space="preserve">
+    <value>USNO B1.0</value>
+  </data>
+  <data name="LblPinPointExpansion" xml:space="preserve">
+    <value>Expansion</value>
+  </data>
+  <data name="LblPinPointExpansionToolTip" xml:space="preserve">
+    <value>Ampliació de l'àrea de cerca del catàleg fora de les dimensions de la imatge (mínim = 0, màxim = 80, predeterminat = 40)</value>
+  </data>
+  <data name="LblPinPointMaxMagnitude" xml:space="preserve">
+    <value>Max. Magnitud</value>
+  </data>
+  <data name="LblPinPointMaxMagnitudeToolTip" xml:space="preserve">
+    <value>La magnitud màxima (més feble) per a la selecció d'estrelles del catàleg de referència (mínim = 2,0, màxim = 20,0, per defecte = 20,0)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHost" xml:space="preserve">
+    <value>AllSky API host</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHostToolTip" xml:space="preserve">
+    <value>Amfitrió de l'API Astrometry.net/AllSky (per defecte = nova.astrometry.net)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKey" xml:space="preserve">
+    <value>AllSky API key</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKeyToolTip" xml:space="preserve">
+    <value>Clau de l'API Astrometry.net/AllSky (opcional)</value>
+  </data>
+  <data name="LblPinPointAllSkySolve" xml:space="preserve">
+    <value>PinPoin AllSky solucio astromètrica</value>
+  </data>
+  <data name="LblPinPointLocalSolve" xml:space="preserve">
+    <value>PinPoint solució astrometrica local</value>
+  </data>
+  <data name="LblPinPointErrorMessage" xml:space="preserve">
+    <value>PinPoint Missatge d'error</value>
+  </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>No es pot establir l'elevació de la muntura en {0}!</value>
+  </data>
 </root>

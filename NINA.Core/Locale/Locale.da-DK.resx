@@ -6724,4 +6724,88 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblTSXPort" xml:space="preserve">
     <value>TheSkyX Port</value>
   </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>Mono bin</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>When on, the camera will average binned pixels to create monochrome output</value>
+  </data>
+  <data name="LblPinPoint" xml:space="preserve">
+    <value>PinPoint</value>
+  </data>
+  <data name="LblPinPointCatalogRoot" xml:space="preserve">
+    <value>Catalog root</value>
+  </data>
+  <data name="LblPinPointFailedInitialize" xml:space="preserve">
+    <value>Failure to initialize PinPoint Astrometric Engine</value>
+  </data>
+  <data name="LblPinPointNotInstalled" xml:space="preserve">
+    <value>Failed to initialize PinPoint Astrometric Engine. It or its 64bit component does not appear to be installed.</value>
+  </data>
+  <data name="LblPinPointReferenceCatalog" xml:space="preserve">
+    <value>Reference catalog</value>
+  </data>
+  <data name="LblPinPointCatAtas" xml:space="preserve">
+    <value>ATLAS / PanSTARRS+Gaia</value>
+  </data>
+  <data name="LblPinPointCatGscact" xml:space="preserve">
+    <value>Enhanced Guide Star 1.1</value>
+  </data>
+  <data name="LblPinPointCatTycho2" xml:space="preserve">
+    <value>ESA Tycho-2</value>
+  </data>
+  <data name="LblPinPointCatType" xml:space="preserve">
+    <value>Reference catalog</value>
+  </data>
+  <data name="LblPinPointCatUcac2" xml:space="preserve">
+    <value>USNO UCAC2</value>
+  </data>
+  <data name="LblPinPointCatUcac3" xml:space="preserve">
+    <value>USNO UCAC3</value>
+  </data>
+  <data name="LblPinPointCatUcac4" xml:space="preserve">
+    <value>USNO UCAC4</value>
+  </data>
+  <data name="LblPinPointCatUsnoA" xml:space="preserve">
+    <value>USNO A2.0</value>
+  </data>
+  <data name="LblPinPointCatUsnoB" xml:space="preserve">
+    <value>USNO B1.0</value>
+  </data>
+  <data name="LblPinPointExpansion" xml:space="preserve">
+    <value>Expansion</value>
+  </data>
+  <data name="LblPinPointExpansionToolTip" xml:space="preserve">
+    <value>Expansion of catalog search area outside the image dimensions (min = 0, max = 80, default = 40)</value>
+  </data>
+  <data name="LblPinPointMaxMagnitude" xml:space="preserve">
+    <value>Max. magnitude</value>
+  </data>
+  <data name="LblPinPointMaxMagnitudeToolTip" xml:space="preserve">
+    <value>The maximum (fainter) magnitude for selection of stars from the reference catalog (min = 2.0, max = 20.0, default = 20.0)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHost" xml:space="preserve">
+    <value>AllSky API host</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHostToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSky API host (default = nova.astrometry.net)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKey" xml:space="preserve">
+    <value>AllSky API key</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKeyToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSky API key (optional)</value>
+  </data>
+  <data name="LblPinPointAllSkySolve" xml:space="preserve">
+    <value>PinPoint AllSky solve</value>
+  </data>
+  <data name="LblPinPointLocalSolve" xml:space="preserve">
+    <value>PinPoint local solve</value>
+  </data>
+  <data name="LblPinPointErrorMessage" xml:space="preserve">
+    <value>PinPoint Error Message</value>
+  </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>Unable to set mount elevation to {0}!</value>
+  </data>
 </root>

@@ -6726,4 +6726,88 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
   <data name="LblTSXPort" xml:space="preserve">
     <value>TheSkyX Port</value>
   </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>Černobílý binning</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>Je-li zapnuto, kamera zprůměruje binované pixely a vytvoří černobílý výstup</value>
+  </data>
+  <data name="LblPinPoint" xml:space="preserve">
+    <value>PinPoint</value>
+  </data>
+  <data name="LblPinPointCatalogRoot" xml:space="preserve">
+    <value>Kořen katalogu</value>
+  </data>
+  <data name="LblPinPointFailedInitialize" xml:space="preserve">
+    <value>Selhání při inicializaci nástroje PinPoint Astrometric Engine</value>
+  </data>
+  <data name="LblPinPointNotInstalled" xml:space="preserve">
+    <value>Nepodařilo se inicializovat PinPoint Astrometric Engine. Zdá se, že není nainstalován ani tento program, ani jeho 64bitový komponent.</value>
+  </data>
+  <data name="LblPinPointReferenceCatalog" xml:space="preserve">
+    <value>Referenční katalog</value>
+  </data>
+  <data name="LblPinPointCatAtas" xml:space="preserve">
+    <value>ATLAS / PanSTARRS+Gaia</value>
+  </data>
+  <data name="LblPinPointCatGscact" xml:space="preserve">
+    <value>Vylepšený Guide Star 1.1</value>
+  </data>
+  <data name="LblPinPointCatTycho2" xml:space="preserve">
+    <value>ESA Tycho-2</value>
+  </data>
+  <data name="LblPinPointCatType" xml:space="preserve">
+    <value>Referenční katalog</value>
+  </data>
+  <data name="LblPinPointCatUcac2" xml:space="preserve">
+    <value>Referenční katalog</value>
+  </data>
+  <data name="LblPinPointCatUcac3" xml:space="preserve">
+    <value>Referenční katalog</value>
+  </data>
+  <data name="LblPinPointCatUcac4" xml:space="preserve">
+    <value>USNO UCAC4</value>
+  </data>
+  <data name="LblPinPointCatUsnoA" xml:space="preserve">
+    <value>USNO A2.0</value>
+  </data>
+  <data name="LblPinPointCatUsnoB" xml:space="preserve">
+    <value>USNO B1.0</value>
+  </data>
+  <data name="LblPinPointExpansion" xml:space="preserve">
+    <value>Rozšíření</value>
+  </data>
+  <data name="LblPinPointExpansionToolTip" xml:space="preserve">
+    <value>Rozšíření oblasti vyhledávání v katalogu mimo rozměry snímku (min = 0, max = 80, výchozí = 40)</value>
+  </data>
+  <data name="LblPinPointMaxMagnitude" xml:space="preserve">
+    <value>Max. magnituda</value>
+  </data>
+  <data name="LblPinPointMaxMagnitudeToolTip" xml:space="preserve">
+    <value>Maximální (slabší) magnituda pro výběr hvězd z referenčního katalogu (min = 2.0, max = 20.0, výchozí = 20.0)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHost" xml:space="preserve">
+    <value>AllSky API host</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHostToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSky API host (výchozí = nova.astrometry.net)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKey" xml:space="preserve">
+    <value>API klíč AllSky</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKeyToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSky API klíč (nepovinné)</value>
+  </data>
+  <data name="LblPinPointAllSkySolve" xml:space="preserve">
+    <value>PinPoint AllSky astrometrie</value>
+  </data>
+  <data name="LblPinPointLocalSolve" xml:space="preserve">
+    <value>Místní astrometrie PinPoint</value>
+  </data>
+  <data name="LblPinPointErrorMessage" xml:space="preserve">
+    <value>Chybová Zpráva PinPoint</value>
+  </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>Unable to set mount elevation to {0}!</value>
+  </data>
 </root>

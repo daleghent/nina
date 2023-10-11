@@ -6701,4 +6701,88 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblTSXPort" xml:space="preserve">
     <value>TheSkyXのポート</value>
   </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>モノクロのビニング</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>オンにすると、カメラはビニングされたピクセルを平均して、モノクロ出力を作成します</value>
+  </data>
+  <data name="LblPinPoint" xml:space="preserve">
+    <value>PinPoint</value>
+  </data>
+  <data name="LblPinPointCatalogRoot" xml:space="preserve">
+    <value>カタログのルート</value>
+  </data>
+  <data name="LblPinPointFailedInitialize" xml:space="preserve">
+    <value>PinPoint天文解析エンジンの初期化の失敗</value>
+  </data>
+  <data name="LblPinPointNotInstalled" xml:space="preserve">
+    <value>PinPoint天文解析エンジンの初期化に失敗しました。本体が64ビットでないか、64ビットのコンポーネントがインストールされていないようです。</value>
+  </data>
+  <data name="LblPinPointReferenceCatalog" xml:space="preserve">
+    <value>参照カタログ</value>
+  </data>
+  <data name="LblPinPointCatAtas" xml:space="preserve">
+    <value>ATLAS / PanSTARRS+Gaia</value>
+  </data>
+  <data name="LblPinPointCatGscact" xml:space="preserve">
+    <value>Enhanced Guide Star 1.1</value>
+  </data>
+  <data name="LblPinPointCatTycho2" xml:space="preserve">
+    <value>ESA Tycho-2</value>
+  </data>
+  <data name="LblPinPointCatType" xml:space="preserve">
+    <value>参照カタログ</value>
+  </data>
+  <data name="LblPinPointCatUcac2" xml:space="preserve">
+    <value>USNO UCAC2</value>
+  </data>
+  <data name="LblPinPointCatUcac3" xml:space="preserve">
+    <value>USNO UCAC3</value>
+  </data>
+  <data name="LblPinPointCatUcac4" xml:space="preserve">
+    <value>USNO UCAC4</value>
+  </data>
+  <data name="LblPinPointCatUsnoA" xml:space="preserve">
+    <value>USNO A2.0</value>
+  </data>
+  <data name="LblPinPointCatUsnoB" xml:space="preserve">
+    <value>USNO B1.0</value>
+  </data>
+  <data name="LblPinPointExpansion" xml:space="preserve">
+    <value>拡張</value>
+  </data>
+  <data name="LblPinPointExpansionToolTip" xml:space="preserve">
+    <value>画像領域外のカタログ検索領域の拡張（最小=0、最大=80、デフォルト=40）</value>
+  </data>
+  <data name="LblPinPointMaxMagnitude" xml:space="preserve">
+    <value>極限等級</value>
+  </data>
+  <data name="LblPinPointMaxMagnitudeToolTip" xml:space="preserve">
+    <value>The maximum (fainter) magnitude for selection of stars from the reference catalog (min = 2.0, max = 20.0, default = 20.0)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHost" xml:space="preserve">
+    <value>AllSkyのAPIのホスト</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHostToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSkyのAPIのホスト（デフォルト = nova.astrometry.net）</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKey" xml:space="preserve">
+    <value>AllSkyのAPIのキー</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKeyToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSkyのAPIのキー（任意）</value>
+  </data>
+  <data name="LblPinPointAllSkySolve" xml:space="preserve">
+    <value>PinPointのAllSkyソルブ</value>
+  </data>
+  <data name="LblPinPointLocalSolve" xml:space="preserve">
+    <value>PinPointのローカルソルブ</value>
+  </data>
+  <data name="LblPinPointErrorMessage" xml:space="preserve">
+    <value>PinPointのエラーメッセージ</value>
+  </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>架台の高さを{0}に設定できません!</value>
+  </data>
 </root>
