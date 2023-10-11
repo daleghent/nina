@@ -14,7 +14,6 @@ namespace NINA.Equipment.Utility {
             RemoveDuplicateFilters(filtersList);
             FillMissingPositions(filtersList, wheelPositions);
             EnsureCorrectNumberOfFilters(filtersList, wheelPositions);
-            SortFiltersByPosition(filtersList);
             return filtersList;
         }
 
@@ -65,13 +64,6 @@ namespace NINA.Equipment.Utility {
                 var filterToAdd = new FilterInfo($"Slot {filtersList.Count}", 0, (short)filtersList.Count);
                 Logger.Info($"Not enough filters defined in the equipment filter list. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
                 filtersList.Add(filterToAdd);
-            }
-        }
-        private void SortFiltersByPosition(AsyncObservableCollection<FilterInfo> filtersList) {
-            var sortedList = filtersList.OrderBy(filter => filter.Position).ToList();
-            filtersList.Clear();
-            foreach (var filter in sortedList) {
-                filtersList.Add(filter);
             }
         }
     }
