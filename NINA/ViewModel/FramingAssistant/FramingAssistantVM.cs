@@ -1138,7 +1138,9 @@ namespace NINA.ViewModel.FramingAssistant {
                         await SkyMapAnnotator.Initialize(skySurveyImage.Coordinates, AstroUtil.ArcminToDegree(skySurveyImage.FoVHeight), ImageParameter.Image.PixelWidth, ImageParameter.Image.PixelHeight, ImageParameter.Rotation, Cache, _loadImageSource.Token);
                         SkyMapAnnotator.DynamicFoV = FramingAssistantSource == SkySurveySource.SKYATLAS;
                         CalculateRectangle(SkyMapAnnotator.ViewportFoV);
-                        RectangleTotalRotation = profileService.ActiveProfile.FramingAssistantSettings.LastRotationAngle;
+                        if(FramingAssistantSource != SkySurveySource.FILE) { 
+                            RectangleTotalRotation = profileService.ActiveProfile.FramingAssistantSettings.LastRotationAngle;
+                        }
                     }
                 } catch (OperationCanceledException) {
                     Logger.Info("Loading image for framing has been cancelled");
