@@ -128,7 +128,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
 
                 var relativeOffsetRemaining = position - this.Position;
                 while (relativeOffsetRemaining != 0 && !ct.IsCancellationRequested) {
-                    var moveAmount = Math.Min(MaxStep, Math.Abs(relativeOffsetRemaining));
+                    var moveAmount = Math.Min(MaxIncrement, Math.Abs(relativeOffsetRemaining));
                     if (relativeOffsetRemaining < 0) {
                         moveAmount *= -1;
                     }
