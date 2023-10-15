@@ -88,31 +88,125 @@ namespace NINA.Image.ImageData {
             }
         }
 
-        private static ushort[] FlipAndConvert2d(Array input) {
-            using (MyStopWatch.Measure("FlipAndConvert2d")) {
-                Int32[,] arr = (Int32[,])input;
-                int width = arr.GetLength(0);
-                int height = arr.GetLength(1);
+        private static ushort[] ProcessAsByte(byte[,] arr, int width, int height, int length) {
+            ushort[] flatArray = new ushort[length];
+            ushort value;
+            unsafe {
+                fixed (byte* ptr = arr) {
+                    int idx = 0, row = 0;
+                    for (int i = 0; i < length; i++) {
+                        value = (ushort)ptr[i];
 
-                int length = width * height;
-                ushort[] flatArray = new ushort[length];
-                ushort value;
+                        idx = ((i % height) * width) + row;
+                        if ((i % (height)) == (height - 1)) row++;
 
-                unsafe {
-                    fixed (Int32* ptr = arr) {
-                        int idx = 0, row = 0;
-                        for (int i = 0; i < length; i++) {
-                            value = (ushort)ptr[i];
-
-                            idx = ((i % height) * width) + row;
-                            if ((i % (height)) == (height - 1)) row++;
-
-                            ushort b = value;
-                            flatArray[idx] = b;
-                        }
+                        ushort b = value;
+                        flatArray[idx] = b;
                     }
                 }
-                return flatArray;
+            }
+            return flatArray;
+        }
+
+        private static ushort[] ProcessAsShort(short[,] arr, int width, int height, int length) {
+            ushort[] flatArray = new ushort[length];
+            ushort value;
+            unsafe {
+                fixed (short* ptr = arr) {
+                    int idx = 0, row = 0;
+                    for (int i = 0; i < length; i++) {
+                        value = (ushort)ptr[i];
+
+                        idx = ((i % height) * width) + row;
+                        if ((i % (height)) == (height - 1)) row++;
+
+                        ushort b = value;
+                        flatArray[idx] = b;
+                    }
+                }
+            }
+            return flatArray;
+        }
+
+        private static ushort[] ProcessAsUShort(ushort[,] arr, int width, int height, int length) {
+            ushort[] flatArray = new ushort[length];
+            ushort value;
+            unsafe {
+                fixed (ushort* ptr = arr) {
+                    int idx = 0, row = 0;
+                    for (int i = 0; i < length; i++) {
+                        value = (ushort)ptr[i];
+
+                        idx = ((i % height) * width) + row;
+                        if ((i % (height)) == (height - 1)) row++;
+
+                        ushort b = value;
+                        flatArray[idx] = b;
+                    }
+                }
+            }
+            return flatArray;
+        }
+
+        private static ushort[] ProcessAsUInt(uint[,] arr, int width, int height, int length) {
+            ushort[] flatArray = new ushort[length];
+            ushort value;
+            unsafe {
+                fixed (uint* ptr = arr) {
+                    int idx = 0, row = 0;
+                    for (int i = 0; i < length; i++) {
+                        value = (ushort)ptr[i];
+
+                        idx = ((i % height) * width) + row;
+                        if ((i % (height)) == (height - 1)) row++;
+
+                        ushort b = value;
+                        flatArray[idx] = b;
+                    }
+                }
+            }
+            return flatArray;
+        }
+        private static ushort[] ProcessAsInt(int[,] arr, int width, int height, int length) {
+            ushort[] flatArray = new ushort[length];
+            ushort value;
+            unsafe {
+                fixed (int* ptr = arr) {
+                    int idx = 0, row = 0;
+                    for (int i = 0; i < length; i++) {
+                        value = (ushort)ptr[i];
+
+                        idx = ((i % height) * width) + row;
+                        if ((i % (height)) == (height - 1)) row++;
+
+                        ushort b = value;
+                        flatArray[idx] = b;
+                    }
+                }
+            }
+            return flatArray;
+        }
+
+        private static ushort[] FlipAndConvert2d(Array input) {
+            using (MyStopWatch.Measure("FlipAndConvert2d")) {
+                int width = input.GetLength(0);
+                int height = input.GetLength(1);
+                int length = width * height;
+                ushort[] flatArray = new ushort[length];
+
+                if (input.GetType() == typeof(byte[,])) {
+                    return ProcessAsByte((byte[,])input, width, height, length);
+                } else if (input.GetType() == typeof(short[,])) {
+                    return ProcessAsShort((short[,])input, width, height, length);
+                } else if (input.GetType() == typeof(ushort[,])) {
+                    return ProcessAsUShort((ushort[,])input, width, height, length);
+                } else if (input.GetType() == typeof(uint[,])) {
+                    return ProcessAsUInt((uint[,])input, width, height, length);
+                } else if (input.GetType() == typeof(int[,])) {
+                    return ProcessAsInt((int[,])input, width, height, length);
+                } else {
+                    throw new NotSupportedException("Unsupported data type");
+                }
             }
         }
     }

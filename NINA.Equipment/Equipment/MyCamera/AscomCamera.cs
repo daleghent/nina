@@ -615,7 +615,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         }
 
                         return exposureDataFactory.CreateFlipped2DExposureData(
-                            flipped2DArray: (int[,])ImageArray,
+                            flipped2DArray: (Array)ImageArray,
                             bitDepth: BitDepth,
                             isBayered: SensorType != SensorType.Monochrome,
                             metaData: new ImageMetaData());
