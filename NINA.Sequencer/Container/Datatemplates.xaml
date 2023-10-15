@@ -81,10 +81,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="DSOExpander" TargetType="Expander">
+    <Style x:Key="DSOExpander" TargetType="ninactrl:DetachingExpander">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Expander">
+                <ControlTemplate TargetType="ninactrl:DetachingExpander">
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -201,10 +201,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="ExposureInfoExpander" TargetType="Expander">
+    <Style x:Key="ExposureInfoExpander" TargetType="ninactrl:DetachingExpander">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Expander">
+                <ControlTemplate TargetType="ninactrl:DetachingExpander">
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -292,8 +292,8 @@
 
                     </Grid.RowDefinitions>
 
-                    <Expander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
-                        <Expander.Header>
+                    <ninactrl:DetachingExpander IsExpanded="{Binding Target.Expanded}" Style="{StaticResource DSOExpander}">
+                        <ninactrl:DetachingExpander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Border MinHeight="25">
                                     <TextBlock
@@ -348,7 +348,7 @@
                                     </StackPanel.Style>
                                 </StackPanel>
                             </StackPanel>
-                        </Expander.Header>
+                        </ninactrl:DetachingExpander.Header>
                         <Grid>
                             <Grid.Resources>
                                 <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
@@ -592,13 +592,13 @@
                                 DataContext="{Binding Target.DeepSkyObject}"
                                 NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                         </Grid>
-                    </Expander>
+                    </ninactrl:DetachingExpander>
 
-                    <Expander
+                    <ninactrl:DetachingExpander
                         Grid.Row="1"
                         IsExpanded="{Binding ExposureInfoListExpanded}"
                         Style="{StaticResource ExposureInfoExpander}">
-                        <Expander.Header>
+                        <ninactrl:DetachingExpander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Border MinHeight="25">
                                     <TextBlock
@@ -622,7 +622,7 @@
                                     </StackPanel.Style>
                                 </StackPanel>
                             </StackPanel>
-                        </Expander.Header>
+                        </ninactrl:DetachingExpander.Header>
                         <DataGrid
                             Grid.ColumnSpan="2"
                             AutoGenerateColumns="False"
@@ -799,7 +799,7 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                    </Expander>
+                    </ninactrl:DetachingExpander>
                 </Grid>
             </view:SequenceContainerView.SequenceContainerContent>
         </view:SequenceContainerView>
@@ -848,7 +848,12 @@
                         TextAlignment="Center" />
                 </StackPanel>
                 <i:Interaction.Behaviors>
-                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DragOverBehavior
+                        AllowDragAbove="False"
+                        AllowDragBelow="False"
+                        AllowDragCenter="{Binding Items.Count, Converter={StaticResource ZeroToBooleanTrueConverter}}"
+                        DragAboveSize="0"
+                        DragBelowSize="0" />
                     <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="DropIntoCommand" />
                 </i:Interaction.Behaviors>
             </Grid>
@@ -869,7 +874,12 @@
                     Opacity="0.4"
                     Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_StartArea}" />
                 <i:Interaction.Behaviors>
-                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DragOverBehavior
+                        AllowDragAbove="False"
+                        AllowDragBelow="False"
+                        AllowDragCenter="{Binding Items.Count, Converter={StaticResource ZeroToBooleanTrueConverter}}"
+                        DragAboveSize="0"
+                        DragBelowSize="0" />
                     <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
                 </i:Interaction.Behaviors>
             </Grid>
@@ -905,7 +915,12 @@
                     Opacity="0.4"
                     Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_EndArea}" />
                 <i:Interaction.Behaviors>
-                    <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                    <behaviors:DragOverBehavior
+                        AllowDragAbove="False"
+                        AllowDragBelow="False"
+                        AllowDragCenter="{Binding Items.Count, Converter={StaticResource ZeroToBooleanTrueConverter}}"
+                        DragAboveSize="0"
+                        DragBelowSize="0" />
                     <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="DropIntoCommand" />
                 </i:Interaction.Behaviors>
             </Grid>

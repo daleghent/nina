@@ -47,6 +47,7 @@
     </UserControl.Resources>
     <StackPanel Margin="0,0,0,1" Orientation="Vertical">
         <i:Interaction.Behaviors>
+            <behaviors:DragDropBehavior />
             <behaviors:DragOverBehavior
                 AllowDragCenter="False"
                 DragAboveSize="25"
@@ -145,10 +146,6 @@
 
                         </Grid>
                     </Grid>
-
-                    <i:Interaction.Behaviors>
-                        <behaviors:DragDropBehavior />
-                    </i:Interaction.Behaviors>
 
                     <Border.Style>
                         <Style TargetType="Border">
