@@ -833,13 +833,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool CanSetGain => false;
 
-        public int GainMax => 0;
+        public int GainMax => -1;
 
-        public int GainMin => 0;
+        public int GainMin => -1;
 
-        public int Gain { get => 0; set => throw new InvalidOperationException(); }
+        public int Gain { get => -1; set => throw new InvalidOperationException(); }
 
-        public IList<int> Gains => new List<int>() { 0 };
+        public IList<int> Gains => new List<int>() { };
 
         public bool DewHeaterOn { get => false; set => throw new InvalidOperationException(); }
 
