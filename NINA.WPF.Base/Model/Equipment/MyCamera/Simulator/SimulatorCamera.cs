@@ -307,7 +307,9 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
                 Connected = true;
                 try {
                     // Trigger a download to ensure the the properties from the previously saved image settings are intialized
-                    _ = await this.DownloadExposure(token);
+                    if(Settings.Type != CameraType.SKYSURVEY) { 
+                        _ = await this.DownloadExposure(token);
+                    }
                     currentFile = 0;
                 } catch (Exception e) {
                     Logger.Error("Failed to download image on connect", e);
