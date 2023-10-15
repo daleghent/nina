@@ -25,7 +25,7 @@ using Microsoft.Xaml.Behaviors;
 namespace NINA.Sequencer.Behaviors {
 
     /// <summary>
-    /// This behavior handles the command to execut when an element is dropped into it. The DragOverBehavior will try to find this command here and invoke its command
+    /// This behavior handles the command to execute when an element is dropped into it. The DragOverBehavior will try to find this command here and invoke it
     /// </summary>
     public class DropIntoBehavior : Behavior<UIElement> {
         public static readonly DependencyProperty OnDropCommandProperty = DependencyProperty.Register(nameof(OnDropCommand), typeof(string), typeof(DropIntoBehavior));
