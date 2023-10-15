@@ -108,6 +108,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN4X4MODE)) {
                         supportedBins.Add(4);
                     }
+
+                    if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN6X6MODE)) {
+                        supportedBins.Add(6);
+                    }
+
+                    if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN8X8MODE)) {
+                        supportedBins.Add(8);
+                    }
+
                     Info.SupportedBins = supportedBins;
                 }
                 return Info.SupportedBins;

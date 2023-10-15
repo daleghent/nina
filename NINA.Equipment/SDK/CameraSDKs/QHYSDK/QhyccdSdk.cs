@@ -885,6 +885,71 @@ namespace QHYCCD {
             /// check if camera support burst mode
             /// </summary>
             CAM_BURST_MODE,
+
+            /// <summary>
+            /// for OEM-600
+            /// </summary>
+            CAM_SPEAKER_LED_ALARM,
+
+            /// <summary>
+            /// for _QHY5III178C Celestron, SDK have to feed this dog or it go reset
+            /// </summary>
+            CAM_WATCH_DOG_FPGA,
+
+            /// <summary>
+            /// check if camera has bin6x6 mode
+            /// </summary>
+            CAM_BIN6X6MODE,
+
+            /// <summary>
+            /// check if camera has bin8x8 mode
+            /// </summary>
+            CAM_BIN8X8MODE,
+
+            /// <summary>
+            /// Show GPS LED tab on sharpCap
+            /// </summary>
+            CAM_GlobalSensorGPSLED,
+
+            /// <summary>
+            /// Process image
+            /// </summary>
+            CONTROL_ImgProc,
+
+            /// <summary>
+            /// Remove single RBI
+            /// </summary>
+            CONTROL_RemoveRBI,
+
+            /// <summary>
+            /// image stabilization
+            /// </summary>
+            CONTROL_GlobalReset,
+
+            /// <summary>
+            /// QHY undocumented
+            /// </summary>
+            CONTROL_FrameDetect,
+
+            /// <summary>
+            /// Supports the conversion between db and gain
+            /// </summary>
+            CAM_GainDBConversion,
+
+            /// <summary>
+            /// QHY undocumented
+            /// </summary>
+            CAM_CurveSystemGain,
+
+            /// <summary>
+            /// QHY undocumented
+            /// </summary>
+            CAM_CurveFullWell,
+
+            /// <summary>
+            /// QHY undocumented
+            /// </summary>
+            CAM_CurveReadoutNoise,
         };
 
         /// <summary>
@@ -903,6 +968,18 @@ namespace QHYCCD {
             /// </summary>
             VIDEO_STREAM
         };
+
+        /// <summary>
+        /// For setting on-camera image processing
+        /// </summary>
+        public enum QHY_IMAGE_PROC : byte {
+            NOPROC = 0,
+            ROTATION180,
+            ROTATION90L,
+            ROTATION90R,
+            MIRRORH,
+            MIRRORV,
+        }
 
         #endregion QHY SDK constants
 
