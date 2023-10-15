@@ -60,11 +60,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     RecognizesAccessKey="True"
-                                    UseLayoutRounding="True">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:DragDropBehavior />
-                                    </i:Interaction.Behaviors>
-                                </ContentPresenter>
+                                    UseLayoutRounding="True" />
                             </Grid>
                         </Border>
                     </StackPanel>
@@ -180,11 +176,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     RecognizesAccessKey="True"
-                                    UseLayoutRounding="True">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:DragDropBehavior />
-                                    </i:Interaction.Behaviors>
-                                </ContentPresenter>
+                                    UseLayoutRounding="True" />
                             </Grid>
                         </Border>
                     </StackPanel>
