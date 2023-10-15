@@ -89,6 +89,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - AF after Exposures will now properly consider previous autofocus runs and reset its counter accordingly
 - Dither after exposures will no longer fail to run when clearing the image statistics history
 - Sky Atlas date picker now correctly sets the selected date instead of the day before the selected one
+- For relative ASCOM focusers the MaxIncrement is now considered for move commands
+- SBIG native driver no longer stores (incorrect 0) Gain in image meta data
+- When an update notification in the app was available but after the initial pop-up a new version was published, it will no longer fail the checksum check
+- ASCOM Camera ImageArray can now properly transform Byte[,], Short[,], UShort[,] in addition to the existing Int[,] to the 16 bit data structure N.I.N.A. is using
+- Dragging an instruction below a sequence container when nothing else is below it will now work correctly
+- When switching profiles, the dock layout will be saved piror to switching
 
 # Version 2.3
 
