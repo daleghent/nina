@@ -31,6 +31,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using ASCOM.Common;
 using ASCOM;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
@@ -781,6 +782,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     Logger.Info("Unable to check or set mount time");
                     return;
                 }
+            } catch (Exception e) {
+                // e.g. InvalidValueException, DriverException - docs are not entirely clear
+                Logger.Error("Unexpected exception when reading mount time. Skipping clock comparison and setting of mount time.", e);
+                return;
             }
 
             var systemTime = DateTime.UtcNow;
