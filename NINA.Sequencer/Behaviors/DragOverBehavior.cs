@@ -23,6 +23,10 @@ using System.Windows.Media;
 
 namespace NINA.Sequencer.Behaviors {
 
+    /// <summary>
+    /// A behavior to handle dragging an item over the item where the behavior is registered.
+    /// When the dragged item is dropped the behavior will look for a correspondign DragIntoBehavior that is part of the drop target or one of its parent elements
+    /// </summary>
     public class DragOverBehavior : Behavior<FrameworkElement> {
 
         public DragOverBehavior() {
