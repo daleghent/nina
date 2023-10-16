@@ -59,7 +59,7 @@ namespace NINA.Image.FileFormat.XISF {
             Xisf.Add(MetaData);
 
             Content = new XDocument(
-            new XDeclaration("1.0", "UTF-8", null),
+                new XDeclaration("1.0", "UTF-8", null), 
                 Xisf
             );
         }
@@ -83,7 +83,14 @@ namespace NINA.Image.FileFormat.XISF {
             Xisf.Add(Image);
         }
 
-        public int ByteCount => Encoding.UTF8.GetByteCount(Content.ToString());
+        public int ByteCount {
+            get {
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    Save(memoryStream);
+                    return (int)memoryStream.Length;
+                }
+            }
+        }
 
         public ImageMetaData ExtractMetaData() {
             var metaData = new ImageMetaData();
@@ -93,7 +100,7 @@ namespace NINA.Image.FileFormat.XISF {
                 metaData.Image.ExposureStart = DateTime.Parse(value);
             }
 
-            if(TryGetFITSProperty("DATE-AVG", out value)) {
+            if (TryGetFITSProperty("DATE-AVG", out value)) {
                 metaData.Image.ExposureMidPoint = DateTime.Parse(value);
             }
 
@@ -359,11 +366,11 @@ namespace NINA.Image.FileFormat.XISF {
             var elements = Image.Elements(xmlns + "FITSKeyword");
             if (!elements.Any()) { return l; }
 
-            foreach(var elem in elements) {
+            foreach (var elem in elements) {
                 if (elem == null) { continue; }
 
                 var key = elem.Attribute("name")?.Value;
-                if(key == null) { continue; }
+                if (key == null) { continue; }
 
                 var value = elem.Attribute("value").Value;
                 var comment = elem.Attribute("comment")?.Value ?? string.Empty;
@@ -732,7 +739,7 @@ namespace NINA.Image.FileFormat.XISF {
             if (Image == null) { throw new InvalidOperationException("No Image component available to add FITS Keyword!"); }
 
             var exists = Image.Elements(xmlns + "FITSKeyword").Attributes("name").Any(x => x.Value == name);
-            if(!exists) { 
+            if (!exists) {
                 Image.Add(new XElement(xmlns + "FITSKeyword",
                             new XAttribute("name", name),
                             new XAttribute("value", RemoveInvalidXMLChars(value)),
@@ -846,7 +853,7 @@ namespace NINA.Image.FileFormat.XISF {
         }
 
         public void Save(Stream s) {
-            using (System.Xml.XmlWriter sw = System.Xml.XmlWriter.Create(s, new System.Xml.XmlWriterSettings { OmitXmlDeclaration = true, Indent = true, Encoding = Encoding.UTF8 })) {
+            using (System.Xml.XmlWriter sw = System.Xml.XmlWriter.Create(s, new System.Xml.XmlWriterSettings { OmitXmlDeclaration = false, Indent = true, Encoding = new UTF8Encoding(false) })) {
                 Content.Save(sw);
             }
         }
