@@ -160,7 +160,7 @@ namespace NINA.Test.Sequencer.Trigger.Autofocus {
             });
 
             filterWheelMediatorMock.SetupSequence(m => m.GetInfo())
-                .Returns(filterWheelInfo)
+                .Returns(nextFilterWheelInfo)
                 .Returns(nextFilterWheelInfo);
 
             sut.Initialize();
@@ -171,6 +171,42 @@ namespace NINA.Test.Sequencer.Trigger.Autofocus {
 
             result.Should().BeTrue();
         }
+
+
+        [Test]
+        public void Test_ShouldTrigger_DifferentFilterInHistory_ButThatsAnAFFilter_WhenChangeThenNotTrigger() {
+            var filterWheelInfo = new FilterWheelInfo();
+            var filterInfo = new FilterInfo() {
+                Name = "Test1"
+            };
+            filterWheelInfo.SelectedFilter = filterInfo;
+
+            var nextFilterWheelInfo = new FilterWheelInfo();
+            var nextFilterInfo = new FilterInfo() {
+                Name = "Test2"
+            };
+            nextFilterWheelInfo.SelectedFilter = nextFilterInfo;
+
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { new FilterInfo() { Name = "Test1", AutoFocusFilter = true } });
+            var point = new ImageHistoryPoint(1, "LIGHT");
+            point.PopulateAFPoint(new AutoFocusReport() { Filter = "Test1", InitialFocusPoint = new FocusPoint() { Position = 5000 }, CalculatedFocusPoint = new FocusPoint() { Position = 5000 }, Timestamp = DateTime.UtcNow });
+            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new AsyncObservableCollection<ImageHistoryPoint>() {
+                point
+            });
+
+            filterWheelMediatorMock.SetupSequence(m => m.GetInfo())
+                .Returns(nextFilterWheelInfo)
+                .Returns(nextFilterWheelInfo);
+
+            sut.Initialize();
+
+            var itemMock = new Mock<IExposureItem>();
+            itemMock.SetupGet(x => x.ImageType).Returns("LIGHT");
+            var result = sut.ShouldTrigger(null, itemMock.Object);
+
+            result.Should().BeFalse();
+        }
+
 
         [Test]
         public void Test_ShouldTrigger_SameFilterInHistory_WhenChangeThenTrigger() {

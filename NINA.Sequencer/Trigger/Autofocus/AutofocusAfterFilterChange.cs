@@ -111,9 +111,12 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             if (!(nextItem is IExposureItem exposureItem)) { return false; }
             if (exposureItem.ImageType != "LIGHT") { return false; }
 
-            var lastAF = history.AutoFocusPoints?.LastOrDefault();
-            if (lastAF != null) {
-                LastAutoFocusFilter = lastAF.AutoFocusPoint?.Filter;
+            var hasAutofocusFilter = profileService.ActiveProfile?.FilterWheelSettings?.FilterWheelFilters?.Where(f => f.AutoFocusFilter == true).FirstOrDefault() != null;
+            if (!hasAutofocusFilter) {
+              var lastAF = history.AutoFocusPoints?.LastOrDefault();
+              if (lastAF != null) {
+                  LastAutoFocusFilter = lastAF.AutoFocusPoint?.Filter;
+              }
             }
 
             var currentFwInfo = filterWheelMediator.GetInfo();
