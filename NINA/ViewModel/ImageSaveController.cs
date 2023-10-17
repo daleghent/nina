@@ -23,6 +23,7 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using Nito.AsyncEx;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -62,6 +63,9 @@ namespace NINA.ViewModel {
                 CancellationTokenSource writeTimeoutCts = null;
                 try {
                     var item = await queue.DequeueAsync(workerCTS.Token);
+                    var swTotal = Stopwatch.StartNew();
+                    var sw = Stopwatch.StartNew();
+
                     Logger.Debug($"Dequeuing image to be saved with id {item.Data.MetaData.Image.Id}");
                     workerCTS.Token.ThrowIfCancellationRequested();
 
@@ -71,18 +75,31 @@ namespace NINA.ViewModel {
 
                     await (BeforeImageSaved?.InvokeAsync(this, new BeforeImageSavedEventArgs(item.Data, item.PrepareTask)) ?? Task.CompletedTask);
 
+                    var beforeSaveTime = sw.Elapsed;
+                    sw = Stopwatch.StartNew();
+
                     var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), writeTimeoutCts.Token);
+
+                    var prepareSaveTime = sw.Elapsed;
+                    sw = Stopwatch.StartNew();
+
                     writeTimeoutCts.Token.ThrowIfCancellationRequested();
-
                     var preparedData = await item.PrepareTask;
-
-                    var beforeFinalizeArgs = new BeforeFinalizeImageSavedEventArgs(preparedData);
+                    var beforeFinalizeArgs = new BeforeFinalizeImageSavedEventArgs(preparedData);                    
                     await (BeforeFinalizeImageSaved?.InvokeAsync(this, beforeFinalizeArgs) ?? Task.CompletedTask);
-                    var customPatterns = beforeFinalizeArgs.Patterns;
 
+                    var beforeFinalizeImageSaveTime = sw.Elapsed;
+                    sw = Stopwatch.StartNew();
+
+                    var customPatterns = beforeFinalizeArgs.Patterns;
                     var patternTemplate = profileService.ActiveProfile.ImageFileSettings.GetFilePattern(item.Data.MetaData.Image.ImageType);
 
                     path = preparedData.RawImageData.FinalizeSave(path, patternTemplate, customPatterns);
+
+                    var finalizeSaveTime = sw.Elapsed;
+                    swTotal.Stop();
+                    Logger.Info($"Successfully saved file at {path}. Duration Total: {swTotal.Elapsed}; BeforeSave: {beforeSaveTime}; Prepare: {prepareSaveTime}; BeforeFinalizeImageSaved: {beforeFinalizeImageSaveTime}; FinalizeSaveTime: {finalizeSaveTime}");
+
                     var stats = await preparedData.RawImageData.Statistics;
 
                     // Run this in a separate task to limit risk of deadlocks
