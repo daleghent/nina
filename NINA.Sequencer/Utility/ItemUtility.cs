@@ -273,12 +273,12 @@ namespace NINA.Sequencer.Utility {
          * the actual time
          */
         public static void CalculateExpectedTimeCommon(WaitLoopData data, double offset, bool until, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
-
             // Don't waste time on constructors
+            if (data == null) { return; }            
+            if (data.Coordinates == null) { return; }
+
             Coordinates coord = data.Coordinates.Coordinates;
-            if (coord.RADegrees == 0 && coord.Dec == 0) {
-                return;
-            }
+            if (coord.RADegrees == 0 && coord.Dec == 0) { return; }
 
             data.SetApproximate(false);
 
