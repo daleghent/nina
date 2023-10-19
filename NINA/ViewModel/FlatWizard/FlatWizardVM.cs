@@ -340,6 +340,7 @@ namespace NINA.ViewModel.FlatWizard {
             get => singleFlatWizardFilterSettings;
             set {
                 singleFlatWizardFilterSettings = value;
+                value.IsChecked = true;
                 RaisePropertyChanged();
             }
         }
