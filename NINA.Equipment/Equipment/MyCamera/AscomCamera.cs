@@ -614,11 +614,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             await CoreUtil.Wait(TimeSpan.FromMilliseconds(100), token);
                         }
 
+                        var metaData = new ImageMetaData();
+                        metaData.FromCamera(this);
+
                         return exposureDataFactory.CreateFlipped2DExposureData(
                             flipped2DArray: (Array)ImageArray,
                             bitDepth: BitDepth,
                             isBayered: SensorType != SensorType.Monochrome,
-                            metaData: new ImageMetaData());
+                            metaData: metaData);
                     } catch (OperationCanceledException) {
                     } catch (Exception ex) {
                         Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
