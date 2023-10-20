@@ -33,6 +33,7 @@ using NINA.Core.Locale;
 using OxyPlot.Axes;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace NINA.Sequencer {
 
@@ -67,6 +68,21 @@ namespace NINA.Sequencer {
         private int targetsLoadingProgress;
         [ObservableProperty]
         private int targetsLoadingTotalCount;
+        [ObservableProperty]
+        private bool sortByRelevance;
+        partial void OnSortByRelevanceChanged(bool oldValue, bool newValue) {
+            if(newValue) {
+                SortByName = false;
+            }
+        }
+
+        [ObservableProperty]
+        private bool sortByName;
+        partial void OnSortByNameChanged(bool oldValue, bool newValue) {
+            if (newValue) {
+                SortByRelevance = false;
+            }
+        }
 
         public TargetController(SequenceJsonConverter sequenceJsonConverter, IProfileService profileService) {
             this.sequenceJsonConverter = sequenceJsonConverter;
@@ -95,10 +111,9 @@ namespace NINA.Sequencer {
                 activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
                 activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
             });
-
-            ToggleSortCommand = new GalaSoft.MvvmLight.Command.RelayCommand(ToggleSort);
         }
 
+        [RelayCommand]
         private void ToggleSort() {
             if (SortByRelevance) {
                 TargetsView.SortDescriptions.RemoveAt(0);
@@ -109,33 +124,7 @@ namespace NINA.Sequencer {
             }
         }
 
-        private bool sortByRelevance;
 
-        public bool SortByRelevance {
-            get => sortByRelevance;
-            set {
-                sortByRelevance = value;
-                if (value) {
-                    SortByName = false;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool sortByName;
-
-        public bool SortByName {
-            get => sortByName;
-            set {
-                sortByName = value;
-                if (value) {
-                    SortByRelevance = false;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
-        public ICommand ToggleSortCommand { get; }
 
         private bool ApplyViewFilter(object obj) {
             return (obj as TargetSequenceContainer).Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
