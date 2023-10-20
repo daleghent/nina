@@ -153,9 +153,10 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                     }
 
                     DriverInfo = $"SDK: {EFWdll.GetSDKVersion()}; FW: {GetFwVersionString()}";
+                    Connected = true;
+
                     Unidirectional = profileService.ActiveProfile.FilterWheelSettings.Unidirectional;
 
-                    Connected = true;
                     return true;
                 } else {
                     Logger.Error("Failed to connect to EFW");
