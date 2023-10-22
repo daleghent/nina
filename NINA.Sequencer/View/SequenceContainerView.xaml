@@ -585,8 +585,13 @@
                                                     Visibility="{Binding Converter={StaticResource StrategyEvaluatesConditionsAndTriggersToVisibilityConverter}}">
                                                     <i:Interaction.Behaviors>
                                                         <!--  Drop area for Triggers  -->
-                                                        <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddTrigger}" DragOverDisplayAnchor="Right" />
-                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Trigger.SequenceTrigger" OnDropCommand="DropIntoTriggersCommand" />
+                                                        <behaviors:DragOverBehavior
+                                                            AllowDragAbove="False"
+                                                            AllowDragBelow="False"
+                                                            AllowDragCenter="{Binding Triggers.Count, Converter={StaticResource ZeroToBooleanTrueConverter}}"
+                                                            DragOverCenterText="{ns:Loc LblDragOver_AddTrigger}"
+                                                            DragOverDisplayAnchor="Right" />
+                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Trigger.ISequenceTrigger" OnDropCommand="DropIntoTriggersCommand" />
                                                     </i:Interaction.Behaviors>
                                                     <GroupBox.Header>
                                                         <Grid>
@@ -757,8 +762,13 @@
                                                     </GroupBox.Header>
                                                     <i:Interaction.Behaviors>
                                                         <!--  Drop area for Conditions  -->
-                                                        <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddCondition}" DragOverDisplayAnchor="Right" />
-                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Conditions.SequenceCondition" OnDropCommand="DropIntoConditionsCommand" />
+                                                        <behaviors:DragOverBehavior
+                                                            AllowDragAbove="False"
+                                                            AllowDragBelow="False"
+                                                            AllowDragCenter="{Binding Conditions.Count, Converter={StaticResource ZeroToBooleanTrueConverter}}"
+                                                            DragOverCenterText="{ns:Loc LblDragOver_AddCondition}"
+                                                            DragOverDisplayAnchor="Right" />
+                                                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Conditions.ISequenceCondition" OnDropCommand="DropIntoConditionsCommand" />
                                                     </i:Interaction.Behaviors>
                                                     <ItemsControl
                                                         Margin="0,0,0,0"
