@@ -207,7 +207,8 @@
                                         Margin="5"
                                         Data="{StaticResource RefreshSVG}"
                                         Fill="{StaticResource PrimaryBrush}"
-                                        Stretch="Uniform" />
+                                        Stretch="Uniform"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         Padding="0,0,2,0"
                                         HorizontalAlignment="Center"
@@ -249,7 +250,8 @@
                                                                     Margin="5,5,0,5"
                                                                     Data="{StaticResource CancelCircledSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <TextBlock
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center"
@@ -259,7 +261,8 @@
                                                                     Margin="0,5,5,5"
                                                                     Data="{StaticResource SkipSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                             </StackPanel>
                                                         </Setter.Value>
                                                     </Setter>
@@ -274,7 +277,8 @@
                                                                     Margin="5,5,0,5"
                                                                     Data="{StaticResource CancelCircledSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <TextBlock
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center"
@@ -284,7 +288,8 @@
                                                                     Margin="0,5,5,5"
                                                                     Data="{StaticResource StopSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                             </StackPanel>
                                                         </Setter.Value>
                                                     </Setter>
@@ -299,7 +304,8 @@
                                                                     Margin="5,5,0,5"
                                                                     Data="{StaticResource CancelCircledSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <TextBlock
                                                                     HorizontalAlignment="Center"
                                                                     VerticalAlignment="Center"
@@ -309,7 +315,8 @@
                                                                     Margin="0,5,5,5"
                                                                     Data="{StaticResource FlagFinishSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                             </StackPanel>
                                                         </Setter.Value>
                                                     </Setter>
@@ -356,7 +363,8 @@
                             Margin="5"
                             Data="{StaticResource TrashCanSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -384,7 +392,8 @@
                             Margin="5"
                             Data="{StaticResource DotsVerticalSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -412,7 +421,8 @@
                             Margin="5"
                             Data="{StaticResource PowerSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -544,7 +554,8 @@
                             Margin="5"
                             Data="{StaticResource PowerSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -579,7 +590,8 @@
                             Margin="5"
                             Data="{StaticResource RefreshSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -615,7 +627,8 @@
                             Margin="5"
                             Data="{StaticResource CopySVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -639,7 +652,8 @@
                             Margin="5"
                             Data="{StaticResource ArrowUpSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -663,7 +677,8 @@
                             Margin="5"
                             Data="{StaticResource ArrowDownSVG}"
                             Fill="{StaticResource PrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>

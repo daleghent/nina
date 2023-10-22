@@ -96,7 +96,8 @@
                 x:Shared="false"
                 Data="{Binding Icon}"
                 Fill="{StaticResource PrimaryBrush}"
-                Stretch="Uniform" />
+                Stretch="Uniform"
+                UseLayoutRounding="True" />
             <Path
                 x:Key="EntityMenuIcon"
                 Width="20"
@@ -105,7 +106,8 @@
                 x:Shared="false"
                 Data="{Binding Entity.Icon}"
                 Fill="{StaticResource PrimaryBrush}"
-                Stretch="Uniform" />
+                Stretch="Uniform"
+                UseLayoutRounding="True" />
             <Path
                 x:Key="TemplateMenuIcon"
                 Width="20"
@@ -114,7 +116,8 @@
                 x:Shared="false"
                 Data="{Binding Container.Icon}"
                 Fill="{StaticResource PrimaryBrush}"
-                Stretch="Uniform" />
+                Stretch="Uniform"
+                UseLayoutRounding="True" />
 
             <Style x:Key="ContainerStyle" TargetType="{x:Type GroupItem}">
                 <Setter Property="Template">
@@ -587,7 +590,8 @@
                                                                     Margin="5"
                                                                     Data="{StaticResource ThunderSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTriggers}" />
                                                             </StackPanel>
 
@@ -684,7 +688,8 @@
                                                                     Margin="5"
                                                                     Data="{StaticResource NotepadSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc Lbl_SequenceContainer_Conditions_Header}" />
                                                             </StackPanel>
 
@@ -698,7 +703,8 @@
                                                                     Margin="5"
                                                                     Data="{StaticResource AddSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                                 <Button.ToolTip>
                                                                     <ToolTip>
                                                                         <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_AddCondition_Tooltip}" />
@@ -791,7 +797,8 @@
                                                     Margin="5"
                                                     Data="{StaticResource SequenceSVG}"
                                                     Fill="{StaticResource PrimaryBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblInstructions}" />
                                             </StackPanel>
 
@@ -805,7 +812,8 @@
                                                     Margin="5"
                                                     Data="{StaticResource AddSVG}"
                                                     Fill="{StaticResource PrimaryBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <Button.ToolTip>
                                                     <ToolTip>
                                                         <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_AddInstruction_Tooltip}" />

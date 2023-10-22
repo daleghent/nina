@@ -826,7 +826,8 @@
                                                         x:Shared="false"
                                                         Data="{Binding Icon}"
                                                         Fill="{StaticResource PrimaryBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Style.Resources>
                                                 <Style.Triggers>
                                                     <EventTrigger RoutedEvent="Click">

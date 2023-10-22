@@ -233,7 +233,8 @@
                                                                     Margin="5"
                                                                     Data="{StaticResource TrashCanSVG}"
                                                                     Fill="{StaticResource PrimaryBrush}"
-                                                                    Stretch="Uniform" />
+                                                                    Stretch="Uniform"
+                                                                    UseLayoutRounding="True" />
                                                             </Grid>
                                                         </Button>
                                                     </DataTemplate>
@@ -841,7 +842,8 @@
                                             x:Shared="false"
                                             Data="{Binding Icon}"
                                             Fill="{StaticResource PrimaryBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Style.Resources>
                                     <Style.Triggers>
                                         <EventTrigger RoutedEvent="Click">
@@ -932,7 +934,8 @@
                                                     x:Shared="false"
                                                     Data="{Binding Icon}"
                                                     Fill="{StaticResource PrimaryBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                             </MenuItem.Resources>
 
                                             <MenuItem.ItemContainerStyle>
@@ -972,7 +975,8 @@
                                                     x:Shared="false"
                                                     Data="{Binding Icon}"
                                                     Fill="{StaticResource PrimaryBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                             </MenuItem.Resources>
 
                                             <MenuItem.ItemContainerStyle>

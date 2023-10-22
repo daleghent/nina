@@ -451,7 +451,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource TrashCanSVG}"
                                                 Fill="{StaticResource PrimaryBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

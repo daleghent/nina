@@ -148,12 +148,14 @@
                                 Data="{StaticResource CheckedCircledSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
+                                UseLayoutRounding="True"
                                 Visibility="Visible" />
                             <Path
                                 x:Name="PART_NotCheckedSymbol"
                                 Data="{StaticResource CancelCircledSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
+                                UseLayoutRounding="True"
                                 Visibility="Collapsed" />
                         </Grid>
                     </Border>
@@ -193,6 +195,7 @@
                                 Data="{StaticResource CheckedCircledSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
+                                UseLayoutRounding="True"
                                 Visibility="Visible" />
                         </Grid>
                     </Border>
@@ -220,6 +223,7 @@
                             Data="{StaticResource CheckedCircledSVG}"
                             Fill="{StaticResource PrimaryBrush}"
                             Stretch="Uniform"
+                            UseLayoutRounding="True"
                             Visibility="Visible" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -243,6 +247,7 @@
                             Data="{StaticResource PowerSVG}"
                             Fill="{StaticResource PrimaryBrush}"
                             Stretch="Uniform"
+                            UseLayoutRounding="True"
                             Visibility="Visible" />
                     </Grid>
                     <ControlTemplate.Triggers>

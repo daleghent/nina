@@ -82,7 +82,8 @@
                                                 Data="{StaticResource FlagFinishSVG}"
                                                 Fill="{StaticResource PrimaryBrush}"
                                                 RenderTransformOrigin="0.5,0.5"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Button>
                                     </StackPanel>
                                 </xceed:SplitButton.DropDownContent>

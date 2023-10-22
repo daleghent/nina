@@ -74,7 +74,8 @@
                                             Margin="2"
                                             Data="{StaticResource CancelSVG}"
                                             Fill="{StaticResource PrimaryBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                         <!--<Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/PinClose.png" />-->
                                     </Button>
                                 </Grid>

@@ -93,7 +93,8 @@
                                 Margin="5"
                                 Data="{StaticResource SatelliteDishSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                             <TextBlock
                                 FontSize="16"
                                 FontStyle="Italic"
@@ -140,8 +141,8 @@
                                         Margin="5"
                                         Data="{StaticResource AddSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                        UseLayoutRounding="True"
-                                        Stretch="Uniform" />
+                                        Stretch="Uniform"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         FontStyle="Italic"
                                         Foreground="{StaticResource ButtonForegroundBrush}"

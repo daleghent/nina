@@ -783,7 +783,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource TrashCanSVG}"
                                                         Fill="{StaticResource PrimaryBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Grid>
                                             </Button>
                                         </DataTemplate>
@@ -832,7 +833,8 @@
                         Margin="5"
                         Data="{StaticResource SketchSVG}"
                         Fill="{StaticResource PrimaryBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"
+                        UseLayoutRounding="True" />
                     <TextBlock
                         FontSize="16"
                         FontStyle="Italic"

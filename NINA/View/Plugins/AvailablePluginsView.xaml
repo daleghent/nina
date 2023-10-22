@@ -262,7 +262,8 @@
                         Data="{StaticResource PuzzlePieceSVG}"
                         Fill="{StaticResource PrimaryBrush}"
                         Stretch="Uniform"
-                        Style="{StaticResource TabItemPath}" />
+                        Style="{StaticResource TabItemPath}"
+                        UseLayoutRounding="True" />
 
                     <TextBlock
                         HorizontalAlignment="Center"
