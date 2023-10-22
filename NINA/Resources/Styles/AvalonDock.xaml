@@ -526,7 +526,8 @@
                                     Margin="2"
                                     Data="{StaticResource CancelSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <!--<Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/PinClose.png" />-->
                             </Button>
                         </Grid>
@@ -573,7 +574,7 @@
                                 x:Name="PART_DockingManagerDropTargetLeft"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Data="{StaticResource CancelSVG}"
+                                UseLayoutRounding="True" Data="{StaticResource CancelSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
                                 Stretch="None" />
     -->

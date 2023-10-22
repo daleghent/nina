@@ -118,7 +118,8 @@
                                             Margin="7.5"
                                             Data="{StaticResource EquipmentSVG}"
                                             Stretch="Uniform"
-                                            Style="{StaticResource TabItemPath}" />
+                                            Style="{StaticResource TabItemPath}"
+                                            UseLayoutRounding="True" />
                                     </Grid>
                                     <TextBlock
                                         Grid.Row="1"
@@ -131,7 +132,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource EquipmentSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -153,7 +155,8 @@
                                         Margin="5"
                                         Data="{StaticResource MapSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
 
                                     <TextBlock
                                         Grid.Row="1"
@@ -166,7 +169,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource MapSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -188,7 +192,8 @@
                                         Margin="5"
                                         Data="{StaticResource FocusAssistantSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Style="{StaticResource SideBarTextBlock}"
@@ -200,7 +205,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource FocusAssistantSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -222,7 +228,8 @@
                                         Margin="5"
                                         Data="{StaticResource FlatWizardSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Style="{StaticResource SideBarTextBlock}"
@@ -234,7 +241,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource FlatWizardSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -256,7 +264,8 @@
                                         Margin="5"
                                         Data="{StaticResource SequenceSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Style="{StaticResource SideBarTextBlock}"
@@ -268,7 +277,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource SequenceSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -302,7 +312,8 @@
                                         Margin="5"
                                         Data="{StaticResource PictureSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Style="{StaticResource SideBarTextBlock}"
@@ -314,7 +325,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource PictureSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -336,7 +348,8 @@
                                         Margin="5"
                                         Data="{StaticResource SettingsSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Style="{StaticResource SideBarTextBlock}"
@@ -348,7 +361,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource SettingsSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                         </TabItem.Header>
@@ -369,7 +383,8 @@
                                         Margin="5"
                                         Data="{StaticResource PuzzlePieceSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <Border
                                         Width="15"
                                         Height="15"
@@ -396,7 +411,8 @@
                                         Margin="2.5"
                                         Data="{StaticResource PuzzlePieceSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                     <Border
                                         Width="13"
                                         Height="13"
@@ -573,7 +589,8 @@
                         Margin="2"
                         Data="{StaticResource EyeSVG}"
                         Stretch="Uniform"
-                        Style="{StaticResource WindowButtonPath}" />
+                        Style="{StaticResource WindowButtonPath}"
+                        UseLayoutRounding="True" />
                 </Button>
                 <Button
                     Grid.Row="2"
@@ -594,7 +611,8 @@
                         Margin="2"
                         Data="{StaticResource QuestionSVG}"
                         Stretch="Uniform"
-                        Style="{StaticResource WindowButtonPath}" />
+                        Style="{StaticResource WindowButtonPath}"
+                        UseLayoutRounding="True" />
                 </Button>
                 <Button
                     Grid.Row="2"
@@ -615,7 +633,8 @@
                         Margin="2"
                         Data="{StaticResource AboutSVG}"
                         Stretch="Uniform"
-                        Style="{StaticResource WindowButtonPath}" />
+                        Style="{StaticResource WindowButtonPath}"
+                        UseLayoutRounding="True" />
                 </Button>
             </Grid>
 

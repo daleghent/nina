@@ -45,7 +45,8 @@
                                     Margin="10,0,10,0"
                                     Data="{StaticResource ArrowRightSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Path
                                     x:Name="icon"
                                     Grid.Column="1"
@@ -53,7 +54,8 @@
                                     Height="20"
                                     Data="{StaticResource TelescopeSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <ContentPresenter
                                     Grid.Column="2"
                                     Margin="4,0,0,0"
@@ -161,7 +163,8 @@
                                     Margin="10,0,10,0"
                                     Data="{StaticResource ArrowRightSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Path
                                     x:Name="icon"
                                     Grid.Column="1"
@@ -169,7 +172,8 @@
                                     Height="15"
                                     Data="{StaticResource CameraSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <ContentPresenter
                                     Grid.Column="2"
                                     Margin="4,0,0,0"
@@ -401,7 +405,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource FocusAssistantSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                     </Button>
                                     <Button
@@ -423,7 +428,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource GetCoordsSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                     </Button>
                                 </StackPanel>

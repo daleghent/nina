@@ -61,7 +61,8 @@
                         Margin="5"
                         Data="{StaticResource ExclamationCircledSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"
+                        UseLayoutRounding="True" />
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveImageAsDSLRNote}" />
                 </StackPanel>
 
@@ -203,7 +204,8 @@
                         Margin="2,10,2,0"
                         Data="{StaticResource DotsSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"
+                        UseLayoutRounding="True" />
                 </Button>
 
 
@@ -907,7 +909,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblDefaultSequenceFolderTooltip}" />
                                 </Button.ToolTip>
@@ -939,7 +942,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblSequenceTemplateFolderTooltip}" />
                                 </Button.ToolTip>
@@ -971,7 +975,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblSequenceTemplateTooltip}" />
                                 </Button.ToolTip>
@@ -1003,7 +1008,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblStartupSequenceTemplateTooltip}" />
                                 </Button.ToolTip>
@@ -1035,7 +1041,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblSequencerTargetsFolderTooltip}" />
                                 </Button.ToolTip>
@@ -1096,7 +1103,8 @@
                                 Margin="5"
                                 Data="{StaticResource ResetSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
 
                         <TextBlock
@@ -1117,7 +1125,8 @@
                                 Margin="5"
                                 Data="{StaticResource SaveAsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
 
                         <TextBlock
@@ -1138,7 +1147,8 @@
                                 Margin="5"
                                 Data="{StaticResource LoadSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </GroupBox>

@@ -48,7 +48,7 @@
                                     <Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}" />
                                 </MultiBinding>
                             </RepeatButton.Visibility>
-                            <Path Data="{StaticResource ArrowUpSVG}" />
+                            <Path Data="{StaticResource ArrowUpSVG}" UseLayoutRounding="True" />
                         </RepeatButton>
                         <RepeatButton
                             Grid.Row="2"
@@ -67,7 +67,7 @@
                                     <Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}" />
                                 </MultiBinding>
                             </RepeatButton.Visibility>
-                            <Path Data="{StaticResource ArrowDownSVG}" />
+                            <Path Data="{StaticResource ArrowDownSVG}" UseLayoutRounding="True" />
                         </RepeatButton>
                     </Grid>
                 </ControlTemplate>
@@ -288,7 +288,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="M 0 0 L 0 7 L 4 3.5 Z"
-                    Fill="{StaticResource BorderBrush}" />
+                    Fill="{StaticResource BorderBrush}"
+                    UseLayoutRounding="True" />
                 <Popup
                     x:Name="Popup"
                     AllowsTransparency="True"

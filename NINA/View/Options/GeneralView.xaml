@@ -116,7 +116,8 @@
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Width="40"
@@ -126,7 +127,8 @@
                                 Margin="5"
                                 Data="{StaticResource CopySVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Width="40"
@@ -136,7 +138,8 @@
                                 Margin="5"
                                 Data="{StaticResource TrashCanSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Grid.Column="1"
@@ -291,7 +294,8 @@
                                 Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
 
@@ -330,7 +334,8 @@
                                 Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
 
@@ -406,7 +411,8 @@
                                             Margin="2"
                                             Data="{StaticResource PreviewSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Button>
                                 </StackPanel>
 
@@ -604,7 +610,8 @@
                                     Margin="5"
                                     Data="{StaticResource CopySVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                             </Button>
                             <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                                 <TextBlock
@@ -798,7 +805,8 @@
                                     Margin="5"
                                     Data="{StaticResource CopySVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                             </Button>
                             <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                                 <TextBlock
@@ -929,7 +937,8 @@
                                 Margin="5"
                                 Data="{StaticResource GPSSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Width="40"
@@ -944,7 +953,8 @@
                                 Margin="5"
                                 Data="{StaticResource GetCoordsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
@@ -1032,7 +1042,8 @@
                                 Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </StackPanel>

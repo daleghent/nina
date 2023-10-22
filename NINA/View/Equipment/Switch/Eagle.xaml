@@ -177,7 +177,8 @@
                                         Margin="5"
                                         Data="{StaticResource CheckedCircledSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                        Stretch="Uniform"
+                                        UseLayoutRounding="True" />
                                 </Button>
                             </StackPanel>
                         </Grid>

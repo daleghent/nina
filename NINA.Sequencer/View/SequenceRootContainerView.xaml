@@ -168,7 +168,8 @@
                             Margin="5"
                             Data="{StaticResource TrashCanSVG}"
                             Fill="{StaticResource ButtonForegroundBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -190,7 +191,8 @@
                             Margin="5"
                             Data="{StaticResource RefreshSVG}"
                             Fill="{StaticResource ButtonForegroundBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                     </Grid>
                     <Button.ToolTip>
                         <ToolTip>
@@ -210,7 +212,8 @@
                     Margin="5"
                     Data="{StaticResource AddSVG}"
                     Fill="{StaticResource ButtonForegroundBrush}"
-                    Stretch="Uniform" />
+                    Stretch="Uniform"
+                    UseLayoutRounding="True" />
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_AddInstruction_Tooltip}" />

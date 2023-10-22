@@ -108,7 +108,8 @@
                             Margin="5,0,0,0"
                             Data="{Binding Icon}"
                             Fill="{StaticResource ButtonForegroundBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform"
+                            UseLayoutRounding="True" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
@@ -138,7 +139,8 @@
                                     HorizontalAlignment="Right"
                                     Data="{StaticResource ExclamationCircledSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Border.ToolTip>
                                     <ItemsControl ItemsSource="{Binding Issues}" />
                                 </Border.ToolTip>

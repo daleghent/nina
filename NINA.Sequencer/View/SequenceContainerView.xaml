@@ -160,7 +160,8 @@
                                                 Margin="5,0,0,0"
                                                 Data="{StaticResource TelescopeSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid.Resources>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="30" />
@@ -176,14 +177,16 @@
                                             Margin="10,0,10,0"
                                             Data="{StaticResource ArrowRightSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                         <Path
                                             x:Name="icon"
                                             Grid.Column="1"
                                             Margin="5,0,3,0"
                                             Data="{StaticResource BoxClosedSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                         <Path
                                             Grid.Column="2"
                                             Width="20"
@@ -191,7 +194,8 @@
                                             Margin="5,0,3,0"
                                             Data="{Binding Icon}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                         <ContentPresenter
                                             Grid.Column="3"
                                             Margin="4,0,0,0"
@@ -351,7 +355,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource PictureSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -384,7 +389,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource SaveAsSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -408,7 +414,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource PowerSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -432,7 +439,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource TrashCanSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -455,7 +463,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource RefreshSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -479,7 +488,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource CopySVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -502,7 +512,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource ArrowUpSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>
@@ -526,7 +537,8 @@
                                                 Margin="5"
                                                 Data="{StaticResource ArrowDownSVG}"
                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                Stretch="Uniform" />
+                                                Stretch="Uniform"
+                                                UseLayoutRounding="True" />
                                         </Grid>
                                         <Button.ToolTip>
                                             <ToolTip>

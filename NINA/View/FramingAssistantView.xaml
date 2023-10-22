@@ -282,7 +282,8 @@
                                             Margin="5"
                                             Data="{StaticResource GetCoordsSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Grid>
                                 </Button>
                                 <Button
@@ -303,7 +304,8 @@
                                             Margin="5"
                                             Data="{StaticResource TelescopeSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Grid>
                                 </Button>
                             </DockPanel>
@@ -1053,7 +1055,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource RotatorSVG}"
                                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1064,7 +1067,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource RotatorSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1093,7 +1097,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource BordersSVG}"
                                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1104,7 +1109,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource BordersSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1132,7 +1138,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource ConstellationSVG}"
                                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1143,7 +1150,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource ConstellationSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1171,7 +1179,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource GridSVG}"
                                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1182,7 +1191,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource GridSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1210,7 +1220,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource AnnotateDSOSVG}"
                                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1221,7 +1232,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource AnnotateDSOSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1250,7 +1262,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource MapSVG}"
                                                         Fill="{StaticResource ButtonForegroundBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
@@ -1261,7 +1274,8 @@
                                                         Margin="5"
                                                         Data="{StaticResource MapSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>

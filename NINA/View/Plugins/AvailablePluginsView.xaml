@@ -41,7 +41,8 @@
                 Margin="2"
                 Data="{StaticResource CheckedCircledSVG}"
                 Stretch="Uniform"
-                Style="{StaticResource WindowButtonPath}" />
+                Style="{StaticResource WindowButtonPath}"
+                UseLayoutRounding="True" />
         </DataTemplate>
 
         <DataTemplate x:Key="InstalledAndRequiresRestartIcon">
@@ -49,7 +50,8 @@
                 Margin="2"
                 Data="{StaticResource RefreshSVG}"
                 Stretch="Uniform"
-                Style="{StaticResource WindowButtonPath}" />
+                Style="{StaticResource WindowButtonPath}"
+                UseLayoutRounding="True" />
         </DataTemplate>
 
         <DataTemplate x:Key="NotInstalledIcon">
@@ -61,7 +63,8 @@
                 Margin="2"
                 Data="{StaticResource DownloadSVG}"
                 Stretch="Uniform"
-                Style="{StaticResource WindowButtonPath}" />
+                Style="{StaticResource WindowButtonPath}"
+                UseLayoutRounding="True" />
         </DataTemplate>
 
         <DataTemplate x:Key="InstalledButton">
