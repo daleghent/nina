@@ -42,6 +42,8 @@ namespace ZWOptical.ASISDK {
             ASI_FAN_ON,
             ASI_PATTERN_ADJUST,
             ASI_ANTI_DEW_HEATER,
+            ASI_HUMIDITY,
+            ASI_ENABLE_DDR
         }
 
 
@@ -94,7 +96,6 @@ namespace ZWOptical.ASISDK {
             ASI_ERROR_VIDEO_MODE_ACTIVE,
             ASI_ERROR_EXPOSURE_IN_PROGRESS,
             ASI_ERROR_GENERAL_ERROR,//general error, eg: value is out of valid range
-            ASI_ERROR_INVALID_MODE,//the current mode is wrong
             ASI_ERROR_END
         };
         public enum ASI_BOOL {
@@ -131,14 +132,12 @@ namespace ZWOptical.ASISDK {
             public ASI_BOOL IsUSB3Host;
             public ASI_BOOL IsUSB3Camera;
             public float ElecPerADU;
-            public int BitDepth;
-            public ASI_BOOL IsTriggerCam;
 
-            [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 16)]
-            public byte[] Unused;
+            [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 24)]
+            public byte[] Unused;//[20];
 
             public string Name {
-                get { return Encoding.ASCII.GetString(name).TrimEnd((char)0); }
+                get { return Encoding.ASCII.GetString(name).TrimEnd((Char)0); }
             }
         };
 
@@ -168,15 +167,10 @@ namespace ZWOptical.ASISDK {
 
 
         public struct ASI_ID {
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8, ArraySubType = UnmanagedType.U1)]
+            [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 8)]
             public byte[] id;
-
             public string ID {
-                get {
-                    string idAscii = Encoding.ASCII.GetString(id);
-                    char[] trimChars = new char[1];
-                    return idAscii.TrimEnd(trimChars);
-                }
+                get { return Encoding.ASCII.GetString(id).TrimEnd((Char)0); }
             }
         }
 
