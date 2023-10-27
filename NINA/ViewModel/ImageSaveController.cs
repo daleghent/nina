@@ -94,28 +94,40 @@ namespace NINA.ViewModel {
                     var customPatterns = beforeFinalizeArgs.Patterns;
                     var patternTemplate = profileService.ActiveProfile.ImageFileSettings.GetFilePattern(item.Data.MetaData.Image.ImageType);
 
-                    path = preparedData.RawImageData.FinalizeSave(path, patternTemplate, customPatterns);
+                    path = item.Data.FinalizeSave(path, patternTemplate, customPatterns);
 
                     var finalizeSaveTime = sw.Elapsed;
                     swTotal.Stop();
                     Logger.Info($"Successfully saved file at {path}. Duration Total: {swTotal.Elapsed}; BeforeSave: {beforeSaveTime}; Prepare: {prepareSaveTime}; BeforeFinalizeImageSaved: {beforeFinalizeImageSaveTime}; FinalizeSaveTime: {finalizeSaveTime}");
 
-                    var stats = await preparedData.RawImageData.Statistics;
 
                     // Run this in a separate task to limit risk of deadlocks
-                    _ = Task.Run(() => ImageSaved?.Invoke(this, 
-                          new ImageSavedEventArgs() {
-                            MetaData = preparedData.RawImageData.MetaData,
-                            PathToImage = new Uri(path),
-                            Image = preparedData.Image,
-                            FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
-                            Statistics = stats,
-                            StarDetectionAnalysis = preparedData.RawImageData.StarDetectionAnalysis,
-                            Duration = preparedData.RawImageData.MetaData.Image.ExposureTime,
-                            IsBayered = preparedData.RawImageData.Properties.IsBayered,
-                            Filter = preparedData.RawImageData.MetaData.FilterWheel.Filter
+                    _ = Task.Run(async () => {
+                        try {
+                            var stats = await item.Data.Statistics;
+                            ImageSaved?.Invoke(this,
+                                  new ImageSavedEventArgs() {
+                                      MetaData = item.Data.MetaData,
+                                      PathToImage = new Uri(path),
+                                      Image = preparedData?.Image,
+                                      FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
+                                      Statistics = stats,
+                                      StarDetectionAnalysis = item.Data.StarDetectionAnalysis,
+                                      Duration = item.Data.MetaData.Image.ExposureTime,
+                                      IsBayered = item.Data.Properties.IsBayered,
+                                      Filter = item.Data.MetaData.FilterWheel.Filter
+                                  }
+                          );
+                        } catch(OperationCanceledException) {
+                        } catch(Exception ex) {
+                            Logger.Error("ImageSaved event ran into an error", ex);
+
                         }
-                      ), workerCTS.Token);
+                    }, workerCTS.Token).ContinueWith(t => {
+                        if (t.IsFaulted) {
+                            Logger.Error("ImageSaved event ran into an error", t.Exception);
+                        }
+                    });
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
                     Logger.Error(ex);
