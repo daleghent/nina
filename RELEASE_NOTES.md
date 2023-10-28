@@ -3,6 +3,18 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 2.3 Hotfix 2
+
+## Improvements 
+- Framing tab will now remember the last selected rotation value between sessions
+
+## Bugfixes
+- Do not throw an error when TrackingRate SET is throwing a PropertyNotImplementedException - this time for real
+- Fix potential race condition in PlateSolvingStatusVM when setting platesolve result
+- Dither after exposures will no longer fail when clearing the image history
+- SkyAtlas: Date Picker will now set the correct date
+- FLICamera - Fix Exposure time that it can also set fractions of a second
+
 # Version 2.3 Hotfix 1
 
 ## Bugfixes
