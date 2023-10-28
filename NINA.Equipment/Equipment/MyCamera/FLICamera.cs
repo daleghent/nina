@@ -808,7 +808,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             /*
              * Convert exposure seconds to milliseconds and set the camera with it.
              */
-            ExposureLength = (uint)sequence.ExposureTime * 1000;
+            ExposureLength = (uint)(sequence.ExposureTime * 1000);
 
             /*
              * Set bin levels
