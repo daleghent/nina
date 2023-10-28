@@ -97,6 +97,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - ASCOM Camera ImageArray can now properly transform Byte[,], Short[,], UShort[,] in addition to the existing Int[,] to the 16 bit data structure N.I.N.A. is using
 - Dragging an instruction below a sequence container when nothing else is below it will now work correctly
 - When switching profiles, the dock layout will be saved piror to switching
+- FLI Camera - Fix Exposure Time that it can also set fractions of a second
 
 # Version 2.3
 
