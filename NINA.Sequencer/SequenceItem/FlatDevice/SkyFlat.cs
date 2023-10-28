@@ -439,7 +439,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 })
             );
             GetIterations().ResetProgress();
-            // we start at exposure + 1, as DetermineExposureTime is already saving the exposure
+            // we start at exposure + 1, as DetermineExposureTime is already saving an exposure
             GetIterations().CompletedIterations++;
             for (var i = 1; i < GetIterations().Iterations; i++) {
                 GetIterations().CompletedIterations++;

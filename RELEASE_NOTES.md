@@ -51,6 +51,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - In framing tab you can now paste in full text coordinates into the RA/Dec text fields and they will be parsed into the separate boxes - e.g. when pasting the following string into the textbox the coordinates will be fully populated: `RA: 05h43m05s.90 DEC: +52°10′58″.0`
 - When sending location to the telescope the elevation is now handled separately and a different error message is shown
 - DitherAfterExposures will only trigger when the next item is an exposure item of type LIGHT
+- The Flat Wizard will now save the exposure used to determine the exposure time, reducing the overall number of exposures by one and saving time
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
