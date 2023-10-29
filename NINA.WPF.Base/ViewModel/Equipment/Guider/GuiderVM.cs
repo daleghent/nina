@@ -49,6 +49,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                         IDeviceChooserVM deviceChooser) : base(profileService) {
             Title = Loc.Instance["LblGuider"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["GuiderSVG"];
+            HasSettings = true;
 
             this.guiderMediator = guiderMediator;
             this.guiderMediator.RegisterHandler(this);

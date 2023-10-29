@@ -34,7 +34,6 @@ namespace NINA.ViewModel {
 
         public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageDataFactory imageDataFactory) : base(profileService) {
             Title = Loc.Instance["LblImageHistory"];
-            CanClose = false;
             ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"];
             thumbnails = new ObservableLimitedSizedStack<Thumbnail>(50);
 

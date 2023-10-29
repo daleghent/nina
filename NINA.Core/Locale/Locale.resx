@@ -6823,4 +6823,7 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblSaveInCacheTooltip" xml:space="preserve">
     <value>When enabled, the image will be saved to your device and can be viewed in the offline sky map</value>
   </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

@@ -40,6 +40,7 @@ namespace NINA.ViewModel.ImageHistory {
 
         public ImageHistoryVM(IProfileService profileService, IImageSaveMediator imageSaveMediator) : base(profileService) {
             Title = Loc.Instance["LblHFRHistory"];
+            HasSettings = true;
 
             if (System.Windows.Application.Current != null) {
                 ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["HFRHistorySVG"];

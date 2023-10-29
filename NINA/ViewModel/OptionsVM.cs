@@ -63,7 +63,6 @@ namespace NINA.ViewModel {
                          IPluggableBehaviorSelector<IStarAnnotator> starAnnotatorSelector,
                          IPluggableBehaviorSelector<IAutoFocusVMFactory> autoFocusVMFactorySelector) : base(profileService) {
             Title = Loc.Instance["LblOptions"];
-            CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
 
             DeviceConsumer = deviceConsumer;
