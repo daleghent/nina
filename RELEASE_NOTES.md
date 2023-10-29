@@ -52,6 +52,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - When sending location to the telescope the elevation is now handled separately and a different error message is shown
 - DitherAfterExposures will only trigger when the next item is an exposure item of type LIGHT
 - The Flat Wizard will now save the exposure used to determine the exposure time, reducing the overall number of exposures by one and saving time
+- Added a new toggle in the framing assistant to control the automatic saving of images for the offline sky map. If you're using the complete offline map from the homepage, you can disable this setting to prevent changes to the cache.
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application

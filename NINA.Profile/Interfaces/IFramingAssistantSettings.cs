@@ -23,5 +23,6 @@ namespace NINA.Profile.Interfaces {
         double Opacity { get; set; }
         SkySurveySource LastSelectedImageSource { get; set; }
         double LastRotationAngle { get; set; }
+        bool SaveImageInOfflineCache { get; set; }
     }
 }

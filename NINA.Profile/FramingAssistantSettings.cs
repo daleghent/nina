@@ -35,6 +35,7 @@ namespace NINA.Profile {
             lastSelectedImageSource = SkySurveySource.HIPS2FITS;
             opacity = 0.2;
             lastRotationAngle = 0;
+            saveImageInOfflineCache = false;
         }
 
         private SkySurveySource lastSelectedImageSource;
@@ -110,6 +111,19 @@ namespace NINA.Profile {
             set {
                 if (lastRotationAngle != value) {
                     lastRotationAngle = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool saveImageInOfflineCache;
+
+        [DataMember]
+        public bool SaveImageInOfflineCache {
+            get => saveImageInOfflineCache;
+            set {
+                if(saveImageInOfflineCache != value) {
+                    saveImageInOfflineCache = value;
                     RaisePropertyChanged();
                 }
             }

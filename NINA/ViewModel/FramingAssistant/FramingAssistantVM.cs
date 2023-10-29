@@ -506,6 +506,14 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
+        public bool SaveImageInOfflineCache {
+            get => profileService.ActiveProfile.FramingAssistantSettings.SaveImageInOfflineCache;
+            set {
+                profileService.ActiveProfile.FramingAssistantSettings.SaveImageInOfflineCache = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private bool preserveAlignment;
 
         // When enabled the rotation for the framing rectangle rotation will be adjusted for field curvature
@@ -1130,7 +1138,7 @@ namespace NINA.ViewModel.FramingAssistant {
                             ImageParameter = skySurveyImage;
                         }));
 
-                        if (Cache != null && FramingAssistantSource != SkySurveySource.SKYATLAS /*&& FramingAssistantSource != SkySurveySource.FILE*/) {
+                        if (Cache != null && SaveImageInOfflineCache && FramingAssistantSource != SkySurveySource.SKYATLAS) {
                             SelectedImageCacheInfo = Cache.SaveImageToCache(skySurveyImage);
                             RaisePropertyChanged(nameof(ImageCacheInfo));
                         }

@@ -78,13 +78,32 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
-                                <WrapPanel Orientation="Horizontal">
-                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
-                                    <TextBlock TextWrapping="Wrap">
-                                        <Hyperlink NavigateUri="https://skyview.gsfc.nasa.gov/" RequestNavigate="Hyperlink_RequestNavigate">SkyView</Hyperlink>
-                                    </TextBlock>
-                                    <TextBlock Text=" a service of the Astrophysics Science Division at NASA/GSFC" TextWrapping="Wrap" />
-                                </WrapPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <WrapPanel Orientation="Horizontal">
+                                        <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Hyperlink NavigateUri="https://skyview.gsfc.nasa.gov/" RequestNavigate="Hyperlink_RequestNavigate">SkyView</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Text=" a service of the Astrophysics Science Division at NASA/GSFC" TextWrapping="Wrap" />
+                                    </WrapPanel>
+
+                                    <Grid Margin="0,5,0,0" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveInCache}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding SaveImageInOfflineCache}">
+                                            <CheckBox.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblSaveInCacheTooltip}" />
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </Grid>
+                                </StackPanel>
                             </Grid>
 
                             <Grid>
@@ -99,13 +118,32 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
-                                <WrapPanel Orientation="Horizontal">
-                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
-                                    <TextBlock TextWrapping="Wrap">
-                                        <Hyperlink NavigateUri="http://skyserver.sdss.org/dr17/" RequestNavigate="Hyperlink_RequestNavigate">Sloan Digital Sky Survey</Hyperlink>
-                                    </TextBlock>
-                                    <TextBlock Text=" a service provided by SkyServer" TextWrapping="Wrap" />
-                                </WrapPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <WrapPanel Orientation="Horizontal">
+                                        <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Hyperlink NavigateUri="http://skyserver.sdss.org/dr17/" RequestNavigate="Hyperlink_RequestNavigate">Sloan Digital Sky Survey</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Text=" a service provided by SkyServer" TextWrapping="Wrap" />
+                                    </WrapPanel>
+
+                                    <Grid Margin="0,5,0,0" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveInCache}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding SaveImageInOfflineCache}">
+                                            <CheckBox.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblSaveInCacheTooltip}" />
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </Grid>
+                                </StackPanel>
                             </Grid>
 
                             <Grid>
@@ -120,13 +158,32 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
-                                <WrapPanel Orientation="Horizontal">
-                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
-                                    <TextBlock TextWrapping="Wrap">
-                                        <Hyperlink NavigateUri="http://archive.eso.org/dss/dss" RequestNavigate="Hyperlink_RequestNavigate">ESO Online Digitized Sky Survey</Hyperlink>
-                                    </TextBlock>
-                                    <TextBlock Text=" a service provided by the European Southern Observatory" TextWrapping="Wrap" />
-                                </WrapPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <WrapPanel Orientation="Horizontal">
+                                        <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Hyperlink NavigateUri="http://archive.eso.org/dss/dss" RequestNavigate="Hyperlink_RequestNavigate">ESO Online Digitized Sky Survey</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Text=" a service provided by the European Southern Observatory" TextWrapping="Wrap" />
+                                    </WrapPanel>
+
+                                    <Grid Margin="0,5,0,0" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveInCache}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding SaveImageInOfflineCache}">
+                                            <CheckBox.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblSaveInCacheTooltip}" />
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </Grid>
+                                </StackPanel>
                             </Grid>
 
                             <Grid>
@@ -141,13 +198,32 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
-                                <WrapPanel Orientation="Horizontal">
-                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
-                                    <TextBlock TextWrapping="Wrap">
-                                        <Hyperlink NavigateUri="https://archive.stsci.edu/dss/acknowledging.html" RequestNavigate="Hyperlink_RequestNavigate">STScI DSS Search</Hyperlink>
-                                    </TextBlock>
-                                    <TextBlock Text=" a service provided by the Space Telescope Science Institude" TextWrapping="Wrap" />
-                                </WrapPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <WrapPanel Orientation="Horizontal">
+                                        <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Hyperlink NavigateUri="https://archive.stsci.edu/dss/acknowledging.html" RequestNavigate="Hyperlink_RequestNavigate">STScI DSS Search</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Text=" a service provided by the Space Telescope Science Institude" TextWrapping="Wrap" />
+                                    </WrapPanel>
+
+                                    <Grid Margin="0,5,0,0" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveInCache}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding SaveImageInOfflineCache}">
+                                            <CheckBox.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblSaveInCacheTooltip}" />
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </Grid>
+                                </StackPanel>
                             </Grid>
 
                             <Grid>
@@ -162,13 +238,32 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
-                                <WrapPanel Orientation="Horizontal">
-                                    <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
-                                    <TextBlock TextWrapping="Wrap">
-                                        <Hyperlink NavigateUri="https://alasky.u-strasbg.fr/hips-image-services/hips2fits" RequestNavigate="Hyperlink_RequestNavigate">hips2fits</Hyperlink>
-                                    </TextBlock>
-                                    <TextBlock Text=" a service provided by CDS" TextWrapping="Wrap" />
-                                </WrapPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <WrapPanel Orientation="Horizontal">
+                                        <TextBlock Text="This sky survey makes use of " TextWrapping="Wrap" />
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Hyperlink NavigateUri="https://alasky.u-strasbg.fr/hips-image-services/hips2fits" RequestNavigate="Hyperlink_RequestNavigate">hips2fits</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Text=" a service provided by CDS" TextWrapping="Wrap" />
+                                    </WrapPanel>
+
+                                    <Grid Margin="0,5,0,0" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveInCache}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding SaveImageInOfflineCache}">
+                                            <CheckBox.ToolTip>
+                                                <TextBlock Text="{ns:Loc LblSaveInCacheTooltip}" />
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </Grid>
+                                </StackPanel>
                             </Grid>
 
                             <Grid>
@@ -254,6 +349,35 @@
                                         Text="{ns:Loc LblClearCache}"
                                         TextWrapping="Wrap" />
                                 </Button>
+                            </Grid>
+                            <Grid>
+                                <!--  File Specific UI  -->
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_FramingAssistantSource, Path=SelectedItem}" Value="{x:Static enum:SkySurveySource.FILE}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveInCache}" />
+                                    <CheckBox
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding SaveImageInOfflineCache}">
+                                        <CheckBox.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblSaveInCacheTooltip}" />
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+                                </Grid>
                             </Grid>
                         </StackPanel>
                     </GroupBox>
