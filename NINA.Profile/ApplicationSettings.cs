@@ -59,8 +59,8 @@ namespace NINA.Profile {
             skySurveyCacheDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
             SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
             SelectedPluggableBehaviorsLookup = ImmutableDictionary<string, string>.Empty;
-            PerDeviceThreadingEnabled = false;
-            PageSize = 50;
+            pageSize = 50;
+            showImagingHistogram = true;
         }
 
         [DataMember]
@@ -136,19 +136,6 @@ namespace NINA.Profile {
             }
         }
 
-        private bool perDeviceThreadingEnabled;
-
-        [DataMember]
-        public bool PerDeviceThreadingEnabled {
-            get => perDeviceThreadingEnabled;
-            set {
-                if (perDeviceThreadingEnabled != value) {
-                    perDeviceThreadingEnabled = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public IReadOnlyDictionary<string, string> SelectedPluggableBehaviorsLookup { get; private set; }
 
         private void SelectedPluggableBehaviors_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
@@ -185,6 +172,18 @@ namespace NINA.Profile {
                 if (value < 1) { value = 1; }
                 if (pageSize != value) {
                     pageSize = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        private bool showImagingHistogram;
+
+        [DataMember]
+        public bool ShowImagingHistogram {
+            get => showImagingHistogram;
+            set {
+                if (showImagingHistogram != value) {
+                    showImagingHistogram = value;
                     RaisePropertyChanged();
                 }
             }

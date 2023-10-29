@@ -27,6 +27,15 @@ namespace NINA.ViewModel {
         public ImageStatisticsVM(IProfileService profileService) : base(profileService) {
             Title = Loc.Instance["LblStatistics"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["HistogramSVG"];
+            HasSettings = true;
+        }
+
+        public bool ShowHistogram {
+            get => profileService.ActiveProfile.ApplicationSettings.ShowImagingHistogram;
+            set {
+                profileService.ActiveProfile.ApplicationSettings.ShowImagingHistogram = value;
+                RaisePropertyChanged();
+            }
         }
 
         public AllImageStatistics Statistics {

@@ -6826,4 +6826,7 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblClose" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>Show Histogram</value>
+  </data>
 </root>
