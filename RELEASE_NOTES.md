@@ -57,11 +57,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
 ```
--p, --profileid     Load profile for a given id at startup.
--s, --sequencefile  Load a sequence file at startup.
--r, --runsequence   (Default: false) Automatically start a sequence loaded with -s and switch to Imaging tab.
--h, --help          Display this help screen.
--v, --version       Display version information
+-p, --profileid         Load profile for a given id at startup.
+-s, --sequencefile      Load a sequence file at startup.
+-r, --runsequence       (Default: false) Automatically start a sequence loaded with -s and switch to Imaging tab.
+-x, --exitaftersequence (Default: false) Automatically exit the application after the sequence has been finished.
+--help                  Display this help screen.
+--version               Display version information
 ```
 
 ## Flat Wizard Rework
