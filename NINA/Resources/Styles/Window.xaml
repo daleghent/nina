@@ -28,11 +28,10 @@
                         <Border BorderBrush="Transparent">
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}">
-                                    <Setter Property="BorderThickness" Value="0" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ThisWindow, Path=WindowState}" Value="Maximized">
                                             <!--<Setter Property="BorderThickness" Value="{Binding Source={x:Static SystemParameters.WindowResizeBorderThickness}}" />-->
-                                            <Setter Property="BorderThickness" Value="4" />
+                                            <Setter Property="Padding" Value="8" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
