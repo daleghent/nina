@@ -32,8 +32,6 @@
     FontStyle="{Binding FontStyle, Source={x:Static settings:Settings.Default}}"
     FontWeight="{Binding FontWeight, Source={x:Static settings:Settings.Default}}"
     Icon="/NINA;component/Resources/Logo_Nina.ico"
-    LocationChanged="ThisWindow_LocationChanged"
-    StateChanged="ThisWindow_StateChanged"
     Style="{StaticResource MainWindow}">
     <Window.InputBindings>
         <KeyBinding Key="F5" Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}" />
