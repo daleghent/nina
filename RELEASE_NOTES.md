@@ -56,6 +56,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Within the imaging tab, several panels now feature a settings button on the upper right corner. This button allows you to reveal or conceal adjustable settings for that particular panel.
   - In conjunction with this update, the HFR History panel has been modified. It will now use the aforementioned settings button, eliminating the previous feature where settings appeared upon mouse hover.
 - Changed the default application theme to "Persian Faint"
+- The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
+  - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.
 
 
 ## Commandline Options
