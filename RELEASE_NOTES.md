@@ -55,6 +55,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added a new toggle in the framing assistant to control the automatic saving of images for the offline sky map. If you're using the complete offline map from the homepage, you can disable this setting to prevent changes to the cache.
 - Within the imaging tab, several panels now feature a settings button on the upper right corner. This button allows you to reveal or conceal adjustable settings for that particular panel.
   - In conjunction with this update, the HFR History panel has been modified. It will now use the aforementioned settings button, eliminating the previous feature where settings appeared upon mouse hover.
+  - Every equipment panel now features an "Info only" switch, allowing users to opt for purely informational displays or to incorporate interactive controls.
 - Changed the default application theme to "Persian Faint"
 - The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
   - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.

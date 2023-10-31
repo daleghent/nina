@@ -30,14 +30,6 @@ namespace NINA.ViewModel {
             HasSettings = true;
         }
 
-        public bool ShowHistogram {
-            get => profileService.ActiveProfile.ApplicationSettings.ShowImagingHistogram;
-            set {
-                profileService.ActiveProfile.ApplicationSettings.ShowImagingHistogram = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public AllImageStatistics Statistics {
             get => _statistics;
             set {

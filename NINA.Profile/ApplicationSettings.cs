@@ -60,7 +60,6 @@ namespace NINA.Profile {
             SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
             SelectedPluggableBehaviorsLookup = ImmutableDictionary<string, string>.Empty;
             pageSize = 50;
-            showImagingHistogram = true;
         }
 
         [DataMember]
@@ -172,18 +171,6 @@ namespace NINA.Profile {
                 if (value < 1) { value = 1; }
                 if (pageSize != value) {
                     pageSize = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        private bool showImagingHistogram;
-
-        [DataMember]
-        public bool ShowImagingHistogram {
-            get => showImagingHistogram;
-            set {
-                if (showImagingHistogram != value) {
-                    showImagingHistogram = value;
                     RaisePropertyChanged();
                 }
             }

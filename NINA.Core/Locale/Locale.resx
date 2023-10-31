@@ -6829,4 +6829,10 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblShowHistogram" xml:space="preserve">
     <value>Show Histogram</value>
   </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Info only</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
+  </data>
 </root>

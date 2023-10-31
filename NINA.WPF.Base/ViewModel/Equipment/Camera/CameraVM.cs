@@ -51,6 +51,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                         IDeviceChooserVM cameraChooserVM) : base(profileService) {
             Title = Loc.Instance["LblCamera"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
+            HasSettings = true;
 
             DeviceChooserVM = cameraChooserVM;
 

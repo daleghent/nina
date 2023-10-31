@@ -55,6 +55,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                             ICameraMediator cameraMediator,
                             IDeviceChooserVM flatDeviceChooserVm,
                             IImageGeometryProvider imageGeometryProvider) : base(profileService) {
+            Title = Loc.Instance["LblFlatDevice"];
+            ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
+            HasSettings = true;
+
             this.applicationStatusMediator = applicationStatusMediator;
             this.flatDeviceMediator = flatDeviceMediator;
             this.flatDeviceMediator.RegisterHandler(this);
@@ -62,8 +66,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             this.cameraMediator.RegisterConsumer(this);
             DeviceChooserVM = flatDeviceChooserVm;
 
-            Title = Loc.Instance["LblFlatDevice"];
-            ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
             var progress = new Progress<ApplicationStatus>(x => { x.Source = this.Title; applicationStatusMediator.StatusUpdate(x); });
 
             ConnectCommand = new AsyncCommand<bool>(() => Task.Run(Connect), (object o) => DeviceChooserVM.SelectedDevice != null);

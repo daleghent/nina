@@ -45,6 +45,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                          IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblRotator"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["RotatorSVG"];
+            HasSettings = true;
 
             this.rotatorMediator = rotatorMediator;
             this.rotatorMediator.RegisterHandler(this);

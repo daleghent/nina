@@ -45,6 +45,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                         IDeviceChooserVM deviceChooserVM) : base(profileService) {
             Title = Loc.Instance["LblSwitch"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SwitchesSVG"];
+            HasSettings = true;
             DeviceChooserVM = deviceChooserVM;
 
             this.applicationStatusMediator = applicationStatusMediator;

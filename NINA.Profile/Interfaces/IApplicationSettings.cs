@@ -29,7 +29,5 @@ namespace NINA.Profile.Interfaces {
         AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors { get; set; }
         IReadOnlyDictionary<string, string> SelectedPluggableBehaviorsLookup { get; }
         int PageSize { get; set; }
-
-        bool ShowImagingHistogram { get; set; }
     }
 }

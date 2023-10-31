@@ -52,6 +52,7 @@ namespace NINA.Profile {
     [KnownType(typeof(SafetyMonitorSettings))]
     [KnownType(typeof(PluginSettings))]
     [KnownType(typeof(GnssSettings))]
+    [KnownType(typeof(DockPanelSettings))]
 
     public class Profile : SerializableINPC, IProfile {
 
@@ -109,6 +110,7 @@ namespace NINA.Profile {
             SafetyMonitorSettings = new SafetyMonitorSettings();
             PluginSettings = new PluginSettings();
             GnssSettings = new GnssSettings();
+            DockPanelSettings = new DockPanelSettings();
         }
 
         /// <summary>
@@ -140,6 +142,7 @@ namespace NINA.Profile {
             SafetyMonitorSettings.PropertyChanged += SettingsChanged;
             PluginSettings.PropertyChanged += SettingsChanged;
             GnssSettings.PropertyChanged += SettingsChanged;
+            DockPanelSettings.PropertyChanged += SettingsChanged;
         }
 
         /// <summary>
@@ -285,6 +288,9 @@ namespace NINA.Profile {
 
         [DataMember]
         public IGnssSettings GnssSettings { get; set; }
+
+        [DataMember]
+        public IDockPanelSettings DockPanelSettings { get; set; }
 
         /// <summary>
         /// Deep Clone an existing profile, create a new Id and append "Copy" to the name

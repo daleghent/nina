@@ -51,6 +51,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                          IImageGeometryProvider imageGeometryProvider) : base(profileService) {
             Title = Loc.Instance["LblFocuser"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("FocusSVG");
+            HasSettings = true;
 
             this.focuserMediator = focuserMediator;
             this.focuserMediator.RegisterHandler(this);

@@ -45,6 +45,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                              IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblFilterWheel"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["FWSVG"];
+            HasSettings = true;
 
             DeviceChooserVM = filterWheelChooserVM;
             this.filterWheelMediator = filterWheelMediator;
