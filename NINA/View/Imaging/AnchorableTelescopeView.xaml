@@ -46,16 +46,16 @@
                         BorderThickness="0"
                         Visibility="{Binding TelescopeInfo.AtPark, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblUnparked}" />
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblParked}" />
                             <CheckBox
                                 Width="20"
                                 Height="20"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
                                 BorderBrush="Transparent"
-                                IsChecked="{Binding TelescopeInfo.AtPark, FallbackValue=False, Mode=OneWay, Converter={StaticResource InverseBooleanConverter}}"
+                                IsChecked="{Binding TelescopeInfo.AtPark, FallbackValue=False, Mode=OneWay}"
                                 IsEnabled="False"
-                                Style="{StaticResource CheckmarkCheckbox}" />
+                                Style="{StaticResource InvertedCheckmarkCheckbox}" />
                         </UniformGrid>
                     </Border>
                     <Border

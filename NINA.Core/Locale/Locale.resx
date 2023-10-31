@@ -6835,4 +6835,8 @@ Increase minimum exposure time or wait until it is brighter.</value>
   <data name="LblInfoOnlyTooltip" xml:space="preserve">
     <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
   </data>
+  <data name="LblParked" xml:space="preserve">
+    <value>Parked</value>
+    <comment>When mount is at park position</comment>
+  </data>
 </root>

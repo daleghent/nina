@@ -106,14 +106,14 @@
                             <Path
                                 x:Name="PART_CheckedSymbol"
                                 Data="{StaticResource CheckedCircledSVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
                                 UseLayoutRounding="True"
                                 Visibility="Visible" />
                             <Path
                                 x:Name="PART_NotCheckedSymbol"
                                 Data="{StaticResource CancelCircledSVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
                                 UseLayoutRounding="True"
                                 Visibility="Collapsed" />
