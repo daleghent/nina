@@ -6803,6 +6803,25 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
     <value>Wiadomość o błędzie PinPoint</value>
   </data>
   <data name="LblUnableToSetMountElevation" xml:space="preserve">
-    <value>Unable to set mount elevation to {0}!</value>
+    <value>Nie można ustawić wysokości montażu na {0}!</value>
+  </data>
+  <data name="LblSaveInCache" xml:space="preserve">
+    <value>Pamięć podręczna obrazu do użytku offline</value>
+    <comment>To store an image automatically in the framing assistant offline cache or not</comment>
+  </data>
+  <data name="LblSaveInCacheTooltip" xml:space="preserve">
+    <value>Gdy włączone, obraz zostanie zapisany na Twoim urządzeniu i może być wyświetlony na mapie nieba</value>
+  </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>Pokaż Histogram</value>
+  </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Info only</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
   </data>
 </root>

@@ -6805,4 +6805,23 @@ Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.<
   <data name="LblUnableToSetMountElevation" xml:space="preserve">
     <value>¡No se puede establecer la elevación de la montura a {0}!</value>
   </data>
+  <data name="LblSaveInCache" xml:space="preserve">
+    <value>Caché de imágenes para usar sin conexión</value>
+    <comment>To store an image automatically in the framing assistant offline cache or not</comment>
+  </data>
+  <data name="LblSaveInCacheTooltip" xml:space="preserve">
+    <value>Cuando está habilitado, la imagen se guardará en tu dispositivo y se podrá ver en el mapa celeste sin conexión</value>
+  </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>Mostrar histograma</value>
+  </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Info only</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
+  </data>
 </root>

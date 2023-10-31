@@ -6806,4 +6806,23 @@ This should only be disabled when having a good pointing model that must not be 
   <data name="LblUnableToSetMountElevation" xml:space="preserve">
     <value>Unable to set mount elevation to {0}!</value>
   </data>
+  <data name="LblSaveInCache" xml:space="preserve">
+    <value>Cache Image for Offline Use</value>
+    <comment>To store an image automatically in the framing assistant offline cache or not</comment>
+  </data>
+  <data name="LblSaveInCacheTooltip" xml:space="preserve">
+    <value>When enabled, the image will be saved to your device and can be viewed in the offline sky map</value>
+  </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>Show Histogram</value>
+  </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Info only</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
+  </data>
 </root>

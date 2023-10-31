@@ -6785,4 +6785,23 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
   <data name="LblUnableToSetMountElevation" xml:space="preserve">
     <value>架台の高さを{0}に設定できません!</value>
   </data>
+  <data name="LblSaveInCache" xml:space="preserve">
+    <value>オフラインで使用するためのキャッシュ画像</value>
+    <comment>To store an image automatically in the framing assistant offline cache or not</comment>
+  </data>
+  <data name="LblSaveInCacheTooltip" xml:space="preserve">
+    <value>有効にすると、画像はデバイスに保存され、オフラインのスカイマップで見ることができます</value>
+  </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>ヒストグラムを表示</value>
+  </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Info only</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
+  </data>
 </root>
