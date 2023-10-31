@@ -7,6 +7,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## Improvements 
 - Framing tab will now remember the last selected rotation value between sessions
+- The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
+  - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.
 
 ## Bugfixes
 - Do not throw an error when TrackingRate SET is throwing a PropertyNotImplementedException - this time for real
