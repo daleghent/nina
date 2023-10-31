@@ -338,18 +338,18 @@ namespace NINA.Profile {
         /// </summary>
         public void Save() {
             using (MyStopWatch.Measure()) {
+                if (File.Exists(Location)) {
+                    var fi = new FileInfo(Location);
+                    if (fi.Length > 0) {
+                        File.Copy(Location, Location + ".bkp", true);
+                    }
+                }
+
                 if (fs == null) {
                     // When profile is in memory only yet
                     fs = new FileStream(Location, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
                 } else {
                     fs.Position = 0;
-                }
-
-                if(fs.Length > 0) { 
-                    using (var temp = new FileStream(Location + ".bkp", FileMode.Create, FileAccess.Write)) {
-                        fs.CopyTo(temp);
-                        temp.Flush();
-                    }
                 }
 
                 fs.SetLength(0);
