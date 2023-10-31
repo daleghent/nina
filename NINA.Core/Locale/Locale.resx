@@ -6839,4 +6839,7 @@ Increase minimum exposure time or wait until it is brighter.</value>
     <value>Parked</value>
     <comment>When mount is at park position</comment>
   </data>
+  <data name="LblSlewing" xml:space="preserve">
+    <value>Slewing</value>
+  </data>
 </root>
