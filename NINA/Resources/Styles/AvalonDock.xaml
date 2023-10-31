@@ -491,7 +491,7 @@
 
 
                             <!--  Directly bind to the model content. Assume this is an IDockableVM  -->
-                            <Button
+                            <ToggleButton
                                 x:Name="PART_SettingsPin"
                                 Grid.Column="1"
                                 Margin="5,1,7.5,1"
@@ -499,6 +499,7 @@
                                 BorderThickness="0"
                                 Command="{Binding Model.Content.ToggleSettingsCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                 Focusable="False"
+                                Style="{StaticResource TB}"
                                 ToolTip="{ns:Loc LblSettings}"
                                 Visibility="{Binding Model.Content.HasSettings, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}">
                                 <Path
@@ -509,7 +510,7 @@
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform"
                                     UseLayoutRounding="True" />
-                            </Button>
+                            </ToggleButton>
 
                             <Button
                                 x:Name="PART_HidePin"
@@ -539,6 +540,9 @@
                         <DataTrigger Binding="{Binding IsMouseOver, ElementName=PART_HidePin}" Value="True">
                             <Setter TargetName="PART_HidePin" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
                             <Setter TargetName="PART_TitleBorder" Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=PART_SettingsPin}" Value="True">
+                            <Setter TargetName="PART_SettingsPin" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsMouseOver, ElementName=PART_SettingsPin}" Value="True">
                             <Setter TargetName="PART_SettingsPin" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
@@ -589,7 +593,7 @@
 
 
                                     <!--  Directly bind to the model content. Assume this is an IDockableVM  -->
-                                    <Button
+                                    <ToggleButton
                                         x:Name="PART_SettingsPin"
                                         Grid.Column="1"
                                         Margin="5,1,7.5,1"
@@ -597,6 +601,7 @@
                                         BorderThickness="0"
                                         Command="{Binding Model.SinglePane.SelectedContent.Content.ToggleSettingsCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
+                                        Style="{StaticResource TB}"
                                         ToolTip="{ns:Loc LblSettings}"
                                         Visibility="{Binding Model.SinglePane.SelectedContent.Content.HasSettings, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}">
                                         <Path
@@ -607,7 +612,7 @@
                                             Fill="{StaticResource ButtonForegroundBrush}"
                                             Stretch="Uniform"
                                             UseLayoutRounding="True" />
-                                    </Button>
+                                    </ToggleButton>
                                     <Button
                                         x:Name="PART_HidePin"
                                         Grid.Column="3"
@@ -639,6 +644,9 @@
                         </Trigger>
                         <DataTrigger Binding="{Binding IsMouseOver, ElementName=PART_HidePin}" Value="True">
                             <Setter TargetName="PART_HidePin" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=PART_SettingsPin}" Value="True">
+                            <Setter TargetName="PART_SettingsPin" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsMouseOver, ElementName=PART_SettingsPin}" Value="True">
                             <Setter TargetName="PART_SettingsPin" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
