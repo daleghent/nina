@@ -449,6 +449,7 @@
                                     Width="40"
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
+                                    DataObject.Pasting="UnitTextBox_Pasting"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="RAHours" UpdateSourceTrigger="LostFocus">
@@ -463,6 +464,7 @@
                                     Width="40"
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
+                                    DataObject.Pasting="UnitTextBox_Pasting"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="RAMinutes" UpdateSourceTrigger="LostFocus">
@@ -477,6 +479,7 @@
                                     Width="40"
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
+                                    DataObject.Pasting="UnitTextBox_Pasting"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding
@@ -506,6 +509,7 @@
                                     Width="40"
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
+                                    DataObject.Pasting="UnitTextBox_Pasting"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
@@ -523,6 +527,7 @@
                                     Width="40"
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
+                                    DataObject.Pasting="UnitTextBox_Pasting"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="DecMinutes" UpdateSourceTrigger="LostFocus">
@@ -537,6 +542,7 @@
                                     Width="40"
                                     Margin="5,0,0,0"
                                     VerticalAlignment="Center"
+                                    DataObject.Pasting="UnitTextBox_Pasting"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding
