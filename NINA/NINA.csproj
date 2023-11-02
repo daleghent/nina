@@ -354,6 +354,7 @@
     <Folder Include="External\x64\Nikon\Type0030\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
