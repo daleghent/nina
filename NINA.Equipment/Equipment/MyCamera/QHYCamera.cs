@@ -1446,7 +1446,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void ExtractGpsMetaData(ushort[] flatArray, ImageMetaData metaData) {
             if ((string)_gpsSettings["SetGPS"] != "True") return;
             //State of the GPS
-            byte[] imgData = new byte[flatArray.Length * sizeof(ushort)];
+            byte[] imgData = new byte[50];
             Buffer.BlockCopy(flatArray, 0, imgData, 0, imgData.Length);
 
             //PPS count
@@ -1480,43 +1480,43 @@ namespace NINA.Equipment.Equipment.MyCamera {
             //Shutter start time
             var start_flag = (imgData[17] / 16) % 4;
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SFLAG", start_flag, "QHY start_flag"));
-            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_SSTAT", receiverStatus(start_flag), "QHY start_flag"));
+            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_SSTAT", ReceiverStatus(start_flag), "QHY start_flag"));
             var start_sec = (256 * 256 * 256 * imgData[18]) + (256 * 256 * imgData[19]) + (256 * imgData[20]) + imgData[21];
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SSEC", start_sec, "QHY start_sec"));
             var start_us = ((256 * 256 * imgData[22]) + (256 * imgData[23]) + imgData[24]) / 10;
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_SUS", start_us, "QHY start_us"));
             //metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_ST", julianSecToDateTime(start_sec, start_us), "QHY start_time"));
-            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_SUTC", julianSecToDateTime(start_sec, start_us).ToUniversalTime(), "QHY start_time"));
+            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_SUTC", JulianSecToDateTime(start_sec, start_us).ToUniversalTime(), "QHY start_time"));
             //Shutter end time
             var end_flag = (imgData[25] / 16) % 4;
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_EFLAG", end_flag, "QHY end_flag"));
-            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_ESTAT", receiverStatus(end_flag), "QHY end_flag"));
+            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_ESTAT", ReceiverStatus(end_flag), "QHY end_flag"));
             var end_sec = (256 * 256 * 256 * imgData[26]) + (256 * 256 * imgData[27]) + (256 * imgData[28]) + imgData[29];
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_ESEC", end_sec, "QHY end_sec"));
             var end_us = ((256 * 256 * imgData[30]) + (256 * imgData[31]) + imgData[32]) / 10;
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_EUS", end_us, "QHY end_us"));
             //metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_ET", julianSecToDateTime(end_sec, end_us), "QHY end_time"));
-            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_EUTC", julianSecToDateTime(end_sec, end_us).ToUniversalTime(), "QHY end_time"));
+            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_EUTC", JulianSecToDateTime(end_sec, end_us).ToUniversalTime(), "QHY end_time"));
             //The current time
             var now_flag = (imgData[33] / 16) % 4;
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_NFLAG", now_flag, "QHY now_flag"));
-            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_NSTAT", receiverStatus(now_flag), "QHY now_flag"));
+            metaData.GenericHeaders.Add(new StringMetaDataHeader("GPS_NSTAT", ReceiverStatus(now_flag), "QHY now_flag"));
             var now_sec = (256 * 256 * 256 * imgData[34]) + (256 * 256 * imgData[35]) + (256 * imgData[36]) + imgData[37];
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_NSEC", now_sec, "QHY now_sec"));
             var now_us = ((256 * 256 * imgData[38]) + (256 * imgData[39]) + imgData[40]) / 10;
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_NUS", now_us, "QHY now_us"));
             //metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_NT", julianSecToDateTime(now_sec, now_us), "QHY now_time"));
-            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_NUTC", julianSecToDateTime(now_sec, now_us).ToUniversalTime(), "QHY now_time"));
+            metaData.GenericHeaders.Add(new DateTimeMetaDataHeader("GPS_NUTC", JulianSecToDateTime(now_sec, now_us).ToUniversalTime(), "QHY now_time"));
             //Exposure time
             var exposure = ((end_sec - start_sec) * 1000 * 1000) + (end_us - start_us);
             metaData.GenericHeaders.Add(new IntMetaDataHeader("GPS_EXP", exposure, "QHY exposure"));
         }
 
-        private DateTime julianSecToDateTime(double sec, double us) {
+        private DateTime JulianSecToDateTime(double sec, double us) {
             return NOVAS.JulianToDateTime(2450000.5d + ((sec + (us / 1e6d)) / 86400d));
         }
 
-        private string receiverStatus(int flag) {
+        private string ReceiverStatus(int flag) {
             switch (flag) {
                 case 0: return "just powered on";
                 case 1: return "not locked";
