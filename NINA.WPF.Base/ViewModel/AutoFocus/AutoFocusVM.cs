@@ -364,15 +364,21 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             return new MeasureAndError() { Measure = sumMeasure / exposuresPerFocusPoint, Stdev = Math.Sqrt(sumVariances / exposuresPerFocusPoint) };
         }
 
-        private async Task GetFocusPoints(FilterInfo filter, int nrOfSteps, IProgress<ApplicationStatus> progress, CancellationToken token, int offset = 0) {
+
+        private async Task GetFocusPoints(FilterInfo filter, int nrOfSteps, IProgress<ApplicationStatus> progress, CancellationToken token, int offset, bool reverse) {
             var stepSize = profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize;
+            var sign = 1;
+            
+            if (reverse) {
+                sign = -1;
+            }
 
             if (offset != 0) {
                 //Move to initial position
                 Logger.Trace($"Moving focuser from {_focusPosition} to initial position by moving {offset * stepSize} steps");
-                _focusPosition = await focuserMediator.MoveFocuserRelative(offset * stepSize, token);
-            }
-
+                _focusPosition = await focuserMediator.MoveFocuserRelative(sign * offset * stepSize, token);
+            } 
+            
             var comparer = new FocusPointComparer();
             var plotComparer = new PlotPointComparer();
 
@@ -393,7 +399,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 PlotFocusPoints.AddSorted(new DataPoint(_focusPosition, measurement.Measure), plotComparer);
                 if (i < nrOfSteps - 1) {
                     Logger.Trace($"Moving focuser from {_focusPosition} to the next autofocus position using step size: {-stepSize}");
-                    _focusPosition = await focuserMediator.MoveFocuserRelative(-stepSize, token);
+                    _focusPosition = await focuserMediator.MoveFocuserRelative(sign * -stepSize, token);
                 }
 
                 token.ThrowIfCancellationRequested();
@@ -611,6 +617,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                         initialHFR = (await GetAverageMeasurement(autofocusFilter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress)).Measure;
                     }
 
+                    var reverse = profileService.ActiveProfile.FocuserSettings.BacklashCompensationModel == BacklashCompensationModel.OVERSHOOT && profileService.ActiveProfile.FocuserSettings.BacklashIn > 0 && profileService.ActiveProfile.FocuserSettings.BacklashOut == 0;
+
                     bool reattempt;
                     do {
                         reattempt = false;
@@ -621,7 +629,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                         var nrOfSteps = offsetSteps + 1;
 
-                        await GetFocusPoints(autofocusFilter, nrOfSteps, progress, token, offset);
+                        await GetFocusPoints(autofocusFilter, nrOfSteps, progress, token, offset, reverse);
 
                         var laststeps = offset;
 
@@ -644,14 +652,14 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                                     await focuserMediator.MoveFocuser((int)Math.Round(FocusPoints.FirstOrDefault().X), token);
                                 }
                                 //More points needed to the left
-                                await GetFocusPoints(autofocusFilter, 1, progress, token, -1);
+                                await GetFocusPoints(autofocusFilter, 1, progress, token, -1, false);
                             } else if (TrendlineFitting.RightTrend.DataPoints.Count() < offsetSteps && FocusPoints.Where(dp => dp.X > TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps) { //Now we can go to the right, if necessary
                                 Logger.Trace("More datapoints needed to the right of the minimum");
                                 //More points needed to the right. Let's get to the rightmost point, and keep going right one point at a time
                                 if (focuserMediator.GetInfo().Position != (int)Math.Round(FocusPoints.LastOrDefault().X)) {
                                     await focuserMediator.MoveFocuser((int)Math.Round(FocusPoints.LastOrDefault().X), token);
                                 }
-                                await GetFocusPoints(autofocusFilter, 1, progress, token, 1);
+                                await GetFocusPoints(autofocusFilter, 1, progress, token, 1, false);
                             }
 
                             leftcount = TrendlineFitting.LeftTrend.DataPoints.Count();

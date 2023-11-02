@@ -58,6 +58,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Changed the default application theme to "Persian Faint"
 - The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
   - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.
+- Reverse autofocus direction when backlash compensation mode is set to "Overshoot" and a BacklashIN value is specified, to reduce the amount of required backlash compensation during autofocus
 
 
 ## Commandline Options
