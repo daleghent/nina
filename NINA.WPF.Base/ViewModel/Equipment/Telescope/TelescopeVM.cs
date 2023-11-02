@@ -435,7 +435,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     }
                                     if(Math.Abs(Telescope.SiteElevation - targetElevation) > SITE_ELEVATION_TOLERANCE) {
                                         Logger.Error(string.Format("Unable to set mount elevation to {0}!", targetElevation));
-                                        Notification.ShowError(string.Format(Loc.Instance["LblUnableToSetMountElevation"], Math.Round(targetLatitude, 3), Math.Round(targetLongitude, 3)));
+                                        Notification.ShowError(string.Format(Loc.Instance["LblUnableToSetMountElevation"], Math.Round(targetElevation, 3)));
                                     }
                                 }
                                 
