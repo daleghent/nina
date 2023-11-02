@@ -156,7 +156,7 @@ This database will be automatically created by the EntityFramework based on the 
 	* Altair SDK: Join the altair development group at https://groups.google.com/forum/#!forum/altair-development-group
     * Due to not being publicly available, they must not be put into a public repository
 * Other external dependencies are automatically installed via nuget (except for some camera vendor DLLs)
-* (Optional) To be able to build the setup projects you need to install [WiX](http://wixtoolset.org/) and their [Visual Studio plugin](https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2017Extension)
+* (Optional) To be able to build the setup projects you need to install [WiX](http://wixtoolset.org/) and the [Visual Studio plugin](https://marketplace.visualstudio.com/items?itemName=FireGiant.FireGiantHeatWaveDev17)
 
 ## Automated Unit Tests (AUT)
 

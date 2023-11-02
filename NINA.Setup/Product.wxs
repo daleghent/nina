@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+﻿<!--
     Copyright © 2016 - 2023 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
@@ -8,12 +7,12 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <?if $(var.Platform) = x64 ?>
-  <?define Win64 = "yes" ?>
+  <?define Win64 = "always64" ?>
   <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
   <?else?>
-  <?define Win64 = "no" ?>
+  <?define Win64 = "always32" ?>
   <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
   <?endif?>
   <?define NINA_ProjectDir=$(var.NINA.ProjectDir)?>
@@ -31,8 +30,8 @@
   <?define NINA.WPF.Base_TargetDir=$(var.NINA.WPF.Base.TargetDir)?>
   <?define NINA.Plugin_TargetDir=$(var.NINA.Plugin.TargetDir)?>
 
-  <Product Id="*" Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Language="1033" Version="!(bind.fileVersion.NINA.exe)" Manufacturer="N.I.N.A." UpgradeCode="5DC025EA-3D24-4E6B-9F82-79718D70896A">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <Package Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Language="1033" Version="!(bind.fileVersion.NINA.exe)" Manufacturer="N.I.N.A." UpgradeCode="5DC025EA-3D24-4E6B-9F82-79718D70896A" InstallerVersion="200">
+    
 
     <!--https://learn.microsoft.com/en-us/windows/win32/msi/reinstallmode-->
     <Property Id="REINSTALLMODE" Value="dmus" />
@@ -159,19 +158,18 @@
       <ComponentGroupRef Id="eu_ES_files" />
     </Feature>
     <InstallExecuteSequence>
-      <Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
-      <Custom Action="API_Firewall_listen_ipv6" Before="InstallFinalize">NOT Installed</Custom>
-      <Custom Action="API_Firewall_add_SGProAPI_urlacl" Before="InstallFinalize">NOT Installed</Custom>
-      <Custom Action="API_Firewall_add_SkyGuardCallback_urlacl" Before="InstallFinalize">NOT Installed</Custom>
+      <Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize" Condition="NOT Installed" />
+      <Custom Action="API_Firewall_listen_ipv6" Before="InstallFinalize" Condition="NOT Installed" />
+      <Custom Action="API_Firewall_add_SGProAPI_urlacl" Before="InstallFinalize" Condition="NOT Installed" />
+      <Custom Action="API_Firewall_add_SkyGuardCallback_urlacl" Before="InstallFinalize" Condition="NOT Installed" />
     </InstallExecuteSequence>
-  </Product>
+  </Package>
 
   <Fragment>
-    <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
         <Directory Id="INSTALLFOLDER" Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy">
-          <Component Win64="$(var.Win64)" Id="CrashDumpRegistry" Guid="FBD97166-8D65-4B4E-99AF-09A4AD98B64E">
-            <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\NINA.exe" Action="createAndRemoveOnUninstall">
+          <Component Id="CrashDumpRegistry" Guid="FBD97166-8D65-4B4E-99AF-09A4AD98B64E" Bitness="$(var.Win64)">
+            <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\NINA.exe" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
               <!-- Folder where the dump file should be written to -->
               <RegistryValue Type="expandable" Name="DumpFolder" Value="%localappdata%\nina\CrashDump" />
               <!-- Create only a max of 1 dump file -->
@@ -181,7 +179,7 @@
             </RegistryKey>
           </Component>
 
-          <Component Win64="$(var.Win64)" Id="InstallLocationRegistry" Guid="5D12CAB2-64FB-4643-AA65-7FA32596CD1E">
+          <Component Id="InstallLocationRegistry" Guid="5D12CAB2-64FB-4643-AA65-7FA32596CD1E" Bitness="$(var.Win64)">
             <RegistryValue Root="HKLM" Key="SOFTWARE\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
           </Component>
           <Directory Id="External" Name="External">
@@ -311,255 +309,254 @@
           <Directory Id="uk_UA" Name="uk-UA" />
         </Directory>
       </Directory>
-      <Directory Id="ProgramMenuFolder">
+      <StandardDirectory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" />
-      </Directory>
-      <Directory Id="DesktopFolder" />
-      <Directory Id="LocalAppDataFolder">
+      </StandardDirectory>
+      <StandardDirectory Id="DesktopFolder" />
+      <StandardDirectory Id="LocalAppDataFolder">
         <Directory Id="NinaAppDataFolder" Name="NINA">
-          <Component Win64="$(var.Win64)" Id="NinaAppDataFolderComponent" Guid="0004E14E-8B9D-4F52-8D2A-3E7DC2B28EC2">
+          <Component Id="NinaAppDataFolderComponent" Guid="0004E14E-8B9D-4F52-8D2A-3E7DC2B28EC2" Bitness="$(var.Win64)">
             <RemoveFolder Id="NinaAppDataFolderRemove" Directory="NinaAppDataFolder" On="uninstall" />
             <RegistryValue Root="HKCU" Key="Software\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
           </Component>
           <Directory Id="LogsFolder" Name="Logs">
-            <Component Win64="$(var.Win64)" Id="LogsFolderComponent" Guid="5FE211B5-C7A1-4A31-87CD-F4352E771A50">
+            <Component Id="LogsFolderComponent" Guid="5FE211B5-C7A1-4A31-87CD-F4352E771A50" Bitness="$(var.Win64)">
               <CreateFolder Directory="LogsFolder" />
               <RemoveFolder Id="LogsFolderRemove" Directory="LogsFolder" On="uninstall" />
               <RegistryValue Root="HKCU" Key="Software\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
             </Component>
           </Directory>
           <Directory Id="FramingAssistantCacheFolder" Name="FramingAssistantCache">
-            <Component Win64="$(var.Win64)" Id="FramingAssistantCacheFolderComponent" Guid="55D46CF1-5758-4913-86DA-19285F41C2C9">
+            <Component Id="FramingAssistantCacheFolderComponent" Guid="55D46CF1-5758-4913-86DA-19285F41C2C9" Bitness="$(var.Win64)">
               <CreateFolder Directory="FramingAssistantCacheFolder" />
               <RemoveFolder Id="FramingAssistantCacheFolderRemove" Directory="FramingAssistantCacheFolder" On="uninstall" />
               <RegistryValue Root="HKCU" Key="Software\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
             </Component>
           </Directory>
           <Directory Id="CrashDumpFolder" Name="CrashDump">
-            <Component Win64="$(var.Win64)" Id="CrashDumpFolderComponent" Guid="76764150-E6A4-4637-BFB4-574B78515CE6">
+            <Component Id="CrashDumpFolderComponent" Guid="76764150-E6A4-4637-BFB4-574B78515CE6" Bitness="$(var.Win64)">
               <CreateFolder Directory="CrashDumpFolder" />
               <RemoveFolder Id="CrashDumpFolderRemove" Directory="CrashDumpFolder" On="uninstall" />
               <RegistryValue Root="HKCU" Key="Software\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
             </Component>
           </Directory>
         </Directory>
-      </Directory>
-    </Directory>
-  </Fragment>
+      </StandardDirectory>
+    </Fragment>
 
   <Fragment>
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Win64="$(var.Win64)" Id="ApplicationShortcut" Guid="833331A1-AC4F-4BAE-8090-C27F1CE3F48E">
+      <Component Id="ApplicationShortcut" Guid="833331A1-AC4F-4BAE-8090-C27F1CE3F48E" Bitness="$(var.Win64)">
         <Shortcut Id="ApplicationStartMenuShortcut" Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Description="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Target="[INSTALLFOLDER]NINA.exe" WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
       </Component>
     </DirectoryRef>
-    <DirectoryRef Id="DesktopFolder">
-      <Component Win64="$(var.Win64)" Id="ApplicationShortcutDesktop" Guid="EA352AD0-8C7C-4956-ABC0-DDB32178C71A">
+    <StandardDirectory Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="EA352AD0-8C7C-4956-ABC0-DDB32178C71A" Bitness="$(var.Win64)">
         <Shortcut Id="ApplicationDesktopShortcut" Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Description="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Target="[INSTALLFOLDER]NINA.exe" WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
       </Component>
-    </DirectoryRef>
+    </StandardDirectory>
   </Fragment>
 
   <Fragment>
 
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Win64="$(var.Win64)" Id="LICENSE.txt" Guid="0a6ae791-4e08-46de-933a-843e8977a0f0">
+      <Component Id="LICENSE.txt" Guid="0a6ae791-4e08-46de-933a-843e8977a0f0" Bitness="$(var.Win64)">
         <File Id="LICENSE.txt" Name="LICENSE.txt" Source="$(var.NINA_TargetDir)LICENSE.txt" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.exe" Guid="b4545676-e377-4900-85f6-3bdc93962a45">
+      <Component Id="NINA.exe" Guid="b4545676-e377-4900-85f6-3bdc93962a45" Bitness="$(var.Win64)">
         <File Id="NINA.exe" Name="NINA.exe" Source="$(var.NINA_TargetDir)NINA.exe" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.dll.config" Guid="64E67D41-A82C-437A-B910-A51B34A9C6D0">
+      <Component Id="NINA.dll.config" Guid="64E67D41-A82C-437A-B910-A51B34A9C6D0" Bitness="$(var.Win64)">
         <File Id="NINA.dll.config" Name="NINA.dll.config" Source="$(var.NINA_TargetDir)NINA.dll.config" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.dll" Guid="851E33E7-B0CF-47A7-B31D-B3C32D134D6A">
+      <Component Id="NINA.dll" Guid="851E33E7-B0CF-47A7-B31D-B3C32D134D6A" Bitness="$(var.Win64)">
         <File Id="NINA.dll" Name="NINA.dll" Source="$(var.NINA_TargetDir)NINA.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Core.dll" Guid="899847bc-65d8-4042-83ce-9d83003bbcfd">
+      <Component Id="NINA.Core.dll" Guid="899847bc-65d8-4042-83ce-9d83003bbcfd" Bitness="$(var.Win64)">
         <File Id="NINA.Core.dll" Name="NINA.Core.dll" Source="$(var.NINA_TargetDir)NINA.Core.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="EntityFramework.dll" Guid="a74e801b-f1d0-4a4e-bfa2-971705dd40aa">
+      <Component Id="EntityFramework.dll" Guid="a74e801b-f1d0-4a4e-bfa2-971705dd40aa" Bitness="$(var.Win64)">
         <File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="$(var.NINA_TargetDir)EntityFramework.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="EntityFramework.SqlServer.dll" Guid="18df716e-b515-49c3-a315-23c5a943a404">
+      <Component Id="EntityFramework.SqlServer.dll" Guid="18df716e-b515-49c3-a315-23c5a943a404" Bitness="$(var.Win64)">
         <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.NINA_TargetDir)EntityFramework.SqlServer.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C">
+      <Component Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C" Bitness="$(var.Win64)">
         <File Id="Fastenshtein.dll" Name="Fastenshtein.dll" Source="$(var.NINA_TargetDir)Fastenshtein.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Newtonsoft.Json.dll" Guid="d5f1d68a-daa3-46fe-af3a-db698064bb12">
+      <Component Id="Newtonsoft.Json.dll" Guid="d5f1d68a-daa3-46fe-af3a-db698064bb12" Bitness="$(var.Win64)">
         <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.NINA_TargetDir)Newtonsoft.Json.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="OxyPlot.Wpf.dll" Guid="0da70938-063f-489f-a562-ec3c949f8484">
+      <Component Id="OxyPlot.Wpf.dll" Guid="0da70938-063f-489f-a562-ec3c949f8484" Bitness="$(var.Win64)">
         <File Id="OxyPlot.Wpf.dll" Name="OxyPlot.Wpf.dll" Source="$(var.NINA_TargetDir)OxyPlot.Wpf.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="OxyPlot.dll" Guid="b319b1c5-05a3-4e7f-946e-fdd424a4bd35">
+      <Component Id="OxyPlot.dll" Guid="b319b1c5-05a3-4e7f-946e-fdd424a4bd35" Bitness="$(var.Win64)">
         <File Id="OxyPlot.dll" Name="OxyPlot.dll" Source="$(var.NINA_TargetDir)OxyPlot.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="System.Data.SQLite.dll" Guid="eb9db954-aaef-4c84-8401-91b12688b243">
+      <Component Id="System.Data.SQLite.dll" Guid="eb9db954-aaef-4c84-8401-91b12688b243" Bitness="$(var.Win64)">
         <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="System.Data.SQLite.EF6.dll" Guid="d4cb4e71-0820-45de-9ce7-ae682bb70840">
+      <Component Id="System.Data.SQLite.EF6.dll" Guid="d4cb4e71-0820-45de-9ce7-ae682bb70840" Bitness="$(var.Win64)">
         <File Id="System.Data.SQLite.EF6.dll" Name="System.Data.SQLite.EF6.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.EF6.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="ToastNotifications.dll" Guid="640b6c3c-5a8d-47c8-9478-9ebbb876d2fc">
+      <Component Id="ToastNotifications.dll" Guid="640b6c3c-5a8d-47c8-9478-9ebbb876d2fc" Bitness="$(var.Win64)">
         <File Id="ToastNotifications.dll" Name="ToastNotifications.dll" Source="$(var.NINA_TargetDir)ToastNotifications.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="ToastNotifications.Messages.dll" Guid="74b98fb4-f2a9-44d8-8c8b-988b83bf09d4">
+      <Component Id="ToastNotifications.Messages.dll" Guid="74b98fb4-f2a9-44d8-8c8b-988b83bf09d4" Bitness="$(var.Win64)">
         <File Id="ToastNotifications.Messages.dll" Name="ToastNotifications.Messages.dll" Source="$(var.NINA_TargetDir)ToastNotifications.Messages.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="FreeImageNET.dll" Guid="65499493-d525-4075-b136-c37e5713dd5b">
+      <Component Id="FreeImageNET.dll" Guid="65499493-d525-4075-b136-c37e5713dd5b" Bitness="$(var.Win64)">
         <File Id="FreeImageNET.dll" Name="FreeImageNET.dll" Source="$(var.NINA_TargetDir)FreeImageNET.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="nikoncswrapper.dll" Guid="2153f113-e26c-4195-a71e-5afcf9eba0b5">
+      <Component Id="nikoncswrapper.dll" Guid="2153f113-e26c-4195-a71e-5afcf9eba0b5" Bitness="$(var.Win64)">
         <File Id="nikoncswrapper.dll" Name="nikoncswrapper.dll" Source="$(var.nikoncswrapper_TargetDir)nikoncswrapper.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.CustomControlLibrary.dll" Guid="f6c5c2f4-cd1b-4243-a976-2b3b886263b2">
+      <Component Id="NINA.CustomControlLibrary.dll" Guid="f6c5c2f4-cd1b-4243-a976-2b3b886263b2" Bitness="$(var.Win64)">
         <File Id="NINA.CustomControlLibrary.dll" Name="NINA.CustomControlLibrary.dll" Source="$(var.NINA.CustomControlLibrary_TargetDir)NINA.CustomControlLibrary.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="AsyncEnumerable.dll" Guid="8dd0fdbc-bacd-4fdf-a83d-0e0e4b7dc56f">
+      <Component Id="AsyncEnumerable.dll" Guid="8dd0fdbc-bacd-4fdf-a83d-0e0e4b7dc56f" Bitness="$(var.Win64)">
         <File Id="AsyncEnumerable.dll" Name="AsyncEnumerable.dll" Source="$(var.NINA_TargetDir)AsyncEnumerable.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NmeaParser.dll" Guid="e45c807d-d193-4e13-825b-2f5b9ea92b63">
+      <Component Id="NmeaParser.dll" Guid="e45c807d-d193-4e13-825b-2f5b9ea92b63" Bitness="$(var.Win64)">
         <File Id="NmeaParser.dll" Name="NmeaParser.dll" Source="$(var.NINA_TargetDir)NmeaParser.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.Collections.Deque.dll" Guid="ac93f123-4673-4016-8b4b-7a7e3390ec56">
+      <Component Id="Nito.Collections.Deque.dll" Guid="ac93f123-4673-4016-8b4b-7a7e3390ec56" Bitness="$(var.Win64)">
         <File Id="Nito.Collections.Deque.dll" Name="Nito.Collections.Deque.dll" Source="$(var.NINA_TargetDir)Nito.Collections.Deque.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.Mvvm.Async.dll" Guid="4e0e05c8-e441-49b9-9174-f87e16bed772">
+      <Component Id="Nito.Mvvm.Async.dll" Guid="4e0e05c8-e441-49b9-9174-f87e16bed772" Bitness="$(var.Win64)">
         <File Id="Nito.Mvvm.Async.dll" Name="Nito.Mvvm.Async.dll" Source="$(var.NINA_TargetDir)Nito.Mvvm.Async.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Coordination.dll" Guid="889df583-c3f3-4eb3-91ed-c1c81701b3d8">
+      <Component Id="Nito.AsyncEx.Coordination.dll" Guid="889df583-c3f3-4eb3-91ed-c1c81701b3d8" Bitness="$(var.Win64)">
         <File Id="Nito.AsyncEx.Coordination.dll" Name="Nito.AsyncEx.Coordination.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Coordination.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Tasks.dll" Guid="a78ed08a-b271-4809-aeac-4a9acb3cdf75">
+      <Component Id="Nito.AsyncEx.Tasks.dll" Guid="a78ed08a-b271-4809-aeac-4a9acb3cdf75" Bitness="$(var.Win64)">
         <File Id="Nito.AsyncEx.Tasks.dll" Name="Nito.AsyncEx.Tasks.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Tasks.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.Disposables.dll" Guid="ae91aa58-7ac0-49a1-8eb8-87e3bb2d70a9">
+      <Component Id="Nito.Disposables.dll" Guid="ae91aa58-7ac0-49a1-8eb8-87e3bb2d70a9" Bitness="$(var.Win64)">
         <File Id="Nito.Disposables.dll" Name="Nito.Disposables.dll" Source="$(var.NINA_TargetDir)Nito.Disposables.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.Mvvm.Core.dll" Guid="8d518177-e613-47f9-a11e-b89508c26fc9">
+      <Component Id="Nito.Mvvm.Core.dll" Guid="8d518177-e613-47f9-a11e-b89508c26fc9" Bitness="$(var.Win64)">
         <File Id="Nito.Mvvm.Core.dll" Name="Nito.Mvvm.Core.dll" Source="$(var.NINA_TargetDir)Nito.Mvvm.Core.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Context.dll" Guid="592aa107-1b13-41ae-a569-5fd49bda174e">
+      <Component Id="Nito.AsyncEx.Context.dll" Guid="592aa107-1b13-41ae-a569-5fd49bda174e" Bitness="$(var.Win64)">
         <File Id="Nito.AsyncEx.Context.dll" Name="Nito.AsyncEx.Context.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Context.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Oop.dll" Guid="F2EEDD26-68EE-4101-801C-087718075CAF">
+      <Component Id="Nito.AsyncEx.Oop.dll" Guid="F2EEDD26-68EE-4101-801C-087718075CAF" Bitness="$(var.Win64)">
         <File Id="Nito.AsyncEx.Oop.dll" Name="Nito.AsyncEx.Oop.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Oop.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Interop.WaitHandles.dll" Guid="631B50E6-584B-410A-B861-85DB45ED56B0">
+      <Component Id="Nito.AsyncEx.Interop.WaitHandles.dll" Guid="631B50E6-584B-410A-B861-85DB45ED56B0" Bitness="$(var.Win64)">
         <File Id="Nito.AsyncEx.Interop.WaitHandles.dll" Name="Nito.AsyncEx.Interop.WaitHandles.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Interop.WaitHandles.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Nito.Cancellation.dll" Guid="CA197B09-AD17-4E49-9761-257249813645">
+      <Component Id="Nito.Cancellation.dll" Guid="CA197B09-AD17-4E49-9761-257249813645" Bitness="$(var.Win64)">
         <File Id="Nito.Cancellation.dll" Name="Nito.Cancellation.dll" Source="$(var.NINA_TargetDir)Nito.Cancellation.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NJsonSchema.dll" Guid="9bb5bcda-30df-4aec-b520-efb9fa96ca2d">
+      <Component Id="NJsonSchema.dll" Guid="9bb5bcda-30df-4aec-b520-efb9fa96ca2d" Bitness="$(var.Win64)">
         <File Id="NJsonSchema.dll" Name="NJsonSchema.dll" Source="$(var.NINA_TargetDir)NJsonSchema.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Namotion.Reflection.dll" Guid="e280d86e-104f-49ea-9c32-b98e532d648d">
+      <Component Id="Namotion.Reflection.dll" Guid="e280d86e-104f-49ea-9c32-b98e532d648d" Bitness="$(var.Win64)">
         <File Id="Namotion.Reflection.dll" Name="Namotion.Reflection.dll" Source="$(var.NINA_TargetDir)Namotion.Reflection.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Accord.Math.dll" Guid="e8a942ea-bc91-44a7-ba5f-aa19800d3beb">
+      <Component Id="Accord.Math.dll" Guid="e8a942ea-bc91-44a7-ba5f-aa19800d3beb" Bitness="$(var.Win64)">
         <File Id="Accord.Math.dll" Name="Accord.Math.dll" Source="$(var.NINA_TargetDir)Accord.Math.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Accord.Math.Core.dll" Guid="6593c698-4f88-4a15-8990-218573db4288">
+      <Component Id="Accord.Math.Core.dll" Guid="6593c698-4f88-4a15-8990-218573db4288" Bitness="$(var.Win64)">
         <File Id="Accord.Math.Core.dll" Name="Accord.Math.Core.dll" Source="$(var.NINA_TargetDir)Accord.Math.Core.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Accord.dll" Guid="2ea6a34b-6c9a-42da-bb4c-24dcf06e9ef2">
+      <Component Id="Accord.dll" Guid="2ea6a34b-6c9a-42da-bb4c-24dcf06e9ef2" Bitness="$(var.Win64)">
         <File Id="Accord.dll" Name="Accord.dll" Source="$(var.NINA_TargetDir)Accord.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Accord.Statistics.dll" Guid="814d20c3-c7fc-4644-bc5c-ac1d8f172fb2">
+      <Component Id="Accord.Statistics.dll" Guid="814d20c3-c7fc-4644-bc5c-ac1d8f172fb2" Bitness="$(var.Win64)">
         <File Id="Accord.Statistics.dll" Name="Accord.Statistics.dll" Source="$(var.NINA_TargetDir)Accord.Statistics.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Accord.Imaging.dll" Guid="e01df832-9853-4564-9a43-2bbd5191486d">
+      <Component Id="Accord.Imaging.dll" Guid="e01df832-9853-4564-9a43-2bbd5191486d" Bitness="$(var.Win64)">
         <File Id="Accord.Imaging.dll" Name="Accord.Imaging.dll" Source="$(var.NINA_TargetDir)Accord.Imaging.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Accord.dll.config" Guid="c7614cb9-9003-4cdc-965b-46c3b76a789a">
+      <Component Id="Accord.dll.config" Guid="c7614cb9-9003-4cdc-965b-46c3b76a789a" Bitness="$(var.Win64)">
         <File Id="Accord.dll.config" Name="Accord.dll.config" Source="$(var.NINA_TargetDir)Accord.dll.config" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.MGEN.dll" Guid="aff16aed-fbcc-4db3-8ae6-30387f4995e9">
+      <Component Id="NINA.MGEN.dll" Guid="aff16aed-fbcc-4db3-8ae6-30387f4995e9" Bitness="$(var.Win64)">
         <File Id="NINA.MGEN.dll" Name="NINA.MGEN.dll" Source="$(var.NINA.MGEN_TargetDir)NINA.MGEN.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="thirdparty" Guid="3C8404A3-D6E6-48DE-81FA-03028AEE884D">
+      <Component Id="thirdparty" Guid="3C8404A3-D6E6-48DE-81FA-03028AEE884D" Bitness="$(var.Win64)">
         <File Id="thirdparty" Name="3rd-party-licenses.txt" Source="$(var.NINA_TargetDir)3rd-party-licenses.txt" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="K4os.Compression.LZ4.dll" Guid="af75b12d-ae2f-48c8-8b15-55a5d7344aa0">
+      <Component Id="K4os.Compression.LZ4.dll" Guid="af75b12d-ae2f-48c8-8b15-55a5d7344aa0" Bitness="$(var.Win64)">
         <File Id="K4os.Compression.LZ4.dll" Name="K4os.Compression.LZ4.dll" Source="$(var.NINA_TargetDir)K4os.Compression.LZ4.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="ToggleSwitch.dll" Guid="b7d48149-e902-402d-86f7-6d08341960c2">
+      <Component Id="ToggleSwitch.dll" Guid="b7d48149-e902-402d-86f7-6d08341960c2" Bitness="$(var.Win64)">
         <File Id="ToggleSwitch.dll" Name="ToggleSwitch.dll" Source="$(var.NINA_TargetDir)ToggleSwitch.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1">
+      <Component Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1" Bitness="$(var.Win64)">
         <File Id="CsvHelper.dll" Name="CsvHelper.dll" Source="$(var.NINA_TargetDir)CsvHelper.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Guid="8b21c463-4e12-4cd4-9c37-d9dcda86c79e">
+      <Component Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Guid="8b21c463-4e12-4cd4-9c37-d9dcda86c79e" Bitness="$(var.Win64)">
         <File Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Name="DotNetProjects.Wpf.Extended.Toolkit.dll" Source="$(var.NINA_TargetDir)DotNetProjects.Wpf.Extended.Toolkit.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="AvalonDock.dll" Guid="59aa7c90-8b21-4475-aaf3-3e269094a407">
+      <Component Id="AvalonDock.dll" Guid="59aa7c90-8b21-4475-aaf3-3e269094a407" Bitness="$(var.Win64)">
         <File Id="AvalonDock.dll" Name="AvalonDock.dll" Source="$(var.NINA_TargetDir)AvalonDock.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Equipment.dll" Guid="cf75097e-4f3d-4c89-a21b-984f6662e0d1">
+      <Component Id="NINA.Equipment.dll" Guid="cf75097e-4f3d-4c89-a21b-984f6662e0d1" Bitness="$(var.Win64)">
         <File Id="NINA.Equipment.dll" Name="NINA.Equipment.dll" Source="$(var.NINA.Equipment_TargetDir)NINA.Equipment.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.PlateSolving.dll" Guid="a3af2a74-1df7-4af2-a735-e587c18c1119">
+      <Component Id="NINA.PlateSolving.dll" Guid="a3af2a74-1df7-4af2-a735-e587c18c1119" Bitness="$(var.Win64)">
         <File Id="NINA.PlateSolving.dll" Name="NINA.PlateSolving.dll" Source="$(var.NINA.PlateSolving_TargetDir)NINA.PlateSolving.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Profile.dll" Guid="e8b31cf9-917f-406f-929a-68a4a28360ca">
+      <Component Id="NINA.Profile.dll" Guid="e8b31cf9-917f-406f-929a-68a4a28360ca" Bitness="$(var.Win64)">
         <File Id="NINA.Profile.dll" Name="NINA.Profile.dll" Source="$(var.NINA.Profile_TargetDir)NINA.Profile.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Sequencer.dll" Guid="18be685c-5896-4c78-a0e1-a43729260e96">
+      <Component Id="NINA.Sequencer.dll" Guid="18be685c-5896-4c78-a0e1-a43729260e96" Bitness="$(var.Win64)">
         <File Id="NINA.Sequencer.dll" Name="NINA.Sequencer.dll" Source="$(var.NINA.Sequencer_TargetDir)NINA.Sequencer.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Astrometry.dll" Guid="aa12c384-5308-485c-b979-419bb08fd488">
+      <Component Id="NINA.Astrometry.dll" Guid="aa12c384-5308-485c-b979-419bb08fd488" Bitness="$(var.Win64)">
         <File Id="NINA.Astrometry.dll" Name="NINA.Astrometry.dll" Source="$(var.NINA.Astrometry_TargetDir)NINA.Astrometry.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Image.dll" Guid="9b7d247e-8326-4100-a6ec-f60097dd1854">
+      <Component Id="NINA.Image.dll" Guid="9b7d247e-8326-4100-a6ec-f60097dd1854" Bitness="$(var.Win64)">
         <File Id="NINA.Image.dll" Name="NINA.Image.dll" Source="$(var.NINA.Image_TargetDir)NINA.Image.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.WPF.Base.dll" Guid="da3b598c-5da9-46a8-a70d-a9a0c86705a4">
+      <Component Id="NINA.WPF.Base.dll" Guid="da3b598c-5da9-46a8-a70d-a9a0c86705a4" Bitness="$(var.Win64)">
         <File Id="NINA.WPF.Base.dll" Name="NINA.WPF.Base.dll" Source="$(var.NINA.WPF.Base_TargetDir)NINA.WPF.Base.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Plugin.dll" Guid="ac594ba2-c9c0-470e-ac04-cf9e3cba2d73">
+      <Component Id="NINA.Plugin.dll" Guid="ac594ba2-c9c0-470e-ac04-cf9e3cba2d73" Bitness="$(var.Win64)">
         <File Id="NINA.Plugin.dll" Name="NINA.Plugin.dll" Source="$(var.NINA.Plugin_TargetDir)NINA.Plugin.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0">
+      <Component Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0" Bitness="$(var.Win64)">
         <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="MdXaml.dll" Guid="dd68150f-b4f4-42a7-af8d-67f830c48918">
+      <Component Id="MdXaml.dll" Guid="dd68150f-b4f4-42a7-af8d-67f830c48918" Bitness="$(var.Win64)">
         <File Id="MdXaml.dll" Name="MdXaml.dll" Source="$(var.NINA_TargetDir)MdXaml.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="ICSharpCode.AvalonEdit.dll" Guid="1c6db533-6ea8-4091-93be-7d16b6be9054">
+      <Component Id="ICSharpCode.AvalonEdit.dll" Guid="1c6db533-6ea8-4091-93be-7d16b6be9054" Bitness="$(var.Win64)">
         <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" Source="$(var.NINA_TargetDir)ICSharpCode.AvalonEdit.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Castle.Core.AsyncInterceptor.dll" Guid="b75476aa-e2cd-425a-8556-7f148faae0e3">
+      <Component Id="Castle.Core.AsyncInterceptor.dll" Guid="b75476aa-e2cd-425a-8556-7f148faae0e3" Bitness="$(var.Win64)">
         <File Id="Castle.Core.AsyncInterceptor.dll" Name="Castle.Core.AsyncInterceptor.dll" Source="$(var.NINA_TargetDir)Castle.Core.AsyncInterceptor.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Castle.Core.dll" Guid="fa300086-73c6-4791-80e1-15fcfcfc1797">
+      <Component Id="Castle.Core.dll" Guid="fa300086-73c6-4791-80e1-15fcfcfc1797" Bitness="$(var.Win64)">
         <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.NINA_TargetDir)Castle.Core.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Google.Protobuf.dll" Guid="48efb59c-8605-4a27-b22c-6dc5eef42339">
+      <Component Id="Google.Protobuf.dll" Guid="48efb59c-8605-4a27-b22c-6dc5eef42339" Bitness="$(var.Win64)">
         <File Id="Google.Protobuf.dll" Name="Google.Protobuf.dll" Source="$(var.NINA_TargetDir)Google.Protobuf.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Grpc.Core.Api.dll" Guid="7a95df86-1596-4cc5-8c01-bc56aa9296c6">
+      <Component Id="Grpc.Core.Api.dll" Guid="7a95df86-1596-4cc5-8c01-bc56aa9296c6" Bitness="$(var.Win64)">
         <File Id="Grpc.Core.Api.dll" Name="Grpc.Core.Api.dll" Source="$(var.NINA_TargetDir)Grpc.Core.Api.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="GrpcDotNetNamedPipes.dll" Guid="12a557ca-8315-4984-81e8-7d5b8830e3f3">
+      <Component Id="GrpcDotNetNamedPipes.dll" Guid="12a557ca-8315-4984-81e8-7d5b8830e3f3" Bitness="$(var.Win64)">
         <File Id="GrpcDotNetNamedPipes.dll" Name="GrpcDotNetNamedPipes.dll" Source="$(var.NINA_TargetDir)GrpcDotNetNamedPipes.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Serilog.dll" Guid="addc1650-2365-452a-a91d-064507e40e77">
+      <Component Id="Serilog.dll" Guid="addc1650-2365-452a-a91d-064507e40e77" Bitness="$(var.Win64)">
         <File Id="Serilog.dll" Name="Serilog.dll" Source="$(var.NINA_TargetDir)Serilog.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Serilog.Sinks.File.dll" Guid="700e0af3-7959-4eb5-8320-1e187e6a45ff">
+      <Component Id="Serilog.Sinks.File.dll" Guid="700e0af3-7959-4eb5-8320-1e187e6a45ff" Bitness="$(var.Win64)">
         <File Id="Serilog.Sinks.File.dll" Name="Serilog.Sinks.File.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.File.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Serilog.Sinks.Console.dll" Guid="b25c2486-9400-4207-aa84-6cab40ef31c2">
+      <Component Id="Serilog.Sinks.Console.dll" Guid="b25c2486-9400-4207-aa84-6cab40ef31c2" Bitness="$(var.Win64)">
         <File Id="Serilog.Sinks.Console.dll" Name="Serilog.Sinks.Console.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.Console.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Microsoft.Xaml.Behaviors.dll" Guid="69093258-81a8-4474-bdb7-d69732bfc56e">
+      <Component Id="Microsoft.Xaml.Behaviors.dll" Guid="69093258-81a8-4474-bdb7-d69732bfc56e" Bitness="$(var.Win64)">
         <File Id="Microsoft.Xaml.Behaviors.dll" Name="Microsoft.Xaml.Behaviors.dll" Source="$(var.NINA_TargetDir)Microsoft.Xaml.Behaviors.dll" />
       </Component>
       <Component Id="NINA.Astrometry.pdb" Guid="4f23f02d-3dc9-4d2a-b3fb-6aa07fc34319">
@@ -656,17 +653,17 @@
   </Fragment>
   <Fragment>
     <ComponentGroup Id="Database_Initial_files" Directory="Database_Initial">
-      <Component Win64="$(var.Win64)" Id="Database_Initial_initial_data.sql" Guid="eac6318b-a3a6-4faf-93a4-e393a978f8d2">
+      <Component Id="Database_Initial_initial_data.sql" Guid="eac6318b-a3a6-4faf-93a4-e393a978f8d2" Bitness="$(var.Win64)">
         <File Id="Database_Initial_initial_data.sql" Name="initial_data.sql" Source="$(var.NINA_TargetDir)Database\Initial\initial_data.sql" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Database_Initial_initial_schema.sql" Guid="45a87858-1713-4e88-ad91-8daa2e732b1b">
+      <Component Id="Database_Initial_initial_schema.sql" Guid="45a87858-1713-4e88-ad91-8daa2e732b1b" Bitness="$(var.Win64)">
         <File Id="Database_Initial_initial_schema.sql" Name="initial_schema.sql" Source="$(var.NINA_TargetDir)Database\Initial\initial_schema.sql" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="Database_Migration_files" Directory="Database_Migration">
-      <Component Win64="$(var.Win64)" Id="Database_Migration_1.sql" Guid="9d6f78f7-1a32-4230-b611-925d274e9dc7">
+      <Component Id="Database_Migration_1.sql" Guid="9d6f78f7-1a32-4230-b611-925d274e9dc7" Bitness="$(var.Win64)">
         <File Id="Database_Migration_1.sql" Name="1.sql" Source="$(var.NINA_TargetDir)Database\Migration\1.sql" />
       </Component>
       <Component Id="Database_Migration_2.sql" Guid="1c6fd751-d889-46e8-ae30-73f16642155f">
@@ -867,14 +864,14 @@
 
   <Fragment>
     <ComponentGroup Id="Utility_DCRaw_files" Directory="Utility_DCRaw">
-      <Component Win64="$(var.Win64)" Id="Utility_DCRaw_dcraw.exe" Guid="2071a04b-5394-4b2b-b02f-bd57a5b1a294">
+      <Component Id="Utility_DCRaw_dcraw.exe" Guid="2071a04b-5394-4b2b-b02f-bd57a5b1a294" Bitness="$(var.Win64)">
         <File Id="Utility_DCRaw_dcraw.exe" Name="dcraw.exe" Source="$(var.NINA_TargetDir)Utility\DCRaw\dcraw.exe" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_JPLEPH_files" Directory="External">
-      <Component Win64="$(var.Win64)" Id="JPLEPH" Guid="3D939C40-47D8-4BF2-8C93-5324FAD7CD08">
+      <Component Id="JPLEPH" Guid="3D939C40-47D8-4BF2-8C93-5324FAD7CD08" Bitness="$(var.Win64)">
         <File Id="JPLEPH" Name="JPLEPH" Source="$(var.NINA_TargetDir)External\JPLEPH" DefaultVersion="1.0.0.0" />
       </Component>
     </ComponentGroup>
@@ -919,25 +916,25 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_VCRedis_files" Directory="INSTALLFOLDER">
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcp100.dll" Guid="d214e6a8-0654-4a85-8096-1b7ff9a672c0">
+      <Component Id="External_x64_VCRedis_msvcp100.dll" Guid="d214e6a8-0654-4a85-8096-1b7ff9a672c0" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_msvcp100.dll" Name="msvcp100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp100.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcp140.dll" Guid="A7EB3D21-2D07-46AC-8F1B-3D8539E43CFD">
+      <Component Id="External_x64_VCRedis_msvcp140.dll" Guid="A7EB3D21-2D07-46AC-8F1B-3D8539E43CFD" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_msvcp140.dll" Name="msvcp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp140.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcr100.dll" Guid="02CB55BE-6D62-47AA-8D05-F6A626D1D8C3">
+      <Component Id="External_x64_VCRedis_msvcr100.dll" Guid="02CB55BE-6D62-47AA-8D05-F6A626D1D8C3" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr100.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_msvcr120.dll" Guid="ABD36695-F2E3-417D-A862-32B04E905E98">
+      <Component Id="External_x64_VCRedis_msvcr120.dll" Guid="ABD36695-F2E3-417D-A862-32B04E905E98" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr120.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcruntime140.dll" Guid="27F9ADDA-59DB-4ABE-AB7B-4DC74DBF128B">
+      <Component Id="External_x64_VCRedis_vcruntime140.dll" Guid="27F9ADDA-59DB-4ABE-AB7B-4DC74DBF128B" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcruntime140_1.dll" Guid="EFCC3E8B-DA53-4385-8282-D78E66860A54">
+      <Component Id="External_x64_VCRedis_vcruntime140_1.dll" Guid="EFCC3E8B-DA53-4385-8282-D78E66860A54" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_vcruntime140_1.dll" Name="vcruntime140_1.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140_1.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_VCRedis_vcomp140.dll" Guid="3A262497-11B7-4996-9526-48424A269C23">
+      <Component Id="External_x64_VCRedis_vcomp140.dll" Guid="3A262497-11B7-4996-9526-48424A269C23" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_vcomp140.dll" Name="vcomp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcomp140.dll" />
       </Component>
     </ComponentGroup>
@@ -945,10 +942,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_AllPro_files" Directory="External_x64_AllPro">
-      <Component Win64="$(var.Win64)" Id="External_x64_AllPro_spikausbd.dll" Guid="F8AA23B3-12D9-4DF7-92A6-E3219F5A5231">
+      <Component Id="External_x64_AllPro_spikausbd.dll" Guid="F8AA23B3-12D9-4DF7-92A6-E3219F5A5231" Bitness="$(var.Win64)">
         <File Id="External_x64_AllPro_spikausbd.dll" Name="spikausbd.dll" Source="$(var.NINA_ProjectDir)External\x64\AllPro\spikausbd.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_AllPro_spikahidapi64.dll" Guid="3D485FD0-DBAD-46F7-A000-3E6B0484AA35">
+      <Component Id="External_x64_AllPro_spikahidapi64.dll" Guid="3D485FD0-DBAD-46F7-A000-3E6B0484AA35" Bitness="$(var.Win64)">
         <File Id="External_x64_AllPro_spikahidapi64.dll" Name="spikahidapi64.dll" Source="$(var.NINA_ProjectDir)External\x64\AllPro\spikahidapi64.dll" />
       </Component>
     </ComponentGroup>
@@ -956,10 +953,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_ASI_files" Directory="External_x64_ASI">
-      <Component Win64="$(var.Win64)" Id="External_x64_ASI_ASICamera2.dll" Guid="83d1acb1-81fa-4381-a930-27527f2ead20">
+      <Component Id="External_x64_ASI_ASICamera2.dll" Guid="83d1acb1-81fa-4381-a930-27527f2ead20" Bitness="$(var.Win64)">
         <File Id="External_x64_ASI_ASICamera2.dll" Name="ASICamera2.dll" Source="$(var.NINA_ProjectDir)External\x64\ASI\ASICamera2.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_ASI_EFW_filter.dll" Guid="e416c8c9-c2a2-47b9-9b53-d79812ebd9c6">
+      <Component Id="External_x64_ASI_EFW_filter.dll" Guid="e416c8c9-c2a2-47b9-9b53-d79812ebd9c6" Bitness="$(var.Win64)">
         <File Id="External_x64_ASI_EFW_filter.dll" Name="EFW_filter.dll" Source="$(var.NINA_TargetDir)External\x64\ASI\EFW_filter.dll" />
       </Component>
     </ComponentGroup>
@@ -967,16 +964,16 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Atik_files" Directory="External_x64_Atik">
-      <Component Win64="$(var.Win64)" Id="External_x64_AtikCameras.dll" Guid="356CD54E-74D0-4E97-9403-F78A2BE8D8E0">
+      <Component Id="External_x64_AtikCameras.dll" Guid="356CD54E-74D0-4E97-9403-F78A2BE8D8E0" Bitness="$(var.Win64)">
         <File Id="External_x64_Atik_AtikCameras.dll" Name="AtikCameras.dll" Source="$(var.NINA_ProjectDir)External\x64\Atik\AtikCameras.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Atik_Atik.Core.dll" Guid="455c64c7-04c6-474b-8b72-fa407be89d6d">
+      <Component Id="External_x64_Atik_Atik.Core.dll" Guid="455c64c7-04c6-474b-8b72-fa407be89d6d" Bitness="$(var.Win64)">
         <File DefaultVersion="65535.0.0.0" Id="External_x64_Atik_Atik.Core.dll" Name="Atik.Core.dll" Source="$(var.NINA_ProjectDir)External\x64\Atik\Atik.Core.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_FlyCapture2_v140.dll" Guid="452A92A5-DE18-45A9-AE6A-36D097E314AD">
+      <Component Id="External_x64_FlyCapture2_v140.dll" Guid="452A92A5-DE18-45A9-AE6A-36D097E314AD" Bitness="$(var.Win64)">
         <File Id="External_x64_Atik_FlyCapture2_v140.dll" Name="FlyCapture2_v140.dll" Source="$(var.NINA_ProjectDir)External\x64\Atik\FlyCapture2_v140.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Atik_libiomp5md.dll" Guid="54989fa0-5e1a-4fb6-84f7-bdab8db7b5af">
+      <Component Id="External_x64_Atik_libiomp5md.dll" Guid="54989fa0-5e1a-4fb6-84f7-bdab8db7b5af" Bitness="$(var.Win64)">
         <File Id="External_x64_Atik_libiomp5md.dll" Name="libiomp5md.dll" Source="$(var.NINA_TargetDir)External\x64\Atik\libiomp5md.dll" />
       </Component>
     </ComponentGroup>
@@ -984,7 +981,7 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Cfitsio_files" Directory="External_x64_Cfitsio">
-      <Component Win64="$(var.Win64)" Id="External_x64_Cfitsio_cfitsio.dll" Guid="BF1295A6-5DF8-436D-ABAD-C7EAF02A054A">
+      <Component Id="External_x64_Cfitsio_cfitsio.dll" Guid="BF1295A6-5DF8-436D-ABAD-C7EAF02A054A" Bitness="$(var.Win64)">
         <File Id="External_x64_Cfitsio_cfitsio.dll" Name="cfitsio.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\cfitsio.dll" />
       </Component>
     </ComponentGroup>
@@ -992,13 +989,13 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_QHYCCD_files" Directory="External_x64_QHYCCD">
-      <Component Win64="$(var.Win64)" Id="External_x64_QHYCCD_ftd2xx.dll" Guid="E0901281-7521-4106-BA83-D347A113D2FF">
+      <Component Id="External_x64_QHYCCD_ftd2xx.dll" Guid="E0901281-7521-4106-BA83-D347A113D2FF" Bitness="$(var.Win64)">
         <File Id="External_x64_QHYCCD_ftd2xx.dll" Name="ftd2xx.dll" Source="$(var.NINA_ProjectDir)External\x64\QHYCCD\ftd2xx.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_QHYCCD_qhyccd.dll" Guid="FA219C9F-D76D-4699-A3CB-D5F6092C8B1F">
+      <Component Id="External_x64_QHYCCD_qhyccd.dll" Guid="FA219C9F-D76D-4699-A3CB-D5F6092C8B1F" Bitness="$(var.Win64)">
         <File Id="External_x64_QHYCCD_qhyccd.dll" Name="qhyccd.dll" Source="$(var.NINA_ProjectDir)External\x64\QHYCCD\qhyccd.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_QHYCCD_tbb.dll" Guid="8E94E826-4666-46D5-B955-321C32ABCE14">
+      <Component Id="External_x64_QHYCCD_tbb.dll" Guid="8E94E826-4666-46D5-B955-321C32ABCE14" Bitness="$(var.Win64)">
         <File Id="External_x64_QHYCCD_tbb.dll" Name="tbb.dll" Source="$(var.NINA_ProjectDir)External\x64\QHYCCD\tbb.dll" />
       </Component>
     </ComponentGroup>
@@ -1006,7 +1003,7 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_FLI_files" Directory="External_x64_FLI">
-      <Component Win64="$(var.Win64)" Id="External_x64_FLI_libfli.dll" Guid="15B366B5-F0CD-45C4-A515-351A83271D5B">
+      <Component Id="External_x64_FLI_libfli.dll" Guid="15B366B5-F0CD-45C4-A515-351A83271D5B" Bitness="$(var.Win64)">
         <File Id="External_x64_FLI_libfli.dll" Name="libfli.dll" Source="$(var.NINA_ProjectDir)External\x64\FLI\libfli.dll" />
       </Component>
     </ComponentGroup>
@@ -1014,7 +1011,7 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_FreeImage_files" Directory="External_x64_FreeImage">
-      <Component Win64="$(var.Win64)" Id="External_x64_FreeImage_FreeImage.dll" Guid="8baf48c2-ac6b-4740-a1c9-023e68e14a60">
+      <Component Id="External_x64_FreeImage_FreeImage.dll" Guid="8baf48c2-ac6b-4740-a1c9-023e68e14a60" Bitness="$(var.Win64)">
         <File Id="External_x64_FreeImage_FreeImage.dll" Name="FreeImage.dll" Source="$(var.NINA_TargetDir)External\x64\FreeImage\FreeImage.dll" />
       </Component>
     </ComponentGroup>
@@ -1022,10 +1019,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0001_files" Directory="External_x64_Nikon_Type0001">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0001_NkdPTP.dll" Guid="09f835d2-4b84-4914-97c5-dbee8ef042b4">
+      <Component Id="External_x64_Nikon_Type0001_NkdPTP.dll" Guid="09f835d2-4b84-4914-97c5-dbee8ef042b4" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0001_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0001\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0001_Type0001.md3" Guid="f7042477-c4f4-4675-ba5b-98992d3d9e6e">
+      <Component Id="External_x64_Nikon_Type0001_Type0001.md3" Guid="f7042477-c4f4-4675-ba5b-98992d3d9e6e" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0001_Type0001.md3" Name="Type0001.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0001\Type0001.md3" />
       </Component>
     </ComponentGroup>
@@ -1033,10 +1030,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0002_files" Directory="External_x64_Nikon_Type0002">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0002_NkdPTP.dll" Guid="f3fc8a09-d3ee-40a2-b23f-08d3b3130af7">
+      <Component Id="External_x64_Nikon_Type0002_NkdPTP.dll" Guid="f3fc8a09-d3ee-40a2-b23f-08d3b3130af7" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0002_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0002\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0002_Type0002.md3" Guid="b472193a-c8d9-4c4f-941e-8dce5d135991">
+      <Component Id="External_x64_Nikon_Type0002_Type0002.md3" Guid="b472193a-c8d9-4c4f-941e-8dce5d135991" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0002_Type0002.md3" Name="Type0002.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0002\Type0002.md3" />
       </Component>
     </ComponentGroup>
@@ -1044,10 +1041,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0003_files" Directory="External_x64_Nikon_Type0003">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0003_NkdPTP.dll" Guid="0cbca6c6-5d7b-4f34-ac6f-602268740867">
+      <Component Id="External_x64_Nikon_Type0003_NkdPTP.dll" Guid="0cbca6c6-5d7b-4f34-ac6f-602268740867" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0003_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0003\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0003_Type0003.md3" Guid="567635e8-5dcf-4273-b9c8-85ba31c3bd69">
+      <Component Id="External_x64_Nikon_Type0003_Type0003.md3" Guid="567635e8-5dcf-4273-b9c8-85ba31c3bd69" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0003_Type0003.md3" Name="Type0003.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0003\Type0003.md3" />
       </Component>
     </ComponentGroup>
@@ -1055,10 +1052,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0005_files" Directory="External_x64_Nikon_Type0005">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0005_NkdPTP.dll" Guid="992f8dd2-a334-4a21-9046-6746a4706278">
+      <Component Id="External_x64_Nikon_Type0005_NkdPTP.dll" Guid="992f8dd2-a334-4a21-9046-6746a4706278" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0005_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0005\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0005_Type0005.md3" Guid="4cd6bb9f-5390-4047-924b-c7c8b61981d9">
+      <Component Id="External_x64_Nikon_Type0005_Type0005.md3" Guid="4cd6bb9f-5390-4047-924b-c7c8b61981d9" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0005_Type0005.md3" Name="Type0005.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0005\Type0005.md3" />
       </Component>
     </ComponentGroup>
@@ -1066,10 +1063,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0004_files" Directory="External_x64_Nikon_Type0004">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0004_NkdPTP.dll" Guid="e2323456-02f2-499e-b5bc-d39348281941">
+      <Component Id="External_x64_Nikon_Type0004_NkdPTP.dll" Guid="e2323456-02f2-499e-b5bc-d39348281941" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0004_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0004\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0004_Type0004.md3" Guid="78969611-082f-4721-9c55-1e115706a93e">
+      <Component Id="External_x64_Nikon_Type0004_Type0004.md3" Guid="78969611-082f-4721-9c55-1e115706a93e" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0004_Type0004.md3" Name="Type0004.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0004\Type0004.md3" />
       </Component>
     </ComponentGroup>
@@ -1077,10 +1074,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0006_files" Directory="External_x64_Nikon_Type0006">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0006_NkdPTP.dll" Guid="c5296af2-0df1-4531-8fdd-a5cb6a1d22ca">
+      <Component Id="External_x64_Nikon_Type0006_NkdPTP.dll" Guid="c5296af2-0df1-4531-8fdd-a5cb6a1d22ca" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0006_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0006\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0006_Type0006.md3" Guid="c628f7e8-1cf9-4f4f-9c02-689dc0d15c27">
+      <Component Id="External_x64_Nikon_Type0006_Type0006.md3" Guid="c628f7e8-1cf9-4f4f-9c02-689dc0d15c27" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0006_Type0006.md3" Name="Type0006.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0006\Type0006.md3" />
       </Component>
     </ComponentGroup>
@@ -1088,10 +1085,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0008_files" Directory="External_x64_Nikon_Type0008">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0008_NkdPTP.dll" Guid="6bec7da9-4b48-4474-8ed6-58afbb250296">
+      <Component Id="External_x64_Nikon_Type0008_NkdPTP.dll" Guid="6bec7da9-4b48-4474-8ed6-58afbb250296" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0008_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0008\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0008_Type0008.md3" Guid="ff483e10-266d-4c79-92d6-525013dabb9a">
+      <Component Id="External_x64_Nikon_Type0008_Type0008.md3" Guid="ff483e10-266d-4c79-92d6-525013dabb9a" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0008_Type0008.md3" Name="Type0008.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0008\Type0008.md3" />
       </Component>
     </ComponentGroup>
@@ -1099,10 +1096,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0007_files" Directory="External_x64_Nikon_Type0007">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0007_NkdPTP.dll" Guid="787b8191-ef88-4827-8b9f-6d856b67fc24">
+      <Component Id="External_x64_Nikon_Type0007_NkdPTP.dll" Guid="787b8191-ef88-4827-8b9f-6d856b67fc24" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0007_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0007\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0007_Type0007.md3" Guid="199cb7a3-b192-4f76-af5e-781220ca7cc3">
+      <Component Id="External_x64_Nikon_Type0007_Type0007.md3" Guid="199cb7a3-b192-4f76-af5e-781220ca7cc3" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0007_Type0007.md3" Name="Type0007.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0007\Type0007.md3" />
       </Component>
     </ComponentGroup>
@@ -1110,10 +1107,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0009_files" Directory="External_x64_Nikon_Type0009">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0009_NkdPTP.dll" Guid="9cc5a30c-79f0-4728-ab8b-88350a6ab0fa">
+      <Component Id="External_x64_Nikon_Type0009_NkdPTP.dll" Guid="9cc5a30c-79f0-4728-ab8b-88350a6ab0fa" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0009_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0009\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0009_Type0009.md3" Guid="eb6d37a5-a570-42a2-98ec-5d0a2dd4f187">
+      <Component Id="External_x64_Nikon_Type0009_Type0009.md3" Guid="eb6d37a5-a570-42a2-98ec-5d0a2dd4f187" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0009_Type0009.md3" Name="Type0009.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0009\Type0009.md3" />
       </Component>
     </ComponentGroup>
@@ -1121,10 +1118,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0010_files" Directory="External_x64_Nikon_Type0010">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0010_NkdPTP.dll" Guid="62289ca7-8394-4ac9-98b6-3cda0df65b78">
+      <Component Id="External_x64_Nikon_Type0010_NkdPTP.dll" Guid="62289ca7-8394-4ac9-98b6-3cda0df65b78" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0010_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0010\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0010_Type0010.md3" Guid="9fe92bd5-b3f9-4fdf-bcd2-9031988eeee9">
+      <Component Id="External_x64_Nikon_Type0010_Type0010.md3" Guid="9fe92bd5-b3f9-4fdf-bcd2-9031988eeee9" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0010_Type0010.md3" Name="Type0010.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0010\Type0010.md3" />
       </Component>
     </ComponentGroup>
@@ -1132,10 +1129,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0011_files" Directory="External_x64_Nikon_Type0011">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0011_NkdPTP.dll" Guid="a340fbc6-fc30-45ea-8c3b-93605dac54b0">
+      <Component Id="External_x64_Nikon_Type0011_NkdPTP.dll" Guid="a340fbc6-fc30-45ea-8c3b-93605dac54b0" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0011_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0011\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0011_Type0011.md3" Guid="5bd739b7-8db4-4ec4-ab99-cbfc1ed01a03">
+      <Component Id="External_x64_Nikon_Type0011_Type0011.md3" Guid="5bd739b7-8db4-4ec4-ab99-cbfc1ed01a03" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0011_Type0011.md3" Name="Type0011.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0011\Type0011.md3" />
       </Component>
     </ComponentGroup>
@@ -1143,10 +1140,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0012_files" Directory="External_x64_Nikon_Type0012">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0012_NkdPTP.dll" Guid="a076a185-77b7-499e-9283-fe60d6b9bbf2">
+      <Component Id="External_x64_Nikon_Type0012_NkdPTP.dll" Guid="a076a185-77b7-499e-9283-fe60d6b9bbf2" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0012_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0012\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0012_Type0012.md3" Guid="3399fcec-dd29-42e3-98a6-5117f6f3eda6">
+      <Component Id="External_x64_Nikon_Type0012_Type0012.md3" Guid="3399fcec-dd29-42e3-98a6-5117f6f3eda6" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0012_Type0012.md3" Name="Type0012.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0012\Type0012.md3" />
       </Component>
     </ComponentGroup>
@@ -1154,10 +1151,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0013_files" Directory="External_x64_Nikon_Type0013">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0013_NkdPTP.dll" Guid="2d3b8d66-fb47-46d2-94ac-7c1955fd31d2">
+      <Component Id="External_x64_Nikon_Type0013_NkdPTP.dll" Guid="2d3b8d66-fb47-46d2-94ac-7c1955fd31d2" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0013_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0013\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0013_Type0013.md3" Guid="e4e58b87-e629-42e3-895b-887e29593c65">
+      <Component Id="External_x64_Nikon_Type0013_Type0013.md3" Guid="e4e58b87-e629-42e3-895b-887e29593c65" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0013_Type0013.md3" Name="Type0013.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0013\Type0013.md3" />
       </Component>
     </ComponentGroup>
@@ -1165,10 +1162,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0014_files" Directory="External_x64_Nikon_Type0014">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0014_NkdPTP.dll" Guid="15b3e8c7-b3aa-4f95-9f75-da1262acb953">
+      <Component Id="External_x64_Nikon_Type0014_NkdPTP.dll" Guid="15b3e8c7-b3aa-4f95-9f75-da1262acb953" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0014_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0014\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0014_Type0014.md3" Guid="5333b9eb-4ac4-4628-9942-cde170fcb24c">
+      <Component Id="External_x64_Nikon_Type0014_Type0014.md3" Guid="5333b9eb-4ac4-4628-9942-cde170fcb24c" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0014_Type0014.md3" Name="Type0014.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0014\Type0014.md3" />
       </Component>
     </ComponentGroup>
@@ -1176,10 +1173,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0015_files" Directory="External_x64_Nikon_Type0015">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0015_NkdPTP.dll" Guid="b67c2500-9950-4c9e-adee-fbf9c4185833">
+      <Component Id="External_x64_Nikon_Type0015_NkdPTP.dll" Guid="b67c2500-9950-4c9e-adee-fbf9c4185833" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0015_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0015\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0015_Type0015.md3" Guid="99130e6e-2412-48cb-a8bc-f5d3ae42fee3">
+      <Component Id="External_x64_Nikon_Type0015_Type0015.md3" Guid="99130e6e-2412-48cb-a8bc-f5d3ae42fee3" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0015_Type0015.md3" Name="Type0015.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0015\Type0015.md3" />
       </Component>
     </ComponentGroup>
@@ -1187,10 +1184,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0016_files" Directory="External_x64_Nikon_Type0016">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0016_NkdPTP.dll" Guid="624a9803-4165-4a47-9749-d2b10588d9cb">
+      <Component Id="External_x64_Nikon_Type0016_NkdPTP.dll" Guid="624a9803-4165-4a47-9749-d2b10588d9cb" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0016_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0016\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0016_Type0016.md3" Guid="f3b77a0c-9e60-4486-acad-9d3be460184e">
+      <Component Id="External_x64_Nikon_Type0016_Type0016.md3" Guid="f3b77a0c-9e60-4486-acad-9d3be460184e" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0016_Type0016.md3" Name="Type0016.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0016\Type0016.md3" />
       </Component>
     </ComponentGroup>
@@ -1198,10 +1195,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0017_files" Directory="External_x64_Nikon_Type0017">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0017_NkdPTP.dll" Guid="53720dd6-3a89-4778-bfc3-f2d9852579ce">
+      <Component Id="External_x64_Nikon_Type0017_NkdPTP.dll" Guid="53720dd6-3a89-4778-bfc3-f2d9852579ce" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0017_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0017\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0017_Type0017.md3" Guid="f0e6456d-a1d6-4e6c-81cb-002b0cd5714a">
+      <Component Id="External_x64_Nikon_Type0017_Type0017.md3" Guid="f0e6456d-a1d6-4e6c-81cb-002b0cd5714a" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0017_Type0017.md3" Name="Type0017.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0017\Type0017.md3" />
       </Component>
     </ComponentGroup>
@@ -1209,10 +1206,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0018_files" Directory="External_x64_Nikon_Type0018">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0018_NkdPTP.dll" Guid="f2fd9e4f-4342-4322-aaa4-402e1fea6bec">
+      <Component Id="External_x64_Nikon_Type0018_NkdPTP.dll" Guid="f2fd9e4f-4342-4322-aaa4-402e1fea6bec" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0018_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0018\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0018_Type0018.md3" Guid="d7d27d93-9a0b-48ea-95af-1db80fe71fe5">
+      <Component Id="External_x64_Nikon_Type0018_Type0018.md3" Guid="d7d27d93-9a0b-48ea-95af-1db80fe71fe5" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0018_Type0018.md3" Name="Type0018.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0018\Type0018.md3" />
       </Component>
     </ComponentGroup>
@@ -1220,10 +1217,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0019_files" Directory="External_x64_Nikon_Type0019">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0019_NkdPTP.dll" Guid="b0131ee4-dea0-43f4-9c7c-d006ae74b7a5">
+      <Component Id="External_x64_Nikon_Type0019_NkdPTP.dll" Guid="b0131ee4-dea0-43f4-9c7c-d006ae74b7a5" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0019_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0019\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0019_Type0019.md3" Guid="d7db33e0-ba5d-419a-8b07-9f170a4eded1">
+      <Component Id="External_x64_Nikon_Type0019_Type0019.md3" Guid="d7db33e0-ba5d-419a-8b07-9f170a4eded1" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0019_Type0019.md3" Name="Type0019.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0019\Type0019.md3" />
       </Component>
     </ComponentGroup>
@@ -1231,10 +1228,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0020_files" Directory="External_x64_Nikon_Type0020">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0020_NkdPTP.dll" Guid="fda8db6f-90da-4c5a-943d-780ad8dd98b3">
+      <Component Id="External_x64_Nikon_Type0020_NkdPTP.dll" Guid="fda8db6f-90da-4c5a-943d-780ad8dd98b3" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0020_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0020\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0020_Type0020.md3" Guid="85ff64d4-dc99-4ac5-b9ed-a79e258adba8">
+      <Component Id="External_x64_Nikon_Type0020_Type0020.md3" Guid="85ff64d4-dc99-4ac5-b9ed-a79e258adba8" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0020_Type0020.md3" Name="Type0020.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0020\Type0020.md3" />
       </Component>
     </ComponentGroup>
@@ -1242,10 +1239,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0021_files" Directory="External_x64_Nikon_Type0021">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0021_NkdPTP.dll" Guid="b15fefde-467a-4faf-befe-5645aa90ed70">
+      <Component Id="External_x64_Nikon_Type0021_NkdPTP.dll" Guid="b15fefde-467a-4faf-befe-5645aa90ed70" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0021_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0021\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0021_Type0021.md3" Guid="fb5837c9-c0a9-45d8-80a8-2ce0eb2b2abe">
+      <Component Id="External_x64_Nikon_Type0021_Type0021.md3" Guid="fb5837c9-c0a9-45d8-80a8-2ce0eb2b2abe" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0021_Type0021.md3" Name="Type0021.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0021\Type0021.md3" />
       </Component>
     </ComponentGroup>
@@ -1253,10 +1250,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0022_files" Directory="External_x64_Nikon_Type0022">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0022_NkdPTP.dll" Guid="b733f439-6726-4b64-b2f7-f46a4d2f9631">
+      <Component Id="External_x64_Nikon_Type0022_NkdPTP.dll" Guid="b733f439-6726-4b64-b2f7-f46a4d2f9631" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0022_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0022\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0022_Type0022.md3" Guid="130b1057-2fc8-4e9a-b1e4-79817d803343">
+      <Component Id="External_x64_Nikon_Type0022_Type0022.md3" Guid="130b1057-2fc8-4e9a-b1e4-79817d803343" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0022_Type0022.md3" Name="Type0022.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0022\Type0022.md3" />
       </Component>
     </ComponentGroup>
@@ -1264,10 +1261,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0023_files" Directory="External_x64_Nikon_Type0023">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0023_NkdPTP.dll" Guid="B95B1662-7144-413E-B8E2-55C449A8BB4D">
+      <Component Id="External_x64_Nikon_Type0023_NkdPTP.dll" Guid="B95B1662-7144-413E-B8E2-55C449A8BB4D" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0023_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0023\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0023_Type0023.md3" Guid="68966743-4BDE-4D0E-92C8-40B2A65237F0">
+      <Component Id="External_x64_Nikon_Type0023_Type0023.md3" Guid="68966743-4BDE-4D0E-92C8-40B2A65237F0" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0023_Type0023.md3" Name="Type0023.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0023\Type0023.md3" />
       </Component>
     </ComponentGroup>
@@ -1275,10 +1272,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0024_files" Directory="External_x64_Nikon_Type0024">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0024_NkdPTP.dll" Guid="C631350B-4783-4035-802E-C2F316875B2A">
+      <Component Id="External_x64_Nikon_Type0024_NkdPTP.dll" Guid="C631350B-4783-4035-802E-C2F316875B2A" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0024_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0024\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0024_Type0024.md3" Guid="C35CFDCF-0C29-4EAF-BECD-79A855F7E0C5">
+      <Component Id="External_x64_Nikon_Type0024_Type0024.md3" Guid="C35CFDCF-0C29-4EAF-BECD-79A855F7E0C5" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0024_Type0024.md3" Name="Type0024.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0024\Type0024.md3" />
       </Component>
     </ComponentGroup>
@@ -1286,10 +1283,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0025_files" Directory="External_x64_Nikon_Type0025">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0025_NkdPTP.dll" Guid="1304eb4d-de29-4e06-a3cc-b50366df726e">
+      <Component Id="External_x64_Nikon_Type0025_NkdPTP.dll" Guid="1304eb4d-de29-4e06-a3cc-b50366df726e" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0025_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0025\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0025_Type0025.md3" Guid="69e2e5e7-fe5a-458b-8bc1-7c458a3cffab">
+      <Component Id="External_x64_Nikon_Type0025_Type0025.md3" Guid="69e2e5e7-fe5a-458b-8bc1-7c458a3cffab" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0025_Type0025.md3" Name="Type0025.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0025\Type0025.md3" />
       </Component>
     </ComponentGroup>
@@ -1297,10 +1294,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0026_files" Directory="External_x64_Nikon_Type0026">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0026_NkdPTP.dll" Guid="5c69b0cc-b942-47a2-acf5-c556457e6307">
+      <Component Id="External_x64_Nikon_Type0026_NkdPTP.dll" Guid="5c69b0cc-b942-47a2-acf5-c556457e6307" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0026_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0026\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0026_Type0026.md3" Guid="f7cbd139-1f15-4798-a01c-ca7ec5f49916">
+      <Component Id="External_x64_Nikon_Type0026_Type0026.md3" Guid="f7cbd139-1f15-4798-a01c-ca7ec5f49916" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0026_Type0026.md3" Name="Type0026.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0026\Type0026.md3" />
       </Component>
     </ComponentGroup>
@@ -1308,10 +1305,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0027_files" Directory="External_x64_Nikon_Type0027">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0027_NkdPTP.dll" Guid="b12334fd-fb8f-418f-ae70-2ef6557a6d04">
+      <Component Id="External_x64_Nikon_Type0027_NkdPTP.dll" Guid="b12334fd-fb8f-418f-ae70-2ef6557a6d04" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0027_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0027\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0027_Type0027.md3" Guid="7ad28768-05e4-40b7-8274-53ed20dc6377">
+      <Component Id="External_x64_Nikon_Type0027_Type0027.md3" Guid="7ad28768-05e4-40b7-8274-53ed20dc6377" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0027_Type0027.md3" Name="Type0027.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0027\Type0027.md3" />
       </Component>
     </ComponentGroup>
@@ -1319,10 +1316,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0028_files" Directory="External_x64_Nikon_Type0028">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0028_NkdPTP.dll" Guid="b1c4e370-5ab2-4c0a-916c-c9ec04c1b9c4">
+      <Component Id="External_x64_Nikon_Type0028_NkdPTP.dll" Guid="b1c4e370-5ab2-4c0a-916c-c9ec04c1b9c4" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0028_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0028\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0028_Type0028.md3" Guid="f8d2bb3d-7457-45f4-8dee-439a31ed6dd2">
+      <Component Id="External_x64_Nikon_Type0028_Type0028.md3" Guid="f8d2bb3d-7457-45f4-8dee-439a31ed6dd2" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0028_Type0028.md3" Name="Type0028.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0028\Type0028.md3" />
       </Component>
     </ComponentGroup>
@@ -1330,10 +1327,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0029_files" Directory="External_x64_Nikon_Type0029">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0029_NkdPTP.dll" Guid="D25A77BA-97C7-4F9F-AA5E-9548B3535BDC">
+      <Component Id="External_x64_Nikon_Type0029_NkdPTP.dll" Guid="D25A77BA-97C7-4F9F-AA5E-9548B3535BDC" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0029_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0029\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0029_Type0029.md3" Guid="1A954DCD-33E8-4670-9843-E4378EE58C1C">
+      <Component Id="External_x64_Nikon_Type0029_Type0029.md3" Guid="1A954DCD-33E8-4670-9843-E4378EE58C1C" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0029_Type0029.md3" Name="Type0029.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0029\Type0029.md3" />
       </Component>
     </ComponentGroup>
@@ -1341,10 +1338,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Nikon_Type0030_files" Directory="External_x64_Nikon_Type0030">
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0030_NkdPTP.dll" Guid="BF6F1E20-83D2-4812-8486-E41AC306A059">
+      <Component Id="External_x64_Nikon_Type0030_NkdPTP.dll" Guid="BF6F1E20-83D2-4812-8486-E41AC306A059" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0030_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0030\NkdPTP.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0030_Type0030.md3" Guid="24695B36-B6EE-4DE6-BCBE-F5A6E05AF813">
+      <Component Id="External_x64_Nikon_Type0030_Type0030.md3" Guid="24695B36-B6EE-4DE6-BCBE-F5A6E05AF813" Bitness="$(var.Win64)">
         <File Id="External_x64_Nikon_Type0030_Type0030.md3" Name="Type0030.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0030\Type0030.md3" />
       </Component>
     </ComponentGroup>
@@ -1352,66 +1349,66 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Canon_files" Directory="External_x64_Canon">
-      <Component Win64="$(var.Win64)" Id="External_x64_Canon_EDSDK.dll" Guid="1443f55a-0434-4941-84c4-fab014e42a8e">
+      <Component Id="External_x64_Canon_EDSDK.dll" Guid="1443f55a-0434-4941-84c4-fab014e42a8e" Bitness="$(var.Win64)">
         <File Id="External_x64_Canon_EDSDK.dll" Name="EDSDK.dll" Source="$(var.NINA_ProjectDir)External\x64\Canon\EDSDK.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_Altair_files" Directory="External_x64_Altair">
-      <Component Win64="$(var.Win64)" Id="External_x64_Altair_altaircam.dll" Guid="54f75954-da94-4c89-86e8-4a8d4e9229c7">
+      <Component Id="External_x64_Altair_altaircam.dll" Guid="54f75954-da94-4c89-86e8-4a8d4e9229c7" Bitness="$(var.Win64)">
         <File Id="External_x64_Altair_altaircam.dll" Name="altaircam.dll" Source="$(var.NINA_ProjectDir)External\x64\Altair\altaircam.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_ToupTek_files" Directory="External_x64_ToupTek">
-      <Component Win64="$(var.Win64)" Id="External_x64_ToupTek_toupcam.dll" Guid="791c2974-a774-4723-a7cd-b808a1b2e1e9">
+      <Component Id="External_x64_ToupTek_toupcam.dll" Guid="791c2974-a774-4723-a7cd-b808a1b2e1e9" Bitness="$(var.Win64)">
         <File Id="External_x64_ToupTek_toupcam.dll" Name="toupcam.dll" Source="$(var.NINA_ProjectDir)External\x64\ToupTek\toupcam.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_Omegon_files" Directory="External_x64_Omegon">
-      <Component Win64="$(var.Win64)" Id="External_x64_Omegon_omegonprocam.dll" Guid="0D9D447F-3831-4421-8E9B-2513613085BD">
+      <Component Id="External_x64_Omegon_omegonprocam.dll" Guid="0D9D447F-3831-4421-8E9B-2513613085BD" Bitness="$(var.Win64)">
         <File Id="External_x64_Omegon_omegonprocam.dll" Name="omegonprocam.dll" Source="$(var.NINA_ProjectDir)External\x64\Omegon\omegonprocam.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_NOVAS_files" Directory="External_x64_NOVAS">
-      <Component Win64="$(var.Win64)" Id="External_x64_NOVAS_NOVAS31lib.dll" Guid="399f4ac2-9791-4e32-89cf-40279554a426">
+      <Component Id="External_x64_NOVAS_NOVAS31lib.dll" Guid="399f4ac2-9791-4e32-89cf-40279554a426" Bitness="$(var.Win64)">
         <File Id="External_x64_NOVAS_NOVAS31lib.dll" Name="NOVAS31lib.dll" Source="$(var.NINA_TargetDir)External\x64\NOVAS\NOVAS31lib.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_NOVAS_cio_ra.bin" Guid="d18f333b-074e-4c33-9e5e-18d5c9770dd0">
+      <Component Id="External_x64_NOVAS_cio_ra.bin" Guid="d18f333b-074e-4c33-9e5e-18d5c9770dd0" Bitness="$(var.Win64)">
         <File Id="External_x64_NOVAS_cio_ra.bin" Name="cio_ra.bin" Source="$(var.NINA_TargetDir)External\x64\NOVAS\cio_ra.bin" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_SOFA_files" Directory="External_x64_SOFA">
-      <Component Win64="$(var.Win64)" Id="External_x64_SOFA_SOFAlib.dll" Guid="7e84f09e-ef65-4075-93f9-34a61f47a2af">
+      <Component Id="External_x64_SOFA_SOFAlib.dll" Guid="7e84f09e-ef65-4075-93f9-34a61f47a2af" Bitness="$(var.Win64)">
         <File Id="External_x64_SOFA_SOFAlib.dll" Name="SOFAlib.dll" Source="$(var.NINA_TargetDir)External\x64\SOFA\SOFAlib.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_FTDI_files" Directory="External_x64_FTDI">
-      <Component Win64="$(var.Win64)" Id="External_x64_FTDI_ftd2xx.dll" Guid="CB3DB9E0-CAB0-4FC0-8316-D986C39BEB39">
+      <Component Id="External_x64_FTDI_ftd2xx.dll" Guid="CB3DB9E0-CAB0-4FC0-8316-D986C39BEB39" Bitness="$(var.Win64)">
         <File Id="External_x64_FTDI_ftd2xx.dll" Name="ftd2xx.dll" Source="$(var.NINA_ProjectDir)External\x64\FTDI\ftd2xx.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_MGEN_files" Directory="External_x64_MGEN">
-      <Component Win64="$(var.Win64)" Id="External_x64_MGEN_MG3lib.dll" Guid="25032fe1-1d0f-4a32-b73e-0a6ff8895766">
+      <Component Id="External_x64_MGEN_MG3lib.dll" Guid="25032fe1-1d0f-4a32-b73e-0a6ff8895766" Bitness="$(var.Win64)">
         <File DefaultVersion="65535.0.0.0" Id="External_x64_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x64\MGEN\MG3lib.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_Risingcam_files" Directory="External_x64_Risingcam">
-      <Component Win64="$(var.Win64)" Id="External_x64_Risingcam_nncam.dll" Guid="4686cc8e-bd19-4fed-8da5-4fc026b4d614">
+      <Component Id="External_x64_Risingcam_nncam.dll" Guid="4686cc8e-bd19-4fed-8da5-4fc026b4d614" Bitness="$(var.Win64)">
         <File Id="External_x64_Risingcam_nncam.dll" Name="nncam.dll" Source="$(var.NINA_TargetDir)External\x64\Risingcam\nncam.dll" />
       </Component>
     </ComponentGroup>
@@ -1419,7 +1416,7 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_SVBony_files" Directory="External_x64_SVBony">
-      <Component Win64="$(var.Win64)" Id="External_x64_SVBony_SVBCameraSDK.dll" Guid="964cd499-e6e4-4e2c-bc29-58b6aa3f6fc0">
+      <Component Id="External_x64_SVBony_SVBCameraSDK.dll" Guid="964cd499-e6e4-4e2c-bc29-58b6aa3f6fc0" Bitness="$(var.Win64)">
         <File Id="External_x64_SVBony_SVBCameraSDK.dll" Name="SVBCameraSDK.dll" Source="$(var.NINA_TargetDir)External\x64\SVBony\SVBCameraSDK.dll" />
       </Component>
     </ComponentGroup>
@@ -1427,7 +1424,7 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_SBIG_files" Directory="External_x64_SBIG">
-      <Component Win64="$(var.Win64)" Id="External_x64_SBIG_SBIGUDrv.dll" Guid="a917ce6a-480f-48cc-a8cc-4ef8da7048db">
+      <Component Id="External_x64_SBIG_SBIGUDrv.dll" Guid="a917ce6a-480f-48cc-a8cc-4ef8da7048db" Bitness="$(var.Win64)">
         <File Id="External_x64_SBIG_SBIGUDrv.dll" Name="SBIGUDrv.dll" Source="$(var.NINA_TargetDir)External\x64\SBIG\SBIGUDrv.dll" />
       </Component>
     </ComponentGroup>
@@ -1435,7 +1432,7 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_MallinCam_files" Directory="External_x64_MallinCam">
-      <Component Win64="$(var.Win64)" Id="External_x64_MallinCam_mallincam.dll" Guid="a02a555a-10f1-4d60-83d1-82f0ba731e2f">
+      <Component Id="External_x64_MallinCam_mallincam.dll" Guid="a02a555a-10f1-4d60-83d1-82f0ba731e2f" Bitness="$(var.Win64)">
         <File Id="External_x64_MallinCam_mallincam.dll" Name="mallincam.dll" Source="$(var.NINA_TargetDir)External\x64\MallinCam\mallincam.dll" />
       </Component>
     </ComponentGroup>
@@ -1443,10 +1440,10 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_PlayerOne_files" Directory="External_x64_PlayerOne">
-      <Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524">
+      <Component Id="External_x64_PlayerOne_PlayerOneCamera.dll" Guid="49e43c21-1826-42e0-a71b-185cf604e524" Bitness="$(var.Win64)">
         <File Id="External_x64_PlayerOne_PlayerOneCamera.dll" Name="PlayerOneCamera.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOneCamera.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="External_x64_PlayerOne_PlayerOnePW.dll" Guid="dc6474ad-afcc-4253-b164-040b65fc4dda">
+      <Component Id="External_x64_PlayerOne_PlayerOnePW.dll" Guid="dc6474ad-afcc-4253-b164-040b65fc4dda" Bitness="$(var.Win64)">
         <File Id="External_x64_PlayerOne_PlayerOnePW.dll" Name="PlayerOnePW.dll" Source="$(var.NINA_TargetDir)External\x64\PlayerOne\PlayerOnePW.dll" />
       </Component>
     </ComponentGroup>
@@ -1454,14 +1451,14 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_ASTPAN_files" Directory="External_x64_ASTPAN">
-      <Component Win64="$(var.Win64)" Id="External_x64_ASTPAN_ASTPANCamera.dll" Guid="e40be9b9-5232-4a19-a39e-a01a80490bb2">
+      <Component Id="External_x64_ASTPAN_ASTPANCamera.dll" Guid="e40be9b9-5232-4a19-a39e-a01a80490bb2" Bitness="$(var.Win64)">
         <File DefaultVersion="65535.0.0.0" Id="External_x64_ASTPAN_ASTPANCamera.dll" Name="ASTPANCamera.dll" Source="$(var.NINA_TargetDir)External\x64\ASTPAN\ASTPANCamera.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_OGMA_files" Directory="External_x64_OGMA">
-      <Component Win64="$(var.Win64)" Id="External_x64_OGMA_ogmacam.dll" Guid="c51d0029-b4e9-4dc4-bb57-f77a22346ea0">
+      <Component Id="External_x64_OGMA_ogmacam.dll" Guid="c51d0029-b4e9-4dc4-bb57-f77a22346ea0" Bitness="$(var.Win64)">
         <File Id="External_x64_OGMA_ogmacam.dll" Name="ogmacam.dll" Source="$(var.NINA_TargetDir)External\x64\OGMA\ogmacam.dll" />
       </Component>
     </ComponentGroup>
@@ -1469,109 +1466,109 @@
 
   <Fragment>
     <SetProperty Id="API_Firewall_listen_ipv6" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=::" Before="API_Firewall_listen_ipv6" />
-    <CustomAction Id="API_Firewall_listen_ipv6" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+    <CustomAction Id="API_Firewall_listen_ipv6" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" BinaryRef="Wix4UtilCA_X86" />
     <SetProperty Id="API_Firewall_listen_ipv4" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=0.0.0.0" Before="API_Firewall_listen_ipv4" />
-    <CustomAction Id="API_Firewall_listen_ipv4" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+    <CustomAction Id="API_Firewall_listen_ipv4" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" BinaryRef="Wix4UtilCA_X86" />
     <SetProperty Id="API_Firewall_add_SGProAPI_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_SGProAPI_urlacl" />
-    <CustomAction Id="API_Firewall_add_SGProAPI_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+    <CustomAction Id="API_Firewall_add_SGProAPI_urlacl" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" BinaryRef="Wix4UtilCA_X86" />
     <SetProperty Id="API_Firewall_add_SkyGuardCallback_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:8000/ user=Everyone" Before="API_Firewall_add_SkyGuardCallback_urlacl" />
-    <CustomAction Id="API_Firewall_add_SkyGuardCallback_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+    <CustomAction Id="API_Firewall_add_SkyGuardCallback_urlacl" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" BinaryRef="Wix4UtilCA_X86" />
   </Fragment>
   <!-- Avalondock localization Start -->
   <Fragment>
     <ComponentGroup Id="ja_files" Directory="ja">
-      <Component Win64="$(var.Win64)" Id="ja_AvalonDock.resources.dll" Guid="06f56ded-f230-426c-b7f2-036a06655c85">
+      <Component Id="ja_AvalonDock.resources.dll" Guid="06f56ded-f230-426c-b7f2-036a06655c85" Bitness="$(var.Win64)">
         <File Id="ja_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ja\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="ro_files" Directory="ro">
-      <Component Win64="$(var.Win64)" Id="ro_AvalonDock.resources.dll" Guid="03b55e29-615c-496c-9a45-1b44a09dbc64">
+      <Component Id="ro_AvalonDock.resources.dll" Guid="03b55e29-615c-496c-9a45-1b44a09dbc64" Bitness="$(var.Win64)">
         <File Id="ro_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ro\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="pl_files" Directory="pl">
-      <Component Win64="$(var.Win64)" Id="pl_AvalonDock.resources.dll" Guid="8805be93-7e64-4832-bf64-58dfca8f6f8f">
+      <Component Id="pl_AvalonDock.resources.dll" Guid="8805be93-7e64-4832-bf64-58dfca8f6f8f" Bitness="$(var.Win64)">
         <File Id="pl_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pl\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="nl_BE_files" Directory="nl_BE">
-      <Component Win64="$(var.Win64)" Id="nl_BE_AvalonDock.resources.dll" Guid="5be0855d-24c6-46b6-a1c5-b484e8214f93">
+      <Component Id="nl_BE_AvalonDock.resources.dll" Guid="5be0855d-24c6-46b6-a1c5-b484e8214f93" Bitness="$(var.Win64)">
         <File Id="nl_BE_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)nl-BE\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="ko_files" Directory="ko">
-      <Component Win64="$(var.Win64)" Id="ko_AvalonDock.resources.dll" Guid="f39357ea-8b59-4f54-93f9-e7c69060c14f">
+      <Component Id="ko_AvalonDock.resources.dll" Guid="f39357ea-8b59-4f54-93f9-e7c69060c14f" Bitness="$(var.Win64)">
         <File Id="ko_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ko\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="it_files" Directory="it">
-      <Component Win64="$(var.Win64)" Id="it_AvalonDock.resources.dll" Guid="873ff0f7-5396-4b52-b166-220e34ae5ad1">
+      <Component Id="it_AvalonDock.resources.dll" Guid="873ff0f7-5396-4b52-b166-220e34ae5ad1" Bitness="$(var.Win64)">
         <File Id="it_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)it\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="hu_files" Directory="hu">
-      <Component Win64="$(var.Win64)" Id="hu_AvalonDock.resources.dll" Guid="aa01082a-6186-45e9-a194-b5ae54726266">
+      <Component Id="hu_AvalonDock.resources.dll" Guid="aa01082a-6186-45e9-a194-b5ae54726266" Bitness="$(var.Win64)">
         <File Id="hu_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)hu\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="fr_files" Directory="fr">
-      <Component Win64="$(var.Win64)" Id="fr_AvalonDock.resources.dll" Guid="9387a889-d3c7-4fcc-8ae2-bee1c1595109">
+      <Component Id="fr_AvalonDock.resources.dll" Guid="9387a889-d3c7-4fcc-8ae2-bee1c1595109" Bitness="$(var.Win64)">
         <File Id="fr_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)fr\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="es_files" Directory="es">
-      <Component Win64="$(var.Win64)" Id="es_AvalonDock.resources.dll" Guid="30c0e67b-c519-4485-8eeb-1145ab8309b6">
+      <Component Id="es_AvalonDock.resources.dll" Guid="30c0e67b-c519-4485-8eeb-1145ab8309b6" Bitness="$(var.Win64)">
         <File Id="es_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)es\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="ru_files" Directory="ru">
-      <Component Win64="$(var.Win64)" Id="ru_AvalonDock.resources.dll" Guid="15c32777-45ab-49fb-8825-6c2ef5f22ef6">
+      <Component Id="ru_AvalonDock.resources.dll" Guid="15c32777-45ab-49fb-8825-6c2ef5f22ef6" Bitness="$(var.Win64)">
         <File Id="ru_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ru\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="sv_files" Directory="sv">
-      <Component Win64="$(var.Win64)" Id="sv_AvalonDock.resources.dll" Guid="9b14096a-7fb7-4c9d-b592-97deae0c57a4">
+      <Component Id="sv_AvalonDock.resources.dll" Guid="9b14096a-7fb7-4c9d-b592-97deae0c57a4" Bitness="$(var.Win64)">
         <File Id="sv_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)sv\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="zh_Hans_files" Directory="zh_Hans">
-      <Component Win64="$(var.Win64)" Id="zh_Hans_AvalonDock.resources.dll" Guid="3f493e60-2c7a-4484-9efb-2345588329e6">
+      <Component Id="zh_Hans_AvalonDock.resources.dll" Guid="3f493e60-2c7a-4484-9efb-2345588329e6" Bitness="$(var.Win64)">
         <File Id="zh_Hans_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)zh-Hans\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="zh_Hant_files" Directory="zh_Hant">
-      <Component Win64="$(var.Win64)" Id="zh_Hant_AvalonDock.resources.dll" Guid="f6d3ceb2-da61-4f9c-8197-b0b55d1842cd">
+      <Component Id="zh_Hant_AvalonDock.resources.dll" Guid="f6d3ceb2-da61-4f9c-8197-b0b55d1842cd" Bitness="$(var.Win64)">
         <File Id="zh_Hant_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)zh-Hant\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="de_files" Directory="de">
-      <Component Win64="$(var.Win64)" Id="de_AvalonDock.resources.dll" Guid="6cac1f41-904f-47bd-bafa-6557ab859a08">
+      <Component Id="de_AvalonDock.resources.dll" Guid="6cac1f41-904f-47bd-bafa-6557ab859a08" Bitness="$(var.Win64)">
         <File Id="de_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)de\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
