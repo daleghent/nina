@@ -26,29 +26,29 @@
     <h1 id="n.i.n.a-nighttime-imaging-n-astronomy-changelog">N.I.N.A. - Nighttime Imaging 'N' Astronomy Changelog</h1>
 <p>If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.<br />
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a></p>
-<h3 id="nightly-status-experimental-do-not-use-for-production"><span style="color:red;">Nightly Status: EXPERIMENTAL - DO NOT USE FOR PRODUCTION!</span></h3>
-<h3 id="nightly-builds-are-preview-builds-and-contain-the-ongoing-development-effort-for-new-features.these-builds-progress-quickly-can-be-unstable-especially-in-early-stages-and-running-on-outdated-nightly-builds-is-strongly-discouragedto-be-able-to-roll-back-to-a-previous-released-version-without-losing-the-profiles-backup-the-profiles-which-are-located-at-localappdatanina"><span style="color:red;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span></h3>
+<h3 id="nightly-status-alpha-use-with-caution-not-recommended-for-production"><span style="color:orange;">Nightly Status: ALPHA - USE WITH CAUTION, NOT RECOMMENDED FOR PRODUCTION!</span></h3>
+<h3 id="nightly-builds-are-preview-builds-and-contain-the-ongoing-development-effort-for-new-features.these-builds-progress-quickly-can-be-unstable-especially-in-early-stages-and-running-on-outdated-nightly-builds-is-strongly-discouragedto-be-able-to-roll-back-to-a-previous-released-version-without-losing-the-profiles-backup-the-profiles-which-are-located-at-localappdatanina"><span style="color:orange;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span></h3>
 <h1 id="version-3.0-nightly">Version 3.0 - NIGHTLY</h1>
 <h2 id="important-changes">Important Changes</h2>
+<p>Rotation values in N.I.N.A. have been updated to use the counter-clockwise notation, aligning with the common &quot;East of North of North Celestial Pole&quot; standard used in most astronomical applications. Existing templates, targets, and other saved items from previous versions will be automatically migrated to reflect this change.</p>
 <ul>
-<li>Rotation values in N.I.N.A. are now displayed in counter clockwise notation to follow the standard of &quot;East of North of North Celestial Pole&quot; that is used in most astro applications. Templates, Targets and other saved items in previous versions will be auto migrated to this adjusted approach.</li>
 <li>ZWO: Persistent device IDs (Aliases) are now supported for ZWO cameras and filter wheels. If one is already set in either of these devices and has not yet connected to it under NINA 3.0, the device will need to be selected again and connected in NINA's Camera or Filter Wheel equipment selection list. This change makes it easier to support setups where multiple ZWO cameras and filter wheels are present.
 <ul>
 <li>Device IDs are limited to 8 ASCII characters in length.</li>
 <li>ZWO EFWs must have firmware version 3.0.9 or later to support storing persistent device IDs.</li>
 </ul>
 </li>
-<li>The command line options have been revisited. Previously <code>/profileid &lt;profile id&gt;</code> was available. This has been changed to <code>--profileid &lt;profile id&gt;</code></li>
+<li>The command line options have been revisited. Previously <code>/profileid &lt;profile id&gt;</code> was available. This has been changed to <code>--profileid &lt;profile id&gt;</code>. See below for more details.</li>
 <li>Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.</li>
-<li>&quot;Loop for time&quot; condition and &quot;Wait for time&quot; instruction have been redesigned. When choosing dawn or dusk times the rollover will no longer happen at noon, but instead at sunrise or sunset. (e.g. when choosing dusk, the rollover will be at dawn)</li>
+<li>The &quot;Loop for time&quot; condition and &quot;Wait for time&quot; instruction have been redesigned. When selecting dawn or dusk times, the rollover will now occur at sunrise or sunset, respectively. For example, when dusk is selected, the rollover will happen at dawn.</li>
 <li>The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implemenatation and should be used instead.</li>
 <li>SGP Server API has been removed from the core application. Instead this is available as a plugin via &quot;SGP Server Emulation&quot;</li>
 <li>Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now supports HDR modes if available. The &quot;High Conversion Gain&quot; toggle has been removed and instead this is controlled via ReadoutModes!</li>
 </ul>
 <h2 id="net-7">.NET 7</h2>
 <ul>
-<li>The application has been lifted to utilize .NET 7. This is much more than just a Version shift of the previously used .NET Framework 4.8 as .NET 7 is based on .NET Core which is a complete rewrite of the .NET Framework by Microsoft and thus a major technical upgrade for N.I.N.A.</li>
-<li>Plugins of prior versions are disabled and need to be patched and target the new version specifically to ensure full compatibility with .NET 7</li>
+<li>The application has transitioned to .NET 7. This is not merely a version upgrade from the previously used .NET Framework 4.8. Instead, .NET 7 is rooted in .NET Core, representing a complete rewrite of the .NET Framework by Microsoft. This marks a significant technical advancement for N.I.N.A.</li>
+<li>Plugins from previous versions are disabled. They must be patched by the plugin authors and targeted specifically for the new version to ensure compatibility with .NET 7.</li>
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
@@ -84,7 +84,6 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>In framing tab and Deep Sky Object Containers you can now paste in full text coordinates into the RA/Dec text fields and they will be parsed into the separate boxes - e.g. when pasting the following string into the textbox the coordinates will be fully populated: <code>RA: 05h43m05s.90 DEC: +52°10′58″.0</code></li>
 <li>When sending location to the telescope the elevation is now handled separately and a different error message is shown</li>
 <li>DitherAfterExposures will only trigger when the next item is an exposure item of type LIGHT</li>
-<li>The Flat Wizard will now save the exposure used to determine the exposure time, reducing the overall number of exposures by one and saving time</li>
 <li>Added a new toggle in the framing assistant to control the automatic saving of images for the offline sky map. If you're using the complete offline map from the homepage, you can disable this setting to prevent changes to the cache.</li>
 <li>Within the imaging tab, several panels now feature a settings button on the upper right corner. This button allows you to reveal or conceal adjustable settings for that particular panel.
 <ul>
@@ -113,18 +112,19 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h2 id="flat-wizard-rework">Flat Wizard Rework</h2>
 <h3 id="flat-wizard-screen">Flat Wizard screen</h3>
 <ul>
-<li>Binning and Gain settings have been moved down to the other settings and can now also be set filter specific</li>
+<li>The Binning and Gain settings have been relocated to align with other settings, and they can now be configured on a filter-specific basis.</li>
 <li>Additionally it is now also possible to specify a camera offset</li>
-<li>A step size is no longer required. Instead the algorithm will now start at (Min+Max/2) and constantly divide further to find the exposure time.</li>
-<li>Selection for dark frames is hidden when choosing sky flats. When using sky flats the exposure time will constantly change making dark flats useless.</li>
+<li>A step size is no longer required. The algorithm will now initiate at (Min+Max/2) and continually halve to determine the optimal exposure time.</li>
+<li>The option for dark frames is concealed when selecting sky flats; due to variable exposure times with sky flats, dark flats become redundant.</li>
 <li>Internally the flat wizard will now use the new advanced sequencer instructions</li>
+<li>The Flat Wizard will now save the exposure used to determine the exposure time, reducing the overall number of exposures taken by one and saving time</li>
 </ul>
 <h3 id="trained-flat-exposure-list">Trained Flat Exposure List</h3>
 <ul>
 <li>The settings page to view and maintain the trained flat exposures for the flat device has been reworked</li>
-<li>Instead of multiple grids the list of trained exposures is now displayed in one uniform grid</li>
-<li>This new format should be easier to understand and make it much simpler to manually adjust values</li>
-<li>All settings from a previous version will be automatically upgraded to the new format</li>
+<li>Trained exposures are now presented in a single unified grid, replacing the previous multiple grids.</li>
+<li>The new layout aims to enhance user comprehension and simplify manual adjustments.</li>
+<li>Settings from previous versions will be seamlessly migrated to this new format.</li>
 </ul>
 <h3 id="new-instructions-for-advanced-sequencer">New Instructions for advanced sequencer</h3>
 <ul>
