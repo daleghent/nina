@@ -108,7 +108,7 @@ namespace NINA.Image.ImageData {
                 this.Image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.OriginalImage, maxStars: maxStars, token: cancelToken);
             }
 
-            starDetection.UpdateAnalysis(this.RawImageData.StarDetectionAnalysis, starDetectionParams, starDetectionResult);
+            UpdateAnalysis(starDetectionParams, starDetectionResult);
             return this;
         }
 
@@ -124,6 +124,10 @@ namespace NINA.Image.ImageData {
                 }                
             }));
             return image;
+        }
+
+        public void UpdateAnalysis(StarDetectionParams p, StarDetectionResult result) {
+            starDetection.UpdateAnalysis(this.RawImageData.StarDetectionAnalysis, p, result);
         }
 
         private static Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;

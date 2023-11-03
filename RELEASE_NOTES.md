@@ -59,6 +59,8 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
   - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.
 - Reverse autofocus direction when backlash compensation mode is set to "Overshoot" and a BacklashIN value is specified, to reduce the amount of required backlash compensation during autofocus
+- Native autofocus will now properly show star detection result in the image statistics panel
+- The native autofocus mechanism has been upgraded to simultaneously process images while shifting to new focus points, which enhances the speed of the entire autofocus operation.
 
 
 ## Commandline Options

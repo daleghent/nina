@@ -377,9 +377,18 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
         }
 
-        private async Task<MeasureAndError> EvaluateExposure(IRenderedImage image, CancellationToken token, IProgress<ApplicationStatus> progress) {
+        private async Task<MeasureAndError> EvaluateExposure(IExposureData exposureData, CancellationToken token, IProgress<ApplicationStatus> progress) {
             Logger.Trace("Evaluating Exposure");
 
+            var imageData = await exposureData.ToImageData(progress, token);
+
+            bool autoStretch = true;
+            //If using contrast based statistics, no need to stretch
+            if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.CONTRASTDETECTION && profileService.ActiveProfile.FocuserSettings.ContrastDetectionMethod == ContrastDetectionMethodEnum.Statistics) {
+                autoStretch = false;
+            }
+            var image = await imagingMediator.PrepareImage(imageData, new PrepareImageParameters(autoStretch, false), token);
+            
             var imageProperties = image.RawImageData.Properties;
             var imageStatistics = await image.RawImageData.Statistics.Task;
 
@@ -421,6 +430,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                 var starDetection = starDetectionSelector.GetBehavior();
                 var analysisResult = await starDetection.Detect(image, pixelFormat, analysisParams, progress, token);
+                image.UpdateAnalysis(analysisParams, analysisResult);
 
                 if (profileService.ActiveProfile.ImageSettings.AnnotateImage) {
                     token.ThrowIfCancellationRequested();
@@ -485,17 +495,34 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         private async Task<MeasureAndError> GetAverageMeasurement(FilterInfo filter, int exposuresPerFocusPoint, CancellationToken token, IProgress<ApplicationStatus> progress) {
-            //Average HFR  of multiple exposures (if configured this way)
-            double sumMeasure = 0;
-            double sumVariances = 0;
+            var task = await GetAverageMeasurementTask(filter, exposuresPerFocusPoint, token, progress);
+            return await task;
+        }
+
+        private async Task<Task<MeasureAndError>> GetAverageMeasurementTask(FilterInfo filter, int exposuresPerFocusPoint, CancellationToken token, IProgress<ApplicationStatus> progress) {
+            List<Task<MeasureAndError>> measurements = new List<Task<MeasureAndError>>();
+
             for (int i = 0; i < exposuresPerFocusPoint; i++) {
                 var image = await TakeExposure(filter, token, progress);
-                var partialMeasurement = await EvaluateExposure(image, token, progress);
-                sumMeasure += partialMeasurement.Measure;
-                sumVariances += partialMeasurement.Stdev * partialMeasurement.Stdev;
+
+                measurements.Add(EvaluateExposure(image, token, progress));
+
                 token.ThrowIfCancellationRequested();
             }
 
+            return EvaluateAllExposures(measurements, exposuresPerFocusPoint, token);
+        }
+
+        private async Task<MeasureAndError> EvaluateAllExposures(List<Task<MeasureAndError>> measureTasks, int exposuresPerFocusPoint, CancellationToken token) {
+            var measures = await Task.WhenAll(measureTasks);
+
+            //Average HFR  of multiple exposures (if configured this way)
+            double sumMeasure = 0;
+            double sumVariances = 0;
+            foreach (var partialMeasurement in measures) {
+                sumMeasure += partialMeasurement.Measure;
+                sumVariances += partialMeasurement.Stdev * partialMeasurement.Stdev;
+            }
             return new MeasureAndError() { Measure = sumMeasure / exposuresPerFocusPoint, Stdev = Math.Sqrt(sumVariances / exposuresPerFocusPoint) };
         }
 
@@ -520,7 +547,14 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             for (int i = 0; i < nrOfSteps; i++) {
                 token.ThrowIfCancellationRequested();
 
-                MeasureAndError measurement = await GetAverageMeasurement(filter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress);
+                var currentFocusPosition = _focusPosition;
+                Task<MeasureAndError> measurementTask = await GetAverageMeasurementTask(filter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress);
+                if (i < nrOfSteps - 1) {
+                    Logger.Trace($"Moving focuser from {_focusPosition} to the next autofocus position using step size: {-stepSize}");
+                    _focusPosition = await focuserMediator.MoveFocuserRelative(sign * -stepSize, token);
+                }
+
+                MeasureAndError measurement = await measurementTask;
 
                 //If star Measurement is 0, we didn't detect any stars or shapes, and want this point to be ignored by the fitting as much as possible. Setting a very high Stdev will do the trick.
                 if (measurement.Measure == 0) {
@@ -530,12 +564,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                 token.ThrowIfCancellationRequested();
 
-                FocusPoints.AddSorted(new ScatterErrorPoint(_focusPosition, measurement.Measure, 0, Math.Max(0.001, measurement.Stdev)), comparer);
-                PlotFocusPoints.AddSorted(new DataPoint(_focusPosition, measurement.Measure), plotComparer);
-                if (i < nrOfSteps - 1) {
-                    Logger.Trace($"Moving focuser from {_focusPosition} to the next autofocus position using step size: {-stepSize}");
-                    _focusPosition = await focuserMediator.MoveFocuserRelative(sign * -stepSize, token);
-                }
+                FocusPoints.AddSorted(new ScatterErrorPoint(currentFocusPosition, measurement.Measure, 0, Math.Max(0.001, measurement.Stdev)), comparer);
+                PlotFocusPoints.AddSorted(new DataPoint(currentFocusPosition, measurement.Measure), plotComparer);
 
                 token.ThrowIfCancellationRequested();
 
@@ -580,8 +610,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             return null;
         }
 
-        private async Task<IRenderedImage> TakeExposure(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress) {
-            IRenderedImage image;
+        private async Task<IExposureData> TakeExposure(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress) {
+            IExposureData image;
             var retries = 0;
             do {
                 Logger.Trace("Starting Exposure for autofocus");
@@ -611,14 +641,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     seq.Gain = filter.AutoFocusGain;
                 }
 
-                bool autoStretch = true;
-                //If using contrast based statistics, no need to stretch
-                if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.CONTRASTDETECTION && profileService.ActiveProfile.FocuserSettings.ContrastDetectionMethod == ContrastDetectionMethodEnum.Statistics) {
-                    autoStretch = false;
-                }
-                var prepareParameters = new PrepareImageParameters(autoStretch: autoStretch, detectStars: false);
                 try {
-                    image = await imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, token, progress);
+                    image = await imagingMediator.CaptureImage(seq, token, progress);
                 } catch (Exception e) {
                     if (!IsSubSampleEnabled()) {
                         throw;
@@ -628,7 +652,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     Logger.Error(e);
                     seq.EnableSubSample = false;
                     seq.SubSambleRectangle = null;
-                    image = await imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, token, progress);
+                    image = await imagingMediator.CaptureImage(seq, token, progress);
                 }
                 retries++;
                 if (image == null && retries < 3) {
