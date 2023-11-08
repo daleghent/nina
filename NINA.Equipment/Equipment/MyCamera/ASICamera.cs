@@ -82,7 +82,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     int cc = ASICameraDll.GetNumOfControls(_cameraId);
                     _controls = new List<CameraControl>();
                     for (int i = 0; i < cc; i++) {
-                        _controls.Add(new CameraControl(_cameraId, i));
+                        try {
+                            var control = new CameraControl(_cameraId, i);
+                            _ = control.Value; // check if querying a value is possible
+                            _controls.Add(control);
+                        } catch(Exception ex) {
+                            Logger.Debug($"Control capability at index {i} threw an exception: " + ex.Message);
+                        }
                     }
                 }
 
