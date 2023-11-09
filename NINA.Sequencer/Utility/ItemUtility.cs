@@ -198,7 +198,7 @@ namespace NINA.Sequencer.Utility {
                 if (baseTime < now) {
                     baseTime = baseTime.AddDays(1);
                 }
-                if (data.UseCustomHorizon) {
+                if (data.UseCustomHorizon && data.Horizon != null) {
                     // With custom horizons, we have to do significant iteration so we'll use 10 minutes as
                     // our iteration time
 
