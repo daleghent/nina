@@ -361,20 +361,56 @@
   <Fragment>
 
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Id="LICENSE.txt" Guid="0a6ae791-4e08-46de-933a-843e8977a0f0" Bitness="$(var.Win64)">
-        <File Id="LICENSE.txt" Name="LICENSE.txt" Source="$(var.NINA_TargetDir)LICENSE.txt" />
+      <Component Id="Accord.dll" Guid="2ea6a34b-6c9a-42da-bb4c-24dcf06e9ef2" Bitness="$(var.Win64)">
+        <File Id="Accord.dll" Name="Accord.dll" Source="$(var.NINA_TargetDir)Accord.dll" />
       </Component>
-      <Component Id="NINA.exe" Guid="b4545676-e377-4900-85f6-3bdc93962a45" Bitness="$(var.Win64)">
-        <File Id="NINA.exe" Name="NINA.exe" Source="$(var.NINA_TargetDir)NINA.exe" />
+      <Component Id="Accord.dll.config" Guid="c7614cb9-9003-4cdc-965b-46c3b76a789a" Bitness="$(var.Win64)">
+        <File Id="Accord.dll.config" Name="Accord.dll.config" Source="$(var.NINA_TargetDir)Accord.dll.config" />
       </Component>
-      <Component Id="NINA.dll.config" Guid="64E67D41-A82C-437A-B910-A51B34A9C6D0" Bitness="$(var.Win64)">
-        <File Id="NINA.dll.config" Name="NINA.dll.config" Source="$(var.NINA_TargetDir)NINA.dll.config" />
+      <Component Id="Accord.Imaging.dll" Guid="e01df832-9853-4564-9a43-2bbd5191486d" Bitness="$(var.Win64)">
+        <File Id="Accord.Imaging.dll" Name="Accord.Imaging.dll" Source="$(var.NINA_TargetDir)Accord.Imaging.dll" />
       </Component>
-      <Component Id="NINA.dll" Guid="851E33E7-B0CF-47A7-B31D-B3C32D134D6A" Bitness="$(var.Win64)">
-        <File Id="NINA.dll" Name="NINA.dll" Source="$(var.NINA_TargetDir)NINA.dll" />
+      <Component Id="Accord.Math.Core.dll" Guid="6593c698-4f88-4a15-8990-218573db4288" Bitness="$(var.Win64)">
+        <File Id="Accord.Math.Core.dll" Name="Accord.Math.Core.dll" Source="$(var.NINA_TargetDir)Accord.Math.Core.dll" />
       </Component>
-      <Component Id="NINA.Core.dll" Guid="899847bc-65d8-4042-83ce-9d83003bbcfd" Bitness="$(var.Win64)">
-        <File Id="NINA.Core.dll" Name="NINA.Core.dll" Source="$(var.NINA_TargetDir)NINA.Core.dll" />
+      <Component Id="Accord.Math.dll" Guid="e8a942ea-bc91-44a7-ba5f-aa19800d3beb" Bitness="$(var.Win64)">
+        <File Id="Accord.Math.dll" Name="Accord.Math.dll" Source="$(var.NINA_TargetDir)Accord.Math.dll" />
+      </Component>
+      <Component Id="Accord.Statistics.dll" Guid="814d20c3-c7fc-4644-bc5c-ac1d8f172fb2" Bitness="$(var.Win64)">
+        <File Id="Accord.Statistics.dll" Name="Accord.Statistics.dll" Source="$(var.NINA_TargetDir)Accord.Statistics.dll" />
+      </Component>
+      <Component Id="ASCOM.Com.dll" Guid="96ef84b2-d757-4080-b3b3-4ea4b3b45adb">
+        <File Id="ASCOM.Com.dll" Name="ASCOM.Com.dll" Source="$(var.NINA_TargetDir)ASCOM.Com.dll" />
+      </Component>
+      <Component Id="ASCOM.Common.dll" Guid="75cf4377-eeda-4fe5-88e0-02627c7b02cc">
+        <File Id="ASCOM.Common.dll" Name="ASCOM.Common.dll" Source="$(var.NINA_TargetDir)ASCOM.Common.dll" />
+      </Component>
+      <Component Id="ASCOM.Exceptions.dll" Guid="b128e165-154a-4ec0-a470-166334c8937a">
+        <File Id="ASCOM.Exceptions.dll" Name="ASCOM.Exceptions.dll" Source="$(var.NINA_TargetDir)ASCOM.Exceptions.dll" />
+      </Component>
+      <Component Id="AsyncEnumerable.dll" Guid="8dd0fdbc-bacd-4fdf-a83d-0e0e4b7dc56f" Bitness="$(var.Win64)">
+        <File Id="AsyncEnumerable.dll" Name="AsyncEnumerable.dll" Source="$(var.NINA_TargetDir)AsyncEnumerable.dll" />
+      </Component>
+      <Component Id="AvalonDock.dll" Guid="59aa7c90-8b21-4475-aaf3-3e269094a407" Bitness="$(var.Win64)">
+        <File Id="AvalonDock.dll" Name="AvalonDock.dll" Source="$(var.NINA_TargetDir)AvalonDock.dll" />
+      </Component>
+      <Component Id="Castle.Core.AsyncInterceptor.dll" Guid="b75476aa-e2cd-425a-8556-7f148faae0e3" Bitness="$(var.Win64)">
+        <File Id="Castle.Core.AsyncInterceptor.dll" Name="Castle.Core.AsyncInterceptor.dll" Source="$(var.NINA_TargetDir)Castle.Core.AsyncInterceptor.dll" />
+      </Component>
+      <Component Id="Castle.Core.dll" Guid="fa300086-73c6-4791-80e1-15fcfcfc1797" Bitness="$(var.Win64)">
+        <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.NINA_TargetDir)Castle.Core.dll" />
+      </Component>
+      <Component Id="CommandLine.dll" Guid="0d8ac625-7515-4fab-b6ca-d1ce200c749f">
+        <File Id="CommandLine.dll" Name="CommandLine.dll" Source="$(var.NINA_TargetDir)CommandLine.dll" />
+      </Component>
+      <Component Id="CommunityToolkit.Mvvm.dll" Guid="c5716412-f553-42d7-ab5a-6c4bebf65cc5">
+        <File Id="CommunityToolkit.Mvvm.dll" Name="CommunityToolkit.Mvvm.dll" Source="$(var.NINA_TargetDir)CommunityToolkit.Mvvm.dll" />
+      </Component>
+      <Component Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1" Bitness="$(var.Win64)">
+        <File Id="CsvHelper.dll" Name="CsvHelper.dll" Source="$(var.NINA_TargetDir)CsvHelper.dll" />
+      </Component>
+      <Component Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Guid="8b21c463-4e12-4cd4-9c37-d9dcda86c79e" Bitness="$(var.Win64)">
+        <File Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Name="DotNetProjects.Wpf.Extended.Toolkit.dll" Source="$(var.NINA_TargetDir)DotNetProjects.Wpf.Extended.Toolkit.dll" />
       </Component>
       <Component Id="EntityFramework.dll" Guid="a74e801b-f1d0-4a4e-bfa2-971705dd40aa" Bitness="$(var.Win64)">
         <File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="$(var.NINA_TargetDir)EntityFramework.dll" />
@@ -385,155 +421,8 @@
       <Component Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C" Bitness="$(var.Win64)">
         <File Id="Fastenshtein.dll" Name="Fastenshtein.dll" Source="$(var.NINA_TargetDir)Fastenshtein.dll" />
       </Component>
-      <Component Id="Newtonsoft.Json.dll" Guid="d5f1d68a-daa3-46fe-af3a-db698064bb12" Bitness="$(var.Win64)">
-        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.NINA_TargetDir)Newtonsoft.Json.dll" />
-      </Component>
-      <Component Id="OxyPlot.Wpf.dll" Guid="0da70938-063f-489f-a562-ec3c949f8484" Bitness="$(var.Win64)">
-        <File Id="OxyPlot.Wpf.dll" Name="OxyPlot.Wpf.dll" Source="$(var.NINA_TargetDir)OxyPlot.Wpf.dll" />
-      </Component>
-      <Component Id="OxyPlot.dll" Guid="b319b1c5-05a3-4e7f-946e-fdd424a4bd35" Bitness="$(var.Win64)">
-        <File Id="OxyPlot.dll" Name="OxyPlot.dll" Source="$(var.NINA_TargetDir)OxyPlot.dll" />
-      </Component>
-      <Component Id="System.Data.SQLite.dll" Guid="eb9db954-aaef-4c84-8401-91b12688b243" Bitness="$(var.Win64)">
-        <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.dll" />
-      </Component>
-      <Component Id="System.Data.SQLite.EF6.dll" Guid="d4cb4e71-0820-45de-9ce7-ae682bb70840" Bitness="$(var.Win64)">
-        <File Id="System.Data.SQLite.EF6.dll" Name="System.Data.SQLite.EF6.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.EF6.dll" />
-      </Component>
-      <Component Id="ToastNotifications.dll" Guid="640b6c3c-5a8d-47c8-9478-9ebbb876d2fc" Bitness="$(var.Win64)">
-        <File Id="ToastNotifications.dll" Name="ToastNotifications.dll" Source="$(var.NINA_TargetDir)ToastNotifications.dll" />
-      </Component>
-      <Component Id="ToastNotifications.Messages.dll" Guid="74b98fb4-f2a9-44d8-8c8b-988b83bf09d4" Bitness="$(var.Win64)">
-        <File Id="ToastNotifications.Messages.dll" Name="ToastNotifications.Messages.dll" Source="$(var.NINA_TargetDir)ToastNotifications.Messages.dll" />
-      </Component>
       <Component Id="FreeImageNET.dll" Guid="65499493-d525-4075-b136-c37e5713dd5b" Bitness="$(var.Win64)">
         <File Id="FreeImageNET.dll" Name="FreeImageNET.dll" Source="$(var.NINA_TargetDir)FreeImageNET.dll" />
-      </Component>
-      <Component Id="nikoncswrapper.dll" Guid="2153f113-e26c-4195-a71e-5afcf9eba0b5" Bitness="$(var.Win64)">
-        <File Id="nikoncswrapper.dll" Name="nikoncswrapper.dll" Source="$(var.nikoncswrapper_TargetDir)nikoncswrapper.dll" />
-      </Component>
-      <Component Id="NINA.CustomControlLibrary.dll" Guid="f6c5c2f4-cd1b-4243-a976-2b3b886263b2" Bitness="$(var.Win64)">
-        <File Id="NINA.CustomControlLibrary.dll" Name="NINA.CustomControlLibrary.dll" Source="$(var.NINA.CustomControlLibrary_TargetDir)NINA.CustomControlLibrary.dll" />
-      </Component>
-      <Component Id="AsyncEnumerable.dll" Guid="8dd0fdbc-bacd-4fdf-a83d-0e0e4b7dc56f" Bitness="$(var.Win64)">
-        <File Id="AsyncEnumerable.dll" Name="AsyncEnumerable.dll" Source="$(var.NINA_TargetDir)AsyncEnumerable.dll" />
-      </Component>
-      <Component Id="NmeaParser.dll" Guid="e45c807d-d193-4e13-825b-2f5b9ea92b63" Bitness="$(var.Win64)">
-        <File Id="NmeaParser.dll" Name="NmeaParser.dll" Source="$(var.NINA_TargetDir)NmeaParser.dll" />
-      </Component>
-      <Component Id="Nito.Collections.Deque.dll" Guid="ac93f123-4673-4016-8b4b-7a7e3390ec56" Bitness="$(var.Win64)">
-        <File Id="Nito.Collections.Deque.dll" Name="Nito.Collections.Deque.dll" Source="$(var.NINA_TargetDir)Nito.Collections.Deque.dll" />
-      </Component>
-      <Component Id="Nito.Mvvm.Async.dll" Guid="4e0e05c8-e441-49b9-9174-f87e16bed772" Bitness="$(var.Win64)">
-        <File Id="Nito.Mvvm.Async.dll" Name="Nito.Mvvm.Async.dll" Source="$(var.NINA_TargetDir)Nito.Mvvm.Async.dll" />
-      </Component>
-      <Component Id="Nito.AsyncEx.Coordination.dll" Guid="889df583-c3f3-4eb3-91ed-c1c81701b3d8" Bitness="$(var.Win64)">
-        <File Id="Nito.AsyncEx.Coordination.dll" Name="Nito.AsyncEx.Coordination.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Coordination.dll" />
-      </Component>
-      <Component Id="Nito.AsyncEx.Tasks.dll" Guid="a78ed08a-b271-4809-aeac-4a9acb3cdf75" Bitness="$(var.Win64)">
-        <File Id="Nito.AsyncEx.Tasks.dll" Name="Nito.AsyncEx.Tasks.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Tasks.dll" />
-      </Component>
-      <Component Id="Nito.Disposables.dll" Guid="ae91aa58-7ac0-49a1-8eb8-87e3bb2d70a9" Bitness="$(var.Win64)">
-        <File Id="Nito.Disposables.dll" Name="Nito.Disposables.dll" Source="$(var.NINA_TargetDir)Nito.Disposables.dll" />
-      </Component>
-      <Component Id="Nito.Mvvm.Core.dll" Guid="8d518177-e613-47f9-a11e-b89508c26fc9" Bitness="$(var.Win64)">
-        <File Id="Nito.Mvvm.Core.dll" Name="Nito.Mvvm.Core.dll" Source="$(var.NINA_TargetDir)Nito.Mvvm.Core.dll" />
-      </Component>
-      <Component Id="Nito.AsyncEx.Context.dll" Guid="592aa107-1b13-41ae-a569-5fd49bda174e" Bitness="$(var.Win64)">
-        <File Id="Nito.AsyncEx.Context.dll" Name="Nito.AsyncEx.Context.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Context.dll" />
-      </Component>
-      <Component Id="Nito.AsyncEx.Oop.dll" Guid="F2EEDD26-68EE-4101-801C-087718075CAF" Bitness="$(var.Win64)">
-        <File Id="Nito.AsyncEx.Oop.dll" Name="Nito.AsyncEx.Oop.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Oop.dll" />
-      </Component>
-      <Component Id="Nito.AsyncEx.Interop.WaitHandles.dll" Guid="631B50E6-584B-410A-B861-85DB45ED56B0" Bitness="$(var.Win64)">
-        <File Id="Nito.AsyncEx.Interop.WaitHandles.dll" Name="Nito.AsyncEx.Interop.WaitHandles.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Interop.WaitHandles.dll" />
-      </Component>
-      <Component Id="Nito.Cancellation.dll" Guid="CA197B09-AD17-4E49-9761-257249813645" Bitness="$(var.Win64)">
-        <File Id="Nito.Cancellation.dll" Name="Nito.Cancellation.dll" Source="$(var.NINA_TargetDir)Nito.Cancellation.dll" />
-      </Component>
-      <Component Id="NJsonSchema.dll" Guid="9bb5bcda-30df-4aec-b520-efb9fa96ca2d" Bitness="$(var.Win64)">
-        <File Id="NJsonSchema.dll" Name="NJsonSchema.dll" Source="$(var.NINA_TargetDir)NJsonSchema.dll" />
-      </Component>
-      <Component Id="Namotion.Reflection.dll" Guid="e280d86e-104f-49ea-9c32-b98e532d648d" Bitness="$(var.Win64)">
-        <File Id="Namotion.Reflection.dll" Name="Namotion.Reflection.dll" Source="$(var.NINA_TargetDir)Namotion.Reflection.dll" />
-      </Component>
-      <Component Id="Accord.Math.dll" Guid="e8a942ea-bc91-44a7-ba5f-aa19800d3beb" Bitness="$(var.Win64)">
-        <File Id="Accord.Math.dll" Name="Accord.Math.dll" Source="$(var.NINA_TargetDir)Accord.Math.dll" />
-      </Component>
-      <Component Id="Accord.Math.Core.dll" Guid="6593c698-4f88-4a15-8990-218573db4288" Bitness="$(var.Win64)">
-        <File Id="Accord.Math.Core.dll" Name="Accord.Math.Core.dll" Source="$(var.NINA_TargetDir)Accord.Math.Core.dll" />
-      </Component>
-      <Component Id="Accord.dll" Guid="2ea6a34b-6c9a-42da-bb4c-24dcf06e9ef2" Bitness="$(var.Win64)">
-        <File Id="Accord.dll" Name="Accord.dll" Source="$(var.NINA_TargetDir)Accord.dll" />
-      </Component>
-      <Component Id="Accord.Statistics.dll" Guid="814d20c3-c7fc-4644-bc5c-ac1d8f172fb2" Bitness="$(var.Win64)">
-        <File Id="Accord.Statistics.dll" Name="Accord.Statistics.dll" Source="$(var.NINA_TargetDir)Accord.Statistics.dll" />
-      </Component>
-      <Component Id="Accord.Imaging.dll" Guid="e01df832-9853-4564-9a43-2bbd5191486d" Bitness="$(var.Win64)">
-        <File Id="Accord.Imaging.dll" Name="Accord.Imaging.dll" Source="$(var.NINA_TargetDir)Accord.Imaging.dll" />
-      </Component>
-      <Component Id="Accord.dll.config" Guid="c7614cb9-9003-4cdc-965b-46c3b76a789a" Bitness="$(var.Win64)">
-        <File Id="Accord.dll.config" Name="Accord.dll.config" Source="$(var.NINA_TargetDir)Accord.dll.config" />
-      </Component>
-      <Component Id="NINA.MGEN.dll" Guid="aff16aed-fbcc-4db3-8ae6-30387f4995e9" Bitness="$(var.Win64)">
-        <File Id="NINA.MGEN.dll" Name="NINA.MGEN.dll" Source="$(var.NINA.MGEN_TargetDir)NINA.MGEN.dll" />
-      </Component>
-      <Component Id="thirdparty" Guid="3C8404A3-D6E6-48DE-81FA-03028AEE884D" Bitness="$(var.Win64)">
-        <File Id="thirdparty" Name="3rd-party-licenses.txt" Source="$(var.NINA_TargetDir)3rd-party-licenses.txt" />
-      </Component>
-      <Component Id="K4os.Compression.LZ4.dll" Guid="af75b12d-ae2f-48c8-8b15-55a5d7344aa0" Bitness="$(var.Win64)">
-        <File Id="K4os.Compression.LZ4.dll" Name="K4os.Compression.LZ4.dll" Source="$(var.NINA_TargetDir)K4os.Compression.LZ4.dll" />
-      </Component>
-      <Component Id="ToggleSwitch.dll" Guid="b7d48149-e902-402d-86f7-6d08341960c2" Bitness="$(var.Win64)">
-        <File Id="ToggleSwitch.dll" Name="ToggleSwitch.dll" Source="$(var.NINA_TargetDir)ToggleSwitch.dll" />
-      </Component>
-      <Component Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1" Bitness="$(var.Win64)">
-        <File Id="CsvHelper.dll" Name="CsvHelper.dll" Source="$(var.NINA_TargetDir)CsvHelper.dll" />
-      </Component>
-      <Component Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Guid="8b21c463-4e12-4cd4-9c37-d9dcda86c79e" Bitness="$(var.Win64)">
-        <File Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Name="DotNetProjects.Wpf.Extended.Toolkit.dll" Source="$(var.NINA_TargetDir)DotNetProjects.Wpf.Extended.Toolkit.dll" />
-      </Component>
-      <Component Id="AvalonDock.dll" Guid="59aa7c90-8b21-4475-aaf3-3e269094a407" Bitness="$(var.Win64)">
-        <File Id="AvalonDock.dll" Name="AvalonDock.dll" Source="$(var.NINA_TargetDir)AvalonDock.dll" />
-      </Component>
-      <Component Id="NINA.Equipment.dll" Guid="cf75097e-4f3d-4c89-a21b-984f6662e0d1" Bitness="$(var.Win64)">
-        <File Id="NINA.Equipment.dll" Name="NINA.Equipment.dll" Source="$(var.NINA.Equipment_TargetDir)NINA.Equipment.dll" />
-      </Component>
-      <Component Id="NINA.PlateSolving.dll" Guid="a3af2a74-1df7-4af2-a735-e587c18c1119" Bitness="$(var.Win64)">
-        <File Id="NINA.PlateSolving.dll" Name="NINA.PlateSolving.dll" Source="$(var.NINA.PlateSolving_TargetDir)NINA.PlateSolving.dll" />
-      </Component>
-      <Component Id="NINA.Profile.dll" Guid="e8b31cf9-917f-406f-929a-68a4a28360ca" Bitness="$(var.Win64)">
-        <File Id="NINA.Profile.dll" Name="NINA.Profile.dll" Source="$(var.NINA.Profile_TargetDir)NINA.Profile.dll" />
-      </Component>
-      <Component Id="NINA.Sequencer.dll" Guid="18be685c-5896-4c78-a0e1-a43729260e96" Bitness="$(var.Win64)">
-        <File Id="NINA.Sequencer.dll" Name="NINA.Sequencer.dll" Source="$(var.NINA.Sequencer_TargetDir)NINA.Sequencer.dll" />
-      </Component>
-      <Component Id="NINA.Astrometry.dll" Guid="aa12c384-5308-485c-b979-419bb08fd488" Bitness="$(var.Win64)">
-        <File Id="NINA.Astrometry.dll" Name="NINA.Astrometry.dll" Source="$(var.NINA.Astrometry_TargetDir)NINA.Astrometry.dll" />
-      </Component>
-      <Component Id="NINA.Image.dll" Guid="9b7d247e-8326-4100-a6ec-f60097dd1854" Bitness="$(var.Win64)">
-        <File Id="NINA.Image.dll" Name="NINA.Image.dll" Source="$(var.NINA.Image_TargetDir)NINA.Image.dll" />
-      </Component>
-      <Component Id="NINA.WPF.Base.dll" Guid="da3b598c-5da9-46a8-a70d-a9a0c86705a4" Bitness="$(var.Win64)">
-        <File Id="NINA.WPF.Base.dll" Name="NINA.WPF.Base.dll" Source="$(var.NINA.WPF.Base_TargetDir)NINA.WPF.Base.dll" />
-      </Component>
-      <Component Id="NINA.Plugin.dll" Guid="ac594ba2-c9c0-470e-ac04-cf9e3cba2d73" Bitness="$(var.Win64)">
-        <File Id="NINA.Plugin.dll" Name="NINA.Plugin.dll" Source="$(var.NINA.Plugin_TargetDir)NINA.Plugin.dll" />
-      </Component>
-      <Component Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0" Bitness="$(var.Win64)">
-        <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
-      </Component>
-      <Component Id="MdXaml.dll" Guid="dd68150f-b4f4-42a7-af8d-67f830c48918" Bitness="$(var.Win64)">
-        <File Id="MdXaml.dll" Name="MdXaml.dll" Source="$(var.NINA_TargetDir)MdXaml.dll" />
-      </Component>
-      <Component Id="ICSharpCode.AvalonEdit.dll" Guid="1c6db533-6ea8-4091-93be-7d16b6be9054" Bitness="$(var.Win64)">
-        <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" Source="$(var.NINA_TargetDir)ICSharpCode.AvalonEdit.dll" />
-      </Component>
-      <Component Id="Castle.Core.AsyncInterceptor.dll" Guid="b75476aa-e2cd-425a-8556-7f148faae0e3" Bitness="$(var.Win64)">
-        <File Id="Castle.Core.AsyncInterceptor.dll" Name="Castle.Core.AsyncInterceptor.dll" Source="$(var.NINA_TargetDir)Castle.Core.AsyncInterceptor.dll" />
-      </Component>
-      <Component Id="Castle.Core.dll" Guid="fa300086-73c6-4791-80e1-15fcfcfc1797" Bitness="$(var.Win64)">
-        <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.NINA_TargetDir)Castle.Core.dll" />
       </Component>
       <Component Id="Google.Protobuf.dll" Guid="48efb59c-8605-4a27-b22c-6dc5eef42339" Bitness="$(var.Win64)">
         <File Id="Google.Protobuf.dll" Name="Google.Protobuf.dll" Source="$(var.NINA_TargetDir)Google.Protobuf.dll" />
@@ -544,53 +433,191 @@
       <Component Id="GrpcDotNetNamedPipes.dll" Guid="12a557ca-8315-4984-81e8-7d5b8830e3f3" Bitness="$(var.Win64)">
         <File Id="GrpcDotNetNamedPipes.dll" Name="GrpcDotNetNamedPipes.dll" Source="$(var.NINA_TargetDir)GrpcDotNetNamedPipes.dll" />
       </Component>
-      <Component Id="Serilog.dll" Guid="addc1650-2365-452a-a91d-064507e40e77" Bitness="$(var.Win64)">
-        <File Id="Serilog.dll" Name="Serilog.dll" Source="$(var.NINA_TargetDir)Serilog.dll" />
+      <Component Id="Iconic.Zlib.Netstandard.dll" Guid="6017c127-e9e4-45cf-b5a2-7011772f4dbb">
+        <File Id="Iconic.Zlib.Netstandard.dll" Name="Iconic.Zlib.Netstandard.dll" Source="$(var.NINA_TargetDir)Iconic.Zlib.Netstandard.dll" />
       </Component>
-      <Component Id="Serilog.Sinks.File.dll" Guid="700e0af3-7959-4eb5-8320-1e187e6a45ff" Bitness="$(var.Win64)">
-        <File Id="Serilog.Sinks.File.dll" Name="Serilog.Sinks.File.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.File.dll" />
+      <Component Id="ICSharpCode.AvalonEdit.dll" Guid="1c6db533-6ea8-4091-93be-7d16b6be9054" Bitness="$(var.Win64)">
+        <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" Source="$(var.NINA_TargetDir)ICSharpCode.AvalonEdit.dll" />
       </Component>
-      <Component Id="Serilog.Sinks.Console.dll" Guid="b25c2486-9400-4207-aa84-6cab40ef31c2" Bitness="$(var.Win64)">
-        <File Id="Serilog.Sinks.Console.dll" Name="Serilog.Sinks.Console.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.Console.dll" />
+      <Component Id="K4os.Compression.LZ4.dll" Guid="af75b12d-ae2f-48c8-8b15-55a5d7344aa0" Bitness="$(var.Win64)">
+        <File Id="K4os.Compression.LZ4.dll" Name="K4os.Compression.LZ4.dll" Source="$(var.NINA_TargetDir)K4os.Compression.LZ4.dll" />
+      </Component>
+      <Component Id="LICENSE.txt" Guid="0a6ae791-4e08-46de-933a-843e8977a0f0" Bitness="$(var.Win64)">
+        <File Id="LICENSE.txt" Name="LICENSE.txt" Source="$(var.NINA_TargetDir)LICENSE.txt" />
+      </Component>
+      <Component Id="MdXaml.dll" Guid="dd68150f-b4f4-42a7-af8d-67f830c48918" Bitness="$(var.Win64)">
+        <File Id="MdXaml.dll" Name="MdXaml.dll" Source="$(var.NINA_TargetDir)MdXaml.dll" />
+      </Component>
+      <Component Id="MdXaml.Plugins.dll" Guid="b1a6f459-2b0a-4887-a162-7e7dd6b3bc93">
+        <File Id="MdXaml.Plugins.dll" Name="MdXaml.Plugins.dll" Source="$(var.NINA_TargetDir)MdXaml.Plugins.dll" />
+      </Component>
+      <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Guid="fc905efb-a8f2-4bf6-8937-f1b5e2e6754d">
+        <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Name="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+      </Component>
+      <Component Id="Microsoft.Extensions.DependencyInjection.dll" Guid="082c4359-5a69-47f4-8043-130071793997">
+        <File Id="Microsoft.Extensions.DependencyInjection.dll" Name="Microsoft.Extensions.DependencyInjection.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.dll" />
       </Component>
       <Component Id="Microsoft.Xaml.Behaviors.dll" Guid="69093258-81a8-4474-bdb7-d69732bfc56e" Bitness="$(var.Win64)">
         <File Id="Microsoft.Xaml.Behaviors.dll" Name="Microsoft.Xaml.Behaviors.dll" Source="$(var.NINA_TargetDir)Microsoft.Xaml.Behaviors.dll" />
       </Component>
+      <Component Id="Namotion.Reflection.dll" Guid="e280d86e-104f-49ea-9c32-b98e532d648d" Bitness="$(var.Win64)">
+        <File Id="Namotion.Reflection.dll" Name="Namotion.Reflection.dll" Source="$(var.NINA_TargetDir)Namotion.Reflection.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="d5f1d68a-daa3-46fe-af3a-db698064bb12" Bitness="$(var.Win64)">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.NINA_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="nikoncswrapper.dll" Guid="2153f113-e26c-4195-a71e-5afcf9eba0b5" Bitness="$(var.Win64)">
+        <File Id="nikoncswrapper.dll" Name="nikoncswrapper.dll" Source="$(var.nikoncswrapper_TargetDir)nikoncswrapper.dll" />
+      </Component>
+      <Component Id="NINA.Astrometry.dll" Guid="aa12c384-5308-485c-b979-419bb08fd488" Bitness="$(var.Win64)">
+        <File Id="NINA.Astrometry.dll" Name="NINA.Astrometry.dll" Source="$(var.NINA.Astrometry_TargetDir)NINA.Astrometry.dll" />
+      </Component>
       <Component Id="NINA.Astrometry.pdb" Guid="4f23f02d-3dc9-4d2a-b3fb-6aa07fc34319">
         <File Id="NINA.Astrometry.pdb" Name="NINA.Astrometry.pdb" Source="$(var.NINA_TargetDir)NINA.Astrometry.pdb" />
       </Component>
-      <Component Id="NINA.Plugin.pdb" Guid="be798686-d8c0-434f-ba18-c21a57c7434c">
-        <File Id="NINA.Plugin.pdb" Name="NINA.Plugin.pdb" Source="$(var.NINA_TargetDir)NINA.Plugin.pdb" />
+      <Component Id="NINA.Core.dll" Guid="899847bc-65d8-4042-83ce-9d83003bbcfd" Bitness="$(var.Win64)">
+        <File Id="NINA.Core.dll" Name="NINA.Core.dll" Source="$(var.NINA_TargetDir)NINA.Core.dll" />
       </Component>
       <Component Id="NINA.Core.pdb" Guid="05b731b1-024b-4ee4-b8b2-b371eb13d71e">
         <File Id="NINA.Core.pdb" Name="NINA.Core.pdb" Source="$(var.NINA_TargetDir)NINA.Core.pdb" />
       </Component>
-      <Component Id="NINA.WPF.Base.pdb" Guid="cd72322e-043f-4b0d-868b-eeaadd0a01bc">
-        <File Id="NINA.WPF.Base.pdb" Name="NINA.WPF.Base.pdb" Source="$(var.NINA_TargetDir)NINA.WPF.Base.pdb" />
-      </Component>
-      <Component Id="NINA.Equipment.pdb" Guid="3acb1e79-9202-43fa-a7eb-4b0817b74e30">
-        <File Id="NINA.Equipment.pdb" Name="NINA.Equipment.pdb" Source="$(var.NINA_TargetDir)NINA.Equipment.pdb" />
-      </Component>
-      <Component Id="NINA.Image.pdb" Guid="03cc8311-faf7-405c-af35-ffde35687c1d">
-        <File Id="NINA.Image.pdb" Name="NINA.Image.pdb" Source="$(var.NINA_TargetDir)NINA.Image.pdb" />
-      </Component>
-      <Component Id="NINA.MGEN.pdb" Guid="b04fe244-bbe5-430b-9915-d696517a9859">
-        <File Id="NINA.MGEN.pdb" Name="NINA.MGEN.pdb" Source="$(var.NINA_TargetDir)NINA.MGEN.pdb" />
+      <Component Id="NINA.CustomControlLibrary.dll" Guid="f6c5c2f4-cd1b-4243-a976-2b3b886263b2" Bitness="$(var.Win64)">
+        <File Id="NINA.CustomControlLibrary.dll" Name="NINA.CustomControlLibrary.dll" Source="$(var.NINA.CustomControlLibrary_TargetDir)NINA.CustomControlLibrary.dll" />
       </Component>
       <Component Id="NINA.CustomControlLibrary.pdb" Guid="067fa782-5602-4b4d-833f-5ee92506bc8c">
         <File Id="NINA.CustomControlLibrary.pdb" Name="NINA.CustomControlLibrary.pdb" Source="$(var.NINA_TargetDir)NINA.CustomControlLibrary.pdb" />
       </Component>
-      <Component Id="NINA.PlateSolving.pdb" Guid="908e8f97-67aa-4ada-bd41-785cdc57d3a3">
-        <File Id="NINA.PlateSolving.pdb" Name="NINA.PlateSolving.pdb" Source="$(var.NINA_TargetDir)NINA.PlateSolving.pdb" />
+      <Component Id="NINA.deps.json" Guid="ebb9f539-e635-49fc-be16-da5f18897774">
+        <File Id="NINA.deps.json" Name="NINA.deps.json" Source="$(var.NINA_TargetDir)NINA.deps.json" />
       </Component>
-      <Component Id="NINA.Profile.pdb" Guid="4463dd0e-01e0-4714-bdab-478eb6d3f210">
-        <File Id="NINA.Profile.pdb" Name="NINA.Profile.pdb" Source="$(var.NINA_TargetDir)NINA.Profile.pdb" />
+      <Component Id="NINA.dll" Guid="851E33E7-B0CF-47A7-B31D-B3C32D134D6A" Bitness="$(var.Win64)">
+        <File Id="NINA.dll" Name="NINA.dll" Source="$(var.NINA_TargetDir)NINA.dll" />
+      </Component>
+      <Component Id="NINA.dll.config" Guid="64E67D41-A82C-437A-B910-A51B34A9C6D0" Bitness="$(var.Win64)">
+        <File Id="NINA.dll.config" Name="NINA.dll.config" Source="$(var.NINA_TargetDir)NINA.dll.config" />
+      </Component>
+      <Component Id="NINA.Equipment.dll" Guid="cf75097e-4f3d-4c89-a21b-984f6662e0d1" Bitness="$(var.Win64)">
+        <File Id="NINA.Equipment.dll" Name="NINA.Equipment.dll" Source="$(var.NINA.Equipment_TargetDir)NINA.Equipment.dll" />
+      </Component>
+      <Component Id="NINA.Equipment.pdb" Guid="3acb1e79-9202-43fa-a7eb-4b0817b74e30">
+        <File Id="NINA.Equipment.pdb" Name="NINA.Equipment.pdb" Source="$(var.NINA_TargetDir)NINA.Equipment.pdb" />
+      </Component>
+      <Component Id="NINA.exe" Guid="b4545676-e377-4900-85f6-3bdc93962a45" Bitness="$(var.Win64)">
+        <File Id="NINA.exe" Name="NINA.exe" Source="$(var.NINA_TargetDir)NINA.exe" />
+      </Component>
+      <Component Id="NINA.Image.dll" Guid="9b7d247e-8326-4100-a6ec-f60097dd1854" Bitness="$(var.Win64)">
+        <File Id="NINA.Image.dll" Name="NINA.Image.dll" Source="$(var.NINA.Image_TargetDir)NINA.Image.dll" />
+      </Component>
+      <Component Id="NINA.Image.pdb" Guid="03cc8311-faf7-405c-af35-ffde35687c1d">
+        <File Id="NINA.Image.pdb" Name="NINA.Image.pdb" Source="$(var.NINA_TargetDir)NINA.Image.pdb" />
+      </Component>
+      <Component Id="NINA.MGEN.dll" Guid="aff16aed-fbcc-4db3-8ae6-30387f4995e9" Bitness="$(var.Win64)">
+        <File Id="NINA.MGEN.dll" Name="NINA.MGEN.dll" Source="$(var.NINA.MGEN_TargetDir)NINA.MGEN.dll" />
+      </Component>
+      <Component Id="NINA.MGEN.pdb" Guid="b04fe244-bbe5-430b-9915-d696517a9859">
+        <File Id="NINA.MGEN.pdb" Name="NINA.MGEN.pdb" Source="$(var.NINA_TargetDir)NINA.MGEN.pdb" />
       </Component>
       <Component Id="NINA.pdb" Guid="be3502d5-c1f2-4672-a6ff-51730392f7dc">
         <File Id="NINA.pdb" Name="NINA.pdb" Source="$(var.NINA_TargetDir)NINA.pdb" />
       </Component>
+      <Component Id="NINA.PlateSolving.dll" Guid="a3af2a74-1df7-4af2-a735-e587c18c1119" Bitness="$(var.Win64)">
+        <File Id="NINA.PlateSolving.dll" Name="NINA.PlateSolving.dll" Source="$(var.NINA.PlateSolving_TargetDir)NINA.PlateSolving.dll" />
+      </Component>
+      <Component Id="NINA.PlateSolving.pdb" Guid="908e8f97-67aa-4ada-bd41-785cdc57d3a3">
+        <File Id="NINA.PlateSolving.pdb" Name="NINA.PlateSolving.pdb" Source="$(var.NINA_TargetDir)NINA.PlateSolving.pdb" />
+      </Component>
+      <Component Id="NINA.Plugin.dll" Guid="ac594ba2-c9c0-470e-ac04-cf9e3cba2d73" Bitness="$(var.Win64)">
+        <File Id="NINA.Plugin.dll" Name="NINA.Plugin.dll" Source="$(var.NINA.Plugin_TargetDir)NINA.Plugin.dll" />
+      </Component>
+      <Component Id="NINA.Plugin.pdb" Guid="be798686-d8c0-434f-ba18-c21a57c7434c">
+        <File Id="NINA.Plugin.pdb" Name="NINA.Plugin.pdb" Source="$(var.NINA_TargetDir)NINA.Plugin.pdb" />
+      </Component>
+      <Component Id="NINA.Profile.dll" Guid="e8b31cf9-917f-406f-929a-68a4a28360ca" Bitness="$(var.Win64)">
+        <File Id="NINA.Profile.dll" Name="NINA.Profile.dll" Source="$(var.NINA.Profile_TargetDir)NINA.Profile.dll" />
+      </Component>
+      <Component Id="NINA.Profile.pdb" Guid="4463dd0e-01e0-4714-bdab-478eb6d3f210">
+        <File Id="NINA.Profile.pdb" Name="NINA.Profile.pdb" Source="$(var.NINA_TargetDir)NINA.Profile.pdb" />
+      </Component>
+      <Component Id="NINA.runtimeconfig.json" Guid="61fd67ff-116a-4261-ba08-8fba45ead3ae">
+        <File Id="NINA.runtimeconfig.json" Name="NINA.runtimeconfig.json" Source="$(var.NINA_TargetDir)NINA.runtimeconfig.json" />
+      </Component>
+      <Component Id="NINA.Sequencer.dll" Guid="18be685c-5896-4c78-a0e1-a43729260e96" Bitness="$(var.Win64)">
+        <File Id="NINA.Sequencer.dll" Name="NINA.Sequencer.dll" Source="$(var.NINA.Sequencer_TargetDir)NINA.Sequencer.dll" />
+      </Component>
       <Component Id="NINA.Sequencer.pdb" Guid="d1f1818e-82b6-4fb3-92cb-2701c5cd8d0c">
         <File Id="NINA.Sequencer.pdb" Name="NINA.Sequencer.pdb" Source="$(var.NINA_TargetDir)NINA.Sequencer.pdb" />
+      </Component>
+      <Component Id="NINA.WPF.Base.dll" Guid="da3b598c-5da9-46a8-a70d-a9a0c86705a4" Bitness="$(var.Win64)">
+        <File Id="NINA.WPF.Base.dll" Name="NINA.WPF.Base.dll" Source="$(var.NINA.WPF.Base_TargetDir)NINA.WPF.Base.dll" />
+      </Component>
+      <Component Id="NINA.WPF.Base.pdb" Guid="cd72322e-043f-4b0d-868b-eeaadd0a01bc">
+        <File Id="NINA.WPF.Base.pdb" Name="NINA.WPF.Base.pdb" Source="$(var.NINA_TargetDir)NINA.WPF.Base.pdb" />
+      </Component>
+      <Component Id="Nito.AsyncEx.Context.dll" Guid="592aa107-1b13-41ae-a569-5fd49bda174e" Bitness="$(var.Win64)">
+        <File Id="Nito.AsyncEx.Context.dll" Name="Nito.AsyncEx.Context.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Context.dll" />
+      </Component>
+      <Component Id="Nito.AsyncEx.Coordination.dll" Guid="889df583-c3f3-4eb3-91ed-c1c81701b3d8" Bitness="$(var.Win64)">
+        <File Id="Nito.AsyncEx.Coordination.dll" Name="Nito.AsyncEx.Coordination.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Coordination.dll" />
+      </Component>
+      <Component Id="Nito.AsyncEx.Interop.WaitHandles.dll" Guid="631B50E6-584B-410A-B861-85DB45ED56B0" Bitness="$(var.Win64)">
+        <File Id="Nito.AsyncEx.Interop.WaitHandles.dll" Name="Nito.AsyncEx.Interop.WaitHandles.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Interop.WaitHandles.dll" />
+      </Component>
+      <Component Id="Nito.AsyncEx.Oop.dll" Guid="F2EEDD26-68EE-4101-801C-087718075CAF" Bitness="$(var.Win64)">
+        <File Id="Nito.AsyncEx.Oop.dll" Name="Nito.AsyncEx.Oop.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Oop.dll" />
+      </Component>
+      <Component Id="Nito.AsyncEx.Tasks.dll" Guid="a78ed08a-b271-4809-aeac-4a9acb3cdf75" Bitness="$(var.Win64)">
+        <File Id="Nito.AsyncEx.Tasks.dll" Name="Nito.AsyncEx.Tasks.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Tasks.dll" />
+      </Component>
+      <Component Id="Nito.Cancellation.dll" Guid="CA197B09-AD17-4E49-9761-257249813645" Bitness="$(var.Win64)">
+        <File Id="Nito.Cancellation.dll" Name="Nito.Cancellation.dll" Source="$(var.NINA_TargetDir)Nito.Cancellation.dll" />
+      </Component>
+      <Component Id="Nito.Collections.Deque.dll" Guid="ac93f123-4673-4016-8b4b-7a7e3390ec56" Bitness="$(var.Win64)">
+        <File Id="Nito.Collections.Deque.dll" Name="Nito.Collections.Deque.dll" Source="$(var.NINA_TargetDir)Nito.Collections.Deque.dll" />
+      </Component>
+      <Component Id="Nito.Disposables.dll" Guid="ae91aa58-7ac0-49a1-8eb8-87e3bb2d70a9" Bitness="$(var.Win64)">
+        <File Id="Nito.Disposables.dll" Name="Nito.Disposables.dll" Source="$(var.NINA_TargetDir)Nito.Disposables.dll" />
+      </Component>
+      <Component Id="Nito.Mvvm.Async.dll" Guid="4e0e05c8-e441-49b9-9174-f87e16bed772" Bitness="$(var.Win64)">
+        <File Id="Nito.Mvvm.Async.dll" Name="Nito.Mvvm.Async.dll" Source="$(var.NINA_TargetDir)Nito.Mvvm.Async.dll" />
+      </Component>
+      <Component Id="Nito.Mvvm.Core.dll" Guid="8d518177-e613-47f9-a11e-b89508c26fc9" Bitness="$(var.Win64)">
+        <File Id="Nito.Mvvm.Core.dll" Name="Nito.Mvvm.Core.dll" Source="$(var.NINA_TargetDir)Nito.Mvvm.Core.dll" />
+      </Component>
+      <Component Id="NJsonSchema.dll" Guid="9bb5bcda-30df-4aec-b520-efb9fa96ca2d" Bitness="$(var.Win64)">
+        <File Id="NJsonSchema.dll" Name="NJsonSchema.dll" Source="$(var.NINA_TargetDir)NJsonSchema.dll" />
+      </Component>
+      <Component Id="NmeaParser.dll" Guid="e45c807d-d193-4e13-825b-2f5b9ea92b63" Bitness="$(var.Win64)">
+        <File Id="NmeaParser.dll" Name="NmeaParser.dll" Source="$(var.NINA_TargetDir)NmeaParser.dll" />
+      </Component>
+      <Component Id="OxyPlot.Contrib.dll" Guid="CE553C08-88CC-4699-80FB-6E7CFC518339">
+        <File Id="OxyPlot.Contrib.dll" Name="OxyPlot.Contrib.dll" Source="$(var.NINA_TargetDir)OxyPlot.Contrib.dll" />
+      </Component>
+      <Component Id="OxyPlot.Contrib.Wpf.dll" Guid="2421a0b7-9318-4572-a72a-c828cf15ffa8">
+        <File Id="OxyPlot.Contrib.Wpf.dll" Name="OxyPlot.Contrib.Wpf.dll" Source="$(var.NINA_TargetDir)OxyPlot.Contrib.Wpf.dll" />
+      </Component>
+      <Component Id="OxyPlot.dll" Guid="b319b1c5-05a3-4e7f-946e-fdd424a4bd35" Bitness="$(var.Win64)">
+        <File Id="OxyPlot.dll" Name="OxyPlot.dll" Source="$(var.NINA_TargetDir)OxyPlot.dll" />
+      </Component>
+      <Component Id="OxyPlot.Wpf.dll" Guid="0da70938-063f-489f-a562-ec3c949f8484" Bitness="$(var.Win64)">
+        <File Id="OxyPlot.Wpf.dll" Name="OxyPlot.Wpf.dll" Source="$(var.NINA_TargetDir)OxyPlot.Wpf.dll" />
+      </Component>
+      <Component Id="OxyPlot.Wpf.Shared.dll" Guid="1397eef9-0f27-4c92-be3c-f66dfdcd2b50">
+        <File Id="OxyPlot.Wpf.Shared.dll" Name="OxyPlot.Wpf.Shared.dll" Source="$(var.NINA_TargetDir)OxyPlot.Wpf.Shared.dll" />
+      </Component>
+      <Component Id="Serilog.dll" Guid="addc1650-2365-452a-a91d-064507e40e77" Bitness="$(var.Win64)">
+        <File Id="Serilog.dll" Name="Serilog.dll" Source="$(var.NINA_TargetDir)Serilog.dll" />
+      </Component>
+      <Component Id="Serilog.Sinks.Console.dll" Guid="b25c2486-9400-4207-aa84-6cab40ef31c2" Bitness="$(var.Win64)">
+        <File Id="Serilog.Sinks.Console.dll" Name="Serilog.Sinks.Console.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.Console.dll" />
+      </Component>
+      <Component Id="Serilog.Sinks.File.dll" Guid="700e0af3-7959-4eb5-8320-1e187e6a45ff" Bitness="$(var.Win64)">
+        <File Id="Serilog.Sinks.File.dll" Name="Serilog.Sinks.File.dll" Source="$(var.NINA_TargetDir)Serilog.Sinks.File.dll" />
+      </Component>
+      <Component Id="sni.dll" Guid="0E0DB3D2-E282-4C15-9B29-13D1E513EF8D">
+        <File Id="sni.dll" Name="sni.dll" Source="$(var.NINA_TargetDir)sni.dll" />
+      </Component>
+      <Component Id="SQLite.Interop.dll_x64_native" Guid="A217249B-AF5A-4128-B4D0-336B111B5995">
+        <File Id="SQLite.Interop.dll_x64_native" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)SQLite.Interop.dll" />
       </Component>
       <Component Id="System.ComponentModel.Composition.dll" Guid="d8c08164-ef91-4cbf-8a10-a6087e40f4a1">
         <File Id="System.ComponentModel.Composition.dll" Name="System.ComponentModel.Composition.dll" Source="$(var.NINA_TargetDir)System.ComponentModel.Composition.dll" />
@@ -598,59 +625,35 @@
       <Component Id="System.Data.SqlClient.dll" Guid="4fd7f091-3586-4e5d-8f96-1c3f0d3ddf59">
         <File Id="System.Data.SqlClient.dll" Name="System.Data.SqlClient.dll" Source="$(var.NINA_TargetDir)System.Data.SqlClient.dll" />
       </Component>
-      <Component Id="System.Management.dll" Guid="da2b98b2-806a-4b52-b0d7-802696e275f2">
-        <File Id="System.Management.dll" Name="System.Management.dll" Source="$(var.NINA_TargetDir)System.Management.dll" />
+      <Component Id="System.Data.SQLite.dll" Guid="eb9db954-aaef-4c84-8401-91b12688b243" Bitness="$(var.Win64)">
+        <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.dll" />
+      </Component>
+      <Component Id="System.Data.SQLite.EF6.dll" Guid="d4cb4e71-0820-45de-9ce7-ae682bb70840" Bitness="$(var.Win64)">
+        <File Id="System.Data.SQLite.EF6.dll" Name="System.Data.SQLite.EF6.dll" Source="$(var.NINA_TargetDir)System.Data.SQLite.EF6.dll" />
       </Component>
       <Component Id="System.IO.Ports.dll" Guid="00cfbe8b-2e61-43e2-9240-2ffbea5097f6">
         <File Id="System.IO.Ports.dll" Name="System.IO.Ports.dll" Source="$(var.NINA_TargetDir)System.IO.Ports.dll" />
       </Component>
+      <Component Id="System.Management.dll" Guid="da2b98b2-806a-4b52-b0d7-802696e275f2">
+        <File Id="System.Management.dll" Name="System.Management.dll" Source="$(var.NINA_TargetDir)System.Management.dll" />
+      </Component>
       <Component Id="System.Runtime.Caching.dll" Guid="f647162f-4dc7-434e-a8bf-36934f0efc2f">
         <File Id="System.Runtime.Caching.dll" Name="System.Runtime.Caching.dll" Source="$(var.NINA_TargetDir)System.Runtime.Caching.dll" />
       </Component>
-      <Component Id="ASCOM.Common.dll" Guid="75cf4377-eeda-4fe5-88e0-02627c7b02cc">
-        <File Id="ASCOM.Common.dll" Name="ASCOM.Common.dll" Source="$(var.NINA_TargetDir)ASCOM.Common.dll" />
+      <Component Id="thirdparty" Guid="3C8404A3-D6E6-48DE-81FA-03028AEE884D" Bitness="$(var.Win64)">
+        <File Id="thirdparty" Name="3rd-party-licenses.txt" Source="$(var.NINA_TargetDir)3rd-party-licenses.txt" />
       </Component>
-      <Component Id="ASCOM.Exceptions.dll" Guid="b128e165-154a-4ec0-a470-166334c8937a">
-        <File Id="ASCOM.Exceptions.dll" Name="ASCOM.Exceptions.dll" Source="$(var.NINA_TargetDir)ASCOM.Exceptions.dll" />
+      <Component Id="ToastNotifications.dll" Guid="640b6c3c-5a8d-47c8-9478-9ebbb876d2fc" Bitness="$(var.Win64)">
+        <File Id="ToastNotifications.dll" Name="ToastNotifications.dll" Source="$(var.NINA_TargetDir)ToastNotifications.dll" />
       </Component>
-      <Component Id="ASCOM.Com.dll" Guid="96ef84b2-d757-4080-b3b3-4ea4b3b45adb">
-        <File Id="ASCOM.Com.dll" Name="ASCOM.Com.dll" Source="$(var.NINA_TargetDir)ASCOM.Com.dll" />
+      <Component Id="ToastNotifications.Messages.dll" Guid="74b98fb4-f2a9-44d8-8c8b-988b83bf09d4" Bitness="$(var.Win64)">
+        <File Id="ToastNotifications.Messages.dll" Name="ToastNotifications.Messages.dll" Source="$(var.NINA_TargetDir)ToastNotifications.Messages.dll" />
       </Component>
-      <Component Id="OxyPlot.Wpf.Shared.dll" Guid="1397eef9-0f27-4c92-be3c-f66dfdcd2b50">
-        <File Id="OxyPlot.Wpf.Shared.dll" Name="OxyPlot.Wpf.Shared.dll" Source="$(var.NINA_TargetDir)OxyPlot.Wpf.Shared.dll" />
+      <Component Id="ToggleSwitch.dll" Guid="b7d48149-e902-402d-86f7-6d08341960c2" Bitness="$(var.Win64)">
+        <File Id="ToggleSwitch.dll" Name="ToggleSwitch.dll" Source="$(var.NINA_TargetDir)ToggleSwitch.dll" />
       </Component>
-      <Component Id="OxyPlot.Contrib.Wpf.dll" Guid="2421a0b7-9318-4572-a72a-c828cf15ffa8">
-        <File Id="OxyPlot.Contrib.Wpf.dll" Name="OxyPlot.Contrib.Wpf.dll" Source="$(var.NINA_TargetDir)OxyPlot.Contrib.Wpf.dll" />
-      </Component>
-      <Component Id="MdXaml.Plugins.dll" Guid="b1a6f459-2b0a-4887-a162-7e7dd6b3bc93">
-        <File Id="MdXaml.Plugins.dll" Name="MdXaml.Plugins.dll" Source="$(var.NINA_TargetDir)MdXaml.Plugins.dll" />
-      </Component>
-      <Component Id="NINA.runtimeconfig.json" Guid="61fd67ff-116a-4261-ba08-8fba45ead3ae">
-        <File Id="NINA.runtimeconfig.json" Name="NINA.runtimeconfig.json" Source="$(var.NINA_TargetDir)NINA.runtimeconfig.json" />
-      </Component>
-      <Component Id="NINA.deps.json" Guid="ebb9f539-e635-49fc-be16-da5f18897774">
-        <File Id="NINA.deps.json" Name="NINA.deps.json" Source="$(var.NINA_TargetDir)NINA.deps.json" />
-      </Component>
-      <Component Id="CommunityToolkit.Mvvm.dll" Guid="c5716412-f553-42d7-ab5a-6c4bebf65cc5">
-        <File Id="CommunityToolkit.Mvvm.dll" Name="CommunityToolkit.Mvvm.dll" Source="$(var.NINA_TargetDir)CommunityToolkit.Mvvm.dll" />
-      </Component>
-      <Component Id="Iconic.Zlib.Netstandard.dll" Guid="6017c127-e9e4-45cf-b5a2-7011772f4dbb">
-        <File Id="Iconic.Zlib.Netstandard.dll" Name="Iconic.Zlib.Netstandard.dll" Source="$(var.NINA_TargetDir)Iconic.Zlib.Netstandard.dll" />
-      </Component>
-      <Component Id="CommandLine.dll" Guid="0d8ac625-7515-4fab-b6ca-d1ce200c749f">
-        <File Id="CommandLine.dll" Name="CommandLine.dll" Source="$(var.NINA_TargetDir)CommandLine.dll" />
-      </Component>
-      <Component Id="Microsoft.Extensions.DependencyInjection.dll" Guid="082c4359-5a69-47f4-8043-130071793997">
-        <File Id="Microsoft.Extensions.DependencyInjection.dll" Name="Microsoft.Extensions.DependencyInjection.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.dll" />
-      </Component>
-      <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Guid="fc905efb-a8f2-4bf6-8937-f1b5e2e6754d">
-        <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Name="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
-      </Component>      
-      <Component Id="sni.dll" Guid="0E0DB3D2-E282-4C15-9B29-13D1E513EF8D">
-        <File Id="sni.dll" Name="sni.dll" Source="$(var.NINA_TargetDir)sni.dll" />
-      </Component>
-      <Component Id="SQLite.Interop.dll_x64_native" Guid="A217249B-AF5A-4128-B4D0-336B111B5995">
-        <File Id="SQLite.Interop.dll_x64_native" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)SQLite.Interop.dll" />
+      <Component Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0" Bitness="$(var.Win64)">
+        <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
