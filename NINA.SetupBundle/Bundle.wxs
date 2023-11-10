@@ -27,25 +27,8 @@
 		<util:RegistrySearch Id="PreviousInstallFolderSearch" Root="HKLM" Key="SOFTWARE\N.I.N.A. - Nighttime Imaging 'N' Astronomy" Value="InstallFolder" Variable="PreviousInstallFolder" Bitness="$(var.Win64)" />
 		<util:DirectorySearch Path="[PreviousInstallFolder]" Variable="InstallFolder" After="PreviousInstallFolderSearch" Condition="PreviousInstallFolder" />
 		<Variable Name="LaunchTarget" Value="[InstallFolder]\NINA.exe" Type="formatted" />
-    <netfx:DotNetCoreSearch
-			RuntimeType="desktop"
-			Platform="x64"
-			MajorVersion="7"
-			Variable="DotNet7DesktopRuntimeVersion"
-			/>
     
 		<Chain>
-      <ExePackage
-           Id="TheNet7Runtime"
-           DisplayName=".NET 7 Desktop Runtime"
-           Vital="no"
-           Cache="remove"
-           Permanent="yes"
-           InstallArguments="/install /quiet /norestart"
-           DetectCondition="DotNet7DesktopRuntimeVersion &gt;= v7.0.0">
-        <!-- The file is required locally. Inside the pre-build event this runtime will be downloaded from the microsoft page if it does not exist-->
-        <ExePackagePayload SourceFile="$(var.ProjectDir)\dotnet-windowsdesktop-runtime-win-x64.exe" DownloadUrl="https://aka.ms/dotnet/7.0/windowsdesktop-runtime-win-x64.exe" />
-      </ExePackage>
 			<MsiPackage Id="NINASetup" Name="$(var.SetupMsiName)" SourceFile="$(var.SetupSource)" bal:DisplayInternalUICondition="1">
 				<MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]" />
 			</MsiPackage>

@@ -55,13 +55,7 @@
   </Target>
   <Import Project="Sdk.targets" Sdk="WixToolset.Sdk" Version="4.0.2" />
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(ProjectDir)dotnet-windowsdesktop-runtime-win-x64.exe" (
-  echo "Downloading dotnet desktop runtime installer to $(ProjectDir)dotnet-windowsdesktop-runtime-win-x64.exe"
-  powershell -Command "(New-Object Net.WebClient).DownloadFile('https://aka.ms/dotnet/7.0/windowsdesktop-runtime-win-x64.exe', '$(ProjectDir)dotnet-windowsdesktop-runtime-win-x64.exe')"
-)
-
-
-%25LOCALAPPDATA%25\Pandoc\pandoc.exe "$(SolutionDir)RELEASE_NOTES.md" -f markdown -t rtf -s -o "$(SolutionDir)RELEASE_NOTES.rtf"</PreBuildEvent>
+    <PreBuildEvent>%25LOCALAPPDATA%25\Pandoc\pandoc.exe "$(SolutionDir)RELEASE_NOTES.md" -f markdown -t rtf -s -o "$(SolutionDir)RELEASE_NOTES.rtf"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>del $(SolutionDir)RELEASE_NOTES.rtf
