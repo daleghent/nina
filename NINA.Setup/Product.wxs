@@ -150,9 +150,6 @@
       <ComponentGroupRef Id="nb_NO_files" />
       <ComponentGroupRef Id="ko_KR_files" />
       <ComponentGroupRef Id="pt_files" />
-      <ComponentGroupRef Id="runtimes_win_x64_native_files" />
-      <ComponentGroupRef Id="runtimes_win_lib_net7.0_files" />
-      <ComponentGroupRef Id="runtimes_win_lib_netcoreapp2.1_files" />
       <ComponentGroupRef Id="uk_UA_files" />
       <ComponentGroupRef Id="hu_HU_files" />
       <ComponentGroupRef Id="eu_ES_files" />
@@ -648,6 +645,12 @@
       </Component>
       <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Guid="fc905efb-a8f2-4bf6-8937-f1b5e2e6754d">
         <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Name="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Source="$(var.NINA_TargetDir)Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+      </Component>      
+      <Component Id="sni.dll" Guid="0E0DB3D2-E282-4C15-9B29-13D1E513EF8D">
+        <File Id="sni.dll" Name="sni.dll" Source="$(var.NINA_TargetDir)sni.dll" />
+      </Component>
+      <Component Id="SQLite.Interop.dll_x64_native" Guid="A217249B-AF5A-4128-B4D0-336B111B5995">
+        <File Id="SQLite.Interop.dll_x64_native" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)SQLite.Interop.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
@@ -1581,40 +1584,4 @@
     </ComponentGroup>
   </Fragment>
   <!-- Avalondock localization End -->
-
-  <!-- Dynamic linked runtime files Start -->
-  <Fragment>
-    <ComponentGroup Id="runtimes_win_x64_native_files" Directory="runtimes_win_x64_native">
-      <Component Id="sni.dll" Guid="ebb719e3-fd87-4480-bf81-fba95336720a">
-        <File Id="sni.dll" Name="sni.dll" Source="$(var.NINA_TargetDir)runtimes\win-x64\native\sni.dll" />
-      </Component>
-      <Component Id="SQLite.Interop.dll_x64_native" Guid="a30b7a13-b4a3-460f-9945-2766f63bfac6">
-        <File Id="SQLite.Interop.dll_x64_native" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)runtimes\win-x64\native\SQLite.Interop.dll" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
-
-  <Fragment>
-    <ComponentGroup Id="runtimes_win_lib_net7.0_files" Directory="runtimes_win_lib_net7.0">
-      <Component Id="System.IO.Ports.dll_net7.0" Guid="390a3a52-4d61-4c07-8139-8ea95ae36fc5">
-        <File Id="System.IO.Ports.dll_net7.0" Name="System.IO.Ports.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.IO.Ports.dll" />
-      </Component>
-      <Component Id="System.Management.dll_net7.0" Guid="9ea0f725-92c7-4edd-a2ef-31f3a0ba2df7">
-        <File Id="System.Management.dll_net7.0" Name="System.Management.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Management.dll" />
-      </Component>
-      <Component Id="System.Runtime.Caching.dll_net7.0" Guid="57e25300-9a6b-496c-91f7-8abea95aa07d">
-        <File Id="System.Runtime.Caching.dll_net7.0" Name="System.Runtime.Caching.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\net7.0\System.Runtime.Caching.dll" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
-
-  <Fragment>
-    <ComponentGroup Id="runtimes_win_lib_netcoreapp2.1_files" Directory="runtimes_win_lib_netcoreapp2.1">
-      <Component Id="System.Data.SqlClient.dll_netcoreapp2.1" Guid="21de8b50-9c4c-4324-aa66-54ef94786a17">
-        <File Id="System.Data.SqlClient.dll_netcoreapp2.1" Name="System.Data.SqlClient.dll" Source="$(var.NINA_TargetDir)runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
-
-  <!-- Dynamic linked runtime files End -->
 </Wix>
