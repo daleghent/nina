@@ -655,6 +655,27 @@
       <Component Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0" Bitness="$(var.Win64)">
         <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
       </Component>
+      <Component Id="External_x64_VCRedis_msvcp100.dll" Guid="d214e6a8-0654-4a85-8096-1b7ff9a672c0" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_msvcp100.dll" Name="msvcp100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp100.dll" />
+      </Component>
+      <Component Id="External_x64_VCRedis_msvcp140.dll" Guid="A7EB3D21-2D07-46AC-8F1B-3D8539E43CFD" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_msvcp140.dll" Name="msvcp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp140.dll" />
+      </Component>
+      <Component Id="External_x64_VCRedis_msvcr100.dll" Guid="02CB55BE-6D62-47AA-8D05-F6A626D1D8C3" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr100.dll" />
+      </Component>
+      <Component Id="External_x64_VCRedis_msvcr120.dll" Guid="ABD36695-F2E3-417D-A862-32B04E905E98" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr120.dll" />
+      </Component>
+      <Component Id="External_x64_VCRedis_vcruntime140.dll" Guid="27F9ADDA-59DB-4ABE-AB7B-4DC74DBF128B" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140.dll" />
+      </Component>
+      <Component Id="External_x64_VCRedis_vcruntime140_1.dll" Guid="EFCC3E8B-DA53-4385-8282-D78E66860A54" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_vcruntime140_1.dll" Name="vcruntime140_1.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140_1.dll" />
+      </Component>
+      <Component Id="External_x64_VCRedis_vcomp140.dll" Guid="3A262497-11B7-4996-9526-48424A269C23" Bitness="$(var.Win64)">
+        <File Id="External_x64_VCRedis_vcomp140.dll" Name="vcomp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcomp140.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
@@ -919,33 +940,6 @@
   </Fragment>
 
   <!-- x64 Dependencies -->
-
-  <Fragment>
-    <ComponentGroup Id="External_x64_VCRedis_files" Directory="INSTALLFOLDER">
-      <Component Id="External_x64_VCRedis_msvcp100.dll" Guid="d214e6a8-0654-4a85-8096-1b7ff9a672c0" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_msvcp100.dll" Name="msvcp100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp100.dll" />
-      </Component>
-      <Component Id="External_x64_VCRedis_msvcp140.dll" Guid="A7EB3D21-2D07-46AC-8F1B-3D8539E43CFD" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_msvcp140.dll" Name="msvcp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp140.dll" />
-      </Component>
-      <Component Id="External_x64_VCRedis_msvcr100.dll" Guid="02CB55BE-6D62-47AA-8D05-F6A626D1D8C3" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_msvcr100.dll" Name="msvcr100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr100.dll" />
-      </Component>
-      <Component Id="External_x64_VCRedis_msvcr120.dll" Guid="ABD36695-F2E3-417D-A862-32B04E905E98" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_msvcr120.dll" Name="msvcr120.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcr120.dll" />
-      </Component>
-      <Component Id="External_x64_VCRedis_vcruntime140.dll" Guid="27F9ADDA-59DB-4ABE-AB7B-4DC74DBF128B" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_vcruntime140.dll" Name="vcruntime140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140.dll" />
-      </Component>
-      <Component Id="External_x64_VCRedis_vcruntime140_1.dll" Guid="EFCC3E8B-DA53-4385-8282-D78E66860A54" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_vcruntime140_1.dll" Name="vcruntime140_1.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcruntime140_1.dll" />
-      </Component>
-      <Component Id="External_x64_VCRedis_vcomp140.dll" Guid="3A262497-11B7-4996-9526-48424A269C23" Bitness="$(var.Win64)">
-        <File Id="External_x64_VCRedis_vcomp140.dll" Name="vcomp140.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\vcomp140.dll" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
-
   <Fragment>
     <ComponentGroup Id="External_x64_AllPro_files" Directory="External_x64_AllPro">
       <Component Id="External_x64_AllPro_spikausbd.dll" Guid="F8AA23B3-12D9-4DF7-92A6-E3219F5A5231" Bitness="$(var.Win64)">
