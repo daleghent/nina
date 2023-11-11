@@ -704,6 +704,7 @@
     <Compile Include="View\VersionCheckView.xaml.cs">
       <DependentUpon>VersionCheckView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowPlacement.cs" />
     <Page Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

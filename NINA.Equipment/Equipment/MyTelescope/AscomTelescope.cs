@@ -143,12 +143,6 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public bool CanSetTrackingRate {
-            get {
-                return GetProperty(nameof(Telescope.CanSetTracking), false);
-            }
-        }
-
         public bool CanSlew {
             get {
                 return GetProperty(nameof(Telescope.CanSlew), false);
@@ -1071,12 +1065,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         protected override string ConnectionLostMessage => Loc.Instance["LblTelescopeConnectionLost"];
 
         public void SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
-            if (!this.TrackingModes.Contains(TrackingMode.Custom) || !this.CanSetTrackingRate) {
+            if (!this.TrackingModes.Contains(TrackingMode.Custom)) {
                 throw new NotSupportedException("Custom tracking rate not supported");
             }
 
-            this.device.TrackingRate = DriveRates.driveSidereal;
-            this.device.Tracking = true;
+            try {
+                this.device.TrackingRate = DriveRates.driveSidereal;
+            } catch (PropertyNotImplementedException pnie) {
+                // TrackingRate Write can throw a PropertyNotImplementedException.
+                Logger.Debug(pnie.Message);
+            }
+            if(this.CanSetTrackingEnabled) { 
+                this.device.Tracking = true;
+            }
             this.device.RightAscensionRate = rightAscensionRate;
             this.device.DeclinationRate = declinationRate;
             RaisePropertyChanged(nameof(TrackingMode));

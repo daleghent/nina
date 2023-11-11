@@ -503,7 +503,7 @@
                             </UniformGrid>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="{ns:Loc LblTargets}">
+                    <GroupBox Header="{ns:Loc LblTargets}" Visibility="{Binding RectangleCalculated, Converter={StaticResource VisibilityConverter}}">
                         <StackPanel Orientation="Vertical">
                             <UniformGrid Margin="0,6,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblHorizontalPanels}" />
