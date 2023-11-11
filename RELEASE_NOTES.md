@@ -46,7 +46,6 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Mini sequencer will now auto scroll to active items
 - The SkyX Imagelink is now available as a plate solver
 - DC-3 Dreams PinPoint is now available as a plate solver
-- Framing tab will now remember the last selected rotation value between sessions
 - When switching profiles the "Switch Filter" instruction will rematch the filter selection based on the name or the index
 - In framing tab and Deep Sky Object Containers you can now paste in full text coordinates into the RA/Dec text fields and they will be parsed into the separate boxes - e.g. when pasting the following string into the textbox the coordinates will be fully populated: `RA: 05h43m05s.90 DEC: +52°10′58″.0`
 - When sending location to the telescope the elevation is now handled separately and a different error message is shown
@@ -56,8 +55,6 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
   - In conjunction with this update, the HFR History panel has been modified. It will now use the aforementioned settings button, eliminating the previous feature where settings appeared upon mouse hover.
   - Every equipment panel now features an "Info only" switch, allowing users to opt for purely informational displays or to incorporate interactive controls.
 - Changed the default application theme to "Persian Faint"
-- The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
-  - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.
 - Reverse autofocus direction when backlash compensation mode is set to "Overshoot" and a BacklashIN value is specified, to reduce the amount of required backlash compensation during autofocus
 - Native autofocus will now properly show star detection result in the image statistics panel
 - The native autofocus mechanism has been upgraded to simultaneously process images while shifting to new focus points, which enhances the speed of the entire autofocus operation.
@@ -109,7 +106,34 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - ASCOM Camera ImageArray can now properly transform Byte[,], Short[,], UShort[,] in addition to the existing Int[,] to the 16 bit data structure N.I.N.A. is using
 - Dragging an instruction below a sequence container when nothing else is below it will now work correctly
 - When switching profiles, the dock layout will be saved piror to switching
-- FLI Camera - Fix Exposure Time that it can also set fractions of a second
+
+# Version 2.3 Hotfix 2
+
+## Improvements 
+- Framing tab will now remember the last selected rotation value between sessions
+- The method the application uses to store and recall the window's position and size has been enhanced. This ensures that the window's location is more consistently retained across sessions.
+  - Due to this update, please re-adjust the window to the desired position and size once after the upgrade. From then on, the application will remember the settings.
+
+## Bugfixes
+- Do not throw an error when TrackingRate SET is throwing a PropertyNotImplementedException - this time for real
+- Fix potential race condition in PlateSolvingStatusVM when setting platesolve result
+- Dither after exposures will no longer fail when clearing the image history
+- SkyAtlas: Date Picker will now set the correct date
+- FLICamera - Fix Exposure time that it can also set fractions of a second
+
+# Version 2.3 Hotfix 1
+
+## Bugfixes
+- Database migration and creation on first time upgrade or installation will now be much faster
+- Fixed Issue in QHY Driver when overscan area was being shown in video mode.
+- Side Of Pier during Meridian Flip will not be flipped when the current position is already a counter weight down position (e.g. when having a pause before meridian time set)
+- Do not throw an error when TrackingRate SET is throwing a PropertyNotImplementedException
+- Fixed an issue when changing the profiles that the ObjectTypes in Framing Assistant were duplicated
+
+## Improvements
+- In Options it is now possible to specify custom plugin repositories. Only add software repositories from sources that you trust! 
+- Sequencer Target Sidebar will now load much faster when having a large number of targets
+- A grid splitter is added to the plugin tab so that the list of plugins can be minimized and more room for the detail page is available
 
 # Version 2.3
 
