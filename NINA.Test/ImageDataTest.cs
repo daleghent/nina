@@ -343,6 +343,7 @@ namespace NINA.Test {
         [TestCase(NINA.Core.Enum.FileTypeEnum.FITS, ".fits")]
         [TestCase(NINA.Core.Enum.FileTypeEnum.TIFF, ".tif")]
         public async Task SaveToDiskSimpleTest(NINA.Core.Enum.FileTypeEnum fileType, string extension) {
+            dataFactoryUtility.ProfileServiceMock.Setup(x => x.ActiveProfile.ImageFileSettings.FITSAddFzExtension).Returns(false);
             var data = new ushort[] {
                 3,1,1,
                 3,4,5,
@@ -369,6 +370,7 @@ namespace NINA.Test {
         [TestCase(NINA.Core.Enum.FileTypeEnum.FITS)]
         [TestCase(NINA.Core.Enum.FileTypeEnum.TIFF)]
         public async Task SaveToDiskForceExtensionTest(NINA.Core.Enum.FileTypeEnum fileType) {
+            dataFactoryUtility.ProfileServiceMock.Setup(x => x.ActiveProfile.ImageFileSettings.FITSAddFzExtension).Returns(false);
             var data = new ushort[] {
                 3,1,1,
                 3,4,5,

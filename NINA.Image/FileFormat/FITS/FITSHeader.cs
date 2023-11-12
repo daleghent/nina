@@ -24,18 +24,17 @@ using NINA.Image.ImageData;
 using System.Windows.Input;
 
 namespace NINA.Image.FileFormat.FITS {
-
     public class FITSHeader {
 
         public FITSHeader(int width, int height) {
-            Add("SIMPLE", true, "C# FITS");
-            Add("BITPIX", 16, "");
-            Add("NAXIS", 2, "Dimensionality");
-            Add("NAXIS1", width, "");
-            Add("NAXIS2", height, "");
-            Add("BZERO", 32768, "");
-            Add("EXTEND", true, "Extensions are permitted");
-        }
+                Add("SIMPLE", true, "C# FITS");
+                Add("BITPIX", 16, "");
+                Add("NAXIS", 2, "Dimensionality");
+                Add("NAXIS1", width, "");
+                Add("NAXIS2", height, "");
+                Add("BZERO", 32768, "");
+                Add("EXTEND", true, "Extensions are permitted");
+            }
 
         private Dictionary<string, FITSHeaderCard> _headerCards = new Dictionary<string, FITSHeaderCard>();
 

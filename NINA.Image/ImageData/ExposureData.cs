@@ -59,30 +59,45 @@ namespace NINA.Image.ImageData {
     public class Flipped2DExposureData : BaseExposureData {
         private readonly Array flipped2DArray;
         public bool IsBayered { get; private set; }
+        public bool Create32BitData { get; }
 
         public Flipped2DExposureData(
             Array flipped2DArray,
             int bitDepth,
             bool isBayered,
             ImageMetaData metaData,
-            IImageDataFactory imageDataFactory)
+            IImageDataFactory imageDataFactory,
+            bool create32BitData = false)
             : base(bitDepth, metaData, imageDataFactory) {
             if (flipped2DArray.Rank > 2) { throw new NotSupportedException(); }
             this.flipped2DArray = flipped2DArray;
             this.IsBayered = isBayered;
+            Create32BitData = create32BitData;
         }
 
         public override async Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
             try {
                 progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblPrepareExposure"] });
-                var flatArray = await Task.Run(() => FlipAndConvert2d(this.flipped2DArray), cancelToken);
-                return imageDataFactory.CreateBaseImageData(
-                    imageArray: new ImageArray(flatArray),
-                    width: this.flipped2DArray.GetLength(0),
-                    height: this.flipped2DArray.GetLength(1),
-                    bitDepth: this.BitDepth,
-                    isBayered: this.IsBayered,
-                    metaData: this.MetaData);
+
+                if(this.Create32BitData && this.flipped2DArray.GetType() == typeof(int[,])) {
+                    var flatArray = await Task.Run(() => FilpAndProcessAsInt((int[,])this.flipped2DArray, this.flipped2DArray.GetLength(0), this.flipped2DArray.GetLength(1), (int)(this.flipped2DArray.GetLength(0) * this.flipped2DArray.GetLength(1))));
+                    return imageDataFactory.CreateBaseImageData(
+                        imageArray: new ImageArrayInt(flatArray),
+                        width: this.flipped2DArray.GetLength(0),
+                        height: this.flipped2DArray.GetLength(1),
+                        bitDepth: this.BitDepth,
+                        isBayered: this.IsBayered,
+                        metaData: this.MetaData);
+                } else {
+                    var flatArray = await Task.Run(() => FlipAndConvert2d(this.flipped2DArray), cancelToken);
+                    return imageDataFactory.CreateBaseImageData(
+                        imageArray: new ImageArray(flatArray),
+                        width: this.flipped2DArray.GetLength(0),
+                        height: this.flipped2DArray.GetLength(1),
+                        bitDepth: this.BitDepth,
+                        isBayered: this.IsBayered,
+                        metaData: this.MetaData);
+                }
             } finally {
                 progress?.Report(new ApplicationStatus { Status = string.Empty });
             }
@@ -209,6 +224,25 @@ namespace NINA.Image.ImageData {
                 }
             }
         }
+        private static int[] FilpAndProcessAsInt(int[,] arr, int width, int height, int length) {
+            int[] flatArray = new int[length];
+            int value;
+            unsafe {
+                fixed (int* ptr = arr) {
+                    int idx = 0, row = 0;
+                    for (int i = 0; i < length; i++) {
+                        value = (int)ptr[i];
+
+                        idx = ((i % height) * width) + row;
+                        if ((i % (height)) == (height - 1)) row++;
+
+                        int b = value;
+                        flatArray[idx] = b;
+                    }
+                }
+            }
+            return flatArray;
+        }
     }
 
     public class RAWExposureData : BaseExposureData {
@@ -265,7 +299,7 @@ namespace NINA.Image.ImageData {
         }
 
         public Flipped2DExposureData CreateFlipped2DExposureData(Array flipped2DArray, int bitDepth, bool isBayered, ImageMetaData metaData) {
-            return new Flipped2DExposureData(flipped2DArray, bitDepth, isBayered, metaData, imageDataFactory);
+            return new Flipped2DExposureData(flipped2DArray, bitDepth, isBayered, metaData, imageDataFactory, profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData);
         }
 
         public RAWExposureData CreateRAWExposureData(RawConverterEnum converter, byte[] rawBytes, string rawType, int bitDepth, ImageMetaData metaData) {
@@ -273,6 +307,9 @@ namespace NINA.Image.ImageData {
         }
 
         public ImageArrayExposureData CreateImageArrayExposureData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
+            return new ImageArrayExposureData(input, width, height, bitDepth, isBayered, metaData, imageDataFactory);
+        }
+        public ImageArrayExposureData CreateImageArrayExposureDataInt(int[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
             return new ImageArrayExposureData(input, width, height, bitDepth, isBayered, metaData, imageDataFactory);
         }
 

@@ -837,12 +837,12 @@ namespace NINA.Image.FileFormat.XISF {
         /// </summary>
         /// <param name="imageProperties"></param>
         /// <param name="imageType"></param>
-        public void AddImageMetaData(ImageProperties imageProperties, string imageType) {
-            if (imageType == "SNAPSHOT") { imageType = "LIGHT"; }
+        public void AddImageMetaData(ImageProperties imageProperties, string imageType, XISFSampleFormat format = XISFSampleFormat.UInt16) {
+            if (imageType == "SNAPSHOT") { imageType = "LIGHT"; } 
 
             XElement image = new XElement(xmlns + "Image",
                     new XAttribute("geometry", imageProperties.Width + ":" + imageProperties.Height + ":" + "1"),
-                    new XAttribute("sampleFormat", "UInt16"),
+                    new XAttribute("sampleFormat", format.ToString()),
                     new XAttribute("imageType", imageType),
                     new XAttribute("colorSpace", "Gray")
                     );
@@ -857,5 +857,10 @@ namespace NINA.Image.FileFormat.XISF {
                 Content.Save(sw);
             }
         }
+    }
+
+    public enum XISFSampleFormat {
+        UInt16,
+        UInt32
     }
 }

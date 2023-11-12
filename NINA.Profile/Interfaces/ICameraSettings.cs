@@ -72,5 +72,6 @@ namespace NINA.Profile.Interfaces {
         int GenericCameraFanSpeed { get; set; }
 
         bool? ZwoAsiMonoBinMode { get; set; }
+        bool ASCOMCreate32BitData { get; set; }
     }
 }

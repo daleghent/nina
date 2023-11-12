@@ -38,7 +38,7 @@ using NINA.Core.Enum;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
-    internal class AscomCamera : AscomDevice<Camera>, ICamera, IDisposable {
+    public class AscomCamera : AscomDevice<Camera>, ICamera, IDisposable {
 
         public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory) : base(cameraId, name) {
             this.profileService = profileService;
@@ -132,6 +132,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         CanSetOffset = false;
                     }
                 }
+            }
+        }
+
+        public bool Create32BitData {
+            get => profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData;
+            set {
+                profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData = value;
+                RaisePropertyChanged();
             }
         }
 

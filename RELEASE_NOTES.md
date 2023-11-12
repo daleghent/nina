@@ -91,6 +91,19 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Auto Brightness Flat: An instruction to find a flat panel brightness for a static exposure time
 - Sky Flat: Similar to the Flat Wizard sky flat, this will take flat frames that have a constantly adjusted exposure time while progressing to compensate for illumination changes due to sun altitude.
 
+
+## File Formats
+
+### FITS
+- Introduced checksum support for enhanced data integrity.
+- Expanded storage options to include compressed formats, utilizing RICE, GZIP1, GZIP2, PLIO, and HCOMPRESS algorithms. Notably, RICE offers an optimal balance of speed and compression efficiency
+- Implemented functionality to read compressed data into Framing Assistant and Camera Simulator
+- Enabled the storage of compressed FITS files with the ".fits.fz" extension for improved file identification
+- Added support for storing data in a 32-bit floating point format
+
+### XISF
+- Added support for storing data in a 32-bit unsigned integer format
+
 ## Bugfixes
 - Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
 - Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning

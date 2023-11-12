@@ -470,6 +470,36 @@ namespace NINA.Image.FileFormat.XISF {
             }
         }
 
+        public void AddAttachedImageInt(int[] data, FileSaveInfo fileSaveInfo) {
+            if (Header.Image == null) { throw new InvalidOperationException("No Image Header Information available for attaching image. Add Image Header first!"); }
+
+            // Add Attached data location info to header
+            Data = new XISFData(data, fileSaveInfo);
+
+            if (Data.ChecksumType != XISFChecksumTypeEnum.NONE) {
+                Header.Image.Add(new XAttribute("checksum", $"{Data.ChecksumName}:{Data.Checksum}"));
+            }
+
+            int headerLengthBytes = 4;
+            int reservedBytes = 4;
+            int attachmentInfoMaxBytes = 256; // Assume max 256 bytes for the attachment, compression, and checksum attributes.
+            int currentHeaderSize = Header.ByteCount + xisfSignature.Length + headerLengthBytes + reservedBytes + attachmentInfoMaxBytes;
+
+            int dataBlockStart = currentHeaderSize + (PaddedBlockSize - currentHeaderSize % PaddedBlockSize);
+
+            if (Data.CompressionType != XISFCompressionTypeEnum.NONE) {
+                Header.Image.Add(new XAttribute("location", $"attachment:{dataBlockStart}:{Data.CompressedSize}"));
+
+                if (Data.ByteShuffling == true) {
+                    Header.Image.Add(new XAttribute("compression", $"{Data.CompressionName}:{Data.Size}:{Data.ShuffleItemSize}"));
+                } else {
+                    Header.Image.Add(new XAttribute("compression", $"{Data.CompressionName}:{Data.Size}"));
+                }
+            } else {
+                Header.Image.Add(new XAttribute("location", $"attachment:{dataBlockStart}:{Data.Size}"));
+            }
+        }
+
         /// <summary>
         /// Writes monolithic XISF data to stream
         ///

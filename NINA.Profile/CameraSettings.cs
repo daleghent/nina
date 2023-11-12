@@ -73,6 +73,8 @@ namespace NINA.Profile {
             genericCameraFanSpeed = 70;
 
             zwoAsiMonoBinMode = false;
+
+            ascomCreate32BitData = false;
         }
 
         private string id;
@@ -672,6 +674,19 @@ namespace NINA.Profile {
             set {
                 if (zwoAsiMonoBinMode != value) {
                     zwoAsiMonoBinMode = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool ascomCreate32BitData;
+
+        [DataMember]
+        public bool ASCOMCreate32BitData {
+            get => ascomCreate32BitData;
+            set {
+                if(ascomCreate32BitData != value) {
+                    ascomCreate32BitData = value;
                     RaisePropertyChanged();
                 }
             }

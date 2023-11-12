@@ -330,6 +330,7 @@
                                 </DataTemplate>
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
+                                    ASCOM="{StaticResource Default}"
                                     Atik="{StaticResource Default}"
                                     Canon="{StaticResource Default}"
                                     Default="{StaticResource Default}"
@@ -597,6 +598,28 @@
                                     </DockPanel>
                                 </DataTemplate>
 
+                                <DataTemplate x:Key="ASCOM">
+                                    <DockPanel Margin="0,5,0,0">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblASCOMCreate32BitData}">
+                                            <TextBlock.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblASCOMCreate32BitDataTooltip}" />
+                                                </ToolTip>
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                                        <CheckBox HorizontalAlignment="Right" IsChecked="{Binding Create32BitData}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblASCOMCreate32BitDataTooltip}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
+                                </DataTemplate>
+
                                 <DataTemplate x:Key="Canon">
                                     <StackPanel Orientation="Vertical">
                                         <DockPanel Margin="0,0,0,6">
@@ -747,9 +770,7 @@
                                                 MinWidth="100"
                                                 VerticalAlignment="Center"
                                                 Text="{ns:Loc LblZwoMonoBinMode}" />
-                                            <CheckBox
-                                                HorizontalAlignment="Right"
-                                                IsChecked="{Binding ZwoAsiMonoBinMode}">
+                                            <CheckBox HorizontalAlignment="Right" IsChecked="{Binding ZwoAsiMonoBinMode}">
                                                 <CheckBox.ToolTip>
                                                     <ToolTip ToolTipService.ShowOnDisabled="False">
                                                         <TextBlock Text="{ns:Loc LblZwoMonoBinModeTooltip}" />
@@ -829,6 +850,7 @@
 
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
+                                    ASCOM="{StaticResource ASCOM}"
                                     Atik="{StaticResource Atik}"
                                     Canon="{StaticResource Canon}"
                                     Default="{StaticResource Default}"

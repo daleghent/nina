@@ -840,6 +840,10 @@ namespace NINA.ViewModel {
                     .Where(p => p != XISFChecksumTypeEnum.SHA3_512)
                     .ToArray();
 
+        public static FITSCompressionTypeEnum[] FITSCompressionTypes => Enum.GetValues(typeof(FITSCompressionTypeEnum))
+                   .Cast<FITSCompressionTypeEnum>()
+                   .ToArray();
+
         private ImagePatterns _imagePatterns;
 
         public ImagePatterns ImagePatterns {
