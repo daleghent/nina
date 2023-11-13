@@ -21,6 +21,7 @@ using Serilog.Core;
 using Serilog.Sinks.File;
 using System.Text;
 using Serilog.Events;
+using System.Globalization;
 
 namespace NINA.Core.Utility {
 
@@ -78,8 +79,13 @@ namespace NINA.Core.Utility {
             sb.AppendLine(PadBoth(".NET Version {0}", 70, '-', Environment.Version.ToString()));
             sb.AppendLine(PadBoth("", 70, '-'));
             sb.AppendLine(PadBoth("Processor Count {0}", 70, '-', Environment.ProcessorCount.ToString()));
-            sb.AppendLine(PadBoth("Total Physical Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalPhysicalMemory / 1024d / 1024d / 1024d, 2).ToString()));
-            sb.AppendLine(PadBoth("Total Virtual Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalVirtualMemory / 1024d / 1024d / 1024d, 2).ToString()));
+            sb.AppendLine(PadBoth("Total Physical Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalPhysicalMemory / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
+            sb.AppendLine(PadBoth("Total Virtual Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalVirtualMemory / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
+            foreach(var drive in DriveInfo.GetDrives()) {
+                if(drive.IsReady) {
+                    sb.AppendLine(PadBoth("Available Space on Drive {0}: {1} GB", 70, '-', drive.Name, Math.Round(drive.AvailableFreeSpace / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
+                }
+            }
             sb.AppendLine(PadBoth("", 70, '-'));
             sb.Append("DATE|LEVEL|SOURCE|MEMBER|LINE|MESSAGE");
 
