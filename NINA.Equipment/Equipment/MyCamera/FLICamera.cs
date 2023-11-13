@@ -875,7 +875,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms and flushing {FLIFlushCount} times at {FLIFloodBin.Name} binning");
 
             FrameType = LibFLI.FLIFrameType.RBI_FLUSH;
-            ExposureLength = (uint)FLIFloodDuration * 1000;
+            ExposureLength = (uint)(FLIFloodDuration * 1000);
             ReadoutMode = ReadoutModeForSnapImages;
             SetBinning(FLIFloodBin.X, FLIFloodBin.Y);
 
