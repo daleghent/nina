@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace NINA.Sequencer.Utility {
     [JsonObject(MemberSerialization.OptOut)]
     public class ExposureInfo : BaseINPC {
+        private int count;
 
         [JsonConstructor]
         public ExposureInfo(int count, string filter, double exposureTime, int gain, int offset, string imageType, short binningX, short binningY, double roi) {
@@ -42,7 +43,16 @@ namespace NINA.Sequencer.Utility {
                 return $"{Math.Truncate(total.TotalHours)}:{total.Minutes:D2}:{total.Seconds:D2}";
             }
         }
-        public int Count { get; private set; }
+        public int Count {
+            get => count;
+            set {
+                if (count != value) {
+                    count = value;
+                    RaisePropertyChanged(nameof(Count));
+                    RaisePropertyChanged(nameof(TotalTime));
+                }                
+            }
+        }
         public string Filter { get; }
         public double ExposureTime { get; }
         public int Gain { get; }
@@ -54,8 +64,6 @@ namespace NINA.Sequencer.Utility {
 
         public void Increment() {
             Count++;
-            RaisePropertyChanged(nameof(Count));
-            RaisePropertyChanged(nameof(TotalTime));
         }
     }
 }

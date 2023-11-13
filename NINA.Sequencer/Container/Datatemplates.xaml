@@ -631,7 +631,8 @@
                             Grid.ColumnSpan="2"
                             AutoGenerateColumns="False"
                             CanUserAddRows="False"
-                            ItemsSource="{Binding ExposureInfoList}">
+                            ItemsSource="{Binding ExposureInfoList}"
+                            SelectionMode="Single">
                             <i:Interaction.Behaviors>
                                 <wpfbehaviors:BubbleScrollEvent />
                             </i:Interaction.Behaviors>
@@ -654,8 +655,16 @@
                                 <DataGridTemplateColumn
                                     Width="*"
                                     Header="{ns:Loc LblTotalNo}"
-                                    IsReadOnly="True"
                                     SortDirection="Ascending">
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ninactrl:IntStepperControl
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                MinValue="0"
+                                                Value="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock
