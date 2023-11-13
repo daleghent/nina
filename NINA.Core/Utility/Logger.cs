@@ -84,6 +84,8 @@ namespace NINA.Core.Utility {
             foreach(var drive in DriveInfo.GetDrives()) {
                 if(drive.IsReady) {
                     sb.AppendLine(PadBoth("Available Space on Drive {0}: {1} GB", 70, '-', drive.Name, Math.Round(drive.AvailableFreeSpace / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
+                } else {
+                    sb.AppendLine(PadBoth("Drive {0} is not ready", 70, '-', drive.Name));
                 }
             }
             sb.AppendLine(PadBoth("", 70, '-'));
