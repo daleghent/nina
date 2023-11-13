@@ -39,7 +39,7 @@ namespace NINA.Sequencer.Utility {
         public string TotalTime {
             get {
                 var total = TimeSpan.FromSeconds(ExposureTime * Count);
-                return $"{total.Hours:D2}:{total.Minutes:D2}:{total.Seconds:D2}";
+                return $"{Math.Truncate(total.TotalHours)}:{total.Minutes:D2}:{total.Seconds:D2}";
             }
         }
         public int Count { get; private set; }

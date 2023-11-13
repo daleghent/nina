@@ -142,6 +142,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Side Of Pier during Meridian Flip will not be flipped when the current position is already a counter weight down position (e.g. when having a pause before meridian time set)
 - Do not throw an error when TrackingRate SET is throwing a PropertyNotImplementedException
 - Fixed an issue when changing the profiles that the ObjectTypes in Framing Assistant were duplicated
+- Exposure Info: When the total exposure time exceeds 24 hours, it will now be displayed properly.
 
 ## Improvements
 - In Options it is now possible to specify custom plugin repositories. Only add software repositories from sources that you trust! 
