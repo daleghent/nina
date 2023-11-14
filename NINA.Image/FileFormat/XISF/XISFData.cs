@@ -226,10 +226,18 @@ namespace NINA.Image.FileFormat.XISF {
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_256:
-                        throw new NotSupportedException();                        
+                        SHA3_256 sha3_256 = SHA3_256.Create();
+                        Checksum = GetStringFromHash(sha3_256.ComputeHash(outArray));
+                        ChecksumName = "sha3-256";
+                        sha3_256.Dispose();
+                        break;
 
                     case XISFChecksumTypeEnum.SHA3_512:
-                        throw new NotSupportedException();                        
+                        SHA3_512 sha3_512 = SHA3_512.Create();
+                        Checksum = GetStringFromHash(sha3_512.ComputeHash(outArray));
+                        ChecksumName = "sha3-512";
+                        sha3_512.Dispose();
+                        break;
 
                     case XISFChecksumTypeEnum.NONE:
                     default:

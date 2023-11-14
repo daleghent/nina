@@ -20,9 +20,9 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - SGP Server API has been removed from the core application. Instead this is available as a plugin via "SGP Server Emulation"
 - Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now supports HDR modes if available. The "High Conversion Gain" toggle has been removed and instead this is controlled via ReadoutModes!
 
-## .NET 7
-- The application has transitioned to .NET 7. This is not merely a version upgrade from the previously used .NET Framework 4.8. Instead, .NET 7 is rooted in .NET Core, representing a complete rewrite of the .NET Framework by Microsoft. This marks a significant technical advancement for N.I.N.A.
-- Plugins from previous versions are disabled. They must be patched by the plugin authors and targeted specifically for the new version to ensure compatibility with .NET 7.
+## .NET 8
+- The application has transitioned to .NET 8. This is not merely a version upgrade from the previously used .NET Framework 4.8. Instead, .NET 8 is rooted in .NET Core, representing a complete rewrite of the .NET Framework by Microsoft. This marks a significant technical advancement for N.I.N.A.
+- Plugins from previous versions are disabled. They must be patched by the plugin authors and targeted specifically for the new version to ensure compatibility with .NET 8.
 
 ## Improvements
 - Profile Chooser on startup will now be shown before the whole application is initializing

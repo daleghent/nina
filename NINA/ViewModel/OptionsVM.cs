@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Microsoft.Win32;
 using NINA.Astrometry;
 using NINA.Core.Enum;
 using NINA.Core.Interfaces;
@@ -44,10 +45,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace NINA.ViewModel {
 
@@ -404,9 +403,9 @@ namespace NINA.ViewModel {
         }
 
         private void RemoveFilter(object obj) {
-            if(obj is FilterInfo filter) {
-                var filters = ActiveProfile.FilterWheelSettings.FilterWheelFilters;                
-                filters.Remove(filter);                
+            if (obj is FilterInfo filter) {
+                var filters = ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+                filters.Remove(filter);
                 for (short i = 0; i < filters.Count; i++) {
                     filters[i].Position = i;
                 }
@@ -433,23 +432,22 @@ namespace NINA.ViewModel {
         }
 
         private void OpenSkyAtlasImageRepositoryDiag(object obj) {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog()) {
-                dialog.SelectedPath = ActiveProfile.ApplicationSettings.SkyAtlasImageRepository;
+            var dialog = new OpenFolderDialog();
+            dialog.InitialDirectory = ActiveProfile.ApplicationSettings.SkyAtlasImageRepository;
 
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.ApplicationSettings.SkyAtlasImageRepository = dialog.SelectedPath;
-                }
+            if (dialog.ShowDialog() == true) {
+                ActiveProfile.ApplicationSettings.SkyAtlasImageRepository = dialog.FolderName;
             }
         }
 
         private void OpenSkySurveyCacheDirectoryDiag(object obj) {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog()) {
-                dialog.SelectedPath = ActiveProfile.ApplicationSettings.SkySurveyCacheDirectory;
+            var dialog = new OpenFolderDialog();
+            dialog.InitialDirectory = ActiveProfile.ApplicationSettings.SkySurveyCacheDirectory;
 
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.ApplicationSettings.SkySurveyCacheDirectory = dialog.SelectedPath;
-                }
+            if (dialog.ShowDialog() == true) {
+                ActiveProfile.ApplicationSettings.SkySurveyCacheDirectory = dialog.FolderName;
             }
+
         }
 
         private void DownloadIndexes(object obj) {
@@ -458,12 +456,10 @@ namespace NINA.ViewModel {
         }
 
         private void OpenImageFileDiag(object o) {
-            using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
-                diag.SelectedPath = ActiveProfile.ImageFileSettings.FilePath;
-                System.Windows.Forms.DialogResult result = diag.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.ImageFileSettings.FilePath = diag.SelectedPath + "\\";
-                }
+            var diag = new OpenFolderDialog();
+            diag.FolderName = ActiveProfile.ImageFileSettings.FilePath;
+            if (diag.ShowDialog() == true) {
+                ActiveProfile.ImageFileSettings.FilePath = diag.FolderName + "\\";
             }
         }
 
@@ -480,43 +476,40 @@ namespace NINA.ViewModel {
         }
 
         private void OpenSequenceFolderDiag(object o) {
-            using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
-                diag.SelectedPath = ActiveProfile.SequenceSettings.DefaultSequenceFolder;
-                System.Windows.Forms.DialogResult result = diag.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.SequenceSettings.DefaultSequenceFolder = diag.SelectedPath + "\\";
-                }
+            var diag = new OpenFolderDialog();
+            diag.InitialDirectory = ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+            if (diag.ShowDialog() == true) {
+                ActiveProfile.SequenceSettings.DefaultSequenceFolder = diag.FolderName + "\\";
             }
+
         }
 
         private void OpenTargetsFolderDiag(object o) {
-            using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
-                diag.SelectedPath = ActiveProfile.SequenceSettings.SequencerTargetsFolder;
-                System.Windows.Forms.DialogResult result = diag.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.SequenceSettings.SequencerTargetsFolder = diag.SelectedPath + "\\";
-                }
+            var diag = new OpenFolderDialog();
+            diag.InitialDirectory = ActiveProfile.SequenceSettings.SequencerTargetsFolder;
+            if (diag.ShowDialog() == true) {
+                ActiveProfile.SequenceSettings.SequencerTargetsFolder = diag.FolderName + "\\";
             }
+
         }
 
         private void OpenSequenceTemplateFolderDiag(object o) {
-            using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
-                diag.SelectedPath = ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
-                System.Windows.Forms.DialogResult result = diag.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.SequenceSettings.SequencerTemplatesFolder = diag.SelectedPath + "\\";
-                }
+            var diag = new OpenFolderDialog();
+            diag.InitialDirectory = ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
+            if (diag.ShowDialog() == true) {
+                ActiveProfile.SequenceSettings.SequencerTemplatesFolder = diag.FolderName + "\\";
+
             }
         }
 
         private void OpenCygwinFileDiag(object o) {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog()) {
-                dialog.SelectedPath = profileService.ActiveProfile.PlateSolveSettings.CygwinLocation;
+            var dialog = new OpenFolderDialog();
+            dialog.InitialDirectory = profileService.ActiveProfile.PlateSolveSettings.CygwinLocation;
 
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                    ActiveProfile.PlateSolveSettings.CygwinLocation = dialog.SelectedPath;
-                }
+            if(dialog.ShowDialog() == true) {
+                ActiveProfile.PlateSolveSettings.CygwinLocation = dialog.FolderName;
             }
+
         }
 
         private void OpenPS2FileDiag(object o) {
@@ -548,12 +541,10 @@ namespace NINA.ViewModel {
         }
 
         private void OpenPinPointCatalogDiag(object o) {
-            var dialog = new FolderBrowserDialog {
-                RootFolder = Environment.SpecialFolder.MyComputer
-            };
+            var dialog = new OpenFolderDialog();
 
-            if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath)) {
-                ActiveProfile.PlateSolveSettings.PinPointCatalogRoot = dialog.SelectedPath;
+            if (dialog.ShowDialog() == true && !string.IsNullOrWhiteSpace(dialog.FolderName)) {
+                ActiveProfile.PlateSolveSettings.PinPointCatalogRoot = dialog.FolderName;
             }
         }
 
@@ -623,13 +614,13 @@ namespace NINA.ViewModel {
                     Notification.ShowError(ex.Message);
                     Logger.Error(ex);
                 }
-            };            
+            };
         }
 
         private void RemovePluginRepository(object obj) {
             if (obj is string url) {
                 try {
-                    if(url == Constants.MainPluginRepository) {
+                    if (url == Constants.MainPluginRepository) {
                         // Removing the main repository is ignored
                         return;
                     }
@@ -830,10 +821,10 @@ namespace NINA.ViewModel {
 
         public static XISFChecksumTypeEnum[] XISFChecksumTypes =>
                 /*
-* NOTE: PixInsight does not yet support opening files with SHA3 checksums, despite then
-* being defined as part of the XISF 1.0 specification. We will not permit the user to choose
-* these as a checksum type until PixInsight also supports them.
-*/
+    * NOTE: PixInsight does not yet support opening files with SHA3 checksums, despite then
+    * being defined as part of the XISF 1.0 specification. We will not permit the user to choose
+    * these as a checksum type until PixInsight also supports them.
+    */
                 Enum.GetValues(typeof(XISFChecksumTypeEnum))
                     .Cast<XISFChecksumTypeEnum>()
                     .Where(p => p != XISFChecksumTypeEnum.SHA3_256)
@@ -896,7 +887,7 @@ namespace NINA.ViewModel {
                 RaisePropertyChanged();
             }
         }
- 
+
 
         public int SaveQueueSize {
             get => Properties.Settings.Default.SaveQueueSize;

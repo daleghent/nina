@@ -387,10 +387,16 @@ namespace NINA.Image.FileFormat.XISF {
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_256:
-                        throw new NotSupportedException();
+                        SHA3_256 sha3_256 = SHA3_256.Create();
+                        computedCksum = GetStringFromHash(sha3_256.ComputeHash(raw));
+                        sha3_256.Dispose();
+                        break;
 
                     case XISFChecksumTypeEnum.SHA3_512:
-                        throw new NotSupportedException();
+                        SHA3_512 sha3_512 = SHA3_512.Create();
+                        computedCksum = GetStringFromHash(sha3_512.ComputeHash(raw));
+                        sha3_512.Dispose();
+                        break;
 
                     default:
                         return false;

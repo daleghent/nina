@@ -22,6 +22,7 @@ using NINA.Profile.Interfaces;
 using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -77,8 +78,9 @@ namespace NINA.ViewModel.Plugins {
 
         private void Restart(object obj) {
             profileService.Release();
+            var startInfo = new ProcessStartInfo(Environment.ProcessPath) { UseShellExecute = false };
+            Process.Start(startInfo);
             Application.Current.Shutdown();
-            System.Windows.Forms.Application.Restart();
         }
 
         private object lockObj = new object();

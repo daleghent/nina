@@ -22,6 +22,7 @@ using Serilog.Sinks.File;
 using System.Text;
 using Serilog.Events;
 using System.Globalization;
+using System.Management;
 
 namespace NINA.Core.Utility {
 
@@ -64,7 +65,6 @@ namespace NINA.Core.Utility {
             /* Initial log of App Version, OS Info, Ascom Version, .NET Version */
             var sb = new StringBuilder();
             var os = Environment.OSVersion;
-            var computerInfo = new Microsoft.VisualBasic.Devices.ComputerInfo();
             sb.AppendLine(PadBoth("", 70, '-'));
             sb.AppendLine(PadBoth(CoreUtil.Title, 70, '-'));
             sb.AppendLine(PadBoth(string.Format("Version {0}", CoreUtil.Version), 70, '-'));
@@ -79,8 +79,7 @@ namespace NINA.Core.Utility {
             sb.AppendLine(PadBoth(".NET Version {0}", 70, '-', Environment.Version.ToString()));
             sb.AppendLine(PadBoth("", 70, '-'));
             sb.AppendLine(PadBoth("Processor Count {0}", 70, '-', Environment.ProcessorCount.ToString()));
-            sb.AppendLine(PadBoth("Total Physical Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalPhysicalMemory / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
-            sb.AppendLine(PadBoth("Total Virtual Memory {0} GB", 70, '-', Math.Round(computerInfo.TotalVirtualMemory / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
+            sb.AppendLine(PadBoth("Total Physical Memory {0} GB", 70, '-', Math.Round(GetTotalPhysicalMemory() / 1024d / 1024d / 1024d, 2).ToString()));
             foreach(var drive in DriveInfo.GetDrives()) {
                 if(drive.IsReady) {
                     sb.AppendLine(PadBoth("Available Space on Drive {0}: {1} GB", 70, '-', drive.Name, Math.Round(drive.AvailableFreeSpace / (1024d * 1024d * 1024d), 2).ToString(CultureInfo.InvariantCulture)));
@@ -92,6 +91,17 @@ namespace NINA.Core.Utility {
             sb.Append("DATE|LEVEL|SOURCE|MEMBER|LINE|MESSAGE");
 
             return sb.ToString();
+        }
+
+        private static long GetTotalPhysicalMemory() {
+            ObjectQuery winQuery = new ObjectQuery("SELECT * FROM Win32_ComputerSystem");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(winQuery);
+
+            foreach (ManagementObject item in searcher.Get()) {
+                return Convert.ToInt64(item["TotalPhysicalMemory"]);
+            }
+
+            return 0; // Return 0 if the information could not be retrieved
         }
 
         private static string PadBoth(string msg, int length, char paddingChar, params string[] msgParams) {
