@@ -6827,18 +6827,17 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>RICE</value>
   </data>
   <data name="LblAddFzExtension" xml:space="preserve">
-    <value>Add .fz extension</value>
+    <value>拡張子.fzを追加</value>
   </data>
   <data name="LblAddFzExtensionTooltip" xml:space="preserve">
-    <value>Adds an additional .fz extension to the file name of compressed FITS files. Example: filename.fits.fz</value>
+    <value>圧縮されたFITSファイルのファイル名に拡張子.fzを追加します。例: ファイル名.fits.fz</value>
   </data>
   <data name="LblASCOMCreate32BitData" xml:space="preserve">
-    <value>Create 32-bit data</value>
+    <value>32ビットデータを作成</value>
   </data>
   <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
-    <value>When the feature is enabled, N.I.N.A. will generate image data with a 32-bit depth, enhancing the pixel value range. 
-However, it's crucial to note that this process will require more memory, increase processing time, and use additional disk space for each exposure.
-Keep in mind that only XISF and FITS file formats can store image data in this 32-bit format. 
-Additionally, it is essential that the ASCOM driver used also supports this 32-bit depth. If the driver does not support 32-bit depth, the increased file size resulting from this setting would only lead to wasted space without any improvement in image data.</value>
+    <value>　この機能を有効にすると、N.I.N.A.はピクセル値の範囲を広げた、32ビット深度の画像データを生成します。
+　しかし、画像を処理するのに、多くの記憶領域を必要とし、処理時間が長くなり、ディスク領域を多く使用することに、留意する必要があります。また、XISFとFITSファイル形式だけが、32ビットデータを保存できることも覚えておいてください。
+　さらに、使っているASCOMドライバーも32ビット深度をサポートしていることが必要です。ドライバーが32ビット深度をサポートしていないのにこの設定をすると、画像データの質は向上しないのに、無駄にファイルサイズが大きくなってしまいます。</value>
   </data>
 </root>

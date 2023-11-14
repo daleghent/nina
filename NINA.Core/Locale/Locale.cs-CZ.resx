@@ -6852,18 +6852,18 @@ Prodlužte minimální dobu expozice nebo počkejte, až bude jasnější.</valu
     <value>RICE</value>
   </data>
   <data name="LblAddFzExtension" xml:space="preserve">
-    <value>Add .fz extension</value>
+    <value>Přidat příponu .fz</value>
   </data>
   <data name="LblAddFzExtensionTooltip" xml:space="preserve">
-    <value>Adds an additional .fz extension to the file name of compressed FITS files. Example: filename.fits.fz</value>
+    <value>Přidá k názvu komprimovaných souborů FITS další příponu .fz. Příklad: filename.fits.fz</value>
   </data>
   <data name="LblASCOMCreate32BitData" xml:space="preserve">
-    <value>Create 32-bit data</value>
+    <value>Vytvořit 32bitová data</value>
   </data>
   <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
-    <value>When the feature is enabled, N.I.N.A. will generate image data with a 32-bit depth, enhancing the pixel value range. 
-However, it's crucial to note that this process will require more memory, increase processing time, and use additional disk space for each exposure.
-Keep in mind that only XISF and FITS file formats can store image data in this 32-bit format. 
-Additionally, it is essential that the ASCOM driver used also supports this 32-bit depth. If the driver does not support 32-bit depth, the increased file size resulting from this setting would only lead to wasted space without any improvement in image data.</value>
+    <value>Pokud je tato funkce povolena, bude N.I.N.A. generovat obrazová data s 32bitovou hloubkou, čímž se zvýší rozsah hodnot pixelů. 
+Je však důležité si uvědomit, že tento proces bude vyžadovat více paměti, prodlouží dobu zpracování a využije další místo na disku pro každou expozici.
+Mějte na paměti, že pouze formáty souborů XISF a FITS mohou ukládat obrazová data v tomto 32bitovém formátu. 
+Navíc je nezbytné, aby použitý ovladač ASCOM tuto 32bitovou hloubku také podporoval. Pokud ovladač 32bitovou hloubku nepodporuje, zvýšená velikost souboru vyplývající z tohoto nastavení by vedla pouze k plýtvání místem bez jakéhokoli zlepšení obrazových dat.</value>
   </data>
 </root>

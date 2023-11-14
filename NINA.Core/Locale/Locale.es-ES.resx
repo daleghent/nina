@@ -6844,21 +6844,21 @@ Aumenta el tiempo mínimo de exposición o espera hasta que sea más brillante.<
     <value>PLIO</value>
   </data>
   <data name="LblCompressionRICE" xml:space="preserve">
-    <value>RICE</value>
+    <value>RECIÓN</value>
   </data>
   <data name="LblAddFzExtension" xml:space="preserve">
-    <value>Add .fz extension</value>
+    <value>Añadir extensión .fz</value>
   </data>
   <data name="LblAddFzExtensionTooltip" xml:space="preserve">
-    <value>Adds an additional .fz extension to the file name of compressed FITS files. Example: filename.fits.fz</value>
+    <value>Añade una extensión .fz adicional al nombre del archivo de los archivos comprimidos FITS. Ejemplo: filename.fits.fz</value>
   </data>
   <data name="LblASCOMCreate32BitData" xml:space="preserve">
-    <value>Create 32-bit data</value>
+    <value>Crear datos de 32 bits</value>
   </data>
   <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
-    <value>When the feature is enabled, N.I.N.A. will generate image data with a 32-bit depth, enhancing the pixel value range. 
-However, it's crucial to note that this process will require more memory, increase processing time, and use additional disk space for each exposure.
-Keep in mind that only XISF and FITS file formats can store image data in this 32-bit format. 
-Additionally, it is essential that the ASCOM driver used also supports this 32-bit depth. If the driver does not support 32-bit depth, the increased file size resulting from this setting would only lead to wasted space without any improvement in image data.</value>
+    <value>Cuando la función está activada, N.I.N.A. generará datos de imagen con una profundidad de 32 bits, mejorando el rango de valores de los píxeles. 
+Sin embargo, es crucial tener en cuenta que este proceso requerirá más memoria, aumentará el tiempo de procesamiento y utilizará espacio adicional en disco para cada exposición.
+Tenga en cuenta que sólo los formatos de archivo XISF y FITS pueden almacenar datos de imagen en este formato de 32 bits. 
+Además, es esencial que el controlador ASCOM utilizado también admita esta profundidad de 32 bits. Si el controlador no admite la profundidad de 32 bits, el aumento del tamaño del archivo resultante de esta configuración sólo supondría un desperdicio de espacio sin ninguna mejora en los datos de imagen.</value>
   </data>
 </root>

@@ -6814,23 +6814,23 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
     <value>Quan està activat, la imatge es desarà al dispositiu i es podrà veure al mapa celeste fora de línia</value>
   </data>
   <data name="LblClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Tancar</value>
   </data>
   <data name="LblShowHistogram" xml:space="preserve">
     <value>Mostra l'Histrograma</value>
   </data>
   <data name="LblInfoOnly" xml:space="preserve">
-    <value>Info only</value>
+    <value>Només info</value>
   </data>
   <data name="LblInfoOnlyTooltip" xml:space="preserve">
-    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
+    <value>Alterna entre mostrar només contingut informatiu i mostrar controls interactius dins del tauler</value>
   </data>
   <data name="LblParked" xml:space="preserve">
-    <value>Parked</value>
+    <value>Aparcat</value>
     <comment>When mount is at park position</comment>
   </data>
   <data name="LblSlewing" xml:space="preserve">
-    <value>Slewing</value>
+    <value>Girant</value>
   </data>
   <data name="LblCompressionGZIP1" xml:space="preserve">
     <value>GZIP 1</value>
@@ -6848,18 +6848,18 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
     <value>RICE</value>
   </data>
   <data name="LblAddFzExtension" xml:space="preserve">
-    <value>Add .fz extension</value>
+    <value>Afegir extensió .fz</value>
   </data>
   <data name="LblAddFzExtensionTooltip" xml:space="preserve">
-    <value>Adds an additional .fz extension to the file name of compressed FITS files. Example: filename.fits.fz</value>
+    <value>Afegeix una extensió .fz addicional al nom de fitxer dels arxius FITS comprimits. Exemple: nomfitxer.fits.fz</value>
   </data>
   <data name="LblASCOMCreate32BitData" xml:space="preserve">
-    <value>Create 32-bit data</value>
+    <value>Crear dades de 32 bits</value>
   </data>
   <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
-    <value>When the feature is enabled, N.I.N.A. will generate image data with a 32-bit depth, enhancing the pixel value range. 
-However, it's crucial to note that this process will require more memory, increase processing time, and use additional disk space for each exposure.
-Keep in mind that only XISF and FITS file formats can store image data in this 32-bit format. 
-Additionally, it is essential that the ASCOM driver used also supports this 32-bit depth. If the driver does not support 32-bit depth, the increased file size resulting from this setting would only lead to wasted space without any improvement in image data.</value>
+    <value>Quan la funció està habilitada, N.I.N.A. generarà dades d'imatge amb una profunditat de 32 bits, millorant l'interval de valors de píxels.
+Tanmateix, és crucial tenir en compte que aquest procés requerirà més memòria, augmentarà el temps de processament i utilitzarà espai de disc addicional per a cada exposició.
+Tingueu en compte que només els formats de fitxer XISF i FITS poden emmagatzemar dades d'imatge en aquest format de 32 bits.
+A més, és essencial que el controlador ASCOM utilitzat també admeti aquesta profunditat de 32 bits. Si el controlador no admet una profunditat de 32 bits, l'augment de la mida del fitxer resultant d'aquesta configuració només comportaria una pèrdua d'espai sense cap millora en les dades d'imatge.</value>
   </data>
 </root>

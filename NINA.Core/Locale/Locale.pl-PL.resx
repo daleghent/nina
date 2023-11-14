@@ -6847,18 +6847,18 @@ Zwiększ minimalny czas ekspozycji lub poczekaj aż będzie jaśniejsze.</value>
     <value>RICE</value>
   </data>
   <data name="LblAddFzExtension" xml:space="preserve">
-    <value>Add .fz extension</value>
+    <value>Dodaj rozszerzenie .fz</value>
   </data>
   <data name="LblAddFzExtensionTooltip" xml:space="preserve">
-    <value>Adds an additional .fz extension to the file name of compressed FITS files. Example: filename.fits.fz</value>
+    <value>Dodaje dodatkowe rozszerzenie .fz do nazwy pliku skompresowanych plików FITS. Przykład: nazwa pliku.fits.fz</value>
   </data>
   <data name="LblASCOMCreate32BitData" xml:space="preserve">
-    <value>Create 32-bit data</value>
+    <value>Utwórz 32-bitowe dane</value>
   </data>
   <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
-    <value>When the feature is enabled, N.I.N.A. will generate image data with a 32-bit depth, enhancing the pixel value range. 
-However, it's crucial to note that this process will require more memory, increase processing time, and use additional disk space for each exposure.
-Keep in mind that only XISF and FITS file formats can store image data in this 32-bit format. 
-Additionally, it is essential that the ASCOM driver used also supports this 32-bit depth. If the driver does not support 32-bit depth, the increased file size resulting from this setting would only lead to wasted space without any improvement in image data.</value>
+    <value>Gdy funkcja jest włączona, N.I.N.A. będzie generować dane obrazu z 32-bitową głębokością, zwiększając zakres wartości pikseli. 
+Należy jednak pamiętać, że ten proces będzie wymagał większej ilości pamięci, wydłużenia czasu przetwarzania i wykorzystania dodatkowego miejsca na dysku do każdej ekspozycji.
+Pamiętaj, że tylko formaty plików XISF i FITS mogą przechowywać dane obrazu w tym 32-bitowym formacie. 
+Ponadto ważne jest, aby sterownik ASCOM również wspierał 32-bitową głębię. Jeśli sterownik nie obsługuje 32-bitów, zwiększony rozmiar pliku wynikający z tego ustawienia doprowadziłby tylko do marnowania miejsca bez poprawy danych obrazu.</value>
   </data>
 </root>
