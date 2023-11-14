@@ -52,6 +52,7 @@ namespace NINA.Image.FileFormat.FITS {
             SHORT_IMG = 16,
             USHORT_IMG = 20,
             LONG_IMG = 32,
+            ULONG_IMG = 40,
             LONGLONG_IMG = 64,
             FLOAT_IMG = -32,
             DOUBLE_IMG = -64
@@ -331,6 +332,10 @@ namespace NINA.Image.FileFormat.FITS {
 
         [DllImport(DLLNAME, EntryPoint = "ffppr", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_write_img(IntPtr fptr, DATATYPE datatype, long fpixel, long nelements, ushort[] array, out int status);
+        [DllImport(DLLNAME, EntryPoint = "ffppr", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int fits_write_img_int(IntPtr fptr, DATATYPE datatype, long fpixel, long nelements, int[] array, out int status);
+        [DllImport(DLLNAME, EntryPoint = "ffppr", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int fits_write_img_uint(IntPtr fptr, DATATYPE datatype, long fpixel, long nelements, uint[] array, out int status);
         [DllImport(DLLNAME, EntryPoint = "ffppr", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_write_img_float(IntPtr fptr, DATATYPE datatype, long fpixel, long nelements, float[] array, out int status);
 
