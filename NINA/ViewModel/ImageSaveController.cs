@@ -78,7 +78,7 @@ namespace NINA.ViewModel {
                     var beforeSaveTime = sw.Elapsed;
                     sw = Stopwatch.StartNew();
 
-                    var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), writeTimeoutCts.Token);
+                    var path = await Retry.Do(() => item.Data.PrepareSave(new FileSaveInfo(profileService), writeTimeoutCts.Token), TimeSpan.FromSeconds(1), 3);
 
                     var prepareSaveTime = sw.Elapsed;
                     sw = Stopwatch.StartNew();
@@ -94,7 +94,7 @@ namespace NINA.ViewModel {
                     var customPatterns = beforeFinalizeArgs.Patterns;
                     var patternTemplate = profileService.ActiveProfile.ImageFileSettings.GetFilePattern(item.Data.MetaData.Image.ImageType);
 
-                    path = item.Data.FinalizeSave(path, patternTemplate, customPatterns);
+                    path = await Retry.Do<string>(() => item.Data.FinalizeSave(path, patternTemplate, customPatterns), TimeSpan.FromSeconds(1), 3);
 
                     var finalizeSaveTime = sw.Elapsed;
                     swTotal.Stop();
