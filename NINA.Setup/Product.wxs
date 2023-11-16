@@ -654,6 +654,12 @@
       <Component Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0" Bitness="$(var.Win64)">
         <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
       </Component>
+      
+      <!-- QHY ini config to switch binning modes -->
+      <Component Id="qhyccd.ini" Guid="e379e3da-b6a9-48a3-8b76-b59899579fdf">
+        <File Id="qhyccd.ini" Name="qhyccd.ini" Source="$(var.NINA_TargetDir)qhyccd.ini" />
+      </Component>
+      
       <!-- VCRedist Dependencies -->
       <Component Id="External_x64_VCRedis_msvcp100.dll" Guid="d214e6a8-0654-4a85-8096-1b7ff9a672c0" Bitness="$(var.Win64)">
         <File Id="External_x64_VCRedis_msvcp100.dll" Name="msvcp100.dll" Source="$(var.NINA_ProjectDir)External\x64\VCRedis\msvcp100.dll" />
@@ -1710,9 +1716,6 @@
       </Component>
       <Component Id="External_x64_QHYCCD_tbb.dll" Guid="8E94E826-4666-46D5-B955-321C32ABCE14" Bitness="$(var.Win64)">
         <File Id="External_x64_QHYCCD_tbb.dll" Name="tbb.dll" Source="$(var.NINA_ProjectDir)External\x64\QHYCCD\tbb.dll" />
-      </Component>
-      <Component Id="qhyccd.ini" Guid="e379e3da-b6a9-48a3-8b76-b59899579fdf">
-        <File Id="qhyccd.ini" Name="qhyccd.ini" Source="$(var.NINA_TargetDir)qhyccd.ini" />
       </Component>
     </ComponentGroup>
   </Fragment>
