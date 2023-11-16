@@ -266,6 +266,10 @@
     <Content Include="External\x64\QHYCCD\tbb.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <ContentWithTargetPath Include="External\x64\QHYCCD\qhyccd.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>qhyccd.ini</TargetPath>
+    </ContentWithTargetPath>
     <Content Include="External\x64\SOFA\SOFAlib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

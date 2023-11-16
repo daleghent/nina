@@ -1711,6 +1711,9 @@
       <Component Id="External_x64_QHYCCD_tbb.dll" Guid="8E94E826-4666-46D5-B955-321C32ABCE14" Bitness="$(var.Win64)">
         <File Id="External_x64_QHYCCD_tbb.dll" Name="tbb.dll" Source="$(var.NINA_ProjectDir)External\x64\QHYCCD\tbb.dll" />
       </Component>
+      <Component Id="qhyccd.ini" Guid="e379e3da-b6a9-48a3-8b76-b59899579fdf">
+        <File Id="qhyccd.ini" Name="qhyccd.ini" Source="$(var.NINA_TargetDir)qhyccd.ini" />
+      </Component>
     </ComponentGroup>
   </Fragment>
 
