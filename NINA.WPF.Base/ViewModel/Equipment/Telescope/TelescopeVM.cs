@@ -871,6 +871,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         public async Task<bool> SlewToCoordinatesAsync(Coordinates coords, CancellationToken token) {
+            using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            // Add a generous timeout of 10 minutes - just to prevent the procedure being stuck
+            timeoutCts.CancelAfter(TimeSpan.FromMinutes(10));
             try {
                 coords = coords.Transform(TelescopeInfo.EquatorialSystem);
                 if (Telescope?.Connected == true) {
@@ -886,7 +889,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             }
                         );
 
-                        await WaitForSlew(token);
+                        await WaitForSlew(timeoutCts.Token);
                     }
 
                     if (Telescope?.AtPark == true) {
@@ -911,25 +914,32 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             var targetSideOfPier = Astrometry.MeridianFlip.ExpectedPierSide(coords, Angle.ByHours(this.TelescopeInfo.SiderealTime));
                             domeSyncTask = Task.Run(async () => {
                                 try {
-                                    return await this.domeMediator.SyncToScopeCoordinates(coords, targetSideOfPier, token);
+                                    return await this.domeMediator.SyncToScopeCoordinates(coords, targetSideOfPier, timeoutCts.Token);
                                 } catch (Exception e) {
                                     Logger.Error("Failed to sync dome when issuing a scope slew. Continuing with the scope slew", e);
                                     return false;
                                 }
-                            }, token);
+                            }, timeoutCts.Token);
                         }
                     }
 
-                    await Telescope.SlewToCoordinates(coords, token);
-                    var waitForUpdate = updateTimer.WaitForNextUpdate(token);
+                    await Telescope.SlewToCoordinates(coords, timeoutCts.Token);
+                    var waitForUpdate = updateTimer.WaitForNextUpdate(timeoutCts.Token);
                     await Task.WhenAll(
-                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), true, token, progress, Loc.Instance["LblSettle"]),
+                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), true, timeoutCts.Token, progress, Loc.Instance["LblSettle"]),
                         domeSyncTask,
                         waitForUpdate);
                     BroadcastTelescopeInfo();
                     return true;
                 } else {
                     Logger.Warning("Telescope is not connected to slew");
+                    return false;
+                }
+            } catch (OperationCanceledException) {
+                if (!timeoutCts?.IsCancellationRequested == true) {
+                    throw;
+                } else {
+                    Logger.Error("Telescope slew timed out after 10 Minutes");
                     return false;
                 }
             } finally {

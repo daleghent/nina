@@ -89,7 +89,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             //Lock access so only one instance can change the filter
             await semaphoreSlim.WaitAsync(token);
             using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(token);
-            // Add a generous timeout of 5 minutes to filter changes - just to prevent the procedure being stuck for whic
+            // Add a generous timeout of 5 minutes to filter changes - just to prevent the procedure being stuck
             timeoutCts.CancelAfter(TimeSpan.FromMinutes(5));
             try {
                 if (FW?.Connected == true) {
