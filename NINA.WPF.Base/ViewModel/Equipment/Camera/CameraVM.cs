@@ -165,10 +165,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 });
 
                 if (Cam.Temperature < 20) {
-                    try {
-                        await RegulateTemperature(20, duration, false, progressRouter, ct);
-                    } catch (CannotReachTargetTemperatureException) {
-                        Logger.Info("Could not reach warming temperature. Most likley due to ambient temperature being lower. Continuing...");
+                    using (var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
+                        try {
+                            timeoutCts.CancelAfter(duration + TimeSpan.FromMinutes(15));
+                            await RegulateTemperature(20, duration, false, progressRouter, timeoutCts.Token);
+                        } catch(OperationCanceledException) { 
+                            if(timeoutCts?.IsCancellationRequested != true) {
+                                throw;
+                            }
+                        } catch (CannotReachTargetTemperatureException) {
+                            Logger.Info("Could not reach warming temperature. Most likley due to ambient temperature being lower. Continuing...");
+                        }
                     }
                 }
 
