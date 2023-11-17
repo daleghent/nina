@@ -33,6 +33,7 @@ using NINA.Equipment.Equipment;
 using Nito.AsyncEx;
 using System.Linq;
 using NINA.Core.Utility.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
@@ -197,35 +198,42 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             }
 
             await Task.Run(async () => {
+                using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+                // Add a generous timeout of 10 minutes - just to prevent the procedure being stuck
+                timeoutCts.CancelAfter(TimeSpan.FromMinutes(10));
+
                 var tempComp = false;
                 if (Focuser.TempCompAvailable && Focuser.TempComp) {
                     tempComp = true;
                     ToggleTempComp(false);
                 }
                 try {
-                    using (ct.Register(() => HaltFocuser())) {
+                    using (timeoutCts.Token.Register(() => HaltFocuser())) {
                         Logger.Info($"Moving Focuser to position {position}");
                         progress.Report(new ApplicationStatus() { Status = string.Format(Loc.Instance["LblFocuserMoveToPosition"], position) });
 
                         while (Focuser.Position != position) {
                             FocuserInfo.IsMoving = true;
-                            ct.ThrowIfCancellationRequested();
-                            await Focuser.Move(position, ct);
+                            timeoutCts.Token.ThrowIfCancellationRequested();
+                            await Focuser.Move(position, timeoutCts.Token);
                         }
 
                         FocuserInfo.Position = this.Position;
                         pos = this.Position;
-                        var waitForUpdate = updateTimer.WaitForNextUpdate(ct);
+                        var waitForUpdate = updateTimer.WaitForNextUpdate(timeoutCts.Token);
                         //Wait for focuser to settle
                         if (profileService.ActiveProfile.FocuserSettings.FocuserSettleTime > 0) {
                             FocuserInfo.IsSettling = true;
-                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), true, ct, progress, Loc.Instance["LblSettle"]);
+                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), true, timeoutCts.Token, progress, Loc.Instance["LblSettle"]);
                         }
                         await waitForUpdate;
                         BroadcastFocuserInfo();
                     }
                 } catch (OperationCanceledException) {
-                    Logger.Info("Focuser move cancelled");
+                    if (!timeoutCts?.IsCancellationRequested == true) {
+                        Logger.Info("Focuser move cancelled");
+                        throw;
+                    }
                 } catch (Exception e) {
                     Logger.Error("Focuser move failed", e);
                     Notification.ShowError(Loc.Instance["LblMoveFocuserFailed"]);
