@@ -22,7 +22,9 @@ namespace NINA.Test.Image {
             imageDataFactoryMock
                 .Setup(x => x.CreateBaseImageData(It.IsAny<ushort[]>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<ImageMetaData>()))
                 .Returns((ushort[] arr, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) => new BaseImageData(arr, width, height, bitDepth, isBayered, metaData, null, null, null));
-            var profileService = new Mock<IProfileService>().Object;
+            var profileServiceMock = new Mock<IProfileService>();
+            var profileService = profileServiceMock.Object;
+            profileServiceMock.SetupGet(x => x.ActiveProfile.CameraSettings.ASCOMCreate32BitData).Returns(false);
             var starDetectionSelectorMock = new Mock<IPluggableBehaviorSelector<IStarDetection>>();
             starDetectionSelectorMock.Setup(x => x.GetBehavior()).Returns(new Mock<IStarDetection>().Object);
             var starDetectionSelector = starDetectionSelectorMock.Object;
@@ -69,7 +71,9 @@ namespace NINA.Test.Image {
             imageDataFactoryMock
                 .Setup(x => x.CreateBaseImageData(It.IsAny<ushort[]>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<ImageMetaData>()))
                 .Returns((ushort[] arr, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) => new BaseImageData(arr, width, height, bitDepth, isBayered, metaData, null, null, null));
-            var profileService = new Mock<IProfileService>().Object;
+            var profileServiceMock = new Mock<IProfileService>();
+            var profileService = profileServiceMock.Object;
+            profileServiceMock.SetupGet(x => x.ActiveProfile.CameraSettings.ASCOMCreate32BitData).Returns(false);
             var starDetectionSelectorMock = new Mock<IPluggableBehaviorSelector<IStarDetection>>();
             starDetectionSelectorMock.Setup(x => x.GetBehavior()).Returns(new Mock<IStarDetection>().Object);
             var starDetectionSelector = starDetectionSelectorMock.Object;
@@ -116,7 +120,9 @@ namespace NINA.Test.Image {
             imageDataFactoryMock
                 .Setup(x => x.CreateBaseImageData(It.IsAny<ushort[]>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<ImageMetaData>()))
                 .Returns((ushort[] arr, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) => new BaseImageData(arr, width, height, bitDepth, isBayered, metaData, null, null, null));
-            var profileService = new Mock<IProfileService>().Object;
+            var profileServiceMock = new Mock<IProfileService>();
+            var profileService = profileServiceMock.Object;
+            profileServiceMock.SetupGet(x => x.ActiveProfile.CameraSettings.ASCOMCreate32BitData).Returns(false);
             var starDetectionSelectorMock = new Mock<IPluggableBehaviorSelector<IStarDetection>>();
             starDetectionSelectorMock.Setup(x => x.GetBehavior()).Returns(new Mock<IStarDetection>().Object);
             var starDetectionSelector = starDetectionSelectorMock.Object;
@@ -163,7 +169,9 @@ namespace NINA.Test.Image {
             imageDataFactoryMock
                 .Setup(x => x.CreateBaseImageData(It.IsAny<ushort[]>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<ImageMetaData>()))
                 .Returns((ushort[] arr, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) => new BaseImageData(arr, width, height, bitDepth, isBayered, metaData, null, null, null));
-            var profileService = new Mock<IProfileService>().Object;
+            var profileServiceMock = new Mock<IProfileService>();
+            var profileService = profileServiceMock.Object;
+            profileServiceMock.SetupGet(x => x.ActiveProfile.CameraSettings.ASCOMCreate32BitData).Returns(false);
             var starDetectionSelectorMock = new Mock<IPluggableBehaviorSelector<IStarDetection>>();
             starDetectionSelectorMock.Setup(x => x.GetBehavior()).Returns(new Mock<IStarDetection>().Object);
             var starDetectionSelector = starDetectionSelectorMock.Object;
@@ -210,7 +218,9 @@ namespace NINA.Test.Image {
             imageDataFactoryMock
                 .Setup(x => x.CreateBaseImageData(It.IsAny<ushort[]>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<ImageMetaData>()))
                 .Returns((ushort[] arr, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) => new BaseImageData(arr, width, height, bitDepth, isBayered, metaData, null, null, null));
-            var profileService = new Mock<IProfileService>().Object;
+            var profileServiceMock = new Mock<IProfileService>();
+            var profileService = profileServiceMock.Object;
+            profileServiceMock.SetupGet(x => x.ActiveProfile.CameraSettings.ASCOMCreate32BitData).Returns(false);
             var starDetectionSelectorMock = new Mock<IPluggableBehaviorSelector<IStarDetection>>();
             starDetectionSelectorMock.Setup(x => x.GetBehavior()).Returns(new Mock<IStarDetection>().Object);
             var starDetectionSelector = starDetectionSelectorMock.Object;

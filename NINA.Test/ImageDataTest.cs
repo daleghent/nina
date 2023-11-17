@@ -88,6 +88,7 @@ namespace NINA.Test {
             };
             MetaData.Image.RecordedRMS.SetScale(5);
             dataFactoryUtility = new ImageDataFactoryTestUtility();
+            dataFactoryUtility.ProfileServiceMock.SetupGet(x => x.ActiveProfile.CameraSettings.ASCOMCreate32BitData).Returns(false);
         }
 
         [Test]
