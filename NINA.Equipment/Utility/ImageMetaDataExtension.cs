@@ -34,10 +34,13 @@ namespace NINA.Equipment.Utility {
         public static void FromCamera(this ImageMetaData data, ICamera info) {
             if (info.Connected) {
                 data.Camera.Name = info.Name;
-                data.Camera.Temperature = info.Temperature;
-                data.Camera.Gain = info.Gain;
-                data.Camera.Offset = info.Offset;
-                data.Camera.SetPoint = info.TemperatureSetPoint;
+                try { data.Camera.Temperature = info.Temperature; } catch { data.Camera.Temperature = double.NaN; }
+                data.Camera.Gain = -1;
+                if(info.CanGetGain) {
+                    try { data.Camera.Gain = info.Gain; } catch { data.Camera.Gain = -1; }
+                }
+                try { data.Camera.Offset = info.Offset; } catch { data.Camera.Offset = -1; }
+                try { data.Camera.SetPoint = info.TemperatureSetPoint; } catch { data.Camera.SetPoint = double.NaN; }
                 data.Camera.BinX = info.BinX;
                 data.Camera.BinY = info.BinY;
                 data.Camera.ElectronsPerADU = info.ElectronsPerADU;

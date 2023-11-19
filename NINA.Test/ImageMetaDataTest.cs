@@ -164,6 +164,7 @@ namespace NINA.Test {
             camera.SetupGet(x => x.Connected).Returns(true);
             camera.SetupGet(x => x.Name).Returns("TEST");
             camera.SetupGet(x => x.Temperature).Returns(20.5);
+            camera.SetupGet(x => x.CanGetGain).Returns(true);
             camera.SetupGet(x => x.Gain).Returns(139);
             camera.SetupGet(x => x.Offset).Returns(10);
             camera.SetupGet(x => x.TemperatureSetPoint).Returns(-10);
