@@ -50,17 +50,17 @@ namespace NINA.Image.FileFormat.FITS {
 
         public void AddHeader(string keyword, string value, string comment) {
             CfitsioNative.fits_update_key_str(filePtr, keyword, value, comment, out var status);
-            CheckStatus("fits_update_key_str", status);
+            LogErrorStatus("fits_update_key_str", status);
         }
 
         public void AddHeader(string keyword, int value, string comment) {
             CfitsioNative.fits_update_key_lng(filePtr, keyword, value, comment, out var status);
-            CheckStatus("fits_update_key_lng", status);
+            LogErrorStatus("fits_update_key_lng", status);
         }
 
         public void AddHeader(string keyword, double value, string comment) {
             CfitsioNative.fits_update_key_dbl(filePtr, keyword, value, 15, comment, out var status);
-            CheckStatus("fits_update_key_dbl", status);
+            LogErrorStatus("fits_update_key_dbl", status);
         }
 
         public void AddHeader(string keyword, DateTime value, string comment) {
@@ -71,7 +71,7 @@ namespace NINA.Image.FileFormat.FITS {
             int status;
 
             CfitsioNative.fits_write_chksum(filePtr, out status);
-            CheckStatus("fits_write_chksum", status);
+            LogErrorStatus("fits_write_chksum", status);
 
             CfitsioNative.fits_close_file(filePtr, out status);
             CheckStatus("fits_close_file", status);

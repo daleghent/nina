@@ -439,15 +439,18 @@ namespace NINA.Image.ImageData {
             var uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(extension));
             var compression = GetFITSCompression(fileSaveInfo.FITSCompressionType);
 
-            if (Data.FlatArrayInt != null) {
-                var f = new CFitsioFITS(uniquePath, Data.FlatArrayInt, Properties.Width, Properties.Height, compression);
+            CFitsioFITS f = null;
+            try {
+                if (Data.FlatArrayInt != null) {
+                    f = new CFitsioFITS(uniquePath, Data.FlatArrayInt, Properties.Width, Properties.Height, compression);
+                } else {
+                    f = new CFitsioFITS(uniquePath, Data.FlatArray, Properties.Width, Properties.Height, compression);
+                }
                 f.PopulateHeaderCards(MetaData);
-                f.Close();
-            } else {
-                var f = new CFitsioFITS(uniquePath, Data.FlatArray, Properties.Width, Properties.Height, compression);
-                f.PopulateHeaderCards(MetaData);
-                f.Close();
+            } finally {
+                    f?.Close();
             }
+            
 
             return uniquePath;
         }
