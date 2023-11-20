@@ -17,6 +17,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.
 - The "Loop for time" condition and "Wait for time" instruction have been redesigned. When selecting dawn or dusk times, the rollover will now occur at sunrise or sunset, respectively. For example, when dusk is selected, the rollover will happen at dawn.
 - The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implemenatation and should be used instead.
+- The native driver for PrimaLuceLab EAGLE has been removed. The EAGLE ASCOM Switch Driver supersedes this implemenatation and should be used instead.
 - SGP Server API has been removed from the core application. Instead this is available as a plugin via "SGP Server Emulation"
 - Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now supports HDR modes if available. The "High Conversion Gain" toggle has been removed and instead this is controlled via ReadoutModes!
 
