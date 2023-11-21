@@ -138,7 +138,7 @@ namespace NINA.Image.ImageData {
                 }
 
                 var imagePatterns = GetImagePatterns();
-                foreach(var cp in customPatterns) {
+                foreach (var cp in customPatterns) {
                     imagePatterns.Add(cp);
                 }
 
@@ -404,7 +404,7 @@ namespace NINA.Image.ImageData {
                     }
                     sb.AppendLine("END");
                     metadata.Title = sb.ToString();
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     Logger.Error("Failed to generate TIFF metadata", ex);
                 }
 
@@ -448,10 +448,8 @@ namespace NINA.Image.ImageData {
                 }
                 f.PopulateHeaderCards(MetaData);
             } finally {
-                    f?.Close();
+                f?.Close();
             }
-            
-
             return uniquePath;
         }
 
@@ -465,7 +463,7 @@ namespace NINA.Image.ImageData {
 
             XISF img = new XISF(header);
 
-            if(Data.FlatArrayInt != null) {
+            if (Data.FlatArrayInt != null) {
                 img.AddAttachedImageInt(Data.FlatArrayInt, fileSaveInfo);
             } else {
                 img.AddAttachedImage(Data.FlatArray, fileSaveInfo);
@@ -574,7 +572,7 @@ namespace NINA.Image.ImageData {
             var metaData = new ImageMetaData();
             if (decoder.Frames[0].Metadata is BitmapMetadata bmpMd) {
                 try {
-                if (!string.IsNullOrWhiteSpace(bmpMd.Title)) {
+                    if (!string.IsNullOrWhiteSpace(bmpMd.Title)) {
                         /* Parse potential FITS header on a best guess base by checking for a start of "SIMPLE" and stop at "END" or no more lines 
                          * Anything that would break the parse will just result in a failed meta data read and empty meta data is used instead.
                          */
@@ -586,36 +584,36 @@ namespace NINA.Image.ImageData {
                                 do {
                                     line = reader.ReadLine();
                                     if (line == null) { continue; }
-                                    if(line == "END") { break; }
+                                    if (line == "END") { break; }
 
                                     // do something with the line
                                     var indexSlash = line.IndexOf('/');
-                                    
+
                                     var key = line.Substring(0, 8).Trim();
 
                                     var value = string.Empty;
-                                    if(indexSlash > 0) {
+                                    if (indexSlash > 0) {
                                         value = line.Substring(9, indexSlash - 10).Trim();
                                     } else {
                                         value = line.Substring(9, 80 - 9).Trim();
-                                    }                                
+                                    }
 
                                     var comment = string.Empty;
-                                    if(indexSlash > 0) {
+                                    if (indexSlash > 0) {
                                         comment = line.Substring(indexSlash + 1, line.Length - indexSlash - 1).Trim();
                                     }
-                                
+
 
                                     if (value.Contains(".")) {
                                         if (double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var parsedValue)) {
                                             fitsHeader.Add(key, parsedValue, comment);
                                         }
                                     } else {
-                                        if (int.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var parsedValue)) { 
+                                        if (int.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var parsedValue)) {
                                             fitsHeader.Add(key, parsedValue, comment);
                                         }
                                     }
-                                
+
 
                                 } while (line != null);
 
