@@ -59,7 +59,7 @@ namespace NINA.Image.FileFormat.FITS {
         }
 
         public void AddHeader(string keyword, double value, string comment) {
-            CfitsioNative.fits_update_key_dbl(filePtr, keyword, value, 15, comment, out var status);
+            CfitsioNative.fits_update_key_dbl(filePtr, keyword, ref value, comment, out var status);
             LogErrorStatus("fits_update_key_dbl", status);
         }
 

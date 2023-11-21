@@ -357,14 +357,21 @@ namespace NINA.Image.FileFormat.FITS {
             return Marshal.ReAllocHGlobal(ptr, newSize);
         }
 
+        public static int fits_update_key_dbl(IntPtr fptr, string keyname, ref double value, string comment, out int status) {
+            return fits_update_key(fptr, DATATYPE.TDOUBLE, keyname, ref value, comment, out status);
+        }
+
+        [DllImport(DLLNAME, EntryPoint = "ffuky", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int fits_update_key(IntPtr fptr, DATATYPE datatype, string keyname, ref double value, string comment, out int status);
+
         [DllImport(DLLNAME, EntryPoint = "ffukyj", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_update_key_lng(IntPtr fptr, string keyname, long value, string comment, out int status);
 
         [DllImport(DLLNAME, EntryPoint = "ffukys", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_update_key_str(IntPtr fptr, string keyname, string value, string comment, out int status);
 
-        [DllImport(DLLNAME, EntryPoint = "ffukyd", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int fits_update_key_dbl(IntPtr fptr, string keyname, double value, int decimals, string comment, out int status);
+        //[DllImport(DLLNAME, EntryPoint = "ffukyd", CallingConvention = CallingConvention.Cdecl)]
+        //public static extern int fits_update_key_dbl(IntPtr fptr, string keyname, double value, int decimals, string comment, out int status);
 
         [DllImport(DLLNAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_set_compression_type(IntPtr fptr, COMPRESSION compress_type, out int status);
@@ -389,6 +396,6 @@ namespace NINA.Image.FileFormat.FITS {
 
         [DllImport(DLLNAME, EntryPoint = "ffmahd", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_movabs_hdu(IntPtr fptr, int movenr, out int hdutype, out int status);
-
+       
     }
 }
