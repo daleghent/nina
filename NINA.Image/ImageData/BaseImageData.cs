@@ -432,12 +432,8 @@ namespace NINA.Image.ImageData {
             string extension = ".fits";
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
 
-            if (fileSaveInfo.FITSAddFzExtension && fileSaveInfo.FITSCompressionType != FITSCompressionTypeEnum.NONE) {
-                extension += ".fz";
-            }
-
-            var uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(extension));
             if(fileSaveInfo.FITSUseLegacyWriter) {
+                var uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(extension));
                 FITS f = new FITS(
                     Data.FlatArray,
                     Properties.Width,
@@ -449,7 +445,13 @@ namespace NINA.Image.ImageData {
                 using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                     f.Write(fs);
                 }
+                return uniquePath;
             } else {
+                if (fileSaveInfo.FITSAddFzExtension && fileSaveInfo.FITSCompressionType != FITSCompressionTypeEnum.NONE) {
+                    extension += ".fz";
+                }
+                var uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(extension));
+
                 var compression = GetFITSCompression(fileSaveInfo.FITSCompressionType);
 
                 CFitsioFITS f = null;
@@ -463,8 +465,8 @@ namespace NINA.Image.ImageData {
                 } finally {
                     f?.Close();
                 }
+                return uniquePath;
             }
-            return uniquePath;
         }
 
         private string SaveXisf(FileSaveInfo fileSaveInfo) {
