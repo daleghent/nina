@@ -1700,8 +1700,14 @@
 
   <Fragment>
     <ComponentGroup Id="External_x64_Cfitsio_files" Directory="External_x64_Cfitsio">
-      <Component Id="External_x64_Cfitsio_cfitsio.dll" Guid="BF1295A6-5DF8-436D-ABAD-C7EAF02A054A" Bitness="$(var.Win64)">
-        <File Id="External_x64_Cfitsio_cfitsio.dll" Name="cfitsio.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\cfitsio.dll" />
+      <Component Id="External_x64_Cfitsio_cfitsionative.dll" Guid="2D4B9FC4-8775-4487-B2E6-B5A14C296EB2" Bitness="$(var.Win64)">
+        <File Id="External_x64_Cfitsio_cfitsionative.dll" Name="cfitsionative.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\cfitsionative.dll" />
+      </Component>
+      <Component Id="External_x64_Cfitsio_pthreadVC2.dll" Guid="D604B363-ABD8-46C0-8CC2-D504BB1152A0" Bitness="$(var.Win64)">
+        <File Id="External_x64_Cfitsio_pthreadVC2.dll" Name="pthreadVC2.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\pthreadVC2.dll" />
+      </Component>
+      <Component Id="External_x64_Cfitsio_zlib.dll" Guid="1856D4E2-E0AA-4610-97DA-8217EDDB5040" Bitness="$(var.Win64)">
+        <File Id="External_x64_Cfitsio_zlib.dll" Name="zlib.dll" Source="$(var.NINA_ProjectDir)External\x64\Cfitsio\zlib.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

@@ -93,6 +93,9 @@
     <CodeAnalysisRuleSet>NINA.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="External\x64\Cfitsio\cfitsionative.dll" />
+    <None Remove="External\x64\Cfitsio\pthreadVC2.dll" />
+    <None Remove="External\x64\Cfitsio\zlib.dll" />
     <None Remove="External\x64\PlayerOne\PlayerOnePW.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -137,7 +140,13 @@
     <Content Include="External\x64\ASTPAN\ASTPANCamera.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="External\x64\Cfitsio\cfitsio.dll">
+    <Content Include="External\x64\Cfitsio\cfitsionative.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x64\Cfitsio\pthreadVC2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x64\Cfitsio\zlib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x64\PlayerOne\PlayerOnePW.dll">

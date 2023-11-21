@@ -16,7 +16,7 @@ namespace NINA.Image.FileFormat.FITS {
             }
         }
 
-        private const string DLLNAME = "cfitsio.dll";
+        private const string DLLNAME = "cfitsionative.dll";
         static CfitsioNative() {
             DllLoader.LoadDll(Path.Combine("Cfitsio", DLLNAME));
         }
@@ -396,6 +396,7 @@ namespace NINA.Image.FileFormat.FITS {
 
         [DllImport(DLLNAME, EntryPoint = "ffmahd", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fits_movabs_hdu(IntPtr fptr, int movenr, out int hdutype, out int status);
-       
+        [DllImport(DLLNAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int fits_is_reentrant();
     }
 }
