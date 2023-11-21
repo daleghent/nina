@@ -27,6 +27,8 @@ namespace NINA.Image.FileFormat {
         public XISFChecksumTypeEnum XISFChecksumType { get; set; } = XISFChecksumTypeEnum.NONE;
         public bool XISFByteShuffling { get; set; } = false;
         public FITSCompressionTypeEnum FITSCompressionType { get; set; } = FITSCompressionTypeEnum.NONE;
+        public bool FITSAddFzExtension { get; set; } = false;
+        public bool FITSUseLegacyWriter { get; set; } = true;
 
         public FileSaveInfo(IProfileService profileService = null) {
             if (profileService != null) {
@@ -38,7 +40,8 @@ namespace NINA.Image.FileFormat {
                 XISFByteShuffling = profileService.ActiveProfile.ImageFileSettings.XISFByteShuffling;
                 XISFChecksumType = profileService.ActiveProfile.ImageFileSettings.XISFChecksumType;
                 FITSCompressionType = profileService.ActiveProfile.ImageFileSettings.FITSCompressionType;
-
+                FITSAddFzExtension = profileService.ActiveProfile.ImageFileSettings.FITSAddFzExtension;
+                FITSUseLegacyWriter = profileService.ActiveProfile.ImageFileSettings.FITSUseLegacyWriter;
             }
         }
 

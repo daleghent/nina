@@ -432,23 +432,37 @@ namespace NINA.Image.ImageData {
             string extension = ".fits";
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
 
-            if (profileService.ActiveProfile.ImageFileSettings.FITSAddFzExtension && fileSaveInfo.FITSCompressionType != FITSCompressionTypeEnum.NONE) {
+            if (fileSaveInfo.FITSAddFzExtension && fileSaveInfo.FITSCompressionType != FITSCompressionTypeEnum.NONE) {
                 extension += ".fz";
             }
 
             var uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(extension));
-            var compression = GetFITSCompression(fileSaveInfo.FITSCompressionType);
+            if(fileSaveInfo.FITSUseLegacyWriter) {
+                FITS f = new FITS(
+                    Data.FlatArray,
+                    Properties.Width,
+                    Properties.Height
+                );
 
-            CFitsioFITS f = null;
-            try {
-                if (Data.FlatArrayInt != null) {
-                    f = new CFitsioFITS(uniquePath, Data.FlatArrayInt, Properties.Width, Properties.Height, compression);
-                } else {
-                    f = new CFitsioFITS(uniquePath, Data.FlatArray, Properties.Width, Properties.Height, compression);
-                }
                 f.PopulateHeaderCards(MetaData);
-            } finally {
-                f?.Close();
+
+                using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
+                    f.Write(fs);
+                }
+            } else {
+                var compression = GetFITSCompression(fileSaveInfo.FITSCompressionType);
+
+                CFitsioFITS f = null;
+                try {
+                    if (Data.FlatArrayInt != null) {
+                        f = new CFitsioFITS(uniquePath, Data.FlatArrayInt, Properties.Width, Properties.Height, compression);
+                    } else {
+                        f = new CFitsioFITS(uniquePath, Data.FlatArray, Properties.Width, Properties.Height, compression);
+                    }
+                    f.PopulateHeaderCards(MetaData);
+                } finally {
+                    f?.Close();
+                }
             }
             return uniquePath;
         }

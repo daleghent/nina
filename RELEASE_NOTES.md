@@ -96,11 +96,12 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 ## File Formats
 
 ### FITS
-- Introduced checksum support for enhanced data integrity.
-- Expanded storage options to include compressed formats, utilizing RICE, GZIP1, GZIP2, PLIO, and HCOMPRESS algorithms. Notably, RICE offers an optimal balance of speed and compression efficiency
 - Implemented functionality to read compressed data into Framing Assistant and Camera Simulator
-- Enabled the storage of compressed FITS files with the ".fits.fz" extension for improved file identification
-- Added support for storing data in a 32-bit unsigned integer format
+- Added a toggle to use CFITSIO to write FITS files. This enables the following features:
+  - Introduced checksum support for enhanced data integrity.
+  - Expanded storage options to include compressed formats, utilizing RICE, GZIP1, GZIP2, PLIO, and HCOMPRESS algorithms. Notably, RICE offers an optimal balance of speed and compression efficiency
+  - Enabled the storage of compressed FITS files with the ".fits.fz" extension for improved file identification
+  - Added support for storing data in a 32-bit unsigned integer format
 
 ### XISF
 - Added support for storing data in a 32-bit unsigned integer format

@@ -43,6 +43,7 @@ namespace NINA.Profile {
             xisfByteShuffling = false;
             fitsCompressionType = FITSCompressionTypeEnum.NONE;
             fitsAddFzExtension = true;
+            fitsUseLegacyWriter = true;
         }
 
         private string filePath;
@@ -231,6 +232,18 @@ namespace NINA.Profile {
             set {
                 if (fitsAddFzExtension != value) {
                     fitsAddFzExtension = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fitsUseLegacyWriter;
+        [DataMember]
+        public bool FITSUseLegacyWriter {
+            get => fitsUseLegacyWriter;
+            set {
+                if(fitsUseLegacyWriter != value) {
+                    fitsUseLegacyWriter = value;
                     RaisePropertyChanged();
                 }
             }

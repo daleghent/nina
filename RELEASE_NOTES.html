@@ -133,11 +133,15 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h2 id="file-formats">File Formats</h2>
 <h3 id="fits">FITS</h3>
 <ul>
+<li>Implemented functionality to read compressed data into Framing Assistant and Camera Simulator</li>
+<li>Added a toggle to use CFITSIO to write FITS files. This enables the following features:
+<ul>
 <li>Introduced checksum support for enhanced data integrity.</li>
 <li>Expanded storage options to include compressed formats, utilizing RICE, GZIP1, GZIP2, PLIO, and HCOMPRESS algorithms. Notably, RICE offers an optimal balance of speed and compression efficiency</li>
-<li>Implemented functionality to read compressed data into Framing Assistant and Camera Simulator</li>
 <li>Enabled the storage of compressed FITS files with the &quot;.fits.fz&quot; extension for improved file identification</li>
 <li>Added support for storing data in a 32-bit unsigned integer format</li>
+</ul>
+</li>
 </ul>
 <h3 id="xisf">XISF</h3>
 <ul>

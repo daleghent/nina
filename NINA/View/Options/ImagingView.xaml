@@ -115,6 +115,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -125,9 +126,32 @@
                                     <TextBlock
                                         MinWidth="100"
                                         VerticalAlignment="Center"
+                                        Text="{ns:Loc LblUseCfitsio}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblUseCfitsioTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding FITSUseLegacyWriter, Converter={StaticResource InverseBooleanConverter}}">
+                                        <CheckBox.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblUseCfitsioTooltip}" />
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Margin="0,5,0,0"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding FITSUseLegacyWriter, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                                    <TextBlock
+                                        MinWidth="100"
+                                        VerticalAlignment="Center"
                                         Text="{ns:Loc LblCompression}" />
                                     <ComboBox
-                                        MinWidth="150"
+                                        MinWidth="100"
                                         Margin="5,0,0,0"
                                         ItemsSource="{Binding DataContext.FITSCompressionTypes, ElementName=UC}"
                                         SelectedItem="{Binding FITSCompressionType}" />
@@ -135,8 +159,10 @@
 
                                 <StackPanel
                                     Grid.Row="1"
-                                    Margin="0,5,0,0"
-                                    Orientation="Horizontal">
+                                    Grid.Column="1"
+                                    Margin="5,5,0,0"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding FITSUseLegacyWriter, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                                     <TextBlock
                                         MinWidth="100"
                                         VerticalAlignment="Center"
