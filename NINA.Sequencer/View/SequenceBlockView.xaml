@@ -339,7 +339,10 @@
                             SequenceTrigger="{StaticResource NoAttempts}" />
                     </StackPanel.Resources>
 
-                    <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource AttemptsDataTemplateSelector}" />
+                    <ContentControl
+                        Content="{Binding}"
+                        ContentTemplateSelector="{StaticResource AttemptsDataTemplateSelector}"
+                        IsTabStop="False" />
                 </StackPanel>
 
                 <ContentPresenter

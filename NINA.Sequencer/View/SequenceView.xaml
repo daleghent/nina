@@ -47,6 +47,8 @@
             BorderThickness="0"
             DataContext="{Binding Sequencer}"
             ItemsSource="{Binding Items}"
+            KeyboardNavigation.TabNavigation="Continue"
+            PreviewKeyDown="TreeView_PreviewKeyDown"
             RenderOptions.CachingHint="Cache"
             ScrollViewer.CanContentScroll="True"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -66,6 +68,7 @@
             </TreeView.Resources>
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
                     <Setter Property="Focusable" Value="False" />
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
