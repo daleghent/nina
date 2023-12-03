@@ -20,6 +20,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - The native driver for PrimaLuceLab EAGLE has been removed. The EAGLE ASCOM Switch Driver supersedes this implemenatation and should be used instead.
 - SGP Server API has been removed from the core application. Instead this is available as a plugin via "SGP Server Emulation"
 - Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now supports HDR modes if available. The "High Conversion Gain" toggle has been removed and instead this is controlled via ReadoutModes!
+- DARKFLAT has been removed from the selection of image types. They really are just DARKs and are classified as such. Previous saved sequences and templates will be automatically migrated.
 
 ## .NET 8
 - The application has transitioned to .NET 8. This is not merely a version upgrade from the previously used .NET Framework 4.8. Instead, .NET 8 is rooted in .NET Core, representing a complete rewrite of the .NET Framework by Microsoft. This marks a significant technical advancement for N.I.N.A.

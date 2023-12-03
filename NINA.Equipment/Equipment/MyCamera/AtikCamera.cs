@@ -691,8 +691,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             var isLightFrame = !(sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
-                  sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
-                  sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT);
+                  sequence.ImageType == CaptureSequence.ImageTypes.BIAS);
 
             ReadoutMode = readoutModes.Count > 1 && sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT
                 ? ReadoutModeForSnapImages
