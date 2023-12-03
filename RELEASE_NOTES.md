@@ -78,7 +78,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - The Binning and Gain settings have been relocated to align with other settings, and they can now be configured on a filter-specific basis.
 - Additionally it is now also possible to specify a camera offset
 - A step size is no longer required. The algorithm will now initiate at (Min+Max/2) and continually halve to determine the optimal exposure time.
-- The option for dark frames is concealed when selecting sky flats; due to variable exposure times with sky flats, dark flats become redundant.
+- The option for dark frames is concealed when selecting sky flats; due to variable exposure times with sky flats, darks become redundant.
 - Internally the flat wizard will now use the new advanced sequencer instructions
 - The Flat Wizard will now save the exposure used to determine the exposure time, reducing the overall number of exposures taken by one and saving time
 
