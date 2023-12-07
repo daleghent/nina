@@ -956,7 +956,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>En sentido contrario al reloj</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Cover your scope now and press OK to start taking the darks.</value>
+    <value>Cubre ahora tu telescopio y presiona OK para comenzar a tomar los dark.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Cubre ahora tu telescopio</value>
@@ -983,7 +983,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>Directorio de Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Darks to take</value>
+    <value>Darks a capturar</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>Ir a D.A.R.V. </value>
@@ -1475,7 +1475,7 @@ Cuando este disparador está desactivado, la aplicación se saltará "empezar ex
     <value>Abrir</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for darks</value>
+    <value>Abrir la tapa para tomar darks</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Fijar</value>
@@ -2536,7 +2536,7 @@ HFR calculada: {2}
     <value>Preparando Imagen</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Sequence</value>
+    <value>Preparando secuencia de Darks</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flats para el filtro: {0}</value>
@@ -2608,7 +2608,7 @@ HFR calculada: {2}
     <value>Modo de lectura para Secuencias</value>
   </data>
   <data name="LblReadoutForNormalImagesToolTip" xml:space="preserve">
-    <value>This readout mode of your camera will be used for LIGHT, BIAS, DARK, FLAT frames in sequences.</value>
+    <value>Este modo de lectura de tu cámara se usará para capturas LIGHT, BIAS, DARK y FLAT en las secuencias.</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
     <value>Modo de lectura para capturas</value>
@@ -5279,10 +5279,10 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Moviendo el rotador a la posición {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark exposures</value>
+    <value>Busca el valor de exposición entrenado para los parámetros especificados y toma los darks</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Exposure</value>
+    <value>Exposición entrenada de darks</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Lado izquierdo</value>

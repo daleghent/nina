@@ -958,7 +958,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Levotočivý</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Cover your scope now and press OK to start taking the darks.</value>
+    <value>Zakryjte dalekohled a stiskem OK začněte snímat dark snímky.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Zakrýt dalekohled</value>
@@ -985,7 +985,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Adresář Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Darks to take</value>
+    <value>Darky k převzetí</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.V. Přejezd</value>
@@ -1477,7 +1477,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Otevřít</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for darks</value>
+    <value>Otevřít kryt pro darky</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Nastavit</value>
@@ -2539,7 +2539,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Příprava obrazu</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Sequence</value>
+    <value>Příprava Dark Sekvence</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flats pro filtr: {0}</value>
@@ -2611,7 +2611,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Režim čtení pro sekvenci</value>
   </data>
   <data name="LblReadoutForNormalImagesToolTip" xml:space="preserve">
-    <value>This readout mode of your camera will be used for LIGHT, BIAS, DARK, FLAT frames in sequences.</value>
+    <value>Tento režim čtení kamery se použije pro snímky LIGHT, BIAS, DARK, FLAT v sekvencích.</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
     <value>Režim čtení pro snímky</value>
@@ -5284,10 +5284,10 @@ Menší číslo pomůže rychleji reagovat na změnu ohniska, například u tepl
     <value>Pohyb rotátoru do polohy {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark exposures</value>
+    <value>Vyhledá naučenou hodnotu expozice pro zadané parametry a pořídí dark expozice</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Exposure</value>
+    <value>Průvodce Expozic Dark</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Vlevo</value>

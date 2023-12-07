@@ -960,7 +960,7 @@ En cas que es necessiti una durada més llarga, es pot especificar aquesta durad
     <value>Sentit contrari a les agulles del rellotge</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Cover your scope now and press OK to start taking the darks.</value>
+    <value>Tapeu el vostre abast ara i premeu D'ACORD per començar a prendre la foscor.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Tapa el telescopi ara</value>
@@ -987,7 +987,7 @@ En cas que es necessiti una durada més llarga, es pot especificar aquesta durad
     <value>Directori de Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Darks to take</value>
+    <value>Darks per agafar</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>Girar a D.A.R.V.</value>
@@ -1480,7 +1480,7 @@ Quan es desactivi aquest, l'aplicació només saltarà a l'inici de l'exposició
     <value>Obert</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for darks</value>
+    <value>Obriu la coberta per als darks</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Fixar</value>
@@ -2540,7 +2540,7 @@ HFR calculat: {2}    </value>
     <value>Preparant Imatge</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Sequence</value>
+    <value>Preparant la seqüència de darks</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flats per al filtre: {0}</value>
@@ -2612,7 +2612,7 @@ HFR calculat: {2}    </value>
     <value>Mode de lectura de seqüències</value>
   </data>
   <data name="LblReadoutForNormalImagesToolTip" xml:space="preserve">
-    <value>This readout mode of your camera will be used for LIGHT, BIAS, DARK, FLAT frames in sequences.</value>
+    <value>Aquest mode de lectura de la càmera s'utilitzarà per a fotogrames LIGHTS, BIAS, DARKS i FLATS en les seqüències.</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
     <value>Mode de lectura per a instantànies</value>
@@ -5279,10 +5279,10 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Movent el rotador a la posició {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark exposures</value>
+    <value>Busca el valor d'exposició entrenat per als paràmetres especificats i pren exposicions darks</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Exposure</value>
+    <value>Exposició entrenada de darks</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Costat esquerra</value>

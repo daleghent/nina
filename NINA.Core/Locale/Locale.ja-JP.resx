@@ -953,7 +953,7 @@
     <value>反時計回り</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Cover your scope now and press OK to start taking the darks.</value>
+    <value>望遠鏡にカバーを付けてOKを押すと、ダークの撮影を開始します。</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>望遠鏡にカバーを付けて下さい。</value>
@@ -980,7 +980,7 @@
     <value>Cygwinディレクトリー</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Darks to take</value>
+    <value>撮影ダーク</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.Vダーゲット導入</value>
@@ -2529,7 +2529,7 @@
     <value>画像の準備中</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Sequence</value>
+    <value>ダーク撮像シーケンスの準備中</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>フィルター:{0} 使用のフラット</value>
@@ -2601,7 +2601,7 @@
     <value>シーケンス用の読み出しモード</value>
   </data>
   <data name="LblReadoutForNormalImagesToolTip" xml:space="preserve">
-    <value>This readout mode of your camera will be used for LIGHT, BIAS, DARK, FLAT frames in sequences.</value>
+    <value>このカメラの読み出しモードは、シーケンス内のライト、バイアス、ダーク、フラットフレームに使用されます。</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
     <value>スナップショット用の読み出しモード</value>
