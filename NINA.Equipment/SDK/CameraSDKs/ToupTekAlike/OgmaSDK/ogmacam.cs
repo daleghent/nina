@@ -353,6 +353,7 @@ public class Ogmacam : IDisposable {
     public const int E_FAIL = unchecked((int)0x80004005);           /* Generic failure */
     public const int E_WRONG_THREAD = unchecked((int)0x8001010e);   /* Call function in the wrong thread */
     public const int E_GEN_FAILURE = unchecked((int)0x8007001f);    /* Device not functioning */
+    public const int E_BUSY = unchecked((int)0x800700aa);           /* The requested resource is in use */
     public const int E_PENDING = unchecked((int)0x8000000a);        /* The data necessary to complete this operation is not yet available */
     public const int E_TIMEOUT = unchecked((int)0x8001011f);        /* This operation returned because the timeout period expired */
 
