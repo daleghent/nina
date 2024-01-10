@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,7 @@ namespace NINA.Core.Utility.Notification {
             lock (_lock) {
                 Initialize();
             }
+            SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
         }
 
         private static Dispatcher dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
@@ -60,6 +62,12 @@ namespace NINA.Core.Utility.Notification {
 
                 cfg.LifetimeSupervisor = new CustomLifetimeSupervisor();
             });
+        }
+
+        private static void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e) {
+            lock (_lock) {
+                Initialize();
+            }
         }
 
         public static void ShowInformation(string message) {
