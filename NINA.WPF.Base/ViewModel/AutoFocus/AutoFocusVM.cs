@@ -714,8 +714,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
             if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR && rSquaredThreshold <= 0) {
                 if (initialHFR != 0 && hfr > (initialHFR * 1.15)) {
-                    Logger.Warning(string.Format("New focus point HFR {0} is significantly worse than original HFR {1}", hfr, initialHFR));
-                    Notification.ShowWarning(string.Format(Loc.Instance["LblAutoFocusNewWorseThanOriginal"], hfr, initialHFR));
+                    Logger.Warning(string.Format("New focus point HFR {0} is significantly worse than original HFR {1}", hfr.ToString("F3"), initialHFR.ToString("F3")));
+                    Notification.ShowWarning(string.Format(Loc.Instance["LblAutoFocusNewWorseThanOriginal"], hfr.ToString("F3"), initialHFR.ToString("F3")));
                     return false;
                 }
             }

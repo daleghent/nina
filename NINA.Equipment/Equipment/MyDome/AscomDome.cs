@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using ASCOM;
 using ASCOM.Com.DriverAccess;
 using ASCOM.Common;
 using NINA.Core.Locale;
@@ -97,7 +96,7 @@ namespace NINA.Equipment.Equipment.MyDome {
 
         public bool CanFindHome => GetProperty(nameof(Dome.CanFindHome), false);
 
-        public double Azimuth => GetProperty(nameof(Dome.Azimuth), -1d);
+        public double Azimuth => GetProperty(nameof(Dome.Azimuth), double.NaN);
 
         public bool AtPark => GetProperty(nameof(Dome.AtPark), false);
 

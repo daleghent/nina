@@ -222,8 +222,8 @@ namespace NINA.ViewModel.FlatWizard {
             set {
                 cameraConnected = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged("StartFlatExposureTooltip");
-                RaisePropertyChanged("StartFlatExposureMultiTooltip");
+                RaisePropertyChanged(nameof(StartFlatExposureTooltip));
+                RaisePropertyChanged(nameof(StartFlatExposureMultiTooltip));
             }
         }
 
@@ -737,24 +737,24 @@ namespace NINA.ViewModel.FlatWizard {
                 filter.BitDepth = bitDepth;
                 filter.CameraInfo = deviceInfo;
             }
-            RaisePropertyChanged("StartFlatExposureTooltip");
-            RaisePropertyChanged("StartFlatExposureMultiTooltip");
+            RaisePropertyChanged(nameof(StartFlatExposureTooltip));
+            RaisePropertyChanged(nameof(StartFlatExposureMultiTooltip));
         }
 
         private FilterWheelInfo filterWheelInfo;
 
         public void UpdateDeviceInfo(FilterWheelInfo deviceInfo) {
             filterWheelInfo = deviceInfo;
-            RaisePropertyChanged("StartFlatExposureTooltip");
-            RaisePropertyChanged("StartFlatExposureMultiTooltip");
+            RaisePropertyChanged(nameof(StartFlatExposureTooltip));
+            RaisePropertyChanged(nameof(StartFlatExposureMultiTooltip));
         }
 
         private TelescopeInfo telescopeInfo;
 
         public void UpdateDeviceInfo(TelescopeInfo deviceInfo) {
             telescopeInfo = deviceInfo;
-            RaisePropertyChanged("SlewToZenithTooltip");
-            RaisePropertyChanged("SlewToZenithTooltipEnabled");
+            RaisePropertyChanged(nameof(SlewToZenithTooltip));
+            RaisePropertyChanged(nameof(SlewToZenithTooltipEnabled));
         }
 
         public void UpdateDeviceInfo(FlatDeviceInfo deviceInfo) {
