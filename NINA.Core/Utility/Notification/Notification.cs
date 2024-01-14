@@ -66,6 +66,7 @@ namespace NINA.Core.Utility.Notification {
 
         private static void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e) {
             lock (_lock) {
+                CloseAll();
                 Initialize();
             }
         }
