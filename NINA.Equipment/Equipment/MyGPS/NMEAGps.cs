@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyGPS {
@@ -32,8 +33,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
     /// NMEA GPS Class detects comport based NMEA GPS Devices
     /// Flow : construct -> Autodiscover [detect, Connect, listens to messages]
     /// </summary>
-    public class NMEAGps : BaseINPC, IGnss, IDisposable {
-        private bool connected = false;
+    public partial class NMEAGps(IProfileService profileService) : BaseINPC, IGnss, IDisposable {
         private string portName;
         private int baudRate = 0;
         private System.Timers.Timer fixTimer;
@@ -41,8 +41,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
         private const int sentenceWait = 4;
         private TaskCompletionSource<GpsResponse> gotGPSFix;
 
-        public NMEAGps(IProfileService profileService) {
-        }
+        private static readonly int[] baudRates = [4800, 2400, 9600, 19200, 38400, 57600, 115200];
 
         public string Name => "NMEA Serial GNSS";
 
@@ -50,13 +49,15 @@ namespace NINA.Equipment.Equipment.MyGPS {
             if (connected) Disconnect();
             connected = false;
             baudRate = 0;
-            portName = "";
+            portName = string.Empty;
         }
 
         private void OnFixTimedEvent(object source, System.Timers.ElapsedEventArgs e) {
             Disconnect();
             throw new GnssNoFixException(string.Format(Loc.Instance["LblGnssGgaMissingError"], sentenceWait));
         }
+
+        private bool connected;
 
         public bool Connected {
             get => connected;
@@ -89,8 +90,8 @@ namespace NINA.Equipment.Equipment.MyGPS {
                 }
             } else return;
 
-            Logger.Debug($"GPSGGA sentence received. Lat: {((Gga)message).Latitude}, Long: {((Gga)message).Longitude}, Altitude: {((Gga)message).Altitude}, " +
-                        $"Quality: {((Gga)message).Quality}, HDOP: {((Gga)message).Hdop}");
+            Logger.Debug($"GGA sentence received. Lat: {((Gga)message).Latitude}, Long: {((Gga)message).Longitude}, Altitude: {((Gga)message).Altitude}, " +
+                        $"Quality: {((Gga)message).Quality}, HDOP: {((Gga)message).Hdop}, Talker ID: {((Gga)message).TalkerId}");
 
             Disconnect();
             gotGPSFix.TrySetResult(gpsResponse);
@@ -98,7 +99,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
 
         public async Task<Location> GetLocation() {
             if (!AutoDiscover()) {
-                throw new GnssNotFoundException();
+                throw new GnssNotFoundException($"{Name} was not found on any accessible COM port");
             }
 
             try {
@@ -115,7 +116,6 @@ namespace NINA.Equipment.Equipment.MyGPS {
                 connected = true;
                 await device.OpenAsync();
 
-                Logger.Info($"NMEA GNSS device found on {portName}");
                 gpsResponse = await gotGPSFix.Task;
 
                 if (gpsResponse.HasFix) {
@@ -158,20 +158,21 @@ namespace NINA.Equipment.Equipment.MyGPS {
         /// <summary>
         /// this finds a suitable comport, connects and listens for GPS sentences
         /// </summary>
-        private static System.IO.Ports.SerialPort FindPort() {
+        private System.IO.Ports.SerialPort FindPort() {
             string[] allPorts = GetComPorts();
             int[,] portRates = new int[allPorts.Length, 7];
 
+            Logger.Info($"Searching for {Name} on {string.Join(", ", allPorts)}");
+
             // set port / baud test precedence
             for (int pnum = 0; pnum < allPorts.Length; pnum++) {
-                List<int> baudRatesToTest = new(new[]
-                   { 4800, 2400, 9600, 19200, 38400, 57600, 115200 });
+                List<int> baudRatesToTest = new(baudRates);
 
                 string cportName = allPorts[pnum];
                 using var port = new System.IO.Ports.SerialPort(cportName);
                 var defaultRate = port.BaudRate;
 
-                if (baudRatesToTest.Contains(defaultRate)) baudRatesToTest.Remove(defaultRate);
+                baudRatesToTest.Remove(defaultRate);
                 baudRatesToTest.Insert(0, defaultRate);
 
                 for (int bnum = 0; bnum < baudRatesToTest.Count; bnum++)
@@ -184,22 +185,44 @@ namespace NINA.Equipment.Equipment.MyGPS {
                     string cportName = allPorts[pnum];
                     int baud = portRates[pnum, bnum];
 
+                    Logger.Debug($"Testing port {cportName} at {baud} baud");
+
                     using var port = new System.IO.Ports.SerialPort(cportName);
 
                     port.BaudRate = baud;
                     port.ReadTimeout = 2000;
-                    bool success = false;
+                    port.NewLine = "\r\n";
 
                     try {
                         port.Open();
                         if (!port.IsOpen)
                             continue;
-                        try { // ths is blocking
-                            port.ReadTo("$GP");
+                        try {
+                            while (true) {
+                                var output = port.ReadLine();
+
+                                Logger.Debug($"Output: \"{output}\"");
+
+                                var match = NmeaSentenceStartRegex().Match(output);
+                                if (!match.Success) {
+                                    // Not a NMEA sentence of any kind, so move on to the next port
+                                    throw new InvalidDataException();
+                                }
+
+                                // It seems we have a NMEA 0183 device. Is this line a GGA sentence?
+                                match = GnssGgaRegex().Match(output);
+                                if (match.Success) {
+                                    Logger.Info($"Found NMEA GGA sentence on {cportName} at {baud}; Talker ID: {match.Groups[1].Value}");
+                                    return new System.IO.Ports.SerialPort(cportName, baud);
+                                }
+                            }
                         } catch (TimeoutException) {
+                            Logger.Debug($"Timed out waiting for output on {cportName} at {baud}");
+                            continue;
+                        } catch (InvalidDataException) {
+                            Logger.Debug($"Non-GNSS output on {cportName} at {baud}");
                             continue;
                         }
-                        success = true;
                     } catch (UnauthorizedAccessException ex) {
                         Logger.Debug(ex.Message);
                     } catch (IOException ex) {
@@ -208,9 +231,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
                         Logger.Error(ex);
                     }
 
-                    if (success) {
-                        return new System.IO.Ports.SerialPort(cportName, baud);
-                    }
+                    port.Close();
                 }
             return null;
         }
@@ -230,7 +251,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
                 baudRate = port.BaudRate;
                 return true;
             } else { // no GPS found
-                portName = "";
+                portName = string.Empty;
                 baudRate = 0;
                 return false;
             }
@@ -241,5 +262,11 @@ namespace NINA.Equipment.Equipment.MyGPS {
             internal Gga.FixQuality FixQuality { get; set; } = Gga.FixQuality.Invalid;
             internal Location Location { get; set; } = null;
         }
+
+        [GeneratedRegex(@"^[\$|\!]G")]
+        private static partial Regex NmeaSentenceStartRegex();
+
+        [GeneratedRegex(@"^[\$|\!](G.)GGA")]
+        private static partial Regex GnssGgaRegex();
     }
 }
