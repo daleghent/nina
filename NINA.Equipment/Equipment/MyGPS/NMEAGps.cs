@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyGPS {
@@ -97,34 +98,32 @@ namespace NINA.Equipment.Equipment.MyGPS {
             gotGPSFix.TrySetResult(gpsResponse);
         }
 
-        public async Task<Location> GetLocation() {
-            if (!AutoDiscover()) {
+        public async Task<Location> GetLocation(CancellationToken token) {
+            if (!await AutoDiscover(token)) {
                 throw new GnssNotFoundException($"{Name} was not found on any accessible COM port");
             }
 
-            try {
-                var gpsResponse = new GpsResponse();
+            var gpsResponse = new GpsResponse();
 
-                var device = new SerialPortDevice(new System.IO.Ports.SerialPort(portName, baudRate));
-                currentDevice = device;
-                device.MessageReceived += Device_MessageReceived;
-                fixTimer = new System.Timers.Timer(TimeSpan.FromSeconds(sentenceWait));
-                fixTimer.Elapsed += OnFixTimedEvent;
-                fixTimer.AutoReset = false;
-                fixTimer.Enabled = true;
-                gotGPSFix = new TaskCompletionSource<GpsResponse>();
-                connected = true;
-                await device.OpenAsync();
+            var device = new SerialPortDevice(new System.IO.Ports.SerialPort(portName, baudRate));
+            currentDevice = device;
+            device.MessageReceived += Device_MessageReceived;
+            fixTimer = new System.Timers.Timer(TimeSpan.FromSeconds(sentenceWait));
+            fixTimer.Elapsed += OnFixTimedEvent;
+            fixTimer.AutoReset = false;
+            fixTimer.Enabled = true;
+            gotGPSFix = new TaskCompletionSource<GpsResponse>();
+            connected = true;
+            await device.OpenAsync();
 
+            using (token.Register(() => gotGPSFix.TrySetCanceled())) {
                 gpsResponse = await gotGPSFix.Task;
+            }
 
-                if (gpsResponse.HasFix) {
-                    return gpsResponse.Location;
-                } else {
-                    throw new GnssNoFixException(string.Format(Loc.Instance["LblGnssGgaQualityError"], gpsResponse.FixQuality));
-                }
-            } catch {
-                throw;
+            if (gpsResponse.HasFix) {
+                return gpsResponse.Location;
+            } else {
+                throw new GnssNoFixException(string.Format(Loc.Instance["LblGnssGgaQualityError"], gpsResponse.FixQuality));
             }
         }
 
@@ -158,7 +157,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
         /// <summary>
         /// this finds a suitable comport, connects and listens for GPS sentences
         /// </summary>
-        private System.IO.Ports.SerialPort FindPort() {
+        private async Task<System.IO.Ports.SerialPort> FindPort(CancellationToken token) {
             string[] allPorts = GetComPorts();
             int[,] portRates = new int[allPorts.Length, 7];
 
@@ -182,6 +181,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
             // use computed precedences to test the ports
             for (int bnum = 0; bnum < 7; bnum++)
                 for (var pnum = 0; pnum < allPorts.Length; pnum++) {
+                    token.ThrowIfCancellationRequested();
                     string cportName = allPorts[pnum];
                     int baud = portRates[pnum, bnum];
 
@@ -199,6 +199,7 @@ namespace NINA.Equipment.Equipment.MyGPS {
                             continue;
                         try {
                             while (true) {
+                                token.ThrowIfCancellationRequested();
                                 var output = port.ReadLine();
 
                                 Logger.Debug($"Output: \"{output}\"");
@@ -223,15 +224,20 @@ namespace NINA.Equipment.Equipment.MyGPS {
                             Logger.Debug($"Non-GNSS output on {cportName} at {baud}");
                             continue;
                         }
+                    } catch (OperationCanceledException) {
+                        throw;
                     } catch (UnauthorizedAccessException ex) {
                         Logger.Debug(ex.Message);
                     } catch (IOException ex) {
                         Logger.Debug(ex.Message);
                     } catch (Exception ex) {
                         Logger.Error(ex);
+                    } finally {
+                        try {
+                            port.Close();
+                        } catch { }
                     }
 
-                    port.Close();
                 }
             return null;
         }
@@ -243,8 +249,8 @@ namespace NINA.Equipment.Equipment.MyGPS {
         /// <summary>
         /// discovers the first GPS device connected to a serial port
         /// </summary>
-        private bool AutoDiscover() {
-            using System.IO.Ports.SerialPort port = FindPort();
+        private async Task<bool> AutoDiscover(CancellationToken token) {
+            using System.IO.Ports.SerialPort port = await FindPort(token);
 
             if (port != null) { //we found a port with a GPS
                 portName = port.PortName;
