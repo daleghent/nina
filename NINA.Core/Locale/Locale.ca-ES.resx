@@ -1174,7 +1174,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>Impossible connectar al controlador de la Cúpula (Dome) ASCOM:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>El controlador pot continuar</value>
+    <value>La cúpula pot seguir</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Estat de l'obturador</value>
@@ -1204,7 +1204,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>En la posició inicial (home)</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>El controlador segueix el telescopi</value>
+    <value>La cúpula segueix al Telescopi</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Girant</value>
@@ -6869,9 +6869,21 @@ A més, és essencial que el controlador ASCOM utilitzat també admeti aquesta p
     <value>Quan està activada aquesta funció, els fitxers FITS es crearan mitjançant la biblioteca CFITSIO, que és una alternativa al mètode predeterminat del programa per escriure aquests fitxers. Aquest canvi permet funcionalitats addicionals, com ara la capacitat de comprimir fitxers FITS per reduir la mida del fitxer i l'opció d'emmagatzemar dades en un format de 32 bits per millorar la precisió de les dades.</value>
   </data>
   <data name="LblBadPixelCorrection" xml:space="preserve">
-    <value>Bad Pixel Correction</value>
+    <value>Correcció de píxels dolents</value>
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
-    <value>Bad Pixel Correction Threshold</value>
+    <value>Llindar de correcció de píxels incorrectes</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Tancat</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Tancant</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Obert</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Obrint</value>
   </data>
 </root>

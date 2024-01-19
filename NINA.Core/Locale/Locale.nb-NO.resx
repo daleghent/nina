@@ -959,7 +959,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Mot klokka</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Cover your scope now and press OK to start taking the darks.</value>
+    <value>Dekk til teleskopet og klikk OK for å ta mørkbildene.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Dekk til teleskopet nå</value>
@@ -986,7 +986,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Cygwin-mappe</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Darks to take</value>
+    <value>Antall mørkbilder</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.V. drift-poljustering</value>
@@ -1172,7 +1172,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>Kan ikke koble til ASCOM kuppel-driver:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Driver støtter følging</value>
+    <value>Kuppel kan følge</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Status</value>
@@ -1202,7 +1202,7 @@ I tilfelle lengre varighet trengs, kan NINA senke temperaturen gradvis med angit
     <value>I hjemposisjon</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Driver følger teleskop</value>
+    <value>Kuppel følger teleskop</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Svinger</value>
@@ -1477,7 +1477,7 @@ Når Bulb-funksjonen deaktiveres vil programmet ikke starte noen eksponering, og
     <value>Åpne</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for darks</value>
+    <value>Åpne deksel for mørkbilder</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Sett</value>
@@ -2538,7 +2538,7 @@ Forventet HFR: {2}</value>
     <value>Forbereder bilde</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Sequence</value>
+    <value>Forbereder sekvens for mørkbilder</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flatbilder for filter: {0}</value>
@@ -5274,10 +5274,10 @@ Et mindre antall gjør triggeren raskere til å reagere når fokusavstand faktis
     <value>Dreier til posisjon {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark exposures</value>
+    <value>Finn innlært eksponeringstid basert på angitte parametre, og ta mørkbilder</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Exposure</value>
+    <value>Innlært mørkbilde</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Venstre side</value>
@@ -6858,9 +6858,21 @@ Det er nødvendig at ASCOM-driveren som brukes også støtter 32-bit dybde; hvis
     <value>Når denne funksjonen er aktivert, vil FITS-filer bli skrevet ved hjelp av CFITSIO-biblioteket, som et alternativ til NINAs innebygde metoder. CFITSIO har mer funksjonalitet, som komprimering for å redusere filstørrelse og muligheten til å lagre data i 32-bits format for bedre presisjon.</value>
   </data>
   <data name="LblBadPixelCorrection" xml:space="preserve">
-    <value>Bad Pixel Correction</value>
+    <value>Korriger pikselfeil</value>
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
-    <value>Bad Pixel Correction Threshold</value>
+    <value>Terskelverdi for pikselfeil</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Lukket</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Lukker</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Åpen</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Åpner</value>
   </data>
 </root>

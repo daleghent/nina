@@ -1171,7 +1171,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Připojit k ovladači ASCOM Dome selhalo:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Ovladač může sledovat</value>
+    <value>Kopule může sledovat</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Stav štěrbiny</value>
@@ -1201,7 +1201,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Ve výchozí pozici</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Ovladač sleduje dalekohled</value>
+    <value>Kopule sleduje dalekohled</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Přejíždění</value>
@@ -6877,5 +6877,17 @@ Navíc je nezbytné, aby použitý ovladač ASCOM tuto 32bitovou hloubku také p
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
     <value>Mezní Hodnota Chybných Pixelů</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Zavírání</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Otevřít</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Otevírání</value>
   </data>
 </root>
