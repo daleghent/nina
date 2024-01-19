@@ -922,11 +922,11 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                                     device.TrackingRate = DriveRate.King;
                                     break;
                             }
-                        } catch (PropertyNotImplementedException pnie) {
+                        } catch (ASCOM.NotImplementedException pnie) {
                             // TrackingRate Write can throw a PropertyNotImplementedException.
                             Logger.Debug(pnie.Message);
                         }
-                    device.Tracking = (value != TrackingMode.Stopped);
+                        device.Tracking = (value != TrackingMode.Stopped);
 
                         if (currentTrackingMode != value) {
                             RaisePropertyChanged();
@@ -950,7 +950,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
             try {
                 this.device.TrackingRate = DriveRate.Sidereal;
-            } catch (PropertyNotImplementedException pnie) {
+            } catch (ASCOM.NotImplementedException pnie) {
                 // TrackingRate Write can throw a PropertyNotImplementedException.
                 Logger.Debug(pnie.Message);
             }
