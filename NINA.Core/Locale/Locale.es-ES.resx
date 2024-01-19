@@ -1169,7 +1169,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>No se puede conectar al controlador de cúpula ASCOM:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>El controlador puede seguir</value>
+    <value>La cúpula puede seguir</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Estado de la apertura del domo</value>
@@ -1199,7 +1199,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>En posición inicial (home)</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>El controlador sigue el telescopio</value>
+    <value>La cúpula sigue al telescopio</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Girando</value>
@@ -6872,5 +6872,17 @@ Además, es esencial que el controlador ASCOM utilizado también admita esta pro
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
     <value>Umbral de corrección de píxeles erróneos</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Cerrada</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Cerrando</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Abrir</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Abriendo</value>
   </data>
 </root>

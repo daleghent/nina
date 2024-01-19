@@ -1170,7 +1170,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Nie można połączyć się ze sterownikiem ASCOM kopuły:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Sterownik może śledzić</value>
+    <value>Kopuła może podążać</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Status przesłony</value>
@@ -1200,7 +1200,7 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Ustawiony w pozycji startowej</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Sterownik prowadzenia teleskopu</value>
+    <value>Kopuła śledzi teleskop</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Obracam się</value>
@@ -6872,5 +6872,17 @@ Ponadto ważne jest, aby sterownik ASCOM również wspierał 32-bitową głębi�
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
     <value>Poziom korekty błędnych pikseli</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Zamknięte</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Zamykanie</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Otwieranie</value>
   </data>
 </root>

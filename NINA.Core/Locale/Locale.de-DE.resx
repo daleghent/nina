@@ -1178,7 +1178,7 @@ wenn die Linien nicht ausgerichtet sind, gibt es einen Polarausrichtungsfehler</
     <value>Verbindung zum ASCOM Kuppel Treiber nicht möglich:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Treiber kann folgen</value>
+    <value>Dome can follow</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Verschlussstatus</value>
@@ -1208,7 +1208,7 @@ wenn die Linien nicht ausgerichtet sind, gibt es einen Polarausrichtungsfehler</
     <value>Zu Hause</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Treiber folgt Teleskop</value>
+    <value>Dome following telescope</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Schwenkt</value>
@@ -6875,5 +6875,17 @@ Additionally, it is essential that the ASCOM driver used also supports this 32-b
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
     <value>Bad Pixel Correction Threshold</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Closing</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Opening</value>
   </data>
 </root>

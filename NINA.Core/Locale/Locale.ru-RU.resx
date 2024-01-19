@@ -1171,7 +1171,7 @@ Dec: {1}</value>
     <value>Не удалось подключиться к драйверу ASCOM Dom:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Драйвер может следовать</value>
+    <value>Dome can follow</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Статус затвора</value>
@@ -1201,7 +1201,7 @@ Dec: {1}</value>
     <value>В домашнем положении</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Драйвер следует за телескопом</value>
+    <value>Dome following telescope</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Движение</value>
@@ -6876,5 +6876,17 @@ Additionally, it is essential that the ASCOM driver used also supports this 32-b
   </data>
   <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
     <value>Bad Pixel Correction Threshold</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Closing</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Opening</value>
   </data>
 </root>
