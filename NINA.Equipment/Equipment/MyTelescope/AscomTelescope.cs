@@ -335,6 +335,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 TargetCoordinates = targetCoordinates;
                 // If we can't set the side of pier, consider our work done up front already                
                 bool pierSideSuccess = !CanSetPierSide;
+                bool checkAndSetPierSideAfterFirstSlew = false;
 
                 // check for the CURRENT mount position
                 // This is not necessarily equals to the target position after the flip (e.g. pause before meridian stops tracking)
@@ -345,9 +346,10 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 if (currentExpectedSideOfPier == currentSoP) {
                     // we are not yet past meridian - the mount is in Counter Weight DOWN position
                     // Hence it should be avoided setting SoP as a SoP change slew could result in a Counter Weight UP position
-                    Logger.Info($"Current side of pier is {currentSoP}, which should be a counter weight down position already. Setting side of pier will be skipped for safety and just a slew to target will be attempted.");
+                    Logger.Info($"Current side of pier is {currentSoP}, which should be a counter weight down position already. Setting side of pier will be done after the first slew attempt if the mount did not flip the pier side by then.");
                     pierSideSuccess = true;
-                } 
+                    checkAndSetPierSideAfterFirstSlew = true;
+                }
 
 
                 bool slewSuccess = false;
@@ -360,6 +362,15 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     // Keep attempting slews as well, in case that's what it takes to flip to the other side of pier
                     Logger.Info($"Slewing to coordinates {targetCoordinates}. Attempt {retries + 1} / {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS}");
                     slewSuccess = await SlewToCoordinates(targetCoordinates, token);
+
+                    if(checkAndSetPierSideAfterFirstSlew) {
+                        if(SideOfPier != targetSideOfPier) {
+                            Logger.Info($"Setting pier side to {targetSideOfPier} after initial slew as the mount seems to not have flipped yet.");
+                            pierSideSuccess = await SetPierSide(targetSideOfPier);
+                            checkAndSetPierSideAfterFirstSlew = false;
+                        }
+                    }
+
                     if (!pierSideSuccess) {
                         pierSideSuccess = SideOfPier == targetSideOfPier;
                     }
@@ -922,11 +933,11 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                                     device.TrackingRate = DriveRate.King;
                                     break;
                             }
-                        } catch (PropertyNotImplementedException pnie) {
+                        } catch (ASCOM.NotImplementedException pnie) {
                             // TrackingRate Write can throw a PropertyNotImplementedException.
                             Logger.Debug(pnie.Message);
                         }
-                    device.Tracking = (value != TrackingMode.Stopped);
+                        device.Tracking = (value != TrackingMode.Stopped);
 
                         if (currentTrackingMode != value) {
                             RaisePropertyChanged();
@@ -950,7 +961,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
             try {
                 this.device.TrackingRate = DriveRate.Sidereal;
-            } catch (PropertyNotImplementedException pnie) {
+            } catch (ASCOM.NotImplementedException pnie) {
                 // TrackingRate Write can throw a PropertyNotImplementedException.
                 Logger.Debug(pnie.Message);
             }

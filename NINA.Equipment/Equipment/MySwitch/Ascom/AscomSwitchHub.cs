@@ -48,14 +48,17 @@ namespace NINA.Equipment.Equipment.MySwitch.Ascom {
                         var s = new AscomSwitch(device, i);
                         Switches.Add(s);
                     }
-                } catch (ASCOM.MethodNotImplementedException) {
+                } catch (ASCOM.MethodNotImplementedException e) {
+                    Logger.Trace($"MethodNotImplementedException for Switch index {i}: {e.Message}");
                     //ISwitchV1 Fallbacks
-                    try {
+                    try {                        
                         var s = new AscomWritableV1Switch(device, i);
                         s.TargetValue = s.Value;
                         await s.SetValue();
+                        Logger.Trace($"Writable v1 Switch found for index {i}");
                         Switches.Add(s);
-                    } catch (Exception) {
+                    } catch (Exception e2) {
+                        Logger.Trace($"Error occurred for Switch index {i} and it is thus most likely a readable v1 Switch: {e2.Message}");
                         var s = new AscomV1Switch(device, i);
                         Switches.Add(s);
                     }

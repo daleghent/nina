@@ -61,6 +61,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Native autofocus will now properly show star detection result in the image statistics panel
 - The native autofocus mechanism has been upgraded to simultaneously process images while shifting to new focus points, which enhances the speed of the entire autofocus operation.
 - Offset is now displayed next to Gain in the Image Statistics window
+- Adjusted color picker style to follow along the customized theme colors of the application
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application
