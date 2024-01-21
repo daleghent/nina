@@ -6896,4 +6896,13 @@ Additionally, it is essential that the ASCOM driver used also supports this 32-b
   <data name="LblOpening" xml:space="preserve">
     <value>Opening</value>
   </data>
+  <data name="LblTelescopeFindHomeTimeout" xml:space="preserve">
+    <value>Telescope find home has timed out after {0} minutes</value>
+  </data>
+  <data name="LblTelescopeParkTimeout" xml:space="preserve">
+    <value>Telescope park has timed out after {0} minutes.</value>
+  </data>
+  <data name="LblTelescopeUnparkTimeout" xml:space="preserve">
+    <value>Telescope unpark has timed out after {0} minutes.</value>
+  </data>
 </root>
