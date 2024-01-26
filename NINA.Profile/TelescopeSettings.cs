@@ -37,6 +37,7 @@ namespace NINA.Profile {
             snapPortStop = "SNAP1,0#";
             settleTime = 5;
             noSync = false;
+            timeSync = true;
             TelescopeLocationSyncDirection = TelescopeLocationSyncDirection.PROMPT;
         }
 
@@ -179,6 +180,18 @@ namespace NINA.Profile {
                     telescopeLocationSyncDirection = value;
                     RaisePropertyChanged();
                 }                
+            }
+        }
+
+        private bool timeSync;
+        [DataMember]
+        public bool TimeSync {
+            get => timeSync;
+            set {
+                if(timeSync != value) {
+                    timeSync = value;
+                    RaisePropertyChanged();
+                }
             }
         }
     }

@@ -804,37 +804,41 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
             Logger.Info($"Mount UTC Time: {mountTime:u} / System UTC Time: {systemTime:u}; Difference: {timeDiff:0.0##} seconds");
 
-            // Sync system's time to the mount
-            try {
-                device.UTCDate = DateTime.UtcNow;
-                Logger.Info($"System time has been synced to the mount");
-            } catch (Exception ex) {
-                // ASCOM docs are confused - online docs says to expect PropertyNotImplementedException, but method comment says NotImplementedException.
-                // Whatever; we'll test for both
-                if (ex is ASCOM.PropertyNotImplementedException || ex is ASCOM.NotImplementedException) {
-                    string message = "Mount driver does not allow the mount's time to be set.";
 
-                    if (timeDiff >= warningThreshold) {
-                        Logger.Warning($"{message} Mount and system have an excessive time difference of {timeDiff:0.0##} seconds.");
-                        Notification.ShowWarning(string.Format(Loc.Instance["LblMountTimeDifferenceTooLarge"], timeDiff));
+            if (profileService.ActiveProfile.TelescopeSettings.TimeSync) {
+                // Sync system's time to the mount
+                try {
+                    device.UTCDate = DateTime.UtcNow;
+                    Logger.Info($"System time has been synced to the mount");
+                } catch (Exception ex) {
+                    // ASCOM docs are confused - online docs says to expect PropertyNotImplementedException, but method comment says NotImplementedException.
+                    // Whatever; we'll test for both
+                    if (ex is ASCOM.PropertyNotImplementedException || ex is ASCOM.NotImplementedException) {
+                        string message = "Mount driver does not allow the mount's time to be set.";
+
+                        if (timeDiff >= warningThreshold) {
+                            Logger.Warning($"{message} Mount and system have an excessive time difference of {timeDiff:0.0##} seconds.");
+                            Notification.ShowWarning(string.Format(Loc.Instance["LblMountTimeDifferenceTooLarge"], timeDiff));
+                            return;
+                        }
+
+                        Logger.Info(message);
                         return;
                     }
 
-                    Logger.Info(message);
+                    Logger.Error($"Unexpected exception when trying to set UTCDate:{Environment.NewLine}{ex}");
                     return;
                 }
 
-                Logger.Error($"Unexpected exception when trying to set UTCDate:{Environment.NewLine}{ex}");
-                return;
+                // One last check
+                timeDiff = Math.Abs((device.UTCDate - DateTime.UtcNow).TotalSeconds);
             }
-
-            // One last check
-            timeDiff = Math.Abs((device.UTCDate - DateTime.UtcNow).TotalSeconds);
 
             if (timeDiff >= warningThreshold) {
-                Logger.Error($"System and mount time still differ by {timeDiff:0.0##} seconds. This may be due to a driver issue.");
+                Logger.Warning($"System and mount time differ by {timeDiff:0.0##} seconds.");
                 Notification.ShowWarning(string.Format(Loc.Instance["LblMountTimeDifferenceTooLarge"], timeDiff));
             }
+
         }
 
         private ImmutableList<TrackingMode> GetTrackingModes() {
