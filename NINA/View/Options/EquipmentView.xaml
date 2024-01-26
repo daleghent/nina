@@ -499,25 +499,6 @@
                                 MaxLength="48"
                                 Text="{Binding Name}" />
                         </UniformGrid>
-
-                        <UniformGrid
-                            Margin="10,5,0,0"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock
-                                MinWidth="200"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblAutomaticMountSync}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblAutomaticMountSyncTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding NoSync, Converter={StaticResource InverseBooleanConverter}}">
-                                <CheckBox.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblAutomaticMountSyncTooltip}" />
-                                </CheckBox.ToolTip>
-                            </CheckBox>
-                        </UniformGrid>
                     </UniformGrid>
 
                     <UniformGrid Columns="2">
@@ -599,6 +580,25 @@
                                     </Binding>
                                 </TextBox.Text>
                             </ninactrl:UnitTextBox>
+                        </UniformGrid>
+
+                        <UniformGrid
+                            Margin="10,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                MinWidth="200"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblCoordinatesMountSync}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblAutomaticMountSyncTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding NoSync, Converter={StaticResource InverseBooleanConverter}}">
+                                <CheckBox.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblAutomaticMountSyncTooltip}" />
+                                </CheckBox.ToolTip>
+                            </CheckBox>
                         </UniformGrid>
                     </UniformGrid>
 
