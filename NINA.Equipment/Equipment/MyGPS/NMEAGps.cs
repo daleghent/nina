@@ -269,10 +269,10 @@ namespace NINA.Equipment.Equipment.MyGPS {
             internal Location Location { get; set; } = null;
         }
 
-        [GeneratedRegex(@"^[\$|\!]G")]
+        [GeneratedRegex(@"^[$!]G")]
         private static partial Regex NmeaSentenceStartRegex();
 
-        [GeneratedRegex(@"^[\$|\!](G.)GGA")]
+        [GeneratedRegex(@"^[$!](G.)GGA")]
         private static partial Regex GnssGgaRegex();
     }
 }
