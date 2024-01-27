@@ -25,6 +25,7 @@ namespace NINA.Profile.Interfaces {
         string SnapPortStart { get; set; }
         string SnapPortStop { get; set; }
         bool NoSync { get; set; }
+        bool TimeSync { get; set; }
         bool PrimaryReversed { get; set; }
         bool SecondaryReversed { get; set; }
 

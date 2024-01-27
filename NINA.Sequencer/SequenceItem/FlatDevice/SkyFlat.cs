@@ -110,6 +110,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.Add(new Annotation());
             this.Add(new Annotation());
             this.Add(switchFilter);
+            this.Add(new Annotation());
 
             var container = new SequentialContainer();
             container.Add(loopCondition);
@@ -174,19 +175,19 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public SwitchFilter GetSwitchFilterItem() {
-            return (Items[2] as SwitchFilter);
+            return Items[2] as SwitchFilter;
         }
 
         public SequentialContainer GetImagingContainer() {
-            return (Items[1] as SequentialContainer);
+            return Items[4] as SequentialContainer;
         }
 
         public TakeExposure GetExposureItem() {
-            return ((Items[3] as SequentialContainer).Items[0] as TakeExposure);
+            return GetImagingContainer().Items[0] as TakeExposure;
         }
 
         public LoopCondition GetIterations() {
-            return ((Items[3] as IConditionable).Conditions[0] as LoopCondition);
+            return GetImagingContainer().Conditions[0] as LoopCondition;
         }
 
 
@@ -257,9 +258,11 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
             var check = HistogramMath.GetExposureAduState(mean, HistogramTargetPercentage, image.BitDepth, HistogramTolerancePercentage);
 
+            DeterminedHistogramADU = mean;
+            this.GetExposureItem().ExposureTime = exposureTime;
+
             switch (check) {
                 case HistogramMath.ExposureAduState.ExposureWithinBounds:
-                    DeterminedHistogramADU = mean;
 
                     // Go ahead and save the exposure, as it already fits the parameters
                     FillTargetMetaData(image.MetaData);
