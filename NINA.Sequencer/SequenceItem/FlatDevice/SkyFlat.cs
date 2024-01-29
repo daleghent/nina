@@ -175,19 +175,19 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public SwitchFilter GetSwitchFilterItem() {
-            return Items[2] as SwitchFilter;
+            return Items.First(x => x is SwitchFilter) as SwitchFilter;
         }
 
         public SequentialContainer GetImagingContainer() {
-            return Items[4] as SequentialContainer;
+            return Items.First(x => x is SequentialContainer) as SequentialContainer;
         }
 
         public TakeExposure GetExposureItem() {
-            return GetImagingContainer().Items[0] as TakeExposure;
+            return GetImagingContainer().Items.First(x => x is TakeExposure) as TakeExposure;
         }
 
         public LoopCondition GetIterations() {
-            return GetImagingContainer().Conditions[0] as LoopCondition;
+            return GetImagingContainer().Conditions.First(x => x is LoopCondition) as LoopCondition;
         }
 
 
