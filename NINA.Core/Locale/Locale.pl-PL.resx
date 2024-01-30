@@ -1116,10 +1116,10 @@ W przypadku, gdy potrzebny jest dłuższy czas, można określić czas trwania, 
     <value>Szybkość prowadzenia deklinacji w sekundach kątowych na sekundę</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Sterownik guidera nie mógł połączyć się z teleskopem</value>
+    <value>Direct Guider could not connect to Mount</value>
   </data>
-  <data name="LblDirectGuiderTelescopeDisconnect" xml:space="preserve">
-    <value>Teleskop został odłączony. Guder został odłączony. Dithering nie działa!</value>
+  <data name="LblDirectGuiderMountDisconnect" xml:space="preserve">
+    <value>Mount has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
     <value>Nie znaleziono katalogu do zapisywania obrazu!</value>
@@ -2060,8 +2060,8 @@ Obliczone HFR: {2}</value>
   <data name="LblNINA" xml:space="preserve">
     <value>N.I.N.A.</value>
   </data>
-  <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>Z N.I.N.A. do Teleskopu</value>
+  <data name="LblNINAToMount" xml:space="preserve">
+    <value>From N.I.N.A. to Mount</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Nie</value>
@@ -2118,10 +2118,10 @@ Obliczone HFR: {2}</value>
     <value>Brak synchronizacji</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>Gdy ta opcja jest włączona, aplikacja nie będzie wysyłać poleceń synchronizacji do teleskopu. Ta metoda powinna być stosowana tylko wtedy, gdy sam teleskop ma dobry model wskazujący (lub ma specjalną potrzebę nie używania poleceń synchronizacji) i nie musi być zmieniany przez oprogramowanie.</value>
+    <value>When enabled the application will never send a sync command to the mount. This should only be used when having a good pointing model that should not be altered in any way.</value>
   </data>
-  <data name="LblNoTelescope" xml:space="preserve">
-    <value>Teleskop nie podłączony</value>
+  <data name="LblNoMount" xml:space="preserve">
+    <value>No Mount</value>
   </data>
   <data name="LblNotificationError" xml:space="preserve">
     <value>Błąd powiadomienia</value>
@@ -2640,8 +2640,8 @@ Obliczone HFR: {2}</value>
   <data name="LblReconnectFocuser" xml:space="preserve">
     <value>Proszę ponownie podłączyć fokuser!</value>
   </data>
-  <data name="LblReconnectTelescope" xml:space="preserve">
-    <value>Proszę ponownie podłączyć teleskop!</value>
+  <data name="LblReconnectMount" xml:space="preserve">
+    <value>Please reconnect mount!</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
     <value>Data referencyjna</value>
@@ -3081,27 +3081,15 @@ Zanim przejdziesz dalej, upewnij się, że Twój fokuser znajduje się w najleps
     <value>Synchronizacja</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Synchronizacja teleskopu nie powiodła się</value>
-  </data>
-  <data name="LblSynchronizedPHD2Guider" xml:space="preserve">
-    <value>PHD2 zsynchronizowany (eksperymentalny)</value>
-  </data>
-  <data name="LblSynchronizedPHD2ServiceClientAlreadyExists" xml:space="preserve">
-    <value>
-        Ten profil jest już połączony z synchronizowanym PHD2.
-        Nie możesz połączyć tego samego profilu dwukrotnie, wybierz inny profil NINA.
-    </value>
-  </data>
-  <data name="LblSynchronizedPHD2ServiceCrashed" xml:space="preserve">
-    <value>Zsynchronizowana usługa PHD2 uległa awarii, uruchom ponownie PHD2</value>
+    <value>Mount sync failed</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
     <value>Ustawienia synchronizacji współrzędnych</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Ustawienia współrzędnych teleskopu różnią się od ustawień NINA.
+    <value>Mount's site settings differ from N.I.N.A.'s.
 
-Czy ustawienia powinny być zsynchronizowane?</value>
+Should the settings be synchronized?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Cel</value>
@@ -3172,8 +3160,8 @@ Czy ustawienia powinny być zsynchronizowane?</value>
   <data name="LblTelescopeSynced" xml:space="preserve">
     <value>Teleskop zsynchronizowany ze współrzędnymi</value>
   </data>
-  <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Z teleskopu do N.I.N.A.</value>
+  <data name="LblMountToNINA" xml:space="preserve">
+    <value>From Mount to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Szybkość prowadzenia RA</value>
@@ -3364,7 +3352,7 @@ Przeciągnij prostokąt nad częścią ramki, na której chcesz wykonać podpró
     <value>Nie można rozpocząć ekspozycji kamery</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>Nie można zsynchronizować. Teleskop nie jest połączony</value>
+    <value>Unable to sync. Mount is not connected</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>Wystąpił nieoczekiwany błąd</value>
@@ -3531,9 +3519,6 @@ Przeciągnij prostokąt nad częścią ramki, na której chcesz wykonać podpró
   </data>
   <data name="LblWarning" xml:space="preserve">
     <value>Ostrzeżenie</value>
-  </data>
-  <data name="LblWarnTelescopeParked" xml:space="preserve">
-    <value>Teleskop jest zaparkowany i zostanie automatycznie uruchomiony po rozpoczęciu sekwencji przez użytkownika</value>
   </data>
   <data name="LblWeather" xml:space="preserve">
     <value>Pogoda</value>
@@ -4030,8 +4015,8 @@ W przypadku gdy potrzebny jest dłuższy czas, można go określić i aplikacja 
   <data name="LblDisconnectRotator" xml:space="preserve">
     <value>Odłączyć Rotator?</value>
   </data>
-  <data name="LblDisconnectTelescope" xml:space="preserve">
-    <value>Odłączyć teleskop?</value>
+  <data name="LblDisconnectMount" xml:space="preserve">
+    <value>Disconnect Mount?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>Teleskop jest zaparkowany. Teleskop musi zostać odparkowany, zanim będzie można go ponownie przesunąć.</value>
@@ -6884,5 +6869,29 @@ Ponadto ważne jest, aby sterownik ASCOM również wspierał 32-bitową głębi�
   </data>
   <data name="LblOpening" xml:space="preserve">
     <value>Otwieranie</value>
+  </data>
+  <data name="LblTelescopeFindHomeTimeout" xml:space="preserve">
+    <value>Upłynął limit czasu oczekiwania na znalezienie teleskopu po {0} minutach</value>
+  </data>
+  <data name="LblTelescopeParkTimeout" xml:space="preserve">
+    <value>Przekroczono limit czasu dla {0} minut.</value>
+  </data>
+  <data name="LblTelescopeUnparkTimeout" xml:space="preserve">
+    <value>Upłynął limit czasu odparkowania teleskopu po {0} minutach.</value>
+  </data>
+  <data name="LblTimeSync" xml:space="preserve">
+    <value>Synchronizacja czasu</value>
+  </data>
+  <data name="LblTimeSyncTooltip" xml:space="preserve">
+    <value>Jeśli ta funkcja jest włączona, aplikacja po podłączeniu zaktualizuje czas montażu tak, aby był zsynchronizowany z czasem systemowym.</value>
+  </data>
+  <data name="LblCoordinatesMountSync" xml:space="preserve">
+    <value>Synchronizacja współrzędnych</value>
+  </data>
+  <data name="LblMount" xml:space="preserve">
+    <value>Mount</value>
+  </data>
+  <data name="LblMountName" xml:space="preserve">
+    <value>Mount name</value>
   </data>
 </root>
