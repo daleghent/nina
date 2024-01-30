@@ -38,7 +38,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 var ascomInteraction = new ASCOMInteraction(profileService);
                 var devices = new List<IDevice>();
 
-                devices.Add(new DummyDevice(Loc.Instance["LblNoTelescope"]));
+                devices.Add(new DummyDevice(Loc.Instance["LblNoMount"]));
 
                 /* Plugin Providers */
                 foreach (var provider in await equipmentProviders.GetProviders()) {

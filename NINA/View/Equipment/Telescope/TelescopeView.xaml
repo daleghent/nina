@@ -44,7 +44,7 @@
                         <TextBlock
                             VerticalAlignment="Center"
                             FontSize="20"
-                            Text="{ns:Loc LblTelescope}" />
+                            Text="{ns:Loc LblMount}" />
                         <equip:Connector
                             Grid.Column="1"
                             CancelCommand="{Binding CancelConnectCommand}"
