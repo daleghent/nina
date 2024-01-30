@@ -190,6 +190,10 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             return GetImagingContainer().Conditions.First(x => x is LoopCondition) as LoopCondition;
         }
 
+        public SequentialContainer ImagingContainer {
+            get => GetImagingContainer();
+        }
+
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             try {
