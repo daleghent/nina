@@ -18,6 +18,7 @@ namespace NINA.Profile.Interfaces {
 
     public interface ITelescopeSettings : ISettings {
         string Name { get; set; }
+        string MountName { get; set; }
         double FocalLength { get; set; }
         double FocalRatio { get; set; }
         string Id { get; set; }

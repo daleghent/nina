@@ -33,10 +33,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <GroupBox DataContext="{Binding CameraSettings}">
                 <GroupBox.Header>
@@ -348,7 +349,7 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox
-                Grid.RowSpan="2"
+                Grid.RowSpan="3"
                 Grid.Column="1"
                 DataContext="{Binding FilterWheelSettings}">
 
@@ -555,6 +556,33 @@
                             </TextBox>
                         </UniformGrid>
                     </UniformGrid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox
+                Grid.Row="2"
+                DataContext="{Binding TelescopeSettings}"
+                Header="{ns:Loc LblMount}">
+                <StackPanel Orientation="Vertical">
+
+                    <UniformGrid Columns="2">
+                        <UniformGrid
+                            Margin="0,5,0,0"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="130"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblMountName}" />
+                            <TextBox
+                                MinWidth="48"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                MaxLength="48"
+                                Text="{Binding MountName}" />
+                        </UniformGrid>
+                    </UniformGrid>
 
                     <UniformGrid Columns="2">
                         <UniformGrid
@@ -616,10 +644,7 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
 
-                            <ComboBox
-                                MinWidth="150"
-                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:TelescopeLocationSyncDirection}}}"
-                                SelectedItem="{Binding TelescopeLocationSyncDirection}">
+                            <ComboBox ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:TelescopeLocationSyncDirection}}}" SelectedItem="{Binding TelescopeLocationSyncDirection}">
 
                                 <ComboBox.ToolTip>
                                     <TextBlock Text="{ns:Loc Lbl_TelescopeLocationSyncDirection_Tooltip}" />
@@ -647,9 +672,8 @@
                     </UniformGrid>
                 </StackPanel>
             </GroupBox>
-
             <GroupBox
-                Grid.Row="2"
+                Grid.Row="3"
                 DataContext="{Binding WeatherDataSettings}"
                 Header="{ns:Loc LblWeather}">
 
@@ -776,7 +800,7 @@
             </GroupBox>
 
             <GroupBox
-                Grid.Row="3"
+                Grid.Row="4"
                 DataContext="{Binding GnssSettings}"
                 Header="{ns:Loc LblGnss}">
                 <StackPanel Orientation="Vertical">
@@ -801,7 +825,7 @@
             </GroupBox>
 
             <GroupBox
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 DataContext="{Binding PlanetariumSettings}"
                 Header="{ns:Loc LblPlanetarium}">

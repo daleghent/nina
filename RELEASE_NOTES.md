@@ -62,6 +62,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - The native autofocus mechanism has been upgraded to simultaneously process images while shifting to new focus points, which enhances the speed of the entire autofocus operation.
 - Offset is now displayed next to Gain in the Image Statistics window
 - Adjusted color picker style to follow along the customized theme colors of the application
+- "Telescope" in equipment area has been renamed to "Mount". Furthermore the equipment options have been separated by telescope and mount. The renaming is an ongoing effort, so some labels might still refer to "telescope" instead of "mount"
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application

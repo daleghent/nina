@@ -53,7 +53,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             this.applicationStatusMediator = applicationStatusMediator;
             this.domeMediator = domeMediator;
             this.DeviceChooserVM = deviceChooserVM;
-            Title = Loc.Instance["LblTelescope"];
+            Title = Loc.Instance["LblMount"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
             progress = new Progress<ApplicationStatus>(p => {
@@ -761,7 +761,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private async Task<bool> DisconnectTelescope() {
-            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectTelescope"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectMount"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }
@@ -769,7 +769,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         public async Task Disconnect() {
-            if (Telescope != null) { Logger.Info("Disconnected Telescope"); }
+            if (Telescope != null) { Logger.Info("Disconnected Mount"); }
             if (updateTimer != null) {
                 await updateTimer.Stop();
             }
