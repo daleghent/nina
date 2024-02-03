@@ -314,7 +314,7 @@ namespace NINA.Core.Utility.Notification {
             foreach (var n in notificationsToRemove)
                 CloseNotification(n.Notification);
 
-            _notifications.Add(notification);
+            _notifications.Add(notification, lifetime);
             RequestShowNotification(new ShowNotificationEventArgs(notification));
         }
 
