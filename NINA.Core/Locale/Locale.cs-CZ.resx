@@ -1117,10 +1117,10 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Míra pointace deklinace v obloukových sekundách za sekundu</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Direct Guider could not connect to Mount</value>
+    <value>Přímé Navádění se nepodařilo navázat spojení s Mountáží</value>
   </data>
   <data name="LblDirectGuiderMountDisconnect" xml:space="preserve">
-    <value>Mount has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
+    <value>Montáž byla odpojena. Přímé navádění se odpojí. Dithering již není účinný!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
     <value>Adresář pro uložení obrázku nebyl nalezen!</value>
@@ -2064,7 +2064,7 @@ Přeskočit.</value>
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToMount" xml:space="preserve">
-    <value>From N.I.N.A. to Mount</value>
+    <value>Z N.I.N.A. do Mountáže</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Ne</value>
@@ -2121,10 +2121,10 @@ Přeskočit.</value>
     <value>Bez Synch</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>When enabled the application will never send a sync command to the mount. This should only be used when having a good pointing model that should not be altered in any way.</value>
+    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do montáže. To by mělo být použito v případě, že existuje vynikající montáž, a neměli byste provádět žádné změny.</value>
   </data>
   <data name="LblNoMount" xml:space="preserve">
-    <value>No Mount</value>
+    <value>Žádná Montáž</value>
   </data>
   <data name="LblNotificationError" xml:space="preserve">
     <value>Chyba Oznámení</value>
@@ -2644,7 +2644,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Připojit zaostření!</value>
   </data>
   <data name="LblReconnectMount" xml:space="preserve">
-    <value>Please reconnect mount!</value>
+    <value>Znovu připojit montáž!</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
     <value>Referenční Datum</value>
@@ -3084,15 +3084,15 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Synchronizace</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Mount sync failed</value>
+    <value>Synchronizace montáže se nezdařila</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
     <value>Synchronizovat nastavení místa</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Mount's site settings differ from N.I.N.A.'s.
+    <value>Nastavení monmtáže se liší od nastavení aplikace N.I.N.A.
 
-Should the settings be synchronized?</value>
+Měla by se nastavení synchronizovat?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Cíl</value>
@@ -3164,7 +3164,7 @@ Should the settings be synchronized?</value>
     <value>Dalekohled synchronizovaný se souřadnicemi</value>
   </data>
   <data name="LblMountToNINA" xml:space="preserve">
-    <value>From Mount to N.I.N.A.</value>
+    <value>Z Montáže do N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Míra Pointace RA</value>
@@ -3355,7 +3355,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Nelze zahájit expozici kamery</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>Unable to sync. Mount is not connected</value>
+    <value>Nelze synchronizovat. Montáž není připojena</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>Došlo k neočekávané chybě</value>
@@ -4019,7 +4019,7 @@ V případě, že je požadována delší doba trvání, lze dobu trvání speci
     <value>Odpojit Rotátor?</value>
   </data>
   <data name="LblDisconnectMount" xml:space="preserve">
-    <value>Disconnect Mount?</value>
+    <value>Odpojit Montáž?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>Dalekohled v parkovací poloze. Před zahájením přejezdu jej možná budete muset odparkovat.</value>
@@ -6894,9 +6894,9 @@ Navíc je nezbytné, aby použitý ovladač ASCOM tuto 32bitovou hloubku také p
     <value>Synchronizace souřadnic</value>
   </data>
   <data name="LblMount" xml:space="preserve">
-    <value>Mount</value>
+    <value>Montáž</value>
   </data>
   <data name="LblMountName" xml:space="preserve">
-    <value>Mount name</value>
+    <value>Jméno Montáže</value>
   </data>
 </root>
