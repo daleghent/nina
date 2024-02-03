@@ -1115,10 +1115,10 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>Velocidad de guiado en Declinación Recta en arcosegundos por segundo</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Direct Guider could not connect to Mount</value>
+    <value>El Guiado directo no puede conectarse a la montura</value>
   </data>
   <data name="LblDirectGuiderMountDisconnect" xml:space="preserve">
-    <value>Mount has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
+    <value>La montura se ha desconectado. El Guiado directo se desconectará. ¡El dither ya no será efectivo!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
     <value>¡No se ha econtrado el directorio para guardar la imagen!</value>
@@ -2061,7 +2061,7 @@ HFR calculada: {2}
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToMount" xml:space="preserve">
-    <value>From N.I.N.A. to Mount</value>
+    <value>De N.I.N.A. a la montura</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -2118,10 +2118,10 @@ HFR calculada: {2}
     <value>Sin sincronización</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>When enabled the application will never send a sync command to the mount. This should only be used when having a good pointing model that should not be altered in any way.</value>
+    <value>Cuando está habilitada, la aplicación nunca enviará un comando de sincronización a la montura. Esto solo debería utilizarse cuando se tenga un buen modelo de estrellas, que no debería ser alterado en modo alguno.</value>
   </data>
   <data name="LblNoMount" xml:space="preserve">
-    <value>No Mount</value>
+    <value>No hay montura</value>
   </data>
   <data name="LblNotificationError" xml:space="preserve">
     <value>Notificación de Error</value>
@@ -2641,7 +2641,7 @@ HFR calculada: {2}
     <value>¡Por favor, reconecta el enfocador!</value>
   </data>
   <data name="LblReconnectMount" xml:space="preserve">
-    <value>Please reconnect mount!</value>
+    <value>¡Por favor, reconecte la montura!</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
     <value>Fecha de Referencia</value>
@@ -3081,15 +3081,15 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>Sinc</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Mount sync failed</value>
+    <value>Fallo en sincronización con la montura</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
     <value>Sincronizar los parámetros del lugar</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Mount's site settings differ from N.I.N.A.'s.
+    <value>La configuración de localización de la montura difiere de la de NINA.
 
-Should the settings be synchronized?</value>
+¿Debe sincronizarse la configuración?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Objetivo</value>
@@ -3161,7 +3161,7 @@ Should the settings be synchronized?</value>
     <value>Telescopio sincronizado con las coordenadas</value>
   </data>
   <data name="LblMountToNINA" xml:space="preserve">
-    <value>From Mount to N.I.N.A.</value>
+    <value>De la montura a N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Velocidad de Guiado en AR</value>
@@ -3352,7 +3352,7 @@ Mueve el rectángulo sobre la parte del Encuadre que quieras hacer subsampling. 
     <value>Imposible iniciar exposición de cámara</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>Unable to sync. Mount is not connected</value>
+    <value>Imposible sincronizar. La montura no está conectada</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>Ha ocurrido un Error Inesperado</value>
@@ -4014,7 +4014,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>¿Desconectar rotador?</value>
   </data>
   <data name="LblDisconnectMount" xml:space="preserve">
-    <value>Disconnect Mount?</value>
+    <value>¿Desconectar la montura?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>El telescopio está aparcado. Nesitarás desaparcarlo antes de que pueda girar.</value>
@@ -6889,9 +6889,9 @@ Además, es esencial que el controlador ASCOM utilizado también admita esta pro
     <value>Sincronización coordenadas</value>
   </data>
   <data name="LblMount" xml:space="preserve">
-    <value>Mount</value>
+    <value>Montura</value>
   </data>
   <data name="LblMountName" xml:space="preserve">
-    <value>Mount name</value>
+    <value>Nombre de la montura</value>
   </data>
 </root>
