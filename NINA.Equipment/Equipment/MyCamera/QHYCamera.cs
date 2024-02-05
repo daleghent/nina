@@ -685,8 +685,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug("QHYCCD: Terminating CoolerWorker task");
 
             CoolerOn = false;
+            var cts = coolerWorkerCts;
             try {
-                coolerWorkerCts?.Cancel();
+                cts?.Cancel();
             } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
@@ -695,7 +696,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } catch (Exception ex) {
                 Logger.Error($"QHYCCD: Cooling thread failed to terminate within {COOLING_TIMEOUT}", ex);
             } finally {
-                try { coolerWorkerCts?.Dispose(); } finally { }                
+                try { cts?.Dispose(); } finally { }                
                 coolerWorkerCts = null;
                 coolerTask = null;
             }
@@ -712,8 +713,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             Logger.Debug("QHYCCD: Terminating SensorStatsWorker task");
 
+            var cts = sensorStatsCts;
+
             try {
-                sensorStatsCts?.Cancel();
+                cts?.Cancel();
             } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
@@ -722,7 +725,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } catch (Exception ex) {
                 Logger.Error($"QHYCCD: SensorStats thread failed to terminate within {COOLING_TIMEOUT}", ex);
             } finally {
-                try { sensorStatsCts?.Dispose(); } finally { }
+                try { cts?.Dispose(); } finally { }
                 sensorStatsCts = null;
                 sensorStatsTask = null;
             }
