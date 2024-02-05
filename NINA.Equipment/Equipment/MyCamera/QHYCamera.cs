@@ -285,7 +285,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public IList<string> SupportedActions => new List<string>();
 
         public double ElectronsPerADU => double.NaN;
-        private bool reconnect = false;
+        private bool internalReconnect = false;
 
         /// <summary>
         // We store the camera's exposure times in microseconds
@@ -735,7 +735,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool ConnectSync() {
-            if (Connected) {
+            if (Connected && !internalReconnect) {
                 return true;
             }
 
@@ -779,7 +779,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return false;
                 }
 
-                if (!reconnect)
+                if (!internalReconnect)
                     SetImageResolution();
 
                 /*
@@ -917,14 +917,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     /*
                      * Initialize cooler's target temperature to 0C
                      */
-                    if (!reconnect) { 
+                    if (!internalReconnect) { 
                         Info.CoolerTargetTemp = 0;
                     }
 
                     /*
                      * Force any TEC cooler to off upon startup
                      */
-                    if(!reconnect) { 
+                    if(!internalReconnect) { 
                         CoolerOn = false;
                     }
 
@@ -945,7 +945,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * it manually using QHYCCD_CAMERA_INFO.CurBin. We initialize the
                  * camera with 1x1 binning.
                  */
-                if (!reconnect) { 
+                if (!internalReconnect) { 
                     Info.CurBin = 1;
                 }
                 SetBinning(Info.CurBin, Info.CurBin);
@@ -992,7 +992,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 QhySdkVersion = GetSdkVersion();
 
                 // Only check driver versions on new connection, because this is really slow.
-                if (!reconnect) {
+                if (!internalReconnect) {
                     /*
                      * Check the USB driver version and emit a warning if it's below the recommended minimum version
                      */
@@ -1031,7 +1031,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             try {
-                Connected = false;
+                if(!internalReconnect) {
+                    Connected = false;
+                }                
 
                 CancelCoolingSync();
                 CancelSensorStatsSync();
@@ -1278,10 +1280,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             // OpenQHYCCD
             // SetLiveStreamMode
             // It appears that ReleaseQHYCCDResource and ScanQHYCCD can be skipped in newer drivers?
-            reconnect = true;
+            internalReconnect = true;
             Disconnect();
             ConnectSync();
-            reconnect = false;
+            internalReconnect = false;
         }
 
         public void StartLiveView(CaptureSequence sequence) {
