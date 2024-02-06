@@ -95,6 +95,12 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Auto Brightness Flat: An instruction to find a flat panel brightness for a static exposure time
 - Sky Flat: Similar to the Flat Wizard sky flat, this will take flat frames that have a constantly adjusted exposure time while progressing to compensate for illumination changes due to sun altitude.
 
+### Object Database Additions
+- 1538 LDN objects (Lynds' Catalogue of Dark Nebulae - Lynds 1962)
+- 180 Barnard objects (The Barnard Catalogue of Dark Markings in the Sky - Barnard,1927)
+- 66 StDr, StDrLu, StDrL, PaStDr, StDrLuLDu objects (25 confirmed planetary nebulae / 21 likely planetary nebulae / 20 possible planetary nebulae)
+- 131 vdB objects (Catalogue of Reflection Nebulae - Van den Bergh, 1966)
+- 235 Sharpless (Sh2) objects (Catalogue of HII Regions - Sharpless, 1959)
 
 ## File Formats
 
