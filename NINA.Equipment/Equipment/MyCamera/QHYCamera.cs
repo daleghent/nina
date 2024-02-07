@@ -285,7 +285,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public IList<string> SupportedActions => new List<string>();
 
         public double ElectronsPerADU => double.NaN;
-        private bool reconnect = false;
+        private bool internalReconnect = false;
 
         /// <summary>
         // We store the camera's exposure times in microseconds
@@ -685,9 +685,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug("QHYCCD: Terminating CoolerWorker task");
 
             CoolerOn = false;
+            var cts = coolerWorkerCts;
             try {
-                coolerWorkerCts?.Cancel();
-                coolerWorkerCts?.Dispose();
+                cts?.Cancel();
             } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
@@ -696,6 +696,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             } catch (Exception ex) {
                 Logger.Error($"QHYCCD: Cooling thread failed to terminate within {COOLING_TIMEOUT}", ex);
             } finally {
+                try { cts?.Dispose(); } finally { }                
                 coolerWorkerCts = null;
                 coolerTask = null;
             }
@@ -712,17 +713,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             Logger.Debug("QHYCCD: Terminating SensorStatsWorker task");
 
+            var cts = sensorStatsCts;
+
             try {
-                sensorStatsCts?.Cancel();
-                sensorStatsCts?.Dispose();
+                cts?.Cancel();
             } catch { }
             try {
                 using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
                     sensorStatsTask?.Wait(timeoutSource.Token);
-                }
+                }            
             } catch (Exception ex) {
                 Logger.Error($"QHYCCD: SensorStats thread failed to terminate within {COOLING_TIMEOUT}", ex);
             } finally {
+                try { cts?.Dispose(); } finally { }
                 sensorStatsCts = null;
                 sensorStatsTask = null;
             }
@@ -735,7 +738,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool ConnectSync() {
-            if (Connected) {
+            if (Connected && !internalReconnect) {
                 return true;
             }
 
@@ -779,7 +782,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return false;
                 }
 
-                if (!reconnect)
+                if (!internalReconnect)
                     SetImageResolution();
 
                 /*
@@ -917,14 +920,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     /*
                      * Initialize cooler's target temperature to 0C
                      */
-                    if (!reconnect) { 
+                    if (!internalReconnect) { 
                         Info.CoolerTargetTemp = 0;
                     }
 
                     /*
                      * Force any TEC cooler to off upon startup
                      */
-                    if(!reconnect) { 
+                    if(!internalReconnect) { 
                         CoolerOn = false;
                     }
 
@@ -945,7 +948,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * it manually using QHYCCD_CAMERA_INFO.CurBin. We initialize the
                  * camera with 1x1 binning.
                  */
-                if (!reconnect) { 
+                if (!internalReconnect) { 
                     Info.CurBin = 1;
                 }
                 SetBinning(Info.CurBin, Info.CurBin);
@@ -984,7 +987,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     Logger.Debug("QHYCCD: Starting SensorStatsWorker task");
 
                     sensorStatsCts = new CancellationTokenSource();
-                    sensorStatsTask = SensorStatsWorker(coolerWorkerCts.Token);
+                    sensorStatsTask = SensorStatsWorker(sensorStatsCts.Token);
                 }
 
                 QhyFirmwareVersion = GetFirmwareVersion();
@@ -992,7 +995,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 QhySdkVersion = GetSdkVersion();
 
                 // Only check driver versions on new connection, because this is really slow.
-                if (!reconnect) {
+                if (!internalReconnect) {
                     /*
                      * Check the USB driver version and emit a warning if it's below the recommended minimum version
                      */
@@ -1031,7 +1034,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             try {
-                Connected = false;
+                if(!internalReconnect) {
+                    Connected = false;
+                }                
 
                 CancelCoolingSync();
                 CancelSensorStatsSync();
@@ -1293,10 +1298,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             // OpenQHYCCD
             // SetLiveStreamMode
             // It appears that ReleaseQHYCCDResource and ScanQHYCCD can be skipped in newer drivers?
-            reconnect = true;
+            internalReconnect = true;
             Disconnect();
             ConnectSync();
-            reconnect = false;
+            internalReconnect = false;
         }
 
         public void StartLiveView(CaptureSequence sequence) {
