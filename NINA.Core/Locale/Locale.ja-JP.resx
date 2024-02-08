@@ -6562,10 +6562,10 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>自動明度フラット</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>この命令は、スカイフラット用のフラットウィザードと同じように、露出時間を自動的に決定します。</value>
+    <value>This instruction automatically adjusts exposure times for capturing twilight sky flats, akin to the functionality of the flat wizard tool. It dynamically modifies the exposure duration after each shot, based on real-time predictions of changes in sky brightness.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>スカイフラット</value>
+    <value>Twilight Sky Flats</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>カバー閉鎖</value>

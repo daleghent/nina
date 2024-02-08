@@ -6580,10 +6580,10 @@ Esto solo debería desactivarse si tienes un buen modelado de cielo que no debe 
     <value>Brillo automático de flat</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>Esta instrucción determinará automáticamente los tiempos de exposición de forma similar al asistente para flats hechos contra el cielo.</value>
+    <value>This instruction automatically adjusts exposure times for capturing twilight sky flats, akin to the functionality of the flat wizard tool. It dynamically modifies the exposure duration after each shot, based on real-time predictions of changes in sky brightness.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Flats de cielo</value>
+    <value>Twilight Sky Flats</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>Cerrando tapa</value>

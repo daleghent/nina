@@ -6607,10 +6607,10 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
     <value>플랫 자동 밝기</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>플랫 마법사와 유사하게 스카이 플랫의 노출 시간을 자동으로 결정합니다.</value>
+    <value>This instruction automatically adjusts exposure times for capturing twilight sky flats, akin to the functionality of the flat wizard tool. It dynamically modifies the exposure duration after each shot, based on real-time predictions of changes in sky brightness.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>스카이 플랫</value>
+    <value>Twilight Sky Flats</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>커버 폐쇄</value>

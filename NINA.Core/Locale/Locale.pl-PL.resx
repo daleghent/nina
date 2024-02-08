@@ -6580,10 +6580,10 @@ Opcję tę należy wyłączyć tylko wtedy, gdy dostępny jest dobry wzorzec map
     <value>Automatyczna jasność Flat</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>Ta funkcja automatycznie określi czasy ekspozycji podobne do kreatora Flat horyzontu.</value>
+    <value>Ta instrukcja automatycznie dostosowuje czasy ekspozycji, aby uchwycić flaty zmierzchowe, podobnie jak w przypadku narzędzia kreatora klatek flat. Dynamicznie modyfikuje czas ekspozycji po każdym zdjęciu, w oparciu o przewidywane w czasie rzeczywistym zmiany jasności nieba.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Flat horyzontu</value>
+    <value>Flaty zmierzchowe</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>Zamknięcie pokrywy</value>

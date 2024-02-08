@@ -6584,10 +6584,10 @@ Això només s'ha de desactivar quan es disposa d'un bon model del cel i no s'ha
     <value>Lluminositat automàtica de Flats</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>Aquesta instrucció determinarà automàticament els temps d'exposició similars a l'assistent de Flats per als Flats del cel.</value>
+    <value>Aquesta instrucció ajusta automàticament els temps d'exposició per capturar Flats del cel crepuscular, semblant a la funcionalitat de l'eina de l'assistent de flats. Modifica dinàmicament la durada de l'exposició després de cada presa, basant-se en prediccions en temps real dels canvis en la brillantor del cel.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Flats del cel</value>
+    <value>Flats de cel crepuscular</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>Tancament de la Coberta</value>
