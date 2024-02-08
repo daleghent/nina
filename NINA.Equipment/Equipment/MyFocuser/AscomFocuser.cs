@@ -94,10 +94,10 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                 var lastPosition = int.MinValue;
                 int samePositionCount = 0;
                 var lastMovementTime = DateTime.Now;
-                while (position != device.Position && !ct.IsCancellationRequested) {
+                while (position != Position && !ct.IsCancellationRequested) {
                     await device.MoveAsync(position, ct);
                     
-                    if (lastPosition == device.Position) {
+                    if (lastPosition == Position) {
                         ++samePositionCount;
                         var samePositionTime = DateTime.Now - lastMovementTime;
                         if (samePositionTime >= SameFocuserPositionTimeout) {

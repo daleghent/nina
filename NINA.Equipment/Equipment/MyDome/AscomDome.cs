@@ -262,13 +262,13 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task FindHome(CancellationToken ct) {
             if (Connected) {
                 if (CanFindHome) {
-                    if (device?.AtHome == true) {
+                    if (AtHome == true) {
                         Logger.Info("Dome already AtHome. Not submitting a FindHome request");
                         return;
                     }
 
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure FindHome works
-                    if (device?.Slewing == true) {
+                    if (Slewing == true) {
                         await (device?.AbortSlewAsync(ct) ?? Task.CompletedTask);
                         await Task.Delay(1000, ct);
                     }
@@ -281,7 +281,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                         await Task.Delay(TimeSpan.FromSeconds(3), ct);
                         ct.ThrowIfCancellationRequested();
 
-                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                        while (Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
                         ct.ThrowIfCancellationRequested();
@@ -303,7 +303,7 @@ namespace NINA.Equipment.Equipment.MyDome {
             if (Connected) {
                 if (CanPark) {
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure Park works
-                    if (device?.Slewing == true) {
+                    if (Slewing == true) {
                         Logger.Info("Dome shutter or rotator slewing when a park was requested. Aborting all movement");
 
                         await device?.AbortSlewAsync(ct);
@@ -328,7 +328,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                             }
                         }
                         await Task.Delay(TimeSpan.FromSeconds(3), ct);
-                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                        while (Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
                         ct.ThrowIfCancellationRequested();
