@@ -6585,10 +6585,10 @@ Tato funkce by měla být vypnuta pouze v případě, že máte k dispozici vyni
     <value>Auto Flat Jas</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>Tato instrukce automaticky určí doby expozice podobné průvodci pro flat expozice z oblohy.</value>
+    <value>Tento pokyn automaticky upravuje expoziční časy pro zachycení snímků soumračné oblohy, podobně jako nástroj průvodce flatem. Po každém snímku dynamicky upravuje dobu expozice na základě předpovědí změn jasu oblohy v reálném čase.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Flat z Oblohy</value>
+    <value>Flaty Soumraku Oblohy</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>Uzavřít Kryt</value>
