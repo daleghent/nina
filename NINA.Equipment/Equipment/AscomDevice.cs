@@ -293,7 +293,7 @@ namespace NINA.Equipment.Equipment {
         /// <param name="propertyName">Property Name of the AscomDevice property</param>
         /// <param name="defaultValue">The default value to be returned when not connected or not implemented</param>
         /// <returns></returns>
-        protected PropT GetProperty<PropT>(string propertyName, PropT defaultValue) {
+        protected PropT GetProperty<PropT>(string propertyName, PropT defaultValue, TimeSpan? cacheInterval = null) {            
             if (device != null) {
                 var retries = 3;
 
@@ -301,7 +301,8 @@ namespace NINA.Equipment.Equipment {
                 var type = device.GetType();
 
                 if (!propertyGETMemory.TryGetValue(propertyName, out var memory)) {
-                    memory = new PropertyMemory(type.GetProperty(propertyName));
+                    if (cacheInterval == null) { cacheInterval = TimeSpan.FromMilliseconds(100); }
+                    memory = new PropertyMemory(type.GetProperty(propertyName), cacheInterval.Value);
                     lock (propertyGETMemory) {
                         propertyGETMemory[propertyName] = memory;
                     }
@@ -357,12 +358,13 @@ namespace NINA.Equipment.Equipment {
         /// <param name="propertyName">Property Name of the AscomDevice property</param>
         /// <param name="value">The value to be set for the given property</param>
         /// <returns></returns>
-        protected bool SetProperty<PropT>(string propertyName, PropT value, [CallerMemberName] string originalPropertyName = null) {
+        protected bool SetProperty<PropT>(string propertyName, PropT value, TimeSpan? cacheInterval = null, [CallerMemberName] string originalPropertyName = null) {
             if (device != null) {
                 var type = device.GetType();
 
                 if (!propertySETMemory.TryGetValue(propertyName, out var memory)) {
-                    memory = new PropertyMemory(type.GetProperty(propertyName));
+                    if (cacheInterval == null) { cacheInterval = TimeSpan.FromMilliseconds(100); }
+                    memory = new PropertyMemory(type.GetProperty(propertyName), cacheInterval.Value);
                     lock (propertySETMemory) {
                         propertySETMemory[propertyName] = memory;
                     }
@@ -411,30 +413,45 @@ namespace NINA.Equipment.Equipment {
 
         protected class PropertyMemory {
 
-            public PropertyMemory(PropertyInfo p) {
+            public PropertyMemory(PropertyInfo p, TimeSpan cacheInterval) {
                 info = p;
+                this.cacheInterval = cacheInterval;
                 IsImplemented = true;
 
                 LastValue = null;
                 if (p.PropertyType.IsValueType) {
                     LastValue = Activator.CreateInstance(p.PropertyType);
                 }
+                LastValueUpdate = DateTimeOffset.MinValue;
             }
 
+            private object lockObj = new object();
             private PropertyInfo info;
+            private readonly TimeSpan cacheInterval;
+
             public bool IsImplemented { get; set; }
             public object LastValue { get; set; }
+            public DateTimeOffset LastValueUpdate { get; set; }
 
             public object GetValue(DeviceT device) {
-                var value = info.GetValue(device);
+                lock (lockObj) {
+                    if (DateTimeOffset.UtcNow - LastValueUpdate < cacheInterval) {
+                        return LastValue;
+                    }
 
-                LastValue = value;
+                    var value = info.GetValue(device);
 
-                return value;
+                    LastValue = value;
+                    LastValueUpdate = DateTimeOffset.UtcNow;
+
+                    return value;
+                }
             }
 
             public void SetValue(DeviceT device, object value) {
-                info.SetValue(device, value);
+                lock (lockObj) { 
+                    info.SetValue(device, value);
+                }
             }
         }
     }
