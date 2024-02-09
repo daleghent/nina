@@ -46,6 +46,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.exposureDataFactory = exposureDataFactory;
             _cameraId = id;
             Name = GetDeviceName(_cameraId);
+            Id = GetDeviceSerialNumber(_cameraId);
         }
 
         private readonly int _cameraId;
@@ -539,7 +540,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool HasSetupDialog => false;
 
-        public string Id => Name;
+        public string Id { get; }
 
         public string Name { get; private set; }
 

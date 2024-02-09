@@ -145,6 +145,11 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h3 id="fits">FITS</h3>
 <ul>
 <li>Implemented functionality to read compressed data into Framing Assistant and Camera Simulator</li>
+<li>Introduced a new FITS keyword &quot;CAMERAID&quot; to uniquely identify the camera used.
+<ul>
+<li>For the majority of native drivers, this field will be populated with the camera's serial number, assuming it is accessible.</li>
+</ul>
+</li>
 <li>Added a toggle to use CFITSIO to write FITS files. This enables the following features:
 <ul>
 <li>Introduced checksum support for enhanced data integrity.</li>

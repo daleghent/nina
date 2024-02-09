@@ -20,7 +20,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         protected IProfileService profileService;
         private readonly IExposureDataFactory exposureDataFactory;
 
-        public GenericCamera(int id, string name, string category, string driverVersion, bool supportBitScaling, IGenericCameraSDK sdk, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
+        public GenericCamera(string id, string name, string category, string driverVersion, bool supportBitScaling, IGenericCameraSDK sdk, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             this.Name = name;
             this.sdk = sdk;
             this.Category = category;
@@ -30,7 +30,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.DriverVersion = driverVersion;
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;
-            this.Id = Category + "_" + id.ToString();
+            this.Id = Category + "_" + id;
         }
 
         public bool Connected => sdk.Connected;

@@ -96,7 +96,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     var atikDevices = AtikCameraDll.GetDevicesCount();
                     Logger.Info($"Found {atikDevices} Atik Cameras");
                     if (atikDevices > 0) {
-                        for (int i = 0; i < atikDevices; i++) {
+                        for (int i = 0; i < atikDevices; i++) {                            
                             var cam = new AtikCamera(i, profileService, exposureDataFactory);
                             devices.Add(cam);
                         }

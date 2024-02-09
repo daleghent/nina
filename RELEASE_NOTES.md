@@ -106,6 +106,8 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 
 ### FITS
 - Implemented functionality to read compressed data into Framing Assistant and Camera Simulator
+- Introduced a new FITS keyword "CAMERAID" to uniquely identify the camera used. 
+  - For the majority of native drivers, this field will be populated with the camera's serial number, assuming it is accessible.
 - Added a toggle to use CFITSIO to write FITS files. This enables the following features:
   - Introduced checksum support for enhanced data integrity.
   - Expanded storage options to include compressed formats, utilizing RICE, GZIP1, GZIP2, PLIO, and HCOMPRESS algorithms. Notably, RICE offers an optimal balance of speed and compression efficiency
