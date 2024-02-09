@@ -543,6 +543,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public string Id { get; }
 
         public string Name { get; private set; }
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
 
         private static string CleanedUpString(char[] values) {
             return string.Join("", values.Take(Array.IndexOf(values, '\0')));

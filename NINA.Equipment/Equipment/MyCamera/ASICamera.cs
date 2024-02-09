@@ -128,7 +128,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set => subSampleHeight = value;
         }
 
-        public string Name {
+        public string Name => Info.Name;
+
+        public string DisplayName {
             get {
                 if (!string.IsNullOrEmpty(CameraAlias)) {
                     return $"{Info.Name} ({CameraAlias})";

@@ -397,6 +397,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Id { get; }
         public string Name { get; }
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
         public string Category { get; }
         public string Description { get; }
         public string DriverInfo { get; }

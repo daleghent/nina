@@ -71,6 +71,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public string Id { get; private set; }
 
         public string Name { get; private set; }
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
 
         public string Category => "SBIG Legacy";
 

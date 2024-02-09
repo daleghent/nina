@@ -483,6 +483,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 DeclinationString = Telescope.DeclinationString,
                                 HoursToMeridianString = Telescope.HoursToMeridianString,
                                 Name = Telescope.Name,
+                                DisplayName = Telescope.DisplayName,
                                 DeviceId = Telescope.Id,
                                 RightAscension = Telescope.RightAscension,
                                 RightAscensionString = Telescope.RightAscensionString,
@@ -535,7 +536,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             profileService.ActiveProfile.TelescopeSettings.Id = Telescope.Id;
 
                             await (Connected?.InvokeAsync(this, new EventArgs()) ?? Task.CompletedTask);
-                            Logger.Info($"Successfully connected Telescope. Id: {telescope.Id} Name: {telescope.Name} Driver Version: {telescope.DriverVersion}");
+                            Logger.Info($"Successfully connected Telescope. Id: {telescope.Id} Name: {telescope.Name} DisplayName: {telescope.DisplayName} Driver Version: {telescope.DriverVersion}");
 
                             return true;
                         } else {

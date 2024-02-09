@@ -51,6 +51,7 @@ namespace NINA.Equipment.Equipment {
         public string Id { get; }
 
         public string Name { get; }
+        public string DisplayName => Name;
 
         public string Description {
             get {

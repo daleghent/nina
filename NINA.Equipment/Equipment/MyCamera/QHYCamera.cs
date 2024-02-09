@@ -351,6 +351,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
+
         public int Offset {
             get {
                 if (Connected) {
