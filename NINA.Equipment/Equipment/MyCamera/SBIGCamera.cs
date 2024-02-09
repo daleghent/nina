@@ -55,7 +55,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.Id = queriedCameraInfo.SerialNumber;
             this.Name = queriedCameraInfo.Name;
             this.DriverVersion = sdk.GetSdkVersion();
-            this.Description = $"{queriedCameraInfo.Name} on {queriedCameraInfo.DeviceId}";
+            this.Description = $"{queriedCameraInfo.Name} on {queriedCameraInfo.DeviceId} - {Id}";
         }
 
         public enum SBIGCameraStatus {

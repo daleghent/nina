@@ -25,8 +25,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.sdk = sdk;
             this.Category = category;
             this.supportBitScaling = supportBitScaling;
-            this.Description = $"Native driver implementation for {category} Cameras";
-            this.DriverInfo = $"{category} native driver";
+            this.Description = $"{id}";
+            this.DriverInfo = $"Native driver implementation for {category} Cameras";
             this.DriverVersion = driverVersion;
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;

@@ -237,7 +237,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string Description => string.Empty;
+        public string Description => CameraAlias;
 
         public string DriverInfo {
             get {

@@ -154,7 +154,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string Description => CleanedUpString(Info.Manufacturer) + " " + Name + " (SerialNo: " + GetSerialNumber(_cameraP) + ")";
+        public string Description => CleanedUpString(Info.Manufacturer) + " " + Name + " (SerialNo: " + Id + ")";
 
         public string DriverInfo => DriverName;
 
