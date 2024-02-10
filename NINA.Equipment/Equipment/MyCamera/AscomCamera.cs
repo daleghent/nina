@@ -136,10 +136,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool Create32BitData {
-            get => profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData;
+            get => false; //profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData;
             set {
-                profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData = value;
-                RaisePropertyChanged();
+                //profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData = value;
+                //RaisePropertyChanged();
             }
         }
 
