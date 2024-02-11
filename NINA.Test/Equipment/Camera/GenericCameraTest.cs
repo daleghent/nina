@@ -51,8 +51,8 @@ namespace NINA.Test.Equipment.Camera {
             sut.Id.Should().Be("Generic Camera_" + id.ToString());
             sut.Name.Should().Be(name);
             sut.Category.Should().Be("Generic Camera");
-            sut.Description.Should().Be("Native driver implementation for Generic Camera Cameras");
-            sut.DriverInfo.Should().Be("Generic Camera native driver");
+            sut.Description.Should().Be(id);
+            sut.DriverInfo.Should().Be("Native driver implementation for Generic Camera Cameras");
             sut.DriverVersion.Should().Be("Some SDK Version");
         }
 
