@@ -116,6 +116,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 
 ### XISF
 - Added support for storing data in a 32-bit unsigned integer format
+- FITS Header Cards are now correctly enclosed with single quotes
 
 ## Alpaca
 - ASCOM Alpaca discovery is now available in N.I.N.A. and discovered devices are selectable in the equipment choosers to connect to
