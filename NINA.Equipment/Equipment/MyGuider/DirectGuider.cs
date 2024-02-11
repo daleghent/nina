@@ -43,6 +43,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public string Name => "Direct Guider";
+        public string DisplayName => Name;
 
         public string Id => "Direct_Guider";
 

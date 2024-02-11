@@ -32,15 +32,19 @@ using NINA.Equipment.Interfaces;
 using ASCOM.Common;
 using ASCOM;
 using NINA.Equipment.Utility;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
-    internal class AscomTelescope : AscomDevice<Telescope>, ITelescope, IDisposable {
+    internal class AscomTelescope : AscomDevice<ITelescopeV3>, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
         private const int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
         private const double TRACKING_RATE_EPSILON = 0.000001;
 
         public AscomTelescope(string telescopeId, string name, IProfileService profileService) : base(telescopeId, name) {
+            this.profileService = profileService;
+        }
+        public AscomTelescope(AscomDevice deviceMeta, IProfileService profileService) : base(deviceMeta) {
             this.profileService = profileService;
         }
 
@@ -988,8 +992,12 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             return Task.CompletedTask;
         }
 
-        protected override Telescope GetInstance(string id) {
-            return new Telescope(id);
+        protected override ITelescopeV3 GetInstance() {
+            if (deviceMeta == null) {
+                return new Telescope(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaTelescope(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
 
         public PierSide DestinationSideOfPier(Coordinates coordinates) {

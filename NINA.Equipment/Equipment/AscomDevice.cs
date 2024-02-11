@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.Com.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
@@ -33,24 +33,34 @@ namespace NINA.Equipment.Equipment {
     /// The unified class that handles the shared properties of all ASCOM devices like Connection, Generic Info and Setup
     /// </summary>
     public abstract class AscomDevice<DeviceT> : BaseINPC, IDevice
-        where DeviceT : ASCOMDevice {
-
+        where DeviceT : IAscomDevice {
+                                                                                                                                                                                                                                      
         public AscomDevice(string id, string name) {
             Id = id;
             Name = name;
+            DisplayName = name;
+            this.Category = "ASCOM";
         }
 
+        public AscomDevice(ASCOM.Alpaca.Discovery.AscomDevice deviceMeta) : this(deviceMeta.UniqueId, deviceMeta.AscomDeviceName) {
+            this.deviceMeta = deviceMeta;
+            DisplayName = $"{Name} @ {deviceMeta.HostName} #{deviceMeta.AlpacaDeviceNumber}";
+            this.Category = "ASCOM Alpaca";
+        }
+        protected readonly ASCOM.Alpaca.Discovery.AscomDevice deviceMeta;
+
         protected DeviceT device;
-        public string Category { get; } = "ASCOM";
+        public string Category { get; private set; }
         protected abstract string ConnectionLostMessage { get; }
 
         protected object lockObj = new object();
 
-        public bool HasSetupDialog => true;
+        public bool HasSetupDialog => Category == "ASCOM";
 
         public string Id { get; }
 
         public string Name { get; }
+        public string DisplayName { get; }
 
         public string Description {
             get {
@@ -216,7 +226,7 @@ namespace NINA.Equipment.Equipment {
                     await PreConnect();
 
                     Logger.Trace($"{Name} - Creating instance for {Id}");
-                    var concreteDevice = GetInstance(Id);
+                    var concreteDevice = GetInstance();
                     device = concreteDevice;
 
                     Connected = true;
@@ -233,7 +243,7 @@ namespace NINA.Equipment.Equipment {
             });
         }
 
-        protected abstract DeviceT GetInstance(string id);
+        protected abstract DeviceT GetInstance();
 
         public void SetupDialog() {
             if (HasSetupDialog) {
@@ -241,15 +251,17 @@ namespace NINA.Equipment.Equipment {
                     bool dispose = false;
                     if (device == null) {
                         Logger.Trace($"{Name} - Creating instance for {Id}");
-                        var concreteDevice = GetInstance(Id);
+                        var concreteDevice = GetInstance();
                         device = concreteDevice;
                         dispose = true;
                     }
                     Logger.Trace($"{Name} - Creating Setup Dialog for {Id}");
-                    device.SetupDialog();
+                    var t = device.GetType();
+                    var method = t.GetMethod("SetupDialog");
+                    method.Invoke(device, null);
                     if (dispose) {
                         device.Dispose();
-                        device = null;
+                        device = default;
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
@@ -279,7 +291,7 @@ namespace NINA.Equipment.Equipment {
         public void Dispose() {
             Logger.Trace($"{Name} - Disposing device");
             device?.Dispose();
-            device = null;
+            device = default;
         }
 
         protected Dictionary<string, PropertyMemory> propertyGETMemory = new Dictionary<string, PropertyMemory>();

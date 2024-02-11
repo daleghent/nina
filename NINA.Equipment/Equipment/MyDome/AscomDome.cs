@@ -12,12 +12,15 @@
 
 #endregion "copyright"
 
+using ASCOM.Alpaca.Discovery;
 using ASCOM.Com.DriverAccess;
 using ASCOM.Common;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
+using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,9 +82,11 @@ namespace NINA.Equipment.Equipment.MyDome {
         }
     }
 
-    internal class AscomDome : AscomDevice<Dome>, IDome, IDisposable {
+    internal class AscomDome : AscomDevice<ASCOM.Common.DeviceInterfaces.IDomeV2>, IDome, IDisposable {
 
         public AscomDome(string domeId, string domeName) : base(domeId, domeName) {
+        }
+        public AscomDome(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
         public bool DriverCanFollow => GetProperty(nameof(Dome.CanSlave), false);
@@ -376,8 +381,12 @@ namespace NINA.Equipment.Equipment.MyDome {
             return Task.CompletedTask;
         }
 
-        protected override Dome GetInstance(string id) {
-            return new Dome(id);
+        protected override ASCOM.Common.DeviceInterfaces.IDomeV2 GetInstance() {
+            if (deviceMeta == null) {
+                return new Dome(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaDome(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

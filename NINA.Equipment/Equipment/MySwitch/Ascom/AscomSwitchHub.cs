@@ -20,12 +20,14 @@ using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
-    internal class AscomSwitchHub : AscomDevice<Switch>, ISwitchHub, IDisposable {
-
+    internal class AscomSwitchHub : AscomDevice<ISwitchV2>, ISwitchHub, IDisposable {
         public AscomSwitchHub(string id, string name) : base(id, name) {
+        }
+        public AscomSwitchHub(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
         public ICollection<ISwitch> Switches { get; private set; } = new AsyncObservableCollection<ISwitch>();
@@ -74,8 +76,12 @@ namespace NINA.Equipment.Equipment.MySwitch.Ascom {
             Switches.Clear();
         }
 
-        protected override Switch GetInstance(string id) {
-            return new Switch(id);
+        protected override ISwitchV2 GetInstance() {
+            if (deviceMeta == null) {
+                return new Switch(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaSwitch(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }
