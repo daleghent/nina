@@ -387,6 +387,12 @@
       <Component Id="ASCOM.Exceptions.dll" Guid="b128e165-154a-4ec0-a470-166334c8937a">
         <File Id="ASCOM.Exceptions.dll" Name="ASCOM.Exceptions.dll" Source="$(var.NINA_TargetDir)ASCOM.Exceptions.dll" />
       </Component>
+      <Component Id="ASCOM.Alpaca.Device.dll" Guid="91a1086c-6ed2-45af-a1b6-7a953786348c">
+        <File Id="ASCOM.Alpaca.Device.dll" Name="ASCOM.Alpaca.Device.dll" Source="$(var.NINA_TargetDir)ASCOM.Alpaca.Device.dll" />
+      </Component>
+      <Component Id="ASCOM.Alpaca.dll" Guid="1f88443b-e5bb-4951-a001-72d769aa686c">
+        <File Id="ASCOM.Alpaca.dll" Name="ASCOM.Alpaca.dll" Source="$(var.NINA_TargetDir)ASCOM.Alpaca.dll" />
+      </Component>
       <Component Id="AsyncEnumerable.dll" Guid="8dd0fdbc-bacd-4fdf-a83d-0e0e4b7dc56f" Bitness="$(var.Win64)">
         <File Id="AsyncEnumerable.dll" Name="AsyncEnumerable.dll" Source="$(var.NINA_TargetDir)AsyncEnumerable.dll" />
       </Component>

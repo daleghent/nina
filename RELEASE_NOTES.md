@@ -95,7 +95,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Auto Brightness Flat: An instruction to find a flat panel brightness for a static exposure time
 - Sky Flat: Similar to the Flat Wizard sky flat, this will take flat frames that have a constantly adjusted exposure time while progressing to compensate for illumination changes due to sun altitude.
 
-### Object Database Additions
+## Object Database Additions
 - 1538 LDN objects (Lynds' Catalogue of Dark Nebulae - Lynds 1962)
 - 180 Barnard objects (The Barnard Catalogue of Dark Markings in the Sky - Barnard,1927)
 - 66 StDr, StDrLu, StDrL, PaStDr, StDrLuLDu objects (25 confirmed planetary nebulae / 21 likely planetary nebulae / 20 possible planetary nebulae)
@@ -116,6 +116,10 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 
 ### XISF
 - Added support for storing data in a 32-bit unsigned integer format
+
+## Alpaca
+- ASCOM Alpaca discovery is now available in N.I.N.A. and discovered devices are selectable in the equipment choosers to connect to
+  - Discovery settings can be adjusted in Options > Equipment > ASCOM Alpaca Discovery
 
 ## Bugfixes
 - Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
