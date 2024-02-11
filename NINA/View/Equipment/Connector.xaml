@@ -48,7 +48,7 @@
                                     <TextBlock
                                         FontStyle="Italic"
                                         FontWeight="Bold"
-                                        Text="{Binding DisplayName}" />
+                                        Text="{Binding Name}" />
                                 </Border>
                                 <ItemsPresenter Grid.Row="1" />
                             </Grid>
