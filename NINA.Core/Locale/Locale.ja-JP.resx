@@ -1112,10 +1112,10 @@
     <value>Decガイドレート(秒角/秒)</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Direct Guider could not connect to Mount</value>
+    <value>Direct Guiderは赤道儀に接続できませんでした</value>
   </data>
   <data name="LblDirectGuiderMountDisconnect" xml:space="preserve">
-    <value>Mount has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
+    <value>赤道儀が切断されました。Direct Guiderは切断されます。ディザリングはもう有効ではありません！</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
     <value>画像保存ディレクトリーが見つかりません。</value>
@@ -2055,7 +2055,7 @@
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToMount" xml:space="preserve">
-    <value>From N.I.N.A. to Mount</value>
+    <value>N.I.N.A.から赤道儀へ</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>いいえ</value>
@@ -2112,10 +2112,10 @@
     <value>同期なし</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>When enabled the application will never send a sync command to the mount. This should only be used when having a good pointing model that should not be altered in any way.</value>
+    <value>有効にすると、アプリケーションは架台に同期コマンドを送信しません。 これを使うのは、どんな方法でも変更されることがない、良好なポインティングモデルがある場合に限られます。</value>
   </data>
   <data name="LblNoMount" xml:space="preserve">
-    <value>No Mount</value>
+    <value>架台なし</value>
   </data>
   <data name="LblNotificationError" xml:space="preserve">
     <value>通知エラー</value>
@@ -2634,7 +2634,7 @@
     <value>フォーカサーを再度接続して下さい。</value>
   </data>
   <data name="LblReconnectMount" xml:space="preserve">
-    <value>Please reconnect mount!</value>
+    <value>架台を再接続してください！</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
     <value>参照日</value>
@@ -3074,15 +3074,13 @@
     <value>同期</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Mount sync failed</value>
+    <value>架台の同期に失敗しました</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
     <value>観測値の設定を同期</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>Mount's site settings differ from N.I.N.A.'s.
-
-Should the settings be synchronized?</value>
+    <value>架台の観測地はN.I.N.A.の設定と異なります。同期する必要がありますか？</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>目標</value>
@@ -3154,7 +3152,7 @@ Should the settings be synchronized?</value>
     <value>赤道儀が座標に同期済み</value>
   </data>
   <data name="LblMountToNINA" xml:space="preserve">
-    <value>From Mount to N.I.N.A.</value>
+    <value>架台から N.I.N.A.へ</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RAガイドレート</value>
@@ -3345,7 +3343,7 @@ Should the settings be synchronized?</value>
     <value>カメラ露出を開始できません。</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>Unable to sync. Mount is not connected</value>
+    <value>同期できません。架台が接続されていません</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>予期せぬエラーが発生しました。</value>
@@ -4004,7 +4002,7 @@ Should the settings be synchronized?</value>
     <value>回転装置の接続を解除しますか？</value>
   </data>
   <data name="LblDisconnectMount" xml:space="preserve">
-    <value>Disconnect Mount?</value>
+    <value>架台を切断しますか？</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>望遠鏡はパークされています。導入する前に、望遠鏡のパークを解除する必要があるかもしれません。</value>
@@ -6562,10 +6560,10 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>自動明度フラット</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>This instruction automatically adjusts exposure times for capturing twilight sky flats, akin to the functionality of the flat wizard tool. It dynamically modifies the exposure duration after each shot, based on real-time predictions of changes in sky brightness.</value>
+    <value>この命令は、薄明時のスカイフラット撮影の露出時間を自動的に調整するもので、フラットウィザードツールと同様の機能です。 空の明るさの変化をリアルタイムに予測し、撮影が終わると露出時間をダイナミックに変化させます。</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Twilight Sky Flats</value>
+    <value>薄明スカイフラット</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>カバー閉鎖</value>
@@ -6868,9 +6866,58 @@ This is evaluated AFTER the "Park mount before moving the shutter" setting.</val
     <value>Coordinates sync</value>
   </data>
   <data name="LblMount" xml:space="preserve">
-    <value>Mount</value>
+    <value>架台</value>
   </data>
   <data name="LblMountName" xml:space="preserve">
-    <value>Mount name</value>
+    <value>架台名</value>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryDuration" xml:space="preserve">
+    <value>Discovery duration</value>
+    <comment>The duration in seconds for ASCOM Alpaca Discovery</comment>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryDuration_Tooltip" xml:space="preserve">
+    <value>The duration of ASCOM Alpaca device discovery attempts (Default: 1 second)</value>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryPort" xml:space="preserve">
+    <value>Discovery Port</value>
+    <comment>The ASCOM Alpaca Port to discover devices</comment>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryPort_Tooltip" xml:space="preserve">
+    <value>ASCOM Alpaca discovery IP port number (Default: 32227)</value>
+  </data>
+  <data name="Lbl_Alpaca_NrOfBroadcasts" xml:space="preserve">
+    <value># of broadcasts</value>
+    <comment>The number of broadcasts to send for ASCOM Alpaca Discovery</comment>
+  </data>
+  <data name="Lbl_Alpaca_NrOfBroadcasts_Tooltip" xml:space="preserve">
+    <value>Number of ASCOM Alpaca device discovery broadcasts (Default: 2)</value>
+  </data>
+  <data name="Lbl_Alpaca_ResolveDnsName" xml:space="preserve">
+    <value>Resolve DNS name</value>
+    <comment>ASCOM Alpaca DNS name resolution</comment>
+  </data>
+  <data name="Lbl_Alpaca_ResolveDnsName_Tooltip" xml:space="preserve">
+    <value>Attempt DNS name resolution for ASCOM Alpaca devices (Default: off)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseHTTPS" xml:space="preserve">
+    <value>Use HTTPS</value>
+    <comment>If ASCOM Alpaca should use HTTPS instead of HTTP</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseHTTPS_Tooltip" xml:space="preserve">
+    <value>Determines if ASCOM Alpaca device discovery should use HTTP or HTTPS (Default: off)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv4" xml:space="preserve">
+    <value>Use IPv4</value>
+    <comment>If ASCOM Alpaca should use IPv4</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv4_Tooltip" xml:space="preserve">
+    <value>Use IPv4 for ASCOM Alpaca device discovery (Default: on)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv6" xml:space="preserve">
+    <value>Use IPv6</value>
+    <comment>If ASCOM Alpaca should use IPv6</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv6_Tooltip" xml:space="preserve">
+    <value>Use IPv6 for device ASCOM Alpaca device discovery (Default: off)</value>
   </data>
 </root>
