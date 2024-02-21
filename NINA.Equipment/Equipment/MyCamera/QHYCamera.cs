@@ -1704,13 +1704,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return;
             }
 
-            // Set binmode before getting the effective area
-            uint rv;
-            if ((rv = Sdk.SetBinMode(1, 1)) != QhySdk.QHYCCD_SUCCESS) {
-                Logger.Error($"QHYCCD: SetQHYCCDBinMode() failed. Returned {rv}");
-                return;
-            }
-
             /*
              * The Effective Area is a sensor's real imaging area. On sensors that have an overscan area, the effective area will be smaller than
              * the sensor's dimensions that were reported by GetQHYCCDChipInfo(). If the sensor does not have an overscan area, the values should be equal.
