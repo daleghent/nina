@@ -1184,6 +1184,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             return true;
         }
 
+
         public void StartExposure(CaptureSequence sequence) {
             RaiseIfNotConnected();
             uint rv;
