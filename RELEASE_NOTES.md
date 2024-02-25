@@ -3,9 +3,10 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-### <span style="color:yellow;">Beta builds are preview builds that contain the full development effort for the next release. These builds contain the full set of features for the next version and are under evaluation to find and fix potential bugs. No major changes will occur in these builds and the focus is on bug fixing only - major changes may only occur if a critical issue is identified and a major change is necessary to fix it. Thus these builds should already be quite stable to use.</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
+### <span style="color:green;">Release Candidate Builds: Final Steps Before Launch </span>
+<span style="color:green;">Release candidate builds represent the culmination of the development efforts, encapsulating all features, enhancements, and critical bug fixes slated for the final release. The focus shifts predominantly to fine-tuning and optimizing performance to deliver a polished and stable product. These builds, by design, are substantially complete and undergo only minor adjustments, specifically targeting unresolved issues critical to the software's integrity.Changes at this stage are deliberately minimal, ensuring that the software remains consistent with the final release vision. This phase is crucial for identifying any lingering issues, ensuring that the final product is not only feature-rich but also robust and reliable.Users are encouraged to actively engage with release candidate builds, providing invaluable feedback to refine and perfect the software. For a seamless experience and to safeguard against any eventualities, it is advisable to back up your profiles stored at %localappdata%\NINA.</span>
 
-# Version 3.0 - BETA
+# Version 3.0 - Release Candidate
 
 ## Important Changes
 Rotation values in N.I.N.A. have been updated to use the counter-clockwise notation, aligning with the common "East of North of North Celestial Pole" standard used in most astronomical applications. Existing templates, targets, and other saved items from previous versions will be automatically migrated to reflect this change.
