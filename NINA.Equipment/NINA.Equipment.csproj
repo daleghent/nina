@@ -44,15 +44,15 @@
   <ItemGroup>
     <PackageReference Include="ASCOM.Alpaca.Components" Version="1.0.111" />
     <PackageReference Include="ASCOM.Alpaca.Device" Version="1.0.111" />
-    <PackageReference Include="ASCOM.Com.Components" Version="1.0.110" />
+    <PackageReference Include="ASCOM.Com.Components" Version="1.0.111" />
     <PackageReference Include="Castle.Core" Version="5.1.1" />
     <PackageReference Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
-    <PackageReference Include="Google.Protobuf.Tools" Version="3.25.1" />
-    <PackageReference Include="Grpc.Tools" Version="2.59.0">
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.25.3" />
+    <PackageReference Include="Grpc.Tools" Version="2.62.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="GrpcDotNetNamedPipes" Version="2.1.0" />
+    <PackageReference Include="GrpcDotNetNamedPipes" Version="3.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
