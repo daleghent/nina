@@ -6954,4 +6954,7 @@ Additionally, it is essential that the ASCOM driver used also supports this 32-b
   <data name="Lbl_Alpaca_UseIPv6_Tooltip" xml:space="preserve">
     <value>Use IPv6 for device ASCOM Alpaca device discovery (Default: off)</value>
   </data>
+  <data name="LblToggleCatalogueDisplay" xml:space="preserve">
+    <value>Toggle Catalogue Display</value>
+  </data>
 </root>
