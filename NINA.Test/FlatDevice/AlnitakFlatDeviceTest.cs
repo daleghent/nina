@@ -139,12 +139,12 @@ namespace NINA.Test.FlatDevice {
         }
 
         [Test]
-        [TestCase(0, null)]
-        [TestCase(255, null)]
-        [TestCase(99, null)]
-        [TestCase(50, null)]
-        [TestCase(-1, null)]
-        [TestCase(256, null)]
+        [TestCase(0, null!)]
+        [TestCase(255, null!)]
+        [TestCase(99, null!)]
+        [TestCase(50, null!)]
+        [TestCase(-1, null!)]
+        [TestCase(256, null!)]
         public void TestSetBrightnessDisconnected(int brightness, string command) {
             string actual = null;
             _mockSdk.Setup(m => m.SendCommand<SetBrightnessResponse>(It.IsAny<SetBrightnessCommand>()))

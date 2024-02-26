@@ -5,7 +5,7 @@ pipelines:
             name: dotnet unit tests
             clone:
                 lfs: true
-            image: mcr.microsoft.com/dotnet/sdk:7.0
+            image: mcr.microsoft.com/dotnet/sdk:8.0
             caches:
               - dotnetcore
             script:              
