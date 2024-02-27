@@ -83,7 +83,7 @@ DELETE FROM dsodetail
     WHERE id = 'vdB88';
 DELETE FROM cataloguenr
     WHERE dsodetailid = 'vdB88' AND catalogue = 'vdB' AND designation = '88';
-INSERT INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
+INSERT OR REPLACE INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
 ('Sh2-293','vdB','88');
 
 
@@ -92,18 +92,18 @@ DELETE FROM dsodetail
     WHERE id = 'vdB90';
 DELETE FROM cataloguenr
     WHERE dsodetailid = 'vdB90' AND catalogue = 'vdB' AND designation = '90';
-INSERT INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
+INSERT OR REPLACE INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
 ('Sh2-295','vdB','90');
 
 
 /* cross identifications for Sh2-240 */
-INSERT INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
-('Sh2-240','Simeis','147');
+INSERT OR REPLACE INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
+('Sh2-240','Simeis','147'),
 ('Sh2-240','SNR','G180.0-01.7');
 
 
 /* cross identifications of RCW objects */
-INSERT INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
+INSERT OR REPLACE INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
 ('Gum1','RCW','2'),
 ('Sh2-305','RCW','8'),
 ('Sh2-306','RCW','10'),
@@ -119,7 +119,7 @@ INSERT INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
 ('PK38+ 2.1','RCW','181'),
 ('Sh2-74','RCW','182');
 
-INSERT INTO dsodetail(id,ra,dec,magnitude,surfacebrightness,sizemin,sizemax,positionangle,nrofstars,brighteststar,constellation,dsotype,dsoclass,notes,syncedfrom,lastmodified) VALUES 
+INSERT OR REPLACE INTO dsodetail(id,ra,dec,magnitude,surfacebrightness,sizemin,sizemax,positionangle,nrofstars,brighteststar,constellation,dsotype,dsoclass,notes,syncedfrom,lastmodified) VALUES 
 ('RCW4',110.9764,-8.5983,NULL,NULL,3600,3600,NULL,NULL,NULL,'Mon','BRTNB',NULL,NULL,'','2024-02-07 22:00'),
 ('RCW9',101.2668,-24.3865,NULL,NULL,1800,5400,NULL,NULL,NULL,'CMa','BRTNB',NULL,'Part of the Vela-Puppis Nebula?','','2024-02-07 22:00'),
 ('RCW11',103.5221,-23.6472,NULL,NULL,1200,3600,NULL,NULL,NULL,'CMa','BRTNB',NULL,'Part of Vela-Puppis?','','2024-02-07 22:00'),
@@ -757,7 +757,7 @@ INSERT INTO dsodetail(id,ra,dec,magnitude,surfacebrightness,sizemin,sizemax,posi
 ('Ou1',61.8400833,51.4067222,NULL,NULL,NULL,78,NULL,NULL,NULL,'Per','NONEX',NULL,'HII region ? Discovered by: Nicolas Outters','Simbad/VizieR','2024-02-15 17:00');
 
 
-INSERT INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
+INSERT OR REPLACE INTO cataloguenr(dsodetailid,catalogue,designation) VALUES
 ('RCW4','RCW','4'),
 ('RCW9','RCW','9'),
 ('RCW11','RCW','11'),

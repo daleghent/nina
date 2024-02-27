@@ -104,6 +104,12 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - 66 StDr, StDrLu, StDrL, PaStDr, StDrLuLDu objects (25 confirmed planetary nebulae / 21 likely planetary nebulae / 20 possible planetary nebulae)
 - 131 vdB objects (Catalogue of Reflection Nebulae - Van den Bergh, 1966)
 - 235 Sharpless (Sh2) objects (Catalogue of HII Regions - Sharpless, 1959)
+- 149 RCW objects (H-α emission regions in Southern Milky Way - Rodgers, Campbell, Whiteoak 1960)  
+- 100 HCG objects (Hickson's Compact groups of Galaxies - Hickson+ 1982-1994)
+- 294 SNR objects (A Catalogue of Galactic Supernova Remnants - Green 2019)
+- 66 objects PN candidates (Planetary nebulae candidates discovered by French amateurs - Ferrero+ 2015)
+- 28 objects of uncertain nature like Ou 4 discovered by French amateurs - Ferrero+ 2015)
+- 13 Asterisms like Little Orion, Napoleons Hat, Kemble 3 and others
 
 ## File Formats
 
