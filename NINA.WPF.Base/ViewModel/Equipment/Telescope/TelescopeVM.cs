@@ -174,7 +174,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                         await updateTimer.WaitForNextUpdate(timeoutCts.Token);
                     }
                 } catch (OperationCanceledException) {
-                    if (timeoutCts?.IsCancellationRequested == true) {
+                    if (token.IsCancellationRequested != true) {
                         Logger.Error("Park has timed out after 10 minutes");
                         Notification.ShowError(string.Format(Loc.Instance["LblTelescopeParkTimeout"], 10));
                     } else {
@@ -262,7 +262,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             success = true;
                             await updateTimer.WaitForNextUpdate(timeoutCts.Token);
                         } catch (OperationCanceledException) {
-                            if (timeoutCts?.IsCancellationRequested == true) {
+                            if (token.IsCancellationRequested != true) {
                                 Logger.Error("Unpark has timed out after 10 minutes");
                                 Notification.ShowError(string.Format(Loc.Instance["LblTelescopeUnparkTimeout"], 10));
                             } else {
@@ -326,7 +326,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     // We are home
                                     success = true;
                                 } catch (OperationCanceledException) {
-                                    if (timeoutCts?.IsCancellationRequested == true) {
+                                    if (token.IsCancellationRequested != true) {
                                         Logger.Error("Find home has timed out after 10 minutes");
                                         Notification.ShowError(string.Format(Loc.Instance["LblTelescopeFindHomeTimeout"], 10));
                                         reason = "it has timed out";
@@ -974,7 +974,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     return false;
                 }
             } catch (OperationCanceledException) {
-                if (timeoutCts?.IsCancellationRequested == true) {
+                if (token.IsCancellationRequested != true) {
                     Logger.Error("Telescope slew timed out after 10 Minutes");
                     return false;
                 } else {

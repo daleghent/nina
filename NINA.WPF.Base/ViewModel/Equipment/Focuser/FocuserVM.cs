@@ -230,7 +230,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                         BroadcastFocuserInfo();
                     }
                 } catch (OperationCanceledException) {
-                    if (!timeoutCts?.IsCancellationRequested == true) {
+                    if (ct.IsCancellationRequested == true) {
                         Logger.Info("Focuser move cancelled");
                         throw;
                     }

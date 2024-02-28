@@ -170,7 +170,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                             timeoutCts.CancelAfter(duration + TimeSpan.FromMinutes(15));
                             await RegulateTemperature(20, duration, false, progressRouter, timeoutCts.Token);
                         } catch(OperationCanceledException) { 
-                            if(timeoutCts?.IsCancellationRequested != true) {
+                            if(ct.IsCancellationRequested == true) {
                                 throw;
                             }
                         } catch (CannotReachTargetTemperatureException) {
