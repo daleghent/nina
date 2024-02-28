@@ -1928,7 +1928,7 @@ Calculated HFR: {2}
     <value>Manual Control</value>
   </data>
   <data name="LblManualCoordinates" xml:space="preserve">
-    <value>Manual Coordinates (J2000)</value>
+    <value>Manual Coordinates</value>
   </data>
   <data name="LblManualFilterWheel" xml:space="preserve">
     <value>Manual Filterwheel</value>
@@ -6956,5 +6956,11 @@ Additionally, it is essential that the ASCOM driver used also supports this 32-b
   </data>
   <data name="LblToggleCatalogueDisplay" xml:space="preserve">
     <value>Toggle Catalogue Display</value>
+  </data>
+  <data name="LblTargetAlt" xml:space="preserve">
+    <value>Target Alt</value>
+  </data>
+  <data name="LblTargetAz" xml:space="preserve">
+    <value>Target Az</value>
   </data>
 </root>
