@@ -35,10 +35,11 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using NINA.Core.Utility.Extensions;
+using CommunityToolkit.Mvvm.Input;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
-    public class TelescopeVM : DockableVM, ITelescopeVM {
+    public partial class TelescopeVM : DockableVM, ITelescopeVM {
         private static double LAT_LONG_TOLERANCE = 0.001;
         private static double SITE_ELEVATION_TOLERANCE = 10;
 
@@ -61,8 +62,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 this.applicationStatusMediator.StatusUpdate(p);
             });
 
+            InputCoordinatesAltAz = new InputTopocentricCoordinates(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
+
             ConnectCommand = new AsyncCommand<bool>(() => Task.Run(ChooseTelescope), (object o) => DeviceChooserVM.SelectedDevice != null);
-            CancelConnectCommand = new RelayCommand(CancelChooseTelescope);
+            CancelConnectCommand = new Core.Utility.RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectTelescope));
             ParkCommand = new AsyncCommand<bool>(() => Task.Run(() => {
                 InitCancelSlewTelescope();
@@ -82,11 +85,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 return FindHome(progress, _cancelSlewTelescopeSource.Token);
             }));
 
-            MoveCommand = new RelayCommand(Move);
-            StopMoveCommand = new RelayCommand(StopMove);
-            StopSlewCommand = new RelayCommand(o => StopSlew());
-            SetTrackingEnabledCommand = new RelayCommand(HandleSetTrackingEnabledCommand);
-            SetTrackingModeCommand = new RelayCommand(HandleSetTrackingModeCommand);
+            SetTrackingEnabledCommand = new Core.Utility.RelayCommand(HandleSetTrackingEnabledCommand);
+            SetTrackingModeCommand = new Core.Utility.RelayCommand(HandleSetTrackingModeCommand);
 
             updateTimer = new DeviceUpdateTimer(
                 GetTelescopeValues,
@@ -97,6 +97,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             profileService.ProfileChanged += async (object sender, EventArgs e) => {
                 await RescanDevicesCommand.ExecuteAsync(null);
             };
+            profileService.LocationChanged += ProfileService_LocationChanged;
+        }
+
+        private void ProfileService_LocationChanged(object sender, EventArgs e) {
+            InputCoordinatesAltAz?.SetPosition(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
         }
 
         public async Task<IList<string>> Rescan() {
@@ -169,7 +174,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                         await updateTimer.WaitForNextUpdate(timeoutCts.Token);
                     }
                 } catch (OperationCanceledException) {
-                    if(timeoutCts?.IsCancellationRequested == true) {
+                    if (token.IsCancellationRequested != true) {
                         Logger.Error("Park has timed out after 10 minutes");
                         Notification.ShowError(string.Format(Loc.Instance["LblTelescopeParkTimeout"], 10));
                     } else {
@@ -257,7 +262,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             success = true;
                             await updateTimer.WaitForNextUpdate(timeoutCts.Token);
                         } catch (OperationCanceledException) {
-                            if (timeoutCts?.IsCancellationRequested == true) {
+                            if (token.IsCancellationRequested != true) {
                                 Logger.Error("Unpark has timed out after 10 minutes");
                                 Notification.ShowError(string.Format(Loc.Instance["LblTelescopeUnparkTimeout"], 10));
                             } else {
@@ -321,14 +326,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     // We are home
                                     success = true;
                                 } catch (OperationCanceledException) {
-                                    if (timeoutCts?.IsCancellationRequested == true) {
+                                    if (token.IsCancellationRequested != true) {
                                         Logger.Error("Find home has timed out after 10 minutes");
                                         Notification.ShowError(string.Format(Loc.Instance["LblTelescopeFindHomeTimeout"], 10));
                                         reason = "it has timed out";
                                     } else {
                                         Notification.ShowWarning(Loc.Instance["LblTelescopeFindHomeCancelled"]);
                                         Logger.Warning("Find Home cancelled");
-                                    }                                    
+                                    }
                                 } catch (Exception e) {
                                     reason = e.Message;
                                     Notification.ShowError(e.Message);
@@ -428,7 +433,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 || Math.Abs(Telescope.SiteElevation - profileService.ActiveProfile.AstrometrySettings.Elevation) >= SITE_ELEVATION_TOLERANCE) {
 
                                 TelescopeLocationSyncDirection syncMode = profileService.ActiveProfile.TelescopeSettings.TelescopeLocationSyncDirection;
-                                if(profileService.ActiveProfile.TelescopeSettings.TelescopeLocationSyncDirection == TelescopeLocationSyncDirection.PROMPT) { 
+                                if (profileService.ActiveProfile.TelescopeSettings.TelescopeLocationSyncDirection == TelescopeLocationSyncDirection.PROMPT) {
                                     var syncVM = new TelescopeLatLongSyncVM(
                                         profileService.ActiveProfile.AstrometrySettings.Latitude,
                                         profileService.ActiveProfile.AstrometrySettings.Longitude,
@@ -440,7 +445,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     await WindowService.ShowDialog(syncVM, Loc.Instance["LblSyncLatLong"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
 
                                     syncMode = syncVM.Mode;
-                                } 
+                                }
 
                                 if (syncMode == TelescopeLocationSyncDirection.TOAPPLICATION) {
                                     Logger.Info($"Importing coordinates from mount into N.I.N.A. - Mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude}, elevation {Telescope.SiteElevation} -> N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude}, elevation {profileService.ActiveProfile.AstrometrySettings.Elevation}");
@@ -461,12 +466,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                         Logger.Error(string.Format("Unable to set mount latitude to {0} and longitude to {1}!", Math.Round(targetLatitude, 3), Math.Round(targetLongitude, 3)));
                                         Notification.ShowError(string.Format(Loc.Instance["LblUnableToSetMountLatLong"], Math.Round(targetLatitude, 3), Math.Round(targetLongitude, 3)));
                                     }
-                                    if(Math.Abs(Telescope.SiteElevation - targetElevation) > SITE_ELEVATION_TOLERANCE) {
+                                    if (Math.Abs(Telescope.SiteElevation - targetElevation) > SITE_ELEVATION_TOLERANCE) {
                                         Logger.Error(string.Format("Unable to set mount elevation to {0}!", targetElevation));
                                         Notification.ShowError(string.Format(Loc.Instance["LblUnableToSetMountElevation"], Math.Round(targetElevation, 3)));
                                     }
                                 }
-                                
+
 
                             }
 
@@ -805,7 +810,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 if (!profileService.ActiveProfile.TelescopeSettings.NoSync && TelescopeInfo.Connected) {
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSync"] });
 
-                    if(transform.RA<0) {
+                    if (transform.RA < 0) {
                         var mod24Ra = AstroUtil.EuclidianModulus(transform.RA, 24);
                         Logger.Info($"RA value {transform.RA} is less than zero: applying Euclidean % 24 to RA for sync.");
                         transform.RA = mod24Ra;
@@ -825,6 +830,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
+        [RelayCommand]
         private void Move(object obj) {
             string cmd = obj.ToString();
             if (cmd == "W") {
@@ -841,6 +847,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
+        [RelayCommand]
         private void StopMove(object obj) {
             string cmd = obj.ToString();
             if (cmd == "W") {
@@ -857,6 +864,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
+        [RelayCommand]
         public void StopSlew() {
             try {
                 Telescope.StopSlew();
@@ -868,6 +876,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         public InputCoordinates InputCoordinates { get; set; } = new InputCoordinates();
+        public InputTopocentricCoordinates InputCoordinatesAltAz { get; set; }
 
         private double _targetRightAscencionSeconds;
         private ITelescopeMediator telescopeMediator;
@@ -965,7 +974,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     return false;
                 }
             } catch (OperationCanceledException) {
-                if (timeoutCts?.IsCancellationRequested == true) {
+                if (token.IsCancellationRequested != true) {
                     Logger.Error("Telescope slew timed out after 10 Minutes");
                     return false;
                 } else {
@@ -974,6 +983,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             } finally {
                 progress.Report(new ApplicationStatus() { Status = string.Empty });
             }
+        }
+
+        [RelayCommand]
+        private Task SlewToCoordinatesAltAz(CancellationToken token) {
+            return Task.Run(() => SlewToCoordinatesAsync(InputCoordinatesAltAz.Coordinates, token));
         }
 
         private Task<bool> SlewToCoordinatesInternal(object obj) {
@@ -1040,12 +1054,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         public bool SetTrackingMode(TrackingMode trackingMode) {
-            if (Telescope?.Connected == true && !Telescope.AtPark && trackingMode != TrackingMode.Custom) {                
+            if (Telescope?.Connected == true && !Telescope.AtPark && trackingMode != TrackingMode.Custom) {
                 Telescope.TrackingMode = trackingMode;
                 if (trackingMode != TrackingMode.Stopped && (Telescope.CanSetDeclinationRate || Telescope.CanSetRightAscensionRate)) {
-                    try { 
+                    try {
                         Telescope.SetCustomTrackingRate(0.0d, 0.0d);
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         Logger.Debug(ex.Message);
                     }
                 }
@@ -1063,7 +1077,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     SetTrackingMode(TrackingMode.Sidereal);
                 }
 
-                
+
                 return true;
             }
             return false;
@@ -1100,7 +1114,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
         public PierSide DestinationSideOfPier(Coordinates coordinates) {
-            if(Telescope?.Connected == true) {
+            if (Telescope?.Connected == true) {
                 return Telescope.DestinationSideOfPier(coordinates);
             }
             return PierSide.pierUnknown;
@@ -1115,9 +1129,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         public ICommand CancelConnectCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
 
-        public ICommand MoveCommand { get; private set; }
 
-        public ICommand StopMoveCommand { get; private set; }
 
         public IAsyncCommand ParkCommand { get; private set; }
 
@@ -1125,7 +1137,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public ICommand UnparkCommand { get; private set; }
 
-        public ICommand StopSlewCommand { get; private set; }
 
         public IAsyncCommand RescanDevicesCommand { get; private set; }
 
