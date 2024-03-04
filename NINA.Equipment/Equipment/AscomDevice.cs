@@ -142,6 +142,9 @@ namespace NINA.Equipment.Equipment {
                         Logger.Debug($"SET {Name} Connected to {value}");
                         device.Connected = value;
                         connected = value;
+                        if (propertyGETMemory.TryGetValue(nameof(Connected), out var getmemory)) {
+                            getmemory.InvalidateCache();
+                        }
                     }
                 }
             }
