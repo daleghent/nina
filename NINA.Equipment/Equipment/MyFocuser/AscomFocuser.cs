@@ -133,7 +133,8 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                     if (relativeOffsetRemaining < 0) {
                         moveAmount *= -1;
                     }
-                    device.Move(moveAmount);
+                    await device.MoveAsync(moveAmount);
+
                     while (IsMoving && !ct.IsCancellationRequested) {
                         await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
