@@ -105,15 +105,17 @@ namespace NINA.Equipment.Equipment {
                 lock (lockObj) {
                     if (connected && device != null) {
                         bool val = false;
-
                         try {
                             bool expected;
-                            val = device?.Connected ?? false;
+                            val = GetProperty(nameof(Connected), defaultValue: false, cacheInterval: TimeSpan.FromSeconds(1), rethrow: true);
                             expected = connected;
                             if (expected != val) {
                                 Logger.Error($"{Name} should be connected but reports to be disconnected. Trying to reconnect...");
                                 try {
                                     Connected = true;
+                                    if (propertyGETMemory.TryGetValue(nameof(Connected), out var getmemory)) {
+                                        getmemory.InvalidateCache();
+                                    }
                                     if (!device.Connected) {
                                         throw new NotConnectedException();
                                     }
@@ -125,7 +127,7 @@ namespace NINA.Equipment.Equipment {
                                 }
                             }
                         } catch (Exception ex) {
-                            Logger.Error(ex);
+                            Logger.Error(ex.InnerException ?? ex);
                             DisconnectOnConnectionError();
                         }
                         return val;
@@ -305,7 +307,7 @@ namespace NINA.Equipment.Equipment {
         /// <param name="propertyName">Property Name of the AscomDevice property</param>
         /// <param name="defaultValue">The default value to be returned when not connected or not implemented</param>
         /// <returns></returns>
-        protected PropT GetProperty<PropT>(string propertyName, PropT defaultValue, TimeSpan? cacheInterval = null) {            
+        protected PropT GetProperty<PropT>(string propertyName, PropT defaultValue, TimeSpan? cacheInterval = null, bool rethrow = false) {            
             if (device != null) {
                 var retries = 3;
 
@@ -327,7 +329,7 @@ namespace NINA.Equipment.Equipment {
                             Logger.Info($"Retrying to GET {type.Name}.{propertyName} - Attempt {i + 1} / {retries}");
                         }
 
-                        if (memory.IsImplemented && Connected) {
+                        if (memory.IsImplemented) {
                             PropT value = (PropT)memory.GetValue(device);
 
                             Logger.Trace($"GET {type.Name}.{propertyName}: {value}");
@@ -337,6 +339,8 @@ namespace NINA.Equipment.Equipment {
                             return defaultValue;
                         }
                     } catch (Exception ex) {
+                        if(rethrow) { throw; }
+
                         if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException
                             || ex is ASCOM.NotImplementedException || ex.InnerException is ASCOM.NotImplementedException
                             || ex is System.NotImplementedException || ex.InnerException is System.NotImplementedException) {
