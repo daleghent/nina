@@ -620,7 +620,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 IsEnabled="{Binding Telescope.CanMovePrimaryAxis}"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                Visibility="{Binding Telescope.CanMovePrimaryAxis, Converter={StaticResource VisibilityConverter}}">
                                 <TextBlock
                                     Margin="0,0,5,0"
                                     VerticalAlignment="Center"
@@ -640,7 +641,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 IsEnabled="{Binding Telescope.CanMoveSecondaryAxis}"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                Visibility="{Binding Telescope.CanMoveSecondaryAxis, Converter={StaticResource VisibilityConverter}}">
                                 <TextBlock
                                     Margin="0,0,5,0"
                                     VerticalAlignment="Center"
