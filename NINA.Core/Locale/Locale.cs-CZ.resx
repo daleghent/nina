@@ -1922,7 +1922,7 @@ Přeskočit.</value>
     <value>Ruční Ovládání</value>
   </data>
   <data name="LblManualCoordinates" xml:space="preserve">
-    <value>Ruční souřadnice</value>
+    <value>Ruční Nastavení Souřadnic</value>
   </data>
   <data name="LblManualFilterWheel" xml:space="preserve">
     <value>Ruční Filtrové kolo</value>
@@ -6952,9 +6952,9 @@ Navíc je nezbytné, aby použitý ovladač ASCOM tuto 32bitovou hloubku také p
     <value>Přepnout Katalog Zobrazení</value>
   </data>
   <data name="LblTargetAlt" xml:space="preserve">
-    <value>Cíl Alt</value>
+    <value>Cílová Alt</value>
   </data>
   <data name="LblTargetAz" xml:space="preserve">
-    <value>Cíl Az</value>
+    <value>Cílová Az</value>
   </data>
 </root>
