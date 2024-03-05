@@ -142,24 +142,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                         if (!Telescope.AtPark) {
                             progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToPark"] });
                             await Telescope.Park(timeoutCts.Token);
-
-                            // Detect if the parking process was cancelled by an external force, such as the user hitting the stop button
-                            // in another app or in the driver's own UI, external to NINA.
-                            if (!Telescope.AtPark && !Telescope.Slewing) {
-                                Logger.Warning("Park operation appears to have been cancelled by an external process");
-                                throw new OperationCanceledException();
-                            } else {
-                                // Defend against drivers that might surprise us with a non-conformant async Park()
-                                // Also catch cases where the user cancelled the procedure by hitting the Stop button
-                                while (!Telescope.AtPark && Telescope.Slewing) {
-                                    if (timeoutCts.Token.IsCancellationRequested) {
-                                        Logger.Warning("Park operation cancelled");
-                                        throw new OperationCanceledException();
-                                    }
-
-                                    await CoreUtil.Delay(TimeSpan.FromSeconds(2), timeoutCts.Token);
-                                }
-                            }
+                            
                             await updateTimer.WaitForNextUpdate(timeoutCts.Token);
                         } else {
                             Logger.Info("Telescope commanded to park but it is already parked");
@@ -304,24 +287,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 try {
                                     progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToFindHome"] });
                                     await Telescope.FindHome(timeoutCts.Token);
-
-                                    // Detect if the homing process was cancelled by an external force, such as the user hitting the stop button
-                                    // in another app or in the driver's own UI, external to NINA.
-                                    if (!Telescope.AtHome && !Telescope.Slewing) {
-                                        Logger.Warning("Find home operation appears to have been cancelled by an external process");
-                                        throw new OperationCanceledException();
-                                    } else {
-                                        // Defend against drivers that might surprise us with a non-conformant async FindHome()
-                                        // Also catch cases where the user cancelled the procedure by hitting the Stop button
-                                        while (!Telescope.AtHome && Telescope.Slewing) {
-                                            if (timeoutCts.Token.IsCancellationRequested) {
-                                                Logger.Warning("Find home cancelled");
-                                                throw new OperationCanceledException();
-                                            }
-
-                                            await CoreUtil.Delay(TimeSpan.FromSeconds(2), timeoutCts.Token);
-                                        }
-                                    }
+                                                                        
                                     await updateTimer.WaitForNextUpdate(timeoutCts.Token);
                                     // We are home
                                     success = true;

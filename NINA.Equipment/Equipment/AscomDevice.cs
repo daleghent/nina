@@ -369,6 +369,14 @@ namespace NINA.Equipment.Equipment {
             return defaultValue;
         }
 
+        protected void InvalidatePropertyCache() {
+            if(propertyGETMemory?.Values?.Count > 0) {
+                foreach (var property in propertyGETMemory.Values) {
+                    property.InvalidateCache();
+                }
+            }
+        }
+
         /// <summary>
         /// Tries to set a property by its name. If an exception occurs it will be logged.
         /// If a ASCOM.NotImplementedException occurs, the "isImplemetned" value will be set to false
@@ -461,7 +469,7 @@ namespace NINA.Equipment.Equipment {
 
             public object GetValue(DeviceT device) {
                 lock (lockObj) {
-                    if (DateTimeOffset.UtcNow - LastValueUpdate < cacheInterval) {
+                    if ((DateTimeOffset.UtcNow - LastValueUpdate) < cacheInterval) {
                         return LastValue;
                     }
 

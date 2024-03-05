@@ -97,7 +97,8 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                 var lastMovementTime = DateTime.Now;
                 while (position != Position && !ct.IsCancellationRequested) {
                     await device.MoveAsync(position, ct);
-                    
+                    InvalidatePropertyCache();
+
                     if (lastPosition == Position) {
                         ++samePositionCount;
                         var samePositionTime = DateTime.Now - lastMovementTime;
@@ -134,6 +135,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                         moveAmount *= -1;
                     }
                     await device.MoveAsync(moveAmount);
+                    InvalidatePropertyCache();
 
                     while (IsMoving && !ct.IsCancellationRequested) {
                         await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
