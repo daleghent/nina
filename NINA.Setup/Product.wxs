@@ -1023,9 +1023,6 @@
       <Component Id="System.Linq.Queryable.dll" Guid="4a20be26-1668-433c-bf17-ffc239cbc880">
         <File Id="System.Linq.Queryable.dll" Name="System.Linq.Queryable.dll" Source="$(var.NINA_TargetDir)System.Linq.Queryable.dll" />
       </Component>
-      <Component Id="System.Linq.Async.dll" Guid="f85d0d9f-dc4f-43b4-98fe-b0a34e3adcf5">
-        <File Id="System.Linq.Async.dll" Name="System.Linq.Async.dll" Source="$(var.NINA_TargetDir)System.Linq.Async.dll" />
-      </Component>
       <Component Id="System.Memory.dll" Guid="6186ad6e-57a4-45dd-a2b8-fae1d0055f25">
         <File Id="System.Memory.dll" Name="System.Memory.dll" Source="$(var.NINA_TargetDir)System.Memory.dll" />
       </Component>
