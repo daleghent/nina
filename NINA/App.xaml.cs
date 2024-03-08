@@ -183,7 +183,11 @@ namespace NINA {
                 var profileSelection = new ProfileSelectVM(_profileService);
                 var profileSelectionWindow = new ProfileSelectView();
                 profileSelectionWindow.DataContext = profileSelection;
-                profileSelectionWindow.ShowDialog();
+                var result = profileSelectionWindow.ShowDialog() ?? false;
+                if(!result) {
+                    Shutdown();
+                    return;
+                }
             }
 
             _mainWindowViewModel = CompositionRoot.Compose(_profileService, _commandLineOptions);
