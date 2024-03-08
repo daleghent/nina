@@ -48,7 +48,7 @@ namespace NINA.Test.FlatDevice {
                 .Returns(Task.FromResult(new StateResponse { DeviceResponse = "*S99000" }));
             _mockSdk.Setup(m => m.SendCommand<FirmwareVersionResponse>(It.IsAny<FirmwareVersionCommand>()))
                 .Returns(Task.FromResult(new FirmwareVersionResponse { DeviceResponse = "*V99124" }));
-            _sut = new AlnitakFlatDevice(_mockProfileService.Object) { Sdk = _mockSdk.Object };
+            _sut = new AlnitakFlatDevice("TestDevice", "TestCategory", "TestName", "TestDisplayName", _mockProfileService.Object) { Sdk = _mockSdk.Object };
         }
 
         [Test]
