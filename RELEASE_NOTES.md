@@ -66,6 +66,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - "Telescope" in equipment area has been renamed to "Mount". Furthermore the equipment options have been separated by telescope and mount. The renaming is an ongoing effort, so some labels might still refer to "telescope" instead of "mount"
 - When the offline sky map is selected, you can customize which Deep Sky Objects are displayed by disabling specific catalogues. To do this, find and adjust the settings in the 'Toggle Catalogue Display' menu located in the lower-left corner of the user interface.
 - Added Alt/Az input for manual coordinates in telescope tab
+- Previously, when users clicked 'X' to close the profile chooser window, the application would start with the selected profile. With this update, clicking 'X' on the profile chooser will now exit the application instead of launching it.
 
 ## Commandline Options
 - Multiple command line options have been added to be able to adjust some of the startup parameters for the application

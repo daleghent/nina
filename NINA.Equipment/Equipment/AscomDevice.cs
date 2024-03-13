@@ -312,9 +312,6 @@ namespace NINA.Equipment.Equipment {
         /// <returns></returns>
         protected PropT GetProperty<PropT>(string propertyName, PropT defaultValue, TimeSpan? cacheInterval = null, bool rethrow = false) {            
             if (device != null) {
-                var retries = 3;
-
-                var interval = TimeSpan.FromMilliseconds(100);
                 var type = device.GetType();
 
                 if (!propertyGETMemory.TryGetValue(propertyName, out var memory)) {
@@ -324,6 +321,10 @@ namespace NINA.Equipment.Equipment {
                         propertyGETMemory[propertyName] = memory;
                     }
                 }
+
+                // Retry three times in normal conditions - disable retry when consecutive errors exceed threshold as it will not likely succeed on a retry anyways
+                var retries = memory.ConsecutiveErrors >= memory.ConsecutiveErrorThreshold ? 1 : 3;
+                var interval = TimeSpan.FromMilliseconds(200);
 
                 for (int i = 0; i < retries; i++) {
                     try {
@@ -336,13 +337,18 @@ namespace NINA.Equipment.Equipment {
                             PropT value = (PropT)memory.GetValue(device);
 
                             Logger.Trace($"GET {type.Name}.{propertyName}: {value}");
-
+                            memory.ConsecutiveErrors = 0;
                             return (PropT)memory.LastValue;
                         } else {
                             return defaultValue;
                         }
                     } catch (Exception ex) {
                         if(rethrow) { throw; }
+
+                        memory.ConsecutiveErrors++;
+                        if (memory.ConsecutiveErrors == memory.ConsecutiveErrorThreshold) {
+                            Logger.Warning($"GET of {type.Name}.{propertyName} encountered {memory.ConsecutiveErrorThreshold} consecutive errors. Further logs for this property access are logged on TRACE level until the property access is successful again");
+                        }
 
                         if (ex is PropertyNotImplementedException || ex.InnerException is PropertyNotImplementedException
                             || ex is ASCOM.NotImplementedException || ex.InnerException is ASCOM.NotImplementedException
@@ -353,17 +359,30 @@ namespace NINA.Equipment.Equipment {
                             return defaultValue;
                         }
 
+                        var logEx = ex.InnerException ?? ex;
+
                         if (ex is NotConnectedException || ex.InnerException is NotConnectedException) {
-                            Logger.Error($"{Name} is not connected ", ex.InnerException ?? ex);
+                            if (memory.ConsecutiveErrors > memory.ConsecutiveErrorThreshold) {
+                                Logger.Trace($"{Name} is not connected {logEx}");
+                            } else {
+                                Logger.Error($"{Name} is not connected ", logEx);
+                            }
                         }
 
-                        var logEx = ex.InnerException ?? ex;
-                        Logger.Error($"An unexpected exception occurred during GET of {type.Name}.{propertyName}: ", logEx);
+                        if(memory.ConsecutiveErrors > memory.ConsecutiveErrorThreshold) {
+                            Logger.Trace($"An unexpected exception occurred during GET of {type.Name}.{propertyName} - Consecutive Errors: {memory.ConsecutiveErrors} - Error: {logEx.Message} {logEx.StackTrace}");
+                        } else {
+                            Logger.Error($"An unexpected exception occurred during GET of {type.Name}.{propertyName}: ", logEx);
+                        }
                     }
                 }
 
                 var val = (PropT)memory.LastValue;
-                Logger.Info($"GET {type.Name}.{propertyName} failed - Returning last known value {val}");
+                if (memory.ConsecutiveErrors > memory.ConsecutiveErrorThreshold) {
+                    Logger.Trace($"GET {type.Name}.{propertyName} failed - Returning last known value {val}");
+                } else {
+                    Logger.Info($"GET {type.Name}.{propertyName} failed - Returning last known value {val}");
+                }   
                 return val;
             }
             return defaultValue;
@@ -447,6 +466,8 @@ namespace NINA.Equipment.Equipment {
                 info = p;
                 this.cacheInterval = cacheInterval;
                 IsImplemented = true;
+                ConsecutiveErrors = 0;
+                ConsecutiveErrorThreshold = 9;
 
                 LastValue = null;
                 if (p.PropertyType.IsValueType) {
@@ -462,6 +483,10 @@ namespace NINA.Equipment.Equipment {
             public bool IsImplemented { get; set; }
             public object LastValue { get; set; }
             public DateTimeOffset LastValueUpdate { get; set; }
+
+            public int ConsecutiveErrors { get; set; }
+
+            public int ConsecutiveErrorThreshold;
 
             public void InvalidateCache() {
                 LastValueUpdate = DateTimeOffset.MinValue;
