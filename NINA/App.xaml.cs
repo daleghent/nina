@@ -142,6 +142,7 @@ namespace NINA {
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var userSettingsException = InitializeUserSettings();
 
             _profileService =
