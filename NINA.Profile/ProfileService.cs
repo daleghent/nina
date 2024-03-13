@@ -206,8 +206,7 @@ namespace NINA.Profile {
         public void ChangeLocale(CultureInfo language) {
             ActiveProfile.ApplicationSettings.Language = language;
 
-            CultureInfo.DefaultThreadCurrentUICulture = language;            
-
+            CultureInfo.DefaultThreadCurrentUICulture = language;
             Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
             var eventHandler = LocaleChanged;
             if (eventHandler != null) { 
@@ -345,7 +344,6 @@ namespace NINA.Profile {
                         info.IsActive = true;
 
                         System.Threading.Thread.CurrentThread.CurrentUICulture = ActiveProfile.ApplicationSettings.Language;
-                        System.Threading.Thread.CurrentThread.CurrentCulture = ActiveProfile.ApplicationSettings.Language;
                         Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
 
                         var eventHandlerProfile = ProfileChanged;
