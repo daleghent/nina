@@ -17,10 +17,10 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - The command line options have been revisited. Previously `/profileid <profile id>` was available. This has been changed to `--profileid <profile id>`. See below for more details.
 - Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.
 - The "Loop for time" condition and "Wait for time" instruction have been redesigned. When selecting dawn or dusk times, the rollover will now occur at sunrise or sunset, respectively. For example, when dusk is selected, the rollover will happen at dawn.
-- The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implemenatation and should be used instead.
-- The native driver for PrimaLuceLab EAGLE has been removed. The EAGLE ASCOM Switch Driver supersedes this implemenatation and should be used instead.
+- The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implementation and should be used instead.
+- The native driver for PrimaLuceLab EAGLE has been removed. The EAGLE ASCOM Switch Driver supersedes this implementation and should be used instead.
 - SGP Server API has been removed from the core application. Instead this is available as a plugin via "SGP Server Emulation"
-- Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now supports HDR modes if available. The "High Conversion Gain" toggle has been removed and instead this is controlled via ReadoutModes!
+- Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now support HDR modes if available. The "High Conversion Gain" toggle has been removed and instead this is controlled via ReadoutModes!
 - DARKFLAT has been removed from the selection of image types. They really are just DARKs and are classified as such. Previous saved sequences and templates will be automatically migrated.
 
 ## .NET 8
@@ -28,7 +28,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - Plugins from previous versions are disabled. They must be patched by the plugin authors and targeted specifically for the new version to ensure compatibility with .NET 8.
 
 ## Improvements
-- Profile Chooser on startup will now be shown before the whole application is initializing
+- The Profile Chooser will now be displayed before the application fully initializes
     - This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen
 - The guider tab will now also show the dither pixels translated to the main camera based on the guider pixel scale reported by the connected guiding application
 - N.I.N.A. will attempt to synchronize the mount's clock with that of the computer's. Not all mount drivers support this feature. A warning will be displayed if the difference between the clocks is more than 10 seconds and the mount time cannot be set
@@ -41,8 +41,8 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
     - PrimaLuceLab Eagle's GPS and Eagle Manager X
 - In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.
 - Further parallelization of post image capture actions. This should especially speed up capturing using a dslr native driver where the time consuming raw conversion will no longer hold up the next exposure.
-- Added an option to Options > Equipment > Telescope to define automatic sync direction of location. This can be used to supress a user prompt for automatic connection and control.
-- Plugin folder in `%localappdata%\NINA\Plugins` now contain a subfolder with the `Major.Minor.Revision` version of the application containing plugins for the current version. This will make it simpler to upgrade and downgrade application versions without having to exchange plugins for developers. From user perspective nothing will change as everything is automatically migrated.
+- Added an option under Options > Equipment > Telescope to define the automatic sync direction for location. This can be used to supress a user prompt for automatic connection and control.
+- Plugin folder in `%localappdata%\NINA\Plugins` now contains a subfolder with the `Major.Minor.Revision` version of the application containing plugins for the current version. This will make it simpler to upgrade and downgrade application versions without having to exchange plugins for developers. From user perspective nothing will change as everything is automatically migrated.
 - Sequencer Sidebar Tab for Templates and Targets now indicate a load progress when the list is refreshed and should also load faster.
 - In Options you can now specify custom plugin repositories for privately hosted plugins
 - Autofocus report JSON files now append the profile id in their filename and get filtered in the application by only using the relevant files from the current profile
@@ -83,7 +83,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 ## Flat Wizard Rework
 ### Flat Wizard screen
 - The Binning and Gain settings have been relocated to align with other settings, and they can now be configured on a filter-specific basis.
-- Additionally it is now also possible to specify a camera offset
+- Additionally it is now possible to specify a camera offset
 - A step size is no longer required. The algorithm will now initiate at (Min+Max/2) and continually halve to determine the optimal exposure time.
 - The option for dark frames is concealed when selecting sky flats; due to variable exposure times with sky flats, darks become redundant.
 - Internally the flat wizard will now use the new advanced sequencer instructions
@@ -134,7 +134,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
   - Discovery settings can be adjusted in Options > Equipment > ASCOM Alpaca Discovery
 
 ## Bugfixes
-- Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure
+- Fixed SVBony Native driver that was sometimes showing the exposure before the latest one after a cancelled exposure
 - Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning
 - Added automatic retry of exposure start when POA_ERROR_EXPOSING error happens
 - Selecting a date in sky atlas no longer sets the date one day earlier than selected
@@ -147,7 +147,7 @@ Rotation values in N.I.N.A. have been updated to use the counter-clockwise notat
 - When an update notification in the app was available but after the initial pop-up a new version was published, it will no longer fail the checksum check
 - ASCOM Camera ImageArray can now properly transform Byte[,], Short[,], UShort[,] in addition to the existing Int[,] to the 16 bit data structure N.I.N.A. is using
 - Dragging an instruction below a sequence container when nothing else is below it will now work correctly
-- When switching profiles, the dock layout will be saved piror to switching
+- When switching profiles, the dock layout will be saved prior to switching
 
 # Version 2.3 Hotfix 2
 

@@ -41,10 +41,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>The command line options have been revisited. Previously <code>/profileid &lt;profile id&gt;</code> was available. This has been changed to <code>--profileid &lt;profile id&gt;</code>. See below for more details.</li>
 <li>Flat Wizard logic has been revamped and can now also be used inside the sequencer. See below for more details.</li>
 <li>The &quot;Loop for time&quot; condition and &quot;Wait for time&quot; instruction have been redesigned. When selecting dawn or dusk times, the rollover will now occur at sunrise or sunset, respectively. For example, when dusk is selected, the rollover will happen at dawn.</li>
-<li>The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implemenatation and should be used instead.</li>
-<li>The native driver for PrimaLuceLab EAGLE has been removed. The EAGLE ASCOM Switch Driver supersedes this implemenatation and should be used instead.</li>
+<li>The native driver for Pegasus Ultimate Power Box v2 has been removed. The Pegasus Unity ASCOM driver supersedes this implementation and should be used instead.</li>
+<li>The native driver for PrimaLuceLab EAGLE has been removed. The EAGLE ASCOM Switch Driver supersedes this implementation and should be used instead.</li>
 <li>SGP Server API has been removed from the core application. Instead this is available as a plugin via &quot;SGP Server Emulation&quot;</li>
-<li>Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now supports HDR modes if available. The &quot;High Conversion Gain&quot; toggle has been removed and instead this is controlled via ReadoutModes!</li>
+<li>Touptek, RisingCam, Altair, MallinCam, OgmaCam and OmegonCam now support HDR modes if available. The &quot;High Conversion Gain&quot; toggle has been removed and instead this is controlled via ReadoutModes!</li>
 <li>DARKFLAT has been removed from the selection of image types. They really are just DARKs and are classified as such. Previous saved sequences and templates will be automatically migrated.</li>
 </ul>
 <h2 id="net-8">.NET 8</h2>
@@ -54,7 +54,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 <h2 id="improvements">Improvements</h2>
 <ul>
-<li>Profile Chooser on startup will now be shown before the whole application is initializing
+<li>The Profile Chooser will now be displayed before the application fully initializes
 <ul>
 <li>This change also fixes the issue that sequence templates are loaded from the first profile when switching it in the chooser instead of the one being chosen</li>
 </ul>
@@ -73,8 +73,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </li>
 <li>In the Imaging Tab above the image preview, a new button to flip an image horizontally per click is added. Each following image will then also be flipped. This flip is for display only and doesn't affect the data.</li>
 <li>Further parallelization of post image capture actions. This should especially speed up capturing using a dslr native driver where the time consuming raw conversion will no longer hold up the next exposure.</li>
-<li>Added an option to Options &gt; Equipment &gt; Telescope to define automatic sync direction of location. This can be used to supress a user prompt for automatic connection and control.</li>
-<li>Plugin folder in <code>%localappdata%\NINA\Plugins</code> now contain a subfolder with the <code>Major.Minor.Revision</code> version of the application containing plugins for the current version. This will make it simpler to upgrade and downgrade application versions without having to exchange plugins for developers. From user perspective nothing will change as everything is automatically migrated.</li>
+<li>Added an option under Options &gt; Equipment &gt; Telescope to define the automatic sync direction for location. This can be used to supress a user prompt for automatic connection and control.</li>
+<li>Plugin folder in <code>%localappdata%\NINA\Plugins</code> now contains a subfolder with the <code>Major.Minor.Revision</code> version of the application containing plugins for the current version. This will make it simpler to upgrade and downgrade application versions without having to exchange plugins for developers. From user perspective nothing will change as everything is automatically migrated.</li>
 <li>Sequencer Sidebar Tab for Templates and Targets now indicate a load progress when the list is refreshed and should also load faster.</li>
 <li>In Options you can now specify custom plugin repositories for privately hosted plugins</li>
 <li>Autofocus report JSON files now append the profile id in their filename and get filtered in the application by only using the relevant files from the current profile</li>
@@ -119,7 +119,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <h3 id="flat-wizard-screen">Flat Wizard screen</h3>
 <ul>
 <li>The Binning and Gain settings have been relocated to align with other settings, and they can now be configured on a filter-specific basis.</li>
-<li>Additionally it is now also possible to specify a camera offset</li>
+<li>Additionally it is now possible to specify a camera offset</li>
 <li>A step size is no longer required. The algorithm will now initiate at (Min+Max/2) and continually halve to determine the optimal exposure time.</li>
 <li>The option for dark frames is concealed when selecting sky flats; due to variable exposure times with sky flats, darks become redundant.</li>
 <li>Internally the flat wizard will now use the new advanced sequencer instructions</li>
@@ -185,7 +185,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 </ul>
 <h2 id="bugfixes">Bugfixes</h2>
 <ul>
-<li>Fixed SVBony Native driver, that was sometimes showing the exposure before the latest one after a cancelled exposure</li>
+<li>Fixed SVBony Native driver that was sometimes showing the exposure before the latest one after a cancelled exposure</li>
 <li>Fixed PlayerOne resolution not fully resetting to complete size after subframe or binning</li>
 <li>Added automatic retry of exposure start when POA_ERROR_EXPOSING error happens</li>
 <li>Selecting a date in sky atlas no longer sets the date one day earlier than selected</li>
@@ -198,7 +198,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>When an update notification in the app was available but after the initial pop-up a new version was published, it will no longer fail the checksum check</li>
 <li>ASCOM Camera ImageArray can now properly transform Byte[,], Short[,], UShort[,] in addition to the existing Int[,] to the 16 bit data structure N.I.N.A. is using</li>
 <li>Dragging an instruction below a sequence container when nothing else is below it will now work correctly</li>
-<li>When switching profiles, the dock layout will be saved piror to switching</li>
+<li>When switching profiles, the dock layout will be saved prior to switching</li>
 </ul>
 <h1 id="version-2.3-hotfix-2">Version 2.3 Hotfix 2</h1>
 <h2 id="improvements-1">Improvements</h2>
