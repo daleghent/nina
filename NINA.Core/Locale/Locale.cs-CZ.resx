@@ -6957,4 +6957,7 @@ Navíc je nezbytné, aby použitý ovladač ASCOM tuto 32bitovou hloubku také p
   <data name="LblTargetAz" xml:space="preserve">
     <value>Cílová Az</value>
   </data>
+  <data name="LblGeoptikFlatFieldController" xml:space="preserve">
+    <value>Geoptik Flat Field Regulátor</value>
+  </data>
 </root>

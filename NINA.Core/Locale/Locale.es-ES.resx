@@ -6952,4 +6952,7 @@ Además, es esencial que el controlador ASCOM utilizado también admita esta pro
   <data name="LblTargetAz" xml:space="preserve">
     <value>Az del objetivo</value>
   </data>
+  <data name="LblGeoptikFlatFieldController" xml:space="preserve">
+    <value>Controlador del generador de flats Geoptik</value>
+  </data>
 </root>

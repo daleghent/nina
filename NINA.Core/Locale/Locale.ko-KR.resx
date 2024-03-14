@@ -6979,4 +6979,7 @@ ASCOM 카메라 드라이버를 사용할 때만 관련이 있습니다!</value>
   <data name="LblTargetAz" xml:space="preserve">
     <value>Target Az</value>
   </data>
+  <data name="LblGeoptikFlatFieldController" xml:space="preserve">
+    <value>Geoptik Flat Field Controller</value>
+  </data>
 </root>
