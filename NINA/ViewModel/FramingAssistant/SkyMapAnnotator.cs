@@ -178,11 +178,11 @@ namespace NINA.ViewModel.FramingAssistant {
             }
             var maxSize = AstroUtil.DegreeToArcsec(2 * Math.Max(ViewportFoV.OriginalHFoV, ViewportFoV.OriginalVFoV));
 
-            var relevantCataloges = ActiveCatalogues.Where(x => x.Active).Select(x => x.Name).ToList();
+            var filteredCatalogues = ActiveCatalogues.Where(x => !x.Active).Select(x => x.Name).ToList();
 
             var filteredDbDSO = dbDSOs
                 .Where(d => (d.Value.Size != null && d.Value.Size > minSize && d.Value.Size < maxSize) || ViewportFoV.VFoVDeg <= 10)
-                .Where(dso => relevantCataloges.Any(dso.Value.Name.StartsWith))
+                .Where(dso => !filteredCatalogues.Any(dso.Value.Name.StartsWith))
                 .ToList();
 
             // if we're above 90deg centerTop will be different than centerBottom, otherwise it is equal
