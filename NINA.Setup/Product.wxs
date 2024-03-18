@@ -296,7 +296,7 @@
             </Directory>
             <Directory Id="runtimes_win" Name="win">
               <Directory Id="runtimes_win_lib" Name="lib">
-                <Directory Id="runtimes_win_lib_net7.0" Name="net7.0" />
+                <Directory Id="runtimes_win_lib_net8.0" Name="net8.0" />
                 <Directory Id="runtimes_win_lib_netcoreapp2.1" Name="netcoreapp2.1" />
               </Directory>
             </Directory>
