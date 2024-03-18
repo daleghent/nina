@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -20,7 +20,6 @@ using NINA.ViewModel.Interfaces;
 using System;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.IO;
 using CsvHelper;
 using System.Globalization;
@@ -33,6 +32,7 @@ using NINA.WPF.Base.Model;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
+using Microsoft.Win32;
 
 namespace NINA.ViewModel.ImageHistory {
 
@@ -40,6 +40,7 @@ namespace NINA.ViewModel.ImageHistory {
 
         public ImageHistoryVM(IProfileService profileService, IImageSaveMediator imageSaveMediator) : base(profileService) {
             Title = Loc.Instance["LblHFRHistory"];
+            HasSettings = true;
 
             if (System.Windows.Application.Current != null) {
                 ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["HFRHistorySVG"];
@@ -75,9 +76,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> _limitedImageHistoryStack;
 
         public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistory {
-            get {
-                return _limitedImageHistoryStack;
-            }
+            get => _limitedImageHistoryStack;
             set {
                 _limitedImageHistoryStack = value;
                 RaisePropertyChanged();
@@ -87,7 +86,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> _observableImageHistoryView;
 
         public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistoryView {
-            get { return this._observableImageHistoryView; }
+            get => this._observableImageHistoryView;
             private set {
                 if (value == this._observableImageHistoryView) {
                     return;
@@ -129,9 +128,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> autoFocusPoints;
 
         public AsyncObservableCollection<ImageHistoryPoint> AutoFocusPoints {
-            get {
-                return autoFocusPoints;
-            }
+            get => autoFocusPoints;
             set {
                 autoFocusPoints = value;
                 RaisePropertyChanged();
@@ -141,9 +138,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<ImageHistoryPoint> autoFocusPointsView;
 
         public AsyncObservableCollection<ImageHistoryPoint> AutoFocusPointsView {
-            get {
-                return autoFocusPointsView;
-            }
+            get => autoFocusPointsView;
             set {
                 autoFocusPointsView = value;
                 RaisePropertyChanged();
@@ -153,9 +148,7 @@ namespace NINA.ViewModel.ImageHistory {
         private AsyncObservableCollection<string> _filterList;
 
         public AsyncObservableCollection<string> FilterList {
-            get {
-                return _filterList;
-            }
+            get => _filterList;
             set {
                 _filterList = value;
                 RaisePropertyChanged();
@@ -165,9 +158,7 @@ namespace NINA.ViewModel.ImageHistory {
         private string _selectedFilter;
 
         public string SelectedFilter {
-            get {
-                return _selectedFilter;
-            }
+            get => _selectedFilter;
             set {
                 _selectedFilter = value;
                 FilterImageHistoryList();
@@ -178,9 +169,7 @@ namespace NINA.ViewModel.ImageHistory {
         private ImageHistoryEnum _imageHistoryLeftSelected;
 
         public ImageHistoryEnum ImageHistoryLeftSelected {
-            get {
-                return _imageHistoryLeftSelected;
-            }
+            get => _imageHistoryLeftSelected;
             set {
                 _imageHistoryLeftSelected = value;
                 ImageHistoryLeftSelectedKey = value.ToString();
@@ -191,9 +180,7 @@ namespace NINA.ViewModel.ImageHistory {
         private ImageHistoryEnum _imageHistoryRightSelected;
 
         public ImageHistoryEnum ImageHistoryRightSelected {
-            get {
-                return _imageHistoryRightSelected;
-            }
+            get => _imageHistoryRightSelected;
             set {
                 _imageHistoryRightSelected = value;
                 ImageHistoryRightSelectedKey = value.ToString();
@@ -204,9 +191,7 @@ namespace NINA.ViewModel.ImageHistory {
         private string _imageHistoryLeftSelectedKey;
 
         public string ImageHistoryLeftSelectedKey {
-            get {
-                return _imageHistoryLeftSelectedKey;
-            }
+            get => _imageHistoryLeftSelectedKey;
             set {
                 _imageHistoryLeftSelectedKey = value;
                 RaisePropertyChanged();
@@ -216,9 +201,7 @@ namespace NINA.ViewModel.ImageHistory {
         private string _imageHistoryRightSelectedKey;
 
         public string ImageHistoryRightSelectedKey {
-            get {
-                return _imageHistoryRightSelectedKey;
-            }
+            get => _imageHistoryRightSelectedKey;
             set {
                 _imageHistoryRightSelectedKey = value;
                 RaisePropertyChanged();
@@ -241,7 +224,7 @@ namespace NINA.ViewModel.ImageHistory {
         private object lockObj = new object();
 
         private static int _exposureId = 0;
-        private int ExposureId { get { return Interlocked.Increment(ref _exposureId); } }
+        private int ExposureId => Interlocked.Increment(ref _exposureId);
         public int GetNextImageId() {
             return ExposureId;
         }
@@ -250,6 +233,22 @@ namespace NINA.ViewModel.ImageHistory {
             lock (lockObj) {
                 var point = new ImageHistoryPoint(id, statistics, imageType);
                 ImageHistory.Add(point);
+            }
+        }
+
+        public void Add(int id, string imageType) {
+            lock (lockObj) {
+                var point = new ImageHistoryPoint(id, imageType);
+                ImageHistory.Add(point);
+            }
+        }
+
+        public void PopulateStatistics(int id, IImageStatistics statistics) {
+            lock (lockObj) {
+                var imageHistoryItem = ImageHistory.FirstOrDefault(item => item.Id == id);
+                if(imageHistoryItem != null) {
+                    imageHistoryItem.PopulateStatistics(statistics);
+                }
             }
         }
 
@@ -304,10 +303,10 @@ namespace NINA.ViewModel.ImageHistory {
 
         public void PlotSave() {
             if (this.ObservableImageHistory.Count != 0) {
-                SaveFileDialog sfd = new SaveFileDialog();
+                FileDialog sfd = new SaveFileDialog();
                 sfd.FileName = NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd") + "_history.csv";
                 sfd.InitialDirectory = Path.GetDirectoryName(ActiveProfile.SequenceSettings.DefaultSequenceFolder);
-                if (sfd.ShowDialog() == DialogResult.OK) {
+                if (sfd.ShowDialog() == true) {
                     if (!sfd.FileName.ToLower().EndsWith(".csv")) sfd.FileName += ".csv";
                     using (var writer = new StreamWriter(sfd.FileName))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {

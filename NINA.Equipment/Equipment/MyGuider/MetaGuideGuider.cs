@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,23 +12,22 @@
 
 #endregion "copyright"
 
-using NINA.Profile.Interfaces;
+using NINA.Astrometry;
+using NINA.Core.Interfaces;
+using NINA.Core.Locale;
+using NINA.Core.Model;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Equipment.MyGuider.MetaGuide;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
 using Nito.AsyncEx;
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Core.Interfaces;
-using NINA.Core.Locale;
-using NINA.Equipment.Equipment.MyGuider.MetaGuide;
-using NINA.Equipment.Interfaces;
-using NINA.Core.Model;
-using NINA.Astrometry;
-using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -40,7 +39,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         [DllImport("user32.dll")]
         private static extern bool PostMessage(int hWnd, uint Msg, int wParam, int lParam);
 
-        private static readonly int HWND_BROADCAST = 0xffff;
+        private const int HWND_BROADCAST = 0xffff;
         private static readonly uint remoteLockMsg = RegisterWindowMessage("MG_RemoteLock");
         private static readonly uint remoteUnlockMsg = RegisterWindowMessage("MG_RemoteUnLock");
         private static readonly uint remoteGuideMsg = RegisterWindowMessage("MG_RemoteGuide");
@@ -51,8 +50,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private static readonly uint remoteUnShift = RegisterWindowMessage("MG_RemoteUnShift");
         private static readonly uint remoteSetShift = RegisterWindowMessage("MG_RemoteSetShift");
 
-        private static readonly int METAGUIDE_CONNECT_TIMEOUT_MS = 5000;
-        private static readonly int METAGUIDE_QUEUE_FLUSH_TIMEOUT_MS = 2000;
+        private const int METAGUIDE_CONNECT_TIMEOUT_MS = 5000;
+        private const int METAGUIDE_QUEUE_FLUSH_TIMEOUT_MS = 2000;
 
         private static readonly Version MINIMUM_MG_VERSION = Version.Parse("5.4.9");
 
@@ -74,6 +73,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public string Name => "MetaGuide";
+
+        public string DisplayName => Name;
         public string Id => "MetaGuide";
 
         public event EventHandler<IGuideStep> GuideEvent;
@@ -81,9 +82,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private bool connected;
 
         public bool Connected {
-            get {
-                return connected;
-            }
+            get => connected;
             private set {
                 if (connected != value) {
                     connected = value;
@@ -96,9 +95,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double pixelScale;
 
         public double PixelScale {
-            get {
-                return pixelScale;
-            }
+            get => pixelScale;
             set {
                 if (pixelScale != value) {
                     pixelScale = value;
@@ -110,9 +107,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private string state = "Not Ready";
 
         public string State {
-            get {
-                return state;
-            }
+            get => state;
             set {
                 if (state != value) {
                     state = value;
@@ -124,9 +119,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private volatile bool isLocked = false;
 
         public bool IsLocked {
-            get {
-                return this.isLocked;
-            }
+            get => this.isLocked;
             private set {
                 if (this.isLocked != value) {
                     this.isLocked = value;
@@ -139,9 +132,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private volatile bool isGuiding = false;
 
         public bool IsGuiding {
-            get {
-                return this.isGuiding;
-            }
+            get => this.isGuiding;
             private set {
                 if (this.isGuiding != value) {
                     this.isGuiding = value;
@@ -154,9 +145,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double intensity;
 
         public double Intensity {
-            get {
-                return intensity;
-            }
+            get => intensity;
             set {
                 if (intensity != value) {
                     intensity = value;
@@ -168,9 +157,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double fwhm;
 
         public double FWHM {
-            get {
-                return fwhm;
-            }
+            get => fwhm;
             set {
                 if (fwhm != value) {
                     fwhm = value;
@@ -182,9 +169,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double seeing;
 
         public double Seeing {
-            get {
-                return seeing;
-            }
+            get => seeing;
             set {
                 if (seeing != value) {
                     seeing = value;
@@ -196,9 +181,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private CalibrationState calibrationState;
 
         public CalibrationState CalibrationState {
-            get {
-                return calibrationState;
-            }
+            get => calibrationState;
             set {
                 if (calibrationState != value) {
                     calibrationState = value;
@@ -210,9 +193,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double focalLength;
 
         public double FocalLength {
-            get {
-                return focalLength;
-            }
+            get => focalLength;
             set {
                 if (focalLength != value) {
                     focalLength = value;
@@ -224,9 +205,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double pixelSize;
 
         public double PixelSize {
-            get {
-                return pixelSize;
-            }
+            get => pixelSize;
             set {
                 if (pixelSize != value) {
                     pixelSize = value;
@@ -266,7 +245,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 this.connecting = true;
             }
 
-            IPAddress ipAddress = IPAddress.Parse(this.profileService.ActiveProfile.GuiderSettings.MetaGuideIP);
+            bool useIpAddressAny = this.profileService.ActiveProfile.GuiderSettings.MetaGuideUseIpAddressAny;
             int port = this.profileService.ActiveProfile.GuiderSettings.MetaGuidePort;
             this.clientCTS = new CancellationTokenSource();
             this.listener = new MetaGuideListener();
@@ -274,7 +253,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             this.listener.OnGuide += Listener_OnGuide;
             this.listener.OnDisconnected += Listener_OnDisconnected;
 
-            this.listenerTask = this.listener.RunListener(ipAddress, port, this.clientCTS.Token);
+            this.listenerTask = this.listener.RunListener(useIpAddressAny, port, this.clientCTS.Token);
             this.listenerTask.GetAwaiter().OnCompleted(() => this.Disconnect());
             bool connectionSuccess = false;
 
@@ -282,6 +261,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 var connectTimeoutTokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(METAGUIDE_CONNECT_TIMEOUT_MS));
                 var connectCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(connectTimeoutTokenSource.Token, token);
                 connectionSuccess = await WaitOnEventChangeCondition(() => this.latestStatus != null, connectCancellationTokenSource.Token);
+
                 lock (this.lockobj) {
                     if (!connectionSuccess) {
                         Logger.Error("Failed to connect to MetaGuide. Check to make sure it is running, that broadcast is enabled in Setup -> Extra, and that the broadcast address and port match up with NINA settings.");
@@ -384,14 +364,13 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return await WaitOnEventChangeCondition(() => !this.IsGuiding && !this.IsLocked, ct);
         }
 
-        public bool CanClearCalibration {
-            get => false;
-        }
+        public bool CanClearCalibration => false;
 
         public bool CanGetLockPosition => false;
         public bool CanSetShiftRate => true;
 
         private bool shiftEnabled;
+
         public bool ShiftEnabled {
             get => shiftEnabled;
             private set {
@@ -401,6 +380,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         private SiderealShiftTrackingRate shiftRate = SiderealShiftTrackingRate.Disabled;
+
         public SiderealShiftTrackingRate ShiftRate {
             get => shiftRate;
             private set {
@@ -415,7 +395,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         private static readonly TimeSpan LOW_INTENSITY_THRESHOLD = TimeSpan.FromSeconds(5);
         private static readonly TimeSpan LOW_INTENSITY_GUIDING_TIMEOUT = TimeSpan.FromSeconds(5);
-        private static readonly int MAX_LOW_INTENSITY_GUIDING_RETRIES = 3;
+        private const int MAX_LOW_INTENSITY_GUIDING_RETRIES = 3;
         private DateTime? lowIntensityStart;
         private bool guidingHaltedDueToLowIntensity = false;
         private Task lowIntensityChangeGuidingTask = Task.CompletedTask;
@@ -629,7 +609,6 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public Task<LockPosition> GetLockPosition() {
             throw new NotImplementedException();
         }
-
     }
 
     public class MetaGuideGuideStep : IGuideStep {

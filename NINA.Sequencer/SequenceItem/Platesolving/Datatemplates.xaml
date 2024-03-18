@@ -1,5 +1,5 @@
 ﻿<!--
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -11,7 +11,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Platesolving"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
@@ -54,7 +54,10 @@
                         Margin="5,0,0,0"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="RASeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                            <Binding
+                                Path="RASeconds"
+                                StringFormat="N1"
+                                UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -102,7 +105,10 @@
                         Margin="5,0,0,0"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="DecSeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                            <Binding
+                                Path="DecSeconds"
+                                StringFormat="N1"
+                                UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -151,7 +157,10 @@
                             Margin="5,0,0,0"
                             TextAlignment="Right">
                             <TextBox.Text>
-                                <Binding Path="RASeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="RASeconds"
+                                    StringFormat="N1"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:SecondsRule />
                                     </Binding.ValidationRules>
@@ -202,7 +211,10 @@
                             Margin="5,0,0,0"
                             TextAlignment="Right">
                             <TextBox.Text>
-                                <Binding Path="DecSeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                                <Binding
+                                    Path="DecSeconds"
+                                    StringFormat="N1"
+                                    UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:SecondsRule />
                                     </Binding.ValidationRules>
@@ -227,7 +239,7 @@
                         TextAlignment="Right"
                         Unit="°">
                         <ninactrl:UnitTextBox.Text>
-                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="PositionAngle" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>
@@ -254,7 +266,7 @@
                         TextAlignment="Right"
                         Unit="°">
                         <ninactrl:UnitTextBox.Text>
-                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="PositionAngle" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>

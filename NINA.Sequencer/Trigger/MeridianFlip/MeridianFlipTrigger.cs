@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -91,30 +91,22 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         protected DateTime earliestFlipTime;
 
         public virtual double MinutesAfterMeridian {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian;
             set { }
         }
 
         public virtual double PauseTimeBeforeMeridian {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian;
             set { }
         }
 
         public virtual double MaxMinutesAfterMeridian {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian;
             set { }
         }
 
         public virtual bool UseSideOfPier {
-            get {
-                return profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier;
-            }
+            get => profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier;
             set { }
         }
 
@@ -135,9 +127,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         }
 
         public virtual double TimeToMeridianFlip {
-            get {
-                return telescopeMediator.GetInfo().TimeToMeridianFlip;
-            }
+            get => telescopeMediator.GetInfo().TimeToMeridianFlip;
             set { }
         }
 
@@ -259,11 +249,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             return false;
                         } else {
                             if (nextItem != null) {
-                                Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}, next instruction {nextItem}. Flip should happen now");
+                                Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}, next instruction {nextItem}. Current pier side {telescopeInfo.SideOfPier} - expected pier side {targetSideOfPier}. Flip should happen now");
                             } else {
-                                Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}. Flip should happen now");
+                                Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}. Current pier side {telescopeInfo.SideOfPier} - expected pier side {targetSideOfPier}. Flip should happen now");
                             }
-                            Logger.Info("Meridian Flip - No more remaining time available before flip. Flip should happen now");
+                            Logger.Info($"Meridian Flip - No more remaining time available before flip. Current pier side {telescopeInfo.SideOfPier} - expected pier side {targetSideOfPier}. Flip should happen now");
                             return true;
                         }
                     } else {
@@ -286,7 +276,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                                        );
 
                             if (delayedFlip) {
-                                Logger.Info($"Meridian Flip - Flip seems to not happened in time as Side Of Pier is {telescopeInfo.SideOfPier} but expected to be {targetSideOfPier}. Flip should happen now");
+                                Logger.Info($"Meridian Flip - Flip seems to not have happened in time as pier side is {telescopeInfo.SideOfPier} but expected to be {targetSideOfPier}. Flip should happen now");
                             }
                             return delayedFlip;
                         }

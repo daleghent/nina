@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -38,9 +38,7 @@ namespace NINA.Image.ImageData {
         private BitmapSource image;
 
         public BitmapSource Image {
-            get {
-                return this.image ?? OriginalImage;
-            }
+            get => this.image ?? OriginalImage;
             private set {
                 this.image = value;
                 RaisePropertyChanged();
@@ -110,18 +108,26 @@ namespace NINA.Image.ImageData {
                 this.Image = await starAnnotator.GetAnnotatedImage(starDetectionParams, starDetectionResult, this.OriginalImage, maxStars: maxStars, token: cancelToken);
             }
 
-            starDetection.UpdateAnalysis(this.RawImageData.StarDetectionAnalysis, starDetectionParams, starDetectionResult);
+            UpdateAnalysis(starDetectionParams, starDetectionResult);
             return this;
         }
 
         public async Task<BitmapSource> GetThumbnail() {
             BitmapSource image = null;
             await _dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                var factor = 300 / this.Image.Width;
-                image = new WriteableBitmap(new TransformedBitmap(this.Image, new ScaleTransform(factor, factor)));
-                image.Freeze();
+                try {
+                    var factor = 300 / this.Image.Width;
+                    image = new WriteableBitmap(new TransformedBitmap(this.Image, new ScaleTransform(factor, factor)));
+                    image.Freeze();
+                } catch(Exception e) {
+                    Logger.Error(e);
+                }                
             }));
             return image;
+        }
+
+        public void UpdateAnalysis(StarDetectionParams p, StarDetectionResult result) {
+            starDetection.UpdateAnalysis(this.RawImageData.StarDetectionAnalysis, p, result);
         }
 
         private static Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;

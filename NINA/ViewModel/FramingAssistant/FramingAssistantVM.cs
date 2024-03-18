@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -158,9 +158,7 @@ namespace NINA.ViewModel.FramingAssistant {
             RaisePropertyChanged(nameof(NighttimeData));
         }
 
-        public bool IsX64 {
-            get => !DllLoader.IsX86();
-        }
+        public bool IsX64 => !DllLoader.IsX86();
 
         private bool sequencerActionsOpened;
 
@@ -214,11 +212,9 @@ namespace NINA.ViewModel.FramingAssistant {
                         var rect = CameraRectangles.First();
                         var name = GetRectangleName(rect);
 
-                        double rotation = rect.DSORotation;
-
                         container.Name = name;
                         container.Target.TargetName = name;
-                        container.Target.Rotation = AstroUtil.EuclidianModulus(rect.DSORotation, 360);
+                        container.Target.PositionAngle = AstroUtil.EuclidianModulus(rect.DSOPositionAngle, 360);
                         container.Target.InputCoordinates = new InputCoordinates() {
                             Coordinates = rect.Coordinates
                         };
@@ -236,9 +232,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     var name = GetRectangleName(rect);
                     var dso = new DeepSkyObject(name ?? rect.Name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
 
-                    double rotation = rect.DSORotation;
-
-                    dso.Rotation = AstroUtil.EuclidianModulus(rotation, 360);
+                    dso.RotationPositionAngle = AstroUtil.EuclidianModulus(rect.DSOPositionAngle, 360);
 
                     dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
 
@@ -246,14 +240,19 @@ namespace NINA.ViewModel.FramingAssistant {
                     sequenceMediator.AddSimpleTarget(dso);
                 }
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
-            SetSequencerTargetCommand = new RelayCommand((object o) => {
+            SetSequencerTargetCommand = new RelayCommand(async (object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
-
-                var template = o as IDeepSkyObjectContainer;
-                foreach (var container in GetDSOContainerListFromFraming(template)) {
-                    Logger.Info($"Adding target to advanced sequencer: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
-                    sequenceMediator.AddAdvancedTarget(container);
-                }
+                await Task.Run(async () => {
+                    // This is needed for the tab to start loading and the virtualizing stack panel to allocate proper space. otherwise we run into problems
+                    await Task.Delay(100);
+                    var template = o as IDeepSkyObjectContainer;
+                    await Application.Current.Dispatcher.BeginInvoke(() => {
+                        foreach (var container in GetDSOContainerListFromFraming(template)) {
+                            Logger.Info($"Adding target to advanced sequencer: {container.Target.DeepSkyObject.Name} - {container.Target.DeepSkyObject.Coordinates}");
+                            sequenceMediator.AddAdvancedTarget(container);
+                        }
+                    });
+                });
             }, (object o) => sequenceMediator.Initialized && RectangleCalculated);
 
             AddTargetToTargetListCommand = new RelayCommand((object o) => {
@@ -279,7 +278,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
                         case "Rotate":
                             Logger.Info($"Centering and rotating from framing assistant to {Rectangle.Coordinates} and angle {Rectangle.TotalRotation}");
-                            result = await CenterAndRotate(Rectangle.Coordinates, Rectangle.TotalRotation, slewTokenSource.Token);
+                            result = await CenterAndRotate(Rectangle.Coordinates, 360 - Rectangle.TotalRotation, slewTokenSource.Token);
                             break;
 
                         default:
@@ -348,9 +347,9 @@ namespace NINA.ViewModel.FramingAssistant {
                     var result = await captureSolver.Solve(seq, parameter, default, _statusUpdate, getRotationTokenSource.Token);
 
                     if (result.Success) {
-                        RectangleTotalRotation = result.Orientation;
-                        Logger.Info($"Camera rotation has been determined: {result.Orientation}°");
-                        Notification.ShowInformation(string.Format(Loc.Instance["LblCameraRotationSolved"], Math.Round(result.Orientation, 2)));
+                        RectangleTotalRotation = 360 - result.PositionAngle;
+                        Logger.Info($"Camera rotation has been determined: {result.PositionAngle}°");
+                        Notification.ShowInformation(string.Format(Loc.Instance["LblCameraRotationSolved"], Math.Round(result.PositionAngle, 2)));
                     } else {
                         Logger.Info("Camera rotation import failed. Plate sovling was unsuccessful");
                         Notification.ShowError(Loc.Instance["LblCameraRotationImportFailed"]);
@@ -379,11 +378,11 @@ namespace NINA.ViewModel.FramingAssistant {
             return true;
         }
 
-        private async Task<bool> CenterAndRotate(Coordinates coordinates, double rotation, CancellationToken token) {
+        private async Task<bool> CenterAndRotate(Coordinates coordinates, double positionAngle, CancellationToken token) {
             var centerAndRotate = new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator, guiderMediator, domeMediator, domeFollower, new PlateSolverFactoryProxy(), new WindowServiceFactory());
 
             centerAndRotate.Coordinates = new InputCoordinates(coordinates);
-            centerAndRotate.Rotation = rotation;
+            centerAndRotate.PositionAngle = positionAngle;
             var isValid = centerAndRotate.Validate();
 
             if (!isValid) {
@@ -414,11 +413,9 @@ namespace NINA.ViewModel.FramingAssistant {
                 var name = GetRectangleName(rect);
                 container.Name = name;
 
-                double rotation = rect.DSORotation;
-
                 container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
                     TargetName = name,
-                    Rotation = AstroUtil.EuclidianModulus(rotation, 360),
+                    PositionAngle = AstroUtil.EuclidianModulus(rect.DSOPositionAngle, 360),
                     InputCoordinates = new InputCoordinates() {
                         Coordinates = rect.Coordinates
                     }
@@ -509,6 +506,14 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
+        public bool SaveImageInOfflineCache {
+            get => profileService.ActiveProfile.FramingAssistantSettings.SaveImageInOfflineCache;
+            set {
+                profileService.ActiveProfile.FramingAssistantSettings.SaveImageInOfflineCache = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private bool preserveAlignment;
 
         // When enabled the rotation for the framing rectangle rotation will be adjusted for field curvature
@@ -548,9 +553,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         // Proxy Property for derotating the image according to the rectangle rotation
-        public double InverseRectangleRotation {
-            get => RotateSky ? (-Rectangle?.Rotation ?? 0) : 0;
-        }
+        public double InverseRectangleRotation => RotateSky ? (-Rectangle?.Rotation ?? 0) : 0;
 
         // Proxy Property to be able to recalculate rectangle on change
         public double RectangleTotalRotation {
@@ -585,17 +588,13 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
                 return skySurveyFactory;
             }
-            set {
-                skySurveyFactory = value;
-            }
+            set => skySurveyFactory = value;
         }
 
         private bool _rectangleCalculated;
 
         public bool RectangleCalculated {
-            get {
-                return _rectangleCalculated;
-            }
+            get => _rectangleCalculated;
             private set {
                 _rectangleCalculated = value;
                 RaisePropertyChanged();
@@ -632,9 +631,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Loc.Instance["LblFramingAssistant"];
@@ -657,7 +654,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 await Task.Delay(50);
             }
             await LoadImageCommand.ExecuteAsync(null);
-            RectangleRotation = dso.Rotation;
+            RectangleRotation = 360 - dso.RotationPositionAngle;
             return true;
         }
 
@@ -684,9 +681,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private DeepSkyObject _dSO;
 
         public DeepSkyObject DSO {
-            get {
-                return _dSO;
-            }
+            get => _dSO;
             set {
                 _dSO = value;
                 _dSO?.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
@@ -723,9 +718,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private readonly IPlanetariumFactory planetariumFactory;
 
         public int RAHours {
-            get {
-                return (int)Math.Truncate(DSO.Coordinates.RA);
-            }
+            get => (int)Math.Truncate(DSO.Coordinates.RA);
             set {
                 if (value >= 0) {
                     DSO.Coordinates.RA = DSO.Coordinates.RA - RAHours + value;
@@ -780,9 +773,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public int DecDegrees {
-            get {
-                return (int)Math.Truncate(DSO.Coordinates.Dec);
-            }
+            get => (int)Math.Truncate(DSO.Coordinates.Dec);
             set {
                 if (NegativeDec) {
                     DSO.Coordinates.Dec = value - DecMinutes / 60.0d - DecSeconds / (60.0d * 60.0d);
@@ -848,9 +839,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private int _downloadProgressValue;
 
         public int DownloadProgressValue {
-            get {
-                return _downloadProgressValue;
-            }
+            get => _downloadProgressValue;
             set {
                 _downloadProgressValue = value;
                 RaisePropertyChanged();
@@ -858,9 +847,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public double FieldOfView {
-            get {
-                return profileService.ActiveProfile.FramingAssistantSettings.FieldOfView;
-            }
+            get => profileService.ActiveProfile.FramingAssistantSettings.FieldOfView;
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.FieldOfView = value;
                 RaisePropertyChanged();
@@ -868,37 +855,31 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         public int CameraWidth {
-            get {
-                return profileService.ActiveProfile.FramingAssistantSettings.CameraWidth;
-            }
+            get => profileService.ActiveProfile.FramingAssistantSettings.CameraWidth;
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraWidth = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(MaxOverlapValue));
                 RaisePropertyChanged(nameof(OverlapValueStepSize));
-                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+                _ = Task.Run(() => CalculateRectangle(SkyMapAnnotator.ViewportFoV));
             }
         }
 
         public int CameraHeight {
-            get {
-                return profileService.ActiveProfile.FramingAssistantSettings.CameraHeight;
-            }
+            get => profileService.ActiveProfile.FramingAssistantSettings.CameraHeight;
             set {
                 profileService.ActiveProfile.FramingAssistantSettings.CameraHeight = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(MaxOverlapValue));
                 RaisePropertyChanged(nameof(OverlapValueStepSize));
-                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+                _ = Task.Run(() => CalculateRectangle(SkyMapAnnotator.ViewportFoV));
             }
         }
 
         private SkySurveySource _framingAssistantSource;
 
         public SkySurveySource FramingAssistantSource {
-            get {
-                return _framingAssistantSource;
-            }
+            get => _framingAssistantSource;
             set {
                 _framingAssistantSource = value;
                 if (profileService.ActiveProfile.FramingAssistantSettings.LastSelectedImageSource != value) {
@@ -912,13 +893,11 @@ namespace NINA.ViewModel.FramingAssistant {
         private double _cameraPixelSize;
 
         public double CameraPixelSize {
-            get {
-                return _cameraPixelSize;
-            }
+            get => _cameraPixelSize;
             set {
                 _cameraPixelSize = value;
                 RaisePropertyChanged();
-                CalculateRectangle(SkyMapAnnotator.ViewportFoV);
+                _ = Task.Run(() => CalculateRectangle(SkyMapAnnotator.ViewportFoV));
             }
         }
 
@@ -940,9 +919,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private int horizontalPanels = 1;
 
         public int HorizontalPanels {
-            get {
-                return horizontalPanels;
-            }
+            get => horizontalPanels;
             set {
                 horizontalPanels = value;
                 RaisePropertyChanged();
@@ -954,9 +931,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private int verticalPanels = 1;
 
         public int VerticalPanels {
-            get {
-                return verticalPanels;
-            }
+            get => verticalPanels;
             set {
                 verticalPanels = value;
                 RaisePropertyChanged();
@@ -965,16 +940,12 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        public bool IsMosaic {
-            get => VerticalPanels > 1 || HorizontalPanels > 1;
-        }
+        public bool IsMosaic => VerticalPanels > 1 || HorizontalPanels > 1;
 
         private double overlapPercentage = 0.2;
 
         public double OverlapPercentage {
-            get {
-                return overlapPercentage;
-            }
+            get => overlapPercentage;
             set {
                 overlapPercentage = value;
                 RaisePropertyChanged();
@@ -985,9 +956,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private double overlapPixels = 500;
 
         public double OverlapPixels {
-            get {
-                return overlapPixels;
-            }
+            get => overlapPixels;
             set {
                 overlapPixels = value;
                 RaisePropertyChanged();
@@ -1058,9 +1027,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private double _focalLength;
 
         public double FocalLength {
-            get {
-                return _focalLength;
-            }
+            get => _focalLength;
             set {
                 _focalLength = value;
                 RaisePropertyChanged();
@@ -1071,9 +1038,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private SkySurveyImage _imageParameter;
 
         public SkySurveyImage ImageParameter {
-            get {
-                return _imageParameter;
-            }
+            get => _imageParameter;
             set {
                 _imageParameter = value;
                 RaisePropertyChanged();
@@ -1083,9 +1048,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private FramingRectangle _rectangle;
 
         public FramingRectangle Rectangle {
-            get {
-                return _rectangle;
-            }
+            get => _rectangle;
             set {
                 _rectangle = value;
                 RaisePropertyChanged();
@@ -1125,7 +1088,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     if (Cache != null && DSO != null) {
                         try {
-                            skySurveyImage = await Cache.GetImage(FramingAssistantSource.GetCacheSourceString(), DSO.Coordinates.RA, DSO.Coordinates.Dec, DSO.Rotation, AstroUtil.DegreeToArcmin(FieldOfView));
+                            skySurveyImage = await Cache.GetImage(FramingAssistantSource.GetCacheSourceString(), DSO.Coordinates.RA, DSO.Coordinates.Dec, 360 - DSO.RotationPositionAngle, AstroUtil.DegreeToArcmin(FieldOfView));
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
@@ -1175,7 +1138,7 @@ namespace NINA.ViewModel.FramingAssistant {
                             ImageParameter = skySurveyImage;
                         }));
 
-                        if (Cache != null && FramingAssistantSource != SkySurveySource.SKYATLAS /*&& FramingAssistantSource != SkySurveySource.FILE*/) {
+                        if (Cache != null && SaveImageInOfflineCache && FramingAssistantSource != SkySurveySource.SKYATLAS) {
                             SelectedImageCacheInfo = Cache.SaveImageToCache(skySurveyImage);
                             RaisePropertyChanged(nameof(ImageCacheInfo));
                         }
@@ -1183,7 +1146,9 @@ namespace NINA.ViewModel.FramingAssistant {
                         await SkyMapAnnotator.Initialize(skySurveyImage.Coordinates, AstroUtil.ArcminToDegree(skySurveyImage.FoVHeight), ImageParameter.Image.PixelWidth, ImageParameter.Image.PixelHeight, ImageParameter.Rotation, Cache, _loadImageSource.Token);
                         SkyMapAnnotator.DynamicFoV = FramingAssistantSource == SkySurveySource.SKYATLAS;
                         CalculateRectangle(SkyMapAnnotator.ViewportFoV);
-                        RectangleTotalRotation = profileService.ActiveProfile.FramingAssistantSettings.LastRotationAngle;
+                        if(FramingAssistantSource != SkySurveySource.FILE) { 
+                            RectangleTotalRotation = profileService.ActiveProfile.FramingAssistantSettings.LastRotationAngle;
+                        }
                     }
                 } catch (OperationCanceledException) {
                     Logger.Info("Loading image for framing has been cancelled");
@@ -1246,7 +1211,7 @@ namespace NINA.ViewModel.FramingAssistant {
             var psResult = await imageSolver.Solve(skySurveyImage.Data, parameter, _statusUpdate, _loadImageSource.Token);
 
             if (psResult?.Success == true) {
-                var rotation = psResult.Orientation;
+                var rotation = psResult.PositionAngle;
                 if (rotation < 0) {
                     rotation += 360;
                 } else if (rotation >= 360) {
@@ -1255,7 +1220,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 skySurveyImage.Coordinates = psResult.Coordinates;
                 skySurveyImage.FoVWidth = AstroUtil.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelWidth);
                 skySurveyImage.FoVHeight = AstroUtil.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelHeight);
-                skySurveyImage.Rotation = rotation;
+                skySurveyImage.Rotation = 360 - rotation;
 
                 if (psResult.Flipped) {
                     var tb = new TransformedBitmap();
@@ -1283,9 +1248,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private XElement _selectedImageCacheInfo;
 
         public XElement SelectedImageCacheInfo {
-            get {
-                return _selectedImageCacheInfo;
-            }
+            get => _selectedImageCacheInfo;
             set {
                 _selectedImageCacheInfo = value;
                 if (_selectedImageCacheInfo != null) {
@@ -1328,7 +1291,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     var rect = new FramingRectangle(parameter.Rotation, 0, 0, width, height) {
                         Rotation = 0,
                         Coordinates = centerCoordinates,
-                        DSORotation = AstroUtil.EuclidianModulus(previousRotation + parameter.Rotation, 360),
+                        DSOPositionAngle = 360 - AstroUtil.EuclidianModulus(previousRotation + parameter.Rotation, 360),
                         OriginalCoordinates = centerCoordinates
                     };
                     var name = GetRectangleName(rect);
@@ -1389,7 +1352,7 @@ namespace NINA.ViewModel.FramingAssistant {
                                 Id = panelId,
                                 Rotation = panelRotation,
                                 Coordinates = panelCenterCoordinates,
-                                DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360),
+                                DSOPositionAngle = 360 - AstroUtil.EuclidianModulus(dsoRotation, 360),
                                 OriginalCoordinates = panelCenterCoordinates
                             };
                             var name = GetRectangleName(rect);
@@ -1498,7 +1461,7 @@ namespace NINA.ViewModel.FramingAssistant {
                         }
 
                         rect.Rotation = panelRotation;
-                        rect.DSORotation = AstroUtil.EuclidianModulus(dsoRotation, 360);
+                        rect.DSOPositionAngle = 360 - AstroUtil.EuclidianModulus(dsoRotation, 360);
                     }
                 }
             }
@@ -1539,7 +1502,7 @@ namespace NINA.ViewModel.FramingAssistant {
                         double rotationAngle = await s.GetRotationAngle();
 
                         if (!double.IsNaN(rotationAngle)) {
-                            RectangleRotation = rotationAngle;
+                            RectangleRotation = 360 - rotationAngle;
                         }
                     }
                 }

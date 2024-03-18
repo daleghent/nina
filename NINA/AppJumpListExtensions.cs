@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -32,7 +32,7 @@ namespace NINA {
                 .Profiles
                 .GroupJoin(
                     jumpList.JumpItems.OfType<JumpTask>(),
-                    p => $"/profileid {p.Id}",
+                    p => $"--profileid {p.Id}",
                     jt => jt.Arguments,
                     (p, jt) => new { Profile = p, JumpTask = jt.SingleOrDefault() }
                 )
@@ -44,8 +44,8 @@ namespace NINA {
                             new JumpTask {
                                 Title = x.Profile.Name,
                                 Description = "Launch N.I.N.A. using profile " + x.Profile.Name,
-                                ApplicationPath = typeof(App).Assembly.Location,
-                                Arguments = $"/profileid {x.Profile.Id}",
+                                ApplicationPath = System.Environment.ProcessPath,
+                                Arguments = $"--profileid {x.Profile.Id}",
                                 WorkingDirectory = System.IO.Directory.GetCurrentDirectory(),
                                 CustomCategory = "Profiles",
                             });

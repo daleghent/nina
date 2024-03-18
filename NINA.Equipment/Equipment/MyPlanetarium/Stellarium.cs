@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -21,6 +21,7 @@ using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
+using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -41,12 +42,12 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
 
         public bool CanGetRotationAngle => true;
 
-        public async Task<Location> GetSite() {
+        public async Task<Location> GetSite(CancellationToken token) {
             string route = "/api/main/status";
 
             try {
                 var request = new HttpGetRequest(this.baseUrl + route, rethrowOnError: true);
-                var response = await request.Request(new CancellationToken());
+                var response = await request.Request(token);
 
                 if (string.IsNullOrEmpty(response)) throw new PlanetariumFailedToConnect();
 
@@ -113,9 +114,6 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 if (isOcularsCcdEnabled) {
                     angle = ParseRotationAngle(jobj);
 
-                    if (angle < 0d) {
-                        angle += 360d;
-                    }
                 }
 
                 return angle;
@@ -260,8 +258,9 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
         }
 
         public double ParseRotationAngle(JObject jObject) {
-            if (double.TryParse((string)jObject["Oculars.selectedCCDRotationAngle"]["value"], out double angle)) {
-                return angle;
+            if (double.TryParse((string)jObject["Oculars.selectedCCDRotationAngle"]["value"], CultureInfo.InvariantCulture, out double angle)) {
+                // Stellatium ocular rotation is clockwise, so it needs to be reversed
+                return AstroUtil.EuclidianModulus(360 - angle, 360);
             } else {
                 return 0d;
             }

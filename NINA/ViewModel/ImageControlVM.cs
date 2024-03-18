@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -84,9 +84,7 @@ namespace NINA.ViewModel {
         private bool showPixelPeeper;
 
         public bool ShowPixelPeeper {
-            get {
-                return showPixelPeeper;
-            }
+            get => showPixelPeeper;
             set {
                 showPixelPeeper = value;
                 RaisePropertyChanged();
@@ -218,12 +216,10 @@ namespace NINA.ViewModel {
         private bool showAberration;
 
         public bool ShowAberration {
-            get {
-                return showAberration;
-            }
+            get => showAberration;
             set {
                 showAberration = value;
-                if(value) { ShowBahtinovAnalyzer = false; }
+                if (value) { ShowBahtinovAnalyzer = false; }
                 RaisePropertyChanged();
             }
         }
@@ -231,9 +227,7 @@ namespace NINA.ViewModel {
         private bool _showBahtinovAnalyzer;
 
         public bool ShowBahtinovAnalyzer {
-            get {
-                return _showBahtinovAnalyzer;
-            }
+            get => _showBahtinovAnalyzer;
             set {
                 _showBahtinovAnalyzer = value;
                 if (value) {
@@ -247,9 +241,7 @@ namespace NINA.ViewModel {
         private ObservableRectangle _rectangle;
 
         public ObservableRectangle BahtinovRectangle {
-            get {
-                return _rectangle;
-            }
+            get => _rectangle;
             set {
                 _rectangle = value;
                 RaisePropertyChanged();
@@ -360,9 +352,7 @@ namespace NINA.ViewModel {
         private BahtinovImage _bahtinovImage;
 
         public BahtinovImage BahtinovImage {
-            get {
-                return _bahtinovImage;
-            }
+            get => _bahtinovImage;
             private set {
                 _bahtinovImage = value;
                 RaisePropertyChanged();
@@ -387,9 +377,7 @@ namespace NINA.ViewModel {
                 }
                 return windowServiceFactory;
             }
-            set {
-                windowServiceFactory = value;
-            }
+            set => windowServiceFactory = value;
         }
 
         private IWindowService service;
@@ -458,9 +446,7 @@ namespace NINA.ViewModel {
         private IRenderedImage _renderedImage;
 
         public IRenderedImage RenderedImage {
-            get {
-                return _renderedImage;
-            }
+            get => _renderedImage;
             set {
                 _renderedImage = value;
                 RaisePropertyChanged();
@@ -496,9 +482,7 @@ namespace NINA.ViewModel {
         private BitmapSource _image;
 
         public BitmapSource Image {
-            get {
-                return _image;
-            }
+            get => _image;
             set {
                 _image = value;
                 if (_image != null) {
@@ -522,9 +506,7 @@ namespace NINA.ViewModel {
         private bool _autoStretch;
 
         public bool AutoStretch {
-            get {
-                return _autoStretch;
-            }
+            get => _autoStretch;
             set {
                 _autoStretch = value;
                 profileService.ActiveProfile.ImageSettings.AutoStretch = value;
@@ -556,9 +538,7 @@ namespace NINA.ViewModel {
         private bool _showCrossHair;
 
         public bool ShowCrossHair {
-            get {
-                return _showCrossHair;
-            }
+            get => _showCrossHair;
             set {
                 _showCrossHair = value;
                 if (value) {
@@ -571,9 +551,7 @@ namespace NINA.ViewModel {
         private bool _detectStars;
 
         public bool DetectStars {
-            get {
-                return _detectStars;
-            }
+            get => _detectStars;
             set {
                 _detectStars = value;
                 profileService.ActiveProfile.ImageSettings.DetectStars = value;
@@ -585,9 +563,7 @@ namespace NINA.ViewModel {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;
@@ -609,6 +585,8 @@ namespace NINA.ViewModel {
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
+
+        public event EventHandler<ImagePreparedEventArgs> ImagePrepared;
 
         public async Task<IRenderedImage> PrepareImage(
             IImageData data,
@@ -655,7 +633,7 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             var processedImage = await ProcessImage(renderedImage, parameters, cancelToken);
-            imagingMediator.OnImagePrepared(new ImagePreparedEventArgs { RenderedImage = renderedImage, Parameters = parameters });
+            ImagePrepared?.Invoke(this, new ImagePreparedEventArgs { RenderedImage = renderedImage, Parameters = parameters });            
 
             this.RenderedImage = processedImage;
             if (ShowAberration) {

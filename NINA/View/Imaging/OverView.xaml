@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,7 +15,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Utility.AvalonDock"
     xmlns:view="clr-namespace:NINA.View"
@@ -271,7 +271,8 @@
                                                             <Path
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
-                                                                Stretch="Uniform" />
+                                                                Stretch="Uniform"
+                                                                UseLayoutRounding="True" />
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
@@ -282,7 +283,8 @@
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
                                                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                                                Stretch="Uniform" />
+                                                                Stretch="Uniform"
+                                                                UseLayoutRounding="True" />
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
@@ -293,7 +295,8 @@
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
                                                                 Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                                Stretch="Uniform" />
+                                                                Stretch="Uniform"
+                                                                UseLayoutRounding="True" />
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
@@ -360,7 +363,8 @@
                                                                 Margin="5"
                                                                 Data="{Binding ImageGeometry}"
                                                                 RenderTransformOrigin="0.5,0.5"
-                                                                Stretch="Uniform">
+                                                                Stretch="Uniform"
+                                                                UseLayoutRounding="True">
                                                                 <Path.RenderTransform>
                                                                     <ScaleTransform ScaleX="-1" />
                                                                 </Path.RenderTransform>
@@ -376,7 +380,8 @@
                                                                 Data="{Binding ImageGeometry}"
                                                                 Fill="{StaticResource ButtonForegroundBrush}"
                                                                 RenderTransformOrigin="0.5,0.5"
-                                                                Stretch="Uniform">
+                                                                Stretch="Uniform"
+                                                                UseLayoutRounding="True">
                                                                 <Path.RenderTransform>
                                                                     <ScaleTransform ScaleX="-1" />
                                                                 </Path.RenderTransform>
@@ -392,7 +397,8 @@
                                                                 Data="{Binding ImageGeometry}"
                                                                 Fill="{StaticResource ButtonForegroundDisabledBrush}"
                                                                 RenderTransformOrigin="0.5,0.5"
-                                                                Stretch="Uniform">
+                                                                Stretch="Uniform"
+                                                                UseLayoutRounding="True">
                                                                 <Path.RenderTransform>
                                                                     <ScaleTransform ScaleX="-1" />
                                                                 </Path.RenderTransform>

@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -58,22 +58,28 @@ using System.ComponentModel;
 namespace NINA.ViewModel.Sequencer {
 
     internal class Sequence2VM : BaseVM, ISequence2VM {
+        private ICommandLineOptions commandLineOptions;
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
+        private IApplicationMediator applicationMediator;
         private ICameraMediator cameraMediator;
         private DispatcherTimer validationTimer;
 
         public Sequence2VM(
             IProfileService profileService,
+            ICommandLineOptions commandLineOptions,
             ISequenceMediator sequenceMediator,
+            IApplicationMediator applicationMediator,
             IApplicationStatusMediator applicationStatusMediator,
             ICameraMediator cameraMediator,
             ISequencerFactory factory
             ) : base(profileService) {
-            
+
+            this.commandLineOptions = commandLineOptions;
             this.applicationStatusMediator = applicationStatusMediator;
 
             this.sequenceMediator = sequenceMediator;
+            this.applicationMediator = applicationMediator;
             this.cameraMediator = cameraMediator;
             cameraMediator.RegisterConsumer(this);
 
@@ -98,11 +104,11 @@ namespace NINA.ViewModel.Sequencer {
             get => savePath;
             set {
                 savePath = value;
-                if(!string.IsNullOrWhiteSpace(value)) {
+                if (!string.IsNullOrWhiteSpace(value)) {
                     DetachSequencerINPC();
                     Sequencer.MainContainer.SequenceTitle = Path.GetFileNameWithoutExtension(value);
                     AttachSequencerINPC();
-                }                
+                }
                 RaisePropertyChanged();
             }
         }
@@ -130,7 +136,7 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         private void Sequencer_PropertyChanged(object sender, PropertyChangedEventArgs e) {
-            if(e.PropertyName == nameof(Sequencer.MainContainer.SequenceTitle)) {
+            if (e.PropertyName == nameof(Sequencer.MainContainer.SequenceTitle)) {
                 SavePath = string.Empty;
             }
         }
@@ -188,7 +194,7 @@ namespace NINA.ViewModel.Sequencer {
                     validationTimer.Tick += (sender, args) => Sequencer.MainContainer.Validate();
                     validationTimer.Start();
 
-                    if (File.Exists(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate)) {
+                    if (commandLineOptions.SequenceFile == null && File.Exists(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate)) {
                         try {
                             LoadSequenceFromFile(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate);
                             SavePath = string.Empty;
@@ -196,6 +202,10 @@ namespace NINA.ViewModel.Sequencer {
                         } catch (Exception ex) {
                             Logger.Error("Startup Sequence failed to load", ex);
                         }
+                    }
+
+                    if (commandLineOptions.SequenceFile != null) {
+                        TryLoadSequenceFile();
                     }
                 }));
             });
@@ -330,6 +340,30 @@ namespace NINA.ViewModel.Sequencer {
             }
         }
 
+        private void TryLoadSequenceFile() {
+            string sequenceFile = commandLineOptions.SequenceFile;
+
+            try {
+                if (!File.Exists(sequenceFile)) {
+                    Logger.Error($"Auto load sequence file not found: {sequenceFile}");
+                    return;
+                }
+
+                Logger.Info($"Loading sequence file: {sequenceFile}");
+                LoadSequenceFromFile(sequenceFile);
+                SavePath = string.Empty;
+                Sequencer.MainContainer.ClearHasChanged();
+
+                if (commandLineOptions.RunSequence) {
+                    Logger.Info("Starting sequence from command line options");
+                    _ = StartSequenceCommand.ExecuteAsync(commandLineOptions.RunSequence);
+                    applicationMediator.ChangeTab(ApplicationTab.IMAGING);
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+        }
+
         private void SaveAsSequence(object arg) {
             try {
                 var initialDirectory = string.Empty;
@@ -410,9 +444,7 @@ namespace NINA.ViewModel.Sequencer {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {
@@ -428,6 +460,10 @@ namespace NINA.ViewModel.Sequencer {
         private CancellationTokenSource cts;
 
         public async Task<bool> StartSequence(object arg) {
+            bool skipValidationPrompt = false;
+            if (arg != null && arg is bool b) {
+                skipValidationPrompt = b;
+            }
             cts?.Dispose();
             cts = new CancellationTokenSource();
             IsRunning = true;
@@ -442,13 +478,17 @@ namespace NINA.ViewModel.Sequencer {
                 Sequencer.MainContainer.Items[2].Status = SequenceEntityStatus.CREATED;
 
                 Logger.Info("Advanced Sequence started");
-                await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
+                await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token, skipValidationPrompt);
                 return true;
             } finally {
                 Logger.Info("Advanced Sequence finished");
                 cameraMediator.ReleaseCaptureBlock(this);
                 TaskBarProgressState = TaskbarItemProgressState.None;
                 IsRunning = false;
+                if(commandLineOptions.ExitAfterSequence) {
+                    Logger.Info("Quitting application after sequence is finished");
+                    Application.Current.Shutdown();
+                }
             }
         }
 

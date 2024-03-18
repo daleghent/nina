@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Accord.Math;
 using NINA.Core.Model;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
@@ -33,10 +32,11 @@ using System.Windows.Input;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Locale;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace NINA.Sequencer {
 
-    public class TemplateController {
+    public partial class TemplateController : BaseINPC {
         private readonly SequenceJsonConverter sequenceJsonConverter;
         private readonly IProfileService profileService;
         private readonly string defaultTemplatePath;
@@ -53,8 +53,8 @@ namespace NINA.Sequencer {
 
         private CollectionViewSource templatesView;
         private CollectionViewSource templatesMenuView;
-        public ICollectionView TemplatesView { get => templatesView.View; }
-        public ICollectionView TemplatesMenuView { get => templatesMenuView.View; }
+        public ICollectionView TemplatesView => templatesView.View;
+        public ICollectionView TemplatesMenuView => templatesMenuView.View;
 
         private string viewFilter = string.Empty;
 
@@ -65,6 +65,13 @@ namespace NINA.Sequencer {
                 TemplatesView.Refresh();
             }
         }
+
+        [ObservableProperty]
+        private bool templatesLoading = true;
+        [ObservableProperty]
+        private int templatesLoadingProgress;
+        [ObservableProperty]
+        private int templatesLoadingTotalCount;
 
         public TemplateController(SequenceJsonConverter sequenceJsonConverter, IProfileService profileService) {
             this.sequenceJsonConverter = sequenceJsonConverter;
@@ -151,6 +158,7 @@ namespace NINA.Sequencer {
         private Task LoadUserTemplates() {
             return Task.Run(async () => {
                 try {
+                    TemplatesLoading = true;
                     userTemplatePath = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
                     var rootParts = userTemplatePath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
 
@@ -161,8 +169,13 @@ namespace NINA.Sequencer {
                     foreach (var template in Templates.Where(t => t.Group != DefaultTemplatesGroup).ToList()) {
                         await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => Templates.Remove(template)));
                     }
+                    TemplatesLoadingProgress = 0;
+                    TemplatesLoadingTotalCount = 1;
 
-                    foreach (var file in Directory.GetFiles(userTemplatePath, "*" + TemplateFileExtension, SearchOption.AllDirectories)) {
+                    var files = Directory.GetFiles(userTemplatePath, "*" + TemplateFileExtension, SearchOption.AllDirectories);
+                    TemplatesLoadingTotalCount = files.Length;
+
+                    foreach (var file in files) {
                         try {
                             var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
                             if (container is ISequenceRootContainer) continue;
@@ -175,6 +188,7 @@ namespace NINA.Sequencer {
                         } catch (Exception ex) {
                             Logger.Error("Invalid template JSON", ex);
                         }
+                        TemplatesLoadingProgress++;
                     }
 
                     await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => {
@@ -188,6 +202,8 @@ namespace NINA.Sequencer {
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_LoadUserTemplatesFailed"]);
+                } finally {
+                    TemplatesLoading = false;
                 }
             });
         }
@@ -200,7 +216,7 @@ namespace NINA.Sequencer {
                     var dso = (sequenceContainer as IDeepSkyObjectContainer);
                     dso.Target.TargetName = string.Empty;
                     dso.Target.InputCoordinates.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
-                    dso.Target.Rotation = 0;
+                    dso.Target.PositionAngle = 0;
                     dso.Target = dso.Target;
                 }
 
@@ -238,7 +254,7 @@ namespace NINA.Sequencer {
             this.profileService = profileService;
         }
 
-        public string GroupTranslated => Loc.Instance[Group] + " › " + (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
+        public string GroupTranslated => Loc.Instance[Group] + " › " + (SubGroups.Length > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
 
         public string Group { get; }
         public string[] SubGroups { get; set; }

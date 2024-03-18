@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,6 +33,7 @@ using NINA.Core.Locale;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Utility;
 using NINA.Core.Utility;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Trigger.Guider {
 
@@ -89,9 +90,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             }
         }
 
-        public int ProgressExposures {
-            get => AfterExposures > 0 ? history.ImageHistory.Count % AfterExposures : 0;
-        }
+        public int ProgressExposures => AfterExposures > 0 ? history.ImageHistory.Count % AfterExposures : 0;
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (AfterExposures > 0) {
@@ -104,6 +103,9 @@ namespace NINA.Sequencer.Trigger.Guider {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
+            if (!(nextItem is IExposureItem exposureItem)) { return false; }
+            if (exposureItem.ImageType != "LIGHT") { return false; }
+
             RaisePropertyChanged(nameof(ProgressExposures));
             if(lastTriggerId > history.ImageHistory.Count) { 
                 // The image history was most likely cleared

@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -241,9 +241,7 @@ namespace NINA.ViewModel {
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {
@@ -320,17 +318,9 @@ namespace NINA.ViewModel {
             }
         }
 
-        public SimpleStartContainer StartOptions {
-            get {
-                return Sequencer.MainContainer.Items[0] as SimpleStartContainer;
-            }
-        }
+        public SimpleStartContainer StartOptions => Sequencer.MainContainer.Items[0] as SimpleStartContainer;
 
-        public SimpleEndContainer EndOptions {
-            get {
-                return Sequencer.MainContainer.Items[2] as SimpleEndContainer;
-            }
-        }
+        public SimpleEndContainer EndOptions => Sequencer.MainContainer.Items[2] as SimpleEndContainer;
 
         public TargetAreaContainer Targets {
             get {
@@ -416,15 +406,14 @@ namespace NINA.ViewModel {
                                 if (csv.TryGetField("pane", out name)) {
                                     var ra = AstroUtil.HMSToDegrees(csv.GetField("ra"));
                                     var dec = AstroUtil.DMSToDegrees(csv.GetField("dec"));
-
-                                    //Nina orientation is not east of north, but flipped
-                                    var angle = 360 - AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                                                        
+                                    var angle = AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
 
                                     var template = GetTemplate();
                                     template.Name = name;
                                     template.Target.TargetName = name;
                                     template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                                    template.Target.Rotation = angle;
+                                    template.Target.PositionAngle = angle;
                                     this.Targets.Add(template);
                                 } else if (csv.TryGetField<string>("familiar name", out name)) {
                                     var catalogue = csv.GetField("catalogue entry");
@@ -435,12 +424,11 @@ namespace NINA.ViewModel {
                                     template.Name = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
                                     template.Target.TargetName = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
                                     template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                                    if (csv.TryGetField<string>("position angle (east)", out var stringAngle) && !string.IsNullOrWhiteSpace(stringAngle)) {
-                                        //Nina orientation is not east of north, but flipped
-                                        var angle = 360 - AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
-                                        template.Target.Rotation = angle;
+                                    if (csv.TryGetField<string>("position angle (east)", out var stringAngle) && !string.IsNullOrWhiteSpace(stringAngle)) {                                        
+                                        var angle = AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                        template.Target.PositionAngle = angle;
                                     } else {
-                                        template.Target.Rotation = 0;
+                                        template.Target.PositionAngle = 0;
                                     }
                                     this.Targets.Add(template);
                                 }
@@ -476,7 +464,7 @@ namespace NINA.ViewModel {
             var target = GetTemplate();
             target.Target.InputCoordinates.Coordinates = deepSkyObject.Coordinates.Clone();
             target.Target.TargetName = deepSkyObject.Name;
-            target.Target.Rotation = deepSkyObject.Rotation;
+            target.Target.PositionAngle = deepSkyObject.RotationPositionAngle;
             this.Targets.Add(target);
             SelectedTarget = Targets.Items.Last() as SimpleDSOContainer;
             (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
@@ -684,9 +672,7 @@ namespace NINA.ViewModel {
         private TimeSpan estimatedDownloadTime = TimeSpan.Zero;
 
         public TimeSpan EstimatedDownloadTime {
-            get {
-                return estimatedDownloadTime;
-            }
+            get => estimatedDownloadTime;
             set {
                 if (value < TimeSpan.Zero) {
                     value = TimeSpan.Zero;
@@ -700,9 +686,7 @@ namespace NINA.ViewModel {
         private DateTime overallStartTime;
 
         public DateTime OverallStartTime {
-            get {
-                return overallStartTime;
-            }
+            get => overallStartTime;
             private set {
                 overallStartTime = value;
                 RaisePropertyChanged();
@@ -713,9 +697,7 @@ namespace NINA.ViewModel {
         private DateTime _eta;
 
         public DateTime OverallEndTime {
-            get {
-                return _eta;
-            }
+            get => _eta;
             private set {
                 _eta = value;
                 RaisePropertyChanged();
@@ -725,9 +707,7 @@ namespace NINA.ViewModel {
         private TimeSpan overallDuration;
 
         public TimeSpan OverallDuration {
-            get {
-                return overallDuration;
-            }
+            get => overallDuration;
             private set {
                 overallDuration = value;
                 RaisePropertyChanged();
@@ -761,9 +741,7 @@ namespace NINA.ViewModel {
                 }
                 return windowServiceFactory;
             }
-            set {
-                windowServiceFactory = value;
-            }
+            set => windowServiceFactory = value;
         }
 
         private void BuildSequence() {
@@ -847,7 +825,7 @@ namespace NINA.ViewModel {
 
             csl.TargetName = definedContainer.Target.TargetName;
             csl.Coordinates = definedContainer.Target.InputCoordinates.Coordinates.Clone();
-            csl.Rotation = definedContainer.Target.Rotation;
+            csl.PositionAngle = definedContainer.Target.PositionAngle;
 
             foreach (var item in definedContainer.Items) {
                 var simpleExposure = item as SimpleExposure;
@@ -905,7 +883,7 @@ namespace NINA.ViewModel {
 
             container.Target.TargetName = csl.TargetName;
             container.Target.InputCoordinates.Coordinates = csl.DSO.Coordinates.Clone();
-            container.Target.Rotation = csl.Rotation;
+            container.Target.PositionAngle = csl.PositionAngle;
 
             var completed = true;
             foreach (var item in csl.Items) {
@@ -957,9 +935,7 @@ namespace NINA.ViewModel {
         private NighttimeData nighttimeData;
 
         public NighttimeData NighttimeData {
-            get {
-                return nighttimeData;
-            }
+            get => nighttimeData;
             set {
                 if (nighttimeData != value) {
                     nighttimeData = value;

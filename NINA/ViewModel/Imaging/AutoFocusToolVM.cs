@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -34,18 +34,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static NINA.WPF.Base.ViewModel.Imaging.AutoFocusToolVM;
 
 namespace NINA.Imaging.ViewModel.Imaging {
 
     public class AutoFocusToolVM : DockableVM, ICameraConsumer, IFocuserConsumer, IAutoFocusToolVM {
         private CancellationTokenSource _autoFocusCancelToken;
-        private AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart> _chartList;
+        private AsyncObservableCollection<Chart> _chartList;
         private bool _chartListSelectable;
-        private WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart _selectedChart;
+        private Chart _selectedChart;
         private ApplicationStatus _status;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IPluggableBehaviorSelector<IAutoFocusVMFactory> autoFocusVMFactorySelector;
@@ -82,7 +82,7 @@ namespace NINA.Imaging.ViewModel.Imaging {
             pluggableBehaviorManager.Initialized += PluggableBehaviorManager_Initialized;
             autoFocusVMFactorySelector.SelectedBehaviorChanged += AutoFocusVMFactorySelector_SelectedBehaviorChanged;
 
-            ChartList = new AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>();
+            ChartList = new AsyncObservableCollection<Chart>();
             ChartListSelectable = true;
 
             reportFileWatcher = new FileSystemWatcher() {
@@ -145,10 +145,8 @@ namespace NINA.Imaging.ViewModel.Imaging {
 
         public ICommand CancelAutoFocusCommand { get; private set; }
 
-        public AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart> ChartList {
-            get {
-                return _chartList;
-            }
+        public AsyncObservableCollection<Chart> ChartList {
+            get => _chartList;
             set {
                 _chartList = value;
                 RaisePropertyChanged();
@@ -156,23 +154,18 @@ namespace NINA.Imaging.ViewModel.Imaging {
         }
 
         public bool ChartListSelectable {
-            get {
-                return _chartListSelectable;
-            }
+            get => _chartListSelectable;
             set {
                 _chartListSelectable = value;
                 RaisePropertyChanged();
             }
         }
 
-        public new string ContentId {
-            get {
+        public new string ContentId =>
                 //Backwards compatibility for avalondock layouts prior to 1.11
-                return "AutoFocusVM";
-            }
-        }
+                "AutoFocusVM";
 
-        public WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart SelectedChart {
+        public Chart SelectedChart {
             get => _selectedChart;
             set {
                 _selectedChart = value;
@@ -185,9 +178,7 @@ namespace NINA.Imaging.ViewModel.Imaging {
         public IAsyncCommand StartAutoFocusCommand { get; private set; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;
@@ -214,24 +205,42 @@ namespace NINA.Imaging.ViewModel.Imaging {
 
         private object lockobj = new object();
 
+        private bool IsAutofocusForCurrentProfile(string fullPath) {
+            var filename = Path.GetFileNameWithoutExtension(fullPath);
+
+            // check if file path has a guid for the profile
+            var match = Regex.Match(filename, @"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}");
+            if (match.Success) {
+                return match.Value == profileService.ActiveProfile.Id.ToString();
+            } else {
+                // Fallback if there is no guid in the file to try to load it for backwards compatibility
+                return true;
+            }
+        }
+
         private void InitializeChartList() {
             var files = Directory.GetFiles(Path.Combine(WPF.Base.ViewModel.AutoFocus.AutoFocusVM.ReportDirectory));
-            var l = new SortedSet<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>(new WPF.Base.ViewModel.Imaging.AutoFocusToolVM.ChartComparer());
+            var l = new SortedSet<Chart>(new ChartComparer());
 
             foreach (string file in files) {
-                var item = new WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart(Path.GetFileName(file), file);
-                l.Add(item);
+                if(IsAutofocusForCurrentProfile(file)) {
+                    var item = new Chart(Path.GetFileName(file), file);
+                    l.Add(item);
+                }                
             }
             lock (lockobj) {
-                ChartList = new AsyncObservableCollection<WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart>(l);
+                ChartList = new AsyncObservableCollection<Chart>(l);
                 SelectedChart = ChartList.FirstOrDefault();
             }
             _ = LoadChart();
         }
 
         private void ReportFileWatcher_Created(object sender, FileSystemEventArgs e) {
+            if(!IsAutofocusForCurrentProfile(e.FullPath)) {
+                return;
+            }
             Logger.Debug($"New AutoFocus chart created at {e.FullPath}");
-            var item = new WPF.Base.ViewModel.Imaging.AutoFocusToolVM.Chart(Path.GetFileName(e.FullPath), e.FullPath);
+            var item = new Chart(Path.GetFileName(e.FullPath), e.FullPath);
 
             lock (lockobj) {
                 ChartList.Insert(0, item);

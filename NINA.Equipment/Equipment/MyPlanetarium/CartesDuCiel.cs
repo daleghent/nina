@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -23,6 +23,7 @@ using System.Linq;
 using System.Globalization;
 using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces;
+using System.Threading;
 
 namespace NINA.Equipment.Equipment.MyPlanetarium {
 
@@ -57,7 +58,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 var columns = response.Split('\t');
 
                 // An "OK!" response with fewer than 2 columns means that CdC is listening ok but the user has not selected an object.
-                if (columns.Count() < 2) {
+                if (columns.Length < 2) {
                     return await GetView();
                 }
 
@@ -109,12 +110,12 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
             }
         }
 
-        public async Task<Location> GetSite() {
+        public async Task<Location> GetSite(CancellationToken token) {
             try {
                 string command = "GETOBS\r\n";
 
                 var query = new BasicQuery(address, port, command);
-                string response = await query.SendQuery();
+                string response = await query.SendQuery(token);
 
                 if (!response.StartsWith("OK!")) { throw new PlanetariumFailedToGetCoordinates(); }
 
@@ -131,6 +132,8 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 };
 
                 return coords;
+            } catch (OperationCanceledException) {
+                throw;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;

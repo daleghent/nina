@@ -1,596 +1,66 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F906E54B-9CE8-4A66-856B-E876DD305F2B}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <RootNamespace>NINA.Core</RootNamespace>
-    <AssemblyName>NINA.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Configurations>Debug;Release;SignedRelease</Configurations>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignedRelease|AnyCPU'">
     <OutputPath>bin\SignedRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Channels" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="API\SGP\SGPTypes.cs" />
-    <Compile Include="Database\NINADbContext.cs" />
-    <Compile Include="Database\Schema\BrightStars.cs" />
-    <Compile Include="Database\Schema\CatalogueNr.cs" />
-    <Compile Include="Database\Schema\Constellation.cs" />
-    <Compile Include="Database\Schema\ConstellationBoundaries.cs" />
-    <Compile Include="Database\Schema\ConstellationStar.cs" />
-    <Compile Include="Database\Schema\DsoDetail.cs" />
-    <Compile Include="Database\Schema\EarthRotationParameters.cs" />
-    <Compile Include="Database\Schema\VisualDescription.cs" />
-    <Compile Include="Enum\AlignmentMode.cs" />
-    <Compile Include="Enum\CameraStates.cs" />
-    <Compile Include="Enum\CameraType.cs" />
-    <Compile Include="Enum\SendCommandTypeEnum.cs" />
-    <Compile Include="Enum\DeviceTypeEnum.cs" />
-    <Compile Include="Enum\Hemisphere.cs" />
-    <Compile Include="Enum\MountTypeEnum.cs" />
-    <Compile Include="Enum\OvershootDirection.cs" />
-    <Compile Include="Enum\RotatorRangeTypeEnum.cs" />
-    <Compile Include="Enum\SequenceEntityStatus.cs" />
-    <Compile Include="Enum\SequenceMode.cs" />
-    <Compile Include="Enum\SkySurveySource.cs" />
-    <Compile Include="Enum\TelescopeLatLongSyncEnum.cs" />
-    <Compile Include="Interfaces\API\SGP\ISGPService.cs" />
-    <Compile Include="Interfaces\API\SGP\ISGPServiceBackend.cs" />
-    <Compile Include="Interfaces\API\SGP\ISGPServiceHost.cs" />
-    <Compile Include="Interfaces\IAutoCompleteItem.cs" />
-    <Compile Include="Interfaces\IGuideEvent.cs" />
-    <Compile Include="Interfaces\IGuideStep.cs" />
-    <Compile Include="Interfaces\IMyMessageBoxVM.cs" />
-    <Compile Include="Interfaces\IPluggableBehavior.cs" />
-    <Compile Include="Interfaces\IPluggableBehaviorSelector.cs" />
-    <Compile Include="Interfaces\Utility\IMicroCache.cs" />
-    <Compile Include="Locale\Locale.ko-KR.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Locale.ko-KR.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Locale\Locale.nb-NO.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Locale.nb-NO.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\AutoFocusPoint.cs" />
-    <Compile Include="Model\CameraDataToManaged.cs" />
-    <Compile Include="Model\CustomHorizon.cs" />
-    <Compile Include="Locale\ILoc.cs" />
-    <Compile Include="Locale\Loc.cs" />
-    <Compile Include="Locale\Locale.de-DE.Designer.cs">
-      <DependentUpon>Locale.de-DE.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.Designer.cs">
-      <DependentUpon>Locale.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.en-GB.Designer.cs">
-      <DependentUpon>Locale.en-GB.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.en-US.Designer.cs">
-      <DependentUpon>Locale.en-US.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.es-ES.Designer.cs">
-      <DependentUpon>Locale.es-ES.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.fr-FR.Designer.cs">
-      <DependentUpon>Locale.fr-FR.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.gl-ES.Designer.cs">
-      <DependentUpon>Locale.gl-ES.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.it-IT.Designer.cs">
-      <DependentUpon>Locale.it-IT.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.ja-JP.Designer.cs">
-      <DependentUpon>Locale.ja-JP.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.nl-NL.Designer.cs">
-      <DependentUpon>Locale.nl-NL.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.pl-PL.Designer.cs">
-      <DependentUpon>Locale.pl-PL.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.pt-PT.Designer.cs">
-      <DependentUpon>Locale.pt-PT.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.ru-RU.Designer.cs">
-      <DependentUpon>Locale.ru-RU.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.tr-TR.Designer.cs">
-      <DependentUpon>Locale.tr-TR.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.zh-CN.Designer.cs">
-      <DependentUpon>Locale.zh-CN.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.zh-HK.Designer.cs">
-      <DependentUpon>Locale.zh-HK.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Locale\Locale.zh-TW.Designer.cs">
-      <DependentUpon>Locale.zh-TW.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Model\ApplicationStatus.cs" />
-    <Compile Include="Model\Equipment\BinningMode.cs" />
-    <Compile Include="Model\Equipment\FilterInfo.cs" />
-    <Compile Include="Model\Equipment\FlatWizardFilterSettings.cs" />
-    <Compile Include="Model\GuideInfo.cs" />
-    <Compile Include="Model\IImageGeometryProvider.cs" />
-    <Compile Include="Model\ImagePattern.cs" />
-    <Compile Include="Model\NullFilter.cs" />
-    <Compile Include="Model\PagedList.cs" />
-    <Compile Include="Model\RMS.cs" />
-    <Compile Include="Model\SequenceEntityFailedException.cs" />
-    <Compile Include="Model\SequenceEntityFailedValidationException.cs" />
-    <Compile Include="Model\SequenceItemSkippedException.cs" />
-    <Compile Include="Model\TooltipDescriptionAttribute.cs" />
-    <Compile Include="MyMessageBox\MyMessageBox.cs" />
-    <Compile Include="MyMessageBox\MyMessageBoxView.xaml.cs">
-      <DependentUpon>MyMessageBoxView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MyMessageBox\MyMessageBoxVM.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Utility\ApplicationResourceDictionary.cs" />
-    <Compile Include="Utility\AsyncCommand.cs" />
-    <Compile Include="Utility\AsyncObservableCollection.cs" />
-    <Compile Include="Utility\AttributeHelper.cs" />
-    <Compile Include="Utility\BaseINPC.cs" />
-    <Compile Include="Utility\BindingProxy.cs" />
-    <Compile Include="Utility\Blittable.cs" />
-    <Compile Include="Utility\ButtonHelper.cs" />
-    <Compile Include="Utility\Extensions\DelegateExtension.cs" />
-    <Compile Include="Utility\ObservableDictionary.cs" />
-    <Compile Include="Utility\TextEncoding.cs" />
-    <Compile Include="Utility\ColorSchema\ColorSchema.cs" />
-    <Compile Include="Utility\Converters\AddToNumberConverter.cs" />
-    <Compile Include="Utility\Converters\AFFittingToColorConverter.cs" />
-    <Compile Include="Utility\Converters\AFFittingToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\AllNullOrEmptyStringToVisibilityCollapsedMultiConverter.cs" />
-    <Compile Include="Utility\Converters\AutoFocusContrastDetectionToCollapsedVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\AutoFocusHFRToCollapsedVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanAndConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanOrConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanOrToVisibilityCollapsedMultiConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanToVisibilityCollapsedMultiConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanToVisibilityHiddenConverter.cs" />
-    <Compile Include="Utility\Converters\BooleanToVisibilityHiddenMultiConverter.cs" />
-    <Compile Include="Utility\Converters\BoolToLabelConverter.cs" />
-    <Compile Include="Utility\Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\CameraDefaultValueConverter.cs" />
-    <Compile Include="Utility\Converters\CameraStateToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\CollectionContainsItemsToBooleanConverter.cs" />
-    <Compile Include="Utility\Converters\CollectionContainsItemsToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\CollectionContainsMoreThanOneItemToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\ConditionalNullToObjectMultiConverter.cs" />
-    <Compile Include="Utility\Converters\DatabindingDebugConverter.cs" />
-    <Compile Include="Utility\Converters\DataTypeToStringConverter.cs" />
-    <Compile Include="Utility\Converters\DateTimeZeroToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\DecDegreeConverter.cs" />
-    <Compile Include="Utility\Converters\DefaultBinningModesConverter.cs" />
-    <Compile Include="Utility\Converters\DoubleToBooleanConverter.cs" />
-    <Compile Include="Utility\Converters\DoubleToHalfValueConverter.cs" />
-    <Compile Include="Utility\Converters\DrawingToMediaBrushConverter.cs" />
-    <Compile Include="Utility\Converters\EnumTooltipConverter.cs" />
-    <Compile Include="Utility\Converters\FilenameConverter.cs" />
-    <Compile Include="Utility\Converters\FilterWheelFilterConverter.cs" />
-    <Compile Include="Utility\Converters\IntListToTextBlockListConverter.cs" />
-    <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
-    <Compile Include="Utility\Converters\InverseBooleanConverter.cs" />
-    <Compile Include="Utility\Converters\InverseBooleanOrToVisibilityCollapsedMultiConverter.cs" />
-    <Compile Include="Utility\Converters\InverseBooleanToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\InverseBoolToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\InverseCollectionContainsItemsToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\InverseMultiBooleanANDConverter.cs" />
-    <Compile Include="Utility\Converters\InverseMultiBooleanORConverter.cs" />
-    <Compile Include="Utility\Converters\InverseNullToBooleanConverter.cs" />
-    <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\InverseNullToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\MinusOneToBaseValueConverter.cs" />
-    <Compile Include="Utility\Converters\MinusOneToEmptyStringConverter.cs" />
-    <Compile Include="Utility\Converters\MultiMarginConverter.cs" />
-    <Compile Include="Utility\Converters\MultiToListConverter.cs" />
-    <Compile Include="Utility\Converters\NaNToDoubleDashConverter.cs" />
-    <Compile Include="Utility\Converters\NaNToEmptyTextConverter.cs" />
-    <Compile Include="Utility\Converters\NaNToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\NaNToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\NullImageConverter.cs" />
-    <Compile Include="Utility\Converters\NullOrEmptyStringToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\NullToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\NullToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\OneValueGreaterThanAnotherToVisiblityConverter.cs" />
-    <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
-    <Compile Include="Utility\Converters\PercentageConverter.cs" />
-    <Compile Include="Utility\Converters\StringCollectionToStringConverter.cs" />
-    <Compile Include="Utility\Converters\TimeSpanToStringConverter.cs" />
-    <Compile Include="Utility\Converters\TimeSpanZeroToVisibilityConverter.cs" />
-    <Compile Include="Utility\Converters\UnitConverter.cs" />
-    <Compile Include="Utility\Converters\SetAlphaToColorConverter.cs" />
-    <Compile Include="Utility\Converters\SideOfPierConverter.cs" />
-    <Compile Include="Utility\Converters\SubstractConverter.cs" />
-    <Compile Include="Utility\Converters\SubtractHalfConverter.cs" />
-    <Compile Include="Utility\Converters\ValueToLocaleConverter.cs" />
-    <Compile Include="Utility\Converters\WidthAndValueToWidthConverter.cs" />
-    <Compile Include="Utility\Converters\ZeroToVisibilityConverter.cs" />
-    <Compile Include="Utility\CustomDateTime.cs" />
-    <Compile Include="Utility\DataPipes.cs" />
-    <Compile Include="Utility\DeferredContent.cs" />
-    <Compile Include="Utility\DeviceUpdateTimer.cs" />
-    <Compile Include="Utility\DialogCloser.cs" />
-    <Compile Include="Utility\DllLoader.cs" />
-    <Compile Include="Utility\EnumBindingSourceExtension.cs" />
-    <Compile Include="Enum\AFCurveFittingEnum.cs" />
-    <Compile Include="Enum\AFMethodEnum.cs" />
-    <Compile Include="Enum\AltitudeSite.cs" />
-    <Compile Include="Enum\ApplicationTab.cs" />
-    <Compile Include="Enum\AutoUpdateSourceEnum.cs" />
-    <Compile Include="Enum\BacklashCompensationModel.cs" />
-    <Compile Include="Enum\BayerPatternEnum.cs" />
-    <Compile Include="Enum\BlindSolverEnum.cs" />
-    <Compile Include="Enum\CameraBulbModeEnum.cs" />
-    <Compile Include="Enum\ComparisonOperatorEnum.cs" />
-    <Compile Include="Enum\ContrastDetectionMethodEnum.cs" />
-    <Compile Include="Enum\DropTargetEnum.cs" />
-    <Compile Include="Enum\FileTypeEnum.cs" />
-    <Compile Include="Enum\FlatWizardMode.cs" />
-    <Compile Include="Enum\GuideDirections.cs" />
-    <Compile Include="Enum\GuiderScaleEnum.cs" />
-    <Compile Include="Enum\ImageHistoryEnum.cs" />
-    <Compile Include="Enum\LogLevelEnum.cs" />
-    <Compile Include="Enum\NoiseReductionEnum.cs" />
-    <Compile Include="Enum\PierSide.cs" />
-    <Compile Include="Enum\PlanetariumEnum.cs" />
-    <Compile Include="Enum\PlateSolverEnum.cs" />
-    <Compile Include="Enum\RawConverterEnum.cs" />
-    <Compile Include="Enum\SensorType.cs" />
-    <Compile Include="Enum\SkyAtlasVMEnum.cs" />
-    <Compile Include="Enum\StarSensitivityEnum.cs" />
-    <Compile Include="Enum\TelescopeAxes.cs" />
-    <Compile Include="Enum\TIFFFeaturesEnum.cs" />
-    <Compile Include="Enum\XISFFeaturesEnum.cs" />
-    <Compile Include="Utility\Extensions\IOrderedQueryableExtension.cs" />
-    <Compile Include="Utility\Extensions\ProcessExtension.cs" />
-    <Compile Include="Utility\Extensions\WPFExtensions.cs" />
-    <Compile Include="Utility\ExternalCommand\ExternalCommandExecutor.cs" />
-    <Compile Include="Utility\Http\HttpDownloadFileRequest.cs" />
-    <Compile Include="Utility\Http\HttpDownloadImageRequest.cs" />
-    <Compile Include="Utility\Http\HttpGetRequest.cs" />
-    <Compile Include="Utility\Http\HttpPostRequest.cs" />
-    <Compile Include="Utility\Http\HttpRequest.cs" />
-    <Compile Include="Utility\Http\HttpUploadFile.cs" />
-    <Compile Include="Utility\IApplicationResourceDictionary.cs" />
-    <Compile Include="Utility\Logger.cs" />
-    <Compile Include="Utility\MathHelper.cs" />
-    <Compile Include="Interfaces\IMediator.cs" />
-    <Compile Include="Utility\MicroCache.cs" />
-    <Compile Include="Utility\ObservableRectangle.cs" />
-    <Compile Include="Utility\PrepareImageParameters.cs" />
-    <Compile Include="Utility\MyStopWatch.cs" />
-    <Compile Include="Utility\Notification\CustomDisplayPart.xaml.cs">
-      <DependentUpon>CustomDisplayPart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utility\Notification\Notification.cs" />
-    <Compile Include="Utility\NotifyTaskCompletion.cs" />
-    <Compile Include="Utility\ObservableLimitedSizeStack.cs" />
-    <Compile Include="Utility\ObserveAllCollection.cs" />
-    <Compile Include="Utility\RelayCommand.cs" />
-    <Compile Include="Utility\SerialCommunication\Exceptions.cs" />
-    <Compile Include="Utility\SerialCommunication\ISerialCommand.cs" />
-    <Compile Include="Utility\SerialCommunication\ISerialPort.cs" />
-    <Compile Include="Utility\SerialCommunication\ISerialPortProvider.cs" />
-    <Compile Include="Utility\SerialCommunication\ISerialSdk.cs" />
-    <Compile Include="Utility\SerialCommunication\Response.cs" />
-    <Compile Include="Utility\SerialCommunication\ResponseCache.cs" />
-    <Compile Include="Utility\SerialCommunication\SerialPortProvider.cs" />
-    <Compile Include="Utility\SerialCommunication\SerialPortWrapper.cs" />
-    <Compile Include="Utility\SerialCommunication\SerialSdk.cs" />
-    <Compile Include="Utility\SerialPortInteraction.cs" />
-    <Compile Include="Utility\SerialRelayInteraction.cs" />
-    <Compile Include="Utility\TabControlEx.cs" />
-    <Compile Include="Utility\TcpRaw\BasicQuery.cs" />
-    <Compile Include="Utility\Ticker.cs" />
-    <Compile Include="Utility\CoreUtil.cs" />
-    <Compile Include="Utility\ValidationRules.cs" />
-    <Compile Include="Utility\ValidationRules\LatitudeRule.cs" />
-    <Compile Include="Utility\ValidationRules\LongitudeRule.cs" />
-    <Compile Include="Utility\ValidationRules\DegreesRule.cs" />
-    <Compile Include="Utility\ValidationRules\DirectoryExistsRule.cs" />
-    <Compile Include="Utility\ValidationRules\DoubleRangeRule.cs" />
-    <Compile Include="Utility\ValidationRules\FileExistsRule.cs" />
-    <Compile Include="Utility\ValidationRules\FloatRangeRule.cs" />
-    <Compile Include="Utility\ValidationRules\FullCircleDegreesRule.cs" />
-    <Compile Include="Utility\ValidationRules\GreaterThanZeroRule.cs" />
-    <Compile Include="Utility\ValidationRules\GreaterZeroRule.cs" />
-    <Compile Include="Utility\ValidationRules\HoursRule.cs" />
-    <Compile Include="Utility\ValidationRules\IntRangeRule.cs" />
-    <Compile Include="Utility\ValidationRules\IsValidIPAddressRule.cs" />
-    <Compile Include="Utility\ValidationRules\MinutesRule.cs" />
-    <Compile Include="Utility\ValidationRules\SecondsRule.cs" />
-    <Compile Include="Utility\ValidationRules\ShortRangeRule.cs" />
-    <Compile Include="Utility\ValidationRules\StrictGreaterZeroRule.cs" />
-    <Compile Include="Utility\WindowService\CustomWindow.cs" />
-    <Compile Include="Utility\WindowService\WindowService.cs" />
-    <Compile Include="Utility\WindowService\WindowServiceFactory.cs" />
-    <EmbeddedResource Include="Locale\Locale.ca-ES.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.cs-CZ.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.da-DK.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.de-DE.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.de-DE.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.el-GR.resx" />
-    <EmbeddedResource Include="Locale\Locale.en-GB.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.en-GB.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.en-US.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.en-US.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.es-ES.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.es-ES.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.fr-FR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.fr-FR.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.gl-ES.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.gl-ES.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.it-IT.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.it-IT.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.ja-JP.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.ja-JP.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.ko-KR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.ko-KR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.nb-NO.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.nb-NO.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.nl-NL.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.nl-NL.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.pl-PL.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.pl-PL.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.pt-PT.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.pt-PT.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.ru-RU.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.ru-RU.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.tr-TR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.tr-TR.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.zh-CN.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.zh-CN.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.zh-HK.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.zh-HK.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Locale\Locale.zh-TW.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Locale.zh-TW.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="App.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\API\ASCOM\Camera\CameraService.proto" />
-    <None Include="Utility\ColorSchema\ColorSchemas.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MyMessageBox\MyMessageBoxView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Utility\Notification\CustomDisplayPart.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <PackageReference Include="Accord.Math" Version="3.8.2-alpha" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <PackageReference Include="Accord.Imaging">
-      <Version>3.8.0</Version>
-    </PackageReference>
     <PackageReference Include="Google.Protobuf">
-      <Version>3.18.1</Version>
+      <Version>3.25.3</Version>
     </PackageReference>
     <PackageReference Include="Google.Protobuf.Tools">
-      <Version>3.18.1</Version>
+      <Version>3.25.3</Version>
     </PackageReference>
     <PackageReference Include="Grpc.Core.Api">
-      <Version>2.41.0</Version>
+      <Version>2.61.0</Version>
     </PackageReference>
     <PackageReference Include="Grpc.Tools">
-      <Version>2.41.0</Version>
+      <Version>2.62.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="GrpcDotNetNamedPipes">
-      <Version>1.4.2</Version>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="OxyPlot.Core">
-      <Version>2.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Serilog">
-      <Version>2.10.0</Version>
+      <Version>2.1.2</Version>
     </PackageReference>
     <PackageReference Include="Serilog.Sinks.Console">
-      <Version>4.0.1</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Serilog.Sinks.File">
       <Version>5.0.0</Version>
     </PackageReference>
+    <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
     <PackageReference Include="System.Data.SQLite">
-      <Version>1.0.115.5</Version>
+      <Version>1.0.118</Version>
     </PackageReference>
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="8.0.0" />
     <PackageReference Include="ToastNotifications">
       <Version>2.5.1</Version>
     </PackageReference>
@@ -598,14 +68,44 @@
   <ItemGroup>
     <Resource Include="Resources\Logo_Nina.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Remove="Locale\Locale.ar-SA.resx" />
+    <EmbeddedResource Remove="Locale\Locale.sv-SE.resx" />
+  </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == SignedRelease (
-		if exist "$(SolutionDir)code_sign.pfx" (
-			echo  "Trying to sign $(TargetPath)"
-			signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)
-		)
-	
-)</PostBuildEvent>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>N.I.N.A. Core Library</Title>
+    <Version>3.0.0.9001</Version>
+    <Authors>Stefan Berg and the N.I.N.A. Contributors</Authors>
+    <Product>N.I.N.A. - Nighttime Imaging 'N' Astronomy</Product>
+    <Description>This assembly contains the core components of N.I.N.A.</Description>
+    <Copyright>Copyright ©  2016 - 2024 Stefan Berg and the N.I.N.A. contributors</Copyright>
+    <PackageProjectUrl>https://nighttime-imaging.eu/</PackageProjectUrl>
+    <PackageIcon>ninasplash.png</PackageIcon>
+    <RepositoryUrl>https://www.bitbucket.org/Isbeorn/nina.git</RepositoryUrl>
+    <PackageOutputPath>$(SolutionDir)publish</PackageOutputPath>
+    <IncludeSymbols>False</IncludeSymbols>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\NINA\Resources\ninasplash.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Locale\Locale.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\Utility\" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec IgnoreExitCode="true" Command="if $(Configuration) == SignedRelease signtool sign /t http://timestamp.sectigo.com /a /v /fd SHA256 $(TargetPath)" />
+  </Target>
 </Project>

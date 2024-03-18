@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -37,9 +37,7 @@ namespace NINA.Core.Utility {
 
         [JsonProperty]
         public double X {
-            get {
-                return _x;
-            }
+            get => _x;
             set {
                 _x = value;
                 RaisePropertyChanged();
@@ -50,9 +48,7 @@ namespace NINA.Core.Utility {
 
         [JsonProperty]
         public double Y {
-            get {
-                return _y;
-            }
+            get => _y;
             set {
                 _y = value;
                 RaisePropertyChanged();
@@ -63,9 +59,7 @@ namespace NINA.Core.Utility {
 
         [JsonProperty]
         public double Width {
-            get {
-                return _width;
-            }
+            get => _width;
             set {
                 _width = value;
                 RaisePropertyChanged();
@@ -76,9 +70,7 @@ namespace NINA.Core.Utility {
 
         [JsonProperty]
         public double Height {
-            get {
-                return _height;
-            }
+            get => _height;
             set {
                 _height = value;
                 RaisePropertyChanged();

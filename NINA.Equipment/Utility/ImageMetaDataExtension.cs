@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -25,13 +25,55 @@ using NINA.Equipment.Equipment.MyFilterWheel;
 using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Equipment.MyRotator;
 using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.Equipment.Utility {
 
     public static class ImageMetaDataExtension {
 
+        public static void FromCamera(this ImageMetaData data, ICamera info) {
+            if (info.Connected) {
+                data.Camera.Id = info.Id;
+                data.Camera.Name = info.Name;
+                try { data.Camera.Temperature = info.Temperature; } catch { data.Camera.Temperature = double.NaN; }
+                data.Camera.Gain = -1;
+                if(info.CanGetGain) {
+                    try { data.Camera.Gain = info.Gain; } catch { data.Camera.Gain = -1; }
+                }
+                try { data.Camera.Offset = info.Offset; } catch { data.Camera.Offset = -1; }
+                try { data.Camera.SetPoint = info.TemperatureSetPoint; } catch { data.Camera.SetPoint = double.NaN; }
+                data.Camera.BinX = info.BinX;
+                data.Camera.BinY = info.BinY;
+                data.Camera.ElectronsPerADU = info.ElectronsPerADU;
+                data.Camera.PixelSize = info.PixelSizeX;
+                data.Camera.USBLimit = info.USBLimit;
+
+                if (info.ReadoutModes?.Count > 1) {
+                    data.Camera.ReadoutModeIndex = info.ReadoutMode;
+                    data.Camera.ReadoutModeName = info.ReadoutModes.ToArray()[info.ReadoutMode];
+                }
+
+                data.Camera.SensorType = info.SensorType;
+
+                if (data.Camera.SensorType != SensorType.Monochrome) {
+                    if (data.Camera.BayerPattern == BayerPatternEnum.None) { // Treat it like a monochrome camera (for mono-bin modes on OSCs)
+                        data.Camera.SensorType = SensorType.Monochrome;
+                    } else if (data.Camera.BayerPattern == BayerPatternEnum.Auto) { // Take the sensor type from the camera driver
+                        data.Camera.SensorType = info.SensorType;
+                        data.Camera.BayerOffsetX = info.BayerOffsetX;
+                        data.Camera.BayerOffsetY = info.BayerOffsetY;
+                    } else { // Take the sensor type from the user-configured bayer pattern
+                        data.Camera.SensorType = (SensorType)data.Camera.BayerPattern;
+                        data.Camera.BayerOffsetX = 0;
+                        data.Camera.BayerOffsetY = 0;
+                    }
+                }
+            }
+        }
+
         public static void FromCameraInfo(this ImageMetaData data, CameraInfo info) {
             if (info.Connected) {
+                data.Camera.Id = info.DeviceId;
                 data.Camera.Name = info.Name;
                 data.Camera.Temperature = info.Temperature;
                 data.Camera.Gain = info.Gain;
@@ -44,17 +86,20 @@ namespace NINA.Equipment.Utility {
                 data.Camera.USBLimit = info.USBLimit;
 
                 if (info.ReadoutModes.Count() > 1) {
+                    data.Camera.ReadoutModeIndex = info.ReadoutMode;
                     data.Camera.ReadoutModeName = info.ReadoutModes.ToArray()[info.ReadoutMode];
                 }
 
                 data.Camera.SensorType = info.SensorType;
 
                 if (data.Camera.SensorType != SensorType.Monochrome) {
-                    if (data.Camera.BayerPattern == BayerPatternEnum.Auto) {
+                    if (data.Camera.BayerPattern == BayerPatternEnum.None) { // Treat it like a monochrome camera (for mono-bin modes on OSCs)
+                        data.Camera.SensorType = SensorType.Monochrome;
+                    } else if (data.Camera.BayerPattern == BayerPatternEnum.Auto) { // Take the sensor type from the camera driver
                         data.Camera.SensorType = info.SensorType;
                         data.Camera.BayerOffsetX = info.BayerOffsetX;
                         data.Camera.BayerOffsetY = info.BayerOffsetY;
-                    } else {
+                    } else { // Take the sensor type from the user-configured bayer pattern
                         data.Camera.SensorType = (SensorType)data.Camera.BayerPattern;
                         data.Camera.BayerOffsetX = 0;
                         data.Camera.BayerOffsetY = 0;

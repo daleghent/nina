@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,6 +13,8 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Astrometry;
+using NINA.Astrometry.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using System;
@@ -25,11 +27,24 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
 
     [JsonObject(MemberSerialization.OptIn)]
     public class TimeProvider : IDateTimeProvider {
+        private INighttimeCalculator nighttimeCalculator;
+        public TimeProvider(INighttimeCalculator nighttimeCalculator) {
+            this.nighttimeCalculator = nighttimeCalculator;
+        }
+
         public string Name { get; } = Loc.Instance["LblTime"];
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {
             return DateTime.Now;
+        }
+
+        public TimeOnly GetRolloverTime(ISequenceEntity context) {
+            var dawn = nighttimeCalculator.Calculate().SunRiseAndSet.Rise;
+            if (!dawn.HasValue) {
+                return new TimeOnly(12, 0, 0);
+            }
+            return TimeOnly.FromDateTime(dawn.Value);
         }
     }
 }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,21 +13,24 @@
 #endregion "copyright"
 
 using NINA.Core.Locale;
-using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Utility.SerialCommunication;
 using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Profile.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Equipment.Interfaces;
-using System.Collections.Generic;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
-
+    /// <summary>
+    /// Serial Driver based on Alnitak Generic Commands Rev 44 6/12/2017.
+    /// </summary>
     public class AlnitakFlatDevice : BaseINPC, IFlatDevice {
         private readonly IProfileService _profileService;
         private IAlnitakDevice _sdk;
@@ -37,9 +40,13 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             set => _sdk = value;
         }
 
-        public AlnitakFlatDevice(IProfileService profileService) {
+        public AlnitakFlatDevice(string id, string category, string name, string displayName, IProfileService profileService) {
             _profileService = profileService;
             PortName = profileService.ActiveProfile.FlatDeviceSettings.PortName;
+            this.Id = id;
+            this.Category = category;
+            this.Name = name;
+            this.DisplayName = displayName;
         }
 
         private static void LogAndNotify(ISerialCommand command, InvalidDeviceResponseException ex) {
@@ -87,9 +94,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
         public bool LightOn {
             get {
@@ -179,11 +184,12 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool HasSetupDialog => !Connected;
 
-        public string Id => "817b60ab-6775-41bd-97b5-3857cc676e51";
+        public string Id { get; }
 
-        public string Name => $"{Loc.Instance["LblAlnitakFlatPanel"]}";
+        public string Name { get; }
+        public string DisplayName { get; }
 
-        public string Category => "Alnitak Astrosystems";
+        public string Category { get; }
 
         private bool _connected;
 
@@ -206,7 +212,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public string DriverInfo => "Serial Driver based on Alnitak Generic Commands Rev 44 6/12/2017.";
+        public string DriverInfo => "Native Serial Driver";
 
         public string DriverVersion => "1.1";
 
@@ -218,10 +224,10 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                     await Sdk.SendCommand<CloseResponse>(command);
                 } catch (InvalidDeviceResponseException ex) {
                     LogAndNotify(command, ex);
-                    return false;
+                    throw new FlatDeviceCoverErrorException();
                 } catch (SerialPortClosedException ex) {
                     HandlePortClosed(command, ex);
-                    return false;
+                    throw new FlatDeviceCoverErrorException();
                 }
                 while (await IsMotorRunning()) {
                     await CoreUtil.Delay(delay, ct);
@@ -278,10 +284,10 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                     await Sdk.SendCommand<OpenResponse>(command);
                 } catch (InvalidDeviceResponseException ex) {
                     LogAndNotify(command, ex);
-                    return false;
+                    throw new FlatDeviceCoverErrorException();
                 } catch (SerialPortClosedException ex) {
                     HandlePortClosed(command, ex);
-                    return false;
+                    throw new FlatDeviceCoverErrorException();
                 }
 
                 while (await IsMotorRunning()) {
@@ -292,7 +298,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         public void SetupDialog() {
-            WindowService.ShowDialog(this, "Alnitak Flat Panel Setup", System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
+            WindowService.ShowDialog(this, "Flat Panel Setup", System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
 
         public IList<string> SupportedActions => new List<string>();

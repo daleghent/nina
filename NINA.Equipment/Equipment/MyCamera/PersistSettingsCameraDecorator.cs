@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -119,9 +119,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double TemperatureSetPoint {
             get => this.Camera.TemperatureSetPoint;
-            set {
-                this.Camera.TemperatureSetPoint = value;
-            }
+            set => this.Camera.TemperatureSetPoint = value;
         }
 
         public short BinX {
@@ -141,6 +139,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public string SensorName => this.Camera.SensorName;
+
+        public string DisplayName => this.Camera.DisplayName;
 
         public SensorType SensorType => this.Camera.SensorType;
 

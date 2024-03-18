@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -24,8 +24,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public bool CanClearCalibration {
             get => _canClearCalibration;
             set {
-                _canClearCalibration = value;
-                RaisePropertyChanged();
+                if (_canClearCalibration != value) {
+                    _canClearCalibration = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -34,8 +36,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public bool CanSetShiftRate {
             get => _canSetShiftRate;
             set {
-                _canSetShiftRate = value;
-                RaisePropertyChanged();
+                if (_canSetShiftRate != value) {
+                    _canSetShiftRate = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -54,8 +58,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public IList<string> SupportedActions {
             get => supportedActions;
             set {
-                supportedActions = value;
-                RaisePropertyChanged();
+                if (supportedActions != value) {
+                    supportedActions = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -66,8 +72,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public RMSError RMSError {
             get => rmsError;
             set {
-                rmsError = value;
-                RaisePropertyChanged();
+                if (rmsError != value) {
+                    rmsError = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 

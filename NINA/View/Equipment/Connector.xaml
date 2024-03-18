@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,7 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View.Equipment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -30,7 +30,7 @@
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
             <DataTemplate x:Key="DeviceItemTemplate">
-                <TextBlock Margin="10,0,0,0" Text="{Binding Name}" />
+                <TextBlock Margin="10,0,0,0" Text="{Binding DisplayName}" />
             </DataTemplate>
             <Style x:Key="ContainerStyle" TargetType="{x:Type GroupItem}">
                 <Setter Property="Template">
@@ -58,7 +58,7 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -66,6 +66,7 @@
         </Grid.ColumnDefinitions>
         <ninactrl:LoadingControl
             Height="30"
+            Margin="0,0,5,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             LoadingImageBrush="{StaticResource PrimaryBrush}"
@@ -99,7 +100,8 @@
                     Margin="5"
                     Data="{StaticResource SettingsSVG}"
                     Fill="{StaticResource ButtonForegroundBrush}"
-                    Stretch="Uniform" />
+                    Stretch="Uniform"
+                    UseLayoutRounding="True" />
             </Grid>
         </Button>
         <ninactrl:AsyncProcessButton
@@ -145,7 +147,8 @@
                         Margin="5"
                         Data="{StaticResource PowerSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"
+                        UseLayoutRounding="True" />
                 </Grid>
             </Button>
         </Grid>

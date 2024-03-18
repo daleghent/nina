@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,7 +14,9 @@
 
 using NINA.Astrometry;
 using NINA.Core.Locale;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -39,18 +41,19 @@ namespace NINA.PlateSolving.Solvers {
                 string[] lines = File.ReadAllLines(outputFilePath, Encoding.UTF8);
                 if (lines.Length > 0) {
                     if (lines[0] == "OK" && lines.Length >= 8) {
-                        var ra = double.Parse(lines[1]);
-                        var dec = double.Parse(lines[2]);
+                        var ra = double.Parse(lines[1], CultureInfo.InvariantCulture);
+                        var dec = double.Parse(lines[2], CultureInfo.InvariantCulture);
 
                         result.Coordinates = new Coordinates(ra, dec, Epoch.J2000, Coordinates.RAType.Degrees);
 
                         var fovW = lines[3];
                         var fovH = lines[4];
 
-                        result.Pixscale = double.Parse(lines[5]);
-                        result.Orientation = double.Parse(lines[6]);
-                        /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
-                        result.Orientation = 180 - result.Orientation + 360;
+                        result.Pixscale = double.Parse(lines[5], CultureInfo.InvariantCulture);
+                        if (!double.IsNaN(result.Pixscale)) {
+                            result.Radius = AstroUtil.ArcsecToDegree(Math.Sqrt(Math.Pow(imageProperties.ImageWidth * result.Pixscale, 2) + Math.Pow(imageProperties.ImageHeight * result.Pixscale, 2)) / 2d);
+                        }
+                        result.PositionAngle = 360 - (180 - double.Parse(lines[6], CultureInfo.InvariantCulture) + 360);
 
                         var focalLength = lines[7];
 

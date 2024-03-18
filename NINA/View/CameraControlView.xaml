@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,7 +14,7 @@
     xmlns:filter="clr-namespace:NINA.Core.Model;assembly=NINA.Core"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -187,7 +187,8 @@
                                             Margin="5"
                                             Data="{StaticResource LoopSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -198,7 +199,8 @@
                                             Margin="5"
                                             Data="{StaticResource LoopSVG}"
                                             Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>

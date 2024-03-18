@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -55,7 +55,7 @@ using Trinet.Core.IO.Ntfs;
 
 namespace NINA.Plugin {
 
-    public class PluginLoader : IPluginLoader {
+    public partial class PluginLoader : IPluginLoader {
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -96,7 +96,8 @@ namespace NINA.Plugin {
                               IDomeSynchronization domeSynchronization,
                               ISequenceMediator sequenceMediator,
                               IOptionsVM optionsVM,
-                              IExposureDataFactory exposureDataFactory) {
+                              IExposureDataFactory exposureDataFactory,
+                              ITwilightCalculator twilightCalculator) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -133,9 +134,10 @@ namespace NINA.Plugin {
             this.sequenceMediator = sequenceMediator;
             this.optionsVM = optionsVM;
             this.exposureDataFactory = exposureDataFactory;
+            this.twilightCalculator = twilightCalculator;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
-                new TimeProvider(),
+                new Sequencer.Utility.DateTimeProvider.TimeProvider(nighttimeCalculator),
                 new SunsetProvider(nighttimeCalculator),
                 new NauticalDuskProvider(nighttimeCalculator),
                 new DuskProvider(nighttimeCalculator),
@@ -175,10 +177,20 @@ namespace NINA.Plugin {
                         } catch (Exception ex) {
                             Logger.Error("Failed to deploy plugin file to destination", ex);
                         }
-                    }
-                    Directory.Delete(staging, true);
+                    }                    
                 } catch (Exception ex) {
                     Logger.Error("Pluging deployment from staging failed", ex);
+                } finally {
+                    try {
+                        Directory.Delete(Constants.StagingFolder, true);
+                    } catch (Exception ex) {
+                        Logger.Error("Deleting staging folder failed", ex);
+                    }
+                    try {
+                        Directory.Delete(Constants.BaseStagingFolder, true);
+                    } catch(Exception ex) {
+                        Logger.Error("Deleting base staging folder failed", ex);
+                    }                    
                 }
             }
         }
@@ -199,8 +211,8 @@ namespace NINA.Plugin {
 
         private void DeleteFromDeletion() {
             try {
-                if (Directory.Exists(Constants.DeletionFolder)) {
-                    Directory.Delete(Constants.DeletionFolder, true);
+                if (Directory.Exists(Constants.BaseDeletionFolder)) {
+                    Directory.Delete(Constants.BaseDeletionFolder, true);
                 }
             } catch (Exception ex) {
                 Logger.Error("Plugin deletion from deletion folder failed", ex);
@@ -208,7 +220,7 @@ namespace NINA.Plugin {
         }
 
         public Task Load() {
-            return Task.Run(async () => {
+            return Task.Run(() => {
                 lock (lockobj) {
                     if (!initialized) {
                         try {
@@ -235,31 +247,72 @@ namespace NINA.Plugin {
                             var sdkTypes = GetCoreEquipmentSDKTypes();
                             var coreCatalog = new TypeCatalog(types.Concat(sdkTypes));
 
-                            Compose(coreCatalog);
+                            Compose(coreCatalog, string.Empty);
 
                             /* Compose the plugin catalog */
 
                             var files = new List<string>();
 
-                            if (Directory.Exists(Constants.CoreExtensionsFolder)) {
-                                files.AddRange(Directory.GetFiles(Constants.CoreExtensionsFolder, "*.dll"));
-                            }
 
-                            // Enumerate only 1 level deep, where we'd expect plugin dlls to be in the root of the plugin folder
+                            var baseUserExtensionsDirectory = new DirectoryInfo(Constants.BaseUserExtensionsFolder);
                             var userExtensionsDirectory = new DirectoryInfo(Constants.UserExtensionsFolder);
-                            if (userExtensionsDirectory.Exists) {
+
+
+                            if(baseUserExtensionsDirectory.Exists) {
+                                if (!userExtensionsDirectory.Exists) {
+                                    // Search for an existing directory of a previous version and copy files over if they exist
+                                    var maxDirectoryVersion = baseUserExtensionsDirectory.GetDirectories()
+                                        .Where(dir => { 
+                                            if (Version.TryParse(dir.Name, out var v)) { if(v < new Version(Constants.ApplicationVersionWithoutRevision)) return true; } 
+                                            return false; })
+                                        .Max(x => new Version(x.Name));
+
+
+                                    if(maxDirectoryVersion == null) {
+                                        // An upgrade from 2.x to current will move all existing plugins into the first version specific folder
+
+                                        var sourceFolder = new DirectoryInfo(Path.Combine(baseUserExtensionsDirectory.FullName));
+
+                                        // To prevent recursion of the folder we create we copy existing plugins to a temp folder in staging and then copy those into the destination folder        
+                                        var tempFolderString = Path.Combine(Constants.BaseStagingFolder, "__TEMP__");
+                                        Logger.Info($"Creating Directory {tempFolderString}");
+                                        var tempFolder = Directory.CreateDirectory(tempFolderString);
+                                        Logger.Info($"Copying Directory from {sourceFolder} to {tempFolder}");
+                                        CoreUtil.CopyDirectory(sourceFolder, tempFolder);
+
+                                        // User Extensions do not exist for current Version - Create directory
+                                        Logger.Info($"Creating Directory {userExtensionsDirectory.FullName}");
+                                        var destinationFolder = Directory.CreateDirectory(userExtensionsDirectory.FullName);
+
+                                        Logger.Info($"Migrating plugins from {sourceFolder} to {destinationFolder}");
+                                        CoreUtil.CopyDirectory(tempFolder, destinationFolder);
+
+                                        Logger.Info($"Deleting {tempFolder}");
+                                        Directory.Delete(tempFolder.FullName, true);                                        
+                                    } else if (maxDirectoryVersion < new Version(Constants.ApplicationVersionWithoutRevision)) {
+                                        // An upgrade from a versioned folder to a higher version folder
+                                        var sourceFolder = new DirectoryInfo(Path.Combine(baseUserExtensionsDirectory.FullName, maxDirectoryVersion.ToString()));
+
+                                        // User Extensions do not exist for current Version - Create directory
+                                        Logger.Info($"Creating Directory {userExtensionsDirectory.FullName}");
+                                        var destinationFolder = Directory.CreateDirectory(userExtensionsDirectory.FullName);
+
+                                        Logger.Info($"Migrating plugins from {sourceFolder} to {destinationFolder}");
+                                        CoreUtil.CopyDirectory(sourceFolder, destinationFolder);
+                                    }
+                                }
+
+                                // Enumerate only 1 level deep, where we'd expect plugin dlls to be in the root of the plugin folder
                                 files.AddRange(userExtensionsDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
                                 foreach (var subDirectory in userExtensionsDirectory.GetDirectories()) {
                                     files.AddRange(subDirectory.GetFiles("*.dll").Select(fi => fi.FullName));
                                 }
                             }
 
-                            CreateChildDomain();
                             for (int i = 0; i < files.Count; i++) {
                                 var file = files[i];
                                 AsyncContext.Run(() => LoadPlugin(file, (i + 1) / (double)files.Count));
                             }
-                            UnloadChildDomain();
 
                             initialized = true;
                             Debug.Print($"Time to load all plugins {sw.Elapsed}");
@@ -273,38 +326,6 @@ namespace NINA.Plugin {
             });
         }
 
-        public class PluginAssemblyLoader : MarshalByRefObject {
-
-            public string[] GrabAssemblyReferences(string assemblyPath) {
-                var assembly = Assembly.ReflectionOnlyLoadFrom(assemblyPath);
-                var paths = assembly.GetReferencedAssemblies().Select(x => x.FullName).ToArray();
-                return paths;
-            }
-        }
-
-
-        object domainlock = new object();
-        AppDomain childDomain;
-        private void CreateChildDomain() {
-            if(childDomain == null) { 
-                lock(domainlock) {
-                    if (childDomain == null) {
-                        var settings = new AppDomainSetup {
-                            ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
-                        };
-                        childDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, settings);
-                    }
-                }
-            }
-        }
-
-        private void UnloadChildDomain() {
-            lock(domainlock) { 
-                AppDomain.Unload(childDomain);
-                childDomain = null;
-            }
-        }
-
         private async Task LoadPlugin(string file, double progress) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
@@ -314,20 +335,8 @@ namespace NINA.Plugin {
                 if (pluginFileInfo.AlternateDataStreamExists("Zone.Identifier")) {
                     pluginFileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
-
-                var handle = Activator.CreateInstance(
-                    childDomain,
-                    typeof(PluginAssemblyLoader).Assembly.FullName,
-                    typeof(PluginAssemblyLoader).FullName,
-                    false,
-                    BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                    null,
-                    null,
-                    System.Globalization.CultureInfo.CurrentCulture,
-                    new object[0]
-                );
-                var loader = (PluginAssemblyLoader)handle.Unwrap();
-                var references = loader.GrabAssemblyReferences(file);
+                
+                var references = PluginAssemblyReader.GrabAssemblyReferences(file);
 
                 var pluginDllDirectory = new DirectoryInfo(Path.Combine(pluginFileInfo.Directory.FullName, "dll"));
                 if (pluginDllDirectory.Exists) {
@@ -347,7 +356,6 @@ namespace NINA.Plugin {
                     }
                 }
 
-
                 if (references.FirstOrDefault(x => x.Contains("NINA.Plugin")) != null) {
                     try {
                         var assembly = Assembly.LoadFrom(file);
@@ -365,12 +373,21 @@ namespace NINA.Plugin {
                             }
 
                             if (!compatibilityMap.IsCompatible(manifest)) {
-                                var deprecatedVersion = new Version(65535, 0, 0, 0);
-                                var minVersion = compatibilityMap.GetMinimumVersion(manifest);
-                                if (minVersion >= deprecatedVersion) {
+
+                                var isDeprecated = compatibilityMap.IsDeprecated(manifest);
+                                var isNotCompatible = compatibilityMap.IsNotCompatible(manifest);
+                                var isUpdateRequired = compatibilityMap.IsUpdateRequired(manifest);
+
+                                if(isDeprecated) {
                                     throw new Exception($"This plugin is deprecated.");
-                                } else {
-                                    throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum plugin version of {minVersion}, but current plugin version is {manifest.Version}");
+                                }
+
+                                if (isUpdateRequired) {
+                                    throw new Exception($"The version of this plugin is not compatible with the current version of N.I.N.A. Please update the plugin.");
+                                }
+
+                                if(isNotCompatible) {
+                                    throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it was compiled against {manifest.MinimumApplicationVersion} but it has to be built against at least {compatibilityMap.MinimumMajorVersion}. Please check if there is a plugin update available.");
                                 }
                             }
 
@@ -382,7 +399,7 @@ namespace NINA.Plugin {
                                 ProgressType = ApplicationStatus.StatusProgressType.Percent
                             });
 
-                            Compose(plugin);
+                            Compose(plugin, manifest.Name);
 
                             await manifest.Initialize();
 
@@ -419,13 +436,12 @@ namespace NINA.Plugin {
                             message = string.Join(Environment.NewLine, loaderExceptions.ToList());
                         }
 
-                        var reflectionAssembly = Assembly.ReflectionOnlyLoadFrom(file);
+                        var metadata = PluginAssemblyReader.GrabPluginMetaData(file);
 
-                        var attr = CustomAttributeData.GetCustomAttributes(reflectionAssembly);
-                        var id = attr.First(x => x.AttributeType == typeof(GuidAttribute)).ConstructorArguments.First().Value.ToString();
-                        var author = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyCompanyAttribute))?.ConstructorArguments.FirstOrDefault().Value.ToString() ?? string.Empty;
-                        var version = new PluginVersion(attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyFileVersionAttribute))?.ConstructorArguments.First().Value.ToString() ?? "1.0.0.0");
-                        var name = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyTitleAttribute))?.ConstructorArguments.First().Value.ToString() ?? string.Empty;
+                        var id = metadata[nameof(GuidAttribute)];
+                        var author = metadata[nameof(AssemblyCompanyAttribute)];
+                        var version = new PluginVersion(metadata[nameof(AssemblyFileVersionAttribute)]);
+                        var name = metadata[nameof(AssemblyTitleAttribute)];
 
                         //Manifest failed - Create a fake manifest using all available file meta info
                         var fvi = FileVersionInfo.GetVersionInfo(file);
@@ -456,7 +472,7 @@ namespace NINA.Plugin {
             }
         }
 
-        private void Compose(ComposablePartCatalog catalog) {
+        private void Compose(ComposablePartCatalog catalog, string pluginName) {
             try {
                 var container = GetContainer(catalog);
                 var parts = new PartsImport();
@@ -466,10 +482,10 @@ namespace NINA.Plugin {
                     Application.Current?.Resources.MergedDictionaries.Add(template);
                 }
 
-                Items = Items.Concat(AssignSequenceEntity(parts.ItemImports, resourceDictionary)).ToList();
-                Conditions = Conditions.Concat(AssignSequenceEntity(parts.ConditionImports, resourceDictionary)).ToList();
-                Triggers = Triggers.Concat(AssignSequenceEntity(parts.TriggerImports, resourceDictionary)).ToList();
-                Container = Container.Concat(AssignSequenceEntity(parts.ContainerImports, resourceDictionary)).ToList();
+                Items = Items.Concat(AssignSequenceEntity(parts.ItemImports, resourceDictionary, pluginName)).ToList();
+                Conditions = Conditions.Concat(AssignSequenceEntity(parts.ConditionImports, resourceDictionary, pluginName)).ToList();
+                Triggers = Triggers.Concat(AssignSequenceEntity(parts.TriggerImports, resourceDictionary, pluginName)).ToList();
+                Container = Container.Concat(AssignSequenceEntity(parts.ContainerImports, resourceDictionary, pluginName)).ToList();
 
                 DockableVMs = DockableVMs.Concat(parts.DockableVMImports).ToList();
                 PluggableBehaviors = PluggableBehaviors.Concat(parts.PluggableBehaviorImports).ToList();
@@ -519,6 +535,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(sequenceMediator);
             container.ComposeExportedValue(optionsVM);
             container.ComposeExportedValue(exposureDataFactory);
+            container.ComposeExportedValue(twilightCalculator);
 
             return container;
         }
@@ -572,6 +589,7 @@ namespace NINA.Plugin {
         private readonly ISequenceMediator sequenceMediator;
         private readonly IOptionsVM optionsVM;
         private readonly IExposureDataFactory exposureDataFactory;
+        private readonly ITwilightCalculator twilightCalculator;
         private readonly Dictionary<string, string> assemblyReferencePathMap;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
@@ -634,7 +652,7 @@ namespace NINA.Plugin {
         }
         
                    
-        private IOrderedEnumerable<T> AssignSequenceEntity<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
+        private IOrderedEnumerable<T> AssignSequenceEntity<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary,string pluginName) where T : ISequenceEntity {
             var items = new List<T>();
             foreach (var importItem in imports) {
                 try {
@@ -646,6 +664,9 @@ namespace NINA.Plugin {
                     if (importItem.Metadata.TryGetValue("Description", out var descriptionObj)) {
                         string description = descriptionObj.ToString();
                         item.Description = GrabLabel(description);
+                        if (!string.IsNullOrEmpty(pluginName)) {
+                            item.Description += $"{Environment.NewLine}({pluginName})";
+                        }                        
                     }
                     if (importItem.Metadata.TryGetValue("Icon", out var iconObj)) {
                         string icon = iconObj.ToString();

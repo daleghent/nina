@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -87,8 +87,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        private static double NormalizeUShort(double val, int bitDepth) {
-            return val / (double)(1 << bitDepth);
+        public static double NormalizeUShort(double val, int bitDepth) {
+            return val / (double)((1 << bitDepth) - 1);
         }
 
         /// <summary>
@@ -96,8 +96,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        private static ushort DenormalizeUShort(double val) {
-            return (ushort)(val * ushort.MaxValue);
+        public static ushort DenormalizeUShort(double val) {
+            return (ushort)(val * ushort.MaxValue + (val < 0.5 ? 0.5 : 0.0));
         }
 
         private static ushort[] GetStretchMap(IImageStatistics statistics, double targetHistogramMedianPercent, double shadowsClipping) {
@@ -338,7 +338,8 @@ namespace NINA.Image.ImageAnalysis {
             double factor,
             double blackClipping) {
             using (MyStopWatch.Measure()) {
-                var filter = ImageUtility.GetColorRemappingFilterUnlinked(redStatistics, greenStatistics, blueStatistics, factor, blackClipping, pf);
+                // Swap Red & Blue statistics due to differences in 48-bit Bitmap (RGB) & BitmapSource (BGR).
+                var filter = ImageUtility.GetColorRemappingFilterUnlinked(blueStatistics, greenStatistics, redStatistics, factor, blackClipping, pf);
                 filter.ApplyInPlace(img);
 
                 var source = ImageUtility.ConvertBitmap(img, pf);

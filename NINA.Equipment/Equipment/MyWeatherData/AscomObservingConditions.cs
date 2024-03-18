@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,108 +12,57 @@
 
 #endregion "copyright"
 
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MyWeatherData {
 
-    internal class AscomObservingConditions : AscomDevice<ObservingConditions, IObservingConditionsFacade, ObservingConditionsFacadeProxy>, IWeatherData, IDisposable {
-
-        public AscomObservingConditions(string weatherDataId, string weatherDataName, IDeviceDispatcher deviceDispatcher) : base(weatherDataId, weatherDataName, deviceDispatcher, DeviceDispatcherType.WeatherData) {
+    internal class AscomObservingConditions : AscomDevice<IObservingConditions>, IWeatherData, IDisposable {
+        public AscomObservingConditions(string weatherDataId, string weatherDataName) : base(weatherDataId, weatherDataName) {
+        }
+        public AscomObservingConditions(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
-        public double AveragePeriod {
-            get {
-                return GetProperty(nameof(ObservingConditions.AveragePeriod), double.NaN);
-            }
-        }
+        public double AveragePeriod => GetProperty(nameof(ObservingConditions.AveragePeriod), double.NaN);
 
-        public double CloudCover {
-            get {
-                return GetProperty(nameof(ObservingConditions.CloudCover), double.NaN);
-            }
-        }
+        public double CloudCover => GetProperty(nameof(ObservingConditions.CloudCover), double.NaN);
 
-        public double DewPoint {
-            get {
-                return GetProperty(nameof(ObservingConditions.DewPoint), double.NaN);
-            }
-        }
+        public double DewPoint => GetProperty(nameof(ObservingConditions.DewPoint), double.NaN);
 
-        public double Humidity {
-            get {
-                return GetProperty(nameof(ObservingConditions.Humidity), double.NaN);
-            }
-        }
+        public double Humidity => GetProperty(nameof(ObservingConditions.Humidity), double.NaN);
 
-        public double Pressure {
-            get {
-                return GetProperty(nameof(ObservingConditions.Pressure), double.NaN);
-            }
-        }
+        public double Pressure => GetProperty(nameof(ObservingConditions.Pressure), double.NaN);
 
-        public double RainRate {
-            get {
-                return GetProperty(nameof(ObservingConditions.RainRate), double.NaN);
-            }
-        }
+        public double RainRate => GetProperty(nameof(ObservingConditions.RainRate), double.NaN);
 
-        public double SkyBrightness {
-            get {
-                return GetProperty(nameof(ObservingConditions.SkyBrightness), double.NaN);
-            }
-        }
+        public double SkyBrightness => GetProperty(nameof(ObservingConditions.SkyBrightness), double.NaN);
 
-        public double SkyQuality {
-            get {
-                return GetProperty(nameof(ObservingConditions.SkyQuality), double.NaN);
-            }
-        }
+        public double SkyQuality => GetProperty(nameof(ObservingConditions.SkyQuality), double.NaN);
 
-        public double SkyTemperature {
-            get {
-                return GetProperty(nameof(ObservingConditions.SkyTemperature), double.NaN);
-            }
-        }
+        public double SkyTemperature => GetProperty(nameof(ObservingConditions.SkyTemperature), double.NaN);
 
-        public double StarFWHM {
-            get {
-                return GetProperty(nameof(ObservingConditions.StarFWHM), double.NaN);
-            }
-        }
+        public double StarFWHM => GetProperty(nameof(ObservingConditions.StarFWHM), double.NaN);
 
-        public double Temperature {
-            get {
-                return GetProperty(nameof(ObservingConditions.Temperature), double.NaN);
-            }
-        }
+        public double Temperature => GetProperty(nameof(ObservingConditions.Temperature), double.NaN);
 
-        public double WindDirection {
-            get {
-                return GetProperty(nameof(ObservingConditions.WindDirection), double.NaN);
-            }
-        }
+        public double WindDirection => GetProperty(nameof(ObservingConditions.WindDirection), double.NaN);
 
-        public double WindGust {
-            get {
-                return GetProperty(nameof(ObservingConditions.WindGust), double.NaN);
-            }
-        }
+        public double WindGust => GetProperty(nameof(ObservingConditions.WindGust), double.NaN);
 
-        public double WindSpeed {
-            get {
-                return GetProperty(nameof(ObservingConditions.WindSpeed), double.NaN);
-            }
-        }
+        public double WindSpeed => GetProperty(nameof(ObservingConditions.WindSpeed), double.NaN);
 
         protected override string ConnectionLostMessage => Loc.Instance["LblWeatherConnectionLost"];
 
-        protected override ObservingConditions GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new ObservingConditions(id));
+        protected override IObservingConditions GetInstance() {
+            if (deviceMeta == null) {
+                return new ObservingConditions(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaObservingConditions(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

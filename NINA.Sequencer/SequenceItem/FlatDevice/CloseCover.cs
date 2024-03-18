@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -57,9 +57,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            // Todo - this interface lacks progress
-            await flatDeviceMediator.CloseCover(token);
+        public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {            
+            await flatDeviceMediator.CloseCover(progress, token);
 
             var coverState = flatDeviceMediator.GetInfo().CoverState;
             if (coverState != Equipment.Interfaces.CoverState.Closed) {

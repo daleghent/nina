@@ -1,5 +1,5 @@
 ﻿<!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -18,7 +18,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View.SimpleSequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:seqview="clr-namespace:NINA.View.Sequencer"
@@ -782,7 +782,10 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="RASeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                            <Binding
+                                Path="RASeconds"
+                                StringFormat="N1"
+                                UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -839,7 +842,10 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="InputCoordinates.DecSeconds" StringFormat="N1" UpdateSourceTrigger="LostFocus">
+                            <Binding
+                                Path="InputCoordinates.DecSeconds"
+                                StringFormat="N1"
+                                UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -857,7 +863,7 @@
                         Margin="5,0,0,0"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="PositionAngle" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>
@@ -949,6 +955,7 @@
                                 HorizontalAlignment="Stretch"
                                 AddSVG="{StaticResource AddSVG}"
                                 MinValue="0"
+                                UseLayoutRounding="True"
                                 StepSize="1"
                                 SubstractSVG="{StaticResource SubstractSVG}"
                                 Value="{Binding Conditions[0].Iterations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -975,6 +982,7 @@
                                 HorizontalAlignment="Stretch"
                                 AddSVG="{StaticResource AddSVG}"
                                 MinValue="0"
+                                UseLayoutRounding="True"
                                 StepSize="1"
                                 SubstractSVG="{StaticResource SubstractSVG}"
                                 Value="{Binding Items[1].ExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -1105,6 +1113,7 @@
                                     HorizontalAlignment="Stretch"
                                     AddSVG="{StaticResource AddSVG}"
                                     MinValue="0"
+                                    UseLayoutRounding="True"
                                     StepSize="1"
                                     SubstractSVG="{StaticResource SubstractSVG}"
                                     Visibility="{Binding Dither, Converter={StaticResource VisibilityConverter}}"

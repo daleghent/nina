@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 
@@ -45,8 +46,8 @@ namespace NINA.Core.Utility.Extensions {
             public int top;
             public int right;
             public int bottom;
-            public int width { get { return right - left; } }
-            public int height { get { return bottom - top; } }
+            public int width => right - left;
+            public int height => bottom - top;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Auto)]
@@ -67,6 +68,18 @@ namespace NINA.Core.Utility.Extensions {
         private static double GetScalingFactor(Window w) {
             Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
             return m.M11;
+        }
+        public static TreeViewItem ContainerFromItemRecursive(this ItemContainerGenerator root, object item) {
+            var treeViewItem = root.ContainerFromItem(item) as TreeViewItem;
+            if (treeViewItem != null)
+                return treeViewItem;
+            foreach (var subItem in root.Items) {
+                treeViewItem = root.ContainerFromItem(subItem) as TreeViewItem;
+                var search = treeViewItem?.ItemContainerGenerator.ContainerFromItemRecursive(item);
+                if (search != null)
+                    return search;
+            }
+            return null;
         }
 
         public static Rect GetAbsolutePosition(this Window w) {

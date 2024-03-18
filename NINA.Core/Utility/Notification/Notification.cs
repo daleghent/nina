@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,6 +47,7 @@ namespace NINA.Core.Utility.Notification {
         private static object _lock = new object();
 
         private static void Initialize() {
+            
             notifier = new Notifier(cfg => {
                 /*cfg.PositionProvider = new WindowPositionProvider(
                     parentWindow: Application.Current.MainWindow,
@@ -229,9 +231,7 @@ namespace NINA.Core.Utility.Notification {
         private Geometry _symbol;
 
         public Geometry Symbol {
-            get {
-                return _symbol;
-            }
+            get => _symbol;
             set {
                 _symbol = value;
                 RaisePropertyChanged();
@@ -241,9 +241,7 @@ namespace NINA.Core.Utility.Notification {
         private Brush _color;
 
         public Brush Color {
-            get {
-                return _color;
-            }
+            get => _color;
             set {
                 _color = value;
                 RaisePropertyChanged();
@@ -253,9 +251,7 @@ namespace NINA.Core.Utility.Notification {
         private Brush _background;
 
         public Brush Background {
-            get {
-                return _background;
-            }
+            get => _background;
             set {
                 _background = value;
                 RaisePropertyChanged();
@@ -287,6 +283,9 @@ namespace NINA.Core.Utility.Notification {
         }
 
         public void PushNotification(INotification notification) {
+            if (_disposed) {
+                return;
+            }
             var lifetime = TimeSpan.FromSeconds(3);
             if (notification.GetType() == typeof(CustomNotification)) {
                 var customNotification = (CustomNotification)notification;
@@ -320,8 +319,7 @@ namespace NINA.Core.Utility.Notification {
         }
 
         public void CloseNotification(INotification notification) {
-            NotificationMetaData removedNotification;
-            _notifications.TryRemove(notification.Id, out removedNotification);
+            _notifications.TryRemove(notification.Id, out var removedNotification);
             RequestCloseNotification(new CloseNotificationEventArgs(removedNotification.Notification));
 
             if (_notificationsPending != null && _notificationsPending.Any()) {
@@ -330,11 +328,19 @@ namespace NINA.Core.Utility.Notification {
             }
         }
 
+        private bool _disposed = false;
         public void Dispose() {
-            _interval.Stop();
+            if (_disposed) { 
+                return;
+            }
+
+            _disposed = true;
+            _interval?.Stop();
             _interval = null;
             _notifications?.Clear();
             _notifications = null;
+            _notificationsPending?.Clear();
+            _notificationsPending = null;
         }
 
         public void UseDispatcher(Dispatcher dispatcher) {

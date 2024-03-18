@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -66,7 +66,7 @@ namespace NINA.ViewModel {
                 var container = (IDeepSkyObjectContainer)template.Clone();
                 container.Name = SearchResult.SelectedItem.Name;
                 container.Target.TargetName = SearchResult.SelectedItem.Name;
-                container.Target.Rotation = 0;
+                container.Target.PositionAngle = 0;
                 container.Target.InputCoordinates.Coordinates = SearchResult.SelectedItem.Coordinates;
 
                 sequenceMediator.AddAdvancedTarget(container);
@@ -118,9 +118,7 @@ namespace NINA.ViewModel {
         private NighttimeData nighttimeData;
 
         public NighttimeData NighttimeData {
-            get {
-                return nighttimeData;
-            }
+            get => nighttimeData;
             set {
                 if (nighttimeData != value) {
                     nighttimeData = value;
@@ -484,7 +482,7 @@ namespace NINA.ViewModel {
 
 
             MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(0, Loc.Instance["LblAny"]));
-            for (int i = 10; i <= 90; i += 10) {
+            for (int i = 10; i <= 80; i += 10) {
                 MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(i, i + "°"));
             }
             MinimumAltitudeDegrees.Add(new KeyValuePair<double, string>(ALTITUDEABOVEHORIZONFILTER, Loc.Instance["LblAboveHorizon"]));
@@ -634,9 +632,7 @@ namespace NINA.ViewModel {
         private double _selectedMinimumMoonDistanceDegrees;
 
         public AsyncObservableCollection<KeyValuePair<DateTime, string>> AltitudeTimesFrom {
-            get {
-                return _altitudeTimesFrom;
-            }
+            get => _altitudeTimesFrom;
             set {
                 _altitudeTimesFrom = value;
                 RaisePropertyChanged();
@@ -644,18 +640,14 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<DateTime, string>> AltitudeTimesThrough {
-            get {
-                return _altitudeTimesThrough;
-            }
+            get => _altitudeTimesThrough;
             set {
                 _altitudeTimesThrough = value;
                 RaisePropertyChanged();
             }
         }
         public AsyncObservableCollection<KeyValuePair<double, string>> MinimumAltitudeDegrees {
-            get {
-                return _minimumAltitudeDegrees;
-            }
+            get => _minimumAltitudeDegrees;
             set {
                 _minimumAltitudeDegrees = value;
                 RaisePropertyChanged();
@@ -671,9 +663,7 @@ namespace NINA.ViewModel {
         }
 
         public double SelectedAltitudeDuration {
-            get {
-                return _selectedAltitudeDuration;
-            }
+            get => _selectedAltitudeDuration;
             set {
                 _selectedAltitudeDuration = value;
                 RaisePropertyChanged();
@@ -681,9 +671,7 @@ namespace NINA.ViewModel {
         }
 
         public DateTime SelectedAltitudeTimeFrom {
-            get {
-                return _selectedAltitudeTimeFrom;
-            }
+            get => _selectedAltitudeTimeFrom;
             set {
                 if (value != _selectedAltitudeTimeThrough) {
                     _selectedAltitudeTimeFrom = value;
@@ -694,11 +682,9 @@ namespace NINA.ViewModel {
 
 
         public DateTime SelectedAltitudeTimeThrough {
-            get {
-                return _selectedAltitudeTimeThrough;
-            }
+            get => _selectedAltitudeTimeThrough;
             set {
-                if(value != _selectedAltitudeTimeThrough) { 
+                if (value != _selectedAltitudeTimeThrough) {
                     _selectedAltitudeTimeThrough = value;
                     RaisePropertyChanged();
                 }
@@ -706,9 +692,7 @@ namespace NINA.ViewModel {
         }
 
         public double SelectedMinimumAltitudeDegrees {
-            get {
-                return _selectedMinimumAltitudeDegrees;
-            }
+            get => _selectedMinimumAltitudeDegrees;
             set {
                 _selectedMinimumAltitudeDegrees = value;
                 RaisePropertyChanged();
@@ -724,21 +708,17 @@ namespace NINA.ViewModel {
         }
 
         public double SelectedMinimumMoonDistanceDegrees {
-            get {
-                return _selectedMinimumMoonDistanceDegrees;
-            }
+            get => _selectedMinimumMoonDistanceDegrees;
             set {
-                if(value < 0) { value = 0; }
-                if(value > 180) { value = 180; }
+                if (value < 0) { value = 0; }
+                if (value > 180) { value = 180; }
                 _selectedMinimumMoonDistanceDegrees = value;
                 RaisePropertyChanged();
             }
         }
 
         public string SearchObjectName {
-            get {
-                return _searchObjectName;
-            }
+            get => _searchObjectName;
 
             set {
                 _searchObjectName = value;
@@ -761,9 +741,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<string> Constellations {
-            get {
-                return _constellations;
-            }
+            get => _constellations;
 
             set {
                 _constellations = value;
@@ -772,9 +750,7 @@ namespace NINA.ViewModel {
         }
 
         public string SelectedConstellation {
-            get {
-                return _selectedConstellation;
-            }
+            get => _selectedConstellation;
 
             set {
                 _selectedConstellation = value;
@@ -783,9 +759,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<double?, string>> RAFrom {
-            get {
-                return _rAFrom;
-            }
+            get => _rAFrom;
 
             set {
                 _rAFrom = value;
@@ -794,9 +768,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<double?, string>> RAThrough {
-            get {
-                return _rAThrough;
-            }
+            get => _rAThrough;
 
             set {
                 _rAThrough = value;
@@ -805,9 +777,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<double?, string>> DecFrom {
-            get {
-                return _decFrom;
-            }
+            get => _decFrom;
 
             set {
                 _decFrom = value;
@@ -816,9 +786,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<double?, string>> DecThrough {
-            get {
-                return _decThrough;
-            }
+            get => _decThrough;
 
             set {
                 _decThrough = value;
@@ -827,9 +795,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedRAFrom {
-            get {
-                return _selectedRAFrom;
-            }
+            get => _selectedRAFrom;
 
             set {
                 _selectedRAFrom = value;
@@ -838,9 +804,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedRAThrough {
-            get {
-                return _selectedRAThrough;
-            }
+            get => _selectedRAThrough;
 
             set {
                 _selectedRAThrough = value;
@@ -849,9 +813,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedDecFrom {
-            get {
-                return _selectedDecFrom;
-            }
+            get => _selectedDecFrom;
 
             set {
                 _selectedDecFrom = value;
@@ -860,9 +822,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedDecThrough {
-            get {
-                return _selectedDecThrough;
-            }
+            get => _selectedDecThrough;
 
             set {
                 _selectedDecThrough = value;
@@ -871,9 +831,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<string> BrightnessFrom {
-            get {
-                return _brightnessFrom;
-            }
+            get => _brightnessFrom;
 
             set {
                 _brightnessFrom = value;
@@ -882,9 +840,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<string> BrightnessThrough {
-            get {
-                return _brightnessThrough;
-            }
+            get => _brightnessThrough;
 
             set {
                 _brightnessThrough = value;
@@ -893,9 +849,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedBrightnessFrom {
-            get {
-                return _selectedBrightnessFrom;
-            }
+            get => _selectedBrightnessFrom;
 
             set {
                 _selectedBrightnessFrom = value;
@@ -904,9 +858,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedBrightnessThrough {
-            get {
-                return _selectedBrightnessThrough;
-            }
+            get => _selectedBrightnessThrough;
 
             set {
                 _selectedBrightnessThrough = value;
@@ -915,9 +867,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<string, string>> SizesFrom {
-            get {
-                return _sizesFrom;
-            }
+            get => _sizesFrom;
 
             set {
                 _sizesFrom = value;
@@ -926,9 +876,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<KeyValuePair<string, string>> SizesThrough {
-            get {
-                return _sizesThrough;
-            }
+            get => _sizesThrough;
 
             set {
                 _sizesThrough = value;
@@ -937,9 +885,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedSizeFrom {
-            get {
-                return _selectedSizeFrom;
-            }
+            get => _selectedSizeFrom;
 
             set {
                 _selectedSizeFrom = value;
@@ -948,9 +894,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedSizeThrough {
-            get {
-                return _selectedSizeThrough;
-            }
+            get => _selectedSizeThrough;
 
             set {
                 _selectedSizeThrough = value;
@@ -959,9 +903,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<string> MagnitudesFrom {
-            get {
-                return _magnitudesFrom;
-            }
+            get => _magnitudesFrom;
 
             set {
                 _magnitudesFrom = value;
@@ -970,9 +912,7 @@ namespace NINA.ViewModel {
         }
 
         public AsyncObservableCollection<string> MagnitudesThrough {
-            get {
-                return _magnitudesThrough;
-            }
+            get => _magnitudesThrough;
 
             set {
                 _magnitudesThrough = value;
@@ -981,9 +921,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedMagnitudeFrom {
-            get {
-                return _selectedMagnitudeFrom;
-            }
+            get => _selectedMagnitudeFrom;
 
             set {
                 _selectedMagnitudeFrom = value;
@@ -992,9 +930,7 @@ namespace NINA.ViewModel {
         }
 
         public double? SelectedMagnitudeThrough {
-            get {
-                return _selectedMagnitudeThrough;
-            }
+            get => _selectedMagnitudeThrough;
 
             set {
                 _selectedMagnitudeThrough = value;
@@ -1016,9 +952,7 @@ namespace NINA.ViewModel {
         public ICommand GetDSOTemplatesCommand { get; private set; }
 
         public int PageSize {
-            get {
-                return profileService.ActiveProfile.ApplicationSettings.PageSize;
-            }
+            get => profileService.ActiveProfile.ApplicationSettings.PageSize;
             set {
                 profileService.ActiveProfile.ApplicationSettings.PageSize = value;
                 RaisePropertyChanged();
@@ -1028,9 +962,7 @@ namespace NINA.ViewModel {
         private SkyAtlasOrderByDirectionEnum _orderByDirection;
 
         public SkyAtlasOrderByDirectionEnum OrderByDirection {
-            get {
-                return _orderByDirection;
-            }
+            get => _orderByDirection;
             set {
                 _orderByDirection = value;
                 RaisePropertyChanged();
@@ -1040,9 +972,7 @@ namespace NINA.ViewModel {
         private SkyAtlasOrderByFieldsEnum _orderByField;
 
         public SkyAtlasOrderByFieldsEnum OrderByField {
-            get {
-                return _orderByField;
-            }
+            get => _orderByField;
             set {
                 _orderByField = value;
                 RaisePropertyChanged();
@@ -1050,9 +980,7 @@ namespace NINA.ViewModel {
         }
 
         public PagedList<DeepSkyObject> SearchResult {
-            get {
-                return _searchResult;
-            }
+            get => _searchResult;
 
             set {
                 _searchResult = value;

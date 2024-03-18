@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -37,8 +37,9 @@ namespace NINA.Plugin {
         public async Task<IList<PluginManifest>> RequestAll(IPluginVersion minimumApplicationVersion, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return await Task.Run(async () => {
                 List<PluginManifest> plugins = new List<PluginManifest>();
+                var compatibilityMap = new PluginCompatibilityMap();
                 try {
-                    var req = new HttpGetRequest(repositoryURL + "/plugins/manifest", true);
+                    var req = new HttpGetRequest(repositoryURL + "/plugins/manifests", true);
                     Logger.Info($"Fetching plugin manifests from {req.Url}");
                     var res = await req.Request(ct);
                     if (!string.IsNullOrEmpty(res)) {
@@ -46,7 +47,8 @@ namespace NINA.Plugin {
                         foreach (var item in arr) {
                             var plugin = await ValidateAndParseManifest(item);
                             if (plugin != null) {
-                                if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)) {
+                                if (PluginVersion.IsPluginCompatible(plugin.MinimumApplicationVersion, minimumApplicationVersion)
+                                    && !compatibilityMap.IsNotCompatible(plugin)) {
                                     plugins.Add(plugin);
                                 }
                             }

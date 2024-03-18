@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -66,10 +66,17 @@ namespace NINA.PlateSolving.Solvers {
 
                 outputPath = GetOutputPath(imagePath);
 
-                await StartCLI(imagePath, outputPath, parameter, imageProperties, progress, cancelToken);
+                using (var cts = CancellationTokenSource.CreateLinkedTokenSource(cancelToken)) {
+                    cts.CancelAfter(TimeSpan.FromMinutes(10));
+                    await StartCLI(imagePath, outputPath, parameter, imageProperties, progress, cancelToken);
+                }
 
                 //Extract solution coordinates
                 result = ReadResult(outputPath, parameter, imageProperties);
+            } catch(OperationCanceledException) {
+                if (!cancelToken.IsCancellationRequested) {
+                    Logger.Error("Platesolver timed out after 10 minutes");
+                }
             } finally {
                 progress?.Report(new ApplicationStatus() { Status = string.Empty });
 

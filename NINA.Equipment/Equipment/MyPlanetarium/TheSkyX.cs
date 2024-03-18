@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -20,6 +20,8 @@ using System;
 using System.Threading.Tasks;
 using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces;
+using System.Threading;
+using System.Globalization;
 
 namespace NINA.Equipment.Equipment.MyPlanetarium {
 
@@ -72,7 +74,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
             }
         }
 
-        public async Task<Location> GetSite() {
+        public async Task<Location> GetSite(CancellationToken token) {
             try {
                 Location loc = new Location();
                 string[] coords;
@@ -99,7 +101,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 });
 
                 var query = new BasicQuery(address, port, script);
-                string reply = await query.SendQuery();
+                string reply = await query.SendQuery(token);
 
                 string[] response = reply.Split('|');
 
@@ -118,6 +120,8 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                     throw new PlanetariumFailedToGetCoordinates();
                 }
                 return loc;
+            } catch (OperationCanceledException) {
+                throw;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;
@@ -162,9 +166,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 string[] response = reply.Split('|');
 
                 if (response[1].Equals("No error. Error = 0.")) {
-                    if (double.TryParse(response[0], out rotationAngle)) {
-                        // Flip the orientation
-                        rotationAngle = 360d - rotationAngle;
+                    if (double.TryParse(response[0], CultureInfo.InvariantCulture, out rotationAngle)) {
                     }
                 }
 

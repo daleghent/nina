@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -40,21 +40,25 @@ namespace NINA.Profile {
             } else {
                 filterWheelFilters = new ObserveAllCollection<FilterInfo>();
             }
+
+            var focusFilters = filterWheelFilters.Where(x => x.AutoFocusFilter == true).ToList();
+            if (focusFilters.Count > 1) {
+                focusFilters.Skip(1).ToList().ForEach(x => x.AutoFocusFilter = false);
+            }
         }
 
         protected override void SetDefaultValues() {
             id = "No_Device";
             filterWheelFilters = new ObserveAllCollection<FilterInfo>();
             disableGuidingOnFilterChange = false;
+            unidirectional = false;
         }
 
         private string id;
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -64,12 +68,26 @@ namespace NINA.Profile {
         }
 
         private bool disableGuidingOnFilterChange;
+
         [DataMember]
         public bool DisableGuidingOnFilterChange {
             get => disableGuidingOnFilterChange;
             set {
                 if(disableGuidingOnFilterChange != value) {
                     disableGuidingOnFilterChange = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool unidirectional;
+
+        [DataMember]
+        public bool Unidirectional {
+            get => unidirectional;
+            set {
+                if (unidirectional != value) {
+                    unidirectional = value;
                     RaisePropertyChanged();
                 }
             }
@@ -83,9 +101,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public ObserveAllCollection<FilterInfo> FilterWheelFilters {
-            get {
-                return filterWheelFilters;
-            }
+            get => filterWheelFilters;
             set {
                 if (filterWheelFilters != value) {
                     if (filterWheelFilters != null) {

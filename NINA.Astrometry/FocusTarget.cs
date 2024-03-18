@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -66,11 +66,7 @@ namespace NINA.Astrometry {
             }
         }
 
-        public string AzimuthString {
-            get {
-                return AstroUtil.DegreesToDMS(Azimuth);
-            }
-        }
+        public string AzimuthString => AstroUtil.DegreesToDMS(Azimuth);
 
         public string SkyDirection => (Azimuth <= 90 || Azimuth >= 270 ? Loc.Instance["LblNorthern"] : Loc.Instance["LblSouthern"]) + " " + (Azimuth >= 0 && Azimuth < 180 ? Loc.Instance["LblEast"] : Loc.Instance["LblWest"]);
 
@@ -96,15 +92,9 @@ namespace NINA.Astrometry {
             }
         }
 
-        public string AltitudeString {
-            get {
-                return AstroUtil.DegreesToDMS(Altitude);
-            }
-        }
+        public string AltitudeString => AstroUtil.DegreesToDMS(Altitude);
 
-        public string Information {
-            get => $"{Name} ({SkyDirection}, Alt: {Altitude:0.00}°, Az: {Azimuth:0.00}°)";
-        }
+        public string Information => $"{Name} ({SkyDirection}, Alt: {Altitude:0.00}°, Az: {Azimuth:0.00}°)";
 
         public override string ToString() {
             return Information;

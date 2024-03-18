@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -35,7 +35,7 @@ namespace NINA.Sequencer.Utility {
                 if (container != null && container.Target != null && container.Target.InputCoordinates != null && container.Target.DeepSkyObject != null) {
                     return new ContextCoordinates(
                         container.Target.InputCoordinates.Coordinates, 
-                        container.Target.Rotation,
+                        container.Target.PositionAngle,
                         container.Target.DeepSkyObject.ShiftTrackingRate);
                 } else {
                     return RetrieveContextCoordinates(parent.Parent);
@@ -169,9 +169,9 @@ namespace NINA.Sequencer.Utility {
             return CalculateTimeAtAltitude(coord, latitude, longitude, targetAltitude, DateTime.Now);
         }
 
-        private static readonly int LOOP_INTERVAL = 5;  // How many minutes for each loop
-        private static readonly int NEAR_TIME = 10;  // How close before we get an exact time
-        private static readonly int NEAR_TIME_HORIZON = 60;
+        private const int LOOP_INTERVAL = 5;  // How many minutes for each loop
+        private const int NEAR_TIME = 10;  // How close before we get an exact time
+        private const int NEAR_TIME_HORIZON = 60;
 
         public static void Iterate(WaitLoopData data, RiseSetMeridian rsm, bool greater, bool sense, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
             // We'll iterate (not too much) to get a better time
@@ -198,7 +198,7 @@ namespace NINA.Sequencer.Utility {
                 if (baseTime < now) {
                     baseTime = baseTime.AddDays(1);
                 }
-                if (data.UseCustomHorizon) {
+                if (data.UseCustomHorizon && data.Horizon != null) {
                     // With custom horizons, we have to do significant iteration so we'll use 10 minutes as
                     // our iteration time
 
@@ -273,12 +273,12 @@ namespace NINA.Sequencer.Utility {
          * the actual time
          */
         public static void CalculateExpectedTimeCommon(WaitLoopData data, double offset, bool until, int allowance, Func<DateTime, ObserverInfo, double> getCurrentAltitude) {
-
             // Don't waste time on constructors
+            if (data == null) { return; }            
+            if (data.Coordinates == null) { return; }
+
             Coordinates coord = data.Coordinates.Coordinates;
-            if (coord.RADegrees == 0 && coord.Dec == 0) {
-                return;
-            }
+            if (coord.RADegrees == 0 && coord.Dec == 0) { return; }
 
             data.SetApproximate(false);
 

@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -394,7 +394,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override async Task<Empty> FastReadout_set(
             SetBoolPropertyRequest request,
             ServerCallContext context) {
-            throw new PropertyNotImplementedException();
+            throw new ASCOM.NotImplementedException();
         }
 
         public override async Task<GetDoublePropertyReply> FullWellCapacity_get(
@@ -433,7 +433,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override async Task<Empty> Gain_set(
             SetShortPropertyRequest request,
             ServerCallContext context) {
-            throw new PropertyNotImplementedException();
+            throw new ASCOM.NotImplementedException();
         }
 
         public override async Task<GetBoolPropertyReply> HasShutter_get(
@@ -566,7 +566,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override async Task<GetStringArrayReply> Offsets_get(
             Empty request,
             ServerCallContext context) {
-            throw new PropertyNotImplementedException("No offsets");
+            throw new ASCOM.NotImplementedException("No offsets");
         }
 
         public override async Task<GetIntPropertyReply> Offset_get(
@@ -610,7 +610,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override async Task<Empty> ReadoutMode_set(
             SetShortPropertyRequest request,
             ServerCallContext context) {
-            throw new PropertyNotImplementedException("ReadoutMode cannot be directly set. Use BinX instead to set the readout mode for binning purposes");
+            throw new ASCOM.NotImplementedException("ReadoutMode cannot be directly set. Use BinX instead to set the readout mode for binning purposes");
         }
 
         public override async Task<GetStringPropertyReply> SensorName_get(
@@ -640,7 +640,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SetDoublePropertyRequest request,
             ServerCallContext context) {
             if (!this.camera.CanSetTemperature) {
-                throw new PropertyNotImplementedException("Camera does not support setting a CCD temperature");
+                throw new ASCOM.NotImplementedException("Camera does not support setting a CCD temperature");
             }
             this.camera.TemperatureSetPoint = request.Value;
             return new Empty();
@@ -656,7 +656,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SetIntPropertyRequest request,
             ServerCallContext context) {
             if (!this.camera.CanSubSample) {
-                throw new PropertyNotImplementedException("Camera does not support sub-sampling");
+                throw new ASCOM.NotImplementedException("Camera does not support sub-sampling");
             }
             this.camera.SubSampleX = request.Value;
             return new Empty();
@@ -672,7 +672,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SetIntPropertyRequest request,
             ServerCallContext context) {
             if (!this.camera.CanSubSample) {
-                throw new PropertyNotImplementedException("Camera does not support sub-sampling");
+                throw new ASCOM.NotImplementedException("Camera does not support sub-sampling");
             }
             this.camera.SubSampleY = request.Value;
             return new Empty();
@@ -681,13 +681,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public override Task<GetDoublePropertyReply> SubExposureDuration_get(
             Empty request,
             ServerCallContext context) {
-            throw new PropertyNotImplementedException("SubExposureDuration not supported");
+            throw new ASCOM.NotImplementedException("SubExposureDuration not supported");
         }
 
         public override async Task<Empty> SubExposureDuration_set(
             SetDoublePropertyRequest request,
             ServerCallContext context) {
-            throw new PropertyNotImplementedException("SubExposureDuration not supported");
+            throw new ASCOM.NotImplementedException("SubExposureDuration not supported");
         }
 
         public override async Task<GetBoolPropertyReply> CanFastReadout_get(

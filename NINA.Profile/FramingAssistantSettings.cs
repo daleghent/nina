@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -35,6 +35,7 @@ namespace NINA.Profile {
             lastSelectedImageSource = SkySurveySource.HIPS2FITS;
             opacity = 0.2;
             lastRotationAngle = 0;
+            saveImageInOfflineCache = false;
         }
 
         private SkySurveySource lastSelectedImageSource;
@@ -54,9 +55,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int CameraHeight {
-            get {
-                return cameraHeight;
-            }
+            get => cameraHeight;
             set {
                 if (cameraHeight != value) {
                     cameraHeight = value;
@@ -69,9 +68,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int CameraWidth {
-            get {
-                return cameraWidth;
-            }
+            get => cameraWidth;
             set {
                 if (cameraWidth != value) {
                     cameraWidth = value;
@@ -84,9 +81,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double FieldOfView {
-            get {
-                return fieldOfView;
-            }
+            get => fieldOfView;
             set {
                 if (fieldOfView != value) {
                     fieldOfView = value;
@@ -99,9 +94,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double Opacity {
-            get {
-                return opacity;
-            }
+            get => opacity;
             set {
                 if (opacity != value) {
                     opacity = value;
@@ -118,6 +111,19 @@ namespace NINA.Profile {
             set {
                 if (lastRotationAngle != value) {
                     lastRotationAngle = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool saveImageInOfflineCache;
+
+        [DataMember]
+        public bool SaveImageInOfflineCache {
+            get => saveImageInOfflineCache;
+            set {
+                if(saveImageInOfflineCache != value) {
+                    saveImageInOfflineCache = value;
                     RaisePropertyChanged();
                 }
             }

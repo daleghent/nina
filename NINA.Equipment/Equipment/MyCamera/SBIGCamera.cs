@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -22,6 +22,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 using NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp;
+using NINA.Equipment.Utility;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
@@ -54,7 +55,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.Id = queriedCameraInfo.SerialNumber;
             this.Name = queriedCameraInfo.Name;
             this.DriverVersion = sdk.GetSdkVersion();
-            this.Description = $"{queriedCameraInfo.Name} on {queriedCameraInfo.DeviceId}";
+            this.Description = $"{queriedCameraInfo.Name} on {queriedCameraInfo.DeviceId} - {Id}";
         }
 
         public enum SBIGCameraStatus {
@@ -70,6 +71,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public string Id { get; private set; }
 
         public string Name { get; private set; }
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
 
         public string Category => "SBIG Legacy";
 
@@ -183,9 +185,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 throw new Exception($"No connected SBIG device");
             }
-            set {
-                connectedDevice = value;
-            }
+            set => connectedDevice = value;
         }
 
         public void Disconnect() {
@@ -368,9 +368,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short MaxBinY {
             get => MaxBinX;
-            private set {
-                MaxBinX = value;
-            }
+            private set => MaxBinX = value;
         }
 
         private double _pixelSizeX;
@@ -621,8 +619,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public void StartExposure(CaptureSequence sequence) {
             var isDarkFrame = sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
-                               sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
-                               sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT;
+                               sequence.ImageType == CaptureSequence.ImageTypes.BIAS;
             var readoutMode = SDK.CameraSDKs.SBIGSDK.ReadoutMode.Create(BinX);
             Point exposureStart;
             Size exposureSize;
@@ -643,13 +640,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 try {
                     CameraStatus = SBIGCameraStatus.DOWNLOAD;
                     var exposureData = sdk.DownloadExposure(ConnectedDevice.DeviceId, this.exposureCcd, ct);
+                    var metaData = new ImageMetaData();
+                    metaData.FromCamera(this);
                     return exposureDataFactory.CreateImageArrayExposureData(
                         input: exposureData.Data,
                         width: exposureData.Width,
                         height: exposureData.Height,
                         bitDepth: BitDepth,
                         isBayered: SensorType != SensorType.Monochrome && BinX == 1 && BinY == 1,
-                        metaData: new ImageMetaData());
+                        metaData: metaData);
                 } catch (OperationCanceledException) {
                 } catch (Exception e) {
                     Logger.Error(e);
@@ -776,9 +775,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool TrackingCcdAscomServerEnabled {
-            get {
-                return profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerEnabled == true;
-            }
+            get => profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerEnabled == true;
             set {
                 if (profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerEnabled != value) {
                     Task.Run(async () => {
@@ -795,9 +792,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool TrackingCcdAscomServerLoggingEnabled {
-            get {
-                return profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled == true;
-            }
+            get => profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled == true;
             set {
                 if (profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled != value) {
                     profileService.ActiveProfile.CameraSettings.TrackingCameraASCOMServerLoggingEnabled = value;
@@ -838,13 +833,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool CanSetGain => false;
 
-        public int GainMax => 0;
+        public int GainMax => -1;
 
-        public int GainMin => 0;
+        public int GainMin => -1;
 
-        public int Gain { get => 0; set => throw new InvalidOperationException(); }
+        public int Gain { get => -1; set => throw new InvalidOperationException(); }
 
-        public IList<int> Gains => new List<int>() { 0 };
+        public IList<int> Gains => new List<int>() { };
 
         public bool DewHeaterOn { get => false; set => throw new InvalidOperationException(); }
 

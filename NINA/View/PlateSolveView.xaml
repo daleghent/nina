@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,7 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     Margin="5"
@@ -42,7 +42,7 @@
             MinWidth="400"
             MaxWidth="400"
             MaxHeight="400"
-            Margin="5,0,0,0"
+            Margin="5,10,10,0"
             Source="{Binding Thumbnail}"
             Stretch="Uniform" />
         <ninactrl:LoadingControl
@@ -53,7 +53,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Visibility="{Binding PlateSolveResult, Converter={StaticResource InverseNullToVisibilityConverter}}" />
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="10,5,10,10">
             <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblCenterRA}" />
@@ -110,8 +110,8 @@
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
-                    <TextBlock Text="{ns:Loc LblOrientation}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.Orientation, StringFormat=\{0:0.00\}, FallbackValue=--}" />
+                    <TextBlock Text="{ns:Loc LblRotation}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding PlateSolveResult.PositionAngle, StringFormat=\{0:0.00\}, FallbackValue=--}" />
                 </UniformGrid>
             </Border>
             <Border
@@ -172,14 +172,14 @@
         <TextBlock
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            Margin="0,10,0,0"
+            Margin="10"
             HorizontalAlignment="Center"
             Text="{Binding Status.Status}" />
         <DataGrid
             Grid.Row="2"
             Grid.ColumnSpan="2"
             MaxHeight="400"
-            Margin="0,10,0,0"
+            Margin="10"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
             HorizontalScrollBarVisibility="Hidden"
@@ -255,9 +255,9 @@
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="40"
-                    Binding="{Binding Orientation, StringFormat=\{0:0.00\}}"
+                    Binding="{Binding PositionAngle, StringFormat=\{0:0.00\}}"
                     CellStyle="{StaticResource CenteredDataGridCell}"
-                    Header="{ns:Loc LblOrientation}"
+                    Header="{ns:Loc LblRotation}"
                     IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>

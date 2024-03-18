@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -21,22 +21,10 @@ namespace NINA.Astrometry.Body {
         public Moon(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        public override double Radius {
-            get {
-                return 1738; // https://de.wikipedia.org/wiki/Monddurchmesser
-            }
-        }
+        public override double Radius => 1738; // https://de.wikipedia.org/wiki/Monddurchmesser
 
-        protected override string Name {
-            get {
-                return "Moon";
-            }
-        }
+        protected override string Name => "Moon";
 
-        protected override NOVAS.Body BodyNumber {
-            get {
-                return NOVAS.Body.Moon;
-            }
-        }
+        protected override NOVAS.Body BodyNumber => NOVAS.Body.Moon;
     }
 }

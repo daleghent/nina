@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -71,7 +71,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            await flatDeviceMediator.SetBrightness(Brightness, token);
+            await flatDeviceMediator.SetBrightness(Brightness, progress, token);
 
             var brightnessState = flatDeviceMediator.GetInfo().Brightness;
             if (brightnessState != Brightness) {
@@ -98,7 +98,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(SetBrightness)}";
+            return $"Category: {Category}, Item: {nameof(SetBrightness)}, {nameof(Brightness)}: {Brightness}";
         }
     }
 }

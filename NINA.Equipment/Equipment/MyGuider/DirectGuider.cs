@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -43,6 +43,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public string Name => "Direct Guider";
+        public string DisplayName => Name;
 
         public string Id => "Direct_Guider";
 
@@ -51,7 +52,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         public void UpdateDeviceInfo(TelescopeInfo telescopeInfo) {
             this.telescopeInfo = telescopeInfo;
             if (Connected && !this.telescopeInfo.Connected) {
-                Notification.ShowWarning(Loc.Instance["LblDirectGuiderTelescopeDisconnect"]);
+                Notification.ShowWarning(Loc.Instance["LblDirectGuiderMountDisconnect"]);
                 Logger.Warning("Telescope is disconnected. Direct Guide will disconnect. Dither will not occur.");
                 Disconnect();
             } else {
@@ -81,9 +82,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             set {
                 if (_connected != value) {
                     _connected = value;
@@ -95,9 +94,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double _pixelScale = -1.0;
 
         public double PixelScale {
-            get {
-                return _pixelScale;
-            }
+            get => _pixelScale;
             set {
                 if (_pixelScale != value) {
                     _pixelScale = value;
@@ -109,9 +106,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double _directGuideDuration = 0.0;
 
         public double DirectGuideDuration {
-            get {
-                return _directGuideDuration;
-            }
+            get => _directGuideDuration;
             set {
                 if (_directGuideDuration != value) {
                     _directGuideDuration = value;
@@ -123,9 +118,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double _westEastGuideRate = 0.0;
 
         public double WestEastGuideRate {
-            get {
-                return _westEastGuideRate;
-            }
+            get => _westEastGuideRate;
             set {
                 if (_westEastGuideRate != value) {
                     _westEastGuideRate = value;
@@ -137,9 +130,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private double _northSouthGuideRate = 0.0;
 
         public double NorthSouthGuideRate {
-            get {
-                return _northSouthGuideRate;
-            }
+            get => _northSouthGuideRate;
             set {
                 if (_northSouthGuideRate != value) {
                     _northSouthGuideRate = value;
@@ -151,9 +142,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         private string _state = "Idle";
 
         public string State {
-            get {
-                return _state;
-            }
+            get => _state;
             set {
                 _state = value;
                 RaisePropertyChanged();
@@ -214,9 +203,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return Task.FromResult(true);
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
         public bool CanSetShiftRate => false;
 

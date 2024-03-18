@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -118,9 +118,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public CameraInfo CameraInfo {
-            get {
-                return cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
-            }
+            get => cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
             private set {
                 cameraInfo = value;
                 RaisePropertyChanged();
@@ -129,17 +127,12 @@ namespace NINA.ViewModel.Imaging {
 
         public ICommand CancelSolveCommand { get; private set; }
 
-        public new string ContentId {
-            get {
+        public new string ContentId =>
                 //Backwards compatibility for avalondock layouts prior to 1.10
-                return "PlatesolveVM";
-            }
-        }
+                "PlatesolveVM";
 
         public PlateSolveResult PlateSolveResult {
-            get {
-                return _plateSolveResult;
-            }
+            get => _plateSolveResult;
 
             set {
                 _plateSolveResult = value;
@@ -171,9 +164,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public double RepeatThreshold {
-            get {
-                return _repeatThreshold;
-            }
+            get => _repeatThreshold;
             set {
                 _repeatThreshold = value;
                 RaisePropertyChanged();
@@ -181,9 +172,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool Sync {
-            get {
-                return profileService.ActiveProfile.PlateSolveSettings.Sync;
-            }
+            get => profileService.ActiveProfile.PlateSolveSettings.Sync;
             set {
                 profileService.ActiveProfile.PlateSolveSettings.Sync = value;
                 RaisePropertyChanged();
@@ -191,9 +180,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool SlewToTarget {
-            get {
-                return profileService.ActiveProfile.PlateSolveSettings.SlewToTarget;
-            }
+            get => profileService.ActiveProfile.PlateSolveSettings.SlewToTarget;
             set {
                 profileService.ActiveProfile.PlateSolveSettings.SlewToTarget = value;
                 if (value) {
@@ -204,9 +191,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public BinningMode SnapBin {
-            get {
-                return _snapBin;
-            }
+            get => _snapBin;
 
             set {
                 _snapBin = value;
@@ -215,9 +200,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public double SnapExposureDuration {
-            get {
-                return _snapExposureDuration;
-            }
+            get => _snapExposureDuration;
 
             set {
                 _snapExposureDuration = value;
@@ -226,9 +209,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public FilterInfo SnapFilter {
-            get {
-                return _snapFilter;
-            }
+            get => _snapFilter;
 
             set {
                 _snapFilter = value;
@@ -237,9 +218,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public int SnapGain {
-            get {
-                return _snapGain;
-            }
+            get => _snapGain;
 
             set {
                 _snapGain = value;
@@ -250,9 +229,7 @@ namespace NINA.ViewModel.Imaging {
         public IAsyncCommand SolveCommand { get; private set; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;
@@ -263,9 +240,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public TelescopeInfo TelescopeInfo {
-            get {
-                return telescopeInfo ?? DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
-            }
+            get => telescopeInfo ?? DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
             private set {
                 telescopeInfo = value;
                 RaisePropertyChanged();

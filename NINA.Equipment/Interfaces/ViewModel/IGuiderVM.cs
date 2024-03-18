@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Core.Interfaces;
 using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyGuider;
 using NINA.Equipment.Equipment.MyGuider.PHD2;
@@ -27,6 +28,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> Dither(CancellationToken token);
 
         Guid StartRMSRecording();
+
+        RMS GetRMSRecording(Guid handle);
 
         Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken token);
 
@@ -43,5 +46,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> StopShifting(CancellationToken ct);
 
         LockPosition GetLockPosition();
+        event Func<object, EventArgs, Task> AfterDither;
+
+        event EventHandler<IGuideStep> GuideEvent;
     }
 }

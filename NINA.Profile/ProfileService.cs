@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -202,30 +202,40 @@ namespace NINA.Profile {
         public bool ProfileWasSpecifiedFromCommandLineArgs { get; private set; }
 
         public event EventHandler LocaleChanged;
-
+        
         public void ChangeLocale(CultureInfo language) {
             ActiveProfile.ApplicationSettings.Language = language;
 
-            System.Threading.Thread.CurrentThread.CurrentUICulture = language;
-            System.Threading.Thread.CurrentThread.CurrentCulture = language;
-
+            CultureInfo.DefaultThreadCurrentUICulture = language;
             Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
-            LocaleChanged?.Invoke(this, null);
+            var eventHandler = LocaleChanged;
+            if (eventHandler != null) { 
+                Application.Current.Dispatcher?.Invoke(eventHandler, this, null);
+            }
         }
 
         public void ChangeLatitude(double latitude) {
             ActiveProfile.AstrometrySettings.Latitude = latitude;
-            LocationChanged?.Invoke(this, null);
+            var eventHandler = LocationChanged;
+            if (eventHandler != null) {
+                Application.Current.Dispatcher?.Invoke(eventHandler, this, null);
+            }
         }
 
         public void ChangeLongitude(double longitude) {
             ActiveProfile.AstrometrySettings.Longitude = longitude;
-            LocationChanged?.Invoke(this, null);
+            var eventHandler = LocationChanged;
+            if (eventHandler != null) {
+                Application.Current.Dispatcher?.Invoke(LocationChanged, this, null);
+            }
         }
 
         public void ChangeElevation(double elevation) {
             ActiveProfile.AstrometrySettings.Elevation = elevation;
-            LocationChanged?.Invoke(this, null);
+            var eventHandler = LocationChanged;
+            if (eventHandler != null) {
+                Application.Current.Dispatcher?.Invoke(eventHandler, this, null);
+            }
         }
 
         public void ChangeHorizon(string horizonFilePath) {
@@ -245,10 +255,14 @@ namespace NINA.Profile {
                 Notification.ShowError(Loc.Instance["LblFailedToLoadCustomHorizon"] + ex.Message);
             }
 
-            HorizonChanged?.Invoke(this, null);
+            var eventHandler = HorizonChanged;
+            if (eventHandler != null) {
+                Application.Current.Dispatcher?.Invoke(eventHandler, this, null);
+            }
         }
 
         public event EventHandler LocationChanged;
+        public event EventHandler BeforeProfileChanging;
 
         public event EventHandler ProfileChanged;
 
@@ -312,6 +326,12 @@ namespace NINA.Profile {
             lock (lockobj) {
                 using (MyStopWatch.Measure()) {
                     try {
+                        var eventHandlerBeforeProfileChanging = BeforeProfileChanging;
+                        if (eventHandlerBeforeProfileChanging != null) {
+                            Application.Current.Dispatcher?.Invoke(eventHandlerBeforeProfileChanging, this, new EventArgs());
+
+                        }
+                        var old = activeProfile;
                         var p = Profile.Load(info.Location);
 
                         UnregisterChangedEventHandlers();
@@ -324,12 +344,21 @@ namespace NINA.Profile {
                         info.IsActive = true;
 
                         System.Threading.Thread.CurrentThread.CurrentUICulture = ActiveProfile.ApplicationSettings.Language;
-                        System.Threading.Thread.CurrentThread.CurrentCulture = ActiveProfile.ApplicationSettings.Language;
                         Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
 
-                        LocaleChanged?.Invoke(this, null);
-                        ProfileChanged?.Invoke(this, null);
-                        LocationChanged?.Invoke(this, null);
+                        var eventHandlerProfile = ProfileChanged;
+                        if (eventHandlerProfile != null) {
+                            Application.Current.Dispatcher?.Invoke(eventHandlerProfile, this, new ProfileChangedEventArgs(old, ActiveProfile));
+
+                        }
+                        var eventHandlerLocale = LocaleChanged;
+                        if (eventHandlerLocale != null) {
+                            Application.Current.Dispatcher?.Invoke(eventHandlerLocale, this, null);
+                        }
+                        var eventHandlerLocation = LocationChanged;
+                        if (eventHandlerLocation != null) {
+                            Application.Current.Dispatcher?.Invoke(eventHandlerLocation, this, null);
+                        }
                         RegisterChangedEventHandlers();
                     } catch (Exception ex) {
                         Logger.Debug(ex.Message + Environment.NewLine + ex.StackTrace);
@@ -469,5 +498,15 @@ namespace NINA.Profile {
                     }
                 }, System.Threading.Tasks.TaskCreationOptions.LongRunning);
         }
+    }
+
+    public class ProfileChangedEventArgs : EventArgs {
+        public ProfileChangedEventArgs(IProfile oldProfile, IProfile newProfile) {
+            this.OldProfile = oldProfile;
+            this.NewProfile = newProfile;
+        }
+
+        public IProfile OldProfile { get; }
+        public IProfile NewProfile { get; }
     }
 }

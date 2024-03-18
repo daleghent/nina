@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2023 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,7 +15,7 @@
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:plugin="clr-namespace:NINA.Plugin;assembly=NINA.Plugin"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
@@ -116,7 +116,8 @@
                                 Margin="5"
                                 Data="{StaticResource AddSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Width="40"
@@ -126,7 +127,8 @@
                                 Margin="5"
                                 Data="{StaticResource CopySVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Width="40"
@@ -136,7 +138,8 @@
                                 Margin="5"
                                 Data="{StaticResource TrashCanSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                         <Button
                             Grid.Column="1"
@@ -291,7 +294,8 @@
                                 Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
 
@@ -330,7 +334,8 @@
                                 Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
 
@@ -406,7 +411,8 @@
                                             Margin="2"
                                             Data="{StaticResource PreviewSVG}"
                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Button>
                                 </StackPanel>
 
@@ -432,20 +438,6 @@
                                     </ninactrl:UnitTextBox>
                                 </StackPanel>
 
-                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                    <TextBlock
-                                        Width="150"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblServerEnabled}">
-                                        <TextBlock.ToolTip>
-                                            <TextBlock Text="{ns:Loc LblServerEnabledTooltip}" />
-                                        </TextBlock.ToolTip>
-                                    </TextBlock>
-                                    <CheckBox
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        IsChecked="{Binding SGPServerEnabled}" />
-                                </StackPanel>
 
                                 <StackPanel
                                     Margin="0,5,0,5"
@@ -618,7 +610,8 @@
                                     Margin="5"
                                     Data="{StaticResource CopySVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                             </Button>
                             <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                                 <TextBlock
@@ -812,7 +805,8 @@
                                     Margin="5"
                                     Data="{StaticResource CopySVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                             </Button>
                             <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                                 <TextBlock
@@ -930,36 +924,26 @@
                                 </Binding>
                             </ninactrl:UnitTextBox.Text>
                         </ninactrl:UnitTextBox>
-                        <Button
+                        <ninactrl:CancellableButton
                             Width="40"
                             Height="21"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Right"
-                            Command="{Binding SiteFromGPSCommand}">
-                            <Button.ToolTip>
-                                <TextBlock Text="{ns:Loc LblGPSTooltip}" />
-                            </Button.ToolTip>
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource GPSSVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
-                        </Button>
-                        <Button
+                            ButtonImage="{StaticResource GPSSVG}"
+                            CancelButtonImage="{StaticResource CancelSVG}"
+                            CancelCommand="{Binding SiteFromGnssCancelCommand}"
+                            Command="{Binding SiteFromGnssCommand}"
+                            ToolTip="{ns:Loc LblGnssTooltip}" />
+                        <ninactrl:CancellableButton
                             Width="40"
                             Height="21"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Right"
-                            Command="{Binding SiteFromPlanetariumCommand}">
-                            <Button.ToolTip>
-                                <TextBlock Text="{ns:Loc LblPlanetariumLocationTooltip}" />
-                            </Button.ToolTip>
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource GetCoordsSVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
-                        </Button>
+                            ButtonImage="{StaticResource GetCoordsSVG}"
+                            CancelButtonImage="{StaticResource CancelSVG}"
+                            CancelCommand="{Binding SiteFromPlanetariumCancelCommand}"
+                            Command="{Binding SiteFromPlanetariumCommand}"
+                            ToolTip="{ns:Loc LblPlanetariumLocationTooltip}" />
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -1046,7 +1030,8 @@
                                 Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </StackPanel>
@@ -1134,7 +1119,8 @@
                                             Margin="5"
                                             Data="{StaticResource TrashCanSVG}"
                                             Fill="{StaticResource PrimaryBrush}"
-                                            Stretch="Uniform" />
+                                            Stretch="Uniform"
+                                            UseLayoutRounding="True" />
                                     </Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using NINA.Astrometry;
 using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyTelescope;
@@ -50,6 +51,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private Graphics g;
         private Graphics dsoImageGraphics;
         private ITelescopeMediator telescopeMediator;
+        private CacheSkySurvey cache;
 
         public SkyMapAnnotator(ITelescopeMediator mediator) {
             this.telescopeMediator = mediator;
@@ -76,7 +78,18 @@ namespace NINA.ViewModel.FramingAssistant {
             }
 
             if (dbDSOs == null) {
-                dbDSOs = (await dbInstance.GetDeepSkyObjects(string.Empty, null, new DatabaseInteraction.DeepSkyObjectSearchParams(), ct)).ToDictionary(x => x.Id, y => y);
+                dbDSOs = (await dbInstance.GetDeepSkyObjects(string.Empty, null, new DatabaseInteraction.DeepSkyObjectSearchParams(), ct)).ToDictionary(x => x.Id, y => y);                
+            }
+
+            if (ActiveCatalogues == null) {
+                ActiveCatalogues = (await dbInstance.GetCatalogues(50, ct))?.Select(x => new ActiveCatalogue(x, true)).ToList() ?? new List<ActiveCatalogue>();
+                foreach (var item in ActiveCatalogues) {
+                    item.PropertyChanged += (sender, e) => {
+                        if (e.PropertyName == nameof(ActiveCatalogue.Active)) {
+                            UpdateSkyMap();
+                        }
+                    };
+                }
             }
 
             ConstellationsInViewport.Clear();
@@ -122,72 +135,34 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public List<FramingDSO> DSOInViewport { get; private set; }
 
-        public bool Initialized { get; private set; }
+        [ObservableProperty]
+        private bool initialized;
 
         public List<FramingConstellation> ConstellationsInViewport { get; private set; }
 
+        [ObservableProperty]
+        private IList<ActiveCatalogue> activeCatalogues;
+
+        [ObservableProperty]
         private bool annotateConstellationBoundaries;
 
-        public bool AnnotateConstellationBoundaries {
-            get => annotateConstellationBoundaries;
-            set {
-                annotateConstellationBoundaries = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private bool dynamicFoV;
 
-        public bool DynamicFoV {
-            get {
-                return dynamicFoV;
-            }
-            set {
-                dynamicFoV = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private bool annotateConstellations;
 
-        public bool AnnotateConstellations {
-            get => annotateConstellations;
-            set {
-                annotateConstellations = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private bool annotateGrid;
 
-        public bool AnnotateGrid {
-            get => annotateGrid;
-            set {
-                annotateGrid = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private CacheSkySurvey cache;
+        [ObservableProperty]
         private bool annotateDSO;
 
-        public bool AnnotateDSO {
-            get => annotateDSO;
-            set {
-                annotateDSO = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        [ObservableProperty]
         private bool useCachedImages;
 
-        public bool UseCachedImages {
-            get => useCachedImages;
-            set {
-                useCachedImages = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private BitmapSource skyMapOverlay;
 
         /// <summary>
         /// Query for skyobjects for a reference coordinate that overlap the current viewport
@@ -203,7 +178,12 @@ namespace NINA.ViewModel.FramingAssistant {
             }
             var maxSize = AstroUtil.DegreeToArcsec(2 * Math.Max(ViewportFoV.OriginalHFoV, ViewportFoV.OriginalVFoV));
 
-            var filteredDbDSO = dbDSOs.Where(d => (d.Value.Size != null && d.Value.Size > minSize && d.Value.Size < maxSize) || ViewportFoV.VFoVDeg <= 10).ToList();
+            var filteredCatalogues = ActiveCatalogues.Where(x => !x.Active).Select(x => x.Name).ToList();
+
+            var filteredDbDSO = dbDSOs
+                .Where(d => (d.Value.Size != null && d.Value.Size > minSize && d.Value.Size < maxSize) || ViewportFoV.VFoVDeg <= 10)
+                .Where(dso => !filteredCatalogues.Any(dso.Value.Name.StartsWith))
+                .ToList();
 
             // if we're above 90deg centerTop will be different than centerBottom, otherwise it is equal
             if (ViewportFoV.IsAbove90) {
@@ -368,7 +348,6 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private Dictionary<string, ConstellationBoundary> ConstellationBoundaries;
-        private BitmapSource skyMapOverlay;
 
         private async Task<Dictionary<string, ConstellationBoundary>> GetConstellationBoundaries() {
             var dic = new Dictionary<string, ConstellationBoundary>();
@@ -513,12 +492,9 @@ namespace NINA.ViewModel.FramingAssistant {
                         }
                     }
                     ct.ThrowIfCancellationRequested();
-                    renderTimer?.Stop();
                     
-                    await Task.Delay(renderTimer?.Interval ?? 200);
                     Render();
                 } catch (Exception) {
-                    renderTimer?.Stop();
                 } finally {
                 }
             });
@@ -562,11 +538,6 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        private void OnTimer(object sender, EventArgs e) {
-            Render();
-        }
-
-        private System.Windows.Forms.Timer renderTimer;
         private CancellationTokenSource renderCts;
         private Task renderTask;
         private Coordinates oldCenter;
@@ -578,7 +549,6 @@ namespace NINA.ViewModel.FramingAssistant {
                 var fov = ViewportFoV.OriginalHFoV;
                 var needFullRedraw = center != oldCenter || fov != oldFoV || UseCachedImages != oldUseCachedImages || renderTask == null || renderTask.Status < TaskStatus.RanToCompletion;
                 try {
-                    renderTimer?.Stop();
                     try { renderCts?.Cancel(); } catch { }
                     while (renderTask != null && (renderTask.Status < TaskStatus.RanToCompletion)) {
                     }
@@ -595,13 +565,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 Render();
 
                 if (UseCachedImages && needFullRedraw) {
-                    renderTimer = new System.Windows.Forms.Timer();
-                    renderTimer.Interval = 200;
-                    renderTimer.Tick += new EventHandler(this.OnTimer);
-                    renderTimer.Start();
-
                     renderCts = new CancellationTokenSource();
-
                     renderTask = DrawBufferedDSOImages(renderCts.Token);
                 }
             }
@@ -623,14 +587,6 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private static readonly Pen ScopePen = new Pen(Color.FromArgb(128, Color.Yellow), 2.0f);
-
-        public BitmapSource SkyMapOverlay {
-            get => skyMapOverlay;
-            set {
-                skyMapOverlay = value;
-                RaisePropertyChanged();
-            }
-        }
 
         private bool telescopeConnected;
         private Coordinates telescopeCoordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Degrees);

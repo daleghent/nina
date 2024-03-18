@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -73,11 +73,9 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public string TargetName {
-            get {
-                return targetName;
-            }
+            get => targetName;
             set {
-                if(value != targetName) { 
+                if (value != targetName) {
                     targetName = value;
                     RaisePropertyChanged();
                     RaiseCoordinatesChanged();
@@ -85,19 +83,24 @@ namespace NINA.Astrometry {
             }
         }
 
-        private double rotation;
+        /// <summary>
+        /// Backwards compatibility property that will migrate to position angle
+        /// </summary>
+        [JsonProperty(propertyName: "Rotation")]
+        public double DeprecatedRotation {
+            set => PositionAngle = 360 - value;
+        }
 
+        private double positionAngle = 0;
         [JsonProperty]
-        public double Rotation {
-            get {
-                return rotation;
-            }
-            set {   
-                if(value != rotation) { 
-                    rotation = value;
+        public double PositionAngle {
+            get => positionAngle;
+            set {
+                if (value != positionAngle) {
+                    positionAngle = AstroUtil.EuclidianModulus(value, 360);
+                    RaisePropertyChanged();
                     RaiseCoordinatesChanged();
                 }
-                
             }
         }
 
@@ -131,12 +134,12 @@ namespace NINA.Astrometry {
 
         private void RaiseCoordinatesChanged() {
             if(!deserializing) { 
-                RaisePropertyChanged(nameof(Rotation));
+                RaisePropertyChanged(nameof(PositionAngle));
                 RaisePropertyChanged(nameof(InputCoordinates));
 
                 DeepSkyObject.Name = TargetName;
                 DeepSkyObject.Coordinates = InputCoordinates?.Coordinates;
-                DeepSkyObject.Rotation = Rotation;
+                DeepSkyObject.RotationPositionAngle = PositionAngle;
 
                 this.CoordinatesChanged?.Invoke(this, new EventArgs());
             }
@@ -145,7 +148,7 @@ namespace NINA.Astrometry {
         public event EventHandler CoordinatesChanged;
 
         public override string ToString() {
-            return $"{InputCoordinates}; Rotation: {Rotation}";
+            return $"{InputCoordinates}; Position Angle: {PositionAngle}";
         }
     }
 }

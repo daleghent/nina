@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -29,7 +29,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
-    public class SVBonySDK : IGenericCameraSDK {
+    public class SVBonySDK : ISVBonySDK {
 
         [ExcludeFromCodeCoverage]
         public SVBonySDK(int id) : this(id, new SVBonyPInvokeProxy()) {
@@ -202,7 +202,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
         }
         
         
-        [HandleProcessCorruptedStateExceptions]
         public Task<ushort[]> GetExposure(double exposureTime, int width, int height, CancellationToken ct) {
             lock(lockobj) {
                 if(ct.IsCancellationRequested) {
@@ -227,7 +226,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
             }
         }
 
-        [HandleProcessCorruptedStateExceptions]
         private async Task<ushort[]> GetExposureInternal(double exposureTime, int width, int height, CancellationToken? previousExposureCancellation) {
             int size = width * height;
             ushort[] buffer = new ushort[size];
@@ -449,6 +447,27 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
 
         public double GetCoolerPower() {
             return GetControlValue(SVB_CONTROL_TYPE.SVB_COOLER_POWER);
+        }
+
+        public bool GetBadPixelCorrection() {
+            return GetControlValue(SVB_CONTROL_TYPE.SVB_BAD_PIXEL_CORRECTION_ENABLE) > 0 ? true : false;
+        }
+
+        public bool SetBadPixelCorrection(bool onOff) {
+            return SetControlValue(SVB_CONTROL_TYPE.SVB_BAD_PIXEL_CORRECTION_ENABLE, onOff ? 1 : 0);
+        }
+        public int GetBadPixelCorrectionThreshold() {
+            return GetControlValue(SVB_CONTROL_TYPE.SVB_BAD_PIXEL_CORRECTION_THRESHOLD);
+        }
+        public int GetMinBadPixelCorrectionThreshold() {
+            return GetMinControlValue(SVB_CONTROL_TYPE.SVB_BAD_PIXEL_CORRECTION_THRESHOLD);
+        }
+        public int GetMaxBadPixelCorrectionThreshold() {
+            return GetMaxControlValue(SVB_CONTROL_TYPE.SVB_BAD_PIXEL_CORRECTION_THRESHOLD);
+        }
+
+        public bool SetBadPixelCorrectionThreshold(int threshold) {
+            return SetControlValue(SVB_CONTROL_TYPE.SVB_BAD_PIXEL_CORRECTION_THRESHOLD, threshold);
         }
 
         private int GetControlValue(SVB_CONTROL_TYPE type) {

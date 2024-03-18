@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -93,15 +93,9 @@ namespace NINA.Profile {
 
         protected override void SetDefaultValues() {
             ColorSchemas = ColorSchemas.ReadColorSchemas();
-            var customSchema = ColorSchemas.CreateDefaultSchema();
-            customSchema.Name = "Custom";
-            ColorSchemas.Items.Add(customSchema);
-            ColorSchema = ColorSchemas.Items.Where(x => x.Name == "Light").First();
+            ColorSchema = ColorSchemas.Items.Where(x => x.Name == "Persian Faint").FirstOrDefault();
 
-            var altCustomSchema = ColorSchemas.CreateDefaultAltSchema();
-            altCustomSchema.Name = "Alternative Custom";
-            ColorSchemas.Items.Add(altCustomSchema);
-            AltColorSchema = ColorSchemas.Items.Where(x => x.Name == "Dark").First();
+            AltColorSchema = ColorSchemas.Items.Where(x => x.Name == "Dark").FirstOrDefault();
         }
 
         public void ToggleSchema() {

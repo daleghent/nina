@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -109,18 +109,14 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public double PixelScale {
-            get {
-                return AstroUtil.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
-            }
+            get => AstroUtil.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
 
             set {
             }
         }
 
         public int DitherSettlingTime {
-            get {
-                return profileService.ActiveProfile.GuiderSettings.SettleTime;
-            }
+            get => profileService.ActiveProfile.GuiderSettings.SettleTime;
 
             set {
                 profileService.ActiveProfile.GuiderSettings.SettleTime = value;
@@ -139,6 +135,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public string Name { get; }
+        public string DisplayName => Name;
 
         public event EventHandler<IGuideStep> GuideEvent;
 
@@ -457,9 +454,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             }
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
         public bool CanSetShiftRate => false;
         public bool ShiftEnabled => false;

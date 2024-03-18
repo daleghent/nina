@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,6 +14,7 @@
 
 using NINA.Astrometry;
 using NINA.Core.Locale;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -94,14 +95,14 @@ namespace NINA.PlateSolving.Solvers {
                         && wcsinfo.ContainsKey("cd12")
                         && wcsinfo.ContainsKey("cd21")
                         && wcsinfo.ContainsKey("cd22")) {
-                        var crval1 = double.Parse(wcsinfo["crval0"]);
-                        var crval2 = double.Parse(wcsinfo["crval1"]);
-                        var crpix1 = double.Parse(wcsinfo["crpix0"]);
-                        var crpix2 = double.Parse(wcsinfo["crpix1"]);
-                        var cd11 = double.Parse(wcsinfo["cd11"]);
-                        var cd12 = double.Parse(wcsinfo["cd12"]);
-                        var cd21 = double.Parse(wcsinfo["cd21"]);
-                        var cd22 = double.Parse(wcsinfo["cd22"]);
+                        var crval1 = double.Parse(wcsinfo["crval0"], CultureInfo.InvariantCulture);
+                        var crval2 = double.Parse(wcsinfo["crval1"], CultureInfo.InvariantCulture);
+                        var crpix1 = double.Parse(wcsinfo["crpix0"], CultureInfo.InvariantCulture);
+                        var crpix2 = double.Parse(wcsinfo["crpix1"], CultureInfo.InvariantCulture);
+                        var cd11 = double.Parse(wcsinfo["cd11"], CultureInfo.InvariantCulture);
+                        var cd12 = double.Parse(wcsinfo["cd12"], CultureInfo.InvariantCulture);
+                        var cd21 = double.Parse(wcsinfo["cd21"], CultureInfo.InvariantCulture);
+                        var cd22 = double.Parse(wcsinfo["cd22"], CultureInfo.InvariantCulture);
 
                         var wcs = new WorldCoordinateSystem(
                             crval1,
@@ -114,24 +115,24 @@ namespace NINA.PlateSolving.Solvers {
                             cd22
                         );
 
-                        /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
                         result.Flipped = !wcs.Flipped;
                     }
 
                     double ra = 0, dec = 0;
-                    if (wcsinfo.ContainsKey("ra_center")) {
-                        ra = double.Parse(wcsinfo["ra_center"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("ra_center", out string value)) {
+                        ra = double.Parse(value, CultureInfo.InvariantCulture);
                     }
-                    if (wcsinfo.ContainsKey("dec_center")) {
-                        dec = double.Parse(wcsinfo["dec_center"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("dec_center", out value)) {
+                        dec = double.Parse(value, CultureInfo.InvariantCulture);
                     }
-                    if (wcsinfo.ContainsKey("orientation_center")) {
-                        result.Orientation = double.Parse(wcsinfo["orientation_center"], CultureInfo.InvariantCulture);
-                        /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
-                        result.Orientation = 180 - result.Orientation + 360;
+                    if (wcsinfo.TryGetValue("orientation_center", out value)) {
+                        result.PositionAngle = 360 - (180 - double.Parse(value, CultureInfo.InvariantCulture) + 360);
                     }
-                    if (wcsinfo.ContainsKey("pixscale")) {
-                        result.Pixscale = double.Parse(wcsinfo["pixscale"], CultureInfo.InvariantCulture);
+                    if (wcsinfo.TryGetValue("pixscale", out value)) {
+                        result.Pixscale = double.Parse(value, CultureInfo.InvariantCulture);
+                        if (!double.IsNaN(result.Pixscale)) {
+                            result.Radius = AstroUtil.ArcsecToDegree(Math.Sqrt(Math.Pow(imageProperties.ImageWidth * result.Pixscale, 2) + Math.Pow(imageProperties.ImageHeight * result.Pixscale, 2)) / 2d);
+                        }
                     }
 
                     result.Coordinates = new Coordinates(ra, dec, Epoch.J2000, Coordinates.RAType.Degrees);

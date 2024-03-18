@@ -964,7 +964,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Counterclockwise</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Cover your scope now and press OK to start taking the dark flats.</value>
+    <value>Cover your scope now and press OK to start taking the darks.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Cover your scope now</value>
@@ -991,7 +991,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Cygwin Directory</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Dark Flats to take</value>
+    <value>Darks to take</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.V. Slew</value>
@@ -1124,10 +1124,10 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Declination guide rate in arcseconds per second</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Direct Guider could not connect to Telescope</value>
+    <value>Direct Guider could not connect to Mount</value>
   </data>
-  <data name="LblDirectGuiderTelescopeDisconnect" xml:space="preserve">
-    <value>Telescope has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
+  <data name="LblDirectGuiderMountDisconnect" xml:space="preserve">
+    <value>Mount has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
     <value>Directory to save image to not found!</value>
@@ -1178,7 +1178,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Unable to connect to ASCOM Dome driver:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Driver can follow</value>
+    <value>Dome can follow</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Shutter status</value>
@@ -1208,7 +1208,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>At home</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Driver following telescope</value>
+    <value>Dome following telescope</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Slewing</value>
@@ -1484,7 +1484,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Open</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats</value>
+    <value>Open cover for darks</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Set</value>
@@ -1928,7 +1928,7 @@ Calculated HFR: {2}
     <value>Manual Control</value>
   </data>
   <data name="LblManualCoordinates" xml:space="preserve">
-    <value>Manual Coordinates (J2000)</value>
+    <value>Manual Coordinates</value>
   </data>
   <data name="LblManualFilterWheel" xml:space="preserve">
     <value>Manual Filterwheel</value>
@@ -2069,8 +2069,8 @@ Calculated HFR: {2}
   <data name="LblNINA" xml:space="preserve">
     <value>N.I.N.A.</value>
   </data>
-  <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+  <data name="LblNINAToMount" xml:space="preserve">
+    <value>From N.I.N.A. to Mount</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -2127,10 +2127,10 @@ Calculated HFR: {2}
     <value>No Sync</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>When enabled the application will never send a sync command to the telescope. This should only be used when having a good pointing model that should not be altered in any way.</value>
+    <value>When enabled the application will never send a sync command to the mount. This should only be used when having a good pointing model that should not be altered in any way.</value>
   </data>
-  <data name="LblNoTelescope" xml:space="preserve">
-    <value>No Telescope</value>
+  <data name="LblNoMount" xml:space="preserve">
+    <value>No Mount</value>
   </data>
   <data name="LblNotificationError" xml:space="preserve">
     <value>Notification Error</value>
@@ -2545,7 +2545,7 @@ Calculated HFR: {2}
     <value>Preparing image</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparing Dark Flat Sequence</value>
+    <value>Preparing Dark Sequence</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flats for filter: {0}</value>
@@ -2617,7 +2617,7 @@ Calculated HFR: {2}
     <value>Readout mode for sequences</value>
   </data>
   <data name="LblReadoutForNormalImagesToolTip" xml:space="preserve">
-    <value>This readout mode of your camera will be used for LIGHT, BIAS, DARK, FLAT and DARKFLAT frames in sequences.</value>
+    <value>This readout mode of your camera will be used for LIGHT, BIAS, DARK, FLAT frames in sequences.</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
     <value>Readout mode for snapshots</value>
@@ -2649,8 +2649,8 @@ Calculated HFR: {2}
   <data name="LblReconnectFocuser" xml:space="preserve">
     <value>Please reconnect focuser!</value>
   </data>
-  <data name="LblReconnectTelescope" xml:space="preserve">
-    <value>Please reconnect telescope!</value>
+  <data name="LblReconnectMount" xml:space="preserve">
+    <value>Please reconnect mount!</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
     <value>Reference Date</value>
@@ -3090,25 +3090,13 @@ Before proceeding, please confirm your system is currently at or close to good f
     <value>Sync</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Telescope sync failed</value>
-  </data>
-  <data name="LblSynchronizedPHD2Guider" xml:space="preserve">
-    <value>Synchronized PHD2 (Experimental)</value>
-  </data>
-  <data name="LblSynchronizedPHD2ServiceClientAlreadyExists" xml:space="preserve">
-    <value>
-        This profile is already connected to the Synchronized PHD2 Guider.
-        You cannot connect the same profile twice, please choose a different NINA profile.
-    </value>
-  </data>
-  <data name="LblSynchronizedPHD2ServiceCrashed" xml:space="preserve">
-    <value>Synchronized PHD2 Service crashed, restarting this Synchronized PHD2 Guider as Service</value>
+    <value>Mount sync failed</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
     <value>Synchronize site settings</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>The telescope's site settings differ from NINA's.
+    <value>Mount's site settings differ from N.I.N.A.'s.
 
 Should the settings be synchronized?</value>
   </data>
@@ -3181,8 +3169,8 @@ Should the settings be synchronized?</value>
   <data name="LblTelescopeSynced" xml:space="preserve">
     <value>Telescope synced to coordinates</value>
   </data>
-  <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+  <data name="LblMountToNINA" xml:space="preserve">
+    <value>From Mount to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RA Guide Rate</value>
@@ -3373,7 +3361,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Unable to start camera exposure</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>Unable to sync. Telescope is not connected</value>
+    <value>Unable to sync. Mount is not connected</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>Unexpected error occurred</value>
@@ -3540,9 +3528,6 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
   </data>
   <data name="LblWarning" xml:space="preserve">
     <value>Warning</value>
-  </data>
-  <data name="LblWarnTelescopeParked" xml:space="preserve">
-    <value>The Telescope is parked, and will be automatically unparked if user proceeds with sequence start</value>
   </data>
   <data name="LblWeather" xml:space="preserve">
     <value>Weather</value>
@@ -4039,8 +4024,8 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDisconnectRotator" xml:space="preserve">
     <value>Disconnect Rotator?</value>
   </data>
-  <data name="LblDisconnectTelescope" xml:space="preserve">
-    <value>Disconnect Telescope?</value>
+  <data name="LblDisconnectMount" xml:space="preserve">
+    <value>Disconnect Mount?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>Telescope is parked. You may need to unpark your scope before slewing.</value>
@@ -5290,10 +5275,10 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Moving rotator to position {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+    <value>Looks up the trained exposure value for the specified parameters and takes dark exposures</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Flat Exposure</value>
+    <value>Trained Dark Exposure</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Left side</value>
@@ -5566,7 +5551,7 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Check for updates</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; from:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
@@ -6606,10 +6591,10 @@ This should only be disabled when having a good pointing model that must not be 
     <value>Auto Brightness Flat</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>This instruction will automatically determine exposure times similar to the flat wizard for sky flats.</value>
+    <value>This instruction automatically adjusts exposure times for capturing twilight sky flats, akin to the functionality of the flat wizard tool. It dynamically modifies the exposure duration after each shot, based on real-time predictions of changes in sky brightness.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Sky Flat</value>
+    <value>Twilight Sky Flats</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>Closing Cover</value>
@@ -6707,5 +6692,278 @@ Increase minimum exposure time or wait until it is brighter.</value>
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>When connecting the telescope this defines the behavior how to react when the mount location and application location differs.</value>
+  </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Peak Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Peak RA: {0} ({1}")</value>
+  </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Plugin Repositories</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Enter Plugin Repository URL</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>Plugin Repository Url is invalid: {0}</value>
+  </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>TheSkyX Imagelink</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>TheSkyX Host</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>TheSkyX Port</value>
+  </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>Mono bin</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>When on, the camera will average binned pixels to create monochrome output</value>
+  </data>
+  <data name="LblPinPoint" xml:space="preserve">
+    <value>PinPoint</value>
+  </data>
+  <data name="LblPinPointCatalogRoot" xml:space="preserve">
+    <value>Catalog root</value>
+  </data>
+  <data name="LblPinPointFailedInitialize" xml:space="preserve">
+    <value>Failure to initialize PinPoint Astrometric Engine</value>
+  </data>
+  <data name="LblPinPointNotInstalled" xml:space="preserve">
+    <value>Failed to initialize PinPoint Astrometric Engine. It or its 64bit component does not appear to be installed.</value>
+  </data>
+  <data name="LblPinPointReferenceCatalog" xml:space="preserve">
+    <value>Reference catalog</value>
+  </data>
+  <data name="LblPinPointCatAtas" xml:space="preserve">
+    <value>ATLAS / PanSTARRS+Gaia</value>
+  </data>
+  <data name="LblPinPointCatGscact" xml:space="preserve">
+    <value>Enhanced Guide Star 1.1</value>
+  </data>
+  <data name="LblPinPointCatTycho2" xml:space="preserve">
+    <value>ESA Tycho-2</value>
+  </data>
+  <data name="LblPinPointCatType" xml:space="preserve">
+    <value>Reference catalog</value>
+  </data>
+  <data name="LblPinPointCatUcac2" xml:space="preserve">
+    <value>USNO UCAC2</value>
+  </data>
+  <data name="LblPinPointCatUcac3" xml:space="preserve">
+    <value>USNO UCAC3</value>
+  </data>
+  <data name="LblPinPointCatUcac4" xml:space="preserve">
+    <value>USNO UCAC4</value>
+  </data>
+  <data name="LblPinPointCatUsnoA" xml:space="preserve">
+    <value>USNO A2.0</value>
+  </data>
+  <data name="LblPinPointCatUsnoB" xml:space="preserve">
+    <value>USNO B1.0</value>
+  </data>
+  <data name="LblPinPointExpansion" xml:space="preserve">
+    <value>Expansion</value>
+  </data>
+  <data name="LblPinPointExpansionToolTip" xml:space="preserve">
+    <value>Expansion of catalog search area outside the image dimensions (min = 0, max = 80, default = 40)</value>
+  </data>
+  <data name="LblPinPointMaxMagnitude" xml:space="preserve">
+    <value>Max. magnitude</value>
+  </data>
+  <data name="LblPinPointMaxMagnitudeToolTip" xml:space="preserve">
+    <value>The maximum (fainter) magnitude for selection of stars from the reference catalog (min = 2.0, max = 20.0, default = 20.0)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHost" xml:space="preserve">
+    <value>AllSky API host</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHostToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSky API host (default = nova.astrometry.net)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKey" xml:space="preserve">
+    <value>AllSky API key</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKeyToolTip" xml:space="preserve">
+    <value>Astrometry.net/AllSky API key (optional)</value>
+  </data>
+  <data name="LblPinPointAllSkySolve" xml:space="preserve">
+    <value>PinPoint AllSky solve</value>
+  </data>
+  <data name="LblPinPointLocalSolve" xml:space="preserve">
+    <value>PinPoint local solve</value>
+  </data>
+  <data name="LblPinPointErrorMessage" xml:space="preserve">
+    <value>PinPoint Error Message</value>
+  </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>Unable to set mount elevation to {0}!</value>
+  </data>
+  <data name="LblSaveInCache" xml:space="preserve">
+    <value>Cache Image for Offline Use</value>
+    <comment>To store an image automatically in the framing assistant offline cache or not</comment>
+  </data>
+  <data name="LblSaveInCacheTooltip" xml:space="preserve">
+    <value>When enabled, the image will be saved to your device and can be viewed in the offline sky map</value>
+  </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>Show Histogram</value>
+  </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Info only</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Toggle between displaying only informational content and showing interactive controls within the panel</value>
+  </data>
+  <data name="LblParked" xml:space="preserve">
+    <value>Parked</value>
+    <comment>When mount is at park position</comment>
+  </data>
+  <data name="LblSlewing" xml:space="preserve">
+    <value>Slewing</value>
+  </data>
+  <data name="LblCompressionGZIP1" xml:space="preserve">
+    <value>GZIP 1</value>
+  </data>
+  <data name="LblCompressionGZIP2" xml:space="preserve">
+    <value>GZIP 2</value>
+  </data>
+  <data name="LblCompressionHCOMPRESS" xml:space="preserve">
+    <value>HCOMPRESS</value>
+  </data>
+  <data name="LblCompressionPLIO" xml:space="preserve">
+    <value>PLIO</value>
+  </data>
+  <data name="LblCompressionRICE" xml:space="preserve">
+    <value>RICE</value>
+  </data>
+  <data name="LblAddFzExtension" xml:space="preserve">
+    <value>Add .fz extension</value>
+  </data>
+  <data name="LblAddFzExtensionTooltip" xml:space="preserve">
+    <value>Adds an additional .fz extension to the file name of compressed FITS files. Example: filename.fits.fz</value>
+  </data>
+  <data name="LblASCOMCreate32BitData" xml:space="preserve">
+    <value>Create 32-bit data</value>
+  </data>
+  <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
+    <value>When the feature is enabled, N.I.N.A. will generate image data with a 32-bit depth, enhancing the pixel value range. 
+However, it's crucial to note that this process will require more memory, increase processing time, and use additional disk space for each exposure.
+Keep in mind that only XISF and FITS file formats can store image data in this 32-bit format. 
+Additionally, it is essential that the ASCOM driver used also supports this 32-bit depth. If the driver does not support 32-bit depth, the increased file size resulting from this setting would only lead to wasted space without any improvement in image data.</value>
+  </data>
+  <data name="LblUseCfitsio" xml:space="preserve">
+    <value>Use CFITSIO</value>
+  </data>
+  <data name="LblUseCfitsioTooltip" xml:space="preserve">
+    <value>When this feature is activated, the FITS files will be created using the CFITSIO library, which is an alternative to the program's default method of writing these files. This change enables additional functionalities, such as the ability to compress FITS files for reduced file size and the option to store data in a 32-bit format for improved data precision.</value>
+  </data>
+  <data name="LblBadPixelCorrection" xml:space="preserve">
+    <value>Bad Pixel Correction</value>
+  </data>
+  <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
+    <value>Bad Pixel Correction Threshold</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Closing</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Opening</value>
+  </data>
+  <data name="LblTelescopeFindHomeTimeout" xml:space="preserve">
+    <value>Telescope find home has timed out after {0} minutes</value>
+  </data>
+  <data name="LblTelescopeParkTimeout" xml:space="preserve">
+    <value>Telescope park has timed out after {0} minutes.</value>
+  </data>
+  <data name="LblTelescopeUnparkTimeout" xml:space="preserve">
+    <value>Telescope unpark has timed out after {0} minutes.</value>
+  </data>
+  <data name="LblTimeSync" xml:space="preserve">
+    <value>Time sync</value>
+  </data>
+  <data name="LblTimeSyncTooltip" xml:space="preserve">
+    <value>When enabled, the application will update the mount time to be in sync with the system time on connection.</value>
+  </data>
+  <data name="LblCoordinatesMountSync" xml:space="preserve">
+    <value>Coordinates sync</value>
+  </data>
+  <data name="LblMount" xml:space="preserve">
+    <value>Mount</value>
+  </data>
+  <data name="LblMountName" xml:space="preserve">
+    <value>Mount name</value>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryDuration" xml:space="preserve">
+    <value>Discovery duration</value>
+    <comment>The duration in seconds for ASCOM Alpaca Discovery</comment>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryDuration_Tooltip" xml:space="preserve">
+    <value>The duration of ASCOM Alpaca device discovery attempts (Default: 2 seconds)</value>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryPort" xml:space="preserve">
+    <value>Discovery Port</value>
+    <comment>The ASCOM Alpaca Port to discover devices</comment>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryPort_Tooltip" xml:space="preserve">
+    <value>ASCOM Alpaca discovery IP port number (Default: 32227)</value>
+  </data>
+  <data name="Lbl_Alpaca_NrOfBroadcasts" xml:space="preserve">
+    <value># of broadcasts</value>
+    <comment>The number of broadcasts to send for ASCOM Alpaca Discovery</comment>
+  </data>
+  <data name="Lbl_Alpaca_NrOfBroadcasts_Tooltip" xml:space="preserve">
+    <value>Number of ASCOM Alpaca device discovery broadcasts (Default: 1)</value>
+  </data>
+  <data name="Lbl_Alpaca_ResolveDnsName" xml:space="preserve">
+    <value>Resolve DNS name</value>
+    <comment>ASCOM Alpaca DNS name resolution</comment>
+  </data>
+  <data name="Lbl_Alpaca_ResolveDnsName_Tooltip" xml:space="preserve">
+    <value>Attempt DNS name resolution for ASCOM Alpaca devices (Default: off)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseHTTPS" xml:space="preserve">
+    <value>Use HTTPS</value>
+    <comment>If ASCOM Alpaca should use HTTPS instead of HTTP</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseHTTPS_Tooltip" xml:space="preserve">
+    <value>Determines if ASCOM Alpaca device discovery should use HTTP or HTTPS (Default: off)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv4" xml:space="preserve">
+    <value>Use IPv4</value>
+    <comment>If ASCOM Alpaca should use IPv4</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv4_Tooltip" xml:space="preserve">
+    <value>Use IPv4 for ASCOM Alpaca device discovery (Default: on)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv6" xml:space="preserve">
+    <value>Use IPv6</value>
+    <comment>If ASCOM Alpaca should use IPv6</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv6_Tooltip" xml:space="preserve">
+    <value>Use IPv6 for device ASCOM Alpaca device discovery (Default: off)</value>
+  </data>
+  <data name="LblToggleCatalogueDisplay" xml:space="preserve">
+    <value>Toggle Catalogue Display</value>
+  </data>
+  <data name="LblTargetAlt" xml:space="preserve">
+    <value>Target Alt</value>
+  </data>
+  <data name="LblTargetAz" xml:space="preserve">
+    <value>Target Az</value>
+  </data>
+  <data name="LblGeoptikFlatFieldController" xml:space="preserve">
+    <value>Geoptik Flat Field Controller</value>
   </data>
 </root>

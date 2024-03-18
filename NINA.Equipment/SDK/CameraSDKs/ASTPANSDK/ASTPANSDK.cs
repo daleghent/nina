@@ -93,7 +93,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
             CheckAndThrowError(pInvoke.ASTPANStopVideoCapture(id));
         }
 
-        [HandleProcessCorruptedStateExceptions]
         public async Task<ushort[]> GetVideoCapture(double exposureTime, int width, int height, CancellationToken ct) {
             var transformedExposureTime = (int)(exposureTime * 1000000d);
 
@@ -147,7 +146,6 @@ namespace NINA.Equipment.SDK.CameraSDKs.ASTPANSDK {
             return (status != ASTPAN_EXP_TYPE.ASTPAN_EXP_WORKING);
         }
 
-        [HandleProcessCorruptedStateExceptions]
         public async Task<ushort[]> GetExposure(double exposureTime, int width, int height, CancellationToken ct) {
             var transformedExposureTime = (int)(exposureTime * 1000000d);
 

@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -51,6 +51,8 @@ namespace NINA.Sequencer {
         ) {
             MainContainer = sequenceRootContainer;
         }
+        // This is a hack to utilize the TreeView control. The Items will just point at the single item in the sequencer which is the root node in the tree
+        public List<ISequenceRootContainer> Items => new List<ISequenceRootContainer> { MainContainer };
 
         private ISequenceRootContainer mainContainer;
 
@@ -66,12 +68,14 @@ namespace NINA.Sequencer {
                 }
                 mainContainer = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(Items));
             }
         }
 
-        public Task Start(IProgress<ApplicationStatus> progress, CancellationToken token) {
+
+        public Task Start(IProgress<ApplicationStatus> progress, CancellationToken token, bool skipIssuePrompt) {
             return Task.Run(async () => {
-                if (!PromptForIssues()) {
+                if (!skipIssuePrompt && !PromptForIssues()) {
                     return false;
                 }
                 try {
@@ -87,10 +91,14 @@ namespace NINA.Sequencer {
             });
         }
 
+        public Task Start(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            return Start(progress, token, false);
+        }
+
         private bool PromptForIssues() {
             var issues = Validate(MainContainer).Distinct();
 
-            if (issues.Count() > 0) {
+            if (issues.Any()) {
                 var builder = new StringBuilder();
                 builder.AppendLine(Loc.Instance["LblPreSequenceChecklist"]).AppendLine();
 

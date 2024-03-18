@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,6 +14,7 @@
 
 using NINA.Astrometry;
 using NINA.Core.Locale;
+using System;
 using System.Globalization;
 using System.IO;
 
@@ -103,20 +104,21 @@ namespace NINA.PlateSolving.Solvers {
                                     /* workaround for when decimal separator is comma instead of point.
                                      won't work when result contains even numbers tho... */
                                     result.Pixscale = double.Parse(resultArr[0] + "." + resultArr[1], CultureInfo.InvariantCulture);
-                                    result.Orientation = double.Parse(resultArr[2] + "." + resultArr[3], CultureInfo.InvariantCulture);
+                                    result.PositionAngle = 360 - double.Parse(resultArr[2] + "." + resultArr[3], CultureInfo.InvariantCulture);
 
-                                    result.Flipped = !(double.Parse(resultArr[4] + "." + resultArr[5], CultureInfo.InvariantCulture) < 0);
-                                    if (result.Flipped) {
-                                        result.Orientation = result.Orientation - 180;
-                                    }
+                                    result.Flipped = (double.Parse(resultArr[4] + "." + resultArr[5], CultureInfo.InvariantCulture) >= 0);
+                                    
                                 } else {
                                     result.Pixscale = double.Parse(resultArr[0], CultureInfo.InvariantCulture);
-                                    result.Orientation = double.Parse(resultArr[1], CultureInfo.InvariantCulture);
+                                    result.PositionAngle = 360 - double.Parse(resultArr[1], CultureInfo.InvariantCulture);
 
-                                    result.Flipped = !(double.Parse(resultArr[2], CultureInfo.InvariantCulture) < 0);
-                                    if (result.Flipped) {
-                                        result.Orientation = result.Orientation - 180;
-                                    }
+                                    result.Flipped = (double.Parse(resultArr[2], CultureInfo.InvariantCulture) >= 0);
+                                }
+                                if (result.Flipped) {
+                                    result.PositionAngle = result.PositionAngle + 180;
+                                }
+                                if (!double.IsNaN(result.Pixscale)) {
+                                    result.Radius = AstroUtil.ArcsecToDegree(Math.Sqrt(Math.Pow(imageProperties.ImageWidth * result.Pixscale, 2) + Math.Pow(imageProperties.ImageHeight * result.Pixscale, 2)) / 2d);
                                 }
                             }
                         }

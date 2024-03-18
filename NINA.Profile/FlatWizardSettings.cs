@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,8 +33,6 @@ namespace NINA.Profile {
             flatCount = 10;
             histogramTolerance = 0.1;
             histogramMeanTarget = 0.5;
-            stepSize = 0.5;
-            binningMode = new BinningMode(1, 1);
             darkFlatCount = 0;
             altitudeSite = AltitudeSite.EAST;
             flatWizardMode = FlatWizardMode.DYNAMICEXPOSURE;
@@ -44,9 +42,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int FlatCount {
-            get {
-                return flatCount;
-            }
+            get => flatCount;
             set {
                 if (flatCount != value) {
                     flatCount = value;
@@ -59,9 +55,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double HistogramMeanTarget {
-            get {
-                return histogramMeanTarget;
-            }
+            get => histogramMeanTarget;
             set {
                 if (histogramMeanTarget != value) {
                     histogramMeanTarget = value;
@@ -74,42 +68,10 @@ namespace NINA.Profile {
 
         [DataMember]
         public double HistogramTolerance {
-            get {
-                return histogramTolerance;
-            }
+            get => histogramTolerance;
             set {
                 if (histogramTolerance != value) {
                     histogramTolerance = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private double stepSize;
-
-        [DataMember]
-        public double StepSize {
-            get {
-                return stepSize;
-            }
-            set {
-                if (stepSize != value) {
-                    stepSize = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private BinningMode binningMode;
-
-        [DataMember]
-        public BinningMode BinningMode {
-            get {
-                return binningMode;
-            }
-            set {
-                if (binningMode != value) {
-                    binningMode = value;
                     RaisePropertyChanged();
                 }
             }
@@ -125,6 +87,18 @@ namespace NINA.Profile {
                     darkFlatCount = value;
                     RaisePropertyChanged();
                 }
+            }
+        }
+
+        private bool openForDarkFlats;
+
+        [DataMember]
+        public bool OpenForDarkFlats {
+            get => openForDarkFlats;
+            set {
+                if (openForDarkFlats == value) return;
+                openForDarkFlats = value;
+                RaisePropertyChanged();
             }
         }
 

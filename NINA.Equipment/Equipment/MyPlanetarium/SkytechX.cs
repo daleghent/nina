@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces;
+using System.Threading;
 
 namespace NINA.Equipment.Equipment.MyPlanetarium {
 
@@ -73,7 +74,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
         /// Return the configured user location
         /// </summary>
         /// <returns></returns>
-        public Task<Location> GetSite() {
+        public Task<Location> GetSite(CancellationToken token) {
             throw new InvalidOperationException();
         }
 

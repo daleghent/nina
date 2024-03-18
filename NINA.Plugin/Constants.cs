@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,19 +14,20 @@
 
 using NINA.Core.Utility;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NINA.Plugin {
 
     public static class Constants {
-        public static readonly string CoreExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Plugins");
-        public static readonly string UserExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
-        public static readonly string StagingFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginStaging");
-        public static readonly string DeletionFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginDeletion");
+        public static readonly Version ApplicationVersion = new Version(CoreUtil.Version);
+        public static readonly string ApplicationVersionWithoutRevision = $"{ApplicationVersion.Major}.{ApplicationVersion.Minor}.{ApplicationVersion.Build}";
+        public static readonly string UserExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins", ApplicationVersionWithoutRevision);
+        public static readonly string StagingFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginStaging", ApplicationVersionWithoutRevision);
+        public static readonly string DeletionFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginDeletion", ApplicationVersionWithoutRevision);
+        public static readonly string BaseUserExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
+        public static readonly string BaseStagingFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginStaging");
+        public static readonly string BaseDeletionFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PluginDeletion");
+
         public static readonly string MainPluginRepository = "https://nighttime-imaging.eu/wp-json/nina/v1";
     }
 }

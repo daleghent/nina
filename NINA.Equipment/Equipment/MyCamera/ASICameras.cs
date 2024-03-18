@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -21,9 +21,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
     public static class ASICameras {
 
-        public static int Count {
-            get { return ASICameraDll.GetNumOfConnectedCameras(); }
-        }
+        public static int Count => ASICameraDll.GetNumOfConnectedCameras();
 
         public static ASICamera GetCamera(int cameraId, IProfileService profileService, IExposureDataFactory exposureDataFactory) {
             if (cameraId >= Count || cameraId < 0)

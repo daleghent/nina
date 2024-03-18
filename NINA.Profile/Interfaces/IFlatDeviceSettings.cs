@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,6 +15,7 @@
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NINA.Profile.Interfaces {
 
@@ -22,26 +23,11 @@ namespace NINA.Profile.Interfaces {
         string Id { get; set; }
         string Name { get; set; }
         string PortName { get; set; }
-        bool OpenForDarkFlats { get; set; }
         int SettleTime { get; set; }
-        bool OpenAtSequenceStart { get; set; }
-        bool CloseAtSequenceEnd { get; set; }
-        bool UseWizardTrainedValues { get; set; }
-
-        ObservableDictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> FilterSettings { get; set; }
-
-        void AddBrightnessInfo(FlatDeviceFilterSettingsKey key, FlatDeviceFilterSettingsValue value);
-
-        FlatDeviceFilterSettingsValue GetBrightnessInfo(FlatDeviceFilterSettingsKey key);
-
-        IEnumerable<BinningMode> GetBrightnessInfoBinnings();
-
-        IEnumerable<int> GetBrightnessInfoGains();
-
-        void RemoveGain(int gain);
-
-        void RemoveBinning(BinningMode binningMode);
-
-        void ClearBrightnessInfo(FlatDeviceFilterSettingsKey key);
+        ObserveAllCollection<TrainedFlatExposureSetting> TrainedFlatExposureSettings { get; set; }
+        bool RemoveFlatExposureSetting(TrainedFlatExposureSetting setting);
+        TrainedFlatExposureSetting GetTrainedFlatExposureSetting(short? filterPosition, BinningMode binning, int gain, int offset);
+        void AddEmptyTrainedExposureSetting();
+        void AddTrainedFlatExposureSetting(short? filterPosition, BinningMode binning, int gain, int offset, int brightness, double exposureTime);
     }
 }

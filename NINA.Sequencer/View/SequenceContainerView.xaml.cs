@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -54,16 +54,16 @@ namespace NINA.View.Sequencer {
             DependencyProperty.Register(nameof(SequenceContainerContent), typeof(object), typeof(SequenceBlockView));
 
         public object SequenceContainerContent {
-            get { return (object)GetValue(SequenceContainerContentProperty); }
-            set { SetValue(SequenceContainerContentProperty, value); }
+            get => (object)GetValue(SequenceContainerContentProperty);
+            set => SetValue(SequenceContainerContentProperty, value);
         }
 
         public static readonly DependencyProperty ShowDetailsProperty =
             DependencyProperty.Register(nameof(ShowDetails), typeof(bool), typeof(SequenceBlockView), new PropertyMetadata(true));
 
         public bool ShowDetails {
-            get { return (bool)GetValue(ShowDetailsProperty); }
-            set { SetValue(ShowDetailsProperty, value); }
+            get => (bool)GetValue(ShowDetailsProperty);
+            set => SetValue(ShowDetailsProperty, value);
         }
 
         private void MenuItemTarget_Click(object sender, RoutedEventArgs e) {

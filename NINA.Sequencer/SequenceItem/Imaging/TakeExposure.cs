@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -38,6 +38,8 @@ using NINA.Astrometry;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Sequencer.Interfaces;
+using NINA.Image.Interfaces;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 
@@ -53,6 +55,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         private IImageSaveMediator imageSaveMediator;
         private IImageHistoryVM imageHistoryVM;
         private IProfileService profileService;
+        Task imageProcessingTask;
 
         [ImportingConstructor]
         public TakeExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
@@ -166,7 +169,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var count = ExposureCount; 
+            var count = ExposureCount;
             var dsoContainer = RetrieveTarget(this.Parent);
             var specificDSOContainer = dsoContainer as DeepSkyObjectContainer;
             if (specificDSOContainer != null) {                
@@ -183,46 +186,58 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 TotalExposureCount = count + 1,
             };
 
-            var imageParams = new PrepareImageParameters(null, false);
-            if (IsLightSequence()) {
-                imageParams = new PrepareImageParameters(true, true);
-            }
-
             
             var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
-            var imageData = await exposureData.ToImageData(progress, token);
-
-            var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
-
-            if (dsoContainer != null) {
-                var target = dsoContainer.Target;
-                if(target != null) { 
-                    imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
-                    imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
-                    imageData.MetaData.Target.Rotation = target.Rotation;
-                }
-            }
-
-            ISequenceContainer parent = Parent;
-            while (parent != null && !(parent is SequenceRootContainer)) {
-                parent = parent.Parent;
-            }
-            if (parent is SequenceRootContainer item) {
-                imageData.MetaData.Sequence.Title = item.SequenceTitle;
-            }
-
-            await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
-
             if (IsLightSequence()) {
-                imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
+                imageHistoryVM.Add(exposureData.MetaData.Image.Id, ImageType);
             }
+
+            if (imageProcessingTask != null) {
+                await imageProcessingTask;
+            }
+            imageProcessingTask = ProcessImageData(dsoContainer, exposureData, progress, token);
 
             if (specificDSOContainer != null) {
                 specificDSOContainer.IncrementExposureCountForItemAndCurrentFilter(this, 1);
             }
             ExposureCount++;
+        }
 
+        private async Task ProcessImageData(IDeepSkyObjectContainer dsoContainer, IExposureData exposureData, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            try {
+                var imageParams = new PrepareImageParameters(null, false);
+                if (IsLightSequence()) {
+                    imageParams = new PrepareImageParameters(true, true);
+                }
+
+                var imageData = await exposureData.ToImageData(progress, token);
+
+                var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
+
+                if (IsLightSequence()) {
+                    imageHistoryVM.PopulateStatistics(imageData.MetaData.Image.Id, await imageData.Statistics);
+                }
+
+                if (dsoContainer != null) {
+                    var target = dsoContainer.Target;
+                    if (target != null) {
+                        imageData.MetaData.Target.Name = target.DeepSkyObject.NameAsAscii;
+                        imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
+                        imageData.MetaData.Target.PositionAngle = target.PositionAngle;
+                    }
+                }
+
+                var root = ItemUtility.GetRootContainer(this.Parent);
+                if (root != null) {
+                    imageData.MetaData.Sequence.Title = root.SequenceTitle;
+                }
+
+                await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
+
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
         }
 
         private bool IsLightSequence() {

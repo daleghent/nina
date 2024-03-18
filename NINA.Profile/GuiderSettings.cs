@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,13 +13,11 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Core.Utility.ColorSchema;
 using NINA.Profile.Interfaces;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Media;
-using System.Xml.Serialization;
 
 namespace NINA.Profile {
 
@@ -47,7 +45,7 @@ namespace NINA.Profile {
             autoRetryStartGuiding = false;
             autoRetryStartGuidingTimeoutSeconds = 300;
             maxY = 4;
-            metaGuideIP = "127.0.1.1";
+            metaGuideUseIpAddressAny = false;
             metaGuidePort = 1277;
             metaGuideMinIntensity = 100;
             metaGuideLockWhenGuiding = false;
@@ -276,17 +274,18 @@ namespace NINA.Profile {
             }
         }
 
-        private string metaGuideIP;
+        private bool metaGuideUseIpAddressAny;
 
         [DataMember]
-        public string MetaGuideIP {
-            get => metaGuideIP;
+        public bool MetaGuideUseIpAddressAny {
+            get => metaGuideUseIpAddressAny;
             set {
-                if (metaGuideIP != value) {
-                    metaGuideIP = value;
+                if (metaGuideUseIpAddressAny != value) {
+                    metaGuideUseIpAddressAny = value;
                     RaisePropertyChanged();
                 }
             }
+        
         }
 
         private int metaGuidePort;
@@ -568,13 +567,10 @@ namespace NINA.Profile {
         #endregion
 
 
-        private Color guideChartRightAscensionColor;
-        [XmlElement(Type = typeof(XmlColor))]
+        private Color guideChartRightAscensionColor;        
         [DataMember]
         public Color GuideChartRightAscensionColor {
-            get {
-                return guideChartRightAscensionColor;
-            }
+            get => guideChartRightAscensionColor;
             set {
                 if (guideChartRightAscensionColor != value) {
                     guideChartRightAscensionColor = value;
@@ -583,13 +579,10 @@ namespace NINA.Profile {
             }
         }
 
-        private Color guideChartDeclinationColor;
-        [XmlElement(Type = typeof(XmlColor))]
+        private Color guideChartDeclinationColor;        
         [DataMember]
         public Color GuideChartDeclinationColor {
-            get {
-                return guideChartDeclinationColor;
-            }
+            get => guideChartDeclinationColor;
             set {
                 if (guideChartDeclinationColor != value) {
                     guideChartDeclinationColor = value;
@@ -601,11 +594,9 @@ namespace NINA.Profile {
         private bool guideChartShowCorrections;
         [DataMember]
         public bool GuideChartShowCorrections {
-            get {
-                return guideChartShowCorrections;
-            }
+            get => guideChartShowCorrections;
             set {
-                if(guideChartShowCorrections != value) {
+                if (guideChartShowCorrections != value) {
                     guideChartShowCorrections = value;
                     RaisePropertyChanged();
                 }

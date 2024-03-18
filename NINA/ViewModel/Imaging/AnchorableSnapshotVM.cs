@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -37,6 +37,7 @@ using System.ComponentModel;
 using NINA.Equipment.Exceptions;
 using System.Windows.Media.Imaging;
 using NINA.Equipment.Equipment.MyFilterWheel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace NINA.ViewModel.Imaging {
 
@@ -109,14 +110,10 @@ namespace NINA.ViewModel.Imaging {
         /// <summary>
         /// Backwards compatible ContentId due to refactoring
         /// </summary>
-        public new string ContentId {
-            get => typeof(ImagingVM).Name;
-        }
+        public new string ContentId => typeof(ImagingVM).Name;
 
         public CameraInfo CameraInfo {
-            get {
-                return cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
-            }
+            get => cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
             set {
                 cameraInfo = value;
                 RaisePropertyChanged();
@@ -124,9 +121,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public FilterWheelInfo FilterWheelInfo {
-            get {
-                return filterWheelInfo ?? DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
-            }
+            get => filterWheelInfo ?? DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
             set {
                 filterWheelInfo = value;
                 RaisePropertyChanged();
@@ -146,9 +141,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
+            get => _liveViewEnabled;
             set {
                 _liveViewEnabled = value;
                 RaisePropertyChanged();
@@ -156,9 +149,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool Loop {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.Loop;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.Loop;
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.Loop = value;
                 RaisePropertyChanged();
@@ -181,9 +172,7 @@ namespace NINA.ViewModel.Imaging {
         public IAsyncCommand SnapCommand { get; private set; }
 
         public double SnapExposureDuration {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.ExposureDuration;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.ExposureDuration;
 
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.ExposureDuration = value;
@@ -194,9 +183,7 @@ namespace NINA.ViewModel.Imaging {
         private FilterInfo snapFilter;
 
         public FilterInfo SnapFilter {
-            get {
-                return snapFilter;
-            }
+            get => snapFilter;
             set {
                 snapFilter = value;
                 profileService.ActiveProfile.SnapShotControlSettings.Filter = value;
@@ -205,9 +192,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public int SnapGain {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.Gain;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.Gain;
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.Gain = value;
                 RaisePropertyChanged();
@@ -215,28 +200,18 @@ namespace NINA.ViewModel.Imaging {
         }
 
         public bool SnapSave {
-            get {
-                return profileService.ActiveProfile.SnapShotControlSettings.Save;
-            }
+            get => profileService.ActiveProfile.SnapShotControlSettings.Save;
             set {
                 profileService.ActiveProfile.SnapShotControlSettings.Save = value;
                 RaisePropertyChanged();
             }
         }
-                
+
+        [ObservableProperty]
         private string snapTargetName = "Snapshot";
-        public string SnapTargetName {
-            get => snapTargetName;
-            set {
-                snapTargetName = value;
-                RaisePropertyChanged();
-            }
-        }
 
         public bool SnapSubSample {
-            get {
-                return _snapSubSample;
-            }
+            get => _snapSubSample;
             set {
                 _snapSubSample = value;
                 RaisePropertyChanged();
@@ -338,9 +313,7 @@ namespace NINA.ViewModel.Imaging {
         public IAsyncCommand StartLiveViewCommand { get; private set; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Title;
@@ -383,9 +356,7 @@ namespace NINA.ViewModel.Imaging {
         private BitmapSource _image;
 
         public BitmapSource Image {
-            get {
-                return _image;
-            }
+            get => _image;
             set {
                 _image = value;
                 RaisePropertyChanged();
@@ -424,7 +395,7 @@ namespace NINA.ViewModel.Imaging {
                     }
                     prepareTask = imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
-                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });                        
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });
                         await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
                         imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageTypes.SNAPSHOT);
                     }

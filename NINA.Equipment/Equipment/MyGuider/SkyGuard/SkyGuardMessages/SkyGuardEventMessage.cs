@@ -90,115 +90,76 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard.SkyGuardMessages {
 
         [DataMember]
         public string Status {
-            get {
-                return status;
-            }
+            get => status;
 
-            set {
-                status = value;
-            }
+            set => status = value;
         }
 
         [DataMember]
         public double Frame {
-            get {
-                return frame;
-            }
+            get => frame;
 
-            set {
-                frame = value;
-            }
+            set => frame = value;
         }
 
         [DataMember]
         public double Time {
-            get {
-                return time;
-            }
+            get => time;
 
-            set {
-                time = DateTime.UtcNow
+            set => time = DateTime.UtcNow
                .Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
                .TotalSeconds;
-            }
         }
 
 
         [DataMember]
         public double RADistanceRaw {
-            get {
-                return rADistanceRaw;
-            }
+            get => rADistanceRaw;
 
             set {
-                if (value == null) {
-                    rADistanceRaw = 0;
-                }
                 rADistanceRaw = value;
             }
         }
 
         [DataMember]
         public double DECDistanceRaw {
-            get {
-                return decDistanceRaw;
-            }
+            get => decDistanceRaw;
 
-            set {
-                decDistanceRaw = value;
-            }
+            set => decDistanceRaw = value;
         }
 
 
 
         [DataMember]
         public double RADuration {
-            get {
+            get => rADuration;
 
-                return rADuration;
-
-            }
-
-            set {
-                rADuration = value;
-            }
+            set => rADuration = value;
         }
 
 
 
         [DataMember]
         public double DECDuration {
-            get {
+            get => dECDuration;
 
-                return dECDuration;
-
-            }
-
-            set {
-                dECDuration = value;
-            }
+            set => dECDuration = value;
         }
 
         public class SkyGuardEventAppState : SkyGuardEventMessage, IGuiderAppState {
             private string state;
 
             public string State {
-                get {
-                    return state;
-                }
+                get => state;
 
-                set {
-                    state = value;
-                }
+                set => state = value;
             }
         }
 
         private SkyGuardEventAppState _appState;
 
         public SkyGuardEventAppState AppState {
-            get {
-                return _appState;
-            }
+            get => _appState;
             set {
                 _appState = value;
                 RaisePropertyChanged();
@@ -206,21 +167,13 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard.SkyGuardMessages {
             }
         }
 
-        public string State {
-            get {
-                return AppState?.State ?? string.Empty;
-            }
-        }
+        public string State => AppState?.State ?? string.Empty;
 
         [DataMember]
         public string Units {
-            get {
-                return units;
-            }
+            get => units;
 
-            set {
-                units = value;
-            }
+            set => units = value;
         }
 
         public IGuideStep Clone() {

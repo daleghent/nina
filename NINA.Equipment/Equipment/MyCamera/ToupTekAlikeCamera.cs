@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -30,6 +30,7 @@ using NINA.Equipment.Interfaces;
 using System.Drawing;
 using System.Collections;
 using System.Linq;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -53,7 +54,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             this.Name = deviceInfo.displayname;
-            this.Description = deviceInfo.model.name;
+            this.Description = deviceInfo.id;
             this.MaxFanSpeed = (int)deviceInfo.model.maxfanspeed;
             this.PixelSizeX = Math.Round(deviceInfo.model.xpixsz, 2);
             this.PixelSizeY = Math.Round(deviceInfo.model.ypixsz, 2);
@@ -66,11 +67,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public string Category { get; }
 
-        public bool HasShutter {
-            get {
-                return false;
-            }
-        }
+        public bool HasShutter => false;
 
         public double Temperature {
             get {
@@ -100,9 +97,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public bool BinAverageEnabled {
-            get {
-                return profileService.ActiveProfile.CameraSettings.BinAverageEnabled == true;
-            }
+            get => profileService.ActiveProfile.CameraSettings.BinAverageEnabled == true;
             set {
                 if (profileService.ActiveProfile.CameraSettings.BinAverageEnabled != value) {
                     profileService.ActiveProfile.CameraSettings.BinAverageEnabled = value;
@@ -134,19 +129,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public short BinY {
-            get {
-                return BinX;
-            }
-            set {
-                BinX = value;
-            }
+            get => BinX;
+            set => BinX = value;
         }
 
-        public string SensorName {
-            get {
-                return string.Empty;
-            }
-        }
+        public string SensorName => string.Empty;
 
         public SensorType SensorType { get; private set; }
 
@@ -207,9 +194,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canGetTemperature;
 
         public bool CanGetTemperature {
-            get {
-                return canGetTemperature;
-            }
+            get => canGetTemperature;
             private set {
                 canGetTemperature = value;
                 RaisePropertyChanged();
@@ -219,9 +204,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool canSetTemperature;
 
         public bool CanSetTemperature {
-            get {
-                return canSetTemperature;
-            }
+            get => canSetTemperature;
             private set {
                 canSetTemperature = value;
                 RaisePropertyChanged();
@@ -256,9 +239,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private double coolerPower = 0.0;
 
         public double CoolerPower {
-            get {
-                return coolerPower;
-            }
+            get => coolerPower;
             private set {
                 coolerPower = value;
                 RaisePropertyChanged();
@@ -349,33 +330,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public CameraStates CameraState { get => CameraStates.NoState; }
+        public CameraStates CameraState => CameraStates.NoState;
 
-        public bool CanSubSample {
-            get {
-                return true;
-            }
-        }
+        public bool CanSubSample => true;
 
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
         public int SubSampleY { get; set; }
         public int SubSampleWidth { get; set; }
         public int SubSampleHeight { get; set; }
-        public bool CanShowLiveView { get => false; }
+        public bool CanShowLiveView => false;
         public bool LiveViewEnabled { get; set; }
 
-        public bool HasBattery {
-            get {
-                return false;
-            }
-        }
+        public bool HasBattery => false;
 
-        public int BatteryLevel {
-            get {
-                return -1;
-            }
-        }
+        public int BatteryLevel => -1;
 
         public int Offset {
             get {
@@ -391,17 +360,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int OffsetMin {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMin => 0;
 
-        public int OffsetMax {
-            get {
-                return 31 * (1 << nativeBitDepth - 8);
-            }
-        }
+        public int OffsetMax => 31 * (1 << nativeBitDepth - 8);
 
         public int USBLimit {
             get {
@@ -419,47 +380,25 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public int USBLimitMin {
-            get {
-                return 0;
-            }
-        }
+        public int USBLimitMin => 0;
 
-        public int USBLimitMax {
-            get {
-                return (int)sdk.MaxSpeed;
-            }
-        }
+        public int USBLimitMax => (int)sdk.MaxSpeed;
 
         private bool canSetOffset;
 
         public bool CanSetOffset {
-            get {
-                return canSetOffset;
-            }
+            get => canSetOffset;
             set {
                 canSetOffset = value;
                 RaisePropertyChanged();
             }
         }
 
-        public bool CanSetUSBLimit {
-            get {
-                return true;
-            }
-        }
+        public bool CanSetUSBLimit => true;
 
-        public bool CanGetGain {
-            get {
-                return sdk.get_ExpoAGain(out var gain);
-            }
-        }
+        public bool CanGetGain => sdk.get_ExpoAGain(out var gain);
 
-        public bool CanSetGain {
-            get {
-                return GainMax != GainMin;
-            }
-        }
+        public bool CanSetGain => GainMax != GainMin;
 
         public int GainMax {
             get {
@@ -492,38 +431,53 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public IList<string> ReadoutModes => new List<string> { "Default" };
+        public IList<string> ReadoutModes { get; private set; }
 
         public short ReadoutMode {
-            get => 0;
-            set { }
-        }
-
-        private short _readoutModeForSnapImages = 0;
-
-        public short ReadoutModeForSnapImages {
-            get => _readoutModeForSnapImages;
+            get {
+                sdk.get_Option(ToupTekAlikeOption.OPTION_CG, out var value);
+                Logger.Trace($"{Category} - Conversion Gain is set to {value}");
+                return (short)value;            }
             set {
-                _readoutModeForSnapImages = value;
-                RaisePropertyChanged();
+                Logger.Trace($"{Category} - Setting Conversion Gain to {value}");
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_CG, value)) {
+                    Logger.Error($"{Category} - Could not set HighGainMode to {value}");
+                } else {
+                    RaisePropertyChanged();
+                }
             }
         }
 
-        private short _readoutModeForNormalImages = 0;
 
+        private short _readoutModeForNormalImages = 0;
         public short ReadoutModeForNormalImages {
             get => _readoutModeForNormalImages;
             set {
-                _readoutModeForNormalImages = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    _readoutModeForNormalImages = value;
+                } else {
+                    _readoutModeForNormalImages = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }
 
-        public IList<int> Gains {
-            get {
-                return new List<int>();
+        private short _readoutModeForSnapImages = 0;
+        public short ReadoutModeForSnapImages {
+            get => _readoutModeForSnapImages;
+            set {
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    _readoutModeForSnapImages = value;
+                } else {
+                    _readoutModeForSnapImages = 0;
+                }
+
+                RaisePropertyChanged();
             }
         }
+
+        public IList<int> Gains => new List<int>();
 
         private AsyncObservableCollection<BinningMode> binningModes;
 
@@ -545,9 +499,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private string id;
 
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 id = value;
                 RaisePropertyChanged();
@@ -557,21 +509,18 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private string name;
 
         public string Name {
-            get {
-                return name;
-            }
+            get => name;
             set {
                 name = value;
                 RaisePropertyChanged();
             }
         }
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
 
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             set {
                 _connected = value;
                 if (!_connected) {
@@ -586,26 +535,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private string description;
 
         public string Description {
-            get {
-                return description;
-            }
+            get => description;
             set {
                 description = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string DriverInfo {
-            get {
-                return $"{Category} SDK";
-            }
-        }
+        public string DriverInfo => $"{Category} SDK";
 
-        public string DriverVersion {
-            get {
-                return sdk?.Version() ?? string.Empty;
-            }
-        }
+        public string DriverVersion => sdk?.Version() ?? string.Empty;
 
         public void AbortExposure() {
             StopExposure();
@@ -702,14 +641,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         HasHighFullwell = false;
                     }
 
-                    if (((this.flags & ToupTekAlikeFlag.FLAG_CG) != 0) || ((this.flags & ToupTekAlikeFlag.FLAG_CGHDR) != 0)) {
-                        Logger.Trace($"{Category} - Camera has High Conversion Gain option");
-                        HasHighGain = true;
-                        HighGainMode = profile.TouptekAlikeHighGain;
-                        SupportedActions.Add(ToupTekActions.HighGainMode);
-                    } else {
-                        HasHighGain = false;
-                    }
+                    ReadoutModes = new List<string> { "Low Conversion Gain" };
+
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_CG) != 0) {
+                        ReadoutModes.Add("High Conversion Gain");
+                        Logger.Debug($"{Category} - Camera has High Conversion Gain option");
+
+                        if ((this.flags & ToupTekAlikeFlag.FLAG_CGHDR) != 0) {
+                            ReadoutModes.Add("High Dynamic Range");
+                            Logger.Debug($"{Category} - Camera has HDR Gain option");
+                        }
+                    }  
 
                     if ((this.flags & ToupTekAlikeFlag.FLAG_TRIGGER_SOFTWARE) == 0) {
                         throw new Exception($"{Category} - This camera is not capable to be triggered by software and is not supported");
@@ -830,39 +772,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private bool _hasHighGain;
-
-        public bool HasHighGain {
-            get => _hasHighGain;
-            set {
-                _hasHighGain = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool HighGainMode {
-            get {
-                if (HasHighGain) {
-                    sdk.get_Option(ToupTekAlikeOption.OPTION_CG, out var value);
-                    Logger.Trace($"{Category} - Conversion Gain is set to {value}");
-                    return value == 1 ? true : false;
-                } else {
-                    return false;
-                }
-            }
-            set {
-                if (HasHighGain) {
-                    Logger.Trace($"{Category} - Setting Conversion Gain to {value}");
-                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_CG, value ? 1 : 0)) {
-                        Logger.Error($"{Category} - Could not set HighGainMode to {value}");
-                    } else {
-                        profileService.ActiveProfile.CameraSettings.TouptekAlikeHighGain = value;
-                        RaisePropertyChanged();
-                    }
-                }
-            }
-        }
-
         private void OnEventCallback(ToupTekAlikeEvent nEvent) {
             Logger.Trace($"{Category} - OnEventCallback {nEvent}");
             switch (nEvent) {
@@ -941,13 +850,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
             }
 
+            var metaData = new ImageMetaData();
+            metaData.FromCamera(this);
             var imageData = exposureDataFactory.CreateImageArrayExposureData(
                     input: data,
                     width: width,
                     height: height,
                     bitDepth: this.BitDepth,
                     isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
 
             return imageData;
         }
@@ -1009,8 +920,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 time = ExposureMax;
             }
 
-            var µsTime = (uint)(time * 1000000);
-            if (!sdk.put_ExpoTime(µsTime)) {
+            var usTime = (uint)(time * 1000000);
+            if (!sdk.put_ExpoTime(usTime)) {
                 throw new Exception($"{Category} - Could not set exposure time");
             }
         }
@@ -1033,6 +944,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             imageReadyTCS?.TrySetCanceled();
             imageReadyTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             Logger.Trace($"{Category} - created new downloadExposure Task with Id {imageReadyTCS.Task.Id}");
+
+            ReadoutMode = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
 
             if (EnableSubSample) {
                 var rect = GetROI();
@@ -1057,11 +970,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private TaskCompletionSource<bool> imageReadyTCS;
         private int nativeBitDepth;
-        public int BitDepth {
-            get {
-                return profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : nativeBitDepth;
-            }
-        }
+        public int BitDepth => profileService.ActiveProfile.CameraSettings.BitScaling ? 16 : nativeBitDepth;
 
         private void OnEventDisconnected() {
             StopExposure();
@@ -1112,7 +1021,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             });
         }
 
-        public int USBLimitStep { get => 1; }
+        public int USBLimitStep => 1;
 
         public string Action(string actionName, string actionParameters) {
             switch (actionName) {
@@ -1122,19 +1031,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         if(flag.HasValue) {
                             Logger.Info($"Device Action {actionName}: {flag.Value}");
                             LowNoiseMode = flag.Value;
-                            return "1";
-                        } else {
-                            Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
-                            return "0";
-                        }
-                    }
-                    break;
-                case ToupTekActions.HighGainMode:
-                    if (HasHighGain) {
-                        var flag = StringToBoolean(actionParameters);
-                        if (flag.HasValue) {
-                            Logger.Info($"Device Action {actionName}: {flag.Value}");
-                            HighGainMode = flag.Value;
                             return "1";
                         } else {
                             Logger.Error($"Unrecognized parameter [{actionParameters}] for action [{actionName}].");
@@ -1155,8 +1051,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         }
                     }
                     break;
-                case ToupTekActions.BinAverage:
-                    if (true) {
+                case ToupTekActions.BinAverage: { 
                         var flag = StringToBoolean(actionParameters);
                         if (flag.HasValue) {
                             Logger.Info($"Device Action {actionName}: {flag.Value}");
@@ -1167,7 +1062,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             return "0";
                         }
                     }
-                    break;
                 case ToupTekActions.FanSpeed:
                     if (MaxFanSpeed > 0) {
                         if(int.TryParse(actionParameters, out var flag)) {
@@ -1230,7 +1124,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private static class ToupTekActions {
             public const string LowNoiseMode = "Ultra Mode";
-            public const string HighGainMode = "High Gain Mode";
             public const string HighFullwellMode = "High Fullwell Mode";
             public const string BinAverage = "Bin Average";
             public const string DewHeaterStrength = "Dew Heater Strength";

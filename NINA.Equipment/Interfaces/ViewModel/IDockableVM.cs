@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -22,12 +22,15 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         bool CanClose { get; set; }
         string ContentId { get; }
         ICommand HideCommand { get; }
+        ICommand ToggleSettingsCommand { get; }
         GeometryGroup ImageGeometry { get; set; }
         bool IsClosed { get; set; }
+        bool HasSettings { get; set; }
         bool IsVisible { get; set; }
         bool IsTool { get; }
         string Title { get; set; }
 
         void Hide(object o);
+        void ToggleSettings(object o);
     }
 }

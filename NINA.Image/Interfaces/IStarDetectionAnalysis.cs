@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Image.ImageAnalysis;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace NINA.Image.Interfaces {
@@ -20,5 +22,6 @@ namespace NINA.Image.Interfaces {
         double HFR { get; set; }
         double HFRStDev { get; set; }
         int DetectedStars { get; set; }
+        List<DetectedStar> StarList { get; set; }
     }
 }

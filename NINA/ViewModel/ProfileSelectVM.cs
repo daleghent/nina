@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -56,41 +56,17 @@ namespace NINA.ViewModel {
             }
         }
 
-        public IProfile ActiveProfile {
-            get {
-                return profileService.ActiveProfile;
-            }
-        }
+        public IProfile ActiveProfile => profileService.ActiveProfile;
 
-        public string Camera {
-            get {
-                return ActiveProfile.CameraSettings.Id;
-            }
-        }
+        public string Camera => ActiveProfile.CameraSettings.Id;
 
-        public string FilterWheel {
-            get {
-                return ActiveProfile.FilterWheelSettings.Id;
-            }
-        }
+        public string FilterWheel => ActiveProfile.FilterWheelSettings.Id;
 
-        public double FocalLength {
-            get {
-                return ActiveProfile.TelescopeSettings.FocalLength;
-            }
-        }
+        public double FocalLength => ActiveProfile.TelescopeSettings.FocalLength;
 
-        public string Focuser {
-            get {
-                return ActiveProfile.FocuserSettings.Id;
-            }
-        }
+        public string Focuser => ActiveProfile.FocuserSettings.Id;
 
-        public string Telescope {
-            get {
-                return ActiveProfile.TelescopeSettings.Id;
-            }
-        }
+        public string Telescope => ActiveProfile.TelescopeSettings.Id;
         public bool UseSavedProfile {
             get => Properties.Settings.Default.UseSavedProfileSelection;
             set {

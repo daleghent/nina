@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -29,17 +29,9 @@ namespace NINA.Core.Utility {
 
         private Timer _timer;
 
-        public DateTime Now {
-            get {
-                return DateTime.Now;
-            }
-        }
+        public DateTime Now => DateTime.Now;
 
-        public double OxyNow {
-            get {
-                return DateTimeAxis.ToDouble(DateTime.Now);
-            }
-        }
+        public double OxyNow => DateTimeAxis.ToDouble(DateTime.Now);
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) {
             RaisePropertyChanged(nameof(Now));

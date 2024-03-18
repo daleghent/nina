@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -24,9 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +43,13 @@ namespace NINA {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+        [DllImport("kernel32.dll")]
+        static extern bool AttachConsole(uint dwProcessId);
+        [DllImport("kernel32.dll")]
+        static extern bool FreeConsole(uint dwProcessId);
+        const uint ATTACH_PARENT_PROCESS = 0x0ffffffff;
+
+        private CommandLineOptions _commandLineOptions;
         private ProfileService _profileService;
         private IMainWindowVM _mainWindowViewModel;
 
@@ -98,9 +108,11 @@ namespace NINA {
                         
                     }
 
-                    Application.Current.Shutdown();
                     // App restart is required, as even after deleting the configuration files the configuration manager still tries to use the old values
-                    System.Windows.Forms.Application.Restart();
+                    _profileService.Release();
+                    var startInfo = new ProcessStartInfo(Environment.ProcessPath) { UseShellExecute = false };
+                    Process.Start(startInfo);
+                    Application.Current.Shutdown();
                 } catch (Exception configDeleteException) {
                     userSettingsException = configDeleteException;
                 }
@@ -114,8 +126,23 @@ namespace NINA {
         }
 
         protected override void OnStartup(StartupEventArgs e) {
+            AttachConsole(ATTACH_PARENT_PROCESS);
+            _commandLineOptions = new CommandLineOptions(e.Args);
+            FreeConsole(ATTACH_PARENT_PROCESS);
+            if (_commandLineOptions.HasErrors) {
+
+                Shutdown(-1);
+                return;
+            }
+
+            if (_commandLineOptions.Debug) {
+                CoreUtil.DebugMode = _commandLineOptions.Debug;
+            }
+
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var userSettingsException = InitializeUserSettings();
 
             _profileService =
@@ -124,13 +151,9 @@ namespace NINA {
 
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
 
-            var startWithProfileId = e
-               .Args
-               .SkipWhile(x => !x.Equals("/profileid", StringComparison.OrdinalIgnoreCase))
-               .Skip(1)
-               .FirstOrDefault();
             _profileService = (ProfileService)Current.Resources["ProfileService"];
 
+            var startWithProfileId = _commandLineOptions.ProfileId;
             if (!_profileService.TryLoad(startWithProfileId)) {
                 ProfileService.ActivateInstanceOfNinaReferencingProfile(startWithProfileId);
                 Shutdown();
@@ -161,10 +184,14 @@ namespace NINA {
                 var profileSelection = new ProfileSelectVM(_profileService);
                 var profileSelectionWindow = new ProfileSelectView();
                 profileSelectionWindow.DataContext = profileSelection;
-                profileSelectionWindow.ShowDialog();
+                var result = profileSelectionWindow.ShowDialog() ?? false;
+                if(!result) {
+                    Shutdown();
+                    return;
+                }
             }
 
-            _mainWindowViewModel = CompositionRoot.Compose(_profileService);
+            _mainWindowViewModel = CompositionRoot.Compose(_profileService, _commandLineOptions);
             var mainWindow = new MainWindow();
             this.MainWindow = mainWindow;
             mainWindow.DataContext = _mainWindowViewModel;
@@ -180,8 +207,9 @@ namespace NINA {
         }
 
         protected override void OnExit(ExitEventArgs e) {
-            _mainWindowViewModel.DeviceDispatcher?.Dispose();
-            this.RefreshJumpList(_profileService);
+            if (e?.ApplicationExitCode != -1) {
+                this.RefreshJumpList(_profileService);
+            }
         }
 
         private void LogResource(ResourceDictionary res, string indentation) {
@@ -201,7 +229,7 @@ namespace NINA {
 
         private static object lockObj = new object();
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             lock(lockObj) { 
                 Logger.Error($"An unhandled exception has occurred of type {e.Exception.GetType()}");

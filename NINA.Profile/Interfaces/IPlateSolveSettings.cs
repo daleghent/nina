@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -42,5 +42,15 @@ namespace NINA.Profile.Interfaces {
         bool Sync { get; set; }
         bool SlewToTarget { get; set; }
         bool BlindFailoverEnabled { get; set; }
+
+        string TheSkyXHost { get; set; }
+        int TheSkyXPort { get; set; }
+
+        Dc3PoinPointCatalogEnum PinPointCatalogType { get; set; }
+        string PinPointCatalogRoot { get; set; }
+        double PinPointMaxMagnitude { get; set; }
+        double PinPointExpansion { get; set; }
+        string PinPointAllSkyApiKey { get; set; }
+        string PinPointAllSkyApiHost { get; set; }
     }
 }

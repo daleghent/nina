@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -34,11 +34,7 @@ namespace NINA.Astrometry {
             ReferenceDateTimer.Enabled = true;
         }
 
-        public static DeepSkyObjectDailyRefresher Instance {
-            get {
-                return instance;
-            }
-        }
+        public static DeepSkyObjectDailyRefresher Instance => instance;
 
 
         private List<WeakReference<DeepSkyObject>> DeepSkyObjects = new List<WeakReference<DeepSkyObject>>();
@@ -105,15 +101,13 @@ namespace NINA.Astrometry {
 
             DeepSkyObjectDailyRefresher.Instance.Register(this);
         }
-        public DateTime ReferenceDate { get => _referenceDate; set { _referenceDate = value; } }
+        public DateTime ReferenceDate { get => _referenceDate; set => _referenceDate = value; }
 
         public MoonInfo Moon { get; private set; }
 
         private Coordinates _coordinates;
         public override Coordinates Coordinates {
-            get {
-                return _coordinates;
-            }
+            get => _coordinates;
             set {
                 _coordinates = value;
                 if (_coordinates != null) {

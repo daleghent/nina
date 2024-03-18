@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,21 +12,22 @@
 
 #endregion "copyright"
 
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
-    internal class AscomSwitchHub : AscomDevice<Switch, ISwitchFacade, SwitchFacadeProxy>, ISwitchHub, IDisposable {
-
-        public AscomSwitchHub(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.Switch) {
+    internal class AscomSwitchHub : AscomDevice<ISwitchV2>, ISwitchHub, IDisposable {
+        public AscomSwitchHub(string id, string name) : base(id, name) {
+        }
+        public AscomSwitchHub(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
         public ICollection<ISwitch> Switches { get; private set; } = new AsyncObservableCollection<ISwitch>();
@@ -49,14 +50,17 @@ namespace NINA.Equipment.Equipment.MySwitch.Ascom {
                         var s = new AscomSwitch(device, i);
                         Switches.Add(s);
                     }
-                } catch (ASCOM.MethodNotImplementedException) {
+                } catch (ASCOM.MethodNotImplementedException e) {
+                    Logger.Trace($"MethodNotImplementedException for Switch index {i}: {e.Message}");
                     //ISwitchV1 Fallbacks
-                    try {
+                    try {                        
                         var s = new AscomWritableV1Switch(device, i);
                         s.TargetValue = s.Value;
                         await s.SetValue();
+                        Logger.Trace($"Writable v1 Switch found for index {i}");
                         Switches.Add(s);
-                    } catch (Exception) {
+                    } catch (Exception e2) {
+                        Logger.Trace($"Error occurred for Switch index {i} and it is thus most likely a readable v1 Switch: {e2.Message}");
                         var s = new AscomV1Switch(device, i);
                         Switches.Add(s);
                     }
@@ -72,8 +76,12 @@ namespace NINA.Equipment.Equipment.MySwitch.Ascom {
             Switches.Clear();
         }
 
-        protected override Switch GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Switch(id));
+        protected override ISwitchV2 GetInstance() {
+            if (deviceMeta == null) {
+                return new Switch(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaSwitch(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

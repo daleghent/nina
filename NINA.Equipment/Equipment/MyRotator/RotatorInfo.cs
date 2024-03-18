@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -20,49 +20,49 @@ namespace NINA.Equipment.Equipment.MyRotator {
         private bool canReverse;
 
         public bool CanReverse {
-            get { return canReverse; }
+            get => canReverse;
             set { canReverse = value; RaisePropertyChanged(); }
         }
 
         private bool reverse;
 
         public bool Reverse {
-            get { return reverse; }
+            get => reverse;
             set { reverse = value; RaisePropertyChanged(); }
         }
 
         private float mechanicalPosition;
 
         public float MechanicalPosition {
-            get { return mechanicalPosition; }
+            get => mechanicalPosition;
             set { mechanicalPosition = value; RaisePropertyChanged(); }
         }
 
         private float position;
 
         public float Position {
-            get { return position; }
+            get => position;
             set { position = value; RaisePropertyChanged(); }
         }
 
         private float stepsize;
 
         public float StepSize {
-            get { return stepsize; }
+            get => stepsize;
             set { stepsize = value; RaisePropertyChanged(); }
         }
 
         private bool isMoving;
 
         public bool IsMoving {
-            get { return isMoving; }
+            get => isMoving;
             set { isMoving = value; RaisePropertyChanged(); }
         }
 
         private bool synced;
 
         public bool Synced {
-            get { return synced; }
+            get => synced;
             set { synced = value; RaisePropertyChanged(); }
         }
 

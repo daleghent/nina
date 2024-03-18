@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,11 +12,13 @@
 
 #endregion "copyright"
 
-using ASCOM;
-using ASCOM.DriverAccess;
+using ASCOM.Alpaca.Discovery;
+using ASCOM.Com.DriverAccess;
+using ASCOM.Common;
+using ASCOM.Common.DeviceInterfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
-using NINA.Equipment.ASCOMFacades;
+using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
@@ -24,9 +26,11 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyFlatDevice {
 
-    public class AscomCoverCalibrator : AscomDevice<CoverCalibrator, ICoverCalibratorFacade, CoverCalibratorFacadeProxy>, IFlatDevice, IDisposable {
+    public class AscomCoverCalibrator : AscomDevice<ICoverCalibratorV1>, IFlatDevice, IDisposable {
 
-        public AscomCoverCalibrator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.FlatDevice) {
+        public AscomCoverCalibrator(string id, string name) : base(id, name) {
+        }
+        public AscomCoverCalibrator(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
         private int lastBrightness = 0;
@@ -35,23 +39,23 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             get {
                 var state = device.CoverState;
                 switch (state) {
-                    case ASCOM.DeviceInterface.CoverStatus.Unknown:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Unknown:
                         return CoverState.Unknown;
 
-                    case ASCOM.DeviceInterface.CoverStatus.NotPresent:
-                        return CoverState.Unknown;
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.NotPresent:
+                        return CoverState.NotPresent;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Moving:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Moving:
                         return CoverState.NeitherOpenNorClosed;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Closed:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Closed:
                         return CoverState.Closed;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Open:
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Open:
                         return CoverState.Open;
 
-                    case ASCOM.DeviceInterface.CoverStatus.Error:
-                        return CoverState.Unknown;
+                    case ASCOM.Common.DeviceInterfaces.CoverStatus.Error:
+                        return CoverState.Error;
 
                     default:
                         return CoverState.Unknown;
@@ -107,21 +111,21 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public string PortName { get => string.Empty; set { } }
 
-        public bool SupportsOpenClose => device.CoverState != ASCOM.DeviceInterface.CoverStatus.NotPresent;
+        public bool SupportsOpenClose => device.CoverState != ASCOM.Common.DeviceInterfaces.CoverStatus.NotPresent;
 
-        public bool SupportsOnOff => device.CalibratorState != ASCOM.DeviceInterface.CalibratorStatus.NotPresent;
+        public bool SupportsOnOff => device.CalibratorState != ASCOM.Common.DeviceInterfaces.CalibratorStatus.NotPresent;
 
         protected override string ConnectionLostMessage => Loc.Instance["LblFlatDeviceConnectionLost"];
 
         private void Initialize() {
-            if (device.CalibratorState == ASCOM.DeviceInterface.CalibratorStatus.NotPresent) {
+            if (device.CalibratorState == ASCOM.Common.DeviceInterfaces.CalibratorStatus.NotPresent) {
                 MinBrightness = 0;
                 MaxBrightness = 0;
             } else {
                 try {
                     MinBrightness = 0;
                     MaxBrightness = device.MaxBrightness;
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     MinBrightness = 0;
                     MaxBrightness = 0;
                 }
@@ -130,9 +134,14 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public async Task<bool> Open(CancellationToken ct, int delay = 300) {
             if (SupportsOpenClose) {
-                device.OpenCover();
-                while (CoverState != CoverState.Unknown && CoverState == CoverState.NeitherOpenNorClosed) {
-                    await Task.Delay(delay);
+                if (CoverState == CoverState.Error) {
+                    throw new FlatDeviceCoverErrorException();
+                }
+
+                await device.OpenCoverAsync(ct);
+                InvalidatePropertyCache();
+                if (CoverState == CoverState.Error) {
+                    throw new FlatDeviceCoverErrorException();
                 }
             }
             return CoverState == CoverState.Open;
@@ -140,9 +149,14 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public async Task<bool> Close(CancellationToken ct, int delay = 300) {
             if (SupportsOpenClose) {
-                device.CloseCover();
-                while (CoverState != CoverState.Unknown && CoverState == CoverState.NeitherOpenNorClosed) {
-                    await Task.Delay(delay);
+                if (CoverState == CoverState.Error) {
+                    throw new FlatDeviceCoverErrorException();
+                }
+
+                await device.CloseCoverAsync(ct);
+                InvalidatePropertyCache();
+                if (CoverState == CoverState.Error) {
+                    throw new FlatDeviceCoverErrorException();
                 }
             }
             return CoverState == CoverState.Closed;
@@ -158,8 +172,12 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             return Task.CompletedTask;
         }
 
-        protected override CoverCalibrator GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new CoverCalibrator(id));
+        protected override ICoverCalibratorV1 GetInstance() {
+            if (deviceMeta == null) {
+                return new CoverCalibrator(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaCoverCalibrator(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,42 +13,31 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ASCOM.Common;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MyFocuser {
 
-    internal class AscomFocuser : AscomDevice<Focuser, IFocuserFacade, FocuserFacadeProxy>, IFocuser, IDisposable {
+    internal class AscomFocuser : AscomDevice<IFocuserV3>, IFocuser, IDisposable {
 
-        public AscomFocuser(string focuser, string name, IDeviceDispatcher deviceDispatcher) : base(focuser, name, deviceDispatcher, DeviceDispatcherType.Focuser) {
+        public AscomFocuser(string focuser, string name) : base(focuser, name) {
+        }
+        public AscomFocuser(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
-        public IFocuserFacade Device => device;
+        public bool IsMoving => GetProperty(nameof(Focuser.IsMoving), false);
 
-        public bool IsMoving {
-            get {
-                return GetProperty(nameof(Focuser.IsMoving), false);
-            }
-        }
+        public int MaxIncrement => GetProperty(nameof(Focuser.MaxIncrement), -1);
 
-        public int MaxIncrement {
-            get {
-                return GetProperty(nameof(Focuser.MaxIncrement), -1);
-            }
-        }
-
-        public int MaxStep {
-            get {
-                return GetProperty(nameof(Focuser.MaxStep), -1);
-            }
-        }
+        public int MaxStep => GetProperty(nameof(Focuser.MaxStep), -1);
 
         private bool _isAbsolute;
 
@@ -65,17 +54,9 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
         }
 
-        public double StepSize {
-            get {
-                return GetProperty(nameof(Focuser.StepSize), double.NaN);
-            }
-        }
+        public double StepSize => GetProperty(nameof(Focuser.StepSize), double.NaN);
 
-        public bool TempCompAvailable {
-            get {
-                return GetProperty(nameof(Focuser.TempCompAvailable), false);
-            }
-        }
+        public bool TempCompAvailable => GetProperty(nameof(Focuser.TempCompAvailable), false);
 
         public bool TempComp {
             get {
@@ -92,11 +73,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
         }
 
-        public double Temperature {
-            get {
-                return GetProperty(nameof(Focuser.Temperature), double.NaN);
-            }
-        }
+        public double Temperature => GetProperty(nameof(Focuser.Temperature), double.NaN);
 
         public Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
             if (_isAbsolute) {
@@ -118,13 +95,11 @@ namespace NINA.Equipment.Equipment.MyFocuser {
                 var lastPosition = int.MinValue;
                 int samePositionCount = 0;
                 var lastMovementTime = DateTime.Now;
-                while (position != device.Position && !ct.IsCancellationRequested) {
-                    device.Move(position);
-                    while (IsMoving && !ct.IsCancellationRequested) {
-                        await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
-                    }
+                while (position != Position && !ct.IsCancellationRequested) {
+                    await device.MoveAsync(position, ct);
+                    InvalidatePropertyCache();
 
-                    if (lastPosition == device.Position) {
+                    if (lastPosition == Position) {
                         ++samePositionCount;
                         var samePositionTime = DateTime.Now - lastMovementTime;
                         if (samePositionTime >= SameFocuserPositionTimeout) {
@@ -155,11 +130,13 @@ namespace NINA.Equipment.Equipment.MyFocuser {
 
                 var relativeOffsetRemaining = position - this.Position;
                 while (relativeOffsetRemaining != 0 && !ct.IsCancellationRequested) {
-                    var moveAmount = Math.Min(MaxStep, Math.Abs(relativeOffsetRemaining));
+                    var moveAmount = Math.Min(MaxIncrement, Math.Abs(relativeOffsetRemaining));
                     if (relativeOffsetRemaining < 0) {
                         moveAmount *= -1;
                     }
-                    device.Move(moveAmount);
+                    await device.MoveAsync(moveAmount);
+                    InvalidatePropertyCache();
+
                     while (IsMoving && !ct.IsCancellationRequested) {
                         await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
@@ -201,8 +178,12 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             return Task.CompletedTask;
         }
 
-        protected override Focuser GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Focuser(id));
+        protected override IFocuserV3 GetInstance() {
+            if (deviceMeta == null) {
+                return new Focuser(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaFocuser(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

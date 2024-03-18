@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -240,7 +240,7 @@ namespace NINA.Image.ImageAnalysis {
                         var mean = (from star in result.StarList select star.HFR).Average();
                         var stdDev = double.NaN;
                         if (result.StarList.Count > 1) {
-                            stdDev = Math.Sqrt((from star in result.StarList select (star.HFR - mean) * (star.HFR - mean)).Sum() / (result.StarList.Count() - 1));
+                            stdDev = Math.Sqrt((from star in result.StarList select (star.HFR - mean) * (star.HFR - mean)).Sum() / (result.StarList.Count - 1));
                         }
 
                         Logger.Info($"Average HFR: {mean}, HFR σ: {stdDev}, Detected Stars {detectedStars}, Sensitivity {p.Sensitivity}, ResizeFactor: {Math.Round(state._resizefactor, 2)}");
@@ -361,14 +361,14 @@ namespace NINA.Image.ImageAnalysis {
                 }
 
                 // No stars could be found. Return.
-                if (starlist.Count() == 0) {
+                if (starlist.Count == 0) {
                     return new List<DetectedStar>();
                 }
 
                 //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
                 if (starlist.Count > 0) {
-                    double avg = sumRadius / (double)starlist.Count();
-                    double stdev = Math.Sqrt((sumSquares - starlist.Count() * avg * avg) / starlist.Count());
+                    double avg = sumRadius / (double)starlist.Count;
+                    double stdev = Math.Sqrt((sumSquares - starlist.Count * avg * avg) / starlist.Count);
                     if (p.Sensitivity != StarSensitivityEnum.Highest) {
                         starlist = starlist.Where(s => s.radius <= avg + 1.5 * stdev && s.radius >= avg - 1.5 * stdev).ToList<Star>();
                     } else {
@@ -383,8 +383,8 @@ namespace NINA.Image.ImageAnalysis {
                 //We are performing AF with only a limited number of stars
                 if (p.NumberOfAFStars > 0) {
                     //First AF exposure, let's find the brightest star positions and store them
-                    if (starlist.Count() != 0 && (p.MatchStarPositions == null || p.MatchStarPositions.Count() == 0)) {
-                        if (starlist.Count() <= p.NumberOfAFStars) {
+                    if (starlist.Count != 0 && (p.MatchStarPositions == null || p.MatchStarPositions.Count == 0)) {
+                        if (starlist.Count <= p.NumberOfAFStars) {
                             result.BrightestStarPositions = starlist.ConvertAll(s => s.Position);
                         } else {
                             starlist = starlist.OrderByDescending(s => s.radius * 0.3 + s.meanBrightness * 0.7).Take(p.NumberOfAFStars).ToList<Star>();
@@ -481,6 +481,7 @@ namespace NINA.Image.ImageAnalysis {
             analysis.HFR = result.AverageHFR;
             analysis.HFRStDev = result.HFRStdDev;
             analysis.DetectedStars = result.DetectedStars;
+            analysis.StarList = result.StarList;
         }
     }
 }

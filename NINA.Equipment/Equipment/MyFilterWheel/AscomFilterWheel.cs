@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,11 @@
 
 #endregion "copyright"
 
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 using NINA.Profile.Interfaces;
 using System;
@@ -25,43 +24,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
 
-    internal class AscomFilterWheel : AscomDevice<FilterWheel, IFilterWheelFacade, FilterWheelFacadeProxy>, IFilterWheel, IDisposable {
+    internal class AscomFilterWheel : AscomDevice<IFilterWheelV2>, IFilterWheel, IDisposable {
 
-        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService, IDeviceDispatcher deviceDispatcher) : base(filterWheelId, name, deviceDispatcher, DeviceDispatcherType.FilterWheel) {
+        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService) : base(filterWheelId, name) {
+            this.profileService = profileService;
+        }
+        public AscomFilterWheel(AscomDevice deviceMeta, IProfileService profileService) : base(deviceMeta) {
             this.profileService = profileService;
         }
 
-        public int[] FocusOffsets {
-            get {
-                return GetProperty(nameof(FilterWheel.FocusOffsets), new int[] { });
-            }
-        }
+        public int[] FocusOffsets => GetProperty(nameof(FilterWheel.FocusOffsets), new int[] { });
 
-        public string[] Names {
-            get {
-                return GetProperty(nameof(FilterWheel.Names), new string[] { });
-            }
-        }
+        public string[] Names => GetProperty(nameof(FilterWheel.Names), new string[] { });
 
         public short Position {
-            get {
-                return GetProperty<short>(nameof(FilterWheel.Position), -1);
-            }
-            set {
-                SetProperty(nameof(Focuser.Position), value);
-            }
+            get => GetProperty<short>(nameof(FilterWheel.Position), -1);
+            set => SetProperty(nameof(Focuser.Position), value);
         }
 
         private IProfileService profileService;
 
-        public AsyncObservableCollection<FilterInfo> Filters {
-            get {
-                return profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-            }
-        }
+        public AsyncObservableCollection<FilterInfo> Filters => profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
 
         protected override string ConnectionLostMessage => Loc.Instance["LblFilterwheelConnectionLost"];
 
@@ -82,7 +69,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 var existingPositions = filtersList.Select(x => (int)x.Position).ToList();
                 var missingPositions = Enumerable.Range(0, existingPositions.Max()).Except(existingPositions);
                 foreach(var position in missingPositions) {
-                    if(device.Names.Count() > position) {
+                    if(device.Names.Length > position) {
                         var offset = device.FocusOffsets.Length > position ? device.FocusOffsets[position] : 0;
                         var filterToAdd = new FilterInfo(device.Names[position], offset, (short)position);
                         Logger.Warning($"Missing filter position. Importing filter: {filterToAdd.Name}, focus offset: {filterToAdd.FocusOffset}");
@@ -92,7 +79,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
 
 
-            int profileFilters = filtersList.Count();
+            int profileFilters = filtersList.Count;
             var deviceFilters = device.Names.Length;
 
             if (profileFilters < deviceFilters) {
@@ -115,8 +102,12 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             return Task.CompletedTask;
         }
 
-        protected override FilterWheel GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new FilterWheel(id));
+        protected override IFilterWheelV2 GetInstance() {
+            if (deviceMeta == null) {
+                return new FilterWheel(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaFilterWheel(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

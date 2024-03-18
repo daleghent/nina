@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -27,13 +27,12 @@ using NINA.Astrometry;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Core.Locale;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace NINA.ViewModel {
 
-    public class FocusTargetsVM : DockableVM, ITelescopeConsumer, IFocusTargetsVM {
-        private ObservableCollection<FocusTarget> focusTargets;
-        private FocusTarget selectedFocusTarget;
-        private bool telescopeConnected;
+    public partial class FocusTargetsVM : DockableVM, ITelescopeConsumer, IFocusTargetsVM {
         private readonly System.Timers.Timer updateTimer;
 
         public FocusTargetsVM(IProfileService profileService, ITelescopeMediator telescopeMediator, IApplicationResourceDictionary resourceDictionary) : base(profileService) {
@@ -51,38 +50,26 @@ namespace NINA.ViewModel {
                 updateTimer.Start();
             }
 
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(
-                async () => await telescopeMediator.SlewToCoordinatesAsync(SelectedFocusTarget.Coordinates, CancellationToken.None));
         }
 
-        public bool TelescopeConnected {
-            get => telescopeConnected;
-            set {
-                telescopeConnected = value;
-                RaisePropertyChanged();
-            }
+        [RelayCommand]
+        private async Task SlewToCoordinates() {
+            await telescopeMediator.SlewToCoordinatesAsync(SelectedFocusTarget.Coordinates, CancellationToken.None);
         }
 
-        public FocusTarget SelectedFocusTarget {
-            get => selectedFocusTarget;
-            set {
-                selectedFocusTarget = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private bool telescopeConnected;
 
-        public ObservableCollection<FocusTarget> FocusTargets {
-            get => focusTargets;
-            set {
-                focusTargets = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private FocusTarget selectedFocusTarget;
+
+        [ObservableProperty]
+        private ObservableCollection<FocusTarget> focusTargets;
+
 
         private List<FocusTarget> allFocusTargets = new List<FocusTarget>();
         private ITelescopeMediator telescopeMediator;
 
-        public IAsyncCommand SlewToCoordinatesCommand { get; }
 
         private Task LoadFocusTargets() {
             return Task.Run(async () => {

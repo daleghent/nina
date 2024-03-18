@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -29,16 +29,12 @@ namespace NINA.View {
 
         private bool _autoScroll = true;
 
-        public ScrollViewer ScrollViewer {
-            get {
-                return (ScrollViewer)ListBox.GetDescendantByType(typeof(ScrollViewer));
-            }
-        }
+        public ScrollViewer ScrollViewer => (ScrollViewer)ListBox.GetDescendantByType(typeof(ScrollViewer));
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e) {
             // User scroll event : set or unset auto-scroll mode
-            if (e.ExtentWidthChange == 0) {   // Content unchanged : user scroll event
-                if (ScrollViewer.HorizontalOffset == ScrollViewer.ScrollableWidth) {
+            if (e.ExtentHeightChange == 0) {   // Content unchanged : user scroll event
+                if (ScrollViewer.VerticalOffset == ScrollViewer.ScrollableHeight) {
                     // Scroll bar is most right position Set autoscroll mode
                     _autoScroll = true;
                 } else {
@@ -48,9 +44,9 @@ namespace NINA.View {
             }
 
             // Content scroll event : auto-scroll eventually
-            if (_autoScroll && e.ExtentWidthChange != 0) {
+            if (_autoScroll && e.ExtentHeightChange != 0) {
                 // Content changed and auto-scroll mode set Autoscroll
-                ScrollViewer.ScrollToHorizontalOffset(ScrollViewer.ExtentWidth);
+                ScrollViewer.ScrollToVerticalOffset(ScrollViewer.ExtentHeight);
             }
         }
     }

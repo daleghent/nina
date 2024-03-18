@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,7 +33,7 @@ namespace NINA.Profile {
             useFilterWheelOffsets = false;
             autoFocusStepSize = 50;
             autoFocusInitialOffsetSteps = 4;
-            autoFocusExposureTime = 6;
+            autoFocusExposureTime = 4;
             autoFocusDisableGuiding = false;
             focuserSettleTime = 0;
             autoFocusMethod = AFMethodEnum.STARHFR;
@@ -56,9 +56,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -71,9 +69,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool UseFilterWheelOffsets {
-            get {
-                return useFilterWheelOffsets;
-            }
+            get => useFilterWheelOffsets;
             set {
                 if (useFilterWheelOffsets != value) {
                     useFilterWheelOffsets = value;
@@ -86,9 +82,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int AutoFocusStepSize {
-            get {
-                return autoFocusStepSize;
-            }
+            get => autoFocusStepSize;
             set {
                 if (autoFocusStepSize != value) {
                     autoFocusStepSize = value;
@@ -101,12 +95,10 @@ namespace NINA.Profile {
 
         [DataMember]
         public int AutoFocusInitialOffsetSteps {
-            get {
-                return autoFocusInitialOffsetSteps;
-            }
+            get => autoFocusInitialOffsetSteps;
             set {
-                if(value < 1) { value = 1; }
-                if(value > 10) { value = 10; }
+                if (value < 1) { value = 1; }
+                if (value > 10) { value = 10; }
                 if (autoFocusInitialOffsetSteps != value) {
                     autoFocusInitialOffsetSteps = value;
                     RaisePropertyChanged();
@@ -118,9 +110,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double AutoFocusExposureTime {
-            get {
-                return autoFocusExposureTime;
-            }
+            get => autoFocusExposureTime;
             set {
                 if (autoFocusExposureTime != value) {
                     autoFocusExposureTime = value;
@@ -133,9 +123,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public AFMethodEnum AutoFocusMethod {
-            get {
-                return autoFocusMethod;
-            }
+            get => autoFocusMethod;
             set {
                 if (autoFocusMethod != value) {
                     autoFocusMethod = value;
@@ -148,9 +136,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public ContrastDetectionMethodEnum ContrastDetectionMethod {
-            get {
-                return contrastDetectionMethod;
-            }
+            get => contrastDetectionMethod;
             set {
                 if (contrastDetectionMethod != value) {
                     contrastDetectionMethod = value;
@@ -163,9 +149,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool AutoFocusDisableGuiding {
-            get {
-                return autoFocusDisableGuiding;
-            }
+            get => autoFocusDisableGuiding;
             set {
                 if (autoFocusDisableGuiding != value) {
                     autoFocusDisableGuiding = value;
@@ -178,9 +162,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int FocuserSettleTime {
-            get {
-                return focuserSettleTime;
-            }
+            get => focuserSettleTime;
             set {
                 if (focuserSettleTime != value) {
                     focuserSettleTime = value;
@@ -228,9 +210,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double AutoFocusInnerCropRatio {
-            get {
-                return autoFocusInnerCropRatio;
-            }
+            get => autoFocusInnerCropRatio;
             set {
                 if (autoFocusInnerCropRatio != value) {
                     autoFocusInnerCropRatio = value;
@@ -243,9 +223,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double AutoFocusOuterCropRatio {
-            get {
-                return autoFocusOuterCropRatio;
-            }
+            get => autoFocusOuterCropRatio;
             set {
                 if (autoFocusOuterCropRatio != value) {
                     autoFocusOuterCropRatio = value;
@@ -258,9 +236,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int BacklashIn {
-            get {
-                return backlashIn;
-            }
+            get => backlashIn;
             set {
                 if (backlashIn != value) {
                     backlashIn = value;
@@ -273,9 +249,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int BacklashOut {
-            get {
-                return backlashOut;
-            }
+            get => backlashOut;
             set {
                 if (backlashOut != value) {
                     backlashOut = value;
@@ -288,9 +262,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public short AutoFocusBinning {
-            get {
-                return autoFocusBinning;
-            }
+            get => autoFocusBinning;
             set {
                 if (autoFocusBinning != value) {
                     if (value > 4) {
@@ -307,9 +279,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int AutoFocusUseBrightestStars {
-            get {
-                return autoFocusUseBrightestStars;
-            }
+            get => autoFocusUseBrightestStars;
             set {
                 if (autoFocusUseBrightestStars != value) {
                     autoFocusUseBrightestStars = value;
@@ -322,9 +292,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public AFCurveFittingEnum AutoFocusCurveFitting {
-            get {
-                return autoFocusCurveFitting;
-            }
+            get => autoFocusCurveFitting;
             set {
                 if (autoFocusCurveFitting != value) {
                     autoFocusCurveFitting = value;
@@ -337,9 +305,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public BacklashCompensationModel BacklashCompensationModel {
-            get {
-                return backlashCompensationModel;
-            }
+            get => backlashCompensationModel;
             set {
                 if (backlashCompensationModel != value) {
                     backlashCompensationModel = value;
@@ -352,9 +318,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int AutoFocusTimeoutSeconds {
-            get {
-                return autoFocusTimeoutSeconds;
-            }
+            get => autoFocusTimeoutSeconds;
             set {
                 if (autoFocusTimeoutSeconds != value) {
                     autoFocusTimeoutSeconds = value;
@@ -367,9 +331,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double RSquaredThreshold {
-            get {
-                return rSquaredThreshold;
-            }
+            get => rSquaredThreshold;
             set {
                 if (value < 0) { value = 0; }
                 if (value > 1) { value = 1; }

@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -58,9 +58,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int AzDegrees {
-            get {
-                return (int)Math.Truncate(coordinates.Azimuth.Degree);
-            }
+            get => (int)Math.Truncate(coordinates.Azimuth.Degree);
             set {
                 if (value >= 0) {
                     coordinates.Azimuth = Angle.ByDegree(coordinates.Azimuth.Degree - AzDegrees + value);
@@ -71,9 +69,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int AzMinutes {
-            get {
-                return (int)(Math.Floor(coordinates.Azimuth.Degree * 60.0d) % 60);
-            }
+            get => (int)(Math.Floor(coordinates.Azimuth.Degree * 60.0d) % 60);
             set {
                 if (value >= 0) {
                     coordinates.Azimuth = Angle.ByDegree(coordinates.Azimuth.Degree - AzMinutes / 60.0d + value / 60.0d);
@@ -84,9 +80,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int AzSeconds {
-            get {
-                return (int)(Math.Floor(coordinates.Azimuth.Degree * 60.0d * 60.0d) % 60);
-            }
+            get => (int)(Math.Floor(coordinates.Azimuth.Degree * 60.0d * 60.0d) % 60);
             set {
                 if (value >= 0) {
                     coordinates.Azimuth = Angle.ByDegree(coordinates.Azimuth.Degree - AzSeconds / (60.0d * 60.0d) + value / (60.0d * 60.0d));
@@ -107,9 +101,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int AltDegrees {
-            get {
-                return (int)Math.Truncate(coordinates.Altitude.Degree);
-            }
+            get => (int)Math.Truncate(coordinates.Altitude.Degree);
             set {
                 if (NegativeAlt) {
                     coordinates.Altitude = Angle.ByDegree(value - AltMinutes / 60.0d - AltSeconds / (60.0d * 60.0d));
@@ -122,9 +114,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int AltMinutes {
-            get {
-                return (int)Math.Floor((Math.Abs(coordinates.Altitude.Degree * 60.0d) % 60));
-            }
+            get => (int)Math.Floor((Math.Abs(coordinates.Altitude.Degree * 60.0d) % 60));
             set {
                 if (coordinates.Altitude.Degree < 0) {
                     coordinates.Altitude = Angle.ByDegree(coordinates.Altitude.Degree + AltMinutes / 60.0d - value / 60.0d);
@@ -138,9 +128,7 @@ namespace NINA.Astrometry {
 
         [JsonProperty]
         public int AltSeconds {
-            get {
-                return (int)Math.Round((Math.Abs(coordinates.Altitude.Degree * 60.0d * 60.0d) % 60));
-            }
+            get => (int)Math.Round((Math.Abs(coordinates.Altitude.Degree * 60.0d * 60.0d) % 60));
             set {
                 if (coordinates.Altitude.Degree < 0) {
                     coordinates.Altitude = Angle.ByDegree(coordinates.Altitude.Degree + AltSeconds / (60.0d * 60.0d) - value / (60.0d * 60.0d));

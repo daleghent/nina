@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -26,9 +26,7 @@ namespace NINA.Astrometry {
         private bool _selected;
 
         public bool Selected {
-            get {
-                return _selected;
-            }
+            get => _selected;
             set {
                 _selected = value;
                 RaisePropertyChanged();
@@ -38,9 +36,7 @@ namespace NINA.Astrometry {
         private string _name;
 
         public string Name {
-            get {
-                return _name;
-            }
+            get => _name;
             set {
                 _name = value;
                 RaisePropertyChanged();

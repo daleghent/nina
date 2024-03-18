@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using ASCOM;
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
@@ -35,13 +35,18 @@ using NINA.Image.Interfaces;
 using NINA.Image.ImageData;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Enum;
-using NINA.Equipment.ASCOMFacades;
+using ASCOM.Common.Alpaca;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
-    internal class AscomCamera : AscomDevice<Camera, ICameraFacade, CameraFacadeProxy>, ICamera, IDisposable {
+    public class AscomCamera : AscomDevice<ICameraV3>, ICamera, IDisposable {
 
-        public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory, IDeviceDispatcher deviceDispatcher) : base(cameraId, name, deviceDispatcher, DeviceDispatcherType.Camera) {
+        public AscomCamera(string cameraId, string name, IProfileService profileService, IExposureDataFactory exposureDataFactory) : base(cameraId, name) {
+            this.profileService = profileService;
+            this.exposureDataFactory = exposureDataFactory;
+        }
+        public AscomCamera(ASCOM.Alpaca.Discovery.AscomDevice deviceMeta, IProfileService profileService, IExposureDataFactory exposureDataFactory) : base(deviceMeta) {
             this.profileService = profileService;
             this.exposureDataFactory = exposureDataFactory;
         }
@@ -90,7 +95,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 //Check if Offset is implemented at all in ICameraV3 Driver
                 _ = device.Offset;
                 CanSetOffset = true;
-            } catch (PropertyNotImplementedException) {
+            } catch (ASCOM.NotImplementedException) {
                 Logger.Trace("Offset is not implemented in this driver");
                 CanSetOffset = false;
             } catch (ASCOM.InvalidOperationException) {
@@ -106,7 +111,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     //Check if offset mode is in value mode
                     _ = device.OffsetMin;
                     offsetValueMode = true;
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     Logger.Trace("Offset operates in index mode");
                     offsetValueMode = false;
                 }
@@ -128,7 +133,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             }
                         } catch (Exception) {
                         }
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         Logger.Error("Offset is implemented, but neither OffsetMin/Max nor Offsets are implemented.");
                         CanSetOffset = false;
                     }
@@ -136,11 +141,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool CanSubSample {
-            get {
-                return true;
+        public bool Create32BitData {
+            get => false; //profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData;
+            set {
+                //profileService.ActiveProfile.CameraSettings.ASCOMCreate32BitData = value;
+                //RaisePropertyChanged();
             }
         }
+
+        public bool CanSubSample => true;
 
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
@@ -148,101 +157,43 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int SubSampleWidth { get; set; }
         public int SubSampleHeight { get; set; }
 
-        public short BayerOffsetX {
-            get {
-                return GetProperty<short>(nameof(Camera.BayerOffsetX), 0);
-            }
-        }
+        public short BayerOffsetX => GetProperty<short>(nameof(Camera.BayerOffsetX), 0);
 
-        public short BayerOffsetY {
-            get {
-                return GetProperty<short>(nameof(Camera.BayerOffsetY), 0);
-            }
-        }
+        public short BayerOffsetY => GetProperty<short>(nameof(Camera.BayerOffsetY), 0);
 
         public short BinX {
-            get {
-                return GetProperty<short>(nameof(Camera.BinX), 1);
-            }
-            set {
-                SetProperty(nameof(Camera.BinX), value);
-            }
+            get => GetProperty<short>(nameof(Camera.BinX), 1);
+            set => SetProperty(nameof(Camera.BinX), value);
         }
 
         public short BinY {
-            get {
-                return GetProperty<short>(nameof(Camera.BinY), 1);
-            }
-            set {
-                SetProperty(nameof(Camera.BinY), value);
-            }
+            get => GetProperty<short>(nameof(Camera.BinY), 1);
+            set => SetProperty(nameof(Camera.BinY), value);
         }
 
-        public Core.Enum.CameraStates CameraState {
-            get => GetProperty<Core.Enum.CameraStates>(nameof(Camera.CameraState), 0);
-        }
+        public Core.Enum.CameraStates CameraState => GetProperty<Core.Enum.CameraStates>(nameof(Camera.CameraState), 0);
 
-        public int CameraXSize {
-            get {
-                return GetProperty(nameof(Camera.CameraXSize), -1);
-            }
-        }
+        public int CameraXSize => GetProperty(nameof(Camera.CameraXSize), -1);
 
-        public int CameraYSize {
-            get {
-                return GetProperty(nameof(Camera.CameraYSize), -1);
-            }
-        }
+        public int CameraYSize => GetProperty(nameof(Camera.CameraYSize), -1);
 
-        public bool CanAbortExposure {
-            get {
-                return GetProperty(nameof(Camera.CanAbortExposure), false);
-            }
-        }
+        public bool CanAbortExposure => GetProperty(nameof(Camera.CanAbortExposure), false);
 
-        public bool CanShowLiveView { get => false; }
+        public bool CanShowLiveView => false;
 
-        public bool CanAsymmetricBin {
-            get {
-                return GetProperty(nameof(Camera.CanAsymmetricBin), false);
-            }
-        }
+        public bool CanAsymmetricBin => GetProperty(nameof(Camera.CanAsymmetricBin), false);
 
-        public bool CanFastReadout {
-            get {
-                return GetProperty(nameof(Camera.CanFastReadout), false);
-            }
-        }
+        public bool CanFastReadout => GetProperty(nameof(Camera.CanFastReadout), false);
 
-        public bool CanGetCoolerPower {
-            get {
-                return GetProperty(nameof(Camera.CanGetCoolerPower), false);
-            }
-        }
+        public bool CanGetCoolerPower => GetProperty(nameof(Camera.CanGetCoolerPower), false);
 
-        public bool CanPulseGuide {
-            get {
-                return GetProperty(nameof(Camera.CanPulseGuide), false);
-            }
-        }
+        public bool CanPulseGuide => GetProperty(nameof(Camera.CanPulseGuide), false);
 
-        public bool CanSetTemperature {
-            get {
-                return GetProperty(nameof(Camera.CanSetCCDTemperature), false);
-            }
-        }
+        public bool CanSetTemperature => GetProperty(nameof(Camera.CanSetCCDTemperature), false);
 
-        public bool CanStopExposure {
-            get {
-                return GetProperty(nameof(Camera.CanStopExposure), false);
-            }
-        }
+        public bool CanStopExposure => GetProperty(nameof(Camera.CanStopExposure), false);
 
-        public double Temperature {
-            get {
-                return GetProperty(nameof(Camera.CCDTemperature), double.NaN);
-            }
-        }
+        public double Temperature => GetProperty(nameof(Camera.CCDTemperature), double.NaN);
 
         private bool _hasCooler;
 
@@ -279,43 +230,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasDewHeater {
-            get {
-                return false;
-            }
-        }
+        public bool HasDewHeater => false;
 
         public bool DewHeaterOn {
-            get {
-                return false;
-            }
+            get => false;
             set {
             }
         }
 
-        public double ElectronsPerADU {
-            get {
-                return GetProperty(nameof(Camera.ElectronsPerADU), double.NaN);
-            }
-        }
+        public double ElectronsPerADU => GetProperty(nameof(Camera.ElectronsPerADU), double.NaN);
 
-        public double ExposureMax {
-            get {
-                return GetProperty(nameof(Camera.ExposureMax), double.NaN);
-            }
-        }
+        public double ExposureMax => GetProperty(nameof(Camera.ExposureMax), double.NaN);
 
-        public double ExposureMin {
-            get {
-                return GetProperty(nameof(Camera.ExposureMin), double.NaN);
-            }
-        }
+        public double ExposureMin => GetProperty(nameof(Camera.ExposureMin), double.NaN);
 
-        public double ExposureResolution {
-            get {
-                return GetProperty(nameof(Camera.ExposureResolution), double.NaN);
-            }
-        }
+        public double ExposureResolution => GetProperty(nameof(Camera.ExposureResolution), double.NaN);
 
         public bool FastReadout {
             get {
@@ -332,18 +261,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public double FullWellCapacity {
-            get {
-                return GetProperty(nameof(Camera.FullWellCapacity), -1d);
-            }
-        }
+        public double FullWellCapacity => GetProperty(nameof(Camera.FullWellCapacity), -1d);
 
         private bool _canGetGain;
 
         public bool CanGetGain {
-            get {
-                return _canGetGain;
-            }
+            get => _canGetGain;
             set {
                 _canGetGain = value;
                 RaisePropertyChanged();
@@ -353,9 +276,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool _canSetGain;
 
         public bool CanSetGain {
-            get {
-                return _canSetGain;
-            }
+            get => _canSetGain;
             set {
                 _canSetGain = value;
                 RaisePropertyChanged();
@@ -372,7 +293,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         } else {
                             val = device.Gain;
                         }
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         CanGetGain = false;
                         Logger.Info("ASCOM - Driver does not implement Gain GET");
                     }
@@ -390,7 +311,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         } else {
                             device.Gain = (short)value;
                         }
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         CanSetGain = false;
                         Logger.Info("ASCOM - Driver does not implement Gain SET");
                     } catch (InvalidValueException ex) {
@@ -462,7 +383,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (_canGetGainMinMax) {
                         try {
                             val = device.GainMax;
-                        } catch (PropertyNotImplementedException) {
+                        } catch (ASCOM.NotImplementedException) {
                             _canGetGainMinMax = false;
                         } catch (ASCOM.InvalidOperationException) {
                             _canGetGainMinMax = false;
@@ -486,8 +407,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if (_canGetGainMinMax) {
                         try {
                             val = device.GainMin;
-                        } catch (PropertyNotImplementedException) {
-                            _canGetGainMinMax = false;
+                        } catch (ASCOM.NotImplementedException) {
+                            _canGetGainMinMax = false;                        
                         } catch (ASCOM.InvalidOperationException) {
                             _canGetGainMinMax = false;
                         }
@@ -514,47 +435,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasShutter {
-            get {
-                return GetProperty(nameof(Camera.HasShutter), false);
-            }
-        }
+        public bool HasShutter => GetProperty(nameof(Camera.HasShutter), false);
 
-        public double HeatSinkTemperature {
-            get {
-                return GetProperty(nameof(Camera.HeatSinkTemperature), double.NaN);
-            }
-        }
+        public double HeatSinkTemperature => GetProperty(nameof(Camera.HeatSinkTemperature), double.NaN);
 
-        public object ImageArray {
-            get {
-                return GetProperty<object>(nameof(Camera.ImageArray), null);
-            }
-        }
+        public object ImageArray => GetProperty<object>(nameof(Camera.ImageArray), null);
 
-        public object ImageArrayVariant {
-            get {
-                return GetProperty<object>(nameof(Camera.ImageArrayVariant), null);
-            }
-        }
+        public object ImageArrayVariant => GetProperty<object>(nameof(Camera.ImageArrayVariant), null);
 
-        public bool ImageReady {
-            get {
-                return GetProperty(nameof(Camera.ImageReady), false);
-            }
-        }
+        public bool ImageReady => GetProperty(nameof(Camera.ImageReady), false);
 
-        public short InterfaceVersion {
-            get {
-                return GetProperty<short>(nameof(Camera.InterfaceVersion), -1);
-            }
-        }
+        public short InterfaceVersion => GetProperty<short>(nameof(Camera.InterfaceVersion), -1);
 
-        public bool IsPulseGuiding {
-            get {
-                return GetProperty(nameof(Camera.IsPulseGuiding), false);
-            }
-        }
+        public bool IsPulseGuiding => GetProperty(nameof(Camera.IsPulseGuiding), false);
 
         private bool _hasLastExposureInfo;
 
@@ -566,7 +459,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         val = device.LastExposureDuration;
                     }
                 } catch (ASCOM.InvalidOperationException) {
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     _hasLastExposureInfo = false;
                 }
                 return val;
@@ -581,35 +474,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         val = device.LastExposureStartTime;
                     }
                 } catch (ASCOM.InvalidOperationException) {
-                } catch (PropertyNotImplementedException) {
+                } catch (ASCOM.NotImplementedException) {
                     _hasLastExposureInfo = false;
                 }
                 return val;
             }
         }
 
-        public int MaxADU {
-            get {
-                return GetProperty(nameof(Camera.MaxADU), -1);
-            }
-        }
+        public int MaxADU => GetProperty(nameof(Camera.MaxADU), -1);
 
-        public short MaxBinX {
-            get {
-                return GetProperty<short>(nameof(Camera.MaxBinX), 1);
-            }
-        }
+        public short MaxBinX => GetProperty<short>(nameof(Camera.MaxBinX), 1);
 
-        public short MaxBinY {
-            get {
-                return GetProperty<short>(nameof(Camera.MaxBinY), 1);
-            }
-        }
+        public short MaxBinY => GetProperty<short>(nameof(Camera.MaxBinY), 1);
 
         public int NumX {
-            get {
-                return GetProperty(nameof(Camera.NumX), -1);
-            }
+            get => GetProperty(nameof(Camera.NumX), -1);
             set {
                 if (!profileService.ActiveProfile.CameraSettings.ASCOMAllowUnevenPixelDimension || SensorType != SensorType.Monochrome) {
                     if (value % 2 > 0) {
@@ -622,9 +501,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public int NumY {
-            get {
-                return GetProperty(nameof(Camera.NumY), -1);
-            }
+            get => GetProperty(nameof(Camera.NumY), -1);
             set {
                 if (!profileService.ActiveProfile.CameraSettings.ASCOMAllowUnevenPixelDimension || SensorType != SensorType.Monochrome) {
                     if (value % 2 > 0) {
@@ -635,28 +512,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public short PercentCompleted {
-            get {
-                return GetProperty<short>(nameof(Camera.PercentCompleted), -1);
-            }
-        }
+        public short PercentCompleted => GetProperty<short>(nameof(Camera.PercentCompleted), -1);
 
-        public double PixelSizeX {
-            get {
-                return GetProperty<double>(nameof(Camera.PixelSizeX), -1d);
-            }
-        }
+        public double PixelSizeX => GetProperty<double>(nameof(Camera.PixelSizeX), -1d);
 
-        public double PixelSizeY {
-            get {
-                return GetProperty<double>(nameof(Camera.PixelSizeY), -1d);
-            }
-        }
+        public double PixelSizeY => GetProperty<double>(nameof(Camera.PixelSizeY), -1d);
 
         public short ReadoutMode {
-            get {
-                return GetProperty<short>(nameof(Camera.ReadoutMode), 0);
-            }
+            get => GetProperty<short>(nameof(Camera.ReadoutMode), 0);
             set {
                 if (Connected && (value != ReadoutMode) && (value < ReadoutModes.Count)) {
                     try {
@@ -664,56 +527,52 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
                         Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
-                    } catch (PropertyNotImplementedException) {
+                    } catch (ASCOM.NotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(ReadoutMode)} SET");
                     }
                 }
             }
         }
 
-        public ArrayList ReadoutModesArrayList {
+        public IList<string> ReadoutModesArrayList {
             get {
-                ArrayList val = new ArrayList();
+                IList<string> val = new List<string>();
                 if (!CanFastReadout) {
-                    val = GetProperty(nameof(Camera.ReadoutModes), new ArrayList());
+                    val = GetProperty(nameof(Camera.ReadoutModes), new List<string>());
                 }
                 return val;
             }
         }
 
-        public string SensorName {
-            get {
-                return GetProperty(nameof(Camera.SensorName), string.Empty);
-            }
-        }
+        public string SensorName => GetProperty(nameof(Camera.SensorName), string.Empty);
 
         public SensorType SensorType {
             get {
-                var deviceType = GetProperty(nameof(Camera.SensorType), ASCOM.DeviceInterface.SensorType.Monochrome);
+                var deviceType = GetProperty(nameof(Camera.SensorType), ASCOM.Common.DeviceInterfaces.SensorType.Monochrome);
 
                 SensorType type;
                 switch (deviceType) {
-                    case ASCOM.DeviceInterface.SensorType.Monochrome:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.Monochrome:
                         type = SensorType.Monochrome;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.Color:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.Color:
                         type = SensorType.Color;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.RGGB:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.RGGB:
                         type = SensorType.RGGB;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.CMYG:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.CMYG:
                         type = SensorType.CMYG;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.CMYG2:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.CMYG2:
                         type = SensorType.CMYG2;
                         break;
 
-                    case ASCOM.DeviceInterface.SensorType.LRGB:
+                    case ASCOM.Common.DeviceInterfaces.SensorType.LRGB:
                         type = SensorType.LRGB;
                         break;
 
@@ -742,21 +601,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public int StartX {
-            get {
-                return GetProperty(nameof(Camera.StartX), -1);
-            }
-            set {
-                SetProperty(nameof(Camera.StartX), value);
-            }
+            get => GetProperty(nameof(Camera.StartX), -1);
+            set => SetProperty(nameof(Camera.StartX), value);
         }
 
         public int StartY {
-            get {
-                return GetProperty(nameof(Camera.StartY), -1);
-            }
-            set {
-                SetProperty(nameof(Camera.StartY), value);
-            }
+            get => GetProperty(nameof(Camera.StartY), -1);
+            set => SetProperty(nameof(Camera.StartY), value);
         }
 
         public AsyncObservableCollection<BinningMode> BinningModes { get; private set; }
@@ -777,11 +628,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             await CoreUtil.Wait(TimeSpan.FromMilliseconds(100), token);
                         }
 
+                        var metaData = new ImageMetaData();
+                        metaData.FromCamera(this);
+
                         return exposureDataFactory.CreateFlipped2DExposureData(
-                            flipped2DArray: (int[,])ImageArray,
+                            flipped2DArray: (Array)ImageArray,
                             bitDepth: BitDepth,
                             isBayered: SensorType != SensorType.Monochrome,
-                            metaData: new ImageMetaData());
+                            metaData: metaData);
                     } catch (OperationCanceledException) {
                     } catch (Exception ex) {
                         Notification.ShowExternalError(ex.Message, Loc.Instance["LblASCOMDriverError"]);
@@ -817,8 +671,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             var isLightFrame = !(sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
-                              sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
-                              sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT);
+                              sequence.ImageType == CaptureSequence.ImageTypes.BIAS);
 
             device.StartExposure(sequence.ExposureTime, isLightFrame);
         }
@@ -857,12 +710,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private IList<int> offsets = new List<int>();
         private bool offsetValueMode = true;
-        private bool canSetOffset = true;
+        private bool canSetOffset = false;
 
         public bool CanSetOffset {
-            get {
-                return canSetOffset;
-            }
+            get => canSetOffset;
             private set {
                 canSetOffset = value;
                 RaisePropertyChanged();
@@ -893,7 +744,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         offsetMax = device.OffsetMax;
                     } else {
                         if (offsets.Count > 0) {
-                            offsetMax = offsets.Count() - 1;
+                            offsetMax = offsets.Count - 1;
                         }
                     }
                 }
@@ -901,11 +752,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool CanSetUSBLimit {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetUSBLimit => false;
 
         public int Offset {
             get {
@@ -935,8 +782,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                             if (value < 0) {
                                 value = 0;
                             }
-                            if (value > offsets.Count() - 1) {
-                                value = offsets.Count() - 1;
+                            if (value > offsets.Count - 1) {
+                                value = offsets.Count - 1;
                             }
                             device.Offset = value;
                         }
@@ -950,9 +797,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public int USBLimit {
-            get {
-                return -1;
-            }
+            get => -1;
             set {
             }
         }
@@ -974,12 +819,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         protected override Task PostConnect() {
+            if(device.SensorType == ASCOM.Common.DeviceInterfaces.SensorType.Color) {
+                Disconnect();
+                throw new Exception(Loc.Instance["LblASCOMColorSensorTypeNotSupported"]);
+            }
             Initialize();
             return Task.CompletedTask;
         }
 
-        protected override Camera GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Camera(id));
+        protected override ICameraV3 GetInstance() {
+            if(deviceMeta == null) {
+                return new Camera(this.Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaCamera(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
+            
         }
 
         public bool LiveViewEnabled { get => false; set => throw new System.NotImplementedException(); }
@@ -988,11 +842,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool HasBattery => false;
 
-        public int BitDepth {
-            get {
-                return (int)profileService.ActiveProfile.CameraSettings.BitDepth;
-            }
-        }
+        public int BitDepth => (int)profileService.ActiveProfile.CameraSettings.BitDepth;
 
         protected override string ConnectionLostMessage => Loc.Instance["LblCameraConnectionLost"];
     }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -57,41 +57,25 @@ namespace NINA.Core.Utility {
 
         public Task<TResult> Task { get; private set; }
 
-        public TResult Result {
-            get {
-                return (Task.Status == TaskStatus.RanToCompletion) ?
+        public TResult Result => (Task.Status == TaskStatus.RanToCompletion) ?
 Task.Result : default(TResult);
-            }
-        }
 
-        public TaskStatus Status { get { return Task.Status; } }
-        public bool IsCompleted { get { return Task.IsCompleted; } }
-        public bool IsNotCompleted { get { return !Task.IsCompleted; } }
+        public TaskStatus Status => Task.Status;
+        public bool IsCompleted => Task.IsCompleted;
+        public bool IsNotCompleted => !Task.IsCompleted;
 
-        public bool IsSuccessfullyCompleted {
-            get {
-                return Task.Status ==
+        public bool IsSuccessfullyCompleted => Task.Status ==
 TaskStatus.RanToCompletion;
-            }
-        }
 
-        public bool IsCanceled { get { return Task.IsCanceled; } }
-        public bool IsFaulted { get { return Task.IsFaulted; } }
-        public AggregateException Exception { get { return Task.Exception; } }
+        public bool IsCanceled => Task.IsCanceled;
+        public bool IsFaulted => Task.IsFaulted;
+        public AggregateException Exception => Task.Exception;
 
-        public Exception InnerException {
-            get {
-                return (Exception == null) ?
+        public Exception InnerException => (Exception == null) ?
 null : Exception.InnerException;
-            }
-        }
 
-        public string ErrorMessage {
-            get {
-                return (InnerException == null) ?
+        public string ErrorMessage => (InnerException == null) ?
 null : InnerException.Message;
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -51,7 +51,10 @@ namespace NINA.Profile {
     [KnownType(typeof(SnapShotControlSettings))]
     [KnownType(typeof(SafetyMonitorSettings))]
     [KnownType(typeof(PluginSettings))]
-    public class Profile : BaseINPC, IProfile {
+    [KnownType(typeof(GnssSettings))]
+    [KnownType(typeof(DockPanelSettings))]
+    [KnownType(typeof(AlpacaSettings))]
+    public class Profile : SerializableINPC, IProfile {
 
         /// <summary>
         /// Exclusive locked filestream to read and write the profile
@@ -75,19 +78,6 @@ namespace NINA.Profile {
         [OnDeserialized]
         private void SetValuesOnDeserialized(StreamingContext context) {
             RegisterHandlers();
-            MigrateFlatDeviceFilterSettingsFromFilterNameToPosition();
-        }
-
-        private void MigrateFlatDeviceFilterSettingsFromFilterNameToPosition() {
-            foreach (var kvp in FlatDeviceSettings.FilterSettings) {
-                if (kvp.Key.Position == null && !string.IsNullOrEmpty(kvp.Key.FilterName)) {
-                    var usedFilter = FilterWheelSettings.FilterWheelFilters.FirstOrDefault(f => f.Name == kvp.Key.FilterName);
-                    if (usedFilter != null) {
-                        kvp.Key.Position = usedFilter.Position;
-                        kvp.Key.FilterName = null;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -119,6 +109,9 @@ namespace NINA.Profile {
             SnapShotControlSettings = new SnapShotControlSettings();
             SafetyMonitorSettings = new SafetyMonitorSettings();
             PluginSettings = new PluginSettings();
+            GnssSettings = new GnssSettings();
+            DockPanelSettings = new DockPanelSettings();
+            AlpacaSettings = new AlpacaSettings();
         }
 
         /// <summary>
@@ -149,6 +142,9 @@ namespace NINA.Profile {
             SnapShotControlSettings.PropertyChanged += SettingsChanged;
             SafetyMonitorSettings.PropertyChanged += SettingsChanged;
             PluginSettings.PropertyChanged += SettingsChanged;
+            GnssSettings.PropertyChanged += SettingsChanged;
+            DockPanelSettings.PropertyChanged += SettingsChanged;
+            AlpacaSettings.PropertyChanged += SettingsChanged;
         }
 
         /// <summary>
@@ -216,9 +212,7 @@ namespace NINA.Profile {
 
         [IgnoreDataMember]
         public string Location {
-            get {
-                return Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles", $"{Id}.profile");
-            }
+            get => Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles", $"{Id}.profile");
             protected set { }
         }
 
@@ -294,6 +288,15 @@ namespace NINA.Profile {
         [DataMember]
         public IPluginSettings PluginSettings { get; set; }
 
+        [DataMember]
+        public IGnssSettings GnssSettings { get; set; }
+
+        [DataMember]
+        public IDockPanelSettings DockPanelSettings { get; set; }
+
+        [DataMember]
+        public IAlpacaSettings AlpacaSettings { get; set; }
+
         /// <summary>
         /// Deep Clone an existing profile, create a new Id and append "Copy" to the name
         /// </summary>
@@ -340,18 +343,18 @@ namespace NINA.Profile {
         /// </summary>
         public void Save() {
             using (MyStopWatch.Measure()) {
+                if (File.Exists(Location)) {
+                    var fi = new FileInfo(Location);
+                    if (fi.Length > 0) {
+                        File.Copy(Location, Location + ".bkp", true);
+                    }
+                }
+
                 if (fs == null) {
                     // When profile is in memory only yet
                     fs = new FileStream(Location, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
                 } else {
                     fs.Position = 0;
-                }
-
-                if(fs.Length > 0) { 
-                    using (var temp = new FileStream(Location + ".bkp", FileMode.Create, FileAccess.Write)) {
-                        fs.CopyTo(temp);
-                        temp.Flush();
-                    }
                 }
 
                 fs.SetLength(0);

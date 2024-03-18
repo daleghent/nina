@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -20,49 +20,49 @@ namespace NINA.Equipment.Equipment.MyFocuser {
         private int position;
 
         public int Position {
-            get { return position; }
+            get => position;
             set { position = value; RaisePropertyChanged(); }
         }
 
         private double stepsize;
 
         public double StepSize {
-            get { return stepsize; }
+            get => stepsize;
             set { stepsize = value; RaisePropertyChanged(); }
         }
 
         private double temperature = double.NaN;
 
         public double Temperature {
-            get { return temperature; }
+            get => temperature;
             set { temperature = value; RaisePropertyChanged(); }
         }
 
         private bool isMoving;
 
         public bool IsMoving {
-            get { return isMoving; }
+            get => isMoving;
             set { isMoving = value; RaisePropertyChanged(); }
         }
 
         private bool isSettling;
 
         public bool IsSettling {
-            get { return isSettling; }
+            get => isSettling;
             set { isSettling = value; RaisePropertyChanged(); }
         }
 
         private bool tempComp;
 
         public bool TempComp {
-            get { return tempComp; }
+            get => tempComp;
             set { tempComp = value; RaisePropertyChanged(); }
         }
 
         private bool tempCompAvailable;
 
         public bool TempCompAvailable {
-            get { return tempCompAvailable; }
+            get => tempCompAvailable;
             set { tempCompAvailable = value; RaisePropertyChanged(); }
         }
 

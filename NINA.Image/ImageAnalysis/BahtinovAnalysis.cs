@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -84,7 +84,7 @@ namespace NINA.Image.ImageAnalysis {
                                 var orderedPoints = bahtinovLines.OrderBy(x => 1.0d / x.Slope).ToList();
                                 var threeLines = new List<Line>();
 
-                                for (var i = 0; i < orderedPoints.Count(); i += 2) {
+                                for (var i = 0; i < orderedPoints.Count; i += 2) {
                                     var l1 = orderedPoints[i];
                                     var l2 = orderedPoints[i + 1];
 

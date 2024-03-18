@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -25,6 +25,7 @@ using System.Xml.Serialization;
 using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
+using System.Globalization;
 
 namespace NINA.Equipment.Model {
 
@@ -42,9 +43,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(CaptureSequence))]
         public AsyncObservableCollection<CaptureSequence> Items {
-            get {
-                return _items;
-            }
+            get => _items;
             set {
                 _items = value;
                 RaisePropertyChanged();
@@ -55,11 +54,7 @@ namespace NINA.Equipment.Model {
             return Items.GetEnumerator();
         }
 
-        public int Count {
-            get {
-                return Items.Where(i => i.Enabled).Count();
-            }
-        }
+        public int Count => Items.Where(i => i.Enabled).Count();
 
         public void Add(CaptureSequence s) {
             Items.Add(s);
@@ -115,8 +110,15 @@ namespace NINA.Equipment.Model {
             CaptureSequenceList l = null;
             try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(CaptureSequenceList));
+                xmlSerializer.UnknownAttribute += XmlSerializer_UnknownAttribute;
 
                 l = (CaptureSequenceList)xmlSerializer.Deserialize(stream);
+                foreach (var s in l.Items) {
+                    // Migration of values prior to 3.0
+                    if (s.ImageType == "DARKFLAT") {
+                        s.ImageType = CaptureSequence.ImageTypes.DARK;
+                    }
+                }
                 AdjustSequenceToMatchCurrentProfile(filters, latitude, longitude, l);
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -159,9 +161,17 @@ namespace NINA.Equipment.Model {
             List<CaptureSequenceList> c = null;
             try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CaptureSequenceList>));
+                xmlSerializer.UnknownAttribute += XmlSerializer_UnknownAttribute;                
 
                 c = (List<CaptureSequenceList>)xmlSerializer.Deserialize(stream);
+                
                 foreach (var l in c) {
+                    foreach(var s in l.Items) {
+                        // Migration of values prior to 3.0
+                        if (s.ImageType == "DARKFLAT") {
+                            s.ImageType = CaptureSequence.ImageTypes.DARK;
+                        }
+                    }
                     AdjustSequenceToMatchCurrentProfile(filters, latitude, longitude, l);
                 }
             } catch (Exception ex) {
@@ -171,6 +181,13 @@ namespace NINA.Equipment.Model {
             return c;
         }
 
+        private static void XmlSerializer_UnknownAttribute(object sender, XmlAttributeEventArgs e) {
+            var list = (CaptureSequenceList)e.ObjectBeingDeserialized;
+            if (e.Attr.Name == "Rotation") {
+                list.DeprecatedRotation = double.Parse(e.Attr.Value, CultureInfo.InvariantCulture);
+            }
+        }
+
         public CaptureSequenceList(CaptureSequence seq) : this() {
             Add(seq);
         }
@@ -178,7 +195,7 @@ namespace NINA.Equipment.Model {
         public void SetSequenceTarget(DeepSkyObject dso) {
             TargetName = dso.Name;
             Coordinates = dso.Coordinates;
-            Rotation = dso.Rotation;
+            PositionAngle = dso.RotationPositionAngle;
             this.DSO = dso;
         }
 
@@ -186,9 +203,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(TargetName))]
         public string TargetName {
-            get {
-                return _targetName;
-            }
+            get => _targetName;
             set {
                 _targetName = value;
                 RaisePropertyChanged();
@@ -199,9 +214,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(Mode))]
         public SequenceMode Mode {
-            get {
-                return _mode;
-            }
+            get => _mode;
             set {
                 _mode = value;
                 RaisePropertyChanged();
@@ -251,9 +264,7 @@ namespace NINA.Equipment.Model {
 
         [XmlElement(nameof(Coordinates))]
         public Coordinates Coordinates {
-            get {
-                return _coordinates;
-            }
+            get => _coordinates;
             set {
                 _coordinates = value;
                 RaiseCoordinatesChanged();
@@ -262,9 +273,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(RAHours))]
         public int RAHours {
-            get {
-                return (int)Math.Truncate(_coordinates.RA);
-            }
+            get => (int)Math.Truncate(_coordinates.RA);
             set {
                 if (value >= 0) {
                     _coordinates.RA = _coordinates.RA - RAHours + value;
@@ -323,9 +332,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(DecDegrees))]
         public int DecDegrees {
-            get {
-                return (int)Math.Truncate(_coordinates.Dec);
-            }
+            get => (int)Math.Truncate(_coordinates.Dec);
             set {
                 if (NegativeDec) {
                     _coordinates.Dec = value - DecMinutes / 60.0d - DecSeconds / (60.0d * 60.0d);
@@ -379,21 +386,25 @@ namespace NINA.Equipment.Model {
             }
         }
 
-        private double rotation;
+        private double positionAngle;
 
-        [XmlAttribute(nameof(Rotation))]
-        public double Rotation {
-            get {
-                return rotation;
-            }
+        [XmlAttribute(nameof(PositionAngle))]
+        public double PositionAngle {
+            get => positionAngle;
             set {
-                rotation = value;
+                positionAngle = AstroUtil.EuclidianModulus(value, 360);
                 RaiseCoordinatesChanged();
             }
         }
 
+
+        [XmlAttribute(attributeName: "Rotation")]
+        public double DeprecatedRotation {
+            set => PositionAngle = 360 - value;
+        }
+
         private void RaiseCoordinatesChanged() {
-            RaisePropertyChanged(nameof(Rotation));
+            RaisePropertyChanged(nameof(PositionAngle));
             if (Coordinates?.RA != 0 || Coordinates?.Dec != 0) {
                 RaisePropertyChanged(nameof(Coordinates));
                 RaisePropertyChanged(nameof(RAHours));
@@ -404,7 +415,7 @@ namespace NINA.Equipment.Model {
                 RaisePropertyChanged(nameof(DecSeconds));
                 DSO.Name = this.TargetName;
                 DSO.Coordinates = Coordinates;
-                DSO.Rotation = Rotation;
+                DSO.RotationPositionAngle = PositionAngle;
                 NegativeDec = DSO?.Coordinates?.Dec < 0;
             }
         }
@@ -434,9 +445,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(Delay))]
         public int Delay {
-            get {
-                return _delay;
-            }
+            get => _delay;
             set {
                 _delay = value;
                 RaisePropertyChanged();
@@ -447,9 +456,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(SlewToTarget))]
         public bool SlewToTarget {
-            get {
-                return _slewToTarget;
-            }
+            get => _slewToTarget;
             set {
                 _slewToTarget = value;
                 if (!_slewToTarget) {
@@ -464,9 +471,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusOnStart))]
         public bool AutoFocusOnStart {
-            get {
-                return _autoFocusOnStart;
-            }
+            get => _autoFocusOnStart;
             set {
                 _autoFocusOnStart = value;
                 RaisePropertyChanged();
@@ -477,9 +482,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(CenterTarget))]
         public bool CenterTarget {
-            get {
-                return _centerTarget;
-            }
+            get => _centerTarget;
             set {
                 _centerTarget = value;
                 if (_centerTarget) { SlewToTarget = _centerTarget; }
@@ -492,9 +495,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(RotateTarget))]
         public bool RotateTarget {
-            get {
-                return rotateTarget;
-            }
+            get => rotateTarget;
             set {
                 rotateTarget = value;
                 if (rotateTarget) { CenterTarget = rotateTarget; }
@@ -506,9 +507,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(StartGuiding))]
         public bool StartGuiding {
-            get {
-                return _startGuiding;
-            }
+            get => _startGuiding;
             set {
                 _startGuiding = value;
                 RaisePropertyChanged();
@@ -519,9 +518,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusOnFilterChange))]
         public bool AutoFocusOnFilterChange {
-            get {
-                return _autoFocusOnFilterChange;
-            }
+            get => _autoFocusOnFilterChange;
             set {
                 _autoFocusOnFilterChange = value;
                 RaisePropertyChanged();
@@ -532,9 +529,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusAfterSetTime))]
         public bool AutoFocusAfterSetTime {
-            get {
-                return _autoFocusAfterSetTime;
-            }
+            get => _autoFocusAfterSetTime;
             set {
                 _autoFocusAfterSetTime = value;
                 RaisePropertyChanged();
@@ -545,9 +540,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusSetTime))]
         public double AutoFocusSetTime {
-            get {
-                return _autoFocusSetTime;
-            }
+            get => _autoFocusSetTime;
             set {
                 _autoFocusSetTime = value;
                 RaisePropertyChanged();
@@ -558,9 +551,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusAfterSetExposures))]
         public bool AutoFocusAfterSetExposures {
-            get {
-                return _autoFocusAfterSetExposures;
-            }
+            get => _autoFocusAfterSetExposures;
             set {
                 _autoFocusAfterSetExposures = value;
                 RaisePropertyChanged();
@@ -571,9 +562,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusSetExposures))]
         public double AutoFocusSetExposures {
-            get {
-                return _autoFocusSetExposures;
-            }
+            get => _autoFocusSetExposures;
             set {
                 _autoFocusSetExposures = value;
                 RaisePropertyChanged();
@@ -584,9 +573,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusAfterTemperatureChange))]
         public bool AutoFocusAfterTemperatureChange {
-            get {
-                return _autoFocusAfterTemperatureChange;
-            }
+            get => _autoFocusAfterTemperatureChange;
             set {
                 _autoFocusAfterTemperatureChange = value;
                 RaisePropertyChanged();
@@ -597,9 +584,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusAfterTemperatureChangeAmount))]
         public double AutoFocusAfterTemperatureChangeAmount {
-            get {
-                return _autoFocusAfterTemperatureChangeAmount;
-            }
+            get => _autoFocusAfterTemperatureChangeAmount;
             set {
                 _autoFocusAfterTemperatureChangeAmount = value;
                 RaisePropertyChanged();
@@ -610,9 +595,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusAfterHFRChange))]
         public bool AutoFocusAfterHFRChange {
-            get {
-                return _autoFocusAfterHFRChange;
-            }
+            get => _autoFocusAfterHFRChange;
             set {
                 _autoFocusAfterHFRChange = value;
                 RaisePropertyChanged();
@@ -623,9 +606,7 @@ namespace NINA.Equipment.Model {
 
         [XmlAttribute(nameof(AutoFocusAfterHFRChangeAmount))]
         public double AutoFocusAfterHFRChangeAmount {
-            get {
-                return _autoFocusAfterHFRChangeAmount;
-            }
+            get => _autoFocusAfterHFRChangeAmount;
             set {
                 _autoFocusAfterHFRChangeAmount = value;
                 RaisePropertyChanged();

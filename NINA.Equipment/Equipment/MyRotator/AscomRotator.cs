@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using ASCOM.DriverAccess;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
@@ -20,21 +20,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
-using ASCOM.DeviceInterface;
-using NINA.Equipment.ASCOMFacades;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Common;
+using ASCOM.Alpaca.Discovery;
 
 namespace NINA.Equipment.Equipment.MyRotator {
 
-    internal class AscomRotator : AscomDevice<Rotator, IRotatorFacade, RotatorFacadeProxy>, IRotator, IDisposable {
+    internal class AscomRotator : AscomDevice<IRotatorV3>, IRotator, IDisposable {
 
-        public AscomRotator(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.Rotator) {
+        public AscomRotator(string id, string name) : base(id, name) {
+        }
+        public AscomRotator(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
-        public bool CanReverse {
-            get {
-                return GetProperty(nameof(Rotator.CanReverse), false);
-            }
-        }
+        public bool CanReverse => GetProperty(nameof(Rotator.CanReverse), false);
 
         public bool Reverse {
             get {
@@ -50,11 +49,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
             }
         }
 
-        public bool IsMoving {
-            get {
-                return GetProperty(nameof(Rotator.IsMoving), false);
-            }
-        }
+        public bool IsMoving => GetProperty(nameof(Rotator.IsMoving), false);
 
         private bool synced;
 
@@ -68,21 +63,11 @@ namespace NINA.Equipment.Equipment.MyRotator {
 
         private float offset = 0;
 
-        public float Position {
-            get => AstroUtil.EuclidianModulus(MechanicalPosition + offset, 360);
-        }
+        public float Position => AstroUtil.EuclidianModulus(MechanicalPosition + offset, 360);
 
-        public float MechanicalPosition {
-            get {
-                return GetProperty(nameof(Rotator.Position), float.NaN);
-            }
-        }
+        public float MechanicalPosition => GetProperty(nameof(Rotator.Position), float.NaN);
 
-        public float StepSize {
-            get {
-                return GetProperty(nameof(Rotator.StepSize), float.NaN);
-            }
-        }
+        public float StepSize => GetProperty(nameof(Rotator.StepSize), float.NaN);
 
         protected override string ConnectionLostMessage => Loc.Instance["LblRotatorConnectionLost"];
 
@@ -109,12 +94,8 @@ namespace NINA.Equipment.Equipment.MyRotator {
                 }
 
                 Logger.Debug($"ASCOM - Move relative by {angle}° - Mechanical Position reported by rotator {MechanicalPosition}° and offset {offset}");
-                await Task.Run(() => {
-                    using (ct.Register(() => device?.Halt())) {
-                        device?.Move(angle);
-                    }
-                    ct.ThrowIfCancellationRequested();
-                }, ct);
+                await device.MoveAsync(angle, ct);
+                InvalidatePropertyCache();
 
                 return true;
             }
@@ -142,8 +123,12 @@ namespace NINA.Equipment.Equipment.MyRotator {
             return Task.CompletedTask;
         }
 
-        protected override Rotator GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Rotator(id));
+        protected override IRotatorV3 GetInstance() {
+            if (deviceMeta == null) {
+                return new Rotator(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaRotator(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -32,11 +32,7 @@ namespace NINA.Core.Utility {
             _stopWatch = Stopwatch.StartNew();
         }
 
-        public TimeSpan Elapsed {
-            get {
-                return _stopWatch.Elapsed;
-            }
-        }
+        public TimeSpan Elapsed => _stopWatch.Elapsed;
 
         private void Log() {
             string message = string.Format("Start: {0}; Stopped: {1}; Elapsed: {2}", _startTime.ToString("dd.MM.yyyy hh:mm:ss.fff"), _stopTime.ToString("dd.MM.yyyy hh:mm:ss.fff"), _stopWatch.Elapsed);

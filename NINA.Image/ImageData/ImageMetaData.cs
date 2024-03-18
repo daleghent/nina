@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -42,7 +42,10 @@ namespace NINA.Image.ImageData {
         /// <param name="profile"></param>
         public void FromProfile(IProfile profile) {
             Camera.PixelSize = profile.CameraSettings.PixelSize;
-            Camera.BayerPattern = profile.CameraSettings.BayerPattern;
+
+            if (Camera.BayerPattern != BayerPatternEnum.None) {
+                Camera.BayerPattern = profile.CameraSettings.BayerPattern;
+            }
 
             Telescope.Name = profile.TelescopeSettings.Name;
             Telescope.FocalLength = profile.TelescopeSettings.FocalLength;
@@ -136,8 +139,9 @@ namespace NINA.Image.ImageData {
     }
 
     public class CameraParameter {
+        public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public string Binning { get => $"{BinX}x{BinY}"; }
+        public string Binning => $"{BinX}x{BinY}";
         public int BinX { get; set; } = 1;
         public int BinY { get; set; } = 1;
         public double PixelSize { get; set; } = double.NaN;
@@ -146,6 +150,7 @@ namespace NINA.Image.ImageData {
         public int Offset { get; set; } = -1;
         public double ElectronsPerADU { get; set; } = double.NaN;
         public double SetPoint { get; set; } = double.NaN;
+        public short ReadoutModeIndex { get; set; } = 0;
         public string ReadoutModeName { get; set; } = string.Empty;
         public BayerPatternEnum BayerPattern = BayerPatternEnum.Auto;
         public SensorType SensorType { get; set; } = SensorType.Monochrome;
@@ -197,7 +202,9 @@ namespace NINA.Image.ImageData {
 
     public class TargetParameter {
         public string Name { get; set; } = string.Empty;
-        public double Rotation { get; set; } = double.NaN;
+        [Obsolete("Use PositionAngle instead")]
+        public double Rotation { get => AstroUtil.EuclidianModulus(360 - PositionAngle, 360); set => PositionAngle = AstroUtil.EuclidianModulus(360 - value, 360); }
+        public double PositionAngle { get; set; } = double.NaN;
         private Coordinates coordinates = null;
 
         public Coordinates Coordinates {

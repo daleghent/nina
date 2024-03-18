@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -25,162 +25,162 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
 
     public class PlayerOnePInvokeProxy : IPlayerOnePInvokeProxy {
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public int POAGetCameraCount() {
             return PlayerOnePInvoke.POAGetCameraCount();
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetCameraProperties(int nIndex, out POACameraProperties pProp) {
             return PlayerOnePInvoke.POAGetCameraProperties(nIndex, out pProp);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetCameraPropertiesByID(int nCameraID, out POACameraProperties pProp) {
             return PlayerOnePInvoke.POAGetCameraPropertiesByID(nCameraID, out pProp);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAOpenCamera(int nCameraID) {
             return PlayerOnePInvoke.POAOpenCamera(nCameraID);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAInitCamera(int nCameraID) {
             return PlayerOnePInvoke.POAInitCamera(nCameraID);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POACloseCamera(int nCameraID) {
             return PlayerOnePInvoke.POACloseCamera(nCameraID);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetConfigsCount(int nCameraID, out int pConfCount) {
             return PlayerOnePInvoke.POAGetConfigsCount(nCameraID, out pConfCount);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetConfigAttributes(int nCameraID, int nConfIndex, out POAConfigAttributes pConfAttr) {
             return PlayerOnePInvoke.POAGetConfigAttributes(nCameraID, nConfIndex, out pConfAttr);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetConfigAttributesByConfigID(int nCameraID, POAConfig confID, out POAConfigAttributes pConfAttr) {
             return PlayerOnePInvoke.POAGetConfigAttributesByConfigID(nCameraID, confID, out pConfAttr);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetConfig(int nCameraID, POAConfig confID, POAConfigValue confValue, POABool isAuto) {
             return PlayerOnePInvoke.POASetConfig(nCameraID, confID, confValue, isAuto);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetConfig(int nCameraID, POAConfig confID, out POAConfigValue confValue, out POABool isAuto) {
             return PlayerOnePInvoke.POAGetConfig(nCameraID, confID, out confValue, out isAuto);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetConfigValueType(POAConfig confID, out POAValueType pConfValueType) {
             return PlayerOnePInvoke.POAGetConfigValueType(confID, out pConfValueType);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetImageStartPos(int nCameraID, int startX, int startY) {
             return PlayerOnePInvoke.POASetImageStartPos(nCameraID, startX, startY);
         }
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
 
         public POAErrors POAGetImageStartPos(int nCameraID, out int pStartX, out int pStartY) {
             return PlayerOnePInvoke.POAGetImageStartPos(nCameraID, out pStartX, out pStartY);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetImageSize(int nCameraID, int width, int height) {
             return PlayerOnePInvoke.POASetImageSize(nCameraID, width, height);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetImageSize(int nCameraID, out int pWidth, out int pHeight) {
             return PlayerOnePInvoke.POAGetImageSize(nCameraID, out pWidth, out pHeight);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetImageBin(int nCameraID, int bin) {
             return PlayerOnePInvoke.POASetImageBin(nCameraID, bin);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetImageBin(int nCameraID, out int pBin) {
             return PlayerOnePInvoke.POAGetImageBin(nCameraID, out pBin);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetImageFormat(int nCameraID, POAImgFormat imgFormat) {
             return PlayerOnePInvoke.POASetImageFormat(nCameraID, imgFormat);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetImageFormat(int nCameraID, out POAImgFormat pImgFormat) {
             return PlayerOnePInvoke.POAGetImageFormat(nCameraID, out pImgFormat);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAStartExposure(int nCameraID, POABool bSignalFrame) {
             return PlayerOnePInvoke.POAStartExposure(nCameraID, bSignalFrame);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAStopExposure(int nCameraID) {
             return PlayerOnePInvoke.POAStopExposure(nCameraID);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetCameraState(int nCameraID, out POACameraState pCameraState) {
             return PlayerOnePInvoke.POAGetCameraState(nCameraID, out pCameraState);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetImageData(int nCameraID, [Out] ushort[] pBuf, int nBufSize, int nTimeoutms) {
             return PlayerOnePInvoke.POAGetImageData(nCameraID, pBuf, nBufSize, nTimeoutms);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetDroppedImagesCount(int nCameraID, out int pDroppedCount) {
             return PlayerOnePInvoke.POAGetDroppedImagesCount(nCameraID, out pDroppedCount);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetUserCustomID(int nCameraID, IntPtr pCustomID, int len) {
             return PlayerOnePInvoke.POASetUserCustomID(nCameraID, pCustomID, len);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetGainOffset(int nCameraID, out int pOffsetHighestDR, out int pOffsetUnityGain, out int pGainLowestRN, out int pOffsetLowestRN, out int pHCGain) {
             return PlayerOnePInvoke.POAGetGainOffset(nCameraID, out pOffsetHighestDR, out pOffsetUnityGain, out pGainLowestRN, out pOffsetLowestRN, out pHCGain);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAImageReady(int nCameraID, out POABool pIsReady) {
             return PlayerOnePInvoke.POAImageReady(nCameraID, out pIsReady);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POASetTrgModeEnable(int nCameraId, POABool enable) {
             return PlayerOnePInvoke.POASetTrgModeEnable(nCameraId, enable);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public IntPtr POAGetErrorString(POAErrors err) {
             return PlayerOnePInvoke.POAGetErrorString(err);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public int POAGetAPIVersion() {
             return PlayerOnePInvoke.POAGetAPIVersion();
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public string POAGetSDKVersion() {
             IntPtr p = PlayerOnePInvoke.POAGetSDKVersion();
             string version = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(p);
@@ -286,22 +286,22 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
             }
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetSensorModeCount(int nCameraID, out int pModeCount) {
             return PlayerOnePInvoke.POAGetSensorModeCount(nCameraID, out pModeCount);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public POAErrors POAGetSensorMode(int nCameraID, out int pModeIndex) {
             return PlayerOnePInvoke.POAGetSensorMode(nCameraID, out pModeIndex);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public  POAErrors POAGetSensorModeInfo(int nCameraID, int index, out POASensorModeInfo pSenModeInfo) {
             return PlayerOnePInvoke.POAGetSensorModeInfo(nCameraID, index, out pSenModeInfo);
         }
 
-        [HandleProcessCorruptedStateExceptions, SecurityCritical]
+        [SecurityCritical]
         public  POAErrors POASetSensorMode(int nCameraID, int modeIndex) {
             return PlayerOnePInvoke.POASetSensorMode(nCameraID, modeIndex);
         }

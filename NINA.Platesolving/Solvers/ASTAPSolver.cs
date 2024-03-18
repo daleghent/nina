@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -92,7 +92,7 @@ namespace NINA.PlateSolving.Solvers {
                 Coordinates.RAType.Degrees
             );
 
-            result.Orientation = double.Parse(dict["CROTA2"], CultureInfo.InvariantCulture);
+            // result.PositionAngle = 360 - double.Parse(dict["CROTA2"], CultureInfo.InvariantCulture);
 
             /*
              * CDELT1 and CDELT2 are obsolete.
@@ -104,9 +104,10 @@ namespace NINA.PlateSolving.Solvers {
 
                 result.Pixscale = AstroUtil.DegreeToArcsec(Math.Sqrt(Math.Pow(cr1y, 2) + Math.Pow(cr2y, 2)));
             }
-
-            /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */
-            result.Orientation = wcs.Rotation - 180;
+            if(!double.IsNaN(result.Pixscale)) {
+                result.Radius = AstroUtil.ArcsecToDegree(Math.Sqrt(Math.Pow(imageProperties.ImageWidth * result.Pixscale, 2) + Math.Pow(imageProperties.ImageHeight * result.Pixscale, 2)) / 2d);
+            }            
+            result.PositionAngle = 360 - (wcs.Rotation - 180);
             result.Flipped = !wcs.Flipped;
 
             return result;

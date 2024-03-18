@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -69,7 +69,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 new ToggleLight(flatDeviceMediator) { OnOff = false },
                 new SwitchFilter(profileService, filterWheelMediator),
                 new SetBrightness(flatDeviceMediator),
-                new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) { ImageType = CaptureSequence.ImageTypes.DARKFLAT },
+                new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) { ImageType = CaptureSequence.ImageTypes.DARK },
                 new LoopCondition() { Iterations = 1 },
                 new OpenCover(flatDeviceMediator)
 
@@ -199,8 +199,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var loop = GetIterations();
             if (loop.CompletedIterations >= loop.Iterations) {
-                Logger.Warning($"The Trained Dark Flat Exposure progress is already complete ({loop.CompletedIterations}/{loop.Iterations}). The instruction will be skipped");
-                throw new SequenceItemSkippedException($"The Trained Dark Flat Exposure progress is already complete ({loop.CompletedIterations}/{loop.Iterations}). The instruction will be skipped");
+                Logger.Warning($"The Trained Dark Exposure progress is already complete ({loop.CompletedIterations}/{loop.Iterations}). The instruction will be skipped");
+                throw new SequenceItemSkippedException($"The Trained Dark Exposure progress is already complete ({loop.CompletedIterations}/{loop.Iterations}). The instruction will be skipped");
             }
 
             /* Lookup trained values and set brightness and exposure time accordingly */
@@ -208,7 +208,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var takeExposure = GetExposureItem();
             var binning = takeExposure.Binning;
             var gain = takeExposure.Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : takeExposure.Gain;
-            var info = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(new FlatDeviceFilterSettingsKey(filter?.Position, binning, gain));
+            var offset = takeExposure.Offset == -1 ? profileService.ActiveProfile.CameraSettings.Offset ?? -1 : takeExposure.Offset;
+            var info = profileService.ActiveProfile.FlatDeviceSettings.GetTrainedFlatExposureSetting(filter?.Position, binning, gain, offset);
 
             (Items[3] as SetBrightness).Brightness = 0;
             takeExposure.ExposureTime = info.Time;
@@ -251,7 +252,10 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 var filter = switchFilter?.Filter;
                 var binning = takeExposure.Binning;
                 var gain = takeExposure.Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : takeExposure.Gain;
-                if (profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(new FlatDeviceFilterSettingsKey(filter?.Position, binning, gain)) == null) {
+                var offset = takeExposure.Offset == -1 ? profileService.ActiveProfile.CameraSettings.Offset ?? -1 : takeExposure.Offset;
+
+
+                if (profileService.ActiveProfile.FlatDeviceSettings.GetTrainedFlatExposureSetting(filter?.Position, binning, gain, offset) == null) {
                     issues.Add(string.Format(Loc.Instance["Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound"], filter?.Name, gain, binning?.Name));
                     valid = false;
                 }

@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,13 +12,15 @@
 
 #endregion "copyright"
 
-using ASCOM;
-using ASCOM.DriverAccess;
+using ASCOM.Alpaca.Discovery;
+using ASCOM.Com.DriverAccess;
+using ASCOM.Common;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
+using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,46 +29,46 @@ namespace NINA.Equipment.Equipment.MyDome {
 
     public static class ShutterStateExtensions {
 
-        public static ShutterState FromASCOM(this ASCOM.DeviceInterface.ShutterState shutterState) {
+        public static ShutterState FromASCOM(this ASCOM.Common.DeviceInterfaces.ShutterState shutterState) {
             switch (shutterState) {
-                case ASCOM.DeviceInterface.ShutterState.shutterOpen:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Open:
                     return ShutterState.ShutterOpen;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterClosed:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Closed:
                     return ShutterState.ShutterClosed;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterOpening:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Opening:
                     return ShutterState.ShutterOpening;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterClosing:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Closing:
                     return ShutterState.ShutterClosing;
 
-                case ASCOM.DeviceInterface.ShutterState.shutterError:
+                case ASCOM.Common.DeviceInterfaces.ShutterState.Error:
                     return ShutterState.ShutterError;
             }
             Logger.Error($"Invalid ASCOM shutter state {shutterState}. The driver is non-conformant and should be fixed. Treating it as shutterError.");
             return ShutterState.ShutterError;
         }
 
-        public static ASCOM.DeviceInterface.ShutterState ToASCOM(this ShutterState shutterState) {
+        public static ASCOM.Common.DeviceInterfaces.ShutterState ToASCOM(this ShutterState shutterState) {
             switch (shutterState) {
                 case ShutterState.ShutterOpen:
-                    return ASCOM.DeviceInterface.ShutterState.shutterOpen;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Open;
 
                 case ShutterState.ShutterClosed:
-                    return ASCOM.DeviceInterface.ShutterState.shutterClosed;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Closed;
 
                 case ShutterState.ShutterOpening:
-                    return ASCOM.DeviceInterface.ShutterState.shutterOpening;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Opening;
 
                 case ShutterState.ShutterClosing:
-                    return ASCOM.DeviceInterface.ShutterState.shutterClosing;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Closing;
 
                 case ShutterState.ShutterError:
-                    return ASCOM.DeviceInterface.ShutterState.shutterError;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Error;
 
                 case ShutterState.ShutterNone:
-                    return ASCOM.DeviceInterface.ShutterState.shutterError;
+                    return ASCOM.Common.DeviceInterfaces.ShutterState.Error;
             }
             throw new ArgumentOutOfRangeException($"{shutterState} is not an expected value");
         }
@@ -80,9 +82,11 @@ namespace NINA.Equipment.Equipment.MyDome {
         }
     }
 
-    internal class AscomDome : AscomDevice<Dome, IDomeFacade, DomeFacadeProxy>, IDome, IDisposable {
+    internal class AscomDome : AscomDevice<ASCOM.Common.DeviceInterfaces.IDomeV2>, IDome, IDisposable {
 
-        public AscomDome(string domeId, string domeName, IDeviceDispatcher deviceDispatcher) : base(domeId, domeName, deviceDispatcher, DeviceDispatcherType.Dome) {
+        public AscomDome(string domeId, string domeName) : base(domeId, domeName) {
+        }
+        public AscomDome(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
         public bool DriverCanFollow => GetProperty(nameof(Dome.CanSlave), false);
@@ -97,19 +101,15 @@ namespace NINA.Equipment.Equipment.MyDome {
 
         public bool CanFindHome => GetProperty(nameof(Dome.CanFindHome), false);
 
-        public double Azimuth => GetProperty(nameof(Dome.Azimuth), -1d);
+        public double Azimuth => GetProperty(nameof(Dome.Azimuth), double.NaN);
 
         public bool AtPark => GetProperty(nameof(Dome.AtPark), false);
 
         public bool AtHome => GetProperty(nameof(Dome.AtHome), false);
 
         public bool DriverFollowing {
-            get {
-                return GetProperty(nameof(Dome.Slaved), false);
-            }
-            set {
-                SetProperty(nameof(Dome.Slaved), value);
-            }
+            get => GetProperty(nameof(Dome.Slaved), false);
+            set => SetProperty(nameof(Dome.Slaved), value);
         }
 
         public bool Slewing => GetProperty(nameof(Dome.Slewing), false);
@@ -119,7 +119,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                 if (!CanSetShutter) {
                     return ShutterState.ShutterNone;
                 }
-                var ascomState = GetProperty(nameof(Dome.ShutterStatus), ASCOM.DeviceInterface.ShutterState.shutterError);
+                var ascomState = GetProperty(nameof(Dome.ShutterStatus), ASCOM.Common.DeviceInterfaces.ShutterState.Error);
                 return ascomState.FromASCOM();
             }
         }
@@ -135,16 +135,8 @@ namespace NINA.Equipment.Equipment.MyDome {
             if (Connected) {
                 if (CanSetAzimuth) {
                     using (ct.Register(async () => await StopSlewing())) {
-                        await Task.Run(async () => {
-                            device?.SlewToAzimuth(azimuth);
-                            await Task.Delay(TimeSpan.FromSeconds(3), ct);
-                            ct.ThrowIfCancellationRequested();
-
-                            while (device != null && device.Slewing && !ct.IsCancellationRequested) {
-                                await Task.Delay(TimeSpan.FromSeconds(1), ct);
-                            }
-                            ct.ThrowIfCancellationRequested();
-                        }, ct);
+                        await (device?.SlewToAzimuthAsync(azimuth, ct) ?? Task.CompletedTask);
+                        InvalidatePropertyCache();
                     }
                 } else {
                     Logger.Warning("Dome cannot slew");
@@ -160,14 +152,15 @@ namespace NINA.Equipment.Equipment.MyDome {
             if (Connected) {
                 // ASCOM only allows you to stop all movement, which includes both shutter and slewing. If the shutter was opening or closing
                 // when this command is received, try and continue the operation afterwards
-                return Task.Run(() => {
+                return Task.Run(async () => {
                     var priorShutterStatus = ShutterStatus;
-                    device?.AbortSlew();
+                    await (device?.AbortSlewAsync() ?? Task.CompletedTask);
                     if (priorShutterStatus == ShutterState.ShutterClosing) {
-                        device?.CloseShutter();
+                        await (device?.CloseShutterAsync() ?? Task.CompletedTask);
                     } else if (priorShutterStatus == ShutterState.ShutterOpening) {
-                        device?.OpenShutter();
+                        await (device?.OpenShutterAsync() ?? Task.CompletedTask);
                     }
+                    InvalidatePropertyCache();
                 });
             } else {
                 Logger.Warning("Dome is not connected");
@@ -203,13 +196,15 @@ namespace NINA.Equipment.Equipment.MyDome {
                         if (ShutterStatus == ShutterState.ShutterError) {
                             // If shutter is in the error state, you must close it before re-opening
                             await CloseShutter(ct);
+                            InvalidatePropertyCache();
                         }
 
                         if (ShutterStatus == ShutterState.ShutterOpening) {
                             Logger.Info($"Dome shutter already opening, so not sending another OpenShutter request");
                         } else {
                             Logger.Info($"Sending an OpenShutter request, since it is currently {ShutterStatus}");
-                            await Task.Run(() => device?.OpenShutter(), ct);
+                            await (device?.OpenShutterAsync(ct) ?? Task.CompletedTask);
+                            InvalidatePropertyCache();
                             ct.ThrowIfCancellationRequested();
                         }
 
@@ -247,7 +242,8 @@ namespace NINA.Equipment.Equipment.MyDome {
                             Logger.Info($"Dome shutter already closing, so not sending another CloseShutter request");
                         } else {
                             Logger.Info($"Sending a CloseShutter request, since it is currently {ShutterStatus}");
-                            await Task.Run(() => device?.CloseShutter(), ct);
+                            await (device?.CloseShutterAsync(ct) ?? Task.CompletedTask);
+                            InvalidatePropertyCache();
                             ct.ThrowIfCancellationRequested();
                         }
 
@@ -276,26 +272,28 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task FindHome(CancellationToken ct) {
             if (Connected) {
                 if (CanFindHome) {
-                    if (device?.AtHome == true) {
+                    if (AtHome == true) {
                         Logger.Info("Dome already AtHome. Not submitting a FindHome request");
                         return;
                     }
 
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure FindHome works
-                    if (device?.Slewing == true) {
-                        device?.AbortSlew();
+                    if (Slewing == true) {
+                        await (device?.AbortSlewAsync(ct) ?? Task.CompletedTask);
+                        InvalidatePropertyCache();
                         await Task.Delay(1000, ct);
                     }
 
                     using (ct.Register(() => device?.AbortSlew())) {
-                        await Task.Run(() => device.FindHome(), ct);
+                        await (device?.FindHomeAsync(ct) ?? Task.CompletedTask);
+                        InvalidatePropertyCache();
                         ct.ThrowIfCancellationRequested();
 
                         // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
                         await Task.Delay(TimeSpan.FromSeconds(3), ct);
                         ct.ThrowIfCancellationRequested();
 
-                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                        while (Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
                         ct.ThrowIfCancellationRequested();
@@ -317,10 +315,11 @@ namespace NINA.Equipment.Equipment.MyDome {
             if (Connected) {
                 if (CanPark) {
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure Park works
-                    if (device?.Slewing == true) {
+                    if (Slewing == true) {
                         Logger.Info("Dome shutter or rotator slewing when a park was requested. Aborting all movement");
 
-                        device?.AbortSlew();
+                        await device?.AbortSlewAsync(ct);
+                        InvalidatePropertyCache();
                         await Task.Delay(TimeSpan.FromSeconds(1), ct);
                     }
 
@@ -329,8 +328,8 @@ namespace NINA.Equipment.Equipment.MyDome {
                         if (AtPark) {
                             Logger.Info("Dome already AtPark. Not sending a Park command");
                         } else {
-                            await Task.Run(() => device?.Park(), ct);
-                            ct.ThrowIfCancellationRequested();
+                            await (device?.ParkAsync(ct) ?? Task.CompletedTask);
+                            InvalidatePropertyCache();
                         }
 
                         if (CanSetShutter) {
@@ -343,7 +342,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                             }
                         }
                         await Task.Delay(TimeSpan.FromSeconds(3), ct);
-                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                        while (Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(TimeSpan.FromSeconds(1), ct);
                         }
                         ct.ThrowIfCancellationRequested();
@@ -391,8 +390,12 @@ namespace NINA.Equipment.Equipment.MyDome {
             return Task.CompletedTask;
         }
 
-        protected override Dome GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new Dome(id));
+        protected override ASCOM.Common.DeviceInterfaces.IDomeV2 GetInstance() {
+            if (deviceMeta == null) {
+                return new Dome(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaDome(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

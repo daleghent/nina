@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,28 +12,29 @@
 
 #endregion "copyright"
 
-using ASCOM.DriverAccess;
+using ASCOM.Alpaca.Discovery;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Locale;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 
 namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
-    internal class AscomSafetyMonitor : AscomDevice<SafetyMonitor, ISafetyMonitorFacade, SafetyMonitorFacadeProxy>, ISafetyMonitor {
-
-        public AscomSafetyMonitor(string id, string name, IDeviceDispatcher deviceDispatcher) : base(id, name, deviceDispatcher, DeviceDispatcherType.SafetyMonitor) {
+    internal class AscomSafetyMonitor : AscomDevice<ASCOM.Common.DeviceInterfaces.ISafetyMonitor>, ISafetyMonitor {
+        public AscomSafetyMonitor(string id, string name) : base(id, name) {
+        }
+        public AscomSafetyMonitor(AscomDevice deviceMeta) : base(deviceMeta) {
         }
 
-        public bool IsSafe {
-            get {
-                return GetProperty(nameof(SafetyMonitor.IsSafe), false);
-            }
-        }
+        public bool IsSafe => GetProperty(nameof(SafetyMonitor.IsSafe), false);
 
         protected override string ConnectionLostMessage => Loc.Instance["LblSafetyMonitorConnectionLost"];
 
-        protected override SafetyMonitor GetInstance(string id) {
-            return DeviceDispatcher.Invoke(DeviceDispatcherType, () => new SafetyMonitor(id));
+        protected override ASCOM.Common.DeviceInterfaces.ISafetyMonitor GetInstance() {
+            if (deviceMeta == null) {
+                return new SafetyMonitor(Id);
+            } else {
+                return new ASCOM.Alpaca.Clients.AlpacaSafetyMonitor(deviceMeta.ServiceType, deviceMeta.IpAddress, deviceMeta.IpPort, deviceMeta.AlpacaDeviceNumber, false, null);
+            }
         }
     }
 }

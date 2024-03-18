@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,14 +33,14 @@ namespace NINA.Profile.Interfaces {
         string PHD2Path { get; set; }
         bool AutoRetryStartGuiding { get; set; }
         int AutoRetryStartGuidingTimeoutSeconds { get; set; }
-        string MetaGuideIP { get; set; }
+        bool MetaGuideUseIpAddressAny { get; set; }
         int MetaGuidePort { get; set; }
         int MGENFocalLength { get; set; }
         int MGENPixelMargin { get; set; }
         int MetaGuideMinIntensity { get; set; }
         int MetaGuideDitherSettleSeconds { get; set; }
         bool MetaGuideLockWhenGuiding { get; set; }
-        int PHD2ROIPct { get; }
+        int PHD2ROIPct { get; set; }
         int? PHD2ProfileId { get; set; }
         int SkyGuardServerPort { get; set; }
         string SkyGuardServerUrl { get; set; }

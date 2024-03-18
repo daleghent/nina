@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -28,11 +28,10 @@
                         <Border BorderBrush="Transparent">
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}">
-                                    <Setter Property="BorderThickness" Value="0" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ThisWindow, Path=WindowState}" Value="Maximized">
                                             <!--<Setter Property="BorderThickness" Value="{Binding Source={x:Static SystemParameters.WindowResizeBorderThickness}}" />-->
-                                            <Setter Property="BorderThickness" Value="4" />
+                                            <Setter Property="Padding" Value="8" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -80,9 +79,25 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontWeight="Bold"
-                                    Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Visibility="{Binding Source={x:Static coreutil:CoreUtil.IsReleaseBuild}, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
-                                    ! PREVIEW VERSION !
+                                    Foreground="Red"
+                                    Visibility="{Binding Source={x:Static coreutil:CoreUtil.IsNightlyBuild}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    ! NIGHTLY UNSTABLE VERSION !
+                                </TextBlock>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold"
+                                    Foreground="Yellow"
+                                    Visibility="{Binding Source={x:Static coreutil:CoreUtil.IsBetaBuild}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    ! BETA PREVIEW VERSION !
+                                </TextBlock>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold"
+                                    Foreground="Green"
+                                    Visibility="{Binding Source={x:Static coreutil:CoreUtil.IsRCBuild}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    RELEASE CANDIDATE
                                 </TextBlock>
 
                                 <StackPanel
@@ -105,7 +120,8 @@
                                                 Margin="2"
                                                 Data="{StaticResource DownloadSVG}"
                                                 Stretch="Uniform"
-                                                Style="{StaticResource WindowButtonPath}" />
+                                                Style="{StaticResource WindowButtonPath}"
+                                                UseLayoutRounding="True" />
                                         </StackPanel>
                                     </Button>
                                     <Button
@@ -118,7 +134,8 @@
                                             Width="12"
                                             Data="{StaticResource MinimizeWindowSVG}"
                                             Stretch="Uniform"
-                                            Style="{StaticResource WindowButtonPath}" />
+                                            Style="{StaticResource WindowButtonPath}"
+                                            UseLayoutRounding="True" />
                                     </Button>
                                     <Button
                                         Width="45"
@@ -131,7 +148,8 @@
                                             Margin="10"
                                             Data="{StaticResource MaximizeSVG}"
                                             Stretch="Uniform"
-                                            Style="{StaticResource WindowButtonPath}" />
+                                            Style="{StaticResource WindowButtonPath}"
+                                            UseLayoutRounding="True" />
                                     </Button>
                                     <Button
                                         Width="45"
@@ -143,7 +161,8 @@
                                             Margin="10"
                                             Data="{StaticResource CancelSVG}"
                                             Stretch="Uniform"
-                                            Style="{StaticResource WindowCloseButtonPath}" />
+                                            Style="{StaticResource WindowCloseButtonPath}"
+                                            UseLayoutRounding="True" />
                                     </Button>
                                 </StackPanel>
 
@@ -235,7 +254,8 @@
                                         Margin="10"
                                         Data="{StaticResource CancelSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource WindowCloseButtonPath}" />
+                                        Style="{StaticResource WindowCloseButtonPath}"
+                                        UseLayoutRounding="True" />
                                 </Button>
                             </StackPanel>
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -35,6 +35,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public string Id => "flip_flat_simulator";
         public string Name => "Flip-Flat Simulator";
+        public string DisplayName => Name;
         public string Category => "Alnitak Astrosystems";
 
         public bool Connected { get; private set; }
@@ -133,9 +134,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOpenClose => true;
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
         public IList<string> SupportedActions => new List<string>();
 

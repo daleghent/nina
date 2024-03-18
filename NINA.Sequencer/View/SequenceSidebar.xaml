@@ -1,5 +1,5 @@
 ﻿<!--
-    Copyright © 2016 - 2023 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -17,7 +17,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:NINA.View.Sequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:sequenceItem="clr-namespace:NINA.Sequencer.SequenceItem"
     xmlns:sequencer="clr-namespace:NINA.Sequencer"
@@ -111,7 +111,8 @@
                         Height="20"
                         Margin="0,0,10,0"
                         Data="{StaticResource SequenceSVG}"
-                        Stretch="Uniform">
+                        Stretch="Uniform"
+                        UseLayoutRounding="True">
                         <Path.Style>
                             <Style TargetType="Path">
                                 <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
@@ -168,7 +169,8 @@
                                                     Margin="3.5"
                                                     Data="{StaticResource CollapseAllSVG}"
                                                     Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                             </Setter.Value>
                                         </Setter>
                                         <Setter Property="ToolTip">
@@ -186,7 +188,8 @@
                                                     Margin="3.5"
                                                     Data="{StaticResource ExpandAllSVG}"
                                                     Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                             </Setter.Value>
                                         </Setter>
                                         <Setter Property="ToolTip">
@@ -223,7 +226,8 @@
                                                     Margin="2.5"
                                                     Data="{StaticResource SettingsSVG}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -234,7 +238,8 @@
                                                     Margin="2.5"
                                                     Data="{StaticResource SettingsSVG}"
                                                     Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -272,7 +277,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{Binding Icon}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     Margin="10,0,0,0"
@@ -338,7 +344,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{StaticResource BoxSVG}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <Path
                                                     Grid.Column="1"
                                                     Width="20"
@@ -346,7 +353,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{Binding Icon}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <TextBlock
                                                     Grid.Column="2"
                                                     Margin="10,0,0,0"
@@ -412,7 +420,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{StaticResource ThunderSVG}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <Path
                                                     Grid.Column="1"
                                                     Width="20"
@@ -420,7 +429,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{Binding Icon}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <TextBlock
                                                     Grid.Column="2"
                                                     Margin="10,0,0,0"
@@ -486,7 +496,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{StaticResource NotepadSVG}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <Path
                                                     Grid.Column="1"
                                                     Width="20"
@@ -494,7 +505,8 @@
                                                     Margin="5,0,0,0"
                                                     Data="{Binding Icon}"
                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
+                                                    Stretch="Uniform"
+                                                    UseLayoutRounding="True" />
                                                 <TextBlock
                                                     Grid.Column="2"
                                                     Margin="10,0,0,0"
@@ -582,7 +594,8 @@
                         Height="20"
                         Margin="0,0,10,0"
                         Data="{StaticResource BoxSVG}"
-                        Stretch="Uniform">
+                        Stretch="Uniform"
+                        UseLayoutRounding="True">
                         <Path.Style>
                             <Style TargetType="Path">
                                 <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
@@ -639,7 +652,8 @@
                                                         Margin="3.5"
                                                         Data="{StaticResource CollapseAllSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter Property="ToolTip">
@@ -657,7 +671,8 @@
                                                         Margin="3.5"
                                                         Data="{StaticResource ExpandAllSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter Property="ToolTip">
@@ -688,6 +703,17 @@
                             TextBlock.FontStyle="Italic"
                             TextWrapping="Wrap" />
                     </Border>
+
+                    <ProgressBar
+                        Grid.Row="2"
+                        Height="20"
+                        Margin="5,5,5,0"
+                        VerticalAlignment="Top"
+                        Maximum="{Binding TemplateController.TemplatesLoadingTotalCount}"
+                        Minimum="0"
+                        Visibility="{Binding TemplateController.TemplatesLoading, Converter={StaticResource VisibilityConverter}}"
+                        Value="{Binding TemplateController.TemplatesLoadingProgress}" />
+
                     <ListBox
                         Grid.Row="3"
                         Margin="5,0,0,0"
@@ -700,7 +726,8 @@
                         ItemContainerStyle="{StaticResource ListBoxItemNoHighlight}"
                         ItemsSource="{Binding TemplateController.TemplatesView}"
                         VirtualizingPanel.IsVirtualizing="True"
-                        VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                        Visibility="{Binding TemplateController.TemplatesLoading, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
 
                         <ItemsControl.GroupStyle>
                             <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
@@ -738,7 +765,8 @@
                                                             Margin="5,0,5,0"
                                                             Data="{Binding Icon}"
                                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                                                            Stretch="Uniform"
+                                                            UseLayoutRounding="True" />
                                                         <TextBlock
                                                             Grid.Row="0"
                                                             Grid.Column="1"
@@ -769,7 +797,8 @@
                                                             Margin="5,0,5,0"
                                                             Data="{Binding Icon}"
                                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                                                            Stretch="Uniform"
+                                                            UseLayoutRounding="True" />
                                                         <TextBlock
                                                             Grid.Row="0"
                                                             Grid.Column="1"
@@ -795,7 +824,8 @@
                                                             Margin="5,0,5,0"
                                                             Data="{Binding Icon}"
                                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                                                            Stretch="Uniform"
+                                                            UseLayoutRounding="True" />
                                                         <TextBlock
                                                             Grid.Column="1"
                                                             Foreground="{StaticResource ButtonForegroundBrush}"
@@ -824,7 +854,8 @@
                                                             Margin="5,0,0,0"
                                                             Data="{StaticResource BoxClosedSVG}"
                                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                                                            Stretch="Uniform"
+                                                            UseLayoutRounding="True" />
                                                         <Path
                                                             Grid.Column="1"
                                                             Width="20"
@@ -832,7 +863,8 @@
                                                             Margin="5,0,0,0"
                                                             Data="{Binding Container.Icon}"
                                                             Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                                                            Stretch="Uniform"
+                                                            UseLayoutRounding="True" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
@@ -904,7 +936,8 @@
                         Height="20"
                         Margin="0,0,10,0"
                         Data="{StaticResource PictureSVG}"
-                        Stretch="Uniform">
+                        Stretch="Uniform"
+                        UseLayoutRounding="True">
                         <Path.Style>
                             <Style TargetType="Path">
                                 <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
@@ -962,7 +995,8 @@
                                                         Margin="3.5"
                                                         Data="{StaticResource CollapseAllSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter Property="ToolTip">
@@ -980,7 +1014,8 @@
                                                         Margin="3.5"
                                                         Data="{StaticResource ExpandAllSVG}"
                                                         Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                        Stretch="Uniform" />
+                                                        Stretch="Uniform"
+                                                        UseLayoutRounding="True" />
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter Property="ToolTip">
@@ -1033,6 +1068,18 @@
                             TextBlock.FontStyle="Italic"
                             TextWrapping="Wrap" />
                     </Border>
+
+                    <ProgressBar
+                        Grid.Row="3"
+                        Height="20"
+                        Margin="5,5,5,0"
+                        VerticalAlignment="Top"
+                        Maximum="{Binding TargetController.TargetsLoadingTotalCount}"
+                        Minimum="0"
+                        Visibility="{Binding TargetController.TargetsLoading, Converter={StaticResource VisibilityConverter}}"
+                        Value="{Binding TargetController.TargetsLoadingProgress}" />
+
+
                     <ListBox
                         Grid.Row="3"
                         Margin="5,0,0,0"
@@ -1045,7 +1092,8 @@
                         ItemContainerStyle="{StaticResource ListBoxItemNoHighlight}"
                         ItemsSource="{Binding TargetController.TargetsView}"
                         VirtualizingPanel.IsVirtualizing="True"
-                        VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                        Visibility="{Binding TargetController.TargetsLoading, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <ItemsControl.GroupStyle>
                             <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
                         </ItemsControl.GroupStyle>
@@ -1122,7 +1170,7 @@
                                                 <TextBlock
                                                     Margin="5,0,0,0"
                                                     Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{Binding Target.Rotation, StringFormat={}{0:N2}}" />
+                                                    Text="{Binding Target.PositionAngle, StringFormat={}{0:N2}}" />
                                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="°" />
                                             </StackPanel>
                                             <StackPanel DataContext="{Binding Target.DeepSkyObject}" Orientation="Horizontal">
@@ -1149,12 +1197,14 @@
                                                                                     Margin="5"
                                                                                     Data="{StaticResource NewMoonSVG}"
                                                                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                                                                    Stretch="Uniform" />
+                                                                                    Stretch="Uniform"
+                                                                                    UseLayoutRounding="True" />
                                                                                 <Path
                                                                                     Margin="5"
                                                                                     Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
                                                                                     Fill="Black"
-                                                                                    Stretch="Uniform" />
+                                                                                    Stretch="Uniform"
+                                                                                    UseLayoutRounding="True" />
                                                                             </Grid>
                                                                         </Setter.Value>
                                                                     </Setter>
@@ -1167,12 +1217,14 @@
                                                                                     Margin="5"
                                                                                     Data="{StaticResource NewMoonSVG}"
                                                                                     Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                                                    Stretch="Uniform" />
+                                                                                    Stretch="Uniform"
+                                                                                    UseLayoutRounding="True" />
                                                                                 <Path
                                                                                     Margin="5"
                                                                                     Data="{Binding Moon.Phase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
                                                                                     Fill="Black"
-                                                                                    Stretch="Uniform" />
+                                                                                    Stretch="Uniform"
+                                                                                    UseLayoutRounding="True" />
                                                                             </Grid>
                                                                         </Setter.Value>
                                                                     </Setter>

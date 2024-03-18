@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -31,9 +31,7 @@ namespace NINA.Image.ImageAnalysis {
         /// <summary>
         /// Format translations dictionary.
         /// </summary>
-        public override Dictionary<PixelFormat, PixelFormat> FormatTranslations {
-            get { return formatTranslations; }
-        }
+        public override Dictionary<PixelFormat, PixelFormat> FormatTranslations => formatTranslations;
 
         /// <summary>
         /// Low threshold.
@@ -47,8 +45,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </remarks>
         ///
         public byte LowThreshold {
-            get { return lowThreshold; }
-            set { lowThreshold = value; }
+            get => lowThreshold;
+            set => lowThreshold = value;
         }
 
         /// <summary>
@@ -63,8 +61,8 @@ namespace NINA.Image.ImageAnalysis {
         /// </remarks>
         ///
         public byte HighThreshold {
-            get { return highThreshold; }
-            set { highThreshold = value; }
+            get => highThreshold;
+            set => highThreshold = value;
         }
 
         /// <summary>

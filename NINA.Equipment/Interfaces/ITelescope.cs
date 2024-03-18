@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using NINA.Core.Enum;
 using System.Threading;
+using System;
 
 namespace NINA.Equipment.Interfaces {
 
@@ -34,6 +35,25 @@ namespace NINA.Equipment.Interfaces {
         public TrackingMode TrackingMode;
         public double? CustomRightAscensionRate;
         public double? CustomDeclinationRate;
+
+        public override bool Equals(object obj) {
+            return obj is TrackingRate rate &&
+                   TrackingMode == rate.TrackingMode &&
+                   CustomRightAscensionRate == rate.CustomRightAscensionRate &&
+                   CustomDeclinationRate == rate.CustomDeclinationRate;
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(TrackingMode, CustomRightAscensionRate, CustomDeclinationRate);
+        }
+
+        public static bool operator ==(TrackingRate left, TrackingRate right) {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(TrackingRate left, TrackingRate right) {
+            return !(left == right);
+        }
     }
 
     public interface ITelescope : IDevice {
@@ -95,7 +115,7 @@ namespace NINA.Equipment.Interfaces {
 
         void PulseGuide(GuideDirections direction, int duration);
 
-        void Park();
+        Task Park(CancellationToken token);
 
         void Setpark();
 
@@ -105,11 +125,11 @@ namespace NINA.Equipment.Interfaces {
 
         bool Sync(Coordinates coordinates);
 
-        void Unpark();
+        Task Unpark(CancellationToken token);
 
         void SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
-        void FindHome();
+        Task FindHome(CancellationToken token);
 
         PierSide DestinationSideOfPier(Coordinates coordinates);
     }

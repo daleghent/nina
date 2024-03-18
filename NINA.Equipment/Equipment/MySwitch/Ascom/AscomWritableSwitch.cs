@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,18 +14,17 @@
 
 using System;
 using System.Threading.Tasks;
-using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Com.DriverAccess;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
-using NINA.Equipment.ASCOMFacades;
 using NINA.Equipment.Interfaces;
 
 namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
     internal class AscomWritableSwitch : AscomSwitch, IWritableSwitch {
 
-        public AscomWritableSwitch(ISwitchFacade s, short id) : base(s, id) {
+        public AscomWritableSwitch(ISwitchV2 s, short id) : base(s, id) {
             Maximum = ascomSwitchHub.MaxSwitchValue(id);
             Minimum = ascomSwitchHub.MinSwitchValue(id);
             StepSize = ascomSwitchHub.SwitchStep(id);

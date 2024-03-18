@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,6 +14,7 @@ using NINA.Plugin.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,10 +41,19 @@ namespace NINA.Plugin {
         }
         private Dictionary<string, PluginCompatibility> CompatibilityMap { get; }
 
+        public readonly Version MinimumMajorVersion = GetPluginMinimumApplicationVersion();
+
+        public readonly Version  DeprecatedVersion = new Version(65535, 0, 0, 0);
+
         public bool IsCompatible(IPluginManifest plugin) {
+
+            if (IsNotCompatible(plugin)) {
+                return false;
+            }
+
+            var version = new Version(plugin.Version.Major, plugin.Version.Minor, plugin.Version.Patch, plugin.Version.Build);
             if (CompatibilityMap.TryGetValue(plugin.Identifier, out var compatibility)) {
                 var minimumCompatibleVersion = new Version(compatibility.MinimumVersion);
-                var version = new Version(plugin.Version.Major, plugin.Version.Minor, plugin.Version.Patch, plugin.Version.Build);
                 if (version < minimumCompatibleVersion) {
                     return false;
                 }
@@ -65,6 +75,28 @@ namespace NINA.Plugin {
             public string Name { get; set; }
             [JsonProperty(propertyName: "minimumVersion")]
             public string MinimumVersion { get; set; }
+        }
+
+        internal bool IsDeprecated(IPluginManifest plugin) {
+            var version = new Version(plugin.Version.Major, plugin.Version.Minor, plugin.Version.Patch, plugin.Version.Build);
+            return version >= DeprecatedVersion;
+            
+        }
+
+        internal bool IsNotCompatible(IPluginManifest plugin) {
+            var version = new Version(plugin.MinimumApplicationVersion.Major, plugin.MinimumApplicationVersion.Minor, plugin.MinimumApplicationVersion.Patch, plugin.MinimumApplicationVersion.Build);
+            return version < MinimumMajorVersion;
+        }
+
+        internal bool IsUpdateRequired(IPluginManifest plugin) {
+            var version = new Version(plugin.Version.Major, plugin.Version.Minor, plugin.Version.Patch, plugin.Version.Build);
+            return version <= GetMinimumVersion(plugin);
+        }
+
+        private static Version GetPluginMinimumApplicationVersion() {
+            var assembly = typeof(PluginCompatibilityMap).Assembly;
+            var attribute = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().FirstOrDefault(x => x.Key == "PluginMinimumApplicationVersion");
+            return new Version(attribute?.Value ?? "0.0.0.0") ;
         }
     }
 }

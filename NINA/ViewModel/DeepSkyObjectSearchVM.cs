@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,7 @@
 using NINA.Core.Database;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINACustomControlLibrary;
+using NINA.CustomControlLibrary;
 using Nito.AsyncEx;
 using Nito.Mvvm;
 using System.Collections.Generic;
@@ -35,9 +35,7 @@ namespace NINA.ViewModel {
         private NotifyTask<List<IAutoCompleteItem>> targetSearchResult;
 
         public NotifyTask<List<IAutoCompleteItem>> TargetSearchResult {
-            get {
-                return targetSearchResult;
-            }
+            get => targetSearchResult;
             set {
                 targetSearchResult = value;
                 RaisePropertyChanged();
@@ -101,18 +99,20 @@ namespace NINA.ViewModel {
         private IAutoCompleteItem selectedTargetSearchResult;
 
         public IAutoCompleteItem SelectedTargetSearchResult {
-            get {
-                return selectedTargetSearchResult;
-            }
+            get => selectedTargetSearchResult;
             set {
                 selectedTargetSearchResult = value;
                 if (selectedTargetSearchResult != null) {
                     this.SetTargetNameWithoutSearch(selectedTargetSearchResult.Column1);
-                    Coordinates = new Coordinates(
+                    if(value is DSOAutoCompleteItem dSOAutoCompleteItem) {
+                        Coordinates = dSOAutoCompleteItem.Coordinates;
+                    } else {
+                        Coordinates = new Coordinates(
                         AstroUtil.HMSToDegrees(value.Column2),
                         AstroUtil.DMSToDegrees(value.Column3),
                         Epoch.J2000,
                         Coordinates.RAType.Degrees);
+                    }
                 }
                 RaisePropertyChanged();
             }
@@ -121,9 +121,7 @@ namespace NINA.ViewModel {
         private bool showPopup;
 
         public bool ShowPopup {
-            get {
-                return showPopup;
-            }
+            get => showPopup;
             set {
                 showPopup = value;
                 RaisePropertyChanged();
@@ -136,6 +134,7 @@ namespace NINA.ViewModel {
             public string Column2 { get; set; }
 
             public string Column3 { get; set; }
+            public Coordinates Coordinates { get; set; }
         }
 
         private Task<List<IAutoCompleteItem>> SearchDSOs(string searchString, CancellationToken ct) {
@@ -148,7 +147,7 @@ namespace NINA.ViewModel {
                 var result = await db.GetDeepSkyObjects(string.Empty, null, searchParams, ct);
                 var list = new List<IAutoCompleteItem>();
                 foreach (var item in result) {
-                    list.Add(new DSOAutoCompleteItem() { Column1 = item.Name, Column2 = item.Coordinates.RAString, Column3 = item.Coordinates.DecString });
+                    list.Add(new DSOAutoCompleteItem() { Column1 = item.Name, Column2 = item.Coordinates.RAString, Column3 = item.Coordinates.DecString, Coordinates = item.Coordinates });
                     ct.ThrowIfCancellationRequested();
                 }
                 return list;

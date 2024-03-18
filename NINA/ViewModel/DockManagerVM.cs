@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -127,6 +127,7 @@ namespace NINA.ViewModel {
             initAnchorableTools.Add(autoFocusToolVM);
             initAnchorableTools.Add(focusTargetsVM);
 
+            profileService.BeforeProfileChanging += ProfileService_BeforeProfileChanging; ;
             profileService.ProfileChanged += ProfileService_ProfileChanged;
 
             Task.Run(async () => {
@@ -144,6 +145,12 @@ namespace NINA.ViewModel {
                 AnchorableTools = initAnchorableTools;
                 Initialized = true;
             });
+        }
+
+        private void ProfileService_BeforeProfileChanging(object sender, EventArgs e) {
+            try {
+                SaveAvalonDockLayout();
+            } catch { }
         }
 
         private void RestoreDockLayoutFromFile(object obj) {
@@ -223,7 +230,7 @@ namespace NINA.ViewModel {
 
                     var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                     serializer.LayoutSerializationCallback += (s, args) => {
-                        if (args.Content is DockableVM d) {
+                        if (args.Content is IDockableVM d) {
                             d.IsVisible = true;
                             args.Content = d;
                         }
@@ -368,7 +375,7 @@ namespace NINA.ViewModel {
                                                     args.Cancel = true;
                                                 } else {
                                                     dupeCheck.Add(args.Model.ContentId);
-                                                    var d = (DockableVM)args.Content;
+                                                    var d = (IDockableVM)args.Content;
                                                     if (d != null) {
                                                         d.IsVisible = true;
                                                         args.Content = d;

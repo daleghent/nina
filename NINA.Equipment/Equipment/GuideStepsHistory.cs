@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -39,27 +39,19 @@ namespace NINA.Equipment.Equipment {
         private RMS rMS;
 
         public RMS RMS {
-            get {
-                return rMS;
-            }
+            get => rMS;
             private set {
                 rMS = value;
                 RaisePropertyChanged();
             }
         }
 
-        public double Interval {
-            get {
-                return MaxY / 4;
-            }
-        }
+        public double Interval => MaxY / 4;
 
         private double _maxY;
 
         public double MaxY {
-            get {
-                return _maxY;
-            }
+            get => _maxY;
 
             set {
                 _maxY = value;
@@ -69,18 +61,12 @@ namespace NINA.Equipment.Equipment {
             }
         }
 
-        public double MinY {
-            get {
-                return -MaxY;
-            }
-        }
+        public double MinY => -MaxY;
 
         private double _maxDurationY;
 
         public double MaxDurationY {
-            get {
-                return _maxDurationY;
-            }
+            get => _maxDurationY;
 
             set {
                 _maxDurationY = value;
@@ -89,20 +75,14 @@ namespace NINA.Equipment.Equipment {
             }
         }
 
-        public double MinDurationY {
-            get {
-                return -MaxDurationY;
-            }
-        }
+        public double MinDurationY => -MaxDurationY;
 
         private LinkedList<HistoryStep> overallGuideSteps = new LinkedList<HistoryStep>();
 
         private AsyncObservableLimitedSizedStack<HistoryStep> guideSteps;
 
         public AsyncObservableLimitedSizedStack<HistoryStep> GuideSteps {
-            get {
-                return guideSteps;
-            }
+            get => guideSteps;
             set {
                 guideSteps = value;
                 RaisePropertyChanged();
@@ -112,9 +92,7 @@ namespace NINA.Equipment.Equipment {
         private int historySize;
 
         public int HistorySize {
-            get {
-                return historySize;
-            }
+            get => historySize;
             set {
                 historySize = value;
                 RebuildGuideHistoryList();
@@ -154,9 +132,7 @@ namespace NINA.Equipment.Equipment {
         private double pixelScale;
 
         public double PixelScale {
-            get {
-                return pixelScale;
-            }
+            get => pixelScale;
             set {
                 pixelScale = value;
                 RMS.SetScale(pixelScale);
@@ -167,9 +143,7 @@ namespace NINA.Equipment.Equipment {
         private GuiderScaleEnum scale;
 
         public GuiderScaleEnum Scale {
-            get {
-                return scale;
-            }
+            get => scale;
             set {
                 scale = value;
                 RebuildGuideHistoryList();
@@ -219,8 +193,8 @@ namespace NINA.Equipment.Equipment {
         public class HistoryStep {
             private static int idProvider = 1;
             public int Id { get; private set; }
-            public double IdOffsetLeft { get => Id - 0.15; }
-            public double IdOffsetRight { get => Id + 0.15; }
+            public double IdOffsetLeft => Id - 0.15;
+            public double IdOffsetRight => Id + 0.15;
             public double RADistanceRaw { get; private set; }
             public double RADistanceRawDisplay { get; private set; }
             public double RADuration { get; private set; }

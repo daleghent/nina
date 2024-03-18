@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -104,11 +104,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        public bool HasFixedTimeProvider {
-            get {
-                return selectedProvider != null && !(selectedProvider is TimeProvider);
-            }
-        }
+        public bool HasFixedTimeProvider => selectedProvider != null && !(selectedProvider is NINA.Sequencer.Utility.DateTimeProvider.TimeProvider);
 
         [JsonProperty]
         public int Hours {
@@ -192,12 +188,15 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var now = DateTime.Now;
             var then = new DateTime(now.Year, now.Month, now.Day, Hours, Minutes, Seconds);
 
-            if (now.Hour < 12 && then.Hour >= 12) {
+            var rollover = SelectedProvider.GetRolloverTime(this);
+            var timeOnlyNow = TimeOnly.FromDateTime(now);
+            var timeOnlyThen = TimeOnly.FromDateTime(then);
+
+            if(timeOnlyNow < rollover && timeOnlyThen >= rollover) {
                 then = then.AddDays(-1);
             }
 
-            //In case it is 22:00:00 but you want to wait until 01:00:00 o'clock a day of 1 needs to be added
-            if (now.Hour >= 12 && then.Hour < 12) {
+            if (timeOnlyNow >= rollover && timeOnlyThen < rollover) {
                 then = then.AddDays(1);
             }
 

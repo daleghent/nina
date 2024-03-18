@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -70,12 +70,10 @@ namespace NINA.Profile {
 
         private string templatePath;
 
-        [Obsolete("Used by the old sequencer")]
         [DataMember]
+        // Used by legacy sequencer
         public string TemplatePath {
-            get {
-                return templatePath;
-            }
+            get => templatePath;
             set {
                 if (templatePath != value) {
                     templatePath = value;
@@ -88,9 +86,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool ParkMountAtSequenceEnd {
-            get {
-                return parkMountAtSequenceEnd;
-            }
+            get => parkMountAtSequenceEnd;
             set {
                 if (parkMountAtSequenceEnd != value) {
                     parkMountAtSequenceEnd = value;
@@ -103,9 +99,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool CloseDomeShutterAtSequenceEnd {
-            get {
-                return closeDomeShutterAtSequenceEnd;
-            }
+            get => closeDomeShutterAtSequenceEnd;
             set {
                 if (closeDomeShutterAtSequenceEnd != value) {
                     closeDomeShutterAtSequenceEnd = value;
@@ -118,9 +112,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool ParkDomeAtSequenceEnd {
-            get {
-                return parkDomeAtSequenceEnd;
-            }
+            get => parkDomeAtSequenceEnd;
             set {
                 if (parkDomeAtSequenceEnd != value) {
                     parkDomeAtSequenceEnd = value;
@@ -133,9 +125,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool WarmCamAtSequenceEnd {
-            get {
-                return warmCamAtSequenceEnd;
-            }
+            get => warmCamAtSequenceEnd;
             set {
                 if (warmCamAtSequenceEnd != value) {
                     warmCamAtSequenceEnd = value;
@@ -147,9 +137,7 @@ namespace NINA.Profile {
         private TimeSpan estimatedDownloadTime;
 
         public TimeSpan EstimatedDownloadTime {
-            get {
-                return estimatedDownloadTime;
-            }
+            get => estimatedDownloadTime;
             set {
                 if (estimatedDownloadTime != value) {
                     estimatedDownloadTime = value;
@@ -160,21 +148,15 @@ namespace NINA.Profile {
 
         [DataMember]
         public long TimeSpanInTicks {
-            get {
-                return estimatedDownloadTime.Ticks;
-            }
-            set {
-                estimatedDownloadTime = new TimeSpan(value);
-            }
+            get => estimatedDownloadTime.Ticks;
+            set => estimatedDownloadTime = new TimeSpan(value);
         }
 
         private string sequenceFolder;
 
         [DataMember]
         public string DefaultSequenceFolder {
-            get {
-                return sequenceFolder;
-            }
+            get => sequenceFolder;
             set {
                 if (sequenceFolder != value) {
                     sequenceFolder = value;
@@ -239,9 +221,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool CoolCameraAtSequenceStart {
-            get {
-                return coolCameraAtSequenceStart;
-            }
+            get => coolCameraAtSequenceStart;
             set {
                 if (coolCameraAtSequenceStart != value) {
                     coolCameraAtSequenceStart = value;
@@ -254,9 +234,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool UnparMountAtSequenceStart {
-            get {
-                return unparMountAtSequenceStart;
-            }
+            get => unparMountAtSequenceStart;
             set {
                 if (unparMountAtSequenceStart != value) {
                     unparMountAtSequenceStart = value;
@@ -269,9 +247,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool OpenDomeShutterAtSequenceStart {
-            get {
-                return openDomeShutterAtSequenceStart;
-            }
+            get => openDomeShutterAtSequenceStart;
             set {
                 if (openDomeShutterAtSequenceStart != value) {
                     openDomeShutterAtSequenceStart = value;
@@ -284,9 +260,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool CollapseSequencerTemplatesByDefault {
-            get {
-                return collapseSequencerTemplatesByDefault;
-            }
+            get => collapseSequencerTemplatesByDefault;
             set {
                 if (collapseSequencerTemplatesByDefault != value) {
                     collapseSequencerTemplatesByDefault = value;
@@ -299,9 +273,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool DoMeridianFlip {
-            get {
-                return doMeridianFlip;
-            }
+            get => doMeridianFlip;
             set {
                 if (doMeridianFlip != value) {
                     doMeridianFlip = value;
@@ -314,9 +286,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool DisableSimpleSequencer {
-            get {
-                return disableSimpleSequencer;
-            }
+            get => disableSimpleSequencer;
             set {
                 if (disableSimpleSequencer != value) {
                     disableSimpleSequencer = value;

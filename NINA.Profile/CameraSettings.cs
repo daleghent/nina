@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -65,13 +65,19 @@ namespace NINA.Profile {
             trackingCameraASCOMServerLoggingEnabled = false;
 
 
-            touptekAlikeHighGain = true;
             touptekAlikeUltraMode = true;
             touptekAlikeHighFullwell = false;
             touptekAlikeDewHeaterStrength = -1;
 
             genericCameraDewHeaterStrength = 10;
             genericCameraFanSpeed = 70;
+
+            badPixelCorrection = true;
+            badPixelCorrectionThreshold = 60;
+
+            zwoAsiMonoBinMode = false;
+
+            ascomCreate32BitData = false;
         }
 
         private string id;
@@ -663,6 +669,32 @@ namespace NINA.Profile {
             }
         }
 
+        private bool? zwoAsiMonoBinMode;
+
+        [DataMember]
+        public bool? ZwoAsiMonoBinMode {
+            get => zwoAsiMonoBinMode;
+            set {
+                if (zwoAsiMonoBinMode != value) {
+                    zwoAsiMonoBinMode = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool ascomCreate32BitData;
+
+        [DataMember]
+        public bool ASCOMCreate32BitData {
+            get => false; //ascomCreate32BitData;
+            set {
+                //if(ascomCreate32BitData != value) {
+                //    ascomCreate32BitData = value;
+                //    RaisePropertyChanged();
+                //}
+            }
+        }
+
         #region GenericCamera
 
         private int genericCameraDewHeaterStrength;
@@ -688,21 +720,35 @@ namespace NINA.Profile {
             }
         }
 
-        
+
         #endregion
 
-        #region TouptekAlike
-        private bool touptekAlikeHighGain;
+        #region SVBony
+        private bool badPixelCorrection;
         [DataMember]
-        public bool TouptekAlikeHighGain {
-            get => touptekAlikeHighGain;
+        public bool BadPixelCorrection {
+            get => badPixelCorrection;
             set {
-                if (touptekAlikeHighGain != value) {
-                    touptekAlikeHighGain = value;
+                if (badPixelCorrection != value) {
+                    badPixelCorrection = value;
                     RaisePropertyChanged();
                 }
             }
         }
+        private int badPixelCorrectionThreshold;
+        [DataMember]
+        public int BadPixelCorrectionThreshold {
+            get => badPixelCorrectionThreshold;
+            set {
+                if (badPixelCorrectionThreshold != value) {
+                    badPixelCorrectionThreshold = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region TouptekAlike
         private bool touptekAlikeUltraMode;
         [DataMember]
         public bool TouptekAlikeUltraMode {

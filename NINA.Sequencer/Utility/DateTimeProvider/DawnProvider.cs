@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -37,11 +37,19 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {
-            var night = nighttimeCalculator.Calculate().TwilightRiseAndSet.Rise;
-            if (!night.HasValue) {
-                throw new Exception("No dawn");
+            var dawn = nighttimeCalculator.Calculate().TwilightRiseAndSet.Rise;
+            if (!dawn.HasValue) {
+                throw new Exception("No astronomical dawn");
             }
-            return night.Value;
+            return dawn.Value;
+        }
+
+        public TimeOnly GetRolloverTime(ISequenceEntity context) {
+            var dusk = nighttimeCalculator.Calculate().SunRiseAndSet.Set;
+            if (!dusk.HasValue) {
+                return new TimeOnly(12, 0, 0);
+            }
+            return TimeOnly.FromDateTime(dusk.Value);
         }
     }
 }

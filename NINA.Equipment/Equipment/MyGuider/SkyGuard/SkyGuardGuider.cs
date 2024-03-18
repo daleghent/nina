@@ -79,6 +79,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         /// Property indicating the name of the SkyGuard software
         /// </summary>
         public string Name => "SkyGuard";
+        public string DisplayName => Name;
 
         /// <summary>
         /// Property indicating the id of the SkyGuard software
@@ -119,23 +120,15 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         /// </summary>
         public string DriverVersion => "1.0";
 
-        public bool CanClearCalibration
-        {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
 
         /// <summary>
         /// Property indicating if skyguard is well connected
         /// </summary>
-        public bool Connected
-        {
-            get
-            {
-                return _connected;
-            }
-            set
-            {
+        public bool Connected {
+            get => _connected;
+            set {
                 _connected = value;
                 RaisePropertyChanged();
             }
@@ -144,27 +137,17 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         /// <summary>
         /// Property indicating connection status with skyguard
         /// </summary>
-        public string State
-        {
-            get
-            {
-                return _state;
-            }
-            set
-            {
+        public string State {
+            get => _state;
+            set {
                 _state = value;
                 RaisePropertyChanged();
             }
         }
 
-        public double PixelScale
-        {
-            get
-            {
-                return _pixelScale;
-            }
-            set
-            {
+        public double PixelScale {
+            get => _pixelScale;
+            set {
                 _pixelScale = value;
                 RaisePropertyChanged();
             }
@@ -173,13 +156,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
         /// <summary>
         /// Property shortening the url to reach SkyGuard
         /// </summary>
-        string SKSS_Uri
-        {
-            get
-            {
-                return $"http://{profileService.ActiveProfile.GuiderSettings.SkyGuardServerUrl}:{profileService.ActiveProfile.GuiderSettings.SkyGuardServerPort}";
-            }
-        }
+        string SKSS_Uri => $"http://{profileService.ActiveProfile.GuiderSettings.SkyGuardServerUrl}:{profileService.ActiveProfile.GuiderSettings.SkyGuardServerPort}";
 
         public RelayCommand OpenSkyGuardDiagCommand { get; set; }
 
@@ -340,7 +317,7 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
             }
             catch (FileNotFoundException ex)
             {
-                Logger.Error(Loc.Instance["LblSkyGuardPathNotFound"]);
+                Logger.Error(Loc.Instance["LblSkyGuardPathNotFound"], ex);
                 Notification.ShowError(Loc.Instance["LblSkyGuardPathNotFound"]);
                 throw;
             }
@@ -924,7 +901,6 @@ namespace NINA.Equipment.Equipment.MyGuider.SkyGuard
 
                 NewTimeOut();
 
-                string isDitheringInProgress;
                 SkyGuardStatusMessage isDitheringInProgressStatus = new SkyGuardStatusMessage();
 
                 string guidingStatusResponse = ExecuteWebRequest($"{SKSS_Uri}/SKSS_GetGuidingStatus");

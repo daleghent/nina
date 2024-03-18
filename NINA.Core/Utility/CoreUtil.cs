@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -41,11 +41,10 @@ namespace NINA.Core.Utility {
             }
         }
 
-        public static bool IsReleaseBuild {
-            get {
-                return new Version(Version).Revision >= 9000;
-            }
-        }
+        public static bool IsReleaseBuild => new Version(Version).Revision >= 9000;
+        public static bool IsBetaBuild => new Version(Version).Revision >= 2000 && new Version(Version).Revision < 3000;
+        public static bool IsRCBuild => new Version(Version).Revision >= 3000 && new Version(Version).Revision < 9000;
+        public static bool IsNightlyBuild => new Version(Version).Revision < 2000;
 
         public static string DocumentationPage {
             get {
@@ -67,23 +66,22 @@ namespace NINA.Core.Utility {
             }
         }
 
-        public static string Title {
-            get {
-                return "N.I.N.A. - Nighttime Imaging 'N' Astronomy";
-            }
-        }
+        public static string Title => "N.I.N.A. - Nighttime Imaging 'N' Astronomy";
 
-        public static string UserAgent {
-            get {
-                return $"N.I.N.A./{Version} ({Environment.OSVersion}; {(Environment.Is64BitOperatingSystem ? "Win64" : "Win32")}; {(Environment.Is64BitProcess ? "x64" : "x86")})";
-            }
-        }
+        public static string UserAgent => $"N.I.N.A./{Version} ({Environment.OSVersion}; {(Environment.Is64BitOperatingSystem ? "Win64" : "Win32")}; {(Environment.Is64BitProcess ? "x64" : "x86")})";
+        public static bool DebugMode { get; set; } = false;
 
         public static string GetUniqueFilePath(string fullPath) {
             int count = 1;
 
-            string fileNameOnly = Path.GetFileNameWithoutExtension(fullPath);
+            string fileNameOnly = Path.GetFileNameWithoutExtension(fullPath);            
             string extension = Path.GetExtension(fullPath);
+            if(extension.ToLower() == ".fz") {
+                // special handling for ".fits.fz" extension
+                extension = ".fits" + extension;
+                fileNameOnly = Path.GetFileNameWithoutExtension(fileNameOnly);
+            }
+            
             string path = Path.GetDirectoryName(fullPath);
             string newFullPath = fullPath;
 

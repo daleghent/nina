@@ -57,7 +57,10 @@ Also attach your log file of that session (if applicable), which can be found in
 1. Fork the repository
 2. **Sync LFS files into the fork**
 ```
-git clone -n <your fork of the repo>    <--- NOTE: the -n flag for "don't checkout the branch"
+git clone -n -b develop https://<YourUserName>@bitbucket.org/<YourUserName>/<YourForkName>.git
+# NOTE: the -n flag for "don't checkout the branch"
+# Ignore any LFS smudge errors for now. They are not yet synced and will get synced in a later step
+cd <YourForkName>
 git remote add upstream https://bitbucket.org/Isbeorn/nina.git
 git lfs fetch upstream --all
 git lfs push origin --all
@@ -136,23 +139,24 @@ This database will be automatically created by the EntityFramework based on the 
 
 ## Setting up the developer environment
 
-* Install Visual Studio Community 2022
+* Install [Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/)
+* Install [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 * Install [ASCOM](https://ascom-standards.org/Downloads/Index.htm)
 * Recommended Visual Studio Extensions:
     * [CodeMaid](http://www.codemaid.net/): A code cleanup Utility
     * [XAML Styler](https://github.com/Xavalon/XamlStyler/) A XAML style formatter
     * [MarkdownEditor](https://github.com/madskristensen/MarkdownEditor) To edit Markdown and auto generate HTML files
     * [License Header Manager](https://github.com/rubicon-oss/LicenseHeaderManager) for automatic insertion of the license into new files
+    * [Fine Code Coverage](https://github.com/FortuneN/FineCodeCoverage) To show code coverage
 * Static external dependencies are hosted in a separate git repository and pulled as a submodule, so they need to be checked out separately
     * `git submodule update --init --recursive` on the first checkout
     * `git submodule update --recursive` to update the submodule to the latest version
     * Having submodules for these files has the advantage that the fork doesn't have to host the files again and run into available LFS space limits
 
     * To get Canon and Nikon DLLs you have to register as a developer for canon and nikon separately on their websites
-	* Altair SDK: Join the altair development group at https://groups.google.com/forum/#!forum/altair-development-group
     * Due to not being publicly available, they must not be put into a public repository
 * Other external dependencies are automatically installed via nuget (except for some camera vendor DLLs)
-* (Optional) To be able to build the setup projects you need to install [WiX](http://wixtoolset.org/) and their [Visual Studio plugin](https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2017Extension)
+* (Optional) To be able to build the setup projects you need to install [WiX](http://wixtoolset.org/) and the [Visual Studio plugin](https://marketplace.visualstudio.com/items?itemName=FireGiant.FireGiantHeatWaveDev17)
 
 ## Automated Unit Tests (AUT)
 
@@ -210,7 +214,7 @@ Screenshots
 Notes
 ```
 
-## NINASetupBundle Prerequisites
+## NINA.SetupBundle Prerequisites
 
 * To provide release notes for the setup bundle, there is a build event using "pandoc" that creates an rtf file out of RELEASE_NOTES.md
 * It is expected inside the folder "%LOCALAPPDATA%\Pandoc\pandoc.exe"
@@ -218,9 +222,9 @@ Notes
 
 ## IoC Container
 
-* We use Ninject to inject dependencies into classes
+* We use Microsoft.Extensions.DependencyInjection to inject dependencies into classes
 * Everything that is created as a first-level composition object and all of their dependencies are automatically created on runtime and injected into the appropriate classes
-* Should you require a global singleton add the interface of that to your constructor, it will be automatically injected if your class is instantiated by Ninject
+* Should you require a global singleton add the interface of that to your constructor, it will be automatically injected if your class is instantiated by DI
 * If you create a VM that is used by the UI or refactor things out of VMs into generalized structures bind them in ``IoCBindings.cs``, so they can be easily injected into the VMs you removed them from
 	* if you create a VM that has an anchorable view, inject it into ``DockManagerVM`` so it's automatically instantiated
 	* if the VM you create is for Equipment, do the same but in EquipmentVM

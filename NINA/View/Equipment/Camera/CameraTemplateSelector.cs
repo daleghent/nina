@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -27,8 +27,11 @@ namespace NINA.View.Equipment {
         public DataTemplate LegacySbig { get; set; }
         public DataTemplate Canon { get; set; }
         public DataTemplate Atik { get; set; }
+        public DataTemplate Zwo { get; set; }
         public DataTemplate Generic { get; set; }
         public DataTemplate FailedToLoadTemplate { get; set; }
+        public DataTemplate ASCOM { get; set; }
+        public DataTemplate SVBony { get; set; }
 
         public string Postfix { get; set; }
 
@@ -43,6 +46,12 @@ namespace NINA.View.Equipment {
                 return Canon;
             } else if (item is AtikCamera) {
                 return Atik;
+            } else if (item is ASICamera) {
+                return Zwo;
+            } else if (item is AscomCamera) {
+                return ASCOM;
+            } else if (item is SVBonyCamera) {
+                return SVBony;
             } else if (item is GenericCamera) {
                 return Generic;
             } else {

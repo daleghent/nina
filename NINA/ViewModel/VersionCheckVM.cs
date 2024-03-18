@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -51,7 +51,6 @@ namespace NINA.ViewModel {
         public IAsyncCommand ShowDownloadCommand { get; set; }
         private CancellationTokenSource checkCts;
         private CancellationTokenSource downloadCts;
-        private VersionInfo versionInfo;
 
         private string setupLocation;
 
@@ -64,9 +63,7 @@ namespace NINA.ViewModel {
                 }
                 return windowServiceFactory;
             }
-            set {
-                windowServiceFactory = value;
-            }
+            set => windowServiceFactory = value;
         }
 
         public async Task<bool> CheckUpdate() {
@@ -79,7 +76,7 @@ namespace NINA.ViewModel {
                 checkCts?.Dispose();
                 checkCts = new CancellationTokenSource();
                 try {
-                    versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
+                    var versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
                     if (versionInfo?.IsNewer() == true) {
                         UpdateAvailable = true;
                         var projectVersion = new ProjectVersion(versionInfo.Version);
@@ -90,7 +87,6 @@ namespace NINA.ViewModel {
                     }
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
-                    versionInfo = null;
                     Logger.Error(ex);
                 }
                 return true;
@@ -107,11 +103,7 @@ namespace NINA.ViewModel {
         }
 
         private void Update(object o) {
-            ProcessStartInfo Info = new ProcessStartInfo();
-            Info.WindowStyle = ProcessWindowStyle.Hidden;
-            Info.CreateNoWindow = true;
-            Info.FileName = Path.Combine(setupLocation, "NINASetupBundle.exe");
-            Process.Start(Info);
+            InvokeProcess.CreateProcess(Path.Combine(setupLocation, "NINASetupBundle.exe"));
             System.Windows.Application.Current.Shutdown();
         }
 
@@ -126,6 +118,7 @@ namespace NINA.ViewModel {
             downloadCts = new CancellationTokenSource();
             try {
                 Downloading = true;
+                var versionInfo = await GetVersionInfo((AutoUpdateSourceEnum)NINA.Properties.Settings.Default.AutoUpdateSource, checkCts.Token);
                 setupLocation = await DownloadLatestVersion(versionInfo);
                 if (ValidateChecksum(versionInfo, setupLocation)) {
                     setupLocation = Unzip(setupLocation);
@@ -169,9 +162,7 @@ namespace NINA.ViewModel {
         private int _progress;
 
         public int Progress {
-            get {
-                return _progress;
-            }
+            get => _progress;
             set {
                 _progress = value;
                 RaisePropertyChanged();
@@ -181,9 +172,7 @@ namespace NINA.ViewModel {
         private bool downloadReady = false;
 
         public bool Downloading {
-            get {
-                return downloadReady;
-            }
+            get => downloadReady;
             set {
                 downloadReady = value;
                 RaisePropertyChanged();
@@ -193,9 +182,7 @@ namespace NINA.ViewModel {
         private bool _updateReady = false;
 
         public bool UpdateReady {
-            get {
-                return _updateReady;
-            }
+            get => _updateReady;
             set {
                 _updateReady = value;
                 RaisePropertyChanged();
@@ -205,9 +192,7 @@ namespace NINA.ViewModel {
         private bool updateAvailable = false;
 
         public bool UpdateAvailable {
-            get {
-                return updateAvailable;
-            }
+            get => updateAvailable;
             set {
                 updateAvailable = value;
                 RaisePropertyChanged();
@@ -227,9 +212,7 @@ namespace NINA.ViewModel {
         private string changelog = string.Empty;
 
         public string Changelog {
-            get {
-                return changelog;
-            }
+            get => changelog;
             set {
                 changelog = value;
                 RaisePropertyChanged();
@@ -299,8 +282,7 @@ namespace NINA.ViewModel {
 
         public class VersionInfo {
 
-            public static string Schema {
-                get => @"{
+            public static string Schema => @"{
 	                '$schema': 'http://json-schema.org/draft-07/schema#',
                     'additionalProperties': false,
                     'properties': {
@@ -335,7 +317,6 @@ namespace NINA.ViewModel {
                     },
   	                'required': ['version', 'checksum', 'file', 'checksum_x86', 'file_x86', 'changelog']
                 }";
-            }
 
             [JsonProperty(PropertyName = "version")]
             public Version Version;

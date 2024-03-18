@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -85,7 +85,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override object Clone() {
             return new SolveAndRotate(this) {
-                Rotation = Rotation
+                PositionAngle = PositionAngle
             };
         }
 
@@ -110,13 +110,18 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             }
         }
 
-        private double rotation = 0;
+        /// <summary>
+        /// Backwards compatibility property that will migrate to position angle
+        /// </summary>
+        [JsonProperty(propertyName: "Rotation")]
+        public double DeprecatedRotation { set => PositionAngle = 360 - value; }
 
+        private double positionAngle = 0;
         [JsonProperty]
-        public double Rotation {
-            get => rotation;
+        public double PositionAngle {
+            get => positionAngle;
             set {
-                rotation = value;
+                positionAngle = AstroUtil.EuclidianModulus(value, 360);
                 RaisePropertyChanged();
             }
         }
@@ -132,7 +137,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
                 stoppedGuiding = await guiderMediator.StopGuiding(token);
 
-                var targetRotation = (float)Rotation;
+                var targetRotation = (float)PositionAngle;
 
                 /* Loop until the rotation is within tolerances*/
                 do {
@@ -141,13 +146,13 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                         throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                     }
 
-                    var orientation = (float)solveResult.Orientation;
+                    var orientation = (float)solveResult.PositionAngle;
                     rotatorMediator.Sync(orientation);
 
                     var prevTargetRotation = targetRotation;
                     targetRotation = rotatorMediator.GetTargetPosition(prevTargetRotation);
                     if (Math.Abs(targetRotation - prevTargetRotation) > 0.1) {
-                        Logger.Info($"Rotator target position {Rotation} adjusted to {targetRotation} to be within the allowed mechanical range");
+                        Logger.Info($"Rotator target position {PositionAngle} adjusted to {targetRotation} to be within the allowed mechanical range");
                         Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
                     }
 
@@ -166,15 +171,15 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                         }
                     }
 
-                    if (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance))) {
-                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");
+                    if (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance), true)) {
+                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {PositionAngle}° - Moving rotator relatively by {rotationDistance}°");
 
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblRotating"] });
                         await rotatorMediator.MoveRelative(rotationDistance, token);
                         progress?.Report(new ApplicationStatus() { Status = string.Empty });
                         token.ThrowIfCancellationRequested();
                     }
-                } while (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance)));
+                } while (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance), true));
             } finally {
                 if (stoppedGuiding) {
                     try {
@@ -223,7 +228,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         public override void AfterParentChanged() {
             var contextCoordinates = ItemUtility.RetrieveContextCoordinates(this.Parent);
             if (contextCoordinates != null) {
-                Rotation = contextCoordinates.Rotation;
+                PositionAngle = contextCoordinates.PositionAngle;
                 Inherited = true;
             } else {
                 Inherited = false;
@@ -243,7 +248,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(SolveAndRotate)}, Rotation: {Rotation}°";
+            return $"Category: {Category}, Item: {nameof(SolveAndRotate)}, Position Angle: {PositionAngle}°";
         }
     }
 }

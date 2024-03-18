@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -37,9 +37,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int Gain {
-            get {
-                return gain;
-            }
+            get => gain;
             set {
                 if (gain != value) {
                     gain = value;
@@ -52,9 +50,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public FilterInfo Filter {
-            get {
-                return filter;
-            }
+            get => filter;
             set {
                 if (filter != value) {
                     filter = value;
@@ -67,9 +63,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ExposureDuration {
-            get {
-                return exposureDuration;
-            }
+            get => exposureDuration;
             set {
                 if (exposureDuration != value) {
                     exposureDuration = value;
@@ -82,9 +76,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool Save {
-            get {
-                return save;
-            }
+            get => save;
             set {
                 if (save != value) {
                     save = value;
@@ -97,9 +89,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool Loop {
-            get {
-                return loop;
-            }
+            get => loop;
             set {
                 if (loop != value) {
                     loop = value;

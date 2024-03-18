@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -51,8 +51,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.PlayerOneSDK {
                 for (var i = 0; i < cameras; i++) {
                     var err = playerOnePInvoke.POAGetCameraProperties(i, out var props);
                     if(err == POAErrors.POA_OK) {                        
-                        var pOneCamera = new GenericCamera(props.cameraID, props.cameraModelName, "Player One", playerOnePInvoke.POAGetSDKVersion(), false, new PlayerOneSDK(props.cameraID, playerOnePInvoke), profileService, exposureDataFactory);
-                        Logger.Debug($"Adding PlayerOne camera {i}: {props.cameraID} (as {props.cameraModelName})");
+                        var pOneCamera = new GenericCamera(props.SN, props.cameraModelName, "Player One", playerOnePInvoke.POAGetSDKVersion(), false, new PlayerOneSDK(props.cameraID, playerOnePInvoke), profileService, exposureDataFactory);
+                        Logger.Debug($"Adding PlayerOne camera {i}: {props.SN} (as {props.cameraModelName})");
                         devices.Add(pOneCamera);
                     }
                 }

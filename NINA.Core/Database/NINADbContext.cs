@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,12 +16,21 @@ using NINA.Core.Database.Schema;
 using NINA.Core.Utility;
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Core.Common;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.SQLite;
+using System.Data.SQLite.EF6;
 using System.IO;
 using System.Linq;
 
 namespace NINA.Core.Database {
+    public class SQLiteConfiguration : DbConfiguration {
+        public SQLiteConfiguration() {
+            SetProviderFactory("System.Data.SQLite", SQLiteFactory.Instance);
+            SetProviderFactory("System.Data.SQLite.EF6", SQLiteProviderFactory.Instance);
+            SetProviderServices("System.Data.SQLite", (DbProviderServices)SQLiteProviderFactory.Instance.GetService(typeof(DbProviderServices)));
+        }
+    }
 
     public class NINADbContext : DbContext {
         public IDbSet<EarthRotationParameters> EarthRotationParameterSet { get; set; }
@@ -34,6 +43,7 @@ namespace NINA.Core.Database {
         public IDbSet<CatalogueNr> CatalogueNrSet { get; set; }
 
         public NINADbContext(string connectionString) : base(new SQLiteConnection() { ConnectionString = connectionString }, true) {
+            DbConfiguration.SetConfiguration(new SQLiteConfiguration());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {

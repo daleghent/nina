@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -59,7 +59,8 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool HasSetupDialog => !Connected;
         public string Id => "b4aee7ad-effe-4cf8-b02b-fd94f2780974";
-        public string Name => $"{Loc.Instance["LblPegasusFlatMaster"]}";
+        public string Name => "Pegasus Flat Master";
+        public string DisplayName => $"{Loc.Instance["LblPegasusFlatMaster"]}";
         public string Category => "Pegasus Astro";
 
         private bool _connected;
@@ -201,9 +202,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOpenClose => false;
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
         public IList<string> SupportedActions => new List<string>();
 

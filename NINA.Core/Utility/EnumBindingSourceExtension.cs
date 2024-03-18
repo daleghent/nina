@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -23,7 +23,7 @@ namespace NINA.Core.Utility {
         private Type _enumType;
 
         public Type EnumType {
-            get { return this._enumType; }
+            get => this._enumType;
             set {
                 if (value != this._enumType) {
                     if (null != value) {

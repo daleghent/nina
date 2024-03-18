@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -38,6 +38,7 @@ using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 using NINA.Astrometry;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -59,13 +60,12 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private PhdEventVersion _version;
 
         public string Name => "PHD2";
+        public string DisplayName => Name;
 
         public string Id => "PHD2_Single";
 
         public PhdEventVersion Version {
-            get {
-                return _version;
-            }
+            get => _version;
             set {
                 _version = value;
                 RaisePropertyChanged();
@@ -75,9 +75,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private ImageSource _image;
 
         public ImageSource Image {
-            get {
-                return _image;
-            }
+            get => _image;
             set {
                 _image = value;
                 RaisePropertyChanged();
@@ -87,9 +85,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private PhdEventAppState _appState;
 
         public PhdEventAppState AppState {
-            get {
-                return _appState;
-            }
+            get => _appState;
             set {
                 _appState = value;
                 RaisePropertyChanged();
@@ -115,9 +111,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private PhdEventGuidingDithered _guidingDithered;
 
         public PhdEventGuidingDithered GuidingDithered {
-            get {
-                return _guidingDithered;
-            }
+            get => _guidingDithered;
             set {
                 _guidingDithered = value;
                 RaisePropertyChanged();
@@ -131,9 +125,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             private set {
                 lock (lockobj) {
                     _connected = value;
@@ -145,20 +137,14 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private double _pixelScale;
 
         public double PixelScale {
-            get {
-                return _pixelScale;
-            }
+            get => _pixelScale;
             set {
                 _pixelScale = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string State {
-            get {
-                return AppState?.State ?? string.Empty;
-            }
-        }
+        public string State => AppState?.State ?? string.Empty;
 
         public bool HasSetupDialog => !Connected;
 
@@ -176,9 +162,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         private Phd2Profile _selectedProfile;
 
         public Phd2Profile SelectedProfile {
-            get {
-                return _selectedProfile;
-            }
+            get => _selectedProfile;
             set {
                 if (value != _selectedProfile) {
                     _selectedProfile = value;
@@ -196,6 +180,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public async Task<bool> Connect(CancellationToken token) {
             initialized = false;
             _tcs = new TaskCompletionSource<bool>();
+
+            var hostEntry = Dns.GetHostEntry(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl);
+            phd2Ip = hostEntry.AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork);
+
             var startedPHD2 = await StartPHD2Process();
 
             _ = Task.Run(RunListener);
@@ -435,7 +423,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             var lockPositionResponse = await SendMessage<GetLockPositionResponse>(
                 msg,
                 receiveTimeout);
-            if (lockPositionResponse?.result != null && lockPositionResponse.result.Count() == 2) {
+            if (lockPositionResponse?.result != null && lockPositionResponse.result.Length == 2) {
                 return new LockPosition(lockPositionResponse.result[0], lockPositionResponse.result[1]);
             }
             return null;
@@ -717,9 +705,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 10000);  // triage: reported deadlock hanging of phd2+nina - 10s timeout
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
+        public bool CanClearCalibration => true;
 
         public bool CanSetShiftRate => true;
 
@@ -744,6 +730,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         private string shiftRateAxis;
+        private IPAddress phd2Ip;
+
         public string ShiftRateAxis {
             get => shiftRateAxis;
             private set {
@@ -778,8 +766,9 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     var serializedMessage = JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
                     Logger.Debug($"Phd2 - Sending message '{serializedMessage}'");
                     client.ReceiveTimeout = receiveTimeout;
+
                     await client.ConnectAsync(
-                        profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
+                        phd2Ip,
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     var stream = client.GetStream();
                     var data = Encoding.ASCII.GetBytes(serializedMessage + Environment.NewLine);
@@ -809,7 +798,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             }
 
             var genericError = (T)Activator.CreateInstance(typeof(T));
-            genericError.id = 1;
+            genericError.id = msg.Id.ToString();
             genericError.error = new PhdError() { code = -1, message = "Unable to get response from phd2" };
             return genericError;
         }
@@ -882,6 +871,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         public void Disconnect() {
             initialized = false;
+            phd2Ip = null;
             try { _clientCTS?.Cancel(); } catch { }
         }
 
@@ -1115,7 +1105,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             _clientCTS = new CancellationTokenSource();
             using (var client = new TcpClient()) {
                 try {
-                    await client.ConnectAsync(profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
+                    await client.ConnectAsync(
+                        phd2Ip,
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     Connected = true;
                     _tcs.TrySetResult(true);
@@ -1136,7 +1127,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
                             foreach (string line in message.Split(new[] { Environment.NewLine },
                                 StringSplitOptions.None)) {
-                                if (!string.IsNullOrEmpty(line) && !line.StartsWith("\0")) {
+                                if (!string.IsNullOrEmpty(line) && line.StartsWith("{")) {
                                     JObject o = JObject.Parse(line, jls);
                                     JToken t = o.GetValue("Event");
                                     string phdevent = "";

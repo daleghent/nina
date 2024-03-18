@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -54,7 +54,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SVBonySDK {
                     var info = sVBonyPInvoke.GetCameraInfo(i);
 
                     Logger.Debug($"Found SVBony camera - id: {info.CameraID}; name: {info.FriendlyName}");
-                    devices.Add(new GenericCamera((int)info.CameraID, info.FriendlyName, "SVBony", sVBonyPInvoke.GetSDKVersion(), true, new SVBonySDK((int)info.CameraID), profileService, exposureDataFactory));
+                    devices.Add(new SVBonyCamera(info.CameraSN, info.FriendlyName, sVBonyPInvoke.GetSDKVersion(), new SVBonySDK((int)info.CameraID), profileService, exposureDataFactory));
                 }
             }
             return devices;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -22,13 +22,14 @@ namespace NINA.Profile.Interfaces {
         string FilePatternDARK { get; set; }
         string FilePatternBIAS { get; set; }
         string FilePatternFLAT { get; set; }
-        string FilePatternDARKFLAT { get; set; }
         FileTypeEnum FileType { get; set; }
         TIFFCompressionTypeEnum TIFFCompressionType { get; set; }
         XISFCompressionTypeEnum XISFCompressionType { get; set; }
         XISFChecksumTypeEnum XISFChecksumType { get; set; }
         bool XISFByteShuffling { get; set; }
-
+        FITSCompressionTypeEnum FITSCompressionType { get; set; }
+        bool FITSAddFzExtension { get; set; }
+        bool FITSUseLegacyWriter { get; set; }
         string GetFilePattern(string imageType);
     }
 }

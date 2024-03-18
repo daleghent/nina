@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,7 +16,6 @@ using Ionic.Zlib;
 using K4os.Compression.LZ4;
 using NINA.Core.Enum;
 using NINA.Core.Utility;
-using SHA3;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -82,8 +81,37 @@ namespace NINA.Image.FileFormat.XISF {
             ByteShuffling = fileSaveInfo.XISFByteShuffling;
             ShuffleItemSize = sizeof(ushort);
 
-            Data = PrepareArray(data);
+
+            /*
+             * Convert the data array into a byte[]
+             * From here onwards we deal in byte arrays only
+             */
+            byte[] byteArray = new byte[data.Length * ShuffleItemSize];
+            Buffer.BlockCopy(data, 0, byteArray, 0, data.Length * ShuffleItemSize);
+
+            Data = PrepareArray(byteArray);
             Size = (uint)data.Length * sizeof(ushort);
+            CompressedSize = CompressionType == XISFCompressionTypeEnum.NONE ? 0 : (uint)Data.Length;
+        }
+
+        public XISFData(int[] data, FileSaveInfo fileSaveInfo) : this(Array.ConvertAll(data, item => (uint)item), fileSaveInfo) {
+        }
+
+        public XISFData(uint[] data, FileSaveInfo fileSaveInfo) {
+            CompressionType = fileSaveInfo.XISFCompressionType;
+            ChecksumType = fileSaveInfo.XISFChecksumType; ;
+            ByteShuffling = fileSaveInfo.XISFByteShuffling;
+            ShuffleItemSize = sizeof(uint);
+
+            /*
+             * Convert the data array into a byte[]
+             * From here onwards we deal in byte arrays only
+             */
+            byte[] byteArray = new byte[data.Length * ShuffleItemSize];
+            Buffer.BlockCopy(data, 0, byteArray, 0, data.Length * ShuffleItemSize);
+
+            Data = PrepareArray(byteArray);
+            Size = (uint)data.Length * sizeof(uint);
             CompressedSize = CompressionType == XISFCompressionTypeEnum.NONE ? 0 : (uint)Data.Length;
         }
 
@@ -101,15 +129,8 @@ namespace NINA.Image.FileFormat.XISF {
         /// </summary>
         /// <param name="data"></param>
         /// <returns>Uncompressed or compressed byte array</returns>
-        private byte[] PrepareArray(ushort[] data) {
+        private byte[] PrepareArray(byte[] byteArray) {
             byte[] outArray;
-
-            /*
-             * Convert the ushort[] into a byte[]
-             * From here onwards we deal in byte arrays only
-             */
-            byte[] byteArray = new byte[data.Length * ShuffleItemSize];
-            Buffer.BlockCopy(data, 0, byteArray, 0, data.Length * ShuffleItemSize);
 
             /*
              * Compress the data block as configured.
@@ -182,42 +203,40 @@ namespace NINA.Image.FileFormat.XISF {
              * If the data block is compressed, we always checksum the compressed form, not the uncompressed form.
              */
             using (MyStopWatch.Measure($"XISF Checksum = {ChecksumType}")) {
-                SHA3Managed sha3;
-
                 switch (ChecksumType) {
                     case XISFChecksumTypeEnum.SHA1:
-                        SHA1 sha1 = new SHA1CryptoServiceProvider();
+                        SHA1 sha1 = SHA1.Create();
                         Checksum = GetStringFromHash(sha1.ComputeHash(outArray));
                         ChecksumName = "sha-1";
                         sha1.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA256:
-                        SHA256 sha256 = new SHA256CryptoServiceProvider();
+                        SHA256 sha256 = SHA256.Create();
                         Checksum = GetStringFromHash(sha256.ComputeHash(outArray));
                         ChecksumName = "sha-256";
                         sha256.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA512:
-                        SHA512 sha512 = new SHA512CryptoServiceProvider();
+                        SHA512 sha512 = SHA512.Create();
                         Checksum = GetStringFromHash(sha512.ComputeHash(outArray));
                         ChecksumName = "sha-512";
                         sha512.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_256:
-                        sha3 = new SHA3Managed(256);
-                        Checksum = GetStringFromHash(sha3.ComputeHash(outArray));
+                        SHA3_256 sha3_256 = SHA3_256.Create();
+                        Checksum = GetStringFromHash(sha3_256.ComputeHash(outArray));
                         ChecksumName = "sha3-256";
-                        sha3.Dispose();
+                        sha3_256.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_512:
-                        sha3 = new SHA3Managed(512);
-                        Checksum = GetStringFromHash(sha3.ComputeHash(outArray));
+                        SHA3_512 sha3_512 = SHA3_512.Create();
+                        Checksum = GetStringFromHash(sha3_512.ComputeHash(outArray));
                         ChecksumName = "sha3-512";
-                        sha3.Dispose();
+                        sha3_512.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.NONE:

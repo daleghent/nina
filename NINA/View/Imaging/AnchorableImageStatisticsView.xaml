@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -21,10 +21,24 @@
         <Grid Margin="5,0,5,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel>
+            <Grid Margin="5" Visibility="{Binding SettingsVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblShowHistogram}" />
+                <CheckBox
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    HorizontalAlignment="Left"
+                    IsChecked="{Binding ActiveProfile.DockPanelSettings.ShowImagingHistogram}" />
+            </Grid>
+
+            <StackPanel Grid.Row="1">
                 <StackPanel
                     Margin="5"
                     VerticalAlignment="Top"
@@ -200,14 +214,28 @@
                                 VerticalAlignment="Center"
                                 Text="{Binding ImageProperties.Gain, StringFormat=\{0:0\}, Converter={StaticResource IntNegativeOneToDoubleDashConverter}}" />
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Width="55"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblOffset}" />
+                            <TextBlock
+                                Width="70"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding ImageProperties.Offset, StringFormat=\{0:0\}, Converter={StaticResource IntNegativeOneToDoubleDashConverter}}" />
+                        </StackPanel>
                     </UniformGrid>
                 </StackPanel>
             </StackPanel>
 
-            <local:HistogramView
-                Grid.Row="1"
-                MinHeight="80"
-                DataContext="{Binding Statistics}" />
+            <Grid
+                Grid.Row="2"
+                VerticalAlignment="Stretch"
+                Visibility="{Binding ActiveProfile.DockPanelSettings.ShowImagingHistogram, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <local:HistogramView MinHeight="80" DataContext="{Binding Statistics}" />
+
+            </Grid>
         </Grid>
     </ScrollViewer>
 </UserControl>

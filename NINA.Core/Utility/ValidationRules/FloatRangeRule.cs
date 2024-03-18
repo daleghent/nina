@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -47,16 +47,16 @@ namespace NINA.Core.Utility.ValidationRules {
     public class FloatRangeChecker : DependencyObject {
 
         public float Minimum {
-            get { return (float)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get => (float)GetValue(MinimumProperty);
+            set => SetValue(MinimumProperty, value);
         }
 
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(float), typeof(FloatRangeChecker), new UIPropertyMetadata(float.MinValue));
 
         public float Maximum {
-            get { return (float)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get => (float)GetValue(MaximumProperty);
+            set => SetValue(MaximumProperty, value);
         }
 
         public static readonly DependencyProperty MaximumProperty =

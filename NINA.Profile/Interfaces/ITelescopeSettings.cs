@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,13 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
+
 namespace NINA.Profile.Interfaces {
 
     public interface ITelescopeSettings : ISettings {
         string Name { get; set; }
+        string MountName { get; set; }
         double FocalLength { get; set; }
         double FocalRatio { get; set; }
         string Id { get; set; }
@@ -23,7 +26,10 @@ namespace NINA.Profile.Interfaces {
         string SnapPortStart { get; set; }
         string SnapPortStop { get; set; }
         bool NoSync { get; set; }
+        bool TimeSync { get; set; }
         bool PrimaryReversed { get; set; }
         bool SecondaryReversed { get; set; }
+
+        TelescopeLocationSyncDirection TelescopeLocationSyncDirection { get; set; }
     }
 }

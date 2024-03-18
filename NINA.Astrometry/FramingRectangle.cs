@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -32,9 +32,7 @@ namespace NINA.Astrometry {
         private int id;
 
         public int Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 id = value;
                 RaisePropertyChanged();
@@ -53,20 +51,18 @@ namespace NINA.Astrometry {
         private Coordinates coordinates;
 
         public Coordinates Coordinates {
-            get {
-                return coordinates;
-            }
+            get => coordinates;
             set {
                 coordinates = value;
                 RaisePropertyChanged();
             }
         }
 
-        private double dsoRotation;
-        public double DSORotation {
-            get => dsoRotation;
+        private double dsoPositionAngle;
+        public double DSOPositionAngle {
+            get => dsoPositionAngle;
             set {
-                dsoRotation = value;
+                dsoPositionAngle = AstroUtil.EuclidianModulus(value, 360);
                 RaisePropertyChanged();
             }
         }

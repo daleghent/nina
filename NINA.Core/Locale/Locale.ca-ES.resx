@@ -960,7 +960,7 @@ En cas que es necessiti una durada més llarga, es pot especificar aquesta durad
     <value>Sentit contrari a les agulles del rellotge</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Tapeu el vostre telescopi ara i premeu D'ACORD per començar a prendre els dark flats.</value>
+    <value>Tapeu el vostre abast ara i premeu D'ACORD per començar a prendre la foscor.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Tapa el telescopi ara</value>
@@ -987,7 +987,7 @@ En cas que es necessiti una durada més llarga, es pot especificar aquesta durad
     <value>Directori de Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Dark Flats a capturar</value>
+    <value>Darks per agafar</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>Girar a D.A.R.V.</value>
@@ -1120,10 +1120,10 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>Velocitat de Guiatge en Declinació en arcsegons per segons</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>El Guiatge Directe no s'ha pogut connectar al Telescopi</value>
+    <value>Direct Guider no s'ha pogut connectar a la muntura</value>
   </data>
-  <data name="LblDirectGuiderTelescopeDisconnect" xml:space="preserve">
-    <value>El Telescopi s'ha desconnectat. El Guiatge Directe es desconnectarà. El Dithering ja no és efectiu!</value>
+  <data name="LblDirectGuiderMountDisconnect" xml:space="preserve">
+    <value>La muntura s'ha desconnectat. Direct Guider es desconnectarà. El dithering ja no és efectiu!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
     <value>No s'ha trobat el directori per desar la Imatge!</value>
@@ -1174,7 +1174,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>Impossible connectar al controlador de la Cúpula (Dome) ASCOM:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>El controlador pot continuar</value>
+    <value>La cúpula pot seguir</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Estat de l'obturador</value>
@@ -1204,7 +1204,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>En la posició inicial (home)</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>El controlador segueix el telescopi</value>
+    <value>La cúpula segueix al Telescopi</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Girant</value>
@@ -1480,7 +1480,7 @@ Quan es desactivi aquest, l'aplicació només saltarà a l'inici de l'exposició
     <value>Obert</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Obre la tapa per a Dark flats</value>
+    <value>Obriu la coberta per als darks</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Fixar</value>
@@ -1923,7 +1923,7 @@ HFR calculat: {2}    </value>
     <value>Control Manual</value>
   </data>
   <data name="LblManualCoordinates" xml:space="preserve">
-    <value>Coordenades Manuals (J2000)</value>
+    <value>Coordenades manuals</value>
   </data>
   <data name="LblManualFilterWheel" xml:space="preserve">
     <value>Roda de Filtre Manual</value>
@@ -2064,8 +2064,8 @@ HFR calculat: {2}    </value>
   <data name="LblNINA" xml:space="preserve">
     <value>N.I.N.A.</value>
   </data>
-  <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>Des de N.I.N.A. al Telescopi</value>
+  <data name="LblNINAToMount" xml:space="preserve">
+    <value>Des de N.I.N.A. a la Muntura</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -2122,10 +2122,10 @@ HFR calculat: {2}    </value>
     <value>Sense sincronització</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>Si està activada, l'aplicació mai no enviarà cap ordre de sincronització al telescopi. Això només s’ha d’utilitzar quan es tingui un bon model d'estrelles, pel que no s’ha d’alterar de cap manera.</value>
+    <value>Quan està habilitada, l'aplicació mai enviarà una ordre de sincronització a la muntura. Això només s'ha d'utilitzar quan es disposa d'un bon model de cel que no s'ha de modificar de cap manera.</value>
   </data>
-  <data name="LblNoTelescope" xml:space="preserve">
-    <value>Sense Telescopi</value>
+  <data name="LblNoMount" xml:space="preserve">
+    <value>No hi ha Muntura</value>
   </data>
   <data name="LblNotificationError" xml:space="preserve">
     <value>Notificació d'Error</value>
@@ -2540,7 +2540,7 @@ HFR calculat: {2}    </value>
     <value>Preparant Imatge</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Preparant seqüència de Dark Flats</value>
+    <value>Preparant la seqüència de darks</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Flats per al filtre: {0}</value>
@@ -2612,7 +2612,7 @@ HFR calculat: {2}    </value>
     <value>Mode de lectura de seqüències</value>
   </data>
   <data name="LblReadoutForNormalImagesToolTip" xml:space="preserve">
-    <value>Aquest mode de lectura de la càmera s’utilitzarà per a fotogrames LIGHT, BIAS, DARK, FLAT i DARKFLAT en seqüències.</value>
+    <value>Aquest mode de lectura de la càmera s'utilitzarà per a fotogrames LIGHTS, BIAS, DARKS i FLATS en les seqüències.</value>
   </data>
   <data name="LblReadoutForSnapImages" xml:space="preserve">
     <value>Mode de lectura per a instantànies</value>
@@ -2644,8 +2644,8 @@ HFR calculat: {2}    </value>
   <data name="LblReconnectFocuser" xml:space="preserve">
     <value>Si us plau torna a connectar l'enfocament automàtic!</value>
   </data>
-  <data name="LblReconnectTelescope" xml:space="preserve">
-    <value>Si us plau torna a connectar el telescopi!</value>
+  <data name="LblReconnectMount" xml:space="preserve">
+    <value>Torneu a connectar la muntura!</value>
   </data>
   <data name="LblReferenceDate" xml:space="preserve">
     <value>Data de Referència</value>
@@ -3085,24 +3085,15 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
     <value>Sinc</value>
   </data>
   <data name="LblSyncFailed" xml:space="preserve">
-    <value>Ha fallat la sincronització amb el Telescopi</value>
-  </data>
-  <data name="LblSynchronizedPHD2Guider" xml:space="preserve">
-    <value>PHD2 Sincronitzat (Experimental)</value>
-  </data>
-  <data name="LblSynchronizedPHD2ServiceClientAlreadyExists" xml:space="preserve">
-    <value>
-        Aquest perfil ja està connectat al Guiatge Sincronitzat de PHD2.
-        No podeu connectar el mateix perfil dues vegades, seleccioneu un perfil NINA diferent.    </value>
-  </data>
-  <data name="LblSynchronizedPHD2ServiceCrashed" xml:space="preserve">
-    <value>El servei PHD2 sincronitzat ha fallat i es torna a reiniciar aquest guiatge sincronitzat de PHD2 com a servei</value>
+    <value>La sincronització de la muntura ha fallat</value>
   </data>
   <data name="LblSyncLatLong" xml:space="preserve">
     <value>Sincronitza la configuració del lloc</value>
   </data>
   <data name="LblSyncLatLongText" xml:space="preserve">
-    <value>La configuració del lloc del telescopi és diferent de la de NINA. Vol sincronitzar la configuració?</value>
+    <value>La configuració de la Muntura difereix de la de N.I.N.A.
+
+S'ha de sincronitzar la configuració?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
     <value>Objectiu</value>
@@ -3173,8 +3164,8 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
   <data name="LblTelescopeSynced" xml:space="preserve">
     <value>Telescopi sincronitzat a les coordenades</value>
   </data>
-  <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Des del Telescopi a N.I.N.A.</value>
+  <data name="LblMountToNINA" xml:space="preserve">
+    <value>Des de la Muntura cap a N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Velocitat de Guiatge en AR</value>
@@ -3365,7 +3356,7 @@ Arrossegueu el rectangle sobre la part del marc que vulgueu fer SubMostra i acti
     <value>Impossible iniciar exposició de la càmera</value>
   </data>
   <data name="LblUnableToSync" xml:space="preserve">
-    <value>No es pot sincronitzar. El telescopi no està connectat</value>
+    <value>No es pot sincronitzar. La muntura no està connectada</value>
   </data>
   <data name="LblUnexpectedError" xml:space="preserve">
     <value>S'ha produït un error inesperat</value>
@@ -3531,9 +3522,6 @@ Quan estigui activat, els canals de color s’estiraran per separat, ajudant a a
   </data>
   <data name="LblWarning" xml:space="preserve">
     <value>Advertència</value>
-  </data>
-  <data name="LblWarnTelescopeParked" xml:space="preserve">
-    <value>El telescopi està estacionat (park) i es deixarà d'estacionar (unpark) automàticament si l'usuari continua amb l'inici de la seqüència</value>
   </data>
   <data name="LblWeather" xml:space="preserve">
     <value>Temps</value>
@@ -4028,8 +4016,8 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
   <data name="LblDisconnectRotator" xml:space="preserve">
     <value>Desconnectar el rotador?</value>
   </data>
-  <data name="LblDisconnectTelescope" xml:space="preserve">
-    <value>Desconnectar el Telescopi?</value>
+  <data name="LblDisconnectMount" xml:space="preserve">
+    <value>Desconnectar la muntura?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>El telescopi està aparcat (park). Hauràs de treure l'aparcament (unpark) del telescopi abans que pugui girar.</value>
@@ -5279,10 +5267,10 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Movent el rotador a la posició {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Cerca el valor d’exposició entrenat per als paràmetres especificats i pren exposicions dark flat</value>
+    <value>Busca el valor d'exposició entrenat per als paràmetres especificats i pren exposicions darks</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Exposició de dark flat entrenada</value>
+    <value>Exposició entrenada de darks</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
     <value>Costat esquerra</value>
@@ -5555,7 +5543,7 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Cerca actualitzacions</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarregueu manualment i copieu el fitxer DLL a %localappdata%\NINA\Plugins des de:</value>
+    <value>Instalar a través del gestor de complements (plugins) de N.I.N.A. o descarregar y copiar manualmente l'arxiu DLL a %localappdata%\NINA\Plugins\&lt;Major&gt;.&lt;Minor&gt;.&lt;Hotfix&gt; des de:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
     <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarregueu manualment i executeu la configuració des de:</value>
@@ -6596,10 +6584,10 @@ Això només s'ha de desactivar quan es disposa d'un bon model del cel i no s'ha
     <value>Lluminositat automàtica de Flats</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Description" xml:space="preserve">
-    <value>Aquesta instrucció determinarà automàticament els temps d'exposició similars a l'assistent de Flats per als Flats del cel.</value>
+    <value>Aquesta instrucció ajusta automàticament els temps d'exposició per capturar Flats del cel crepuscular, semblant a la funcionalitat de l'eina de l'assistent de flats. Modifica dinàmicament la durada de l'exposició després de cada presa, basant-se en prediccions en temps real dels canvis en la brillantor del cel.</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SkyFlat_Name" xml:space="preserve">
-    <value>Flats del cel</value>
+    <value>Flats de cel crepuscular</value>
   </data>
   <data name="LblClosingCover" xml:space="preserve">
     <value>Tancament de la Coberta</value>
@@ -6697,5 +6685,278 @@ Augmenta el temps d'exposició mínim o espera fins que sigui més brillant.</va
   </data>
   <data name="Lbl_TelescopeLocationSyncDirection_Tooltip" xml:space="preserve">
     <value>Quan es connecta el telescopi, es defineix com es comportarà quan la ubicació de la montura i de l' aplicació siguin diferents.</value>
+  </data>
+  <data name="LblPHD2PeakDec" xml:space="preserve">
+    <value>Pic Dec: {0} ({1}")</value>
+  </data>
+  <data name="LblPHD2PeakRA" xml:space="preserve">
+    <value>Peak AR: {0} ({1}")</value>
+  </data>
+  <data name="LblPluginRepositories" xml:space="preserve">
+    <value>Repositoris de complements</value>
+  </data>
+  <data name="LblPluginRepositoryEnterUrl" xml:space="preserve">
+    <value>Introduïu l'URL del dipòsit de complements (plugins)</value>
+  </data>
+  <data name="LblPluginRepositoryUrlInvalid" xml:space="preserve">
+    <value>L'Url del dipòsit de complements (plugins) no és vàlid: {0}</value>
+  </data>
+  <data name="LblTSXImageLink" xml:space="preserve">
+    <value>Enllaç a Imatge TheSkyX</value>
+  </data>
+  <data name="LblTSXHost" xml:space="preserve">
+    <value>Servidor TheSkyX</value>
+  </data>
+  <data name="LblTSXPort" xml:space="preserve">
+    <value>Port TheSkyX</value>
+  </data>
+  <data name="LblZwoMonoBinMode" xml:space="preserve">
+    <value>Mono bin</value>
+  </data>
+  <data name="LblZwoMonoBinModeTooltip" xml:space="preserve">
+    <value>Quan estigui activada, la càmera farà una mitjana dels píxels agrupats per crear una sortida monocroma</value>
+  </data>
+  <data name="LblPinPoint" xml:space="preserve">
+    <value>PinPoint</value>
+  </data>
+  <data name="LblPinPointCatalogRoot" xml:space="preserve">
+    <value>Arrel del Catàleg</value>
+  </data>
+  <data name="LblPinPointFailedInitialize" xml:space="preserve">
+    <value>No s'ha pogut inicialitzar el motor astromètric PinPoint</value>
+  </data>
+  <data name="LblPinPointNotInstalled" xml:space="preserve">
+    <value>No s'ha pogut inicialitzar el motor astromètric PinPoint. Sembla que ell o el seu component de 64 bits no estiguin instal·lats.</value>
+  </data>
+  <data name="LblPinPointReferenceCatalog" xml:space="preserve">
+    <value>Catàleg de referència</value>
+  </data>
+  <data name="LblPinPointCatAtas" xml:space="preserve">
+    <value>ATLAS / PanSTARRS+Gaia</value>
+  </data>
+  <data name="LblPinPointCatGscact" xml:space="preserve">
+    <value>Estrella de la guia millorada 1.1</value>
+  </data>
+  <data name="LblPinPointCatTycho2" xml:space="preserve">
+    <value>ESA Tycho-2</value>
+  </data>
+  <data name="LblPinPointCatType" xml:space="preserve">
+    <value>Catàleg de Referència</value>
+  </data>
+  <data name="LblPinPointCatUcac2" xml:space="preserve">
+    <value>USNO UCAC2</value>
+  </data>
+  <data name="LblPinPointCatUcac3" xml:space="preserve">
+    <value>USNO UCAC3</value>
+  </data>
+  <data name="LblPinPointCatUcac4" xml:space="preserve">
+    <value>USNO UCAC4</value>
+  </data>
+  <data name="LblPinPointCatUsnoA" xml:space="preserve">
+    <value>USN A2.0</value>
+  </data>
+  <data name="LblPinPointCatUsnoB" xml:space="preserve">
+    <value>USNO B1.0</value>
+  </data>
+  <data name="LblPinPointExpansion" xml:space="preserve">
+    <value>Expansion</value>
+  </data>
+  <data name="LblPinPointExpansionToolTip" xml:space="preserve">
+    <value>Ampliació de l'àrea de cerca del catàleg fora de les dimensions de la imatge (mínim = 0, màxim = 80, predeterminat = 40)</value>
+  </data>
+  <data name="LblPinPointMaxMagnitude" xml:space="preserve">
+    <value>Max. Magnitud</value>
+  </data>
+  <data name="LblPinPointMaxMagnitudeToolTip" xml:space="preserve">
+    <value>La magnitud màxima (més feble) per a la selecció d'estrelles del catàleg de referència (mínim = 2,0, màxim = 20,0, per defecte = 20,0)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHost" xml:space="preserve">
+    <value>AllSky API host</value>
+  </data>
+  <data name="LblPinPointAllSkyApiHostToolTip" xml:space="preserve">
+    <value>Amfitrió de l'API Astrometry.net/AllSky (per defecte = nova.astrometry.net)</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKey" xml:space="preserve">
+    <value>AllSky API key</value>
+  </data>
+  <data name="LblPinPointAllSkyApiKeyToolTip" xml:space="preserve">
+    <value>Clau de l'API Astrometry.net/AllSky (opcional)</value>
+  </data>
+  <data name="LblPinPointAllSkySolve" xml:space="preserve">
+    <value>PinPoin AllSky solucio astromètrica</value>
+  </data>
+  <data name="LblPinPointLocalSolve" xml:space="preserve">
+    <value>PinPoint solució astrometrica local</value>
+  </data>
+  <data name="LblPinPointErrorMessage" xml:space="preserve">
+    <value>PinPoint Missatge d'error</value>
+  </data>
+  <data name="LblUnableToSetMountElevation" xml:space="preserve">
+    <value>No es pot establir l'elevació de la muntura en {0}!</value>
+  </data>
+  <data name="LblSaveInCache" xml:space="preserve">
+    <value>Imatge de memòria cau per a ús fora de línia</value>
+    <comment>To store an image automatically in the framing assistant offline cache or not</comment>
+  </data>
+  <data name="LblSaveInCacheTooltip" xml:space="preserve">
+    <value>Quan està activat, la imatge es desarà al dispositiu i es podrà veure al mapa celeste fora de línia</value>
+  </data>
+  <data name="LblClose" xml:space="preserve">
+    <value>Tancar</value>
+  </data>
+  <data name="LblShowHistogram" xml:space="preserve">
+    <value>Mostra l'Histrograma</value>
+  </data>
+  <data name="LblInfoOnly" xml:space="preserve">
+    <value>Només info</value>
+  </data>
+  <data name="LblInfoOnlyTooltip" xml:space="preserve">
+    <value>Alterna entre mostrar només contingut informatiu i mostrar controls interactius dins del tauler</value>
+  </data>
+  <data name="LblParked" xml:space="preserve">
+    <value>Aparcat</value>
+    <comment>When mount is at park position</comment>
+  </data>
+  <data name="LblSlewing" xml:space="preserve">
+    <value>Girant</value>
+  </data>
+  <data name="LblCompressionGZIP1" xml:space="preserve">
+    <value>GZIP 1</value>
+  </data>
+  <data name="LblCompressionGZIP2" xml:space="preserve">
+    <value>GZIP 2</value>
+  </data>
+  <data name="LblCompressionHCOMPRESS" xml:space="preserve">
+    <value>HCOMPRESS</value>
+  </data>
+  <data name="LblCompressionPLIO" xml:space="preserve">
+    <value>PLIO</value>
+  </data>
+  <data name="LblCompressionRICE" xml:space="preserve">
+    <value>RICE</value>
+  </data>
+  <data name="LblAddFzExtension" xml:space="preserve">
+    <value>Afegir extensió .fz</value>
+  </data>
+  <data name="LblAddFzExtensionTooltip" xml:space="preserve">
+    <value>Afegeix una extensió .fz addicional al nom de fitxer dels arxius FITS comprimits. Exemple: nomfitxer.fits.fz</value>
+  </data>
+  <data name="LblASCOMCreate32BitData" xml:space="preserve">
+    <value>Crear dades de 32 bits</value>
+  </data>
+  <data name="LblASCOMCreate32BitDataTooltip" xml:space="preserve">
+    <value>Quan la funció està habilitada, N.I.N.A. generarà dades d'imatge amb una profunditat de 32 bits, millorant l'interval de valors de píxels.
+Tanmateix, és crucial tenir en compte que aquest procés requerirà més memòria, augmentarà el temps de processament i utilitzarà espai de disc addicional per a cada exposició.
+Tingueu en compte que només els formats de fitxer XISF i FITS poden emmagatzemar dades d'imatge en aquest format de 32 bits.
+A més, és essencial que el controlador ASCOM utilitzat també admeti aquesta profunditat de 32 bits. Si el controlador no admet una profunditat de 32 bits, l'augment de la mida del fitxer resultant d'aquesta configuració només comportaria una pèrdua d'espai sense cap millora en les dades d'imatge.</value>
+  </data>
+  <data name="LblUseCfitsio" xml:space="preserve">
+    <value>Utilitza CFITSIO</value>
+  </data>
+  <data name="LblUseCfitsioTooltip" xml:space="preserve">
+    <value>Quan està activada aquesta funció, els fitxers FITS es crearan mitjançant la biblioteca CFITSIO, que és una alternativa al mètode predeterminat del programa per escriure aquests fitxers. Aquest canvi permet funcionalitats addicionals, com ara la capacitat de comprimir fitxers FITS per reduir la mida del fitxer i l'opció d'emmagatzemar dades en un format de 32 bits per millorar la precisió de les dades.</value>
+  </data>
+  <data name="LblBadPixelCorrection" xml:space="preserve">
+    <value>Correcció de píxels dolents</value>
+  </data>
+  <data name="LblBadPixelCorrectionThreshold" xml:space="preserve">
+    <value>Llindar de correcció de píxels incorrectes</value>
+  </data>
+  <data name="LblClosed" xml:space="preserve">
+    <value>Tancat</value>
+  </data>
+  <data name="LblClosing" xml:space="preserve">
+    <value>Tancant</value>
+  </data>
+  <data name="LblOpen" xml:space="preserve">
+    <value>Obert</value>
+  </data>
+  <data name="LblOpening" xml:space="preserve">
+    <value>Obrint</value>
+  </data>
+  <data name="LblTelescopeFindHomeTimeout" xml:space="preserve">
+    <value>L'intent de trobar la posició HOME s'ha cancel·lat després de {0} minuts</value>
+  </data>
+  <data name="LblTelescopeParkTimeout" xml:space="preserve">
+    <value>El temps d'espera per aparcar el telescopi s'ha esgotat després de {0} minuts.</value>
+  </data>
+  <data name="LblTelescopeUnparkTimeout" xml:space="preserve">
+    <value>El temps de treure aparcament del telescopi s'ha esgotat després de {0} minuts.</value>
+  </data>
+  <data name="LblTimeSync" xml:space="preserve">
+    <value>Sincronització del temps</value>
+  </data>
+  <data name="LblTimeSyncTooltip" xml:space="preserve">
+    <value>Quan està habilitada, l'aplicació actualitzarà l'hora de la muntura perquè estigui sincronitzada amb l'hora del sistema en connectar.</value>
+  </data>
+  <data name="LblCoordinatesMountSync" xml:space="preserve">
+    <value>Sincronització de coordenades</value>
+  </data>
+  <data name="LblMount" xml:space="preserve">
+    <value>Muntura</value>
+  </data>
+  <data name="LblMountName" xml:space="preserve">
+    <value>Nom de la Muntura</value>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryDuration" xml:space="preserve">
+    <value>Durada del procediment de recerca</value>
+    <comment>The duration in seconds for ASCOM Alpaca Discovery</comment>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryDuration_Tooltip" xml:space="preserve">
+    <value>La durada dels intents de descoberta del dispositiu ASCOM Alpaca (per defecte: 2 segons)</value>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryPort" xml:space="preserve">
+    <value>Port de Recerca</value>
+    <comment>The ASCOM Alpaca Port to discover devices</comment>
+  </data>
+  <data name="Lbl_Alpaca_DiscoveryPort_Tooltip" xml:space="preserve">
+    <value>Número de port IP de recerca d'ASCOM Alpaca (per defecte: 32227)</value>
+  </data>
+  <data name="Lbl_Alpaca_NrOfBroadcasts" xml:space="preserve">
+    <value>Nombre de transmissions</value>
+    <comment>The number of broadcasts to send for ASCOM Alpaca Discovery</comment>
+  </data>
+  <data name="Lbl_Alpaca_NrOfBroadcasts_Tooltip" xml:space="preserve">
+    <value>Nombre d'intents de descobriment de dispositius ASCOM Alpaca (per defecte: 1)</value>
+  </data>
+  <data name="Lbl_Alpaca_ResolveDnsName" xml:space="preserve">
+    <value>Resoldre Nom DNS</value>
+    <comment>ASCOM Alpaca DNS name resolution</comment>
+  </data>
+  <data name="Lbl_Alpaca_ResolveDnsName_Tooltip" xml:space="preserve">
+    <value>Intent de resolució de noms DNS per als dispositius ASCOM Alpaca (per defecte: desactivat)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseHTTPS" xml:space="preserve">
+    <value>Utilitzar HTTPS</value>
+    <comment>If ASCOM Alpaca should use HTTPS instead of HTTP</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseHTTPS_Tooltip" xml:space="preserve">
+    <value>Determina si la recerca de dispositius ASCOM Alpaca hauria d'utilitzar HTTP o HTTPS (per defecte: desactivat)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv4" xml:space="preserve">
+    <value>Utilitzar IPv4</value>
+    <comment>If ASCOM Alpaca should use IPv4</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv4_Tooltip" xml:space="preserve">
+    <value>Utilitzar IPv4 per a la recerca de dispositius ASCOM Alpaca (per defecte: activat)</value>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv6" xml:space="preserve">
+    <value>Utilitzar IPv6</value>
+    <comment>If ASCOM Alpaca should use IPv6</comment>
+  </data>
+  <data name="Lbl_Alpaca_UseIPv6_Tooltip" xml:space="preserve">
+    <value>Utilitzeu IPv6 per a la recerca del dispositiu ASCOM Alpaca (per defecte: desactivat)</value>
+  </data>
+  <data name="LblToggleCatalogueDisplay" xml:space="preserve">
+    <value>Alternar visualització del catàleg</value>
+  </data>
+  <data name="LblTargetAlt" xml:space="preserve">
+    <value>Alt de l'Objectiu</value>
+  </data>
+  <data name="LblTargetAz" xml:space="preserve">
+    <value>Az de l'Objectiu</value>
+  </data>
+  <data name="LblGeoptikFlatFieldController" xml:space="preserve">
+    <value>Controlador de Camp Pla Geoptik</value>
   </data>
 </root>

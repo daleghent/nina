@@ -1,5 +1,5 @@
 ﻿<!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -17,9 +17,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <TabControl
-        Style="{StaticResource SecondLevelTabControl}"
-        TabStripPlacement="Left">
+    <TabControl Style="{StaticResource SecondLevelTabControl}" TabStripPlacement="Left">
         <TabItem>
             <TabItem.Header>
                 <TextBlock
@@ -54,6 +52,20 @@
             </TabItem.Header>
             <TabItem.Content>
                 <local:LicenseView />
+            </TabItem.Content>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock
+                    MinHeight="30"
+                    Margin="5,0,5,0"
+                    FontSize="14"
+                    Style="{StaticResource SideBarTextBlock}"
+                    Text="Icons"
+                    TextWrapping="Wrap" />
+            </TabItem.Header>
+            <TabItem.Content>
+                <local:IconsView />
             </TabItem.Content>
         </TabItem>
         <TabItem>

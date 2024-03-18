@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,11 +33,17 @@ using System.IO;
 using System.Linq;
 using NINA.Plugin.Interfaces;
 using Nito.AsyncEx;
+using System.Diagnostics;
 using NINA.Astrometry;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
+using System.Globalization;
 
 namespace NINA.ViewModel {
 
-    internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
+    internal partial class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
 
         public ApplicationVM(IProfileService profileService,
                              ProjectVersion projectVersion,
@@ -56,28 +62,26 @@ namespace NINA.ViewModel {
             this.applicationDeviceConnectionVM = applicationDeviceConnectionVM;
             cameraMediator.RegisterConsumer(this);
 
-            ExitCommand = new RelayCommand(ExitApplication);
-            ClosingCommand = new RelayCommand(ClosingApplication);
-            MinimizeWindowCommand = new RelayCommand(MinimizeWindow);
-            MaximizeWindowCommand = new RelayCommand(MaximizeWindow);
-            OpenManualCommand = new RelayCommand(OpenManual);
-            OpenAboutCommand = new RelayCommand(OpenAbout);
-            CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
-            CheckWindowsVersionCommand = new RelayCommand(CheckWindowsVersion);
-            CheckEphemerisExistsCommand = new RelayCommand(CheckEphemerisExists);
-            CollapseTabControlCommand = new RelayCommand((object o) => Collapsed = true);
-            ExpandTabControlCommand = new RelayCommand((object o) => Collapsed = false);
-
             profileService.ProfileChanged += ProfileService_ProfileChanged;
             SubscribeSystemEvents();
         }
 
-        private void CheckASCOMPlatformVersion(object obj) {
+        [RelayCommand]
+        private void CollapseTabControl() {
+            Collapsed = true;
+        }
+        [RelayCommand]
+        private void ExpandTabControl() {
+            Collapsed = false;
+        }
+
+        [RelayCommand]
+        private void CheckASCOMPlatformVersion() {
             try {
                 var version = ASCOMInteraction.GetPlatformVersion();
                 Logger.Info($"ASCOM Platform {version} installed");
-                var recommendedVersion = new Version("6.6.1.3673");
-                if (version < recommendedVersion) {                 
+                var recommendedVersion = new Version("6.6.2.4195");
+                if (version < recommendedVersion) {
                     Logger.Error($"Outdated ASCOM Platform detected. Current: {version} - Minimum Required: {recommendedVersion}");
                     Notification.ShowWarning(Loc.Instance["LblASCOMPlatformOutdated"]);
                 }
@@ -86,24 +90,25 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void CheckWindowsVersion(object obj) {
-            // Minimum support Windows version is (curently) Windows 8 (6.2)
-            var minimumVersion = new Version(6, 2);
-            string friendlyName = "Windows";
+        [RelayCommand]
+        private void CheckWindowsVersion() {
+            try {
+                if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) { 
+                    // Minimum support Windows version is (curently) Windows 10 1507
+                    var minimumVersion = new Version(10, 0, 10240);
 
-            if (Environment.OSVersion.Version < minimumVersion) {
-                try {
-                    var searcher = new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem");
-
-                    foreach (ManagementObject os in searcher.Get()) {
-                        friendlyName = os["Caption"].ToString().Trim();
-                        break;
+                    Regex versionRegex = new Regex(@"\d+(\.\d+)+");
+                    Match match = versionRegex.Match(RuntimeInformation.OSDescription);
+                    if (match.Success) {
+                        var osVersion = new Version(match.Value);
+                        if (osVersion < minimumVersion) {
+                            Logger.Error($"Windows version {RuntimeInformation.OSDescription} below supported version {minimumVersion}");
+                            Notification.ShowError(string.Format(Loc.Instance["LblYourWindowsIsTooOld"], RuntimeInformation.OSDescription));
+                        }
                     }
-                } catch (Exception ex) {
-                    Logger.Info($"Error getting Windows name: {ex.Message}");
-                } finally {
-                    Notification.ShowError(string.Format(Loc.Instance["LblYourWindowsIsTooOld"], friendlyName));
                 }
+            } catch (Exception ex) {
+                Logger.Error(ex);
             }
         }
 
@@ -112,29 +117,45 @@ namespace NINA.ViewModel {
             set {
                 Properties.Settings.Default.CollapsedSidebar = value;
                 CoreUtil.SaveSettings(Properties.Settings.Default);
-                RaisePropertyChanged();
+                OnPropertyChanged();
             }
         }
 
+        [RelayCommand]
         private void CheckEphemerisExists(object o) {
-            if(!File.Exists(NOVAS.EphemerisLocation)) {
+            if (!File.Exists(NOVAS.EphemerisLocation)) {
                 Notification.ShowError(Loc.Instance["LblEphemerisNotFound"]);
             }
         }
 
         private void ProfileService_ProfileChanged(object sender, EventArgs e) {
-            RaisePropertyChanged(nameof(ActiveProfile));
-        }
-        private void OpenManual(object o) {
-            System.Diagnostics.Process.Start(CoreUtil.DocumentationPage);
+            OnPropertyChanged(nameof(ActiveProfile));
         }
 
-        private void OpenAbout(object o) {
+        [RelayCommand]
+        private void OpenManual() {
+            System.Diagnostics.Process.Start(new ProcessStartInfo(CoreUtil.DocumentationPage) { UseShellExecute = true });
+        }
+
+        [RelayCommand]
+        private void OpenAbout() {
             AboutPageView window = new AboutPageView();
             window.Width = 1280;
             window.Height = 720;
             var service = new WindowServiceFactory().Create();
             service.Show(window, Title + " - " + Loc.Instance["LblAbout"], ResizeMode.NoResize, WindowStyle.ToolWindow);
+        }
+
+        [RelayCommand]
+        private void ChangeResolution(string resolution) {
+            var split = resolution.Split("x");
+            if (split.Length == 2) {
+                var width = double.Parse(split[0], CultureInfo.InvariantCulture);
+                var height = double.Parse(split[1], CultureInfo.InvariantCulture);
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                Application.Current.MainWindow.Width = width;
+                Application.Current.MainWindow.Height = height;
+            }
         }
 
         public void ChangeTab(ApplicationTab tab) {
@@ -143,13 +164,8 @@ namespace NINA.ViewModel {
 
         public string Version => projectVersion.ToString();
 
-        public string Title {
-            get {
-                return NINA.Core.Utility.CoreUtil.Title;
-            }
-        }
+        public string Title => NINA.Core.Utility.CoreUtil.Title;
 
-        private int _tabIndex;
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private readonly ICameraMediator cameraMediator;
         private readonly IImageSaveMediator imageSaveMediator;
@@ -157,17 +173,12 @@ namespace NINA.ViewModel {
         private readonly IDockManagerVM dockManager;
         private readonly IApplicationDeviceConnectionVM applicationDeviceConnectionVM;
 
-        public int TabIndex {
-            get {
-                return _tabIndex;
-            }
-            set {
-                _tabIndex = value;
-                RaisePropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private int tabIndex;
 
-        private static void MaximizeWindow(object obj) {
+
+        [RelayCommand]
+        private static void MaximizeWindow() {
             if (Application.Current.MainWindow.WindowState == WindowState.Maximized) {
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
             } else {
@@ -175,11 +186,13 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void MinimizeWindow(object obj) {
+        [RelayCommand]
+        private void MinimizeWindow() {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void ExitApplication(object obj) {
+        [RelayCommand]
+        private void Exit() {
             Sequencer.ISequenceNavigationVM vm = ((Interfaces.IMainWindowVM)Application.Current.MainWindow.DataContext).SequenceNavigationVM;
             if (vm.Initialized) {
                 if (vm.Sequence2VM.Sequencer.MainContainer.AskHasChanged(vm.Sequence2VM.Sequencer.MainContainer.Name)) {
@@ -200,7 +213,7 @@ namespace NINA.ViewModel {
         }
 
         private void SubscribeSystemEvents() {
-            try { 
+            try {
                 Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
                 Microsoft.Win32.SystemEvents.SessionEnding += SystemEvents_SessionEnding;
             } catch { }
@@ -210,7 +223,7 @@ namespace NINA.ViewModel {
             try {
                 Microsoft.Win32.SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 Microsoft.Win32.SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-            } catch { }            
+            } catch { }
         }
 
         private void SystemEvents_SessionEnding(object sender, Microsoft.Win32.SessionEndingEventArgs e) {
@@ -225,7 +238,7 @@ namespace NINA.ViewModel {
         }
 
         private void SystemEvents_PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e) {
-            switch(e.Mode) {
+            switch (e.Mode) {
                 case Microsoft.Win32.PowerModes.Resume:
                     Logger.Info("The operating system is about to resume from a suspended state.");
                     break;
@@ -238,7 +251,8 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void ClosingApplication(object o) {
+        [RelayCommand]
+        private void Closing() {
             UnsubscribeSystemEvents();
             try {
                 Logger.Debug("Saving dock layout");
@@ -296,17 +310,6 @@ namespace NINA.ViewModel {
 
         private readonly ProjectVersion projectVersion;
 
-        public ICommand MinimizeWindowCommand { get; private set; }
-        public ICommand MaximizeWindowCommand { get; private set; }
-        public ICommand CheckUpdateCommand { get; private set; }
-        public ICommand OpenManualCommand { get; private set; }
-        public ICommand OpenAboutCommand { get; private set; }
-        public ICommand ExitCommand { get; private set; }
-        public ICommand ClosingCommand { get; private set; }
-        public ICommand CheckASCOMPlatformVersionCommand { get; private set; }
-        public ICommand CheckWindowsVersionCommand { get; private set; }
-        public ICommand CheckEphemerisExistsCommand { get; }
-        public ICommand CollapseTabControlCommand { get; }
-        public ICommand ExpandTabControlCommand { get; }
+
     }
 }

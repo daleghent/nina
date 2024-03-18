@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -30,7 +30,7 @@ namespace NINA.Profile {
 
         protected override void SetDefaultValues() {
             id = "No_Device";
-            reverse = false;
+            reverse2 = false;
             rangeType = RotatorRangeTypeEnum.FULL;
             rangeStartMechanicalPosition = 0.0f;
         }
@@ -39,9 +39,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -50,17 +48,26 @@ namespace NINA.Profile {
             }
         }
 
-        private bool reverse;
-
+        [Obsolete("Use Reverse2 instead")]
         [DataMember]
         public bool Reverse {
-            get {
-                return reverse;
-            }
+            get => !reverse2;
+            set => reverse2 = !value;
+        }
+
+        private bool reverse2;
+        [DataMember]
+        /// <summary>
+        /// Historically N.I.N.A. was expressing rotation in clockwise orientation
+        /// As this was changed to follow the standard of counter clockwise orientation, the reverse setting is flipped for migration purposes
+        /// </summary>
+        public bool Reverse2 {
+            get => reverse2;
             set {
-                if (reverse != value) {
-                    reverse = value;
+                if (reverse2 != value) {
+                    reverse2 = value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(Reverse2));
                 }
             }
         }
@@ -69,9 +76,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public RotatorRangeTypeEnum RangeType {
-            get {
-                return rangeType;
-            }
+            get => rangeType;
             set {
                 if (rangeType != value) {
                     rangeType = value;
@@ -84,9 +89,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public float RangeStartMechanicalPosition {
-            get {
-                return rangeStartMechanicalPosition;
-            }
+            get => rangeStartMechanicalPosition;
             set {
                 if (rangeStartMechanicalPosition != value) {
                     rangeStartMechanicalPosition = value;

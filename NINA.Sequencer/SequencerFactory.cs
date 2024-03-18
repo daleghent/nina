@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -144,19 +144,19 @@ namespace NINA.Sequencer {
         public ICollectionView TriggersView { get; }
 
         public T GetContainer<T>() where T : ISequenceContainer {
-            return (T)Container.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();
+            return (T)(Container.FirstOrDefault(x => x.GetType() == typeof(T))?.Clone() ?? default(T));
         }
 
         public T GetItem<T>() where T : ISequenceItem {
-            return (T)Items.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();
+            return (T)(Items.FirstOrDefault(x => x.GetType() == typeof(T))?.Clone() ?? default(T));
         }
 
         public T GetCondition<T>() where T : ISequenceCondition {
-            return (T)Conditions.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();
+            return (T)(Conditions.FirstOrDefault(x => x.GetType() == typeof(T))?.Clone() ?? default(T));
         }
 
         public T GetTrigger<T>() where T : ISequenceTrigger {
-            return (T)Triggers.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();
+            return (T)(Triggers.FirstOrDefault(x => x.GetType() == typeof(T))?.Clone() ?? default(T));
         }
     }
 
@@ -166,10 +166,8 @@ namespace NINA.Sequencer {
             this.entityOptions = entityOptions;
         }
 
-        public bool Enabled { 
-            get {
-                return entityOptions.GetValueBoolean(this.Entity.GetType().FullName, true);
-            }
+        public bool Enabled {
+            get => entityOptions.GetValueBoolean(this.Entity.GetType().FullName, true);
             set {
                 entityOptions.SetValueBoolean(this.Entity.GetType().FullName, value);
                 RaisePropertyChanged();

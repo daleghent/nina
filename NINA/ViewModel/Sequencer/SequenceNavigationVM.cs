@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -46,12 +46,11 @@ namespace NINA.ViewModel.Sequencer {
         /// <summary>
         /// Backwards compatible ContentId due to sequencer replacement
         /// </summary>
-        public override string ContentId {
-            get => "SequenceVM";
-        }
+        public override string ContentId => "SequenceVM";
 
         public SequenceNavigationVM(
                 IProfileService profileService,
+                ICommandLineOptions commandLineOptions,
                 ISequenceMediator sequenceMediator,
                 IPluginLoader pluginProvider,
                 ICameraMediator cameraMediator,
@@ -98,13 +97,13 @@ namespace NINA.ViewModel.Sequencer {
                 this.factory = new SequencerFactory(profileService, pluginProvider.Items, pluginProvider.Conditions, pluginProvider.Triggers, pluginProvider.Container, pluginProvider.DateTimeProviders);
 
                 this.simpleSequenceVM = new SimpleSequenceVM(profileService, sequenceMediator, cameraMediator, applicationStatusMediator, nighttimeCalculator, planetariumFactory, framingAssistantVM, applicationMediator, factory);
-                this.sequence2VM = new Sequence2VM(profileService, sequenceMediator, applicationStatusMediator, cameraMediator, factory);
+                this.sequence2VM = new Sequence2VM(profileService, commandLineOptions, sequenceMediator, applicationMediator, applicationStatusMediator, cameraMediator, factory);
 
                 await Task.WhenAll(simpleSequenceVM.Initialize(), sequence2VM.Initialize());
 
                 Initialized = true;
 
-                if (profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer) {
+                if (profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer || commandLineOptions.RunSequence) {
                     this.ActiveSequencerVM = sequence2VM;
                 } else {
                     ActiveSequencerVM = this;
@@ -127,13 +126,9 @@ namespace NINA.ViewModel.Sequencer {
         public ICommand SwitchToAdvancedSequenceCommand { get; private set; }
         public ICommand SwitchToTargetSetCommand { get; private set; }
 
-        public ISimpleSequenceVM SimpleSequenceVM {
-            get => simpleSequenceVM;
-        }
+        public ISimpleSequenceVM SimpleSequenceVM => simpleSequenceVM;
 
-        public ISequence2VM Sequence2VM {
-            get => sequence2VM;
-        }
+        public ISequence2VM Sequence2VM => sequence2VM;
 
         public bool SimpleSequenceHasTargets => ((SimpleSequenceVM)simpleSequenceVM).Targets.Items.Count > 0;
 

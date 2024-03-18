@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -23,8 +23,7 @@ namespace NINA.Plugin.ManifestDefinition {
     [Serializable]
     public class PluginManifest : IPluginManifest {
 
-        public static string Schema {
-            get => @"{
+        public static string Schema => @"{
                 '$schema': 'http://json-schema.org/draft-07/schema#',
                 'type': 'object',
                 'properties': {
@@ -223,7 +222,6 @@ namespace NINA.Plugin.ManifestDefinition {
                 },
                 'required': ['Name', 'Identifier', 'Version', 'Author', 'Repository', 'License', 'LicenseURL', 'MinimumApplicationVersion', 'Descriptions', 'Installer']
             }";
-        }
 
         [JsonProperty(Required = Required.Always)]
         public string Name { get; set; }

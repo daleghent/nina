@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -211,24 +211,30 @@ namespace NINA.PlateSolving.Solvers {
             PlateSolveResult result = new PlateSolveResult();
 
             try {
-                progress.Report(new ApplicationStatus() { Status = "Authenticating to Astrometery.net..." });
-                var session = await GetAuthenticationToken(cancelToken);
+                using (var cts = CancellationTokenSource.CreateLinkedTokenSource(cancelToken)) {
+                    cts.CancelAfter(TimeSpan.FromMinutes(10));
 
-                progress.Report(new ApplicationStatus() { Status = "Uploading image to Astrometry.net..." });
-                var jobId = await SubmitImageJob(progress, source, session, cancelToken);
+                    progress.Report(new ApplicationStatus() { Status = "Authenticating to Astrometery.net..." });
+                    var session = await GetAuthenticationToken(cancelToken);
 
-                progress.Report(new ApplicationStatus() { Status = $"Getting result for Astrometry.net job {jobId}..." });
-                Calibration jobinfo = await GetJobResult(jobId, cancelToken);
+                    progress.Report(new ApplicationStatus() { Status = "Uploading image to Astrometry.net..." });
+                    var jobId = await SubmitImageJob(progress, source, session, cancelToken);
 
-                result.Orientation = jobinfo.orientation;
-                /* The orientation is mirrored on the x-axis */
-                result.Flipped = jobinfo.parity < 0;
-                result.Orientation = 180 - result.Orientation + 360;
+                    progress.Report(new ApplicationStatus() { Status = $"Getting result for Astrometry.net job {jobId}..." });
+                    Calibration jobinfo = await GetJobResult(jobId, cancelToken);
 
-                result.Pixscale = jobinfo.pixscale;
-                result.Coordinates = new Astrometry.Coordinates(jobinfo.ra, jobinfo.dec, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Degrees);
-                result.Radius = jobinfo.radius;
+                    /* The orientation is mirrored on the x-axis */
+                    result.Flipped = jobinfo.parity < 0;
+                    result.PositionAngle = 360 - (180 - jobinfo.orientation + 360);
+
+                    result.Pixscale = jobinfo.pixscale;
+                    result.Coordinates = new Astrometry.Coordinates(jobinfo.ra, jobinfo.dec, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Degrees);
+                    result.Radius = jobinfo.radius;
+                }
             } catch (OperationCanceledException) {
+                if (!cancelToken.IsCancellationRequested) {
+                    Logger.Error("Platesolver timed out after 10 minutes");
+                }
                 result.Success = false;
             } catch (Exception ex) {
                 result.Success = false;

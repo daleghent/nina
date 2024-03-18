@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,7 +13,9 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using NINA.Image.ImageAnalysis;
 using NINA.Image.Interfaces;
+using System.Collections.Generic;
 
 namespace NINA.Image.ImageData {
 
@@ -21,11 +23,10 @@ namespace NINA.Image.ImageData {
         private double _hfr = double.NaN;
         private double _hfrStDev = double.NaN;
         private int _detectedStars = -1;
+        private List<DetectedStar> _starList = new List<DetectedStar>();
 
         public double HFR {
-            get {
-                return this._hfr;
-            }
+            get => this._hfr;
             set {
                 this._hfr = value;
                 this.RaisePropertyChanged();
@@ -33,9 +34,7 @@ namespace NINA.Image.ImageData {
         }
 
         public double HFRStDev {
-            get {
-                return this._hfrStDev;
-            }
+            get => this._hfrStDev;
             set {
                 this._hfrStDev = value;
                 this.RaisePropertyChanged();
@@ -43,11 +42,17 @@ namespace NINA.Image.ImageData {
         }
 
         public int DetectedStars {
-            get {
-                return this._detectedStars;
-            }
+            get => this._detectedStars;
             set {
                 this._detectedStars = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public List<DetectedStar> StarList {
+            get => this._starList;
+            set {
+                this._starList = value;
                 this.RaisePropertyChanged();
             }
         }

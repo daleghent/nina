@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -44,6 +44,15 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
                 return DateTime.Now + timeToMeridian;
             }
             return DateTime.Now;
+        }
+        public TimeOnly GetRolloverTime(ISequenceEntity context) {
+            var contextCoordinates = ItemUtility.RetrieveContextCoordinates(context?.Parent);
+            if (contextCoordinates != null) {
+                var siderealTime = Angle.ByHours(AstroUtil.GetLocalSiderealTime(DateTime.Now, profileService.ActiveProfile.AstrometrySettings.Longitude));
+                var timeToMeridian = MeridianFlip.TimeToMeridian(contextCoordinates.Coordinates, siderealTime);
+                return TimeOnly.FromDateTime(DateTime.Now + timeToMeridian + TimeSpan.FromHours(12));
+            }
+            return TimeOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(12));
         }
     }
 }

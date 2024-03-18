@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,10 +16,6 @@ namespace NINA.Astrometry.Body {
 
     public class Earth {
 
-        public static double Radius {
-            get {
-                return 6371; // https://de.wikipedia.org/wiki/Erdradius
-            }
-        }
+        public static double Radius => 6371; // https://de.wikipedia.org/wiki/Erdradius
     }
 }

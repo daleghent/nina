@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -39,6 +39,9 @@ namespace NINA.Plugin {
         /// <param name="manifest"></param>
         public void Uninstall(IPluginManifest manifest) {
             try {
+                if (!Directory.Exists(Constants.BaseDeletionFolder)) {
+                    Directory.CreateDirectory(Constants.BaseDeletionFolder);
+                }
                 if (!Directory.Exists(Constants.DeletionFolder)) {
                     Directory.CreateDirectory(Constants.DeletionFolder);
                 }
@@ -68,8 +71,14 @@ namespace NINA.Plugin {
         public async Task Install(IPluginManifest manifest, bool update, CancellationToken ct) {
             var tempFile = Path.Combine(Path.GetTempPath(), manifest.Name + ".dll");
             try {
+                if (!Directory.Exists(Constants.BaseStagingFolder)) {
+                    Directory.CreateDirectory(Constants.BaseStagingFolder);
+                }
                 if (!Directory.Exists(Constants.StagingFolder)) {
                     Directory.CreateDirectory(Constants.StagingFolder);
+                }
+                if (!Directory.Exists(Constants.BaseDeletionFolder)) {
+                    Directory.CreateDirectory(Constants.BaseDeletionFolder);
                 }
                 if (!Directory.Exists(Constants.DeletionFolder)) {
                     Directory.CreateDirectory(Constants.DeletionFolder);
@@ -167,10 +176,9 @@ namespace NINA.Plugin {
         private string FindFileInRootFolderByGuid(IPluginManifest manifest) {
             foreach (var file in Directory.GetFiles(Constants.UserExtensionsFolder, "*.dll", SearchOption.AllDirectories)) {
                 try {
-                    var reflectionAssembly = Assembly.ReflectionOnlyLoadFrom(file);
+                    var metaData = PluginAssemblyReader.GrabPluginMetaData(file);
 
-                    var attr = CustomAttributeData.GetCustomAttributes(reflectionAssembly);
-                    var id = attr.First(x => x.AttributeType == typeof(GuidAttribute)).ConstructorArguments.First().Value.ToString();
+                    metaData.TryGetValue(nameof(GuidAttribute), out var id);
                     if (id == manifest.Identifier) {
                         return file;
                     }

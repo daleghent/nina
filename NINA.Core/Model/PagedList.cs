@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -46,9 +46,7 @@ namespace NINA.Core.Model {
         private T _selectedItem;
 
         public T SelectedItem {
-            get {
-                return _selectedItem;
-            }
+            get => _selectedItem;
             set {
                 _selectedItem = value;
                 RaisePropertyChanged();
@@ -96,9 +94,7 @@ namespace NINA.Core.Model {
         private AsyncObservableCollection<T> _itemPage = new AsyncObservableCollection<T>();
 
         public AsyncObservableCollection<T> ItemPage {
-            get {
-                return _itemPage;
-            }
+            get => _itemPage;
             private set {
                 _itemPage = value;
                 RaisePropertyChanged();
@@ -128,9 +124,7 @@ namespace NINA.Core.Model {
         private int _pageSize;
 
         public int PageSize {
-            get {
-                return _pageSize;
-            }
+            get => _pageSize;
             set {
                 _pageSize = value;
                 RaisePropertyChanged();
@@ -140,9 +134,7 @@ namespace NINA.Core.Model {
         private int _currentPage;
 
         public int CurrentPage {
-            get {
-                return _currentPage;
-            }
+            get => _currentPage;
             set {
                 if (value >= Pages.FirstOrDefault() && value <= Pages.LastOrDefault()) {
                     _currentPage = value;
@@ -154,20 +146,14 @@ namespace NINA.Core.Model {
         private AsyncObservableCollection<int> _pages = new AsyncObservableCollection<int>();
 
         public AsyncObservableCollection<int> Pages {
-            get {
-                return _pages;
-            }
+            get => _pages;
             private set {
                 _pages = value;
                 RaisePropertyChanged();
             }
         }
 
-        public int Count {
-            get {
-                return _items.Count;
-            }
-        }
+        public int Count => _items.Count;
 
         public ICommand FirstPageCommand { get; private set; }
         public ICommand PrevPageCommand { get; private set; }

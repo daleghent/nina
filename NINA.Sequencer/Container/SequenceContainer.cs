@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Accord.IO;
 using Dasync.Collections;
 using Newtonsoft.Json;
 using NINA.Core.Enum;
@@ -77,9 +76,7 @@ namespace NINA.Sequencer.Container {
 
         [JsonProperty]
         public virtual bool IsExpanded {
-            get {
-                return isExpanded;
-            }
+            get => isExpanded;
             set {
                 isExpanded = value;
                 RaisePropertyChanged(nameof(IsExpanded));
@@ -217,8 +214,12 @@ namespace NINA.Sequencer.Container {
                     item.AfterParentChanged();
 
                     IValidatable validatable = (item as IValidatable);
-                    if (validatable != null) {
-                        validatable.Validate();
+                    if (validatable != null) {                        
+                        try {
+                            validatable.Validate();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
                     }
                 }
                 foreach (var condition in Conditions) {
@@ -226,7 +227,11 @@ namespace NINA.Sequencer.Container {
 
                     IValidatable validatable = (condition as IValidatable);
                     if (validatable != null) {
-                        validatable.Validate();
+                        try {
+                            validatable.Validate();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
                     }
                 }
                 foreach (var trigger in Triggers) {
@@ -234,7 +239,11 @@ namespace NINA.Sequencer.Container {
 
                     IValidatable validatable = (trigger as IValidatable);
                     if (validatable != null) {
-                        validatable.Validate();
+                        try {
+                            validatable.Validate();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
                     }
                 }
             }
@@ -459,8 +468,20 @@ namespace NINA.Sequencer.Container {
             }
         }
 
-        public void ResetAll() {
+        private void ResetTriggers() {
             lock (lockObj) {
+                foreach (ISequenceTrigger trigger in Triggers) {
+                    trigger.Status = SequenceEntityStatus.CREATED;
+                    if (trigger is SequenceTrigger seqTrigger) {
+                        seqTrigger.TriggerRunner.ResetAll();
+                    }
+                }
+            }
+        }
+
+        public virtual void ResetAll() {
+            lock (lockObj) {
+                ResetTriggers();
                 ResetConditions();
                 ResetProgress();
                 foreach (var child in Items) {
@@ -527,19 +548,34 @@ namespace NINA.Sequencer.Container {
                 foreach (var item in Items) {
                     IValidatable validatable = (item as IValidatable);
                     if (validatable != null) {
-                        valid = validatable.Validate() && valid;
+                        try {
+                            valid = validatable.Validate() && valid;
+                        } catch(Exception ex) {
+                            Logger.Error(ex);
+                            valid = false;
+                        }                        
                     }
                 }
                 foreach (var item in Conditions) {
                     IValidatable validatable = (item as IValidatable);
                     if (validatable != null) {
-                        valid = validatable.Validate() && valid;
+                        try {
+                            valid = validatable.Validate() && valid;
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                            valid = false;
+                        }
                     }
                 }
                 foreach (var item in Triggers) {
                     IValidatable validatable = (item as IValidatable);
                     if (validatable != null) {
-                        valid = validatable.Validate() && valid;
+                        try {
+                            valid = validatable.Validate() && valid;
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                            valid = false;
+                        }
                     }
                 }
                 return valid;

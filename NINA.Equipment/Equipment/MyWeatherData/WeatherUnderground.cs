@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -53,6 +53,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         public string Category => _category;
         public string Id => _driverId;
         public string Name => _driverName;
+        public string DisplayName => Name;
         public string DriverInfo => Loc.Instance["LblWeatherUndergroundClientInfo"];
         public string DriverVersion => _driverVersion;
         public string Description => Loc.Instance["LblWeatherUndergroundClientDescription"];
@@ -131,17 +132,17 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         private double _averagePeriod;
         public double AveragePeriod { get => _averagePeriod; set => _averagePeriod = value; }
 
-        public double RainRate { get => double.NaN; }
+        public double RainRate => double.NaN;
 
-        public double SkyBrightness { get => double.NaN; }
+        public double SkyBrightness => double.NaN;
 
-        public double SkyQuality { get => double.NaN; }
+        public double SkyQuality => double.NaN;
 
-        public double SkyTemperature { get => double.NaN; }
+        public double SkyTemperature => double.NaN;
 
-        public double StarFWHM { get => double.NaN; }
+        public double StarFWHM => double.NaN;
 
-        public double WindGust { get => double.NaN; }
+        public double WindGust => double.NaN;
 
         public string WUAPIKey;
 

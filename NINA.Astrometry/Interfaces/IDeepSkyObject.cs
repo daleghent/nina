@@ -21,7 +21,10 @@ namespace NINA.Astrometry.Interfaces {
         double? SizeMin { get; set; }
         double? Size { get; set; }
         double? SurfaceBrightness { get; set; }
+
+        [Obsolete("Use RotationPositionAngle instead")]
         double Rotation { get; set; }
+        double RotationPositionAngle { get; set; }
         DataPoint MaxAltitude { get; }
         List<DataPoint> Altitudes { get; }
         List<DataPoint> Horizon { get; }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
@@ -30,21 +31,22 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             id = "No_Device";
             name = string.Empty;
+            mountName = string.Empty;
             focalLength = double.NaN;
             focalRatio = double.NaN;
             snapPortStart = ":SNAP1,1#";
             snapPortStop = "SNAP1,0#";
             settleTime = 5;
             noSync = false;
+            timeSync = true;
+            telescopeLocationSyncDirection = TelescopeLocationSyncDirection.PROMPT;
         }
 
         private string id;
 
         [DataMember]
         public string Id {
-            get {
-                return id;
-            }
+            get => id;
             set {
                 if (id != value) {
                     id = value;
@@ -57,12 +59,23 @@ namespace NINA.Profile {
 
         [DataMember]
         public string Name {
-            get {
-                return name;
-            }
+            get => name;
             set {
                 if (name != value) {
                     name = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string mountName;
+
+        [DataMember]
+        public string MountName {
+            get => mountName;
+            set {
+                if (mountName != value) {
+                    mountName = value;
                     RaisePropertyChanged();
                 }
             }
@@ -72,9 +85,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double FocalLength {
-            get {
-                return focalLength;
-            }
+            get => focalLength;
             set {
                 if (focalLength != value) {
                     focalLength = value;
@@ -87,9 +98,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double FocalRatio {
-            get {
-                return focalRatio;
-            }
+            get => focalRatio;
             set {
                 if (focalRatio != value) {
                     focalRatio = value;
@@ -102,9 +111,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SnapPortStart {
-            get {
-                return snapPortStart;
-            }
+            get => snapPortStart;
             set {
                 if (snapPortStart != value) {
                     snapPortStart = value;
@@ -117,9 +124,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SnapPortStop {
-            get {
-                return snapPortStop;
-            }
+            get => snapPortStop;
             set {
                 if (snapPortStop != value) {
                     snapPortStop = value;
@@ -132,9 +137,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int SettleTime {
-            get {
-                return settleTime;
-            }
+            get => settleTime;
             set {
                 if (settleTime != value) {
                     settleTime = value;
@@ -147,9 +150,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool NoSync {
-            get {
-                return noSync;
-            }
+            get => noSync;
             set {
                 if (noSync != value) {
                     noSync = value;
@@ -162,9 +163,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool PrimaryReversed {
-            get {
-                return primaryReversed;
-            }
+            get => primaryReversed;
             set {
                 if (primaryReversed != value) {
                     primaryReversed = value;
@@ -177,12 +176,34 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool SecondaryReversed {
-            get {
-                return secondaryReversed;
-            }
+            get => secondaryReversed;
             set {
                 if (secondaryReversed != value) {
                     secondaryReversed = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private TelescopeLocationSyncDirection telescopeLocationSyncDirection;
+        [DataMember]
+        public TelescopeLocationSyncDirection TelescopeLocationSyncDirection {
+            get => telescopeLocationSyncDirection;
+            set {
+                if(telescopeLocationSyncDirection != value) {
+                    telescopeLocationSyncDirection = value;
+                    RaisePropertyChanged();
+                }                
+            }
+        }
+
+        private bool timeSync;
+        [DataMember]
+        public bool TimeSync {
+            get => timeSync;
+            set {
+                if(timeSync != value) {
+                    timeSync = value;
                     RaisePropertyChanged();
                 }
             }

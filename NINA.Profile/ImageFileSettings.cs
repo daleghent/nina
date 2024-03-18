@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -35,12 +35,14 @@ namespace NINA.Profile {
             filePatternDARK = "";
             filePatternBIAS = "";
             filePatternFLAT = "";
-            filePatternDARKFLAT = "";
             fileType = FileTypeEnum.FITS;
             tiffCompressionType = TIFFCompressionTypeEnum.NONE;
             xisfCompressionType = XISFCompressionTypeEnum.NONE;
             xisfChecksumType = XISFChecksumTypeEnum.SHA256;
             xisfByteShuffling = false;
+            fitsCompressionType = FITSCompressionTypeEnum.NONE;
+            fitsAddFzExtension = true;
+            fitsUseLegacyWriter = true;
         }
 
         private string filePath;
@@ -90,19 +92,6 @@ namespace NINA.Profile {
             set {
                 if (filePatternFLAT != value) {
                     filePatternFLAT = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private string filePatternDARKFLAT;
-
-        [DataMember]
-        public string FilePatternDARKFLAT {
-            get => filePatternDARKFLAT;
-            set {
-                if (filePatternDARKFLAT != value) {
-                    filePatternDARKFLAT = value;
                     RaisePropertyChanged();
                 }
             }
@@ -208,6 +197,44 @@ namespace NINA.Profile {
             }
         }
 
+        private FITSCompressionTypeEnum fitsCompressionType;
+
+        [DataMember]
+        public FITSCompressionTypeEnum FITSCompressionType {
+            get => fitsCompressionType;
+            set {
+                if (fitsCompressionType != value) {
+                    fitsCompressionType = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fitsAddFzExtension;
+
+        [DataMember]
+        public bool FITSAddFzExtension {
+            get => fitsAddFzExtension;
+            set {
+                if (fitsAddFzExtension != value) {
+                    fitsAddFzExtension = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fitsUseLegacyWriter;
+        [DataMember]
+        public bool FITSUseLegacyWriter {
+            get => fitsUseLegacyWriter;
+            set {
+                if(fitsUseLegacyWriter != value) {
+                    fitsUseLegacyWriter = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public string GetFilePattern(string imageType) {
             var pattern = FilePattern;
 
@@ -216,9 +243,6 @@ namespace NINA.Profile {
             }
             if (imageType == "FLAT" && !string.IsNullOrWhiteSpace(FilePatternFLAT)) {
                 pattern = FilePatternFLAT;
-            }
-            if (imageType == "DARKFLAT" && !string.IsNullOrWhiteSpace(FilePatternDARKFLAT)) {
-                pattern = FilePatternDARKFLAT;
             }
             if (imageType == "BIAS" && !string.IsNullOrWhiteSpace(FilePatternBIAS)) {
                 pattern = FilePatternBIAS;

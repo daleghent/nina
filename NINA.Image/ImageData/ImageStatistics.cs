@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -47,7 +47,7 @@ namespace NINA.Image.ImageData {
             using (MyStopWatch.Measure()) {
                 long sum = 0;
                 long squareSum = 0;
-                int count = array.Count();
+                int count = array.Length;
                 ushort min = ushort.MaxValue;
                 ushort oldmin = min;
                 ushort max = 0;

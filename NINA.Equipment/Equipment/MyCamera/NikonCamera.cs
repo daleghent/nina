@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -32,6 +32,7 @@ using NINA.Image.RawConverter;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -81,20 +82,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private bool _liveViewEnabled;
 
         public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
+            get => _liveViewEnabled;
             set {
                 _liveViewEnabled = value;
                 RaisePropertyChanged();
             }
         }
 
-        public int BitDepth {
-            get {
-                return (int)profileService.ActiveProfile.CameraSettings.BitDepth;
-            }
-        }
+        public int BitDepth => (int)profileService.ActiveProfile.CameraSettings.BitDepth;
 
         public void StartLiveView(CaptureSequence sequence) {
             _camera.LiveViewEnabled = true;
@@ -123,13 +118,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     ushort[] outArray = new ushort[bitmap.PixelWidth * bitmap.PixelHeight];
                     bitmap.CopyPixels(outArray, 2 * bitmap.PixelWidth, 0);
 
+                    var metaData = new ImageMetaData();
+                    metaData.FromCamera(this);
                     return exposureDataFactory.CreateImageArrayExposureData(
                             input: outArray,
                             width: bitmap.PixelWidth,
                             height: bitmap.PixelHeight,
                             bitDepth: 16,
                             isBayered: false,
-                            metaData: new ImageMetaData());
+                            metaData: metaData);
                 }
             });
         }
@@ -258,29 +255,20 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private NikonDevice _camera;
 
-        public string Id {
-            get {
-                return "Nikon";
-            }
-        }
+        public string Id => "Nikon";
 
         private string _name;
 
         public string Name {
-            get {
-                return _name;
-            }
+            get => _name;
             private set {
                 _name = value;
                 RaisePropertyChanged();
             }
         }
+        public string DisplayName => Name;
 
-        public bool CanShowLiveView {
-            get {
-                return _camera.SupportsCapability(eNkMAIDCapability.kNkMAIDCapability_GetLiveViewImage);
-            }
-        }
+        public bool CanShowLiveView => _camera.SupportsCapability(eNkMAIDCapability.kNkMAIDCapability_GetLiveViewImage);
 
         public string Description {
             get {
@@ -292,182 +280,98 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasShutter {
-            get {
-                return true;
-            }
-        }
+        public bool HasShutter => true;
 
         private bool _connected;
 
         public bool Connected {
-            get {
-                return _connected;
-            }
+            get => _connected;
             set {
                 _connected = value;
                 RaisePropertyChanged();
             }
         }
 
-        public double Temperature {
-            get {
-                return double.NaN;
-            }
-        }
+        public double Temperature => double.NaN;
 
         public double TemperatureSetPoint {
-            get {
-                return double.NaN;
-            }
+            get => double.NaN;
 
             set {
             }
         }
 
         public short BinX {
-            get {
-                return 1;
-            }
+            get => 1;
 
             set {
             }
         }
 
         public short BinY {
-            get {
-                return 1;
-            }
+            get => 1;
             set {
             }
         }
 
-        public string DriverInfo {
-            get {
-                return string.Empty;
-            }
-        }
+        public string DriverInfo => string.Empty;
 
-        public string DriverVersion {
-            get {
-                return string.Empty;
-            }
-        }
+        public string DriverVersion => string.Empty;
 
-        public string SensorName {
-            get {
-                return string.Empty;
-            }
-        }
+        public string SensorName => string.Empty;
 
-        public SensorType SensorType {
-            get {
-                return SensorType.RGGB;
-            }
-        }
+        public SensorType SensorType => SensorType.RGGB;
 
         public short BayerOffsetX => 0;
 
         public short BayerOffsetY => 0;
 
-        public int CameraXSize {
-            get {
-                return -1;
-            }
-        }
+        public int CameraXSize => -1;
 
-        public int CameraYSize {
-            get {
-                return -1;
-            }
-        }
+        public int CameraYSize => -1;
 
-        public double ExposureMin {
-            get {
-                return 0;
-            }
-        }
+        public double ExposureMin => 0;
 
-        public double ExposureMax {
-            get {
-                return double.PositiveInfinity;
-            }
-        }
+        public double ExposureMax => double.PositiveInfinity;
 
         public double ElectronsPerADU => double.NaN;
 
-        public short MaxBinX {
-            get {
-                return 1;
-            }
-        }
+        public short MaxBinX => 1;
 
-        public short MaxBinY {
-            get {
-                return 1;
-            }
-        }
+        public short MaxBinY => 1;
 
-        public double PixelSizeX {
-            get {
-                return double.NaN;
-            }
-        }
+        public double PixelSizeX => double.NaN;
 
-        public double PixelSizeY {
-            get {
-                return double.NaN;
-            }
-        }
+        public double PixelSizeY => double.NaN;
 
-        public bool CanSetTemperature {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetTemperature => false;
 
         public bool CoolerOn {
-            get {
-                return false;
-            }
+            get => false;
             set {
             }
         }
 
-        public double CoolerPower {
-            get {
-                return double.NaN;
-            }
-        }
+        public double CoolerPower => double.NaN;
 
-        public bool HasDewHeater {
-            get {
-                return false;
-            }
-        }
+        public bool HasDewHeater => false;
 
         public bool DewHeaterOn {
-            get {
-                return false;
-            }
+            get => false;
             set {
             }
         }
 
-        public CameraStates CameraState { get => CameraStates.NoState; }
+        public CameraStates CameraState => CameraStates.NoState;
 
         public int Offset {
-            get {
-                return -1;
-            }
+            get => -1;
             set {
             }
         }
 
         public int USBLimit {
-            get {
-                return -1;
-            }
+            get => -1;
             set {
             }
         }
@@ -478,35 +382,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public IList<string> SupportedActions => new List<string>();
 
-        public bool CanSetOffset {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetOffset => false;
 
-        public int OffsetMin {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMin => 0;
 
-        public int OffsetMax {
-            get {
-                return 0;
-            }
-        }
+        public int OffsetMax => 0;
 
-        public bool CanSetUSBLimit {
-            get {
-                return false;
-            }
-        }
+        public bool CanSetUSBLimit => false;
 
-        public bool CanSubSample {
-            get {
-                return false;
-            }
-        }
+        public bool CanSubSample => false;
 
         public bool CanGetGain {
             get {
@@ -651,11 +535,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return false;
-            }
-        }
+        public bool HasSetupDialog => false;
 
         public bool EnableSubSample { get; set; }
         public int SubSampleX { get; set; }
@@ -709,12 +589,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             try {
                 var rawImageData = _memoryStream.ToArray();
+                var metaData = new ImageMetaData();
+                metaData.FromCamera(this);
                 return exposureDataFactory.CreateRAWExposureData(
                     converter: profileService.ActiveProfile.CameraSettings.RawConverter,
                     rawBytes: rawImageData,
                     rawType: "nef",
                     bitDepth: this.BitDepth,
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
             } finally {
                 if (_memoryStream != null) {
                     _memoryStream.Dispose();

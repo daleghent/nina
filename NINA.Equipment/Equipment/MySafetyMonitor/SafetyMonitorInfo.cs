@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -20,7 +20,7 @@ namespace NINA.Equipment.Equipment.MySafetyMonitor {
         private bool isSafe;
 
         public bool IsSafe {
-            get { return isSafe; }
+            get => isSafe;
             set { isSafe = value; RaisePropertyChanged(); }
         }
 

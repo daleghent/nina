@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,8 +12,12 @@
 
 #endregion "copyright"
 
+using CommunityToolkit.Mvvm.Input;
 using System;
+using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NINA.Core.Utility {
@@ -29,8 +33,8 @@ namespace NINA.Core.Utility {
         }
 
         public event EventHandler CanExecuteChanged {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
         protected void RaiseCanExecuteChanged() {
@@ -38,11 +42,13 @@ namespace NINA.Core.Utility {
         }
     }
 
+    [Obsolete($"Use {nameof(IAsyncRelayCommand)} instead, that utilizes MVVM Toolkit via CommunityToolkit.Mvvm.Input")]
     public interface IAsyncCommand : ICommand {
 
         Task ExecuteAsync(object parameter);
     }
 
+    [Obsolete($"Use {nameof(AsyncRelayCommand)} instead, that utilizes MVVM Toolkit via CommunityToolkit.Mvvm.Input")]
     public class AsyncCommand<TResult> : AsyncCommandBase {
         private readonly Func<object, Task<TResult>> _command;
         private NotifyTaskCompletion<TResult> _execution;
@@ -92,13 +98,30 @@ namespace NINA.Core.Utility {
         public override async Task ExecuteAsync(object parameter) {
             Execution = new NotifyTaskCompletion<TResult>(_command(parameter));
             RaiseCanExecuteChanged();
+            RaisePropertyChanged(nameof(IsRunning));
             if (!Execution.IsCompleted) {
                 await Execution.TaskCompletion;
             }
+            RaisePropertyChanged(nameof(IsRunning));
             RaiseCanExecuteChanged();
         }
+        public bool IsRunning => Execution?.IsNotCompleted ?? false;
 
         // Raises PropertyChanged
-        public NotifyTaskCompletion<TResult> Execution { get { return _execution; } private set { _execution = value; RaisePropertyChanged(); } }
+        public NotifyTaskCompletion<TResult> Execution { get => _execution; private set { _execution = value; RaisePropertyChanged(); } }
+    }
+
+    public static class RelayCommandExtensions {
+
+        public static void RegisterPropertyChangeNotification(this IRelayCommand value, INotifyPropertyChanged observable, params string[] propertyNames) {
+            observable.PropertyChanged += (object sender, PropertyChangedEventArgs e) => {
+                foreach (var propertyName in propertyNames) {
+                    if (e.PropertyName == propertyName) {
+                        Application.Current.Dispatcher.Invoke(value.NotifyCanExecuteChanged);
+                        return;
+                    }
+                }
+            };
+        }
     }
 }

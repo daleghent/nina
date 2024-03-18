@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -23,7 +23,6 @@ using NINA.Image.ImageAnalysis;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
-using SHA3;
 using System;
 using System.IO;
 using System.Linq;
@@ -366,38 +365,37 @@ namespace NINA.Image.FileFormat.XISF {
 
         private static bool VerifyChecksum(byte[] raw, XISFChecksumTypeEnum cksumType, string providedCksum) {
             string computedCksum;
-            SHA3Managed sha3;
 
             using (MyStopWatch.Measure($"XISF Checksum = {cksumType}")) {
                 switch (cksumType) {
                     case XISFChecksumTypeEnum.SHA1:
-                        SHA1 sha1 = new SHA1CryptoServiceProvider();
+                        SHA1 sha1 = SHA1.Create();
                         computedCksum = GetStringFromHash(sha1.ComputeHash(raw));
                         sha1.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA256:
-                        SHA256 sha256 = new SHA256CryptoServiceProvider();
+                        SHA256 sha256 = SHA256.Create();
                         computedCksum = GetStringFromHash(sha256.ComputeHash(raw));
                         sha256.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA512:
-                        SHA512 sha512 = new SHA512CryptoServiceProvider();
+                        SHA512 sha512 = SHA512.Create();
                         computedCksum = GetStringFromHash(sha512.ComputeHash(raw));
                         sha512.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_256:
-                        sha3 = new SHA3Managed(256);
-                        computedCksum = GetStringFromHash(sha3.ComputeHash(raw));
-                        sha3.Dispose();
+                        SHA3_256 sha3_256 = SHA3_256.Create();
+                        computedCksum = GetStringFromHash(sha3_256.ComputeHash(raw));
+                        sha3_256.Dispose();
                         break;
 
                     case XISFChecksumTypeEnum.SHA3_512:
-                        sha3 = new SHA3Managed(512);
-                        computedCksum = GetStringFromHash(sha3.ComputeHash(raw));
-                        sha3.Dispose();
+                        SHA3_512 sha3_512 = SHA3_512.Create();
+                        computedCksum = GetStringFromHash(sha3_512.ComputeHash(raw));
+                        sha3_512.Dispose();
                         break;
 
                     default:
@@ -449,6 +447,36 @@ namespace NINA.Image.FileFormat.XISF {
         }
 
         public void AddAttachedImage(ushort[] data, FileSaveInfo fileSaveInfo) {
+            if (Header.Image == null) { throw new InvalidOperationException("No Image Header Information available for attaching image. Add Image Header first!"); }
+
+            // Add Attached data location info to header
+            Data = new XISFData(data, fileSaveInfo);
+
+            if (Data.ChecksumType != XISFChecksumTypeEnum.NONE) {
+                Header.Image.Add(new XAttribute("checksum", $"{Data.ChecksumName}:{Data.Checksum}"));
+            }
+
+            int headerLengthBytes = 4;
+            int reservedBytes = 4;
+            int attachmentInfoMaxBytes = 256; // Assume max 256 bytes for the attachment, compression, and checksum attributes.
+            int currentHeaderSize = Header.ByteCount + xisfSignature.Length + headerLengthBytes + reservedBytes + attachmentInfoMaxBytes;
+
+            int dataBlockStart = currentHeaderSize + (PaddedBlockSize - currentHeaderSize % PaddedBlockSize);
+
+            if (Data.CompressionType != XISFCompressionTypeEnum.NONE) {
+                Header.Image.Add(new XAttribute("location", $"attachment:{dataBlockStart}:{Data.CompressedSize}"));
+
+                if (Data.ByteShuffling == true) {
+                    Header.Image.Add(new XAttribute("compression", $"{Data.CompressionName}:{Data.Size}:{Data.ShuffleItemSize}"));
+                } else {
+                    Header.Image.Add(new XAttribute("compression", $"{Data.CompressionName}:{Data.Size}"));
+                }
+            } else {
+                Header.Image.Add(new XAttribute("location", $"attachment:{dataBlockStart}:{Data.Size}"));
+            }
+        }
+
+        public void AddAttachedImageInt(int[] data, FileSaveInfo fileSaveInfo) {
             if (Header.Image == null) { throw new InvalidOperationException("No Image Header Information available for attaching image. Add Image Header first!"); }
 
             // Add Attached data location info to header

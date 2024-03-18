@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -139,6 +139,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         public string Id => "bc0c02ef-83f7-67f7-f05e-fd97a80f1b3e";
 
         public string Name => "Artesky Flat Box";
+        public string DisplayName => Name;
 
         public string Category => "Artesky";
 
@@ -238,9 +239,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
 
         public bool SupportsOpenClose => false;
 
-        public bool SupportsOnOff {
-            get => true;
-        }
+        public bool SupportsOnOff => true;
 
         public void SetupDialog() {
             WindowService.ShowDialog(this, "Artesky Flat Box Setup", System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);

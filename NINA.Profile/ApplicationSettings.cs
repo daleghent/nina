@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -59,15 +59,12 @@ namespace NINA.Profile {
             skySurveyCacheDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
             SelectedPluggableBehaviors = new AsyncObservableCollection<KeyValuePair<string, string>>();
             SelectedPluggableBehaviorsLookup = ImmutableDictionary<string, string>.Empty;
-            PerDeviceThreadingEnabled = false;
-            PageSize = 50;
+            pageSize = 50;
         }
 
         [DataMember]
         public string Culture {
-            get {
-                return Language.Name;
-            }
+            get => Language.Name;
             set {
                 Language = new CultureInfo(value);
                 RaisePropertyChanged();
@@ -77,9 +74,7 @@ namespace NINA.Profile {
         private CultureInfo language;
 
         public CultureInfo Language {
-            get {
-                return language;
-            }
+            get => language;
             set {
                 if (language != value) {
                     language = value;
@@ -92,9 +87,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public LogLevelEnum LogLevel {
-            get {
-                return logLevel;
-            }
+            get => logLevel;
             set {
                 if (logLevel != value) {
                     logLevel = value;
@@ -107,9 +100,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double DevicePollingInterval {
-            get {
-                return devicePollingInterval;
-            }
+            get => devicePollingInterval;
             set {
                 if (devicePollingInterval != value) {
                     devicePollingInterval = value;
@@ -122,9 +113,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SkyAtlasImageRepository {
-            get {
-                return skyAtlasImageRepository;
-            }
+            get => skyAtlasImageRepository;
             set {
                 if (skyAtlasImageRepository != value) {
                     skyAtlasImageRepository = value;
@@ -137,27 +126,10 @@ namespace NINA.Profile {
 
         [DataMember]
         public string SkySurveyCacheDirectory {
-            get {
-                return skySurveyCacheDirectory;
-            }
+            get => skySurveyCacheDirectory;
             set {
                 if (skySurveyCacheDirectory != value) {
                     skySurveyCacheDirectory = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private bool perDeviceThreadingEnabled;
-
-        [DataMember]
-        public bool PerDeviceThreadingEnabled {
-            get {
-                return perDeviceThreadingEnabled;
-            }
-            set {
-                if (perDeviceThreadingEnabled != value) {
-                    perDeviceThreadingEnabled = value;
                     RaisePropertyChanged();
                 }
             }
@@ -175,9 +147,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public AsyncObservableCollection<KeyValuePair<string, string>> SelectedPluggableBehaviors {
-            get {
-                return selectedPluggableBehaviors;
-            }
+            get => selectedPluggableBehaviors;
             set {
                 if (selectedPluggableBehaviors != value) {
                     if (selectedPluggableBehaviors != null) {
@@ -196,11 +166,9 @@ namespace NINA.Profile {
 
         [DataMember]
         public int PageSize {
-            get {
-                return pageSize;
-            }
+            get => pageSize;
             set {
-                if(value < 1) { value = 1; }                
+                if (value < 1) { value = 1; }
                 if (pageSize != value) {
                     pageSize = value;
                     RaisePropertyChanged();

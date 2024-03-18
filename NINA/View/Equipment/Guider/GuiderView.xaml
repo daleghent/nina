@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,7 +15,7 @@
     xmlns:guider="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:local="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -37,8 +37,8 @@
             <GroupBox.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" MinWidth="140" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock
                         VerticalAlignment="Center"
@@ -96,8 +96,43 @@
                                 Margin="0,6,0,6"
                                 VerticalAlignment="Center"
                                 Columns="2">
-                                <TextBlock Text="{ns:Loc LblPixelScale}" />
+                                <TextBlock Text="{ns:Loc LblGuiderPixelScale}" />
                                 <TextBlock Margin="5,0,0,0" Text="{Binding GuideStepsHistory.PixelScale, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UnitConverter}, ConverterParameter=' arcsec/px|2'}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblGuiderDitherPixels}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.DitherPixels, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UnitConverter}, ConverterParameter=' px|2'}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblCameraPixelScale}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding MainCameraPixelScale, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UnitConverter}, ConverterParameter=' arcsec/px|2'}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblCameraDitherPixels}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding MainCameraDitherPixels, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UnitConverter}, ConverterParameter=' px|2'}" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>

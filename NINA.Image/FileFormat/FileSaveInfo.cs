@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -26,6 +26,9 @@ namespace NINA.Image.FileFormat {
         public XISFCompressionTypeEnum XISFCompressionType { get; set; } = XISFCompressionTypeEnum.NONE;
         public XISFChecksumTypeEnum XISFChecksumType { get; set; } = XISFChecksumTypeEnum.NONE;
         public bool XISFByteShuffling { get; set; } = false;
+        public FITSCompressionTypeEnum FITSCompressionType { get; set; } = FITSCompressionTypeEnum.NONE;
+        public bool FITSAddFzExtension { get; set; } = false;
+        public bool FITSUseLegacyWriter { get; set; } = true;
 
         public FileSaveInfo(IProfileService profileService = null) {
             if (profileService != null) {
@@ -36,6 +39,9 @@ namespace NINA.Image.FileFormat {
                 XISFCompressionType = profileService.ActiveProfile.ImageFileSettings.XISFCompressionType;
                 XISFByteShuffling = profileService.ActiveProfile.ImageFileSettings.XISFByteShuffling;
                 XISFChecksumType = profileService.ActiveProfile.ImageFileSettings.XISFChecksumType;
+                FITSCompressionType = profileService.ActiveProfile.ImageFileSettings.FITSCompressionType;
+                FITSAddFzExtension = profileService.ActiveProfile.ImageFileSettings.FITSAddFzExtension;
+                FITSUseLegacyWriter = profileService.ActiveProfile.ImageFileSettings.FITSUseLegacyWriter;
             }
         }
 

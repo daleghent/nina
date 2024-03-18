@@ -1,6 +1,6 @@
 #region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -85,6 +85,11 @@ namespace NINA.ViewModel {
 
         private IImageHistoryVM imageHistoryVM;
 
+        public event EventHandler<ImagePreparedEventArgs> ImagePrepared {
+            add { this._imageControl.ImagePrepared += value; }
+            remove { this._imageControl.ImagePrepared -= value; }
+        }
+
         public ImagingVM(IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,
@@ -130,9 +135,7 @@ namespace NINA.ViewModel {
         }
 
         public CameraInfo CameraInfo {
-            get {
-                return cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
-            }
+            get => cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
             set {
                 cameraInfo = value;
                 RaisePropertyChanged();
@@ -140,16 +143,14 @@ namespace NINA.ViewModel {
         }
 
         public IImageControlVM ImageControl {
-            get { return _imageControl; }
+            get => _imageControl;
             set { _imageControl = value; RaisePropertyChanged(); }
         }
 
         public IImageStatisticsVM ImgStatisticsVM { get; }
 
         public ApplicationStatus Status {
-            get {
-                return _status;
-            }
+            get => _status;
             set {
                 _status = value;
                 _status.Source = Loc.Instance["LblImaging"]; ;
@@ -229,9 +230,7 @@ namespace NINA.ViewModel {
                         token.ThrowIfCancellationRequested();
 
                         if (data == null) {
-                            Logger.Error(new CameraDownloadFailedException(sequence));
-                            Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
-                            return null;
+                            throw new CameraDownloadFailedException(sequence);
                         }
 
                         AddMetaData(data.MetaData, sequence, exposureStart, midpointDateTime, rms, targetName);
@@ -247,6 +246,10 @@ namespace NINA.ViewModel {
                         }
                     } catch (OperationCanceledException) {
                         cameraMediator.AbortExposure();
+                        throw;
+                    } catch (CameraDownloadFailedException ex) {
+                        Logger.Error(ex.Message);
+                        Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
                         throw;
                     } catch (CameraExposureFailedException ex) {
                         Logger.Error(ex.Message);

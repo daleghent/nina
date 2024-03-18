@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,6 +16,7 @@ using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 using NINA.Profile.Interfaces;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -24,7 +25,7 @@ namespace NINA.Profile {
 
     [Serializable()]
     [DataContract]
-    public class PlateSolveSettings : Settings, IPlateSolveSettings {
+    public partial class PlateSolveSettings : Settings, IPlateSolveSettings {
         private PlateSolverEnum plateSolverType = PlateSolverEnum.ASTAP;
 
         [OnDeserializing]
@@ -65,13 +66,21 @@ namespace NINA.Profile {
             aSTAPLocation = File.Exists(defaultASTAPLocation)
                  ? defaultASTAPLocation
                  : string.Empty;
+
+            _theSkyXHost = "localhost";
+            _theSkyXPort = 3040;
+
+            pinPointCatalogType = Dc3PoinPointCatalogEnum.ppGSCACT;
+            pinPointCatalogRoot = Environment.ExpandEnvironmentVariables(@"%SYSTEMDRIVE%\GSC11\");
+            pinPointMaxMagnitude = 20;
+            pinPointExpansion = 40;
+            pinPointAllSkyApiKey = string.Empty;
+            pinPointAllSkyApiHost = "nova.astrometry.net";
         }
 
         [DataMember]
         public PlateSolverEnum PlateSolverType {
-            get {
-                return plateSolverType;
-            }
+            get => plateSolverType;
             set {
                 if (plateSolverType != value) {
                     plateSolverType = value;
@@ -84,9 +93,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public BlindSolverEnum BlindSolverType {
-            get {
-                return blindSolverType;
-            }
+            get => blindSolverType;
             set {
                 if (blindSolverType != value) {
                     blindSolverType = value;
@@ -99,12 +106,10 @@ namespace NINA.Profile {
 
         [DataMember]
         public string AstrometryURL {
-            get {
-                return astrometryURL;
-            }
+            get => astrometryURL;
             set {
                 // Clear out any whitespace characters in the URL
-                string url = Regex.Replace(value, @"\s", string.Empty);
+                string url = Whitespace().Replace(value, string.Empty);
 
                 if (astrometryURL != url) {
                     astrometryURL = url;
@@ -117,14 +122,12 @@ namespace NINA.Profile {
 
         [DataMember]
         public string AstrometryAPIKey {
-            get {
-                return astrometryAPIKey;
-            }
+            get => astrometryAPIKey;
             set {
                 // Whitespace characters are not valid characaters in an Astrometry.net API key.
                 // Help the user by removing any that might be present. Copy and pasting from the astrometry.net API page
                 // can sometimes insert a space at the end of the API key string, and it's not very obvious.
-                string key = Regex.Replace(value, @"\s", string.Empty);
+                string key = Whitespace().Replace(value, string.Empty);
 
                 if (astrometryAPIKey != key) {
                     astrometryAPIKey = key;
@@ -137,9 +140,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string CygwinLocation {
-            get {
-                return Environment.ExpandEnvironmentVariables(cygwinLocation);
-            }
+            get => Environment.ExpandEnvironmentVariables(cygwinLocation);
             set {
                 if (cygwinLocation != value) {
                     cygwinLocation = value;
@@ -152,9 +153,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double SearchRadius {
-            get {
-                return searchRadius;
-            }
+            get => searchRadius;
             set {
                 if (searchRadius != value) {
                     searchRadius = value;
@@ -167,9 +166,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string PS2Location {
-            get {
-                return Environment.ExpandEnvironmentVariables(pS2Location);
-            }
+            get => Environment.ExpandEnvironmentVariables(pS2Location);
             set {
                 if (pS2Location != value) {
                     pS2Location = value;
@@ -182,9 +179,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string PS3Location {
-            get {
-                return Environment.ExpandEnvironmentVariables(pS3Location);
-            }
+            get => Environment.ExpandEnvironmentVariables(pS3Location);
             set {
                 if (pS3Location != value) {
                     pS3Location = value;
@@ -197,9 +192,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int Regions {
-            get {
-                return regions;
-            }
+            get => regions;
             set {
                 if (regions != value) {
                     regions = value;
@@ -212,9 +205,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ExposureTime {
-            get {
-                return exposureTime;
-            }
+            get => exposureTime;
             set {
                 if (exposureTime != value) {
                     exposureTime = value;
@@ -227,9 +218,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double Threshold {
-            get {
-                return threshold;
-            }
+            get => threshold;
             set {
                 if (threshold != value) {
                     threshold = value;
@@ -242,9 +231,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double RotationTolerance {
-            get {
-                return rotationTolerance;
-            }
+            get => rotationTolerance;
             set {
                 if (rotationTolerance != value) {
                     rotationTolerance = value;
@@ -257,9 +244,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int NumberOfAttempts {
-            get {
-                return numberOfAttempts;
-            }
+            get => numberOfAttempts;
             set {
                 if (numberOfAttempts != value) {
                     numberOfAttempts = value;
@@ -272,9 +257,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public double ReattemptDelay {
-            get {
-                return reattemptDelay;
-            }
+            get => reattemptDelay;
             set {
                 if (reattemptDelay != value) {
                     reattemptDelay = value;
@@ -287,9 +270,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public FilterInfo Filter {
-            get {
-                return filter;
-            }
+            get => filter;
             set {
                 if (filter != value) {
                     filter = value;
@@ -302,9 +283,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string AspsLocation {
-            get {
-                return Environment.ExpandEnvironmentVariables(aspsLocation);
-            }
+            get => Environment.ExpandEnvironmentVariables(aspsLocation);
             set {
                 if (aspsLocation != value) {
                     aspsLocation = value;
@@ -317,9 +296,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public string ASTAPLocation {
-            get {
-                return Environment.ExpandEnvironmentVariables(aSTAPLocation);
-            }
+            get => Environment.ExpandEnvironmentVariables(aSTAPLocation);
             set {
                 if (aSTAPLocation != value) {
                     aSTAPLocation = value;
@@ -332,9 +309,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int DownSampleFactor {
-            get {
-                return downSampleFactor;
-            }
+            get => downSampleFactor;
             set {
                 if (downSampleFactor != value) {
                     downSampleFactor = value;
@@ -347,9 +322,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int MaxObjects {
-            get {
-                return maxObjects;
-            }
+            get => maxObjects;
             set {
                 if (maxObjects != value) {
                     maxObjects = value;
@@ -362,9 +335,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool Sync {
-            get {
-                return sync;
-            }
+            get => sync;
             set {
                 if (sync != value) {
                     sync = value;
@@ -377,9 +348,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public bool SlewToTarget {
-            get {
-                return slewToTarget;
-            }
+            get => slewToTarget;
             set {
                 if (slewToTarget != value) {
                     slewToTarget = value;
@@ -392,9 +361,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public short Binning {
-            get {
-                return binning;
-            }
+            get => binning;
             set {
                 if (binning != value) {
                     binning = value;
@@ -407,9 +374,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public int Gain {
-            get {
-                return gain;
-            }
+            get => gain;
             set {
                 if (gain != value) {
                     gain = value;
@@ -420,13 +385,9 @@ namespace NINA.Profile {
 
         private bool blindFailoverEnabled;
 
-
         [DataMember]
-
         public bool BlindFailoverEnabled {
-            get {
-                return blindFailoverEnabled;
-            }
+            get => blindFailoverEnabled;
             set {
                 if (blindFailoverEnabled != value) {
                     blindFailoverEnabled = value;
@@ -434,5 +395,123 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        private string _theSkyXHost;
+
+        [DataMember]
+        public string TheSkyXHost {
+            get => _theSkyXHost;
+            set {
+                if (_theSkyXHost != value) {
+                    _theSkyXHost = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int _theSkyXPort;
+
+        [DataMember]
+        public int TheSkyXPort {
+            get => _theSkyXPort;
+            set {
+                if (_theSkyXPort != value) {
+                    _theSkyXPort = value;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        private Dc3PoinPointCatalogEnum pinPointCatalogType;
+
+        [DataMember]
+        public Dc3PoinPointCatalogEnum PinPointCatalogType {
+            get => pinPointCatalogType;
+            set {
+                if (pinPointCatalogType != value) {
+                    pinPointCatalogType = value;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        private string pinPointCatalogRoot;
+
+        [DataMember]
+        public string PinPointCatalogRoot {
+            get => pinPointCatalogRoot;
+            set {
+                if (pinPointCatalogRoot != value) {
+                    pinPointCatalogRoot = value;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        private double pinPointMaxMagnitude;
+
+        [DataMember]
+        public double PinPointMaxMagnitude {
+            get => pinPointMaxMagnitude;
+            set {
+                if (pinPointMaxMagnitude != value) {
+                    pinPointMaxMagnitude = value;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        private double pinPointExpansion;
+
+        [DataMember]
+        public double PinPointExpansion {
+            get => pinPointExpansion;
+            set {
+                if (pinPointExpansion != value) {
+                    pinPointExpansion = value;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        private string pinPointAllSkyApiKey;
+
+        [DataMember]
+        public string PinPointAllSkyApiKey {
+            get => pinPointAllSkyApiKey;
+            set {
+                string key = Whitespace().Replace(value, string.Empty);
+
+                if (pinPointAllSkyApiKey != key) {
+                    pinPointAllSkyApiKey = key;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        private string pinPointAllSkyApiHost;
+
+        [DataMember]
+        public string PinPointAllSkyApiHost {
+            get => pinPointAllSkyApiHost;
+            set {
+                string host = value.Trim();
+
+                if (pinPointAllSkyApiHost != host) {
+                    pinPointAllSkyApiHost = host;
+                    RaisePropertyChanged();
+                }
+
+            }
+        }
+
+        [GeneratedRegex(@"\s")]
+        private static partial Regex Whitespace();
     }
 }

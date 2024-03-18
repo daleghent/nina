@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -59,7 +59,7 @@ namespace NINA.Image.FileFormat.XISF {
             Xisf.Add(MetaData);
 
             Content = new XDocument(
-            new XDeclaration("1.0", "UTF-8", null),
+                new XDeclaration("1.0", "UTF-8", null), 
                 Xisf
             );
         }
@@ -83,7 +83,14 @@ namespace NINA.Image.FileFormat.XISF {
             Xisf.Add(Image);
         }
 
-        public int ByteCount => Encoding.UTF8.GetByteCount(Content.ToString());
+        public int ByteCount {
+            get {
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    Save(memoryStream);
+                    return (int)memoryStream.Length;
+                }
+            }
+        }
 
         public ImageMetaData ExtractMetaData() {
             var metaData = new ImageMetaData();
@@ -93,7 +100,7 @@ namespace NINA.Image.FileFormat.XISF {
                 metaData.Image.ExposureStart = DateTime.Parse(value);
             }
 
-            if(TryGetFITSProperty("DATE-AVG", out value)) {
+            if (TryGetFITSProperty("DATE-AVG", out value)) {
                 metaData.Image.ExposureMidPoint = DateTime.Parse(value);
             }
 
@@ -104,6 +111,10 @@ namespace NINA.Image.FileFormat.XISF {
             /* Camera */
             if (TryGetImageProperty(XISFImageProperty.Instrument.Camera.Name, out value)) {
                 metaData.Camera.Name = value;
+            }
+
+            if (TryGetFITSProperty("CAMERAID", out value)) {
+                metaData.Camera.Id = value;
             }
 
             if (TryGetFITSProperty("GAIN", out value)) {
@@ -202,7 +213,7 @@ namespace NINA.Image.FileFormat.XISF {
             }
 
             if (TryGetFITSProperty("OBJCTROT", out value)) {
-                metaData.Target.Rotation = double.Parse(value, CultureInfo.InvariantCulture);
+                metaData.Target.PositionAngle = double.Parse(value, CultureInfo.InvariantCulture);
             }
 
             if (TryGetImageProperty(XISFImageProperty.Observation.Object.RA, out value)) {
@@ -339,7 +350,7 @@ namespace NINA.Image.FileFormat.XISF {
         private bool TryGetFITSProperty(string key, out string value) {
             value = string.Empty;
             var elements = Image.Elements(xmlns + "FITSKeyword");
-            if (elements.Count() == 0) { return false; }
+            if (!elements.Any()) { return false; }
 
             var elem = elements.FirstOrDefault(el => el.Attribute("name")?.Value == key);
             if (elem == null) { return false; }
@@ -357,13 +368,13 @@ namespace NINA.Image.FileFormat.XISF {
         private List<IGenericMetaDataHeader> GetAllFITSKeywords() {
             var l = new List<IGenericMetaDataHeader>();
             var elements = Image.Elements(xmlns + "FITSKeyword");
-            if (elements.Count() == 0) { return l; }
+            if (!elements.Any()) { return l; }
 
-            foreach(var elem in elements) {
+            foreach (var elem in elements) {
                 if (elem == null) { continue; }
 
                 var key = elem.Attribute("name")?.Value;
-                if(key == null) { continue; }
+                if (key == null) { continue; }
 
                 var value = elem.Attribute("value").Value;
                 var comment = elem.Attribute("comment")?.Value ?? string.Empty;
@@ -376,7 +387,7 @@ namespace NINA.Image.FileFormat.XISF {
                 } else if (value == "T" || value == "F") {
                     var boolean = value.Trim() == "T" ? true : false;
                     l.Add(new BoolMetaDataHeader(key, boolean, comment));
-                } else if (value.Contains(".") && double.TryParse(value, out var number)) {
+                } else if (value.Contains(".") && double.TryParse(value, CultureInfo.InvariantCulture, out var number)) {
                     l.Add(new DoubleMetaDataHeader(key, number, comment));
                 } else if (int.TryParse(value, out var integer)) {
                     l.Add(new IntMetaDataHeader(key, integer, comment));
@@ -403,6 +414,9 @@ namespace NINA.Image.FileFormat.XISF {
             /* Camera */
             if (!string.IsNullOrWhiteSpace(metaData.Camera.Name)) {
                 AddImageProperty(XISFImageProperty.Instrument.Camera.Name, metaData.Camera.Name, "Imaging instrument name");
+            }
+            if (!string.IsNullOrWhiteSpace(metaData.Camera.Id)) {
+                AddImageFITSKeyword("CAMERAID", metaData.Camera.Id, "Imaging instrument identifier");
             }
             if (metaData.Camera.Gain >= 0) {
                 AddImageFITSKeyword("GAIN", metaData.Camera.Gain, "Sensor gain");
@@ -443,7 +457,7 @@ namespace NINA.Image.FileFormat.XISF {
                 AddImageFITSKeyword("READOUTM", metaData.Camera.ReadoutModeName, "Sensor readout mode");
             }
 
-            if (metaData.Camera.SensorType != SensorType.Monochrome) {
+            if (metaData.Camera.SensorType != SensorType.Monochrome && metaData.Camera.BayerPattern != BayerPatternEnum.None) {
                 AddImageFITSKeyword("BAYERPAT", metaData.Camera.SensorType.ToString().ToUpper(), "Sensor Bayer pattern");
                 AddImageFITSKeyword("XBAYROFF", metaData.Camera.BayerOffsetX, "Bayer pattern X axis offset");
                 AddImageFITSKeyword("YBAYROFF", metaData.Camera.BayerOffsetY, "Bayer pattern Y axis offset");
@@ -524,9 +538,9 @@ namespace NINA.Image.FileFormat.XISF {
                 AddImageFITSKeyword(XISFImageProperty.Observation.Object.Dec[2], AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
             }
 
-            if (!double.IsNaN(metaData.Target.Rotation)) {
+            if (!double.IsNaN(metaData.Target.PositionAngle)) {
                 /* NINA Specific target rotation */
-                AddImageFITSKeyword("OBJCTROT", metaData.Target.Rotation, "[deg] planned rotation of imaged object");
+                AddImageFITSKeyword("OBJCTROT", metaData.Target.PositionAngle, "[deg] planned rotation of imaged object");
             }
 
             /* Focuser */
@@ -662,7 +676,7 @@ namespace NINA.Image.FileFormat.XISF {
                         AddImageFITSKeyword(d.Key, d.Value, d.Comment);
                         break;
                     case BoolMetaDataHeader b:
-                        AddImageFITSKeyword(b.Key, b.Value ? "T" : "F", b.Comment);
+                        AddImageFITSKeyword(b.Key, b.Value, b.Comment);
                         break;
                     case DateTimeMetaDataHeader d:
                         AddImageFITSKeyword(d.Key, d.Value, d.Comment);
@@ -700,39 +714,43 @@ namespace NINA.Image.FileFormat.XISF {
         /// <param name="value">      value of that specific property</param>
         /// <param name="comment">    optional comment</param>
         /// <param name="autoaddfits">default: true; if fitskey available automatically add FITSHeader</param>
-        public void AddImageProperty(string[] property, string value, string comment = "", bool autoaddfits = true, string fitsvalue = null) {
+        public void AddImagePropertyInternal(string[] property, string value, string comment, bool autoaddfits, string fitsvalue) {
             if (Image == null) { throw new InvalidOperationException("No Image component available to add property!"); }
             AddProperty(Image, property, value, comment);
             if (property.Length > 2 && autoaddfits) {
                 if (fitsvalue == null) {
-                    AddImageFITSKeyword(property[2], value, comment);
+                    AddImageFITSKeywordInternal(property[2], value, comment);
                 } else {
-                    AddImageFITSKeyword(property[2], fitsvalue, comment);
+                    AddImageFITSKeywordInternal(property[2], fitsvalue, comment);
                 }
             }
         }
 
+        public void AddImageProperty(string[] property, String value, string comment = "", bool autoaddfits = true) {
+            AddImagePropertyInternal(property, value, comment, autoaddfits, "'" + value + "'");
+        }
+
         public void AddImageProperty(string[] property, DateTime value, string comment = "", bool autoaddfits = true) {
-            AddImageProperty(property, value.ToString(@"yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture), comment, autoaddfits);
+            AddImagePropertyInternal(property, value.ToString(@"yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture), comment, autoaddfits, "'" + value.ToString(@"yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture) + "'");
         }
 
         public void AddImageProperty(string[] property, int value, string comment = "", bool autoaddfits = true) {
-            AddImageProperty(property, value.ToString(CultureInfo.InvariantCulture), comment, autoaddfits);
+            AddImagePropertyInternal(property, value.ToString(CultureInfo.InvariantCulture), comment, autoaddfits, value.ToString(CultureInfo.InvariantCulture));
         }
 
         public void AddImageProperty(string[] property, double value, string comment = "", bool autoaddfits = true) {
-            AddImageProperty(property, value.ToString(CultureInfo.InvariantCulture), comment, autoaddfits, DoubleToFitsString(value));
+            AddImagePropertyInternal(property, value.ToString(CultureInfo.InvariantCulture), comment, autoaddfits, DoubleToFitsString(value));
         }
 
         public void AddImageProperty(string[] property, float value, string comment = "", bool autoaddfits = true) {
-            AddImageProperty(property, value.ToString(CultureInfo.InvariantCulture), comment, autoaddfits, FloatToFitsString(value));
+            AddImagePropertyInternal(property, value.ToString(CultureInfo.InvariantCulture), comment, autoaddfits, FloatToFitsString(value));
         }
 
-        public void AddImageFITSKeyword(string name, string value, string comment = "") {
+        private void AddImageFITSKeywordInternal(string name, string value, string comment = "") {
             if (Image == null) { throw new InvalidOperationException("No Image component available to add FITS Keyword!"); }
 
             var exists = Image.Elements(xmlns + "FITSKeyword").Attributes("name").Any(x => x.Value == name);
-            if(!exists) { 
+            if (!exists) {
                 Image.Add(new XElement(xmlns + "FITSKeyword",
                             new XAttribute("name", name),
                             new XAttribute("value", RemoveInvalidXMLChars(value)),
@@ -740,20 +758,27 @@ namespace NINA.Image.FileFormat.XISF {
             }
         }
 
+        public void AddImageFITSKeyword(string name, string value, string comment = "") {
+            AddImageFITSKeywordInternal(name, "'" + value + "'", comment);
+        }
+        public void AddImageFITSKeyword(string name, bool value, string comment = "") {
+            AddImageFITSKeywordInternal(name, value ? "T" : "F", comment);
+        }
+
         public void AddImageFITSKeyword(string name, DateTime value, string comment = "") {
-            AddImageFITSKeyword(name, value.ToString(@"yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture), comment);
+            AddImageFITSKeywordInternal(name, "'" + value.ToString(@"yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture) + "'", comment);
         }
 
         public void AddImageFITSKeyword(string name, int value, string comment = "") {
-            AddImageFITSKeyword(name, value.ToString(CultureInfo.InvariantCulture), comment);
+            AddImageFITSKeywordInternal(name, value.ToString(CultureInfo.InvariantCulture), comment);
         }
 
         public void AddImageFITSKeyword(string name, double value, string comment = "") {
-            AddImageFITSKeyword(name, DoubleToFitsString(value), comment);
+            AddImageFITSKeywordInternal(name, DoubleToFitsString(value), comment);
         }
 
         public void AddImageFITSKeyword(string name, float value, string comment = "") {
-            AddImageFITSKeyword(name, FloatToFitsString(value), comment);
+            AddImageFITSKeywordInternal(name, FloatToFitsString(value), comment);
         }
 
         private string DoubleToFitsString(double value) {
@@ -830,12 +855,12 @@ namespace NINA.Image.FileFormat.XISF {
         /// </summary>
         /// <param name="imageProperties"></param>
         /// <param name="imageType"></param>
-        public void AddImageMetaData(ImageProperties imageProperties, string imageType) {
-            if (imageType == "SNAPSHOT") { imageType = "LIGHT"; }
+        public void AddImageMetaData(ImageProperties imageProperties, string imageType, XISFSampleFormat format = XISFSampleFormat.UInt16) {
+            if (imageType == "SNAPSHOT") { imageType = "LIGHT"; } 
 
             XElement image = new XElement(xmlns + "Image",
                     new XAttribute("geometry", imageProperties.Width + ":" + imageProperties.Height + ":" + "1"),
-                    new XAttribute("sampleFormat", "UInt16"),
+                    new XAttribute("sampleFormat", format.ToString()),
                     new XAttribute("imageType", imageType),
                     new XAttribute("colorSpace", "Gray")
                     );
@@ -846,9 +871,14 @@ namespace NINA.Image.FileFormat.XISF {
         }
 
         public void Save(Stream s) {
-            using (System.Xml.XmlWriter sw = System.Xml.XmlWriter.Create(s, new System.Xml.XmlWriterSettings { OmitXmlDeclaration = true, Indent = true, Encoding = Encoding.UTF8 })) {
+            using (System.Xml.XmlWriter sw = System.Xml.XmlWriter.Create(s, new System.Xml.XmlWriterSettings { OmitXmlDeclaration = false, Indent = true, Encoding = new UTF8Encoding(false) })) {
                 Content.Save(sw);
             }
         }
+    }
+
+    public enum XISFSampleFormat {
+        UInt16,
+        UInt32
     }
 }

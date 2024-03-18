@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,48 +12,52 @@
 
 #endregion "copyright"
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using NINA.Core.Utility;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace NINA.Equipment.Equipment {
 
-    public class DeviceInfo : BaseINPC {
+    public partial class DeviceInfo : BaseINPC {
+        [ObservableProperty]
         private bool connected;
-        public bool Connected { get { return connected; } set { connected = value; RaisePropertyChanged(); } }
-        private string name;
-        public string Name { get { return name; } set { name = value; RaisePropertyChanged(); } }
 
+        [ObservableProperty]
+        private string name;
+
+        [ObservableProperty]
+        private string displayName;
+
+        [ObservableProperty]
         private string description;
 
-        public string Description {
-            get { return description; }
-            set { description = value; RaisePropertyChanged(); }
-        }
-
+        [ObservableProperty]
         private string driverInfo;
 
-        public string DriverInfo {
-            get { return driverInfo; }
-            set { driverInfo = value; RaisePropertyChanged(); }
-        }
-
+        [ObservableProperty]
         private string driverVersion;
 
-        public string DriverVersion {
-            get { return driverVersion; }
-            set { driverVersion = value; RaisePropertyChanged(); }
-        }
-
+        [ObservableProperty]
         private string deviceId;
-
-        public string DeviceId {
-            get => deviceId;
-            set { deviceId = value; RaisePropertyChanged(); }
-        }
 
         public static T CreateDefaultInstance<T>() where T : DeviceInfo, new() {
             return new T() {
                 Connected = false
             };
+        }
+
+        public void Reset() {
+            var defaultInstance = Activator.CreateInstance(this.GetType()) as DeviceInfo;
+            defaultInstance.Connected = false;
+            this.CopyFrom(defaultInstance);
+        }
+
+        public void CopyFrom(DeviceInfo other) {
+            foreach (PropertyInfo property in this.GetType().GetProperties().Where(p => p.CanWrite)) {
+                property.SetValue(this, property.GetValue(other, null), null);
+            }
         }
     }
 }

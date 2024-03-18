@@ -1,5 +1,5 @@
 ﻿<!--
-    Copyright (c) 2016 - 2023 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,7 +16,7 @@
     xmlns:local="clr-namespace:NINA.View.Plugins"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:plugin="clr-namespace:NINA.ViewModel.Plugins"
     xmlns:settings="clr-namespace:NINA.Properties"
@@ -73,7 +73,8 @@
                                         Margin="5"
                                         Data="{StaticResource SaveSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
                                 </Grid>
                             </Grid>
                             <TextBlock
@@ -87,7 +88,8 @@
                                 Margin="2.5"
                                 Data="{StaticResource SaveSVG}"
                                 Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                                Style="{StaticResource TabItemPath}"
+                                UseLayoutRounding="True" />
                         </Grid>
                     </Grid>
                 </TabItem.Header>
@@ -107,7 +109,8 @@
                                     Data="{StaticResource PuzzlePieceSVG}"
                                     Fill="{StaticResource PrimaryBrush}"
                                     Stretch="Uniform"
-                                    Style="{StaticResource TabItemPath}" />
+                                    Style="{StaticResource TabItemPath}"
+                                    UseLayoutRounding="True" />
 
                                 <TextBlock
                                     HorizontalAlignment="Center"
@@ -466,7 +469,8 @@
                                         Margin="5"
                                         Data="{StaticResource GridSVG}"
                                         Stretch="Uniform"
-                                        Style="{StaticResource TabItemPath}" />
+                                        Style="{StaticResource TabItemPath}"
+                                        UseLayoutRounding="True" />
 
                                     <Border
                                         Width="15"
@@ -496,7 +500,8 @@
                                 Margin="2.5"
                                 Data="{StaticResource GridSVG}"
                                 Stretch="Uniform"
-                                Style="{StaticResource TabItemPath}" />
+                                Style="{StaticResource TabItemPath}"
+                                UseLayoutRounding="True" />
                             <Border
                                 Width="13"
                                 Height="13"

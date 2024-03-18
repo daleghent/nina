@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -9,10 +9,12 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using Microsoft.Extensions.DependencyInjection;
 using NINA.Core.Interfaces;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Image.ImageAnalysis;
 using NINA.Interfaces;
 using NINA.Profile.Interfaces;
 using NINA.Utility;
@@ -23,7 +25,6 @@ using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Sequencer;
 using NINA.WPF.Base.Interfaces.ViewModel;
-using Ninject;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -33,17 +34,21 @@ namespace NINA {
 
     internal static class CompositionRoot {
 
-        public static IMainWindowVM Compose(IProfileService profileService) {
+        public static IMainWindowVM Compose(IProfileService profileService, ICommandLineOptions commandLineOptions) {
             try {
-                IReadOnlyKernel _kernel =
-                new KernelConfiguration(
-                    new IoCBindings(profileService))
-                .BuildReadonlyKernel();
-
+                var serviceProvider = new IoCBindings(profileService, commandLineOptions).Load();
                 Stopwatch sw;
 
                 sw = Stopwatch.StartNew();
-                var appvm = _kernel.Get<IApplicationVM>();
+                var imageSaveController = serviceProvider.GetService<IImageSaveController>();
+                Debug.Print($"Time to create IImageSaveController {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var imagingVM = serviceProvider.GetService<IImagingVM>();
+                Debug.Print($"Time to create IImagingVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var appvm = serviceProvider.GetService<IApplicationVM>();
                 Debug.Print($"Time to create IApplicationVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
@@ -54,69 +59,58 @@ namespace NINA {
                 }
                 Debug.Print($"Time to initialize EDSDK {sw.Elapsed}");
 
-                sw = Stopwatch.StartNew();
-                var imageSaveController = _kernel.Get<IImageSaveController>();
-                Debug.Print($"Time to create IImageSaveController {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var imagingVM = _kernel.Get<IImagingVM>();
-                Debug.Print($"Time to create IImagingVM {sw.Elapsed}");
-
-                sw = Stopwatch.StartNew();
-                var equipmentVM = _kernel.Get<IEquipmentVM>();
+                var equipmentVM = serviceProvider.GetService<IEquipmentVM>();
                 Debug.Print($"Time to create IEquipmentVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var skyAtlasVM = _kernel.Get<ISkyAtlasVM>();
+                var skyAtlasVM = serviceProvider.GetService<ISkyAtlasVM>();
                 Debug.Print($"Time to create ISkyAtlasVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var sequenceNavigationVM = _kernel.Get<ISequenceNavigationVM>();
+                var sequenceNavigationVM = serviceProvider.GetService<ISequenceNavigationVM>();
                 Debug.Print($"Time to create ISequenceNavigationVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var framingAssistantVM = _kernel.Get<IFramingAssistantVM>();
+                var framingAssistantVM = serviceProvider.GetService<IFramingAssistantVM>();
                 Debug.Print($"Time to create IFramingAssistantVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var flatWizardVM = _kernel.Get<IFlatWizardVM>();
+                var flatWizardVM = serviceProvider.GetService<IFlatWizardVM>();
                 Debug.Print($"Time to create IFlatWizardVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var dockManagerVM = _kernel.Get<IDockManagerVM>();
+                var dockManagerVM = serviceProvider.GetService<IDockManagerVM>();
                 Debug.Print($"Time to create IDockManagerVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var optionsVM = _kernel.Get<IOptionsVM>();
+                var optionsVM = serviceProvider.GetService<IOptionsVM>();
                 Debug.Print($"Time to create IOptionsVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var applicationDeviceConnectionVM = _kernel.Get<IApplicationDeviceConnectionVM>();
+                var applicationDeviceConnectionVM = serviceProvider.GetService<IApplicationDeviceConnectionVM>();
                 Debug.Print($"Time to create IApplicationDeviceConnectionVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var versionCheckVM = _kernel.Get<IVersionCheckVM>();
+                var versionCheckVM = serviceProvider.GetService<IVersionCheckVM>();
                 Debug.Print($"Time to create IVersionCheckVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var applicationStatusVM = _kernel.Get<IApplicationStatusVM>();
+                var applicationStatusVM = serviceProvider.GetService<IApplicationStatusVM>();
                 Debug.Print($"Time to create IApplicationStatusVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var imageHistoryVM = _kernel.Get<IImageHistoryVM>();
+                var imageHistoryVM = serviceProvider.GetService<IImageHistoryVM>();
                 Debug.Print($"Time to create IImageHistoryVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var pluginsVM = _kernel.Get<IPluginsVM>();
+                var pluginsVM = serviceProvider.GetService<IPluginsVM>();
                 Debug.Print($"Time to create IPluginsVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
-                var globalObjects = _kernel.Get<GlobalObjects>();
+                var globalObjects = serviceProvider.GetService<GlobalObjects>();
                 Debug.Print($"Time to create GlobalObjects {sw.Elapsed}");
-
-                sw = Stopwatch.StartNew();
-                var deviceDispatcher = _kernel.Get<IDeviceDispatcher>();
-                Debug.Print($"Time to create DeviceDispatcher {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
                 var mainWindowVM = new MainWindowVM {
@@ -138,7 +132,6 @@ namespace NINA {
                     ImageHistoryVM = imageHistoryVM,
                     PluginsVM = pluginsVM,
                     GlobalObjects = globalObjects,
-                    DeviceDispatcher = deviceDispatcher
                 };
                 Debug.Print($"Time to create MainWindowVM {sw.Elapsed}");
 

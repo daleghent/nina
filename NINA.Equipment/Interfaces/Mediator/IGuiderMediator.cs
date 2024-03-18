@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -30,6 +30,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Guid StartRMSRecording();
 
+        RMS GetRMSRecording(Guid handle);
+
         RMS StopRMSRecording(Guid handle);
 
         Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken token);
@@ -47,9 +49,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
         LockPosition GetLockPosition();
 
         event Func<object, EventArgs, Task> AfterDither;
-        Task RaiseAfterDither(EventArgs e);
 
         event EventHandler<IGuideStep> GuideEvent;
-        void RaiseGuideEvent(IGuideStep e);
     }
 }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -37,5 +38,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         void SendCommandBlind(string command, bool raw = true);
         IDevice GetDevice();
+
+        event Func<object, EventArgs, Task> Connected;
+        event Func<object, EventArgs, Task> Disconnected;
     }
 }

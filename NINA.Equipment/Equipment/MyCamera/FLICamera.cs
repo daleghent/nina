@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -30,6 +30,7 @@ using NINA.Core.Locale;
 using NINA.Image.Interfaces;
 using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyCamera {
 
@@ -362,6 +363,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short MaxBinY => 16;
 
         public string Name => Info.Model;
+        public string DisplayName => $"{Name} ({(Id.Length > 8 ? Id[^8..] : Id)})";
 
         public int Offset {
             get => -1;
@@ -731,13 +733,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 BGFlushStart();
 
+                var metaData = new ImageMetaData();
+                metaData.FromCamera(this);
                 return exposureDataFactory.CreateImageArrayExposureData(
                     input: imgData,
                     width: width,
                     height: height,
                     bitDepth: this.BitDepth,
                     isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
+                    metaData: metaData);
             }, ct);
         }
 
@@ -761,9 +765,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
                 return windowService;
             }
-            set {
-                windowService = value;
-            }
+            set => windowService = value;
         }
 
         public void SetupDialog() {
@@ -800,8 +802,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * Darks and Bias frames both get set to same type.
              */
             isDarkFrame = sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
-                sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
-                sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT;
+                sequence.ImageType == CaptureSequence.ImageTypes.DARK;
 
             FrameType = isDarkFrame ? LibFLI.FLIFrameType.DARK : LibFLI.FLIFrameType.NORMAL;
 
@@ -874,7 +875,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms and flushing {FLIFlushCount} times at {FLIFloodBin.Name} binning");
 
             FrameType = LibFLI.FLIFrameType.RBI_FLUSH;
-            ExposureLength = (uint)FLIFloodDuration * 1000;
+            ExposureLength = (uint)(FLIFloodDuration * 1000);
             ReadoutMode = ReadoutModeForSnapImages;
             SetBinning(FLIFloodBin.X, FLIFloodBin.Y);
 

@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -46,8 +46,8 @@
             <GroupBox.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" MinWidth="140" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock
                         VerticalAlignment="Center"
@@ -69,14 +69,8 @@
         </GroupBox>
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.Resources>
-                <DataTemplate x:Key="Eagle">
-                    <switch:Eagle />
-                </DataTemplate>
                 <DataTemplate x:Key="Generic">
                     <switch:Generic />
-                </DataTemplate>
-                <DataTemplate x:Key="UltimatePowerBoxV2">
-                    <switch:PegasusAstroUltimatePowerboxV2 />
                 </DataTemplate>
                 <DataTemplate x:Key="Failed">
                     <TextBlock
@@ -87,11 +81,9 @@
                 </DataTemplate>
                 <switch:SwitchHubTemplateSelector
                     x:Key="ContentSelector"
-                    Eagle="{StaticResource Eagle}"
                     FailedToLoadTemplate="{StaticResource Failed}"
                     Generic="{StaticResource Generic}"
-                    Postfix="{x:Static wpfutil:DataTemplatePostfix.SwitchSettings}"
-                    UltimatePowerBoxV2="{StaticResource UltimatePowerBoxV2}" />
+                    Postfix="{x:Static wpfutil:DataTemplatePostfix.SwitchSettings}" />
             </Grid.Resources>
             <ContentControl
                 Content="{Binding}"

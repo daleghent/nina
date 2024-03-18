@@ -1,7 +1,7 @@
 ﻿#region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -24,6 +24,9 @@ using Microsoft.Xaml.Behaviors;
 
 namespace NINA.Sequencer.Behaviors {
 
+    /// <summary>
+    /// This behavior handles the command to execute when an element is dropped into it. The DragOverBehavior will try to find this command here and invoke it
+    /// </summary>
     public class DropIntoBehavior : Behavior<UIElement> {
         public static readonly DependencyProperty OnDropCommandProperty = DependencyProperty.Register(nameof(OnDropCommand), typeof(string), typeof(DropIntoBehavior));
 
@@ -49,22 +52,14 @@ namespace NINA.Sequencer.Behaviors {
         }
 
         public string AllowedDragDropTypesString {
-            get {
-                return (string)GetValue(AllowedDragDropTypesProperty);
-            }
-            set {
-                SetValue(AllowedDragDropTypesProperty, value);
-            }
+            get => (string)GetValue(AllowedDragDropTypesProperty);
+            set => SetValue(AllowedDragDropTypesProperty, value);
         }
 
         public string OnDropCommand {
-            get {
-                return (string)GetValue(OnDropCommandProperty);
-            }
+            get => (string)GetValue(OnDropCommandProperty);
 
-            set {
-                SetValue(OnDropCommandProperty, value);
-            }
+            set => SetValue(OnDropCommandProperty, value);
         }
 
         protected override void OnAttached() {

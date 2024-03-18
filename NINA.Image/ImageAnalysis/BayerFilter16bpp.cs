@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -143,9 +143,9 @@ namespace NINA.Image.ImageAnalysis {
                         dst[RGB.G] = (ushort)(rgbValues[RGB.G] / rgbCounters[RGB.G]);
                         dst[RGB.B] = (ushort)(rgbValues[RGB.B] / rgbCounters[RGB.B]);
                         if (SaveColorChannels) {
-                            LRGBArrays.Red[counter] = dst[RGB.R];
+                            LRGBArrays.Red[counter] = dst[RGB.B];
                             LRGBArrays.Green[counter] = dst[RGB.G];
-                            LRGBArrays.Blue[counter] = dst[RGB.B];
+                            LRGBArrays.Blue[counter] = dst[RGB.R];
                         }
                         if (SaveLumChannel) {
                             LRGBArrays.Lum[counter] = (ushort)Math.Floor((dst[RGB.R] + dst[RGB.G] + dst[RGB.B]) / 3d);

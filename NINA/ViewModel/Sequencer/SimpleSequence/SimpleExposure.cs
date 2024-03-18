@@ -1,6 +1,6 @@
 ﻿#region "copyright"
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -143,9 +143,25 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Enabled) {
+                AlignExposureCount();
                 return base.Execute(progress, token);
             } else {
                 return Task.CompletedTask;
+            }
+        }
+
+        public override void ResetAll() {
+            base.ResetAll();
+            AlignExposureCount();
+        }
+
+        private void AlignExposureCount() {
+            var parent = (this.Parent as SimpleDSOContainer);
+            if (parent.Mode == Core.Enum.SequenceMode.STANDARD) {
+                (GetTakeExposure() as TakeExposure).ExposureCount = (GetLoopCondition() as LoopCondition).CompletedIterations;
+            } else if (parent.Mode == Core.Enum.SequenceMode.ROTATE) {
+                var condition = parent.Conditions.Where(x => x.GetType() == typeof(LoopCondition)).First() as LoopCondition;
+                (GetTakeExposure() as TakeExposure).ExposureCount = condition.CompletedIterations;
             }
         }
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -32,17 +32,13 @@ namespace NINA.Astrometry {
         private double _rotationOffset;
         public double RotationOffset {
             get => _rotationOffset;
-            set {
-                _rotationOffset = AstroUtil.MathMod(value, 360);
-            }
+            set => _rotationOffset = AstroUtil.MathMod(value, 360);
         }
 
         private double _rotation;
 
         public double Rotation {
-            get {
-                return _rotation;
-            }
+            get => _rotation;
             set {
                 _rotation = AstroUtil.MathMod(value, 360);
                 if (_rotation < 0) { _rotation += 360; }
@@ -59,10 +55,9 @@ namespace NINA.Astrometry {
                 rotation = AstroUtil.MathMod(rotation, 360);
                 return Math.Round(rotation, 2);
             }
-            set {
+            set =>
                 //This will rise property changed for TotalRotation
                 Rotation = AstroUtil.MathMod(value - _rotationOffset, 360);
-            }
         }
     }
 }

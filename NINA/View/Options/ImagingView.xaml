@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,7 +14,7 @@
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:nina="clr-namespace:NINA"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -61,7 +61,8 @@
                         Margin="5"
                         Data="{StaticResource ExclamationCircledSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"
+                        UseLayoutRounding="True" />
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSaveImageAsDSLRNote}" />
                 </StackPanel>
 
@@ -72,6 +73,8 @@
                     <GroupBox.Header>
                         <TextBlock FontSize="12" Text="{ns:Loc LblFileFormatOptions}" />
                     </GroupBox.Header>
+
+                    <!--  TIFF  -->
                     <Grid>
                         <StackPanel>
                             <StackPanel.Style>
@@ -107,16 +110,76 @@
                                     </Style.Triggers>
                                 </Style>
                             </StackPanel.Style>
+
+                            <!--  FITS  -->
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="{ns:Loc LblNoFileFormatOptions}" />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        MinWidth="100"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblUseCfitsio}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblUseCfitsioTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding FITSUseLegacyWriter, Converter={StaticResource InverseBooleanConverter}}">
+                                        <CheckBox.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblUseCfitsioTooltip}" />
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Margin="0,5,0,0"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding FITSUseLegacyWriter, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                                    <TextBlock
+                                        MinWidth="100"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblCompression}" />
+                                    <ComboBox
+                                        MinWidth="100"
+                                        Margin="5,0,0,0"
+                                        ItemsSource="{Binding DataContext.FITSCompressionTypes, ElementName=UC}"
+                                        SelectedItem="{Binding FITSCompressionType}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="5,5,0,0"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding FITSUseLegacyWriter, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                                    <TextBlock
+                                        MinWidth="100"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblAddFzExtension}" />
+                                    <CheckBox
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding FITSAddFzExtension}">
+                                        <CheckBox.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblAddFzExtensionTooltip}" />
+                                        </CheckBox.ToolTip>
+                                    </CheckBox>
+                                </StackPanel>
                             </Grid>
                         </StackPanel>
+
+                        <!--  XISF  -->
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -203,7 +266,8 @@
                         Margin="2,10,2,0"
                         Data="{StaticResource DotsSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform"
+                        UseLayoutRounding="True" />
                 </Button>
 
 
@@ -306,26 +370,6 @@
                                 PreviewDragOver="TextBox_PreviewDragOver"
                                 Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternBIAS, UpdateSourceTrigger=PropertyChanged}"
                                 TextWrapping="Wrap" />
-
-                            <TextBlock
-                                Grid.Row="3"
-                                Margin="20,5,0,0"
-                                VerticalAlignment="Center"
-                                Text="DARKFLAT" />
-                            <ninactrl:HintTextBox
-                                x:Name="FilePatternDARKFLATTextBox"
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                Margin="5,5,0,0"
-                                VerticalAlignment="Center"
-                                VerticalContentAlignment="Stretch"
-                                AllowDrop="True"
-                                DragEnter="TextBox_DragEnter"
-                                Drop="TextBox_Drop"
-                                HintText="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePattern, UpdateSourceTrigger=PropertyChanged}"
-                                PreviewDragOver="TextBox_PreviewDragOver"
-                                Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARKFLAT, UpdateSourceTrigger=PropertyChanged}"
-                                TextWrapping="Wrap" />
                         </Grid>
                     </Expander.Content>
                 </Expander>
@@ -410,24 +454,6 @@
                         Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreviewBIAS, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap"
                         Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternBIAS, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
-
-
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Margin="20,5,0,0"
-                        VerticalAlignment="Center"
-                        Text="DARKFLAT"
-                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARKFLAT, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
-                    <TextBox
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Margin="0,5,0,0"
-                        VerticalAlignment="Center"
-                        IsReadOnly="True"
-                        Text="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternPreviewDARKFLAT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                        TextWrapping="Wrap"
-                        Visibility="{Binding Source={StaticResource OptionsProxy}, Path=Data.FilePatternDARKFLAT, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}" />
                 </Grid>
 
                 <Grid
@@ -907,7 +933,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblDefaultSequenceFolderTooltip}" />
                                 </Button.ToolTip>
@@ -939,7 +966,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblSequenceTemplateFolderTooltip}" />
                                 </Button.ToolTip>
@@ -971,7 +999,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblSequenceTemplateTooltip}" />
                                 </Button.ToolTip>
@@ -1003,7 +1032,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblStartupSequenceTemplateTooltip}" />
                                 </Button.ToolTip>
@@ -1035,7 +1065,8 @@
                                     Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
+                                    Stretch="Uniform"
+                                    UseLayoutRounding="True" />
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblSequencerTargetsFolderTooltip}" />
                                 </Button.ToolTip>
@@ -1096,7 +1127,8 @@
                                 Margin="5"
                                 Data="{StaticResource ResetSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
 
                         <TextBlock
@@ -1117,7 +1149,8 @@
                                 Margin="5"
                                 Data="{StaticResource SaveAsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
 
                         <TextBlock
@@ -1138,7 +1171,8 @@
                                 Margin="5"
                                 Data="{StaticResource LoadSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
+                                Stretch="Uniform"
+                                UseLayoutRounding="True" />
                         </Button>
                     </Grid>
                 </GroupBox>

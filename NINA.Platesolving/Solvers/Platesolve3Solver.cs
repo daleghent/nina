@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,6 +14,7 @@
 
 using NINA.Astrometry;
 using NINA.Core.Locale;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -104,16 +105,15 @@ namespace NINA.PlateSolving.Solvers {
                         if (linenr == 2) {
                             if (resultArr.Length >= 2) {
                                 result.Pixscale = 206264.8d / double.Parse(resultArr[0], CultureInfo.InvariantCulture);
-                                result.Orientation = double.Parse(resultArr[1], CultureInfo.InvariantCulture);
-                                /* We need to flip the rotation */
-                                result.Orientation = 360 - result.Orientation;
+                                if (!double.IsNaN(result.Pixscale)) {
+                                    result.Radius = AstroUtil.ArcsecToDegree(Math.Sqrt(Math.Pow(imageProperties.ImageWidth * result.Pixscale, 2) + Math.Pow(imageProperties.ImageHeight * result.Pixscale, 2)) / 2d);
+                                }
+                                result.PositionAngle = double.Parse(resultArr[1], CultureInfo.InvariantCulture);
                             }
                         }
                         if (linenr == 4) {
                             if (resultArr.Length >= 2) {
-                                if (double.Parse(resultArr[0], CultureInfo.InvariantCulture) < 0) {
-                                    result.Flipped = true;
-                                }
+                                result.Flipped = double.Parse(resultArr[0], CultureInfo.InvariantCulture) >= 0;
                             }
                         }
                         linenr++;

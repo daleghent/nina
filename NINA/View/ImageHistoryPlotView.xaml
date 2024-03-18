@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright (c) 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,20 +14,23 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
-    xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Contrib.Wpf"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid>
         <oxy:Plot
             Background="{StaticResource BackgroundBrush}"
-            LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
-            LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
-            LegendOrientation="Vertical"
-            LegendPosition="LeftTop"
-            LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
             PlotAreaBackground="{StaticResource BackgroundBrush}"
             PlotAreaBorderColor="{Binding Path=Color, Source={StaticResource BorderBrush}}">
+            <oxy:Plot.Legends>
+                <oxy:Legend
+                    LegendBackground="{Binding Path=Color, Source={StaticResource BackgroundBrush}}"
+                    LegendBorder="{Binding Path=Color, Source={StaticResource BorderBrush}}"
+                    LegendOrientation="Vertical"
+                    LegendPosition="LeftTop"
+                    LegendTextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
+            </oxy:Plot.Legends>
             <oxy:Plot.Axes>
                 <oxy:LinearAxis
                     AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"

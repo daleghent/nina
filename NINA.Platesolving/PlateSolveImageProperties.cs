@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -23,23 +23,11 @@ namespace NINA.PlateSolving {
         public double ImageWidth { get; private set; }
         public double ImageHeight { get; private set; }
 
-        public double ArcSecPerPixel {
-            get {
-                return AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
-            }
-        }
+        public double ArcSecPerPixel => AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
 
-        public double FoVH {
-            get {
-                return AstroUtil.ArcminToDegree(AstroUtil.FieldOfView(ArcSecPerPixel, ImageHeight));
-            }
-        }
+        public double FoVH => AstroUtil.ArcminToDegree(AstroUtil.FieldOfView(ArcSecPerPixel, ImageHeight));
 
-        public double FoVW {
-            get {
-                return AstroUtil.ArcminToDegree(AstroUtil.FieldOfView(ArcSecPerPixel, ImageWidth));
-            }
-        }
+        public double FoVW => AstroUtil.ArcminToDegree(AstroUtil.FieldOfView(ArcSecPerPixel, ImageWidth));
 
         public static PlateSolveImageProperties Create(PlateSolveParameter parameter, IImageData source) {
             return new PlateSolveImageProperties() {

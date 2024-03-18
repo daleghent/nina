@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -24,26 +24,21 @@ using NINA.Image.ImageData;
 using System.Windows.Input;
 
 namespace NINA.Image.FileFormat.FITS {
-
     public class FITSHeader {
 
         public FITSHeader(int width, int height) {
-            Add("SIMPLE", true, "C# FITS");
-            Add("BITPIX", 16, "");
-            Add("NAXIS", 2, "Dimensionality");
-            Add("NAXIS1", width, "");
-            Add("NAXIS2", height, "");
-            Add("BZERO", 32768, "");
-            Add("EXTEND", true, "Extensions are permitted");
-        }
+                Add("SIMPLE", true, "C# FITS");
+                Add("BITPIX", 16, "");
+                Add("NAXIS", 2, "Dimensionality");
+                Add("NAXIS1", width, "");
+                Add("NAXIS2", height, "");
+                Add("BZERO", 32768, "");
+                Add("EXTEND", true, "Extensions are permitted");
+            }
 
         private Dictionary<string, FITSHeaderCard> _headerCards = new Dictionary<string, FITSHeaderCard>();
 
-        public ICollection<FITSHeaderCard> HeaderCards {
-            get {
-                return _headerCards.Values;
-            }
-        }
+        public ICollection<FITSHeaderCard> HeaderCards => _headerCards.Values;
 
         public void Add(string keyword, string value, string comment) {
             if (!_headerCards.ContainsKey(keyword)) {
@@ -95,11 +90,11 @@ namespace NINA.Image.FileFormat.FITS {
             var metaData = new ImageMetaData();
             metaData.GenericHeaders = GetAllFITSKeywords();
 
-            if (_headerCards.ContainsKey("IMAGETYP")) {
-                metaData.Image.ImageType = _headerCards["IMAGETYP"].OriginalValue;
+            if (_headerCards.TryGetValue("IMAGETYP", out var card)) {
+                metaData.Image.ImageType = card.OriginalValue;
             }
 
-            if (_headerCards.TryGetValue("IMAGETYP", out var card)) {
+            if (_headerCards.TryGetValue("IMAGETYP", out card)) {
                 metaData.Image.ImageType = card.OriginalValue;
             }
 
@@ -146,6 +141,10 @@ namespace NINA.Image.FileFormat.FITS {
 
             if (_headerCards.TryGetValue("INSTRUME", out card)) {
                 metaData.Camera.Name = card.OriginalValue;
+            }
+
+            if (_headerCards.TryGetValue("CAMERAID", out card)) {
+                metaData.Camera.Id = card.OriginalValue;
             }
 
             if (_headerCards.TryGetValue("SET-TEMP", out card)) {
@@ -291,7 +290,7 @@ namespace NINA.Image.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("OBJCTROT", out card)) {
-                metaData.Target.Rotation = ParseDouble(card.OriginalValue);
+                metaData.Target.PositionAngle = ParseDouble(card.OriginalValue);
             }
 
             if (_headerCards.TryGetValue("AIRMASS", out card)) {
@@ -446,7 +445,7 @@ namespace NINA.Image.FileFormat.FITS {
                 } else if (elem.Value.OriginalValue == "T" || elem.Value.OriginalValue == "F") {
                     var value = elem.Value.OriginalValue.Trim() == "T" ? true : false;
                     l.Add(new BoolMetaDataHeader(key, value, elem.Value.Comment));
-                } else if (elem.Value.OriginalValue.Contains(".") && double.TryParse(elem.Value.OriginalValue, out var number)) {                    
+                } else if (elem.Value.OriginalValue.Contains(".") && double.TryParse(elem.Value.OriginalValue, CultureInfo.InvariantCulture, out var number)) {                    
                     l.Add(new DoubleMetaDataHeader(key, number, elem.Value.Comment));
                 } else if (int.TryParse(elem.Value.OriginalValue, out var integer)) {
                     l.Add(new IntMetaDataHeader(key, integer, elem.Value.Comment));
@@ -545,6 +544,10 @@ namespace NINA.Image.FileFormat.FITS {
                 Add("INSTRUME", metaData.Camera.Name, "Imaging instrument name");
             }
 
+            if (!string.IsNullOrEmpty(metaData.Camera.Id)) {
+                Add("CAMERAID", metaData.Camera.Id, "Imaging instrument identifier");
+            }
+
             if (!double.IsNaN(metaData.Camera.SetPoint)) {
                 Add("SET-TEMP", metaData.Camera.SetPoint, "[degC] CCD temperature setpoint");
             }
@@ -557,7 +560,7 @@ namespace NINA.Image.FileFormat.FITS {
                 Add("READOUTM", metaData.Camera.ReadoutModeName, "Sensor readout mode");
             }
 
-            if (metaData.Camera.SensorType != SensorType.Monochrome) {
+            if (metaData.Camera.SensorType != SensorType.Monochrome && metaData.Camera.BayerPattern != BayerPatternEnum.None) {
                 Add("BAYERPAT", metaData.Camera.SensorType.ToString().ToUpper(), "Sensor Bayer pattern");
                 Add("XBAYROFF", metaData.Camera.BayerOffsetX, "Bayer pattern X axis offset");
                 Add("YBAYROFF", metaData.Camera.BayerOffsetY, "Bayer pattern Y axis offset");
@@ -640,9 +643,9 @@ namespace NINA.Image.FileFormat.FITS {
                 Add("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
             }
 
-            if (!double.IsNaN(metaData.Target.Rotation)) {
+            if (!double.IsNaN(metaData.Target.PositionAngle)) {
                 /* NINA Specific target rotation */
-                Add("OBJCTROT", metaData.Target.Rotation, "[deg] planned rotation of imaged object");
+                Add("OBJCTROT", metaData.Target.PositionAngle, "[deg] planned rotation of imaged object");
             }
 
             /* Focuser */

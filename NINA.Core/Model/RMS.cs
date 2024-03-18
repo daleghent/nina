@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -26,11 +26,11 @@ namespace NINA.Core.Model {
         private double ra;
         private double dec;
         private double total;
- 
+        private double peakRA = 0;
+        private double peakDec = 0;
+
         public double RA {
-            get {
-                return ra;
-            }
+            get => ra;
 
             set {
                 ra = value;
@@ -40,9 +40,7 @@ namespace NINA.Core.Model {
         }
 
         public double Dec {
-            get {
-                return dec;
-            }
+            get => dec;
 
             set {
                 dec = value;
@@ -52,9 +50,7 @@ namespace NINA.Core.Model {
         }
 
         public double Total {
-            get {
-                return total;
-            }
+            get => total;
 
             set {
                 total = value;
@@ -63,29 +59,35 @@ namespace NINA.Core.Model {
             }
         }
 
-        public string RAText {
-            get {
-                return string.Format(Locale.Loc.Instance["LblPHD2RARMS"], RA.ToString("0.00"), (RA * Scale).ToString("0.00"));
-            }
-        }
+        public string RAText => string.Format(Locale.Loc.Instance["LblPHD2RARMS"], RA.ToString("0.00"), (RA * Scale).ToString("0.00"));
 
-        public string DecText {
-            get {
-                return string.Format(Locale.Loc.Instance["LblPHD2DecRMS"], Dec.ToString("0.00"), (Dec * Scale).ToString("0.00"));
-            }
-        }
+        public string DecText => string.Format(Locale.Loc.Instance["LblPHD2DecRMS"], Dec.ToString("0.00"), (Dec * Scale).ToString("0.00"));
 
-        public string TotalText {
-            get {
-                return string.Format(Locale.Loc.Instance["LblPHD2TotalRMS"], Total.ToString("0.00"), (Total * Scale).ToString("0.00"));
-            }
-        }
+        public string TotalText => string.Format(Locale.Loc.Instance["LblPHD2TotalRMS"], Total.ToString("0.00"), (Total * Scale).ToString("0.00"));
+        public string PeakRAText => string.Format(Locale.Loc.Instance["LblPHD2PeakRA"], PeakRA.ToString("0.00"), (PeakRA * Scale).ToString("0.00"));
+        public string PeakDecText => string.Format(Locale.Loc.Instance["LblPHD2PeakDec"], PeakDec.ToString("0.00"), (PeakDec * Scale).ToString("0.00"));
 
         public double Scale { get; private set; } = 1;
 
-        public double PeakRA { get; set; } = 0;
+        public double PeakRA { 
+            get => peakRA; 
+            set {
+                peakRA = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(PeakRAText));
+            }
+        }
 
-        public double PeakDec { get; set; } = 0;
+        public double PeakDec { 
+            get => peakDec; 
+            set {
+                peakDec = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(PeakDecText));
+            }
+        }
+
+        public int DataPoints { get => datapoints; } 
 
         public void AddDataPoint(double raDistance, double decDistance) {
             datapoints++;

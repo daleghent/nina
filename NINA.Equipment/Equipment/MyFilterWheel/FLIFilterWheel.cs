@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -95,6 +95,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         public string Name => Info.Model;
+        public string DisplayName => Name;
         public string Description => string.Format($"{Info.Model} ({Info.Id}) HWRev: {Info.HWrev} FWRev: {Info.FWrev}");
 
         private string driverInfo = string.Empty;
@@ -174,7 +175,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                  * filter names after that point.
                  */
                 var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-                int i = filtersList.Count();
+                int i = filtersList.Count;
                 int positions = (int)Info.Positions;
                 long rv;
 

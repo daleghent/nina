@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,8 +12,10 @@
 
 #endregion "copyright"
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model;
 using NINA.Equipment.Equipment.MyFlatDevice;
 using NINA.Equipment.Interfaces.ViewModel;
 
@@ -21,12 +23,12 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
     public interface IFlatDeviceMediator : IDeviceMediator<IFlatDeviceVM, IFlatDeviceConsumer, FlatDeviceInfo> {
 
-        Task SetBrightness(int brightness, CancellationToken token);
+        Task SetBrightness(int brightness, IProgress<ApplicationStatus> progress, CancellationToken token);
 
-        Task CloseCover(CancellationToken token);
+        Task CloseCover(IProgress<ApplicationStatus> progress, CancellationToken token);
 
-        Task ToggleLight(object o, CancellationToken token);
+        Task ToggleLight(bool onOff, IProgress<ApplicationStatus> progress, CancellationToken token);
 
-        Task OpenCover(CancellationToken token);
+        Task OpenCover(IProgress<ApplicationStatus> progress, CancellationToken token);
     }
 }

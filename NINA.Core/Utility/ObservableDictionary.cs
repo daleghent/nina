@@ -189,11 +189,7 @@ namespace NINA.Core.Utility {
         ///     The number of name/value pairs in this ContentLocatorPart.
         /// </summary>
         /// <value>count of name/value pairs</value>
-        public int Count {
-            get {
-                return _nameValues.Count;
-            }
-        }
+        public int Count => _nameValues.Count;
 
         /// <summary>
         ///     Indexer provides lookup of values by key.  Gets or sets the value
@@ -236,31 +232,19 @@ namespace NINA.Core.Utility {
         /// <summary>
         ///
         /// </summary>
-        public bool IsReadOnly {
-            get {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         ///     Returns a collection of all the keys in this ContentLocatorPart.
         /// </summary>
         /// <value>keys</value>
-        public ICollection<TKey> Keys {
-            get {
-                return _nameValues.Keys;
-            }
-        }
+        public ICollection<TKey> Keys => _nameValues.Keys;
 
         /// <summary>
         ///     Returns a collection of all the values in this ContentLocatorPart.
         /// </summary>
         /// <value>values</value>
-        public ICollection<TValue> Values {
-            get {
-                return _nameValues.Values;
-            }
-        }
+        public ICollection<TValue> Values => _nameValues.Values;
 
         #endregion Public Properties
 

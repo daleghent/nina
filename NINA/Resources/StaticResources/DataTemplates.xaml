@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2022 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2024 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -11,17 +11,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:af="clr-namespace:NINA.WPF.Base.ViewModel.AutoFocus;assembly=NINA.WPF.Base"
     xmlns:camera="clr-namespace:NINA.Equipment.Equipment.MyCamera;assembly=NINA.Equipment"
-    xmlns:eagle="clr-namespace:NINA.Equipment.Equipment.MySwitch.Eagle;assembly=NINA.Equipment"
     xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:flatdevice="clr-namespace:NINA.Equipment.Equipment.MyFlatDevice;assembly=NINA.Equipment"
     xmlns:focuser="clr-namespace:NINA.Equipment.Equipment.MyFocuser;assembly=NINA.Equipment"
     xmlns:framing="clr-namespace:NINA.ViewModel.FramingAssistant"
     xmlns:fw="clr-namespace:NINA.ViewModel.FlatWizard"
-    xmlns:fwcore="clr-namespace:NINA.WPF.Base.Model;assembly=NINA.WPF.Base"
     xmlns:guider="clr-namespace:NINA.Equipment.Equipment.MyGuider;assembly=NINA.Equipment"
-    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ninactrl="clr-namespace:NINA.CustomControlLibrary;assembly=NINA.CustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
-    xmlns:pegasus="clr-namespace:NINA.Equipment.Equipment.MySwitch.PegasusAstro;assembly=NINA.Equipment"
     xmlns:phd2="clr-namespace:NINA.Equipment.Equipment.MyGuider.PHD2;assembly=NINA.Equipment"
     xmlns:rotator="clr-namespace:NINA.Equipment.Equipment.MyRotator;assembly=NINA.Equipment"
     xmlns:safety="clr-namespace:NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator;assembly=NINA.WPF.Base"
@@ -58,11 +55,7 @@
         <equip:TelescopeLatLongSyncView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type fw:FlatWizardUserPromptVM}">
-        <view:FlatWizardUserPrompt />
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type fwcore:FlatWizardFilterSettingsWrapper}">
+    <DataTemplate DataType="{x:Type fw:FlatWizardFilterSettingsWrapper}">
         <view:FlatWizardFilterSettingsWrapperView />
     </DataTemplate>
 
@@ -90,24 +83,12 @@
         <equip:MGenSetupView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type eagle:Eagle}">
-        <switchview:EagleSetupView />
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type flatdevice:AlnitakFlatDevice}">
         <equip:AlnitakSetupView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type pegasus:UltimatePowerBoxV2}">
-        <equip:PegasusAstroUltimatePowerboxV2SetupView />
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type flatdevice:PegasusAstroFlatMaster}">
         <equip:PegasusAstroFlatMasterSetupView />
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type focuser:UltimatePowerboxV2}">
-        <equip:PegasusAstroUltimatePowerBoxV2StepperMotorSetupView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type flatdevice:ArteskyFlatBox}">
