@@ -3,6 +3,12 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+### <span style="color:orange;">Nightly Status: ALPHA - USE WITH CAUTION, NOT RECOMMENDED FOR PRODUCTION!</span>
+### <span style="color:orange;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
+
+# Version 3.1 NIGHTLY
+
+
 # Version 3.0
 
 ## Important Changes
