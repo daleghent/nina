@@ -224,7 +224,7 @@ namespace NINA.Equipment.Equipment.MyDome {
             // Altitude rotation: scope tilts up from horizontal
             var altitudeRotation = Matrix4x4.CreateRotationY((float)(topocentric.Altitude.Radians));
 
-            // Azimuth rotation: scope rotates around the dome’s vertical axis (z-axis)
+            // Azimuth rotation: scope rotates around the dome's vertical axis (z-axis)
             var azimuthRotation = Matrix4x4.CreateRotationZ((float)(-topocentric.Azimuth.Radians));
 
             // Determine hemisphere direction
@@ -244,7 +244,7 @@ namespace NINA.Equipment.Equipment.MyDome {
                 0.0f
             ));
 
-            return mountOffset * azimuthRotation * altitudeRotation * lateralOffset;
+            return mountOffset * (azimuthRotation * altitudeRotation * lateralOffset);
         }
     }
 }
