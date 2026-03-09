@@ -8124,4 +8124,7 @@ This is useful when a built-in trigger has the timing you need, but you want cus
   <data name="LblStarSNR" xml:space="preserve">
     <value>Star SNR</value>
   </data>
+  <data name="LblDeviceActionsAndCommands" xml:space="preserve">
+    <value>Device Actions and Commands</value>
+  </data>
 </root>

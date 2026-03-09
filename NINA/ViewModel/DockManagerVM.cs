@@ -9,29 +9,26 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
-using NINA.Utility;
+
+using CommunityToolkit.Mvvm.ComponentModel;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Plugin.Interfaces;
+using NINA.Profile;
 using NINA.Profile.Interfaces;
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows.Input;
-using NINA.WPF.Base.ViewModel.Equipment.FilterWheel;
-using NINA.WPF.Base.ViewModel.Equipment.Rotator;
-using NINA.WPF.Base.ViewModel.Equipment.Guider;
-using NINA.ViewModel.Interfaces;
-using NINA.WPF.Base.ViewModel.Equipment.Camera;
-using NINA.WPF.Base.ViewModel.Equipment.Focuser;
-using NINA.ViewModel.Imaging;
-using NINA.WPF.Base.ViewModel.Equipment.Dome;
-using NINA.WPF.Base.ViewModel.Equipment.Switch;
-using NINA.WPF.Base.ViewModel.Equipment.Telescope;
-using NINA.WPF.Base.ViewModel.Equipment.WeatherData;
-using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Sequencer;
-using NINA.ViewModel.ImageHistory;
-using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using System.Collections.Generic;
 using NINA.Core.Utility;
@@ -65,6 +62,7 @@ namespace NINA.ViewModel {
                              IDomeVM domeVM,
                              IAnchorableSnapshotVM snapshotVM,
                              IAnchorablePlateSolverVM plateSolverVM,
+                             IAnchorableDeviceActionsVM deviceActionsVM,
                              ITelescopeVM telescopeVM,
                              IGuiderVM guiderVM,
                              IFocusTargetsVM focusTargetsVM,
@@ -103,6 +101,7 @@ namespace NINA.ViewModel {
             initAnchorables.Add(thumbnailVM);
             initAnchorables.Add(plateSolverVM);
             initAnchorables.Add(autoFocusToolVM);
+            initAnchorables.Add(deviceActionsVM);
             initAnchorables.Add(focusTargetsVM);
             initAnchorables.Add(flatDeviceVM);
             initAnchorables.Add(safetyMonitorVM);
@@ -128,6 +127,7 @@ namespace NINA.ViewModel {
             initAnchorableTools.Add(plateSolverVM);
             initAnchorableTools.Add(autoFocusToolVM);
             initAnchorableTools.Add(focusTargetsVM);
+            initAnchorableTools.Add(deviceActionsVM);
 
             profileService.BeforeProfileChanging += ProfileService_BeforeProfileChanging; ;
             profileService.ProfileChanged += ProfileService_ProfileChanged;
@@ -161,8 +161,8 @@ namespace NINA.ViewModel {
             try {
                 var dialog = OptionsVM.GetFilteredFileDialog("", "DockBackup.dock.config", "Dock Config|*.dock.config");
                 if (dialog.ShowDialog() == true) {
-                    if(File.Exists(dialog.FileName)) {
-                        lock(lockObj) {
+                    if (File.Exists(dialog.FileName)) {
+                        lock (lockObj) {
                             _dockloaded = false;
                             File.Copy(dialog.FileName, GetDockConfigPath(profileService.ActiveProfile.Id), true);
                             Notification.ShowInformation(Loc.Instance["LblDockLayoutRestored"]);
@@ -193,9 +193,9 @@ namespace NINA.ViewModel {
                             Notification.ShowInformation(Loc.Instance["LblBackupDockLayoutSuccessful"]);
                         }
                     }
-                    
+
                 }
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["LblBackupDockLayoutFailed"]);
             }
@@ -295,16 +295,16 @@ namespace NINA.ViewModel {
         private AvalonDock.DockingManager _dockmanager;
         private bool _dockloaded = false;
         private string pendingDockLayout;
-        private object lockObj = new object();
-        private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
+        private readonly object lockObj = new object();
+        private readonly Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
         public static string GetDockConfigPath(Guid profileId) {
-            if(Properties.Settings.Default.SingleDockLayout) {
+            if (Properties.Settings.Default.SingleDockLayout) {
                 return Path.Combine(ProfileService.PROFILEFOLDER, $"GLOBAL.dock.config");
             } else {
                 return Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
             }
-            
+
         }
 
         public async Task<bool> InitializeAvalonDockLayout(object o) {
@@ -314,7 +314,7 @@ namespace NINA.ViewModel {
 
             while (!Initialized) {
                 await Task.Delay(100);
-            };
+            }
 
             await _dispatcher.BeginInvoke(new Action(() => {
                 lock (lockObj) {
@@ -494,6 +494,6 @@ namespace NINA.ViewModel {
         public IAsyncCommand LoadAvalonDockLayoutCommand { get; private set; }
         public ICommand ResetDockLayoutCommand { get; }
         public ICommand BackupDockLayoutCommand { get; private set; }
-        public ICommand RestoreDockLayoutFromFileCommand { get; private set; }        
+        public ICommand RestoreDockLayoutFromFileCommand { get; private set; }
     }
 }
