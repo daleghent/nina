@@ -41,7 +41,6 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
-
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.Annotation_Mini">
         <Grid Visibility="Collapsed" />
     </DataTemplate>
@@ -54,12 +53,14 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <logic:ExprStringControl Label="{ns:Loc LblMessage}" AcceptsReturn="True" Text="{Binding Text, Mode=TwoWay}" />
+                    <logic:ExprStringControl
+                        AcceptsReturn="True"
+                        Label="{ns:Loc LblMessage}"
+                        Text="{Binding Text, Mode=TwoWay}" />
                 </Grid>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
-
     <DataTemplate DataType="{x:Type local:MessageBoxResult}">
         <Grid>
             <Grid.RowDefinitions>
@@ -107,7 +108,6 @@
             </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
-
     <DataTemplate DataType="{x:Type local:WaitForTimeSpan}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
@@ -247,6 +247,147 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.DeviceAction_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding DeviceType}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding ActionName}" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:DeviceAction}">
+        <view:SequenceBlockView>
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox
+                        MinWidth="100"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding DeviceTypes}"
+                        SelectedItem="{Binding DeviceType}" />
+
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblAction}" />
+                    <ComboBox
+                        MinWidth="100"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        IsEnabled="{Binding HasActions}"
+                        ItemsSource="{Binding SupportedActions}"
+                        SelectedItem="{Binding ActionName}" />
+
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblParameters}" />
+                    <logic:ExprControl
+                        MinWidth="150"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        IsEnabled="{Binding HasActions}"
+                        Exp="{Binding ActionParameters}" />
+
+                    <Button
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Command="{Binding RefreshActionsCommand}"
+                        IsEnabled="{Binding EnableRefresh}">
+                        <TextBlock
+                            Margin="5,0,5,0"
+                            VerticalAlignment="Center"
+                            Text="Refresh Actions" />
+                    </Button>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.SendCommand_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding DeviceType}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblType}" />
+
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding SendCommandType}" />
+                    <logic:ExprControl
+                        MinWidth="150"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Exp="{Binding Command}" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:SendCommand}">
+        <view:SequenceBlockView>
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox
+                        MinWidth="100"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding DeviceTypes}"
+                        SelectedItem="{Binding DeviceType}" />
+
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblType}" />
+                    <ComboBox
+                        MinWidth="100"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding SendCommandTypes}"
+                        SelectedItem="{Binding SendCommandType}" />
+
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblCommand}" />
+                    <TextBox
+                        MinWidth="150"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Text="{Binding Command}"
+                        TextAlignment="Left" />
+
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblRaw}" />
+                    <CheckBox
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding Raw}" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:ExternalScript}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>
@@ -256,11 +397,9 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    
-                    <logic:ExprStringControl
-                        Label="{ns:Loc LblScript}"
-                        Text="{Binding Script, Mode=TwoWay}" />
-                    
+
+                    <logic:ExprStringControl Label="{ns:Loc LblScript}" Text="{Binding Script, Mode=TwoWay}" />
+
                     <Button
                         Grid.Column="2"
                         Width="20"
@@ -331,7 +470,6 @@
             </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
-
     <DataTemplate DataType="{x:Type local:WaitForAltitude}">
         <view:SequenceBlockView>
             <view:SequenceBlockView.SequenceItemContent>

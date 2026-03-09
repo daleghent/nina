@@ -337,6 +337,7 @@ namespace NINA.Utility {
                 services.AddSingleton<IPlateSolverFactory, PlateSolverFactoryProxy>();
                 services.AddSingleton<IPluginLoader, PluginLoader>();
                 services.AddSingleton<IPluginsVM, PluginsVM>();
+                services.AddSingleton<IAnchorableDeviceActionsVM, AnchorableDeviceActionsVM>();
 
                 return services.BuildServiceProvider();
             } catch (Exception e) {

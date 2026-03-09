@@ -9,7 +9,12 @@
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #endregion "copyright"
+using NINA.Core.Utility;
+using NINA.Imaging.ViewModel.Imaging;
 using NINA.ViewModel;
+using NINA.ViewModel.ImageHistory;
+using NINA.ViewModel.Imaging;
+using NINA.ViewModel.Sequencer;
 using NINA.WPF.Base.ViewModel.Equipment.Camera;
 using NINA.WPF.Base.ViewModel.Equipment.Dome;
 using NINA.WPF.Base.ViewModel.Equipment.FilterWheel;
@@ -21,14 +26,9 @@ using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
 using NINA.WPF.Base.ViewModel.Equipment.Switch;
 using NINA.WPF.Base.ViewModel.Equipment.Telescope;
 using NINA.WPF.Base.ViewModel.Equipment.WeatherData;
-using NINA.ViewModel.ImageHistory;
-using NINA.ViewModel.Imaging;
-using NINA.ViewModel.Sequencer;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using NINA.Imaging.ViewModel.Imaging;
-using System;
-using NINA.Core.Utility;
 
 namespace NINA.Utility.AvalonDock {
 
@@ -44,6 +44,8 @@ namespace NINA.Utility.AvalonDock {
         public DataTemplate ImageControlTemplate { get; set; }
 
         public DataTemplate PlatesolveTemplate { get; set; }
+
+        public DataTemplate DeviceActionsTemplate { get; set; }
 
         public DataTemplate GuiderTemplate { get; set; }
 
@@ -110,6 +112,9 @@ namespace NINA.Utility.AvalonDock {
 
                 case SequenceNavigationVM _:
                     return SequenceTemplate;
+
+                case AnchorableDeviceActionsVM _:
+                    return DeviceActionsTemplate;
 
                 case WeatherDataVM _:
                     return WeatherDataTemplate;

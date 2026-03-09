@@ -149,6 +149,12 @@
                     </DataTemplate>
                 </util:PaneTemplateSelector.FlatDeviceTemplate>
 
+                <util:PaneTemplateSelector.DeviceActionsTemplate>
+                    <DataTemplate>
+                        <view:AnchorableDeviceActionsView />
+                    </DataTemplate>
+                </util:PaneTemplateSelector.DeviceActionsTemplate>
+
                 <util:PaneTemplateSelector.FailedToLoadTemplate>
                     <DataTemplate>
                         <TextBlock

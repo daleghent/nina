@@ -108,6 +108,10 @@ This allows you to safely return to a stable release if needed.
 - **XISF ZStandard Compression**
   - Added support for ZStandard compression in XISF files.
 
+### Plugins
+- **Device Actions and Commands**
+  - The **Device Actions and Commands** plugin's sequence instructions and Imaging tab tool window are now built-in N.I.N.A. features.
+  - This plugin may be uninstalled as it is no longer required. Sequences containing the **Device Action** or **Send Command** utility instructions will be automatically migrated to use the built-in versions of those instructions.
 
 # Version 3.2
 

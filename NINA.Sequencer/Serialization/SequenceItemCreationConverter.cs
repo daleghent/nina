@@ -12,19 +12,17 @@
 
 #endregion "copyright"
 
-using System;
-using NINA.Sequencer.SequenceItem;
 using Newtonsoft.Json.Linq;
 using NINA.Core.Utility;
-using NINA.Sequencer.Container;
-using System.Diagnostics;
+using NINA.Sequencer.SequenceItem;
+using System;
 
 namespace NINA.Sequencer.Serialization {
 
     public class SequenceItemCreationConverter : JsonCreationConverter<ISequenceItem> {
-        private SequenceContainerCreationConverter sequenceContainerCreationConverter;
+        private readonly SequenceContainerCreationConverter sequenceContainerCreationConverter;
 
-        public SequenceItemCreationConverter(ISequencerFactory factory, SequenceContainerCreationConverter sequenceContainerCreationConverter) :base(factory) {
+        public SequenceItemCreationConverter(ISequencerFactory factory, SequenceContainerCreationConverter sequenceContainerCreationConverter) : base(factory) {
             this.sequenceContainerCreationConverter = sequenceContainerCreationConverter;
         }
 
@@ -33,8 +31,8 @@ namespace NINA.Sequencer.Serialization {
                 return sequenceContainerCreationConverter.Create(objectType, jObject);
             }
 
-            if(jObject.TryGetValue("ImageType", out var value)) {                
-                if(value.Value<string>() == "DARKFLAT") {
+            if (jObject.TryGetValue("ImageType", out var value)) {
+                if (value.Value<string>() == "DARKFLAT") {
                     // Migration of values prior to 3.0
                     jObject["ImageType"] = new JValue("DARK");
                 }
@@ -69,6 +67,10 @@ namespace NINA.Sequencer.Serialization {
             "NINA.Plugins.Connector.Instructions.DisconnectEquipment, NINA.Plugins.Connector" => "NINA.Sequencer.SequenceItem.Connect.DisconnectEquipment, NINA.Sequencer",
             "NINA.Plugins.Connector.Instructions.DisconnectAllEquipment, NINA.Plugins.Connector" => "NINA.Sequencer.SequenceItem.Connect.DisconnectAllEquipment, NINA.Sequencer",
             "NINA.Plugins.Connector.Instructions.SwitchProfile, NINA.Plugins.Connector" => "NINA.Sequencer.SequenceItem.Connect.SwitchProfile, NINA.Sequencer",
+
+            // Migration of Dale Ghent's Device Actions and Commands plugin to NINA 03/2026
+            "DaleGhent.NINA.DeviceActionsCommands.DeviceActionInstruction, DaleGhent.NINA.DeviceActionsCommands" => "NINA.Sequencer.SequenceItem.Utility.DeviceAction, NINA.Sequencer",
+            "DaleGhent.NINA.DeviceActionsCommands.SendCommandInstruction, DaleGhent.NINA.DeviceActionsCommands" => "NINA.Sequencer.SequenceItem.Utility.SendCommand, NINA.Sequencer",
             _ => token
         };
     }
