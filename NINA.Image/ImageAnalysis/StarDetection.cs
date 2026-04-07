@@ -24,6 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -673,9 +675,24 @@ namespace NINA.Image.ImageAnalysis {
                 values.Sort();
                 var median = MedianFromSorted(values);
                 var deviations = new List<double>(values.Count);
-                for (var index = 0; index < values.Count; index++) {
-                    deviations.Add(Math.Abs(values[index] - median));
+                CollectionsMarshal.SetCount(deviations, values.Count);
+                var deviationsSpan = CollectionsMarshal.AsSpan(deviations);
+                var valuesSpan = CollectionsMarshal.AsSpan(values);
+                var vMedian = new Vector<double>(median);
+                var vectorSize = Vector<double>.Count;
+                int devIdx = 0;
+
+                // Vectorized computation of MAD
+                for (; devIdx <= valuesSpan.Length - vectorSize; devIdx += vectorSize) {
+                    var v = new Vector<double>(valuesSpan.Slice(devIdx, vectorSize));
+                    Vector.Abs(v - vMedian).CopyTo(deviationsSpan.Slice(devIdx, vectorSize));
                 }
+
+                // Handle any remaining elements that don't fit into a vector
+                for (; devIdx < valuesSpan.Length; devIdx++) {
+                    deviationsSpan[devIdx] = Math.Abs(valuesSpan[devIdx] - median);
+                }
+
                 deviations.Sort();
                 var mad = MedianFromSorted(deviations);
                 var sigma = mad > 0 ? 1.4826d * mad : StandardDeviation(values, median);
@@ -720,9 +737,25 @@ namespace NINA.Image.ImageAnalysis {
                 return 0d;
             }
 
-            double sumSquares = 0d;
-            for (var index = 0; index < values.Count; index++) {
-                var delta = values[index] - mean;
+            var span = CollectionsMarshal.AsSpan(values);
+            var vMean = new Vector<double>(mean);
+            var vSumSquares = Vector<double>.Zero;
+            var vectorSize = Vector<double>.Count;
+            int i = 0;
+
+            // Use vectorized operations to compute the sum of squared deviations from the mean.
+            // CPUs with AVX2 (Haswell microarch and later) can do 8 doubles at a time.
+            for (; i <= span.Length - vectorSize; i += vectorSize) {
+                var v = new Vector<double>(span.Slice(i, vectorSize));
+                var delta = v - vMean;
+                vSumSquares += delta * delta;
+            }
+
+            double sumSquares = Vector.Dot(vSumSquares, Vector<double>.One);
+
+            // Handle any remaining elements that don't fit into a vector
+            for (; i < span.Length; i++) {
+                var delta = span[i] - mean;
                 sumSquares += delta * delta;
             }
 
