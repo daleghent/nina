@@ -33,7 +33,7 @@ using Point = Accord.Point;
 namespace NINA.Image.ImageAnalysis {
 
     public class StarDetection : IStarDetection {
-        private static int _maxWidth = 1552;
+        private static readonly int _maxWidth = 1552;
 
         public string Name => "NINA";
 
@@ -122,6 +122,7 @@ namespace NINA.Image.ImageAnalysis {
         }
 
         public class Star {
+
             // Measure shape/flux out to 1.5x the detected star radius so the aperture includes
             // most of the stellar profile wings without expanding too far into local background
             // or neighboring sources.
@@ -131,6 +132,7 @@ namespace NINA.Image.ImageAnalysis {
             // sub-pixel resolution for the FWHM half-maximum crossing while still smoothing
             // pixel-grid noise.
             private const double RadialProfileBinWidth = 0.5d;
+
             private const int CentroidMaxIterations = 3;
             private const double CentroidConvergencePixels = 0.01d;
 
@@ -139,7 +141,7 @@ namespace NINA.Image.ImageAnalysis {
             public double MeanBrightness { get; set; }
             public double SurroundingMean { get; set; }
             public double MaxPixelValue { get; set; }
-            public Point Position { get;set; }
+            public Point Position { get; set; }
             public double HFR { get; private set; }
             public double FWHM { get; private set; }
             public double Eccentricity { get; private set; }
@@ -182,7 +184,7 @@ namespace NINA.Image.ImageAnalysis {
             }
 
             internal bool InsideCircle(double x, double y, double centerX, double centerY, double radius) {
-                return (Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2) <= Math.Pow(radius, 2));
+                return Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2) <= Math.Pow(radius, 2);
             }
 
             private double GetMeasurementRadius(Point center, List<PixelData> pixelData) {
@@ -217,7 +219,7 @@ namespace NINA.Image.ImageAnalysis {
                     foreach (var data in pixelData) {
                         var dx = data.PosX - currentCenter.X;
                         var dy = data.PosY - currentCenter.Y;
-                        var distanceSquared = dx * dx + dy * dy;
+                        var distanceSquared = (dx * dx) + (dy * dy);
                         if (distanceSquared > radius * radius) {
                             continue;
                         }
@@ -300,7 +302,7 @@ namespace NINA.Image.ImageAnalysis {
                     }
 
                     var fraction = (targetFlux - previousFlux) / (cumulativeFlux - previousFlux);
-                    return previousRadius + fraction * (sample.Distance - previousRadius);
+                    return previousRadius + (fraction * (sample.Distance - previousRadius));
                 }
 
                 return samples.Max(sample => sample.Distance);
@@ -353,7 +355,7 @@ namespace NINA.Image.ImageAnalysis {
                         }
 
                         var fraction = (halfMaximum - previousValue) / (value - previousValue);
-                        var halfMaxRadius = previousRadius + fraction * (radius - previousRadius);
+                        var halfMaxRadius = previousRadius + (fraction * (radius - previousRadius));
                         return 2d * halfMaxRadius;
                     }
 
@@ -399,7 +401,7 @@ namespace NINA.Image.ImageAnalysis {
                 momentXY /= totalFlux;
 
                 var trace = momentXX + momentYY;
-                var determinantTerm = (momentXX - momentYY) * (momentXX - momentYY) + 4d * momentXY * momentXY;
+                var determinantTerm = ((momentXX - momentYY) * (momentXX - momentYY)) + (4d * momentXY * momentXY);
                 var root = Math.Sqrt(Math.Max(0d, determinantTerm));
                 var major = (trace + root) / 2d;
                 var minor = (trace - root) / 2d;
@@ -426,7 +428,7 @@ namespace NINA.Image.ImageAnalysis {
             }
         }
 
-        public record PixelData (int PosX, int PosY, double Value);
+        public record PixelData(int PosX, int PosY, double Value);
         private record RadialSample(double Distance, double RawFlux, double PositiveFlux, int PosX, int PosY);
 
         public async Task<StarDetectionResult> Detect(IRenderedImage image, PixelFormat pf, StarDetectionParams p, IProgress<ApplicationStatus> progress, CancellationToken token) {
@@ -583,7 +585,7 @@ namespace NINA.Image.ImageAnalysis {
                         continue;
                     }
 
-                    s.MeanBrightness = starPixelSum / (double)starPixelCount;
+                    s.MeanBrightness = starPixelSum / starPixelCount;
                     if (backgroundPixelValues.Count == 0) {
                         continue;
                     }
@@ -594,9 +596,9 @@ namespace NINA.Image.ImageAnalysis {
                     double largeRectStdev = backgroundStats.Sigma;
                     int minimumNumberOfPixels = (int)Math.Ceiling(Math.Max(state._originalBitmapSource.PixelWidth, state._originalBitmapSource.PixelHeight) / 1000d);
 
-                    if (s.MeanBrightness >= largeRectMean + Math.Min(0.1 * largeRectMean, largeRectStdev) && innerStarPixelValues.Count(pv => pv > largeRectMean + 1.5 * largeRectStdev) > minimumNumberOfPixels) {
+                    if (s.MeanBrightness >= largeRectMean + Math.Min(0.1 * largeRectMean, largeRectStdev) && innerStarPixelValues.Count(pv => pv > largeRectMean + (1.5 * largeRectStdev)) > minimumNumberOfPixels) {
                         s.Calculate(pixelDataList);
-                        //It's a local maximum, and has enough bright pixels, so likely to be a star.                        
+                        //It's a local maximum, and has enough bright pixels, so likely to be a star.
                         if (s.Position.X > (s.Rectangle.X + 1) && s.Position.Y > (s.Rectangle.Y + 1) && s.Position.X < (s.Rectangle.X + s.Rectangle.Width - 2) && s.Position.Y < (s.Rectangle.Y + s.Rectangle.Height - 2)) {
                             // Only add star when centroid is not touching the rectangle edges
                             sumRadius += s.Radius;
@@ -613,13 +615,13 @@ namespace NINA.Image.ImageAnalysis {
 
                 //Now that we have a properly filtered star list, let's compute stats and further filter out from the mean
                 if (starList.Count > 0) {
-                    double avg = sumRadius / (double)starList.Count;
-                    double stdev = Math.Sqrt((sumSquares - starList.Count * avg * avg) / starList.Count);
+                    double avg = sumRadius / starList.Count;
+                    double stdev = Math.Sqrt((sumSquares - (starList.Count * avg * avg)) / starList.Count);
                     if (p.Sensitivity != StarSensitivityEnum.Highest) {
-                        starList = starList.Where(s => s.Radius <= avg + 1.5 * stdev && s.Radius >= avg - 1.5 * stdev).ToList<Star>();
+                        starList = starList.Where(s => s.Radius <= avg + (1.5 * stdev) && s.Radius >= avg - (1.5 * stdev)).ToList<Star>();
                     } else {
                         //More sensitivity means getting fainter and smaller stars, and maybe some noise, skewing the distribution towards low radius. Let's be more permissive towards the large star end.
-                        starList = starList.Where(s => s.Radius <= avg + 2 * stdev && s.Radius >= avg - 1.5 * stdev).ToList<Star>();
+                        starList = starList.Where(s => s.Radius <= avg + (2 * stdev) && s.Radius >= avg - (1.5 * stdev)).ToList<Star>();
                     }
                 }
 
@@ -633,7 +635,7 @@ namespace NINA.Image.ImageAnalysis {
                         if (starList.Count <= p.NumberOfAFStars) {
                             result.BrightestStarPositions = starList.ConvertAll(s => s.Position);
                         } else {
-                            starList = starList.OrderByDescending(s => s.Radius * 0.3 + s.MeanBrightness * 0.7).Take(p.NumberOfAFStars).ToList<Star>();
+                            starList = starList.OrderByDescending(s => (s.Radius * 0.3) + (s.MeanBrightness * 0.7)).Take(p.NumberOfAFStars).ToList<Star>();
                             result.BrightestStarPositions = starList.ConvertAll(i => i.Position);
                         }
                         return starList.Select(s => s.ToDetectedStar()).ToList();
