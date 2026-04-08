@@ -376,22 +376,64 @@ namespace NINA.Image.ImageAnalysis {
                 // moment-based shape formalism used in source extraction; see
                 // Bertin & Arnouts (1996), SExtractor, A&AS 117, 393,
                 // https://doi.org/10.1051/aas:1996164
-                double momentXX = 0;
-                double momentYY = 0;
-                double momentXY = 0;
-                double totalFlux = 0;
+
+                // Pack positive-flux samples into parallel SoA arrays so Vector<double> can
+                // operate on contiguous single-field spans (RadialSample is AoS and cannot be
+                // cast directly).
+                var count = 0;
+                var fluxArr = new double[samples.Count];
+                var dxArr = new double[samples.Count];
+                var dyArr = new double[samples.Count];
 
                 foreach (var sample in samples) {
                     if (sample.PositiveFlux <= 0) {
                         continue;
                     }
+                    fluxArr[count] = sample.PositiveFlux;
+                    dxArr[count] = sample.PosX - center.X;
+                    dyArr[count] = sample.PosY - center.Y;
+                    count++;
+                }
 
-                    var dx = sample.PosX - center.X;
-                    var dy = sample.PosY - center.Y;
-                    totalFlux += sample.PositiveFlux;
-                    momentXX += sample.PositiveFlux * dx * dx;
-                    momentYY += sample.PositiveFlux * dy * dy;
-                    momentXY += sample.PositiveFlux * dx * dy;
+                if (count == 0) {
+                    return double.NaN;
+                }
+
+                var fluxSpan = fluxArr.AsSpan(0, count);
+                var dxSpan = dxArr.AsSpan(0, count);
+                var dySpan = dyArr.AsSpan(0, count);
+
+                var vectorSize = Vector<double>.Count;
+                var vTotalFlux = Vector<double>.Zero;
+                var vMomentXX = Vector<double>.Zero;
+                var vMomentYY = Vector<double>.Zero;
+                var vMomentXY = Vector<double>.Zero;
+                int i = 0;
+
+                for (; i <= count - vectorSize; i += vectorSize) {
+                    var vFlux = new Vector<double>(fluxSpan.Slice(i, vectorSize));
+                    var vDx = new Vector<double>(dxSpan.Slice(i, vectorSize));
+                    var vDy = new Vector<double>(dySpan.Slice(i, vectorSize));
+                    vTotalFlux += vFlux;
+                    vMomentXX += vFlux * vDx * vDx;
+                    vMomentYY += vFlux * vDy * vDy;
+                    vMomentXY += vFlux * vDx * vDy;
+                }
+
+                double totalFlux = Vector.Dot(vTotalFlux, Vector<double>.One);
+                double momentXX = Vector.Dot(vMomentXX, Vector<double>.One);
+                double momentYY = Vector.Dot(vMomentYY, Vector<double>.One);
+                double momentXY = Vector.Dot(vMomentXY, Vector<double>.One);
+
+                // Scalar tail for remaining elements that do not fill a full vector
+                for (; i < count; i++) {
+                    var f = fluxSpan[i];
+                    var ddx = dxSpan[i];
+                    var ddy = dySpan[i];
+                    totalFlux += f;
+                    momentXX += f * ddx * ddx;
+                    momentYY += f * ddy * ddy;
+                    momentXY += f * ddx * ddy;
                 }
 
                 if (totalFlux <= 0) {
