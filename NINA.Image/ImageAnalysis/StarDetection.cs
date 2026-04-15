@@ -35,7 +35,7 @@ using Point = Accord.Point;
 namespace NINA.Image.ImageAnalysis {
 
     public class StarDetection : IStarDetection {
-        private static readonly int _maxWidth = 1552;
+        private const int _maxWidth = 1552;
 
         public string Name => "NINA";
 
@@ -159,16 +159,31 @@ namespace NINA.Image.ImageAnalysis {
                     return;
                 }
 
-                var centroidRadius = GetMeasurementRadius(this.Position, pixelData);
-                var centroid = CalculateCentroid(pixelData, this.Position, centroidRadius, iterate: true);
-                if (centroid.TotalFlux <= 0) {
+                // Convert AoS pixel data to SoA layout for vectorized operations
+                var pixelCount = pixelData.Count;
+                var posXArr = new double[pixelCount];
+                var posYArr = new double[pixelCount];
+                var valuesArr = new double[pixelCount];
+                for (int i = 0; i < pixelCount; i++) {
+                    var pd = pixelData[i];
+                    posXArr[i] = pd.PosX;
+                    posYArr[i] = pd.PosY;
+                    valuesArr[i] = pd.Value;
+                }
+                ReadOnlySpan<double> posXSpan = posXArr;
+                ReadOnlySpan<double> posYSpan = posYArr;
+                ReadOnlySpan<double> valuesSpan = valuesArr;
+
+                var centroidRadius = GetMeasurementRadius(this.Position, posXSpan, posYSpan);
+                var (Center, TotalFlux) = CalculateCentroid(posXSpan, posYSpan, valuesSpan, this.Position, centroidRadius, iterate: true);
+                if (TotalFlux <= 0) {
                     return;
                 }
 
-                this.Position = centroid.Center;
+                this.Position = Center;
 
-                var measurementRadius = GetMeasurementRadius(this.Position, pixelData);
-                var radialSamples = CollectRadialSamples(pixelData, this.Position, measurementRadius);
+                var measurementRadius = GetMeasurementRadius(this.Position, posXSpan, posYSpan);
+                var radialSamples = CollectRadialSamples(posXSpan, posYSpan, valuesSpan, this.Position, measurementRadius);
                 if (radialSamples.Count == 0) {
                     return;
                 }
@@ -189,11 +204,39 @@ namespace NINA.Image.ImageAnalysis {
                 return Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2) <= Math.Pow(radius, 2);
             }
 
-            private double GetMeasurementRadius(Point center, List<PixelData> pixelData) {
-                var minX = pixelData.Min(p => p.PosX);
-                var maxX = pixelData.Max(p => p.PosX);
-                var minY = pixelData.Min(p => p.PosY);
-                var maxY = pixelData.Max(p => p.PosY);
+            private double GetMeasurementRadius(Point center, ReadOnlySpan<double> posX, ReadOnlySpan<double> posY) {
+                var vectorSize = Vector<double>.Count;
+                var vMinX = new Vector<double>(double.MaxValue);
+                var vMaxX = new Vector<double>(double.MinValue);
+                var vMinY = new Vector<double>(double.MaxValue);
+                var vMaxY = new Vector<double>(double.MinValue);
+                int i = 0;
+
+                for (; i <= posX.Length - vectorSize; i += vectorSize) {
+                    var vx = new Vector<double>(posX.Slice(i, vectorSize));
+                    var vy = new Vector<double>(posY.Slice(i, vectorSize));
+                    vMinX = Vector.Min(vMinX, vx);
+                    vMaxX = Vector.Max(vMaxX, vx);
+                    vMinY = Vector.Min(vMinY, vy);
+                    vMaxY = Vector.Max(vMaxY, vy);
+                }
+
+                double minX = double.MaxValue, maxX = double.MinValue;
+                double minY = double.MaxValue, maxY = double.MinValue;
+                for (int j = 0; j < vectorSize; j++) {
+                    minX = Math.Min(minX, vMinX[j]);
+                    maxX = Math.Max(maxX, vMaxX[j]);
+                    minY = Math.Min(minY, vMinY[j]);
+                    maxY = Math.Max(maxY, vMaxY[j]);
+                }
+
+                for (; i < posX.Length; i++) {
+                    minX = Math.Min(minX, posX[i]);
+                    maxX = Math.Max(maxX, posX[i]);
+                    minY = Math.Min(minY, posY[i]);
+                    maxY = Math.Max(maxY, posY[i]);
+                }
+
                 var availableRadius = Math.Min(
                     Math.Min(center.X - minX, maxX - center.X),
                     Math.Min(center.Y - minY, maxY - center.Y)) - 0.5d;
@@ -202,7 +245,7 @@ namespace NINA.Image.ImageAnalysis {
                 return Math.Max(1d, Math.Min(requestedRadius, availableRadius));
             }
 
-            private (Point Center, double TotalFlux) CalculateCentroid(List<PixelData> pixelData, Point center, double radius, bool iterate) {
+            private (Point Center, double TotalFlux) CalculateCentroid(ReadOnlySpan<double> posX, ReadOnlySpan<double> posY, ReadOnlySpan<double> values, Point center, double radius, bool iterate) {
                 // Windowed centroiding with a circular Gaussian weight follows the standard
                 // weighted-moment source-extraction approach used in SExtractor. See
                 // Bertin & Arnouts (1996), https://doi.org/10.1051/aas:1996164 and
@@ -211,32 +254,81 @@ namespace NINA.Image.ImageAnalysis {
                 var currentCenter = center;
                 var maxIterations = iterate ? CentroidMaxIterations : 1;
                 var lastTotalFlux = 0d;
+                var radiusSq = radius * radius;
+                var negHalfInvSigmaSq = -0.5d / (sigma * sigma);
+                var count = posX.Length;
+
+                // Scratch arrays allocated once, reused across centroid iterations
+                var fPosX = new double[count];
+                var fPosY = new double[count];
+                var fFlux = new double[count];
+                var fWeightedFlux = new double[count];
 
                 for (var iteration = 0; iteration < maxIterations; iteration++) {
-                    double sumWeightedFlux = 0;
-                    double sumX = 0;
-                    double sumY = 0;
-                    double sumFlux = 0;
+                    var filteredCount = 0;
+                    var cx = (double)currentCenter.X;
+                    var cy = (double)currentCenter.Y;
 
-                    foreach (var data in pixelData) {
-                        var dx = data.PosX - currentCenter.X;
-                        var dy = data.PosY - currentCenter.Y;
-                        var distanceSquared = (dx * dx) + (dy * dy);
-                        if (distanceSquared > radius * radius) {
+                    // Scalar pre-filter: compact qualifying pixels into contiguous spans
+                    // and compute Gaussian window weight (Math.Exp is not vectorizable
+                    // without System.Numerics.Tensors)
+                    for (int i = 0; i < count; i++) {
+                        var dx = posX[i] - cx;
+                        var dy = posY[i] - cy;
+                        var distSq = (dx * dx) + (dy * dy);
+                        if (distSq > radiusSq) {
                             continue;
                         }
 
-                        var flux = data.Value - SurroundingMean;
+                        var flux = values[i] - SurroundingMean;
                         if (flux <= 0) {
                             continue;
                         }
 
-                        var window = Math.Exp(-0.5d * distanceSquared / (sigma * sigma));
-                        var weightedFlux = flux * window;
-                        sumWeightedFlux += weightedFlux;
-                        sumX += data.PosX * weightedFlux;
-                        sumY += data.PosY * weightedFlux;
-                        sumFlux += flux;
+                        var window = Math.Exp(distSq * negHalfInvSigmaSq);
+                        fPosX[filteredCount] = posX[i];
+                        fPosY[filteredCount] = posY[i];
+                        fFlux[filteredCount] = flux;
+                        fWeightedFlux[filteredCount] = flux * window;
+                        filteredCount++;
+                    }
+
+                    if (filteredCount == 0) {
+                        return (currentCenter, 0);
+                    }
+
+                    // Vectorized accumulation over the filtered SoA spans
+                    var fPosXSpan = fPosX.AsSpan(0, filteredCount);
+                    var fPosYSpan = fPosY.AsSpan(0, filteredCount);
+                    var fFluxSpan = fFlux.AsSpan(0, filteredCount);
+                    var fWeightedFluxSpan = fWeightedFlux.AsSpan(0, filteredCount);
+
+                    var vectorSize = Vector<double>.Count;
+                    var vSumWeightedFlux = Vector<double>.Zero;
+                    var vSumX = Vector<double>.Zero;
+                    var vSumY = Vector<double>.Zero;
+                    var vSumFlux = Vector<double>.Zero;
+                    int vi = 0;
+
+                    for (; vi <= filteredCount - vectorSize; vi += vectorSize) {
+                        var vWF = new Vector<double>(fWeightedFluxSpan.Slice(vi, vectorSize));
+                        vSumWeightedFlux += vWF;
+                        vSumX += new Vector<double>(fPosXSpan.Slice(vi, vectorSize)) * vWF;
+                        vSumY += new Vector<double>(fPosYSpan.Slice(vi, vectorSize)) * vWF;
+                        vSumFlux += new Vector<double>(fFluxSpan.Slice(vi, vectorSize));
+                    }
+
+                    double sumWeightedFlux = Vector.Dot(vSumWeightedFlux, Vector<double>.One);
+                    double sumX = Vector.Dot(vSumX, Vector<double>.One);
+                    double sumY = Vector.Dot(vSumY, Vector<double>.One);
+                    double sumFlux = Vector.Dot(vSumFlux, Vector<double>.One);
+
+                    // Scalar tail for remaining elements
+                    for (; vi < filteredCount; vi++) {
+                        sumWeightedFlux += fWeightedFluxSpan[vi];
+                        sumX += fPosXSpan[vi] * fWeightedFluxSpan[vi];
+                        sumY += fPosYSpan[vi] * fWeightedFluxSpan[vi];
+                        sumFlux += fFluxSpan[vi];
                     }
 
                     if (sumWeightedFlux <= 0) {
@@ -259,17 +351,38 @@ namespace NINA.Image.ImageAnalysis {
                 return Math.Max(radius / 2d, 1d);
             }
 
-            private List<RadialSample> CollectRadialSamples(List<PixelData> pixelData, Point center, double radius) {
-                var samples = new List<RadialSample>();
+            private List<RadialSample> CollectRadialSamples(ReadOnlySpan<double> posX, ReadOnlySpan<double> posY, ReadOnlySpan<double> values, Point center, double radius) {
+                var count = posX.Length;
+                var distArr = new double[count];
 
-                foreach (var data in pixelData) {
-                    var distance = Math.Sqrt(Math.Pow(data.PosX - center.X, 2.0d) + Math.Pow(data.PosY - center.Y, 2.0d));
-                    if (distance > radius) {
+                // Vectorized batch distance computation: dist = sqrt(dx² + dy²)
+                var vectorSize = Vector<double>.Count;
+                var vCenterX = new Vector<double>(center.X);
+                var vCenterY = new Vector<double>(center.Y);
+                int i = 0;
+
+                for (; i <= count - vectorSize; i += vectorSize) {
+                    var vDx = new Vector<double>(posX.Slice(i, vectorSize)) - vCenterX;
+                    var vDy = new Vector<double>(posY.Slice(i, vectorSize)) - vCenterY;
+                    var vDistSq = (vDx * vDx) + (vDy * vDy);
+                    Vector.SquareRoot(vDistSq).CopyTo(distArr.AsSpan(i, vectorSize));
+                }
+
+                // Scalar tail
+                for (; i < count; i++) {
+                    var dx = posX[i] - center.X;
+                    var dy = posY[i] - center.Y;
+                    distArr[i] = Math.Sqrt((dx * dx) + (dy * dy));
+                }
+
+                var samples = new List<RadialSample>();
+                for (int j = 0; j < count; j++) {
+                    if (distArr[j] > radius) {
                         continue;
                     }
 
-                    var flux = data.Value - SurroundingMean;
-                    samples.Add(new RadialSample(distance, flux, Math.Max(flux, 0), data.PosX, data.PosY));
+                    var flux = values[j] - SurroundingMean;
+                    samples.Add(new RadialSample(distArr[j], flux, Math.Max(flux, 0), (int)posX[j], (int)posY[j]));
                 }
 
                 return samples;
