@@ -200,7 +200,7 @@ namespace NINA.Image.ImageAnalysis {
                 this.Eccentricity = CalculateEccentricity(radialSamples, this.Position);
             }
 
-            internal bool InsideCircle(double x, double y, double centerX, double centerY, double radius) {
+            internal static bool InsideCircle(double x, double y, double centerX, double centerY, double radius) {
                 return Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2) <= Math.Pow(radius, 2);
             }
 
@@ -347,7 +347,7 @@ namespace NINA.Image.ImageAnalysis {
                 return (currentCenter, lastTotalFlux);
             }
 
-            private double GetWindowSigma(double radius) {
+            private static double GetWindowSigma(double radius) {
                 return Math.Max(radius / 2d, 1d);
             }
 
@@ -388,7 +388,7 @@ namespace NINA.Image.ImageAnalysis {
                 return samples;
             }
 
-            private double CalculateHalfFluxRadius(List<RadialSample> samples, double totalFlux) {
+            private static double CalculateHalfFluxRadius(List<RadialSample> samples, double totalFlux) {
                 // Curve-of-growth HFR: sort background-subtracted flux by radius and interpolate
                 // the radius at which the enclosed flux reaches 50% of the total enclosed flux.
                 // This follows the standard half-light / half-flux radius definition rather than
@@ -481,7 +481,7 @@ namespace NINA.Image.ImageAnalysis {
                 return double.NaN;
             }
 
-            private double CalculateEccentricity(List<RadialSample> samples, Point center) {
+            private static double CalculateEccentricity(List<RadialSample> samples, Point center) {
                 // Eccentricity from background-subtracted, flux-weighted second central moments
                 // within the local measurement aperture:
                 // e = sqrt(1 - lambda_minor / lambda_major), where the lambdas are the
@@ -655,7 +655,7 @@ namespace NINA.Image.ImageAnalysis {
             return result;
         }
 
-        private bool InROI(Bitmap bitmapToAnalyze, StarDetectionParams p, Blob blob) {
+        private static bool InROI(Bitmap bitmapToAnalyze, StarDetectionParams p, Blob blob) {
             return DetectionUtility.InROI(
                 new Size(width: bitmapToAnalyze.Width, height: bitmapToAnalyze.Height),
                 blob: blob.Rectangle,
@@ -663,7 +663,7 @@ namespace NINA.Image.ImageAnalysis {
                 innerCropRatio: p.InnerCropRatio);
         }
 
-        private List<DetectedStar> IdentifyStars(StarDetectionParams p, State state, BlobCounter blobCounter, Bitmap bitmapToAnalyze, StarDetectionResult result, CancellationToken token, out int detectedStars) {
+        private static List<DetectedStar> IdentifyStars(StarDetectionParams p, State state, BlobCounter blobCounter, Bitmap bitmapToAnalyze, StarDetectionResult result, CancellationToken token, out int detectedStars) {
             using (MyStopWatch.Measure()) {
                 detectedStars = 0;
                 Blob[] blobs = blobCounter.GetObjectsInformation();
@@ -722,7 +722,7 @@ namespace NINA.Image.ImageAnalysis {
                         for (int y = largeRect.Y; y < largeRect.Y + largeRect.Height; y++) {
                             var pixelValue = state._iarr.FlatArray[x + (state.imageProperties.Width * y)];
                             if (x >= s.Rectangle.X && x < s.Rectangle.X + s.Rectangle.Width && y >= s.Rectangle.Y && y < s.Rectangle.Y + s.Rectangle.Height) { //We're in the small rectangle directly surrounding the star
-                                if (s.InsideCircle(x, y, s.Position.X, s.Position.Y, s.Radius)) { // We're in the inner sanctum of the star
+                                if (Star.InsideCircle(x, y, s.Position.X, s.Position.Y, s.Radius)) { // We're in the inner sanctum of the star
                                     starPixelSum += pixelValue;
                                     starPixelCount++;
                                     innerStarPixelValues.Add(pixelValue);
@@ -806,14 +806,14 @@ namespace NINA.Image.ImageAnalysis {
             }
         }
 
-        private double CalculateEccentricity(double width, double height) {
+        private static double CalculateEccentricity(double width, double height) {
             var x = Math.Max(width, height);
             var y = Math.Min(width, height);
             double focus = Math.Sqrt(Math.Pow(x, 2) - Math.Pow(y, 2));
             return focus / x;
         }
 
-        private (double Background, double Sigma) EstimateBackground(List<double> pixelValues) {
+        private static (double Background, double Sigma) EstimateBackground(List<double> pixelValues) {
             // Robust local sky estimate from a sigma-clipped median. Sigma clipping is standard
             // practice for astronomical background estimation in the presence of source pixels
             // and outliers; see the Astropy CCD Reduction Guide:
@@ -874,7 +874,7 @@ namespace NINA.Image.ImageAnalysis {
             return (finalMedian, StandardDeviation(values, finalMedian));
         }
 
-        private double MedianFromSorted(List<double> values) {
+        private static double MedianFromSorted(List<double> values) {
             if (values.Count == 0) {
                 return 0d;
             }
@@ -887,7 +887,7 @@ namespace NINA.Image.ImageAnalysis {
             return values[middle];
         }
 
-        private double StandardDeviation(List<double> values, double mean) {
+        private static double StandardDeviation(List<double> values, double mean) {
             if (values.Count == 0) {
                 return 0d;
             }
@@ -917,7 +917,7 @@ namespace NINA.Image.ImageAnalysis {
             return Math.Sqrt(sumSquares / values.Count);
         }
 
-        private BlobCounter DetectStructures(Bitmap bmp, CancellationToken token) {
+        private static BlobCounter DetectStructures(Bitmap bmp, CancellationToken token) {
             using (MyStopWatch.Measure()) {
                 /* detect structures */
                 BlobCounter blobCounter = new BlobCounter();
@@ -929,7 +929,7 @@ namespace NINA.Image.ImageAnalysis {
             }
         }
 
-        private void PrepareForStructureDetection(Bitmap bmp, StarDetectionParams p, CancellationToken token) {
+        private static void PrepareForStructureDetection(Bitmap bmp, StarDetectionParams p, CancellationToken token) {
             using (MyStopWatch.Measure()) {
                 using (MyStopWatch.Measure("PrepareForStructureDetection - CannyEdge")) {
                     if (p.NoiseReduction == NoiseReductionEnum.None || p.NoiseReduction == NoiseReductionEnum.Median) {
@@ -954,7 +954,7 @@ namespace NINA.Image.ImageAnalysis {
             }
         }
 
-        private Bitmap ReduceNoise(Bitmap bitmapToAnalyze, StarDetectionParams p) {
+        private static Bitmap ReduceNoise(Bitmap bitmapToAnalyze, StarDetectionParams p) {
             using (MyStopWatch.Measure()) {
                 if (bitmapToAnalyze.Width > _maxWidth) {
                     Bitmap bmp;
