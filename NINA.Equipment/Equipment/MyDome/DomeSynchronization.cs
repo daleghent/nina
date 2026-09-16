@@ -267,9 +267,11 @@ namespace NINA.Equipment.Equipment.MyDome {
             ));
 
             // Account for any lateral axis and vertical axis offsets to accomodate side-by-side or piggyback telescopes
+            // The lateral axis is negated because the final azimuth is derived from -atan2(y, x), so a positive
+            // offset along the y-axis has to point to the right of the OTA axis.
             var offsets = Matrix4x4.CreateTranslation(new Vector3(
                 0.0f,
-                (float)domeSettings.LateralAxis_mm,
+                -(float)domeSettings.LateralAxis_mm,
                 (float)domeSettings.GemAxis_mm
             ));
 
