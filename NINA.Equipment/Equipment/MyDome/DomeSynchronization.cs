@@ -253,11 +253,17 @@ namespace NINA.Equipment.Equipment.MyDome {
                 }
             }
 
-            // Azimuth rotation: scope rotates around the dome's vertical axis (z-axis)
-            var azimuthRotation = Matrix4x4.CreateRotationZ((float)-azimuth.Radians);
-
             // Determine hemisphere direction
             var latitudeFactor = siteLatitude.Radians >= 0 ? 1.0 : -1.0;
+
+            // In the southern hemisphere, the azimuth math is done as if the site were in the northern hemisphere, and
+            // TargetDomeCoordinates flips the answer by adding 180 degrees at the end. An azimuth is already a
+            // real-world compass bearing, so it must first be turned 180 degrees. Otherwise that final flip
+            // would send the dome in the wrong direction.
+            var mirroredAzimuthRadians = latitudeFactor >= 0 ? azimuth.Radians : azimuth.Radians + Math.PI;
+
+            // Azimuth rotation: scope rotates around the dome's vertical axis (z-axis)
+            var azimuthRotation = Matrix4x4.CreateRotationZ((float)-mirroredAzimuthRadians);
 
             // Mount offset from dome center
             var mountOffset = Matrix4x4.CreateTranslation(new Vector3(
