@@ -94,7 +94,7 @@ namespace NINA.Equipment.Equipment.MyDome {
 
             // The OTA points along the positive X-axis before any transformations take place. Transforming the point (1, 0, 0) provides a unit
             // direction vector from (0, 0, 0) which is the scope aperture origin
-            var scopeDirection = scopeOriginTranslation * Matrix4x4.CreateTranslation(new Vector3(1.0f, 0.0f, 0.0f)) * origin - scopeApertureOrigin;
+            var scopeDirection = (scopeOriginTranslation * Matrix4x4.CreateTranslation(new Vector3(1.0f, 0.0f, 0.0f)) * origin) - scopeApertureOrigin;
 
             // Calculate the distance along the unit vector, originating from the scope aperture origin, to where the line
             // intersects the sphere
@@ -109,7 +109,7 @@ namespace NINA.Equipment.Equipment.MyDome {
             var distance = -dotProduct + Math.Sqrt(underRoot);
 
             // Calculate the intersection point with the sphere
-            var intersection = scopeApertureOrigin + scopeDirection * (float)distance;
+            var intersection = scopeApertureOrigin + (scopeDirection * (float)distance);
 
             // Finally, calculate the azimuth of that intersection point, and ensure it is within [0, 2PI)
             var domeAzimuthRadians = (-Math.Atan2(intersection.Y, intersection.X) + TWO_PI) % TWO_PI;
@@ -195,7 +195,7 @@ namespace NINA.Equipment.Equipment.MyDome {
             var localHour = Angle.ByHours(localSiderealTime - scopeCoordinates.RA);
             var pierFactor = ((sideOfPier == PierSide.pierEast) ? 1.0 : -1.0) * latitudeFactor;
             // In the southern hemisphere, RA goes the opposite direction it does in the north
-            var raRotationRadians = pierFactor * HALF_PI - (localHour.Radians * latitudeFactor);
+            var raRotationRadians = (pierFactor * HALF_PI) - (localHour.Radians * latitudeFactor);
             var raRotationAdjustment = Matrix4x4.CreateRotationX((float)raRotationRadians);
             // Rotation around Dec is along the Z axis
             // The north celestial pole is at +90 DEC, and the south pole is at -90 DEC
@@ -222,7 +222,7 @@ namespace NINA.Equipment.Equipment.MyDome {
             var topocentric = scopeCoordinates.Transform(siteLatitude, siteLongitude, siteElevation);
 
             // Altitude rotation: scope tilts up from horizontal
-            var altitudeRotation = Matrix4x4.CreateRotationY((float)(topocentric.Altitude.Radians));
+            var altitudeRotation = Matrix4x4.CreateRotationY((float)topocentric.Altitude.Radians);
             var azimuth = topocentric.Azimuth;
 
             // Adaptive threshold: telescope is considered to be beyond the top edge of the shutter if this altitude is exceeded
@@ -254,7 +254,7 @@ namespace NINA.Equipment.Equipment.MyDome {
             }
 
             // Azimuth rotation: scope rotates around the dome's vertical axis (z-axis)
-            var azimuthRotation = Matrix4x4.CreateRotationZ((float)(-azimuth.Radians));
+            var azimuthRotation = Matrix4x4.CreateRotationZ((float)-azimuth.Radians);
 
             // Determine hemisphere direction
             var latitudeFactor = siteLatitude.Radians >= 0 ? 1.0 : -1.0;
