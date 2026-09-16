@@ -12,15 +12,15 @@
 
 #endregion "copyright"
 
-using NINA.Profile.Interfaces;
-using NINA.Astrometry;
-using System;
 using Accord.Math;
+using NINA.Astrometry;
 using NINA.Core.Enum;
-using NINA.Equipment.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
+using System;
 
 namespace NINA.Equipment.Equipment.MyDome {
 
