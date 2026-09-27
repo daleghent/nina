@@ -38,7 +38,7 @@ namespace NINA.Sequencer.Conditions {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
-    [UsesExpressions]
+    [UsesExpressions(GenerateValidation = true)]
     public partial class AltitudeCondition : LoopForAltitudeBase, IValidatable, ISequenceCustomPropertyEditProvider, ISequenceAttachmentStateProvider {
         private double lastRA;
         private double lastDec;
@@ -76,16 +76,9 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        [IsExpression(Default = 30, Range = [-90, 90], Proxy = "Data.Offset", HasValidator = true)]
+        [IsExpression(Default = 30, Range = [-90, 90], Proxy = "Data.Offset")]
         public partial double Offset { get; set; }
 
-        partial void OffsetExpressionValidator(Expression expr) {
-            if (expr.Error == null) {
-                if (Data != null) {
-                    Data.Offset = expr.Value;
-                }
-            }
-        }
         private void Coordinates_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             // When coordinates change, we change the decimal value
             InputCoordinates ic = (InputCoordinates)sender;
@@ -150,7 +143,7 @@ namespace NINA.Sequencer.Conditions {
             }
 
             CalculateExpectedTime();
-            return Data.IsRising || Data.CurrentAltitude >= Data.Offset;
+            return Data.IsRising || Data.CurrentAltitude >= Offset;
         }
 
         public double GetCurrentAltitude(DateTime time, ObserverInfo observer) {
@@ -159,7 +152,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void CalculateExpectedTime() {
-            OffsetExpression.Evaluate();
+            _ = Offset; // Refresh the target consumed by the shared altitude calculator.
             Data.CurrentAltitude = GetCurrentAltitude(DateTime.Now, Data.Observer);
             CalculateExpectedTimeCommon(Data, until: true, 30, GetCurrentAltitude);
         }
@@ -237,11 +230,5 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        public bool Validate() {
-            Issues.Clear();
-            Expression.ValidateExpressions(Issues, RaExpression, DecExpression, PositionAngleExpression, OffsetExpression);
-            RaisePropertyChanged(nameof(Issues));
-            return Issues.Count == 0;
-        }
     }
 }

@@ -22,6 +22,8 @@ This allows you to safely return to a stable release if needed.
 - The application now runs on .NET 10, bringing performance improvements and access to the latest runtime features.
 
 ## Bugfixes
+- Validation issues for Loop, Loop While and Moon Illumination conditions now start with an empty list and notify the UI when validation results change.
+- Take Many Exposures now rejects invalid iteration expressions. Explicit subframe dimensions and absolute focuser moves now read current expression values when executed.
 - Sky Flats now honors retry and error settings when a predicted exposure exceeds the configured limits, and incomplete captures no longer count as completed frames.
 - Fixed missing synchronization in native QHY, ToupTek-family, FTDI, SBIG and Moravian SDK calls to prevent overlapping operations and premature handle release.
 - Dome parking now checks that the driver reports it is parked after movement stops and reports a failure if it is not. A fixed 10-minute timeout aborts parking if it does not complete.
@@ -124,6 +126,7 @@ This allows you to safely return to a stable release if needed.
   - When loading older sequences, existing values are preserved and automatically interpreted as simple expressions.
 
 - **Plugin support (opt-in)**
+  - Expression entities can opt into generated validation with `UsesExpressions(GenerateValidation = true)`, including conditional fields, synchronized proxy properties and a notifying `Issues` property when none is inherited. Compiler diagnostics catch conflicting validation, local `Issues` declarations and invalid inherited properties without changing existing plugin interfaces.
   - Expression support for plugin-provided sequence items is **opt-in** and requires plugin updates.
   - Plugins must explicitly adopt the new expression system to expose expression-enabled fields.
   - Plugins that are not updated continue to function normally, but their sequence items will not offer expression support.

@@ -28,7 +28,11 @@ using System.Reflection;
 
 namespace NINA.Sequencer.Generators {
     [Generator]
-    public class ExpressionGenerator : IIncrementalGenerator {
+    public partial class ExpressionGenerator : IIncrementalGenerator {
+        private static readonly DiagnosticDescriptor MissingUsesExpressions = new(
+            "EXP0001", "IsExpression usage error",
+            "Property '{0}' is marked with [IsExpression], but the containing class '{1}' is missing [UsesExpressions]",
+            "Usage", DiagnosticSeverity.Hidden, isEnabledByDefault: true);
         public void Initialize(IncrementalGeneratorInitializationContext context) {
 
             //Uncomment to attach a debugger for source generation
@@ -44,10 +48,11 @@ namespace NINA.Sequencer.Generators {
             ).Where(m => m is not null);
 
                     var allProperties = propertyDeclarations.Collect();
-                    context.RegisterSourceOutput(allProperties, Execute);
+                    context.RegisterSourceOutput(allProperties.Combine(context.CompilationProvider),
+                        (output, input) => Execute(output, input.Left, input.Right));
         }
 
-        private void Execute(SourceProductionContext context, ImmutableArray<PropertyInfo?> propertyInfos) {
+        private void Execute(SourceProductionContext context, ImmutableArray<PropertyInfo?> propertyInfos, Compilation compilation) {
             // Group properties by the full metadata name of their containing type
             var groupedByContainingType = propertyInfos
                 .GroupBy(p => p!.ContainingType.ToDisplayString());
@@ -74,16 +79,8 @@ namespace NINA.Sequencer.Generators {
                 // If the class is missing [UsesExpressions ("symbolBroker")], emit a diagnostic and skip generating code
                 if (!hasUsesExpressions) {
                     // Create a diagnostic
-                    var descriptor = new DiagnosticDescriptor(
-                        id: "EXP0001",
-                        title: "IsExpression usage error",
-                        messageFormat: "Property '{0}' is marked with [IsExpression], but the containing class '{1}' is missing [UsesExpressions].",
-                        category: "Usage",
-                        DiagnosticSeverity.Hidden,
-                        isEnabledByDefault: true);
-
                     var diag = Diagnostic.Create(
-                        descriptor,
+                        MissingUsesExpressions,
                         propertySymbol.PropertySymbol.Locations.FirstOrDefault(),
                         propertySymbol.PropertySymbol.Name,
                         classSymbol.Name);
@@ -93,8 +90,13 @@ namespace NINA.Sequencer.Generators {
                     continue;
                 }
 
-                // Generate partial class code
-                var generatedSource = GeneratePartialClass(ns, className, group, broker);
+                var generateValidation = GeneratesValidation(classSymbol);
+                if (generateValidation && !ValidateDeclaration(context, compilation, classSymbol, group)) {
+                    continue;
+                }
+
+                // Legacy generation stays unchanged until the entity explicitly opts in.
+                var generatedSource = GeneratePartialClass(ns, className, group, broker, generateValidation);
 
                 // Add the source using a stable hint name:
                 var hintName = $"{className}_ExpressionAttribute.g.cs";
@@ -159,7 +161,7 @@ namespace NINA.Sequencer.Generators {
             return new PropertyInfo(symbol.ContainingType, symbol, args, extraInfo);
         }
 
-        private static string GeneratePartialClass(string namespaceName, string className, IGrouping<string, PropertyInfo?> properties, string broker) {
+        private static string GeneratePartialClass(string namespaceName, string className, IGrouping<string, PropertyInfo?> properties, string broker, bool generateValidation) {
             // Build the partial class with one method per property
             var cloneSource = string.Empty;
             var expressionClones = string.Empty;
@@ -200,7 +202,7 @@ namespace NINA.Sequencer.Generators {
                 foreach (KeyValuePair<string, TypedConstant> kvp in prop.Args) {
 
                     if (kvp.Key == "HasValidator") {
-                        hasValidator = true;
+                        hasValidator = !generateValidation || (bool)kvp.Value.Value!;
                     } else if (kvp.Key == "Proxy") {
                         proxy = (string)kvp.Value.Value;
                         jsonIgnore = true;
@@ -223,13 +225,15 @@ namespace NINA.Sequencer.Generators {
                     }
                 }
 
-                if (hasValidator) {
+                var synchronizeProxy = generateValidation && proxy != null;
+                var validator = synchronizeProxy ? $"ValidateAndSynchronize{propName}" : (hasValidator ? $"{propNameExpression}Validator" : null);
+                if (validator != null) {
                     propertiesSource += $@"
-                    {fieldNameExpression}.Validator = {propNameExpression}Validator;";
+                    {fieldNameExpression}.Validator = {validator};";
                 }
 
                 expressionClones += $@"
-            clone.{propNameExpression} = new Expression (this.{propNameExpression}, clone, {(hasValidator ? $"clone.{propNameExpression}Validator" : "null")});";
+            clone.{propNameExpression} = new Expression (this.{propNameExpression}, clone, {(validator != null ? $"clone.{validator}" : "null")});";
 
                 expressionReleases += $@"
             {fieldNameExpression}?.ReleaseConsumers();";
@@ -243,6 +247,11 @@ namespace NINA.Sequencer.Generators {
                 {fieldNameExpression}?.ReleaseConsumers();
                 {fieldNameExpression} = value;
                 if (value == null) return;";
+                if (generateValidation) {
+                    propertiesSource += $@"
+                value.Context = this;
+                value.Validator = {validator ?? "null"};";
+                }
                 propertiesSource += $@"
                 RaisePropertyChanged();
             }}
@@ -256,16 +265,37 @@ namespace NINA.Sequencer.Generators {
 
 
                 if (proxy != null) {
+                    var getter = $"get => {proxy};";
+                    if (synchronizeProxy) {
+                        getter = $@"get {{
+                var expression = {propNameExpression};
+                expression.Evaluate(true);
+                ValidateAndSynchronize{propName}(expression);
+                return {proxy};
+            }}";
+                        methodsSource += $@"
+        private void ValidateAndSynchronize{propName}(Expression expression) {{
+            {(hasValidator ? $"if (expression.Error == null) {propNameExpression}Validator(expression);" : "")}
+            Synchronize{propName}(expression);
+        }}
+
+        private void Synchronize{propName}(Expression expression) {{
+            if (expression.Error == null) {{
+                {proxy} = ({fieldType})expression.Value;
+            }}
+        }}
+";
+                    }
                     propertiesSource += $@"
 
         [Json";
                     propertiesSource += jsonIgnore ? "Ignore" : "Property";
                     propertiesSource += $@"]
         public partial {fieldType} {propName} {{
-            get => {proxy};
+            {getter}
             set {{
                 {propNameExpression}.Definition = Convert.ToString(value, CultureInfo.InvariantCulture);
-                {proxy} = {propNameExpression}.Value;
+                {(synchronizeProxy ? $"ValidateAndSynchronize{propName}({propNameExpression});" : $"{proxy} = {propNameExpression}.Value;")}
             }}
         }}
 ";
@@ -315,7 +345,7 @@ using NINA.Sequencer.Generators;
 
 namespace {namespaceName}
 {{
-    partial class {className}
+    partial class {className}{(generateValidation ? " : global::NINA.Sequencer.Validations.IValidatable" : "")}
     {{
         public override object Clone() {{
             var clone = new {className}(this) {{{cloneSource}
@@ -334,6 +364,7 @@ namespace {namespaceName}
         partial void AfterClone({className} original, {className} clone);
 {propertiesSource}
 {methodsSource}
+{(generateValidation ? GenerateValidation(properties.First()!.ContainingType, properties) : "")}
     }}
 }}";
         }
@@ -394,10 +425,13 @@ namespace {namespaceName}
             get { return _proxy; }
             set { _proxy = value; }
         }
+
+        public string ValidateWhen { get; set; } = "";
     }
 
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class UsesExpressionsAttribute : Attribute {
+        public bool GenerateValidation { get; set; }
         public UsesExpressionsAttribute() {
         }
     }

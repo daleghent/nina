@@ -195,6 +195,41 @@ namespace NINA.Test.Sequencer.SequenceItem.Imaging {
         }
 
         [Test]
+        public async Task Capture_DimensionsUseCurrentSymbolsWithoutBackgroundValidation() {
+            var sut = CreateExpressionItem();
+            sut.ROIOption = SubframeType.DIMENSIONS;
+            double size = 5;
+            var broker = new Mock<ISymbolBroker>();
+            broker.Setup(b => b.TryGetValue("liveSize", out It.Ref<object>.IsAny))
+                .Returns((string name, out object value) => { value = size; return true; });
+            foreach (var expression in new[] { sut.LeftExpression, sut.TopExpression, sut.WidthExpression, sut.HeightExpression }) {
+                expression.SymbolBroker = broker.Object;
+                expression.Definition = "liveSize";
+            }
+            var exposure = new Mock<IExposureData>();
+            var image = new Mock<IImageData>();
+            var metadata = new ImageMetaData();
+            image.SetupGet(i => i.MetaData).Returns(metadata);
+            exposure.SetupGet(e => e.MetaData).Returns(metadata);
+            exposure.Setup(e => e.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(image.Object);
+            CaptureSequence? captured = null;
+            imagingMediatorMock.Setup(i => i.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<string>()))
+                .Callback<CaptureSequence, CancellationToken, IProgress<ApplicationStatus>, string>((sequence, token, progress, title) => captured = sequence)
+                .ReturnsAsync(exposure.Object);
+            imagingMediatorMock.Setup(i => i.PrepareImage(It.IsAny<IImageData>(), It.IsAny<PrepareImageParameters>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Mock.Of<IRenderedImage>());
+            foreach (double next in new[] { 5.0, 10.0, 3.0 }) {
+                size = next;
+                await sut.Execute(null, CancellationToken.None);
+                captured.Should().NotBeNull();
+                captured!.SubSambleRectangle.X.Should().Be(next);
+                captured.SubSambleRectangle.Y.Should().Be(next);
+                captured.SubSambleRectangle.Width.Should().Be(next);
+                captured.SubSambleRectangle.Height.Should().Be(next);
+            }
+        }
+
+        [Test]
         public void Validate_NoIssues() {
             profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = true });

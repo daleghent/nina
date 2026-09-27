@@ -35,7 +35,6 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Mediator;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
@@ -50,7 +49,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Focuser")]
     [Export(typeof(ISequenceTrigger))]
     [JsonObject(MemberSerialization.OptIn)]
-    [UsesExpressions]
+    [UsesExpressions(GenerateValidation = true)]
 
     public partial class AutofocusAfterTimeTrigger : SequenceTrigger, IValidatable {
         private IProfileService profileService;
@@ -82,16 +81,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         partial void AfterClone(AutofocusAfterTimeTrigger original, AutofocusAfterTimeTrigger clone) {
             clone.TriggerRunner = (SequentialContainer)original.TriggerRunner.Clone();
-        }
-
-        private IList<string> issues = new List<string>();
-
-        public IList<string> Issues {
-            get => issues;
-            set {
-                issues = ImmutableList.CreateRange(value);
-                RaisePropertyChanged();
-            }
         }
 
         [IsExpression (Default = 30)]
@@ -147,21 +136,16 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             return $"Trigger: {nameof(AutofocusAfterTimeTrigger)}, Amount: {Amount}m";
         }
 
-        public bool Validate() {
-            var i = new List<string>();
+        partial void ValidateAdditional(IList<string> issues) {
             var cameraInfo = cameraMediator.GetInfo();
             var focuserInfo = focuserMediator.GetInfo();
 
             if (!cameraInfo.Connected) {
-                i.Add(Loc.Instance["LblCameraNotConnected"]);
+                issues.Add(Loc.Instance["LblCameraNotConnected"]);
             }
             if (!focuserInfo.Connected) {
-                i.Add(Loc.Instance["LblFocuserNotConnected"]);
+                issues.Add(Loc.Instance["LblFocuserNotConnected"]);
             }
-
-            Expression.ValidateExpressions(i, AmountExpression);
-            Issues = i;
-            return i.Count == 0;
         }
     }
 }

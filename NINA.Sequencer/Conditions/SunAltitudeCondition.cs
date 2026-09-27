@@ -37,7 +37,7 @@ namespace NINA.Sequencer.Conditions {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
-    [UsesExpressions]   
+    [UsesExpressions(GenerateValidation = true)]
     
     public partial class SunAltitudeCondition : LoopForSunMoonAltitudeBase, IValidatable {
 
@@ -61,25 +61,12 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        [IsExpression(Default = 0, Range = [-90, 90], Proxy = "Data.Offset", HasValidator = true)]
+        [IsExpression(Default = 0, Range = [-90, 90], Proxy = "Data.Offset")]
         public partial double Offset { get; set; }
-
-        partial void OffsetExpressionValidator(Expression expr) {
-            if (expr.Error == null) {
-                Data.Offset = expr.Value;
-            }
-        }
 
         public override void AfterParentChanged() {
             Validate();
             base.AfterParentChanged();
-        }
-
-        public bool Validate() {
-            var issues = new List<string>();
-            Expression.ValidateExpressions(issues, OffsetExpression);
-            Issues = issues;
-            return issues.Count == 0;
         }
 
         private DateTimeOffset lastCalculation = DateTimeOffset.MinValue;
@@ -87,7 +74,7 @@ namespace NINA.Sequencer.Conditions {
         private ComparisonOperatorEnum lastCalculationComparator = ComparisonOperatorEnum.EQUALS;
 
         public override void CalculateExpectedTime() {
-            OffsetExpression.Evaluate();
+            _ = Offset; // Refresh the target consumed by the shared altitude calculator.
             Data.CurrentAltitude = AstroUtil.GetSunAltitude(DateTime.Now, Data.Observer);
 
             if (!Check(null, null, true)) {
@@ -121,7 +108,8 @@ namespace NINA.Sequencer.Conditions {
 
         protected override double GetDataOffset() {
             // Sunrise/Sunset calculations are a special case where we adjust for the upper limp of the Sun touching the horizon including atmospheric refraction.
-            return Data.Offset != 0 ? Data.Offset : -AstroUtil.SunUpperLimbApparentHorizonAltitude;
+            var offset = Offset;
+            return offset != 0 ? offset : -AstroUtil.SunUpperLimbApparentHorizonAltitude;
         }
     }
 }

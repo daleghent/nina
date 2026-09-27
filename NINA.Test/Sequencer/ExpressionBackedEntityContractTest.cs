@@ -130,6 +130,64 @@ namespace NINA.Test.Sequencer {
             }
         }
 
+        [Test]
+        public void NewExpressionEntities_UseGeneratedValidationUnlessInheritanceIsExplicitlyCovered() {
+            var handwritten = GetExpressionEntityTypes().Where(type => !type.GetCustomAttributesData()
+                .Single(a => a.AttributeType.FullName == UsesExpressionsAttributeName).NamedArguments
+                .Any(a => a.MemberName == "GenerateValidation" && Equals(a.TypedValue.Value, true)));
+            handwritten.Select(type => type.Name).Should().BeEquivalentTo(new[] {
+                nameof(ConditionalContainer), nameof(AutoBrightnessFlat), nameof(AutoExposureFlat),
+                nameof(SmartExposure), nameof(TakeManyExposures)
+            }, "these containers explicitly compose inherited and child validation; new entities should opt in");
+        }
+
+        [TestCaseSource(nameof(GeneratedValidationEntityCases))]
+        public void ValidationIssues_AreInitializedAndNotifyOnFailureAndRecovery(Type entityType) {
+            var entity = CreateEntity(entityType);
+            var validation = (IValidatable)entity;
+            validation.Issues.Should().NotBeNull();
+            var property = GetExpressionBackedProperties(entityType).First();
+            var expression = GetExpression(entity, property.Name);
+            var original = expression.Definition;
+            int notifications = 0;
+            ((System.ComponentModel.INotifyPropertyChanged)entity).PropertyChanged += (_, args) => {
+                if (args.PropertyName == nameof(IValidatable.Issues)) notifications++;
+            };
+            expression.Definition = "1 +";
+            notifications = 0;
+            validation.Validate().Should().BeFalse();
+            validation.Issues.Should().Contain(Loc.Instance["LblSyntaxError"]);
+            notifications.Should().Be(1);
+            expression.Definition = original;
+            notifications = 0;
+            validation.Validate();
+            validation.Issues.Should().NotContain(Loc.Instance["LblSyntaxError"]);
+            notifications.Should().Be(1);
+        }
+
+        private static IEnumerable<TestCaseData> GeneratedValidationEntityCases() => GetExpressionEntityTypes()
+            .Where(type => type.GetCustomAttributesData().Single(a => a.AttributeType.FullName == UsesExpressionsAttributeName)
+                .NamedArguments.Any(a => a.MemberName == "GenerateValidation" && Equals(a.TypedValue.Value, true)))
+            .Select(type => new TestCaseData(type));
+
+        [TestCaseSource(nameof(GeneratedValidationEntityCases))]
+        public void ValidationIssues_UseMutableListsAndReplaceThemOnValidation(Type entityType) {
+            var entity = CreateEntity(entityType);
+            var assigned = new List<string> { "device unavailable" };
+            entityType.GetProperty(nameof(IValidatable.Issues)).SetValue(entity, assigned);
+            var validation = (IValidatable)entity;
+            validation.Issues.Should().BeSameAs(assigned);
+            assigned.Clear();
+            validation.Issues.Should().BeEmpty();
+            validation.Validate();
+            validation.Issues.Should().NotBeSameAs(assigned);
+            validation.Issues.IsReadOnly.Should().BeFalse();
+            validation.Issues.Add("additional issue");
+            validation.Issues.Should().Contain("additional issue");
+            validation.Issues.Clear();
+            validation.Issues.Should().BeEmpty();
+        }
+
         /// <summary>
         /// Verifies the Generated Expression Properties Are Initialized From Attribute Metadata scenario for the sequencer behavior under test.
         /// </summary>
@@ -164,7 +222,8 @@ namespace NINA.Test.Sequencer {
                 expression.Range.Should().BeNull();
             }
 
-            if (TryGetNamedArgument<bool>(attribute, "HasValidator", out bool hasValidator) && hasValidator) {
+            if ((TryGetNamedArgument<bool>(attribute, "HasValidator", out bool hasValidator) && hasValidator)
+                || TryGetNamedArgument<string>(attribute, "Proxy", out _)) {
                 expression.Validator.Should().NotBeNull();
             } else {
                 expression.Validator.Should().BeNull();
@@ -217,24 +276,22 @@ namespace NINA.Test.Sequencer {
         /// Verifies the Invalid Expression Definitions Are Reported By Entity Validation scenario for the sequencer behavior under test.
         /// </summary>
         [Test]
-        [TestCaseSource(nameof(ExpressionEntityCases))]
-        public void InvalidExpressionDefinitions_AreReportedByEntityValidation(Type entityType) {
+        [TestCaseSource(nameof(ExpressionPropertyCases))]
+        public void InvalidExpressionDefinitions_AreReportedByEntityValidation(Type entityType, string propertyName) {
             object entity = CreateEntity(entityType);
-            PropertyInfo scalarProperty = GetExpressionBackedProperties(entityType).First();
-
-            SetExpressionDefinition(entity, scalarProperty.Name, "1 +");
-
-            Expression expression = GetExpression(entity, scalarProperty.Name);
-            expression.Error.Should().Be(Loc.Instance["LblSyntaxError"]);
-
-            if (entity is IValidatable validatable) {
-                Action validate = () => validatable.Validate();
-
-                validate.Should().NotThrow($"{entityType.Name}.{scalarProperty.Name} has a syntax error but validation should remain a normal result path");
-                if (!validatable.Validate()) {
-                    validatable.Issues.Should().NotBeEmpty();
-                }
-            }
+            if (entity is TakeSubframeExposure subframe) subframe.ROIOption = SubframeType.ROI;
+            var validatable = (IValidatable)entity;
+            Expression expression = GetExpression(entity, propertyName);
+            string original = expression.Definition;
+            expression.Definition = "1 +";
+            validatable.Validate().Should().BeFalse($"{entityType.Name}.{propertyName} has a malformed expression");
+            validatable.Issues.Should().Contain(Loc.Instance["LblSyntaxError"]);
+            var issues = validatable.Issues.ToArray();
+            validatable.Validate().Should().BeFalse();
+            validatable.Issues.Should().BeEquivalentTo(issues);
+            expression.Definition = original;
+            validatable.Validate();
+            validatable.Issues.Should().NotContain(Loc.Instance["LblSyntaxError"]);
         }
 
         /// <summary>
