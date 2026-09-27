@@ -42,6 +42,7 @@ using NINA.Sequencer.Logic;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Camera;
 using NINA.Sequencer.SequenceItem.Dome;
+using NINA.Sequencer.SequenceItem.Expressions;
 using NINA.Sequencer.SequenceItem.FilterWheel;
 using NINA.Sequencer.SequenceItem.FlatDevice;
 using NINA.Sequencer.SequenceItem.Focuser;
@@ -65,6 +66,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NINA.Test.Sequencer {
 
@@ -223,6 +226,122 @@ namespace NINA.Test.Sequencer {
             AssertExpressions(entity);
             Detach(first, entity);
             Detach(second, clone);
+        }
+
+        [TestCase(typeof(AboveHorizonCondition))]
+        [TestCase(typeof(AltitudeCondition))]
+        [TestCase(typeof(CoordinatesInstruction))]
+        [TestCase(typeof(SlewScopeToAltAz))]
+        [NonParallelizable]
+        public async Task ExpressionContext_ResolvesCurrentScopeAfterReplacementCloneAndMoves(Type entityType) {
+            var root = new SequenceRootContainer();
+            var first = new SequentialContainer();
+            var second = new SequentialContainer();
+            root.Add(first);
+            root.Add(second);
+            var entity = (ISequenceEntity)CreateEntity(entityType);
+            if (entity is LoopForAltitudeBase condition) condition.ConditionWatchdog = Mock.Of<IConditionWatchdog>();
+            var properties = GetExpressionBackedProperties(entityType);
+            ISequenceEntity? clone = null;
+
+            async Task<Variable> AddVariable(SequentialContainer parent, string value) {
+                var variable = new Variable { SymbolBroker = Mock.Of<ISymbolBroker>() };
+                parent.Add(variable);
+                variable.Identifier = "contextValue";
+                variable.OriginalDefinition = value;
+                await variable.Execute(null, CancellationToken.None);
+                return variable;
+            }
+            async Task SetVariable(SequentialContainer parent, string value) {
+                var setter = new ResetVariable { Variable = "contextValue" };
+                parent.Add(setter);
+                setter.Expr.Definition = value;
+                await setter.Execute(null, CancellationToken.None);
+                parent.Remove(setter);
+            }
+            void Attach(SequenceContainer parent, ISequenceEntity child) {
+                if (child is ISequenceItem item) parent.Add(item);
+                else parent.Add((ISequenceCondition)child);
+            }
+            void AssertValues(ISequenceEntity owner, Variable symbol, double expected) {
+                foreach (var property in properties) {
+                    var expression = GetExpression(owner, property.Name);
+                    expression.Context.Should().BeSameAs(owner);
+                    expression.Definition.Should().Be("contextValue");
+                    GetNumericScalarValue(owner, property).Should().BeApproximately(expected, 1e-5);
+                    expression.Error.Should().BeNull();
+                    expression.Resolved["contextValue"].Should().BeSameAs(symbol);
+                    symbol.Consumers.Should().ContainKey(expression);
+                }
+            }
+            void AssertDetached(ISequenceEntity owner) {
+                owner.Parent.Should().BeNull();
+                foreach (var property in properties) {
+                    var expression = GetExpression(owner, property.Name);
+                    expression.Context.Should().BeSameAs(owner);
+                    expression.Resolved.Should().BeEmpty();
+                    _ = GetNumericScalarValue(owner, property);
+                    expression.Error.Should().Contain(Loc.Instance["LblUndefined"]);
+                    expression.Parameters.Should().BeEmpty();
+                }
+            }
+
+            try {
+                var firstVariable = await AddVariable(first, "5");
+                var secondVariable = await AddVariable(second, "8");
+                Attach(first, entity);
+                foreach (var property in properties) {
+                    var replacement = new Expression(GetExpression(entity, property.Name), null) { Definition = "contextValue" };
+                    entityType.GetProperty(property.Name + "Expression")!.SetValue(entity, replacement);
+                    replacement.Context.Should().BeSameAs(entity);
+                }
+                AssertValues(entity, firstVariable, 5);
+                clone = (ISequenceEntity)entity.Clone();
+                if (clone is LoopForAltitudeBase clonedCondition) clonedCondition.ConditionWatchdog = Mock.Of<IConditionWatchdog>();
+                AssertDetached(clone);
+                Attach(second, clone);
+                AssertValues(clone, secondVariable, 8);
+                AssertValues(entity, firstVariable, 5);
+
+                Attach(second, entity);
+                AssertValues(entity, secondVariable, 8);
+                firstVariable.Consumers.Should().BeEmpty();
+                await SetVariable(first, "6");
+                AssertValues(entity, secondVariable, 8);
+                await SetVariable(second, "11");
+                AssertValues(entity, secondVariable, 11);
+                AssertValues(clone, secondVariable, 11);
+
+                entity.Detach();
+                AssertDetached(entity);
+                foreach (var property in properties) {
+                    secondVariable.Consumers.Should().NotContainKey(GetExpression(entity, property.Name));
+                }
+                Attach(first, entity);
+                AssertValues(entity, firstVariable, 6);
+                AssertValues(clone, secondVariable, 11);
+                await SetVariable(first, "7");
+                AssertValues(entity, firstVariable, 7);
+                AssertValues(clone, secondVariable, 11);
+
+                Attach(root, entity);
+                ((IValidatable)entity).Validate().Should().BeFalse("contextValue is scoped to the child containers");
+                foreach (var property in properties) {
+                    var expression = GetExpression(entity, property.Name);
+                    expression.Error.Should().Contain(Loc.Instance["LblUndefined"]);
+                    expression.Parameters.Should().BeEmpty();
+                }
+                Attach(second, entity);
+                AssertValues(entity, secondVariable, 11);
+                ((IValidatable)entity).Validate().Should().BeTrue();
+            } finally {
+                entity.Detach();
+                clone?.Detach();
+                foreach (var parent in new[] { first, second }) {
+                    foreach (var item in parent.GetItemsSnapshot()) item.Detach();
+                    parent.Detach();
+                }
+            }
         }
 
         [TestCaseSource(nameof(GeneratedValidationEntityCases))]
