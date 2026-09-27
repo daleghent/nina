@@ -42,6 +42,7 @@ using NINA.Sequencer.Logic;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Camera;
 using NINA.Sequencer.SequenceItem.Dome;
+using NINA.Sequencer.SequenceItem.Expressions;
 using NINA.Sequencer.SequenceItem.FilterWheel;
 using NINA.Sequencer.SequenceItem.FlatDevice;
 using NINA.Sequencer.SequenceItem.Focuser;
@@ -65,6 +66,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NINA.Test.Sequencer {
 
@@ -123,6 +126,242 @@ namespace NINA.Test.Sequencer {
             EntityFactories.Keys.Should().BeEquivalentTo(expressionEntityTypes.Select(t => t.Name));
         }
 
+        [Test]
+        public void ExpressionBackedConditions_ParticipateInSequencerValidation() {
+            foreach (Type type in GetExpressionEntityTypes().Where(t => typeof(ISequenceCondition).IsAssignableFrom(t))) {
+                typeof(IValidatable).IsAssignableFrom(type).Should().BeTrue($"{type.Name} must participate in container and runtime validation");
+            }
+        }
+
+        [Test]
+        public void NewExpressionEntities_UseGeneratedValidationUnlessInheritanceIsExplicitlyCovered() {
+            var handwritten = GetExpressionEntityTypes().Where(type => !type.GetCustomAttributesData()
+                .Single(a => a.AttributeType.FullName == UsesExpressionsAttributeName).NamedArguments
+                .Any(a => a.MemberName == "GenerateValidation" && Equals(a.TypedValue.Value, true)));
+            handwritten.Select(type => type.Name).Should().BeEquivalentTo(new[] {
+                nameof(ConditionalContainer), nameof(AutoBrightnessFlat), nameof(AutoExposureFlat),
+                nameof(SmartExposure), nameof(TakeManyExposures)
+            }, "these containers explicitly compose inherited and child validation; new entities should opt in");
+        }
+
+        [TestCaseSource(nameof(GeneratedValidationEntityCases))]
+        public void ValidationIssues_AreInitializedAndNotifyOnFailureAndRecovery(Type entityType) {
+            var entity = CreateEntity(entityType);
+            var validation = (IValidatable)entity;
+            validation.Issues.Should().NotBeNull();
+            var property = GetExpressionBackedProperties(entityType).First();
+            var expression = GetExpression(entity, property.Name);
+            var original = expression.Definition;
+            int notifications = 0;
+            ((System.ComponentModel.INotifyPropertyChanged)entity).PropertyChanged += (_, args) => {
+                if (args.PropertyName == nameof(IValidatable.Issues)) notifications++;
+            };
+            expression.Definition = "1 +";
+            notifications = 0;
+            validation.Validate().Should().BeFalse();
+            validation.Issues.Should().Contain(Loc.Instance["LblSyntaxError"]);
+            notifications.Should().Be(1);
+            expression.Definition = original;
+            notifications = 0;
+            validation.Validate();
+            validation.Issues.Should().NotContain(Loc.Instance["LblSyntaxError"]);
+            notifications.Should().Be(1);
+        }
+
+        private static IEnumerable<TestCaseData> GeneratedValidationEntityCases() => GetExpressionEntityTypes()
+            .Where(type => type.GetCustomAttributesData().Single(a => a.AttributeType.FullName == UsesExpressionsAttributeName)
+                .NamedArguments.Any(a => a.MemberName == "GenerateValidation" && Equals(a.TypedValue.Value, true)))
+            .Select(type => new TestCaseData(type));
+
+        [TestCase(typeof(AboveHorizonCondition))]
+        [TestCase(typeof(AltitudeCondition))]
+        [TestCase(typeof(CoordinatesInstruction))]
+        [TestCase(typeof(SlewScopeToAltAz))]
+        public void ExpressionContext_IsBoundBeforeAttachmentAndSurvivesCloneAndReparenting(Type entityType) {
+            var entity = (ISequenceEntity)CreateEntity(entityType);
+            var properties = GetExpressionBackedProperties(entityType);
+            var values = properties.ToDictionary(p => p.Name, ChooseValidValue);
+            foreach (var property in properties) {
+                var original = GetExpression(entity, property.Name);
+                original.Context.Should().BeSameAs(entity);
+                var replacement = new Expression(original, null) {
+                    Definition = values[property.Name].ToString(CultureInfo.InvariantCulture)
+                };
+                entityType.GetProperty(property.Name + "Expression").SetValue(entity, replacement);
+                replacement.Context.Should().BeSameAs(entity, "replacement must bind immediately, before attachment can repair it");
+            }
+
+            void AssertExpressions(ISequenceEntity owner) {
+                foreach (var property in properties) {
+                    GetExpression(owner, property.Name).Context.Should().BeSameAs(owner);
+                    GetNumericScalarValue(owner, property).Should().BeApproximately(values[property.Name], 1e-5);
+                }
+            }
+            void Attach(SequentialContainer parent, ISequenceEntity child) {
+                if (child is ISequenceItem item) parent.Add(item);
+                else parent.Add((ISequenceCondition)child);
+            }
+            void Detach(SequentialContainer parent, ISequenceEntity child) {
+                if (child is ISequenceItem item) parent.Remove(item).Should().BeTrue();
+                else parent.Remove((ISequenceCondition)child).Should().BeTrue();
+            }
+
+            var first = new SequentialContainer();
+            var second = new SequentialContainer();
+            AssertExpressions(entity);
+            Attach(first, entity);
+            AssertExpressions(entity);
+            var clone = (ISequenceEntity)entity.Clone();
+            AssertExpressions(clone);
+            foreach (var property in properties) {
+                GetExpression(clone, property.Name).Should().NotBeSameAs(GetExpression(entity, property.Name));
+            }
+            Attach(second, clone);
+            AssertExpressions(clone);
+            Attach(second, entity);
+            AssertExpressions(entity);
+            Detach(second, entity);
+            AssertExpressions(entity);
+            Attach(first, entity);
+            AssertExpressions(entity);
+            Detach(first, entity);
+            Detach(second, clone);
+        }
+
+        [TestCase(typeof(AboveHorizonCondition))]
+        [TestCase(typeof(AltitudeCondition))]
+        [TestCase(typeof(CoordinatesInstruction))]
+        [TestCase(typeof(SlewScopeToAltAz))]
+        [NonParallelizable]
+        public async Task ExpressionContext_ResolvesCurrentScopeAfterReplacementCloneAndMoves(Type entityType) {
+            var root = new SequenceRootContainer();
+            var first = new SequentialContainer();
+            var second = new SequentialContainer();
+            root.Add(first);
+            root.Add(second);
+            var entity = (ISequenceEntity)CreateEntity(entityType);
+            if (entity is LoopForAltitudeBase condition) condition.ConditionWatchdog = Mock.Of<IConditionWatchdog>();
+            var properties = GetExpressionBackedProperties(entityType);
+            ISequenceEntity? clone = null;
+
+            async Task<Variable> AddVariable(SequentialContainer parent, string value) {
+                var variable = new Variable { SymbolBroker = Mock.Of<ISymbolBroker>() };
+                parent.Add(variable);
+                variable.Identifier = "contextValue";
+                variable.OriginalDefinition = value;
+                await variable.Execute(null, CancellationToken.None);
+                return variable;
+            }
+            async Task SetVariable(SequentialContainer parent, string value) {
+                var setter = new ResetVariable { Variable = "contextValue" };
+                parent.Add(setter);
+                setter.Expr.Definition = value;
+                await setter.Execute(null, CancellationToken.None);
+                parent.Remove(setter);
+            }
+            void Attach(SequenceContainer parent, ISequenceEntity child) {
+                if (child is ISequenceItem item) parent.Add(item);
+                else parent.Add((ISequenceCondition)child);
+            }
+            void AssertValues(ISequenceEntity owner, Variable symbol, double expected) {
+                foreach (var property in properties) {
+                    var expression = GetExpression(owner, property.Name);
+                    expression.Context.Should().BeSameAs(owner);
+                    expression.Definition.Should().Be("contextValue");
+                    GetNumericScalarValue(owner, property).Should().BeApproximately(expected, 1e-5);
+                    expression.Error.Should().BeNull();
+                    expression.Resolved["contextValue"].Should().BeSameAs(symbol);
+                    symbol.Consumers.Should().ContainKey(expression);
+                }
+            }
+            void AssertDetached(ISequenceEntity owner) {
+                owner.Parent.Should().BeNull();
+                foreach (var property in properties) {
+                    var expression = GetExpression(owner, property.Name);
+                    expression.Context.Should().BeSameAs(owner);
+                    expression.Resolved.Should().BeEmpty();
+                    _ = GetNumericScalarValue(owner, property);
+                    expression.Error.Should().Contain(Loc.Instance["LblUndefined"]);
+                    expression.Parameters.Should().BeEmpty();
+                }
+            }
+
+            try {
+                var firstVariable = await AddVariable(first, "5");
+                var secondVariable = await AddVariable(second, "8");
+                Attach(first, entity);
+                foreach (var property in properties) {
+                    var replacement = new Expression(GetExpression(entity, property.Name), null) { Definition = "contextValue" };
+                    entityType.GetProperty(property.Name + "Expression")!.SetValue(entity, replacement);
+                    replacement.Context.Should().BeSameAs(entity);
+                }
+                AssertValues(entity, firstVariable, 5);
+                clone = (ISequenceEntity)entity.Clone();
+                if (clone is LoopForAltitudeBase clonedCondition) clonedCondition.ConditionWatchdog = Mock.Of<IConditionWatchdog>();
+                AssertDetached(clone);
+                Attach(second, clone);
+                AssertValues(clone, secondVariable, 8);
+                AssertValues(entity, firstVariable, 5);
+
+                Attach(second, entity);
+                AssertValues(entity, secondVariable, 8);
+                firstVariable.Consumers.Should().BeEmpty();
+                await SetVariable(first, "6");
+                AssertValues(entity, secondVariable, 8);
+                await SetVariable(second, "11");
+                AssertValues(entity, secondVariable, 11);
+                AssertValues(clone, secondVariable, 11);
+
+                entity.Detach();
+                AssertDetached(entity);
+                foreach (var property in properties) {
+                    secondVariable.Consumers.Should().NotContainKey(GetExpression(entity, property.Name));
+                }
+                Attach(first, entity);
+                AssertValues(entity, firstVariable, 6);
+                AssertValues(clone, secondVariable, 11);
+                await SetVariable(first, "7");
+                AssertValues(entity, firstVariable, 7);
+                AssertValues(clone, secondVariable, 11);
+
+                Attach(root, entity);
+                ((IValidatable)entity).Validate().Should().BeFalse("contextValue is scoped to the child containers");
+                foreach (var property in properties) {
+                    var expression = GetExpression(entity, property.Name);
+                    expression.Error.Should().Contain(Loc.Instance["LblUndefined"]);
+                    expression.Parameters.Should().BeEmpty();
+                }
+                Attach(second, entity);
+                AssertValues(entity, secondVariable, 11);
+                ((IValidatable)entity).Validate().Should().BeTrue();
+            } finally {
+                entity.Detach();
+                clone?.Detach();
+                foreach (var parent in new[] { first, second }) {
+                    foreach (var item in parent.GetItemsSnapshot()) item.Detach();
+                    parent.Detach();
+                }
+            }
+        }
+
+        [TestCaseSource(nameof(GeneratedValidationEntityCases))]
+        public void ValidationIssues_UseMutableListsAndReplaceThemOnValidation(Type entityType) {
+            var entity = CreateEntity(entityType);
+            var assigned = new List<string> { "device unavailable" };
+            entityType.GetProperty(nameof(IValidatable.Issues)).SetValue(entity, assigned);
+            var validation = (IValidatable)entity;
+            validation.Issues.Should().BeSameAs(assigned);
+            assigned.Clear();
+            validation.Issues.Should().BeEmpty();
+            validation.Validate();
+            validation.Issues.Should().NotBeSameAs(assigned);
+            validation.Issues.IsReadOnly.Should().BeFalse();
+            validation.Issues.Add("additional issue");
+            validation.Issues.Should().Contain("additional issue");
+            validation.Issues.Clear();
+            validation.Issues.Should().BeEmpty();
+        }
+
         /// <summary>
         /// Verifies the Generated Expression Properties Are Initialized From Attribute Metadata scenario for the sequencer behavior under test.
         /// </summary>
@@ -157,7 +396,8 @@ namespace NINA.Test.Sequencer {
                 expression.Range.Should().BeNull();
             }
 
-            if (TryGetNamedArgument<bool>(attribute, "HasValidator", out bool hasValidator) && hasValidator) {
+            if ((TryGetNamedArgument<bool>(attribute, "HasValidator", out bool hasValidator) && hasValidator)
+                || TryGetNamedArgument<string>(attribute, "Proxy", out _)) {
                 expression.Validator.Should().NotBeNull();
             } else {
                 expression.Validator.Should().BeNull();
@@ -210,24 +450,22 @@ namespace NINA.Test.Sequencer {
         /// Verifies the Invalid Expression Definitions Are Reported By Entity Validation scenario for the sequencer behavior under test.
         /// </summary>
         [Test]
-        [TestCaseSource(nameof(ExpressionEntityCases))]
-        public void InvalidExpressionDefinitions_AreReportedByEntityValidation(Type entityType) {
+        [TestCaseSource(nameof(ExpressionPropertyCases))]
+        public void InvalidExpressionDefinitions_AreReportedByEntityValidation(Type entityType, string propertyName) {
             object entity = CreateEntity(entityType);
-            PropertyInfo scalarProperty = GetExpressionBackedProperties(entityType).First();
-
-            SetExpressionDefinition(entity, scalarProperty.Name, "1 +");
-
-            Expression expression = GetExpression(entity, scalarProperty.Name);
-            expression.Error.Should().Be(Loc.Instance["LblSyntaxError"]);
-
-            if (entity is IValidatable validatable) {
-                Action validate = () => validatable.Validate();
-
-                validate.Should().NotThrow($"{entityType.Name}.{scalarProperty.Name} has a syntax error but validation should remain a normal result path");
-                if (!validatable.Validate()) {
-                    validatable.Issues.Should().NotBeEmpty();
-                }
-            }
+            if (entity is TakeSubframeExposure subframe) subframe.ROIOption = SubframeType.ROI;
+            var validatable = (IValidatable)entity;
+            Expression expression = GetExpression(entity, propertyName);
+            string original = expression.Definition;
+            expression.Definition = "1 +";
+            validatable.Validate().Should().BeFalse($"{entityType.Name}.{propertyName} has a malformed expression");
+            validatable.Issues.Should().Contain(Loc.Instance["LblSyntaxError"]);
+            var issues = validatable.Issues.ToArray();
+            validatable.Validate().Should().BeFalse();
+            validatable.Issues.Should().BeEquivalentTo(issues);
+            expression.Definition = original;
+            validatable.Validate();
+            validatable.Issues.Should().NotContain(Loc.Instance["LblSyntaxError"]);
         }
 
         /// <summary>

@@ -73,6 +73,21 @@ namespace NINA.Test.Sequencer.SequenceItem {
             profile?.Dispose();
         }
 
+        [TestCase(CenterInstruction)]
+        [TestCase(CenterAndRotateInstruction)]
+        [TestCase(SlewScopeToRaDecInstruction)]
+        [TestCase(WaitForAltitudeInstruction)]
+        [TestCase(WaitUntilAboveHorizonInstruction)]
+        public void Clone_BindsInheritedExpressionsBeforeAttachment(string instructionName) {
+            var instruction = CreateInstruction(instructionName);
+            var clone = (CoordinatesInstruction)instruction.Clone();
+
+            clone.Parent.Should().BeNull();
+            foreach (var expression in new[] { clone.RaExpression, clone.DecExpression, clone.PositionAngleExpression, clone.OffsetExpression }) {
+                expression.Context.Should().BeSameAs(clone, "the generated setter must rebind expressions copied by UpdateExpressions before attachment");
+            }
+        }
+
         /// <summary>
         /// Verifies a coordinate-inheriting instruction remains attached to its target context and updates when that target's coordinates change.
         /// </summary>

@@ -866,6 +866,60 @@ namespace NINA.Test.Sequencer.Logic {
             replacement.Consumers.Should().ContainKey(expression);
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Expression_ReleaseConsumers_DiscardsCachedInputsWithoutEvaluating(bool dispose) {
+            var root = new SequenceRootContainer();
+            var container = CreateContainer("Scope");
+            root.Add(container);
+            var symbol = CreateConstant("local", "10", container);
+            object brokerValue = 20.0;
+            _symbolBroker.Setup(b => b.TryGetValue("brokerValue", out brokerValue)).Returns(true);
+            var expression = CreateResolvedExpression("local + brokerValue", CreateContext(container).Object);
+            expression.Value.Should().Be(30);
+            expression.Parameters.Should().HaveCount(2);
+
+            if (dispose) expression.Dispose();
+            else expression.ReleaseConsumers();
+
+            expression.Parameters.Should().BeEmpty();
+            expression.Resolved.Should().BeEmpty();
+            symbol.Consumers.Should().NotContainKey(expression);
+            expression.Definition.Should().Be("local + brokerValue");
+            expression.Value.Should().Be(30, "releasing inputs must not invoke value-change callbacks");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Expression_ReleaseOneReference_PreservesOtherCachedInputs(bool referenceRemoved) {
+            var root = new SequenceRootContainer();
+            var container = CreateContainer("Scope");
+            root.Add(container);
+            var local = CreateConstant("local", "10", container);
+            var other = CreateConstant("other", "20", container);
+            var context = CreateContext(container);
+            var expression = CreateResolvedExpression("local + other", context.Object);
+            expression.Value.Should().Be(30);
+            context.SetupGet(c => c.Parent).Returns((ISequenceContainer)null!);
+
+            if (referenceRemoved) expression.ReferenceRemoved(local);
+            else expression.RemoveParameter("local");
+
+            expression.Parameters.Should().ContainSingle().Which.Key.Should().Be("other");
+            expression.Resolved.Should().ContainSingle().Which.Key.Should().Be("other");
+            local.Consumers.Should().NotContainKey(expression);
+            other.Consumers.Should().ContainKey(expression);
+
+            expression.Evaluate(ignoreRoot: true);
+            expression.Error.Should().Contain(Loc.Instance["LblUndefined"] + ": local");
+            context.SetupGet(c => c.Parent).Returns(container);
+            expression.Evaluate(ignoreRoot: true);
+            expression.Error.Should().BeNull();
+            expression.Value.Should().Be(30);
+            local.Consumers.Should().ContainKey(expression);
+            other.Consumers.Should().ContainKey(expression);
+        }
+
         [Test]
         public void Expression_VolatileReevaluation_ReleasesConsumerFromPreviouslyResolvedSymbol() {
             SequenceRootContainer root = new SequenceRootContainer();

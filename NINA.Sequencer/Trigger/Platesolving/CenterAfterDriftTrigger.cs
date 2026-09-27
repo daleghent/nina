@@ -38,7 +38,6 @@ using NINA.WPF.Base.Mediator;
 using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
@@ -55,7 +54,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Telescope")]
     [Export(typeof(ISequenceTrigger))]
     [JsonObject(MemberSerialization.OptIn)]
-    [UsesExpressions]
+    [UsesExpressions(GenerateValidation = true)]
 
     public partial class CenterAfterDriftTrigger : SequenceTrigger, IValidatable {
         private IProfileService profileService;
@@ -99,16 +98,6 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         partial void AfterClone(CenterAfterDriftTrigger clone) {
             TriggerRunner = (SequentialContainer)TriggerRunner.Clone();
             Coordinates = Coordinates?.Clone();
-        }
-
-        private IList<string> issues = new List<string>();
-
-        public IList<string> Issues {
-            get => issues;
-            set {
-                issues = ImmutableList.CreateRange(value);
-                RaisePropertyChanged();
-            }
         }
 
         [JsonProperty]
@@ -262,24 +251,18 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             return $"Trigger: {nameof(CenterAfterDriftTrigger)}, DistanceArcMinutes: {DistanceArcMinutes}";
         }
 
-        public bool Validate() {
-            var i = new List<string>();
+        partial void ValidateAdditional(IList<string> issues) {
             var cameraInfo = cameraMediator.GetInfo();
             var telescopeInfo = telescopeMediator.GetInfo();
             if (!cameraInfo.Connected) {
-                i.Add(Loc.Instance["LblCameraNotConnected"]);
+                issues.Add(Loc.Instance["LblCameraNotConnected"]);
             }
             if (!telescopeInfo.Connected) {
-                i.Add(Loc.Instance["LblTelescopeNotConnected"]);
+                issues.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
             if (!Inherited) {
-                i.Add(Loc.Instance["LblNoTarget"]);
+                issues.Add(Loc.Instance["LblNoTarget"]);
             }
-
-            Expression.ValidateExpressions(i, AfterExposuresExpression, DistanceArcMinutesExpression);
-
-            Issues = i;
-            return i.Count == 0;
         }
     }
 }

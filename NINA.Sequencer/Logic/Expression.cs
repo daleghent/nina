@@ -816,6 +816,7 @@ namespace NINA.Sequencer.Logic {
                 symbol.RemoveConsumer(this);
             }
             resolved.Clear();
+            parameters.Clear();
         }
 
         public override string ToString() {
