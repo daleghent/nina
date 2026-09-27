@@ -9,7 +9,7 @@ using System.Collections.Immutable;
 
 namespace NINA.Test.Sequencer {
     [TestFixture]
-    public class ExpressionGeneratorTest {
+    public partial class ExpressionGeneratorTest {
         private static readonly CSharpParseOptions ParseOptions = new(LanguageVersion.Preview);
         private static readonly Lazy<MetadataReference[]> References = new(() =>
             ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")!).Split(Path.PathSeparator)

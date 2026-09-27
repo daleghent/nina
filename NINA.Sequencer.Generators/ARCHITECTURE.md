@@ -15,12 +15,9 @@ The project currently contains a single generator:
 
 - `ExpressionGenerator.cs`
 
-This generator scans for:
+This generator discovers every `[IsExpression]` application before checking declaration support, including invalid fields and ordinary properties.
 
-- partial properties
-- annotated with `[IsExpression]`
-
-and generates partial class code that adds:
+For supported declarations it generates partial class code that adds:
 
 - the backing `Expression` object
 - generated property accessors
@@ -33,11 +30,12 @@ and generates partial class code that adds:
 
 The generator is explicit about what it accepts:
 
-- the syntax node must be a partial property declaration
-- the property must use `get;` / `set;` style accessors without bodies
+- the declaration must be a public instance partial property
+- the property must use public `get;` / `set;` accessors without bodies, initializers or incompatible modifiers
+- the owner must be a top-level partial class that is not generic, abstract or file-local
 - the property must carry `NINA.Sequencer.Generators.IsExpressionAttribute`
 
-It also requires the containing class to have `[UsesExpressions]`. If that attribute is missing, the generator emits diagnostic `EXP0001` and skips generation for that property.
+It also requires the containing class to have `[UsesExpressions]`. If that attribute is missing, the generator emits error `EXP0001`. Unsupported declarations produce `EXP0009` at the annotation instead of being silently ignored. A bad declaration skips generation for its owner while unrelated valid owners still generate. Source hint names include the full type identity, so plugins can use identical class names in different namespaces.
 
 ## Generated Contract
 
@@ -95,7 +93,27 @@ In this mode, `Proxy = "Data.Offset"` generates synchronization when an expressi
 
 The generator does not rewrite lifecycle methods. Keep attachment-time validation where needed, especially before starting a condition watchdog. In generated-validation mode, creation, replacement and cloning already bind each expression's `Context` to its owner; attachment code does not need to repeat those assignments. JSON property names, defaults, clone hooks and existing interfaces remain unchanged.
 
-Diagnostics reject a handwritten `Validate()` conflict (`EXP0002`), invalid `ValidateWhen` (`EXP0003`), incompatible proxy (`EXP0004`), incompatible inherited `Issues` (`EXP0005`), inherited validation whose composition is ambiguous (`EXP0006`), a local handwritten `Issues` declaration (`EXP0007`) or a handwritten member named `ValidateOwnExpressions` (`EXP0008`). The helper-name and `ValidateWhen` checks also apply to plain `[UsesExpressions]`, since its helper is generated too. The `EXP0100` analyzer warns about direct expression-value and proxy-cache reads in opted-in entities. Validator and deserialization callbacks intentionally use cached state; other deliberate cache reads require a narrowly justified suppression. This analyzer does not perform interprocedural data-flow analysis and cannot detect a cache hidden behind an alias or another helper.
+Diagnostics reject a handwritten `Validate()` conflict (`EXP0002`), invalid `ValidateWhen` (`EXP0003`), incompatible proxy (`EXP0004`), incompatible inherited `Issues` (`EXP0005`), inherited validation whose composition is ambiguous (`EXP0006`), a local handwritten `Issues` declaration (`EXP0007`) or a handwritten member named `ValidateOwnExpressions` (`EXP0008`). The helper-name and `ValidateWhen` checks also apply to plain `[UsesExpressions]`, since its helper is generated too.
+
+### Diagnostics for plugin adoption
+
+| Rule | Severity | Correction |
+| --- | --- | --- |
+| EXP0001 | Error | Add `[UsesExpressions]` to the owner. |
+| EXP0009 | Error | Use the supported partial property and owner shape described above. |
+| EXP0010 | Error | Implement the requested instance `partial void PropertyExpressionValidator(Expression expression)` callback without an access modifier or remove `HasValidator`. |
+| EXP0011 | Error | Supply a valid range or omit it. |
+| EXP0100 | Warning | Read the evaluating scalar property instead of its expression value or proxy cache. |
+| EXP0101 | Warning | In validation hooks, add errors to the supplied issue list instead of changing `Issues`, which will be replaced. Move preparation errors to `ValidateAdditional`. |
+| EXP0102 | Warning | Opt into generated validation or implement the existing `IValidatable` contract. A public `Validate()` method alone does not participate in container validation. |
+| EXP0103 | Info | Consider calling the class's `ValidateOwnExpressions` helper directly from handwritten validation so future properties are included automatically. |
+| EXP0104 | Warning | In a generated proxy's custom validator, use the supplied expression or proxy cache instead of reading or writing its evaluating scalar property. |
+
+Range metadata accepts two bounds and optional integer boundary flags from 0 through 3. Omitted or null ranges are unrestricted. Bounds cannot be NaN and the interval must be ordered and nonempty; equal inclusive endpoints are valid. A maximum of zero keeps its runtime meaning of `NO_MAXIMUM`, including ignoring the maximum-exclusive flag. Infinity bounds are supported. Defaults and automatic-value sentinels may intentionally lie outside a range. Strings are emitted as escaped C# literals and numbers use invariant round-trip literals, including qualified NaN and infinity constants.
+
+`EXP0010` checks the effective callback configuration in both modes. Plain `[UsesExpressions]` retains its legacy behavior where explicitly supplying the `HasValidator` argument requests a callback even when its value is false. In generated-validation mode only `HasValidator = true` requests one. A proxy callback cannot silently disappear through partial-method call elision.
+
+The usage analyzers match symbols and receivers. `EXP0100` covers inherited expressions, unqualified proxy reads and read-modify-write operations. Simple assignments, constructors, actual expression validators, deserialization callbacks and `nameof` are exempt. `EXP0101` and `EXP0104` inspect direct hook bodies only, excluding nested lambdas and local functions. Participation checks recognize inherited and explicit `IValidatable` implementations. `EXP0103` is an adoption hint, not proof of invalid validation: it only recognizes a direct call on the current instance and is suppressed when `EXP0102` applies. These analyzers do not follow aliases or other helper methods and do not prove that a call runs on every path. Deliberate exceptions can use ordinary diagnostic suppression with a narrow justification.
 
 Five built-in containers retain explicit validation composition: Conditional Container, Auto Brightness Flat, Auto Exposure Flat, Smart Exposure and Take Many Exposures. Their overrides aggregate child validation and call `ValidateOwnExpressions` for their own expressions. `ExpressionBackedEntityContractTest` keeps this exception list explicit, requires factories for new entities and rejects malformed input for every annotated property. It also exercises expression context binding before attachment and through replacement, cloning and reparenting. `ExpressionGeneratorTest` compiles generated code and checks helper composition, declaration diagnostics and analyzer behavior. Neither integration test path manually evaluates expressions to repair production wiring.
 

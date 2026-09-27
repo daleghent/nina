@@ -128,6 +128,7 @@ This allows you to safely return to a stable release if needed.
 - **Plugin support (opt-in)**
   - Expression support for plugin-provided sequence items is **opt-in** and requires plugin updates.
   - Plugins must explicitly adopt the new expression system to expose expression-enabled fields.
+  - The expression generator now reports invalid declarations, missing validator callbacks and malformed ranges at build time. New diagnostics help plugin authors compose validation, avoid discarded issues and prevent recursive proxy access. Cache-read warnings also cover inherited expressions and compound assignments. Generated sources support escaped default labels, special numeric constants and matching class names in different namespaces.
   - Plugins that are not updated continue to function normally, but their sequence items will not offer expression support.
 
 - **Sequencer**

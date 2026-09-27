@@ -32,7 +32,7 @@ namespace NINA.Sequencer.Generators {
         private static readonly DiagnosticDescriptor MissingUsesExpressions = new(
             "EXP0001", "IsExpression usage error",
             "Property '{0}' is marked with [IsExpression], but the containing class '{1}' is missing [UsesExpressions]",
-            "Usage", DiagnosticSeverity.Hidden, isEnabledByDefault: true);
+            "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
         public void Initialize(IncrementalGeneratorInitializationContext context) {
 
             //Uncomment to attach a debugger for source generation
@@ -42,27 +42,34 @@ namespace NINA.Sequencer.Generators {
             //            }
             //#endif 
 
-            var propertyDeclarations = context.SyntaxProvider.CreateSyntaxProvider(
-                predicate: static (node, ct) => IsCandidatePartialProperty(node),
-                transform: static (ctx, ct) => GetPropertyInfoOrNull(ctx)
-            ).Where(m => m is not null);
-
-                    var allProperties = propertyDeclarations.Collect();
-                    context.RegisterSourceOutput(allProperties.Combine(context.CompilationProvider),
-                        (output, input) => Execute(output, input.Left, input.Right));
+            // Discover invalid declarations too, so an annotation never silently disappears.
+            var declarations = context.SyntaxProvider.ForAttributeWithMetadataName(
+                ExpressionAnalysis.ExpressionAttributeName,
+                predicate: static (node, ct) => true,
+                transform: static (ctx, ct) => new ExpressionDeclaration(ctx.TargetSymbol, ctx.Attributes[0]));
+            context.RegisterSourceOutput(declarations.Collect().Combine(context.CompilationProvider),
+                (output, input) => Execute(output, input.Left, input.Right));
         }
 
-        private void Execute(SourceProductionContext context, ImmutableArray<PropertyInfo?> propertyInfos, Compilation compilation) {
+        private void Execute(SourceProductionContext context, ImmutableArray<ExpressionDeclaration> declarations, Compilation compilation) {
+            foreach (var declaration in declarations.Where(d => d.Symbol is not IPropertySymbol and not IFieldSymbol)) {
+                context.ReportDiagnostic(Diagnostic.Create(InvalidDeclaration, AttributeLocation(declaration.Attribute), declaration.Symbol.Name));
+            }
             // Group properties by the full metadata name of their containing type
-            var groupedByContainingType = propertyInfos
-                .GroupBy(p => p!.ContainingType.ToDisplayString());
+            var groupedByContainingType = declarations.Where(d => d.Symbol is IPropertySymbol or IFieldSymbol)
+                .GroupBy(p => p.Symbol.ContainingType.ToDisplayString());
 
             foreach (var group in groupedByContainingType) {
-                var propertySymbol = group.First();
-                var classSymbol = propertySymbol.ContainingType;
+                var classSymbol = group.First().Symbol.ContainingType;
                 var className = classSymbol.Name;
-                var ns = classSymbol.ContainingNamespace?.ToDisplayString() ?? "";
-                string broker = null;
+                var ns = classSymbol.ContainingNamespace.IsGlobalNamespace ? "" : classSymbol.ContainingNamespace.ToDisplayString();
+                string? broker = null;
+
+                var valid = true;
+                foreach (var declaration in group) {
+                    valid &= ValidateExpressionDeclaration(context, compilation, declaration);
+                }
+                if (!valid) continue;
 
                 bool hasUsesExpressions = classSymbol
                         .GetAttributes()
@@ -71,7 +78,7 @@ namespace NINA.Sequencer.Generators {
                 foreach (var attribute in classSymbol.GetAttributes()) {
                     if (attribute.AttributeClass?.ToDisplayString() == "NINA.Sequencer.Generators.UsesExpressionsAttribute") {
                         if (attribute.ConstructorArguments.Length > 0) {
-                            broker = (string)attribute.ConstructorArguments[0].Value;
+                            broker = attribute.ConstructorArguments[0].Value as string;
                         }
                     }
                 }
@@ -81,8 +88,8 @@ namespace NINA.Sequencer.Generators {
                     // Create a diagnostic
                     var diag = Diagnostic.Create(
                         MissingUsesExpressions,
-                        propertySymbol.PropertySymbol.Locations.FirstOrDefault(),
-                        propertySymbol.PropertySymbol.Name,
+                        group.First().Attribute.ApplicationSyntaxReference?.GetSyntax().GetLocation(),
+                        group.First().Symbol.Name,
                         classSymbol.Name);
 
                     context.ReportDiagnostic(diag);
@@ -91,77 +98,21 @@ namespace NINA.Sequencer.Generators {
                 }
 
                 var generateValidation = GeneratesValidation(classSymbol);
-                if (!ValidateDeclaration(context, compilation, classSymbol, group, generateValidation)) {
+                var properties = group.Select(p => new PropertyInfo(classSymbol, (IPropertySymbol)p.Symbol, p.Attribute.NamedArguments, "")).ToArray();
+                if (!ValidateDeclaration(context, compilation, classSymbol, properties, generateValidation)) {
                     continue;
                 }
 
                 // Legacy property behavior stays unchanged until the entity explicitly opts in.
-                var generatedSource = GeneratePartialClass(ns, className, group, broker, generateValidation);
+                var generatedSource = GeneratePartialClass(ns, className, properties, broker, generateValidation);
 
                 // Add the source using a stable hint name:
-                var hintName = $"{className}_ExpressionAttribute.g.cs";
+                var hintName = $"{classSymbol.ToDisplayString()}_ExpressionAttribute.g.cs";
                 context.AddSource(hintName, generatedSource);
             }
         }
 
-        private static bool IsPropertyWithAttributes(SyntaxNode node) {
-            return node is PropertyDeclarationSyntax pds && pds.AttributeLists.Count > 0;
-        }
-        private static bool IsCandidatePartialProperty(SyntaxNode node) {
-            if (node is not PropertyDeclarationSyntax pds)
-                return false;
-
-            if (pds.AttributeLists.Count == 0)
-                return false;
-
-            // Must be partial
-            if (!pds.Modifiers.Any(SyntaxKind.PartialKeyword))
-                return false;
-
-            // Must be an auto-like signature (no bodies / expression bodies)
-            if (pds.ExpressionBody is not null)
-                return false;
-
-            if (pds.AccessorList is null)
-                return false;
-
-            foreach (var acc in pds.AccessorList.Accessors) {
-                // C# 12 partial property declaration uses semicolon accessors
-                // e.g. get; set; (no bodies)
-                if (acc.Body is not null || acc.ExpressionBody is not null)
-                    return false;
-
-                if (acc.SemicolonToken.IsKind(SyntaxKind.None))
-                    return false;
-            }
-
-            return true;
-        }
-
-        private static PropertyInfo? GetPropertyInfoOrNull(GeneratorSyntaxContext context) {
-            if (context.Node is not PropertyDeclarationSyntax)
-                return null;
-
-            var symbol = context.SemanticModel.GetDeclaredSymbol(context.Node) as IPropertySymbol;
-            if (symbol is null)
-                return null;
-
-            var myPropAttr = symbol.GetAttributes()
-                .FirstOrDefault(a => a.AttributeClass?.ToDisplayString() == "NINA.Sequencer.Generators.IsExpressionAttribute");
-
-            if (myPropAttr is null)
-                return null;
-
-            var args = myPropAttr.NamedArguments;
-
-            var extraInfo = (myPropAttr.ConstructorArguments.Length > 0)
-                ? myPropAttr.ConstructorArguments[0].Value?.ToString() ?? ""
-                : "";
-
-            return new PropertyInfo(symbol.ContainingType, symbol, args, extraInfo);
-        }
-
-        private static string GeneratePartialClass(string namespaceName, string className, IGrouping<string, PropertyInfo?> properties, string broker, bool generateValidation) {
+        private static string GeneratePartialClass(string namespaceName, string className, IEnumerable<PropertyInfo> properties, string? broker, bool generateValidation) {
             // Build the partial class with one method per property
             var cloneSource = string.Empty;
             var expressionClones = string.Empty;
@@ -204,9 +155,9 @@ namespace NINA.Sequencer.Generators {
                     if (kvp.Key == "HasValidator") {
                         hasValidator = !generateValidation || (bool)kvp.Value.Value!;
                     } else if (kvp.Key == "Proxy") {
-                        proxy = (string)kvp.Value.Value;
+                        proxy = kvp.Value.Value as string;
                         jsonIgnore = true;
-                    } else if (kvp.Value.Type?.TypeKind == TypeKind.Array) {
+                    } else if (kvp.Key == "Range" && !kvp.Value.IsNull) {
                         var values = kvp.Value.Values;
                         double min = Convert.ToDouble(values[0].Value, CultureInfo.InvariantCulture);
                         double max = Convert.ToDouble(values[1].Value, CultureInfo.InvariantCulture);
@@ -215,13 +166,13 @@ namespace NINA.Sequencer.Generators {
                             r = Convert.ToDouble(values[2].Value, CultureInfo.InvariantCulture);
                         }
                         propertiesSource += $@"
-                    {fieldNameExpression}.{kvp.Key} = new double[] {{{min.ToString(CultureInfo.InvariantCulture)}, {max.ToString(CultureInfo.InvariantCulture)}, {r.ToString(CultureInfo.InvariantCulture)}}};";
+                    {fieldNameExpression}.{kvp.Key} = new double[] {{{DoubleLiteral(min)}, {DoubleLiteral(max)}, {DoubleLiteral(r)}}};";
                     } else if (kvp.Key == "Default" || kvp.Key == "AutoValue") {
                         propertiesSource += $@"
-                    {fieldNameExpression}.{kvp.Key} = {Convert.ToString(kvp.Value.Value, CultureInfo.InvariantCulture)};";
+                    {fieldNameExpression}.{kvp.Key} = {DoubleLiteral((double)kvp.Value.Value!)};";
                     } else if (kvp.Key == "DefaultString") {
                         propertiesSource += $@"
-                    {fieldNameExpression}.{kvp.Key} = ""{kvp.Value.Value}"";";
+                    {fieldNameExpression}.{kvp.Key} = {(kvp.Value.IsNull ? "null" : Microsoft.CodeAnalysis.CSharp.SymbolDisplay.FormatLiteral((string)kvp.Value.Value!, true))};";
                     }
                 }
 
@@ -343,8 +294,7 @@ using NINA.Core.Utility;
 using NINA.Sequencer.Logic;
 using NINA.Sequencer.Generators;
 
-namespace {namespaceName}
-{{
+{(namespaceName.Length == 0 ? "" : $"namespace {namespaceName} {{")}
     partial class {className}{(generateValidation ? " : global::NINA.Sequencer.Validations.IValidatable" : "")}
     {{
         public override object Clone() {{
@@ -367,7 +317,7 @@ namespace {namespaceName}
 {GenerateOwnExpressionValidation(properties, generateValidation)}
 {(generateValidation ? GenerateValidation(properties.First()!.ContainingType) : "")}
     }}
-}}";
+{(namespaceName.Length == 0 ? "" : "}")}";
         }
 
         private sealed record PropertyInfo {
