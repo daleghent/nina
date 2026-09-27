@@ -22,26 +22,18 @@ Whether you're new to astrophotography or a seasoned imager, N.I.N.A. aims to ma
 
 This repository contains the N.I.N.A. application source code, shared libraries, installers, and tests in [`NINA.sln`](NINA.sln). User-facing documentation is maintained separately in [`nina.docs`](https://github.com/isbeorn/nina.docs) and included here as the [`NINA.Docs`](NINA.Docs) submodule.
 
-If you are working on the codebase, start with:
+Choose the reference for your task:
 
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) for workflow, prerequisites, testing, localization, and pull request expectations
-- [`AGENTS.md`](AGENTS.md) for solution-wide architecture, boundaries, and coding guidance
-- the `ARCHITECTURE.md` file in the project you are changing for project-local structure and responsibilities
+- [AGENTS.md](AGENTS.md) for repository constraints and agent guidance
+- [ARCHITECTURE.md](ARCHITECTURE.md) for solution ownership, boundaries and links to all project architecture documents
+- [CONTRIBUTING.md](CONTRIBUTING.md) for contributor setup, localization and upstream submission requirements
+- [Testing map](.agents/skills/nina-repository/references/testing-map.md) for Windows build commands and test selection
 
 ---
 
 ## 🛠 Development
 
-The repository CI uses the .NET CLI on Windows. The basic local workflow is:
-
-```powershell
-dotnet restore NINA.sln
-dotnet build NINA/NINA.csproj --configuration Debug --no-restore
-dotnet build NINA.Test/NINA.Test.csproj --configuration Debug --no-restore
-dotnet test NINA.Test/NINA.Test.csproj --configuration Debug --no-build -p:PlatformTarget=x64
-```
-
-For prerequisites, setup details, and contributor rules, use [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Development uses the .NET CLI on Windows. See [developer prerequisites](CONTRIBUTING.md#setting-up-the-developer-environment) and the [local verification commands](.agents/skills/nina-repository/references/testing-map.md#command-setup). The [contribution guide](CONTRIBUTING.md#running-auts-from-the-command-line) distinguishes focused local checks from required CI verification.
 
 ---
 
