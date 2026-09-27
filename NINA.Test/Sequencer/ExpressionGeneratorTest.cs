@@ -85,6 +85,89 @@ namespace NINA.Test.Sequencer {
         }
 
         [Test]
+        public void HandwrittenValidation_ComposesHelperWithInheritedAndDomainChecks() {
+            dynamic entity = Compile(Source("""
+                [IsExpression(Default = 20)] public partial double AddedLater { get; set; }
+                public bool DeviceConnected { get; set; }
+                public override bool Validate() {
+                    var valid = base.Validate();
+                    var issues = new List<string>(Issues);
+                    ValidateOwnExpressions(issues);
+                    if (!DeviceConnected) issues.Add("device unavailable");
+                    Issues = issues;
+                    return valid && issues.Count == 0;
+                }
+                """, attribute: "", baseType: "Parent, NINA.Sequencer.Validations.IValidatable") + IssuesBase("""
+                    public bool ChildValid { get; set; }
+                    public int ParentValidations { get; private set; }
+                    public IList<string> Issues { get; set; } = new List<string>();
+                    public virtual bool Validate() {
+                        ParentValidations++;
+                        Issues = new List<string>();
+                        if (!ChildValid) Issues.Add("child invalid");
+                        return ChildValid;
+                    }
+                    """));
+            var validation = (IValidatable)entity;
+            entity.AmountExpression.Definition = "1 +";
+            entity.AddedLaterExpression.Definition = "2 +";
+            Assert.That(validation.Validate(), Is.False);
+            Assert.That(validation.Issues, Is.EqualTo(new[] {
+                "child invalid", NINA.Core.Locale.Loc.Instance["LblSyntaxError"],
+                NINA.Core.Locale.Loc.Instance["LblSyntaxError"], "device unavailable"
+            }));
+            Assert.That((int)entity.ParentValidations, Is.EqualTo(1));
+            entity.ChildValid = true;
+            entity.DeviceConnected = true;
+            entity.AmountExpression.Definition = "12";
+            Assert.That(validation.Validate(), Is.False);
+            Assert.That(validation.Issues, Has.Count.EqualTo(1));
+            entity.AddedLaterExpression.Definition = "24";
+            Assert.That(validation.Validate(), Is.True);
+            Assert.That(validation.Issues, Is.Empty);
+            Assert.That((int)entity.ParentValidations, Is.EqualTo(3));
+            Assert.That(((Type)entity.GetType()).GetMethod("ValidateOwnExpressions", BindingFlags.Public | BindingFlags.Instance), Is.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void HandwrittenValidation_HelperHonorsConditionsAndRejectsInvalidConditions(bool invalidCondition) {
+            var members = """
+                public bool Active { get; set; }
+                public IList<string> Issues { get; set; } = new List<string>();
+                public bool Validate() {
+                    var issues = new List<string>();
+                    ValidateOwnExpressions(issues);
+                    Issues = issues;
+                    return issues.Count == 0;
+                }
+                """;
+            var source = Source(members, attribute: "", propertyArguments: invalidCondition
+                ? "ValidateWhen = \"Missing\"" : "Default = 10, ValidateWhen = nameof(Active)");
+            if (invalidCondition) {
+                Assert.That(Generate(source).Result.Diagnostics.Select(d => d.Id), Does.Contain("EXP0003"));
+                return;
+            }
+            dynamic entity = Compile(source);
+            entity.AmountExpression.Definition = "1 +";
+            Assert.That((bool)entity.Validate(), Is.True);
+            entity.Active = true;
+            Assert.That((bool)entity.Validate(), Is.False);
+            entity.Active = false;
+            Assert.That((bool)entity.Validate(), Is.True);
+            entity.Active = true;
+            entity.AmountExpression.Definition = "12";
+            Assert.That((bool)entity.Validate(), Is.True);
+        }
+
+        [TestCase("")]
+        [TestCase("GenerateValidation = true")]
+        public void HandwrittenExpressionHelper_ProducesConflictDiagnostic(string attribute) {
+            var (_, result) = Generate(Source("private void ValidateOwnExpressions(IList<string> issues) { }", attribute: attribute));
+            Assert.That(result.Diagnostics.Select(d => d.Id), Does.Contain("EXP0008"));
+        }
+
+        [Test]
         public void ConditionalExpression_RechecksBothModeTransitions() {
             dynamic entity = Compile(Source("public bool Active { get; set; }", propertyArguments: "Default = 10, ValidateWhen = nameof(Active)"));
             entity.AmountExpression.Definition = "1 +";
@@ -122,11 +205,15 @@ namespace NINA.Test.Sequencer {
         [Test]
         public void Hooks_RunBeforeAndAfterExpressionValidationAndReuseIssuesSetter() {
             dynamic entity = Compile(Source("""
+                public int IssuesBeforeAdditional { get; private set; }
                 partial void PrepareExpressionValidation() {
                     AmountExpression.Range = new double[] { 1, 5, 0 };
                     AmountExpression.Definition = "9";
                 }
-                partial void ValidateAdditional(IList<string> issues) { issues.Add("device unavailable"); }
+                partial void ValidateAdditional(IList<string> issues) {
+                    IssuesBeforeAdditional = issues.Count;
+                    issues.Add("device unavailable");
+                }
                 """, baseType: "Parent") + IssuesBase("""
                     public int Assignments { get; private set; }
                     private System.Collections.Generic.IList<string> issues = new System.Collections.Generic.List<string>();
@@ -135,6 +222,7 @@ namespace NINA.Test.Sequencer {
             entity.AmountExpression.Definition = "9";
             Assert.That(((IValidatable)entity).Validate(), Is.False);
             Assert.That(((IValidatable)entity).Issues, Has.Count.EqualTo(2));
+            Assert.That((int)entity.IssuesBeforeAdditional, Is.EqualTo(1));
             Assert.That((int)entity.Assignments, Is.EqualTo(1));
         }
 

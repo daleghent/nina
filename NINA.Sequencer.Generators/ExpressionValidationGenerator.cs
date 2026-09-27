@@ -21,6 +21,8 @@ namespace NINA.Sequencer.Generators {
             "'{0}' inherits Validate(). Keep handwritten validation until its inherited validation has been explicitly composed; automatic generation cannot choose whether to replace or call the base method");
         private static readonly DiagnosticDescriptor IssuesConflict = Error("EXP0007", "Handwritten Issues conflicts with generated validation",
             "'{0}' opts into generated validation but declares Issues. Remove the local declaration to use the generated property or a compatible inherited property");
+        private static readonly DiagnosticDescriptor ExpressionHelperConflict = Error("EXP0008", "Handwritten member conflicts with generated expression validation helper",
+            "'{0}' declares ValidateOwnExpressions, which is reserved for the generated expression validation helper. Rename the handwritten member");
 
         private static DiagnosticDescriptor Error(string id, string title, string message) =>
             new(id, title, message, "Usage", DiagnosticSeverity.Error, isEnabledByDefault: true);
@@ -40,28 +42,33 @@ namespace NINA.Sequencer.Generators {
         private static string? Argument(PropertyInfo property, string name) =>
             property.Args.FirstOrDefault(a => a.Key == name).Value.Value as string;
 
-        private static bool ValidateDeclaration(SourceProductionContext context, Compilation compilation, INamedTypeSymbol type, IEnumerable<PropertyInfo?> properties) {
+        private static bool ValidateDeclaration(SourceProductionContext context, Compilation compilation, INamedTypeSymbol type, IEnumerable<PropertyInfo?> properties, bool generateValidation) {
             var valid = true;
             void Report(DiagnosticDescriptor descriptor, ISymbol symbol, params object[] arguments) {
                 context.ReportDiagnostic(Diagnostic.Create(descriptor, symbol.Locations.FirstOrDefault(), arguments));
                 valid = false;
             }
-            if (type.GetMembers("Validate").Length != 0) {
-                Report(ValidationConflict, type, type.Name);
-            } else if (FindMember(type.BaseType, "Validate") != null) {
-                Report(InheritedValidation, type, type.Name);
+            if (type.GetMembers("ValidateOwnExpressions").Length != 0) {
+                Report(ExpressionHelperConflict, type, type.Name);
             }
-            var localIssues = type.GetMembers().FirstOrDefault(m => m.Name == "Issues"
-                || m is IPropertySymbol property && property.ExplicitInterfaceImplementations.Any(i => i.Name == "Issues"
-                    && i.ContainingType.ToDisplayString() == "NINA.Sequencer.Validations.IValidatable"));
-            if (localIssues != null) {
-                Report(IssuesConflict, localIssues, type.Name);
-            }
-            var issues = FindMember(type.BaseType, "Issues");
-            if (issues != null && !(issues is IPropertySymbol p && Readable(compilation, p, type) && !p.IsAbstract
-                && p.GetMethod!.DeclaredAccessibility == Accessibility.Public && p.SetMethod != null && compilation.IsSymbolAccessibleWithin(p.SetMethod, type)
-                && !p.SetMethod.IsInitOnly && p.Type.ToDisplayString() == "System.Collections.Generic.IList<string>")) {
-                Report(InvalidIssues, type, type.Name);
+            if (generateValidation) {
+                if (type.GetMembers("Validate").Length != 0) {
+                    Report(ValidationConflict, type, type.Name);
+                } else if (FindMember(type.BaseType, "Validate") != null) {
+                    Report(InheritedValidation, type, type.Name);
+                }
+                var localIssues = type.GetMembers().FirstOrDefault(m => m.Name == "Issues"
+                    || m is IPropertySymbol property && property.ExplicitInterfaceImplementations.Any(i => i.Name == "Issues"
+                        && i.ContainingType.ToDisplayString() == "NINA.Sequencer.Validations.IValidatable"));
+                if (localIssues != null) {
+                    Report(IssuesConflict, localIssues, type.Name);
+                }
+                var issues = FindMember(type.BaseType, "Issues");
+                if (issues != null && !(issues is IPropertySymbol p && Readable(compilation, p, type) && !p.IsAbstract
+                    && p.GetMethod!.DeclaredAccessibility == Accessibility.Public && p.SetMethod != null && compilation.IsSymbolAccessibleWithin(p.SetMethod, type)
+                    && !p.SetMethod.IsInitOnly && p.Type.ToDisplayString() == "System.Collections.Generic.IList<string>")) {
+                    Report(InvalidIssues, type, type.Name);
+                }
             }
             foreach (var property in properties.OfType<PropertyInfo>()) {
                 var when = Argument(property, "ValidateWhen");
@@ -70,7 +77,7 @@ namespace NINA.Sequencer.Generators {
                     Report(InvalidCondition, property.PropertySymbol, property.PropertySymbol.Name, when);
                 }
                 var proxy = Argument(property, "Proxy");
-                if (proxy != null && !ValidProxy(compilation, type, property.PropertySymbol, proxy)) {
+                if (generateValidation && proxy != null && !ValidProxy(compilation, type, property.PropertySymbol, proxy)) {
                     Report(InvalidProxy, property.PropertySymbol, property.PropertySymbol.Name, proxy);
                 }
             }
@@ -102,7 +109,7 @@ namespace NINA.Sequencer.Generators {
             return false;
         }
 
-        private static string GenerateValidation(INamedTypeSymbol type, IEnumerable<PropertyInfo?> properties) {
+        private static string GenerateValidation(INamedTypeSymbol type) {
             var source = new StringBuilder();
             if (FindMember(type.BaseType, "Issues") == null) {
                 source.AppendLine(@"
@@ -116,13 +123,28 @@ namespace NINA.Sequencer.Generators {
             source.AppendLine(@"
         public bool Validate() {
             var issues = new global::System.Collections.Generic.List<string>();
-            PrepareExpressionValidation();");
+            PrepareExpressionValidation();
+            ValidateOwnExpressions(issues);
+            ValidateAdditional(issues);
+            Issues = issues;
+            return issues.Count == 0;
+        }
+
+        partial void PrepareExpressionValidation();
+        partial void ValidateAdditional(global::System.Collections.Generic.IList<string> issues);");
+            return source.ToString();
+        }
+
+        private static string GenerateOwnExpressionValidation(IEnumerable<PropertyInfo?> properties, bool generateValidation) {
+            var source = new StringBuilder(@"
+        private void ValidateOwnExpressions(global::System.Collections.Generic.IList<string> issues) {
+");
             foreach (var property in properties.OfType<PropertyInfo>()) {
                 var name = property.PropertySymbol.Name;
                 var when = Argument(property, "ValidateWhen");
                 if (when != null) source.AppendLine($"            if ({when}) {{");
                 source.AppendLine($"            Expression.ValidateExpressions(issues, {name}Expression);");
-                if (Argument(property, "Proxy") != null) {
+                if (generateValidation && Argument(property, "Proxy") != null) {
                     source.AppendLine($"            ValidateAndSynchronize{name}({name}Expression);");
                     // Evaluation can clear an earlier custom error without changing Value,
                     // so the engine's value-change callback alone is not sufficient.
@@ -134,14 +156,7 @@ namespace NINA.Sequencer.Generators {
                 }
                 if (when != null) source.AppendLine("            }");
             }
-            source.AppendLine(@"
-            ValidateAdditional(issues);
-            Issues = issues;
-            return issues.Count == 0;
-        }
-
-        partial void PrepareExpressionValidation();
-        partial void ValidateAdditional(global::System.Collections.Generic.IList<string> issues);");
+            source.AppendLine("        }");
             return source.ToString();
         }
     }

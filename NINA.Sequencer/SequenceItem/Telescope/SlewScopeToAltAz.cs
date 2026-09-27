@@ -194,8 +194,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override void AfterParentChanged() {
-            AltExpression.Context = this;
-            AzExpression.Context = this;
             if (Coordinates != null) {
                 Coordinates.PropertyChanged -= Coordinates_PropertyChanged;
                 lastAlt = Coordinates.Coordinates.Altitude.Degree;

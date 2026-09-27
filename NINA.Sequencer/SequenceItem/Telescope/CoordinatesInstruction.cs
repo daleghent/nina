@@ -237,10 +237,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
                 Inherited = false;
             }
 
-            RaExpression.Context = this;
-            DecExpression.Context = this;
-            PositionAngleExpression.Context = this;
-            OffsetExpression.Context = this;
             Validate();
         }
 

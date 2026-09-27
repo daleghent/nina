@@ -123,10 +123,6 @@ namespace NINA.Sequencer.Conditions {
                 lastDec = Data.Coordinates.Coordinates.Dec;
                 Data.Coordinates.PropertyChanged += Coordinates_PropertyChanged;
             }
-            RaExpression.Context = this;
-            DecExpression.Context = this;
-            PositionAngleExpression.Context = this;
-            OffsetExpression.Context = this;
             Validate();
             RunWatchdogIfInsideSequenceRoot();
         }

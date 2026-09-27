@@ -223,7 +223,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
             Issues = issues;
 
-            Logic.Expression.ValidateExpressions(Issues, IterationsExpression);
+            ValidateOwnExpressions(Issues);
 
             RaisePropertyChanged(nameof(Issues));
 

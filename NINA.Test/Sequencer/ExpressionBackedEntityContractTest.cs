@@ -170,6 +170,61 @@ namespace NINA.Test.Sequencer {
                 .NamedArguments.Any(a => a.MemberName == "GenerateValidation" && Equals(a.TypedValue.Value, true)))
             .Select(type => new TestCaseData(type));
 
+        [TestCase(typeof(AboveHorizonCondition))]
+        [TestCase(typeof(AltitudeCondition))]
+        [TestCase(typeof(CoordinatesInstruction))]
+        [TestCase(typeof(SlewScopeToAltAz))]
+        public void ExpressionContext_IsBoundBeforeAttachmentAndSurvivesCloneAndReparenting(Type entityType) {
+            var entity = (ISequenceEntity)CreateEntity(entityType);
+            var properties = GetExpressionBackedProperties(entityType);
+            var values = properties.ToDictionary(p => p.Name, ChooseValidValue);
+            foreach (var property in properties) {
+                var original = GetExpression(entity, property.Name);
+                original.Context.Should().BeSameAs(entity);
+                var replacement = new Expression(original, null) {
+                    Definition = values[property.Name].ToString(CultureInfo.InvariantCulture)
+                };
+                entityType.GetProperty(property.Name + "Expression").SetValue(entity, replacement);
+                replacement.Context.Should().BeSameAs(entity, "replacement must bind immediately, before attachment can repair it");
+            }
+
+            void AssertExpressions(ISequenceEntity owner) {
+                foreach (var property in properties) {
+                    GetExpression(owner, property.Name).Context.Should().BeSameAs(owner);
+                    GetNumericScalarValue(owner, property).Should().BeApproximately(values[property.Name], 1e-5);
+                }
+            }
+            void Attach(SequentialContainer parent, ISequenceEntity child) {
+                if (child is ISequenceItem item) parent.Add(item);
+                else parent.Add((ISequenceCondition)child);
+            }
+            void Detach(SequentialContainer parent, ISequenceEntity child) {
+                if (child is ISequenceItem item) parent.Remove(item).Should().BeTrue();
+                else parent.Remove((ISequenceCondition)child).Should().BeTrue();
+            }
+
+            var first = new SequentialContainer();
+            var second = new SequentialContainer();
+            AssertExpressions(entity);
+            Attach(first, entity);
+            AssertExpressions(entity);
+            var clone = (ISequenceEntity)entity.Clone();
+            AssertExpressions(clone);
+            foreach (var property in properties) {
+                GetExpression(clone, property.Name).Should().NotBeSameAs(GetExpression(entity, property.Name));
+            }
+            Attach(second, clone);
+            AssertExpressions(clone);
+            Attach(second, entity);
+            AssertExpressions(entity);
+            Detach(second, entity);
+            AssertExpressions(entity);
+            Attach(first, entity);
+            AssertExpressions(entity);
+            Detach(first, entity);
+            Detach(second, clone);
+        }
+
         [TestCaseSource(nameof(GeneratedValidationEntityCases))]
         public void ValidationIssues_UseMutableListsAndReplaceThemOnValidation(Type entityType) {
             var entity = CreateEntity(entityType);

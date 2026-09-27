@@ -91,11 +91,11 @@ namespace NINA.Sequencer.Generators {
                 }
 
                 var generateValidation = GeneratesValidation(classSymbol);
-                if (generateValidation && !ValidateDeclaration(context, compilation, classSymbol, group)) {
+                if (!ValidateDeclaration(context, compilation, classSymbol, group, generateValidation)) {
                     continue;
                 }
 
-                // Legacy generation stays unchanged until the entity explicitly opts in.
+                // Legacy property behavior stays unchanged until the entity explicitly opts in.
                 var generatedSource = GeneratePartialClass(ns, className, group, broker, generateValidation);
 
                 // Add the source using a stable hint name:
@@ -364,7 +364,8 @@ namespace {namespaceName}
         partial void AfterClone({className} original, {className} clone);
 {propertiesSource}
 {methodsSource}
-{(generateValidation ? GenerateValidation(properties.First()!.ContainingType, properties) : "")}
+{GenerateOwnExpressionValidation(properties, generateValidation)}
+{(generateValidation ? GenerateValidation(properties.First()!.ContainingType) : "")}
     }}
 }}";
         }

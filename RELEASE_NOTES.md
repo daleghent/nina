@@ -126,7 +126,6 @@ This allows you to safely return to a stable release if needed.
   - When loading older sequences, existing values are preserved and automatically interpreted as simple expressions.
 
 - **Plugin support (opt-in)**
-  - Expression entities can opt into generated validation with `UsesExpressions(GenerateValidation = true)`, including conditional fields, synchronized proxy properties and a notifying `Issues` property when none is inherited. Compiler diagnostics catch conflicting validation, local `Issues` declarations and invalid inherited properties without changing existing plugin interfaces.
   - Expression support for plugin-provided sequence items is **opt-in** and requires plugin updates.
   - Plugins must explicitly adopt the new expression system to expose expression-enabled fields.
   - Plugins that are not updated continue to function normally, but their sequence items will not offer expression support.

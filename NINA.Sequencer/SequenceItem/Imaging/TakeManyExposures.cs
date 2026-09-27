@@ -164,7 +164,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
 
             Issues = new List<string>(item.Issues);
-            Expression.ValidateExpressions(Issues, IterationsExpression);
+            ValidateOwnExpressions(Issues);
 
             RaisePropertyChanged(nameof(Issues));
             return valid && Issues.Count == 0;
