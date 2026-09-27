@@ -24,6 +24,7 @@ using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Generators;
 using NINA.Sequencer.Interfaces;
+using NINA.Sequencer.Logic;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Autofocus;
 using NINA.Sequencer.Utility;
@@ -158,6 +159,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                 i.Add(Loc.Instance["LblFocuserNotConnected"]);
             }
 
+            Expression.ValidateExpressions(i, AmountExpression);
             Issues = i;
             return i.Count == 0;
         }

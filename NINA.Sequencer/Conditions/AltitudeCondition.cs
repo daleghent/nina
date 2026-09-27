@@ -22,6 +22,7 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Telescope;
 using NINA.Sequencer.SequenceItem.Utility;
 using NINA.Sequencer.Utility;
+using NINA.Sequencer.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -38,7 +39,7 @@ namespace NINA.Sequencer.Conditions {
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
     [UsesExpressions]
-    public partial class AltitudeCondition : LoopForAltitudeBase, ISequenceCustomPropertyEditProvider, ISequenceAttachmentStateProvider {
+    public partial class AltitudeCondition : LoopForAltitudeBase, IValidatable, ISequenceCustomPropertyEditProvider, ISequenceAttachmentStateProvider {
         private double lastRA;
         private double lastDec;
         private bool hasDsoParent;
@@ -158,6 +159,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void CalculateExpectedTime() {
+            OffsetExpression.Evaluate();
             Data.CurrentAltitude = GetCurrentAltitude(DateTime.Now, Data.Observer);
             CalculateExpectedTimeCommon(Data, until: true, 30, GetCurrentAltitude);
         }
@@ -236,6 +238,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public bool Validate() {
+            Issues.Clear();
             Expression.ValidateExpressions(Issues, RaExpression, DecExpression, PositionAngleExpression, OffsetExpression);
             RaisePropertyChanged(nameof(Issues));
             return Issues.Count == 0;

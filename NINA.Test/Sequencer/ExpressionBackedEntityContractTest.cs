@@ -123,6 +123,13 @@ namespace NINA.Test.Sequencer {
             EntityFactories.Keys.Should().BeEquivalentTo(expressionEntityTypes.Select(t => t.Name));
         }
 
+        [Test]
+        public void ExpressionBackedConditions_ParticipateInSequencerValidation() {
+            foreach (Type type in GetExpressionEntityTypes().Where(t => typeof(ISequenceCondition).IsAssignableFrom(t))) {
+                typeof(IValidatable).IsAssignableFrom(type).Should().BeTrue($"{type.Name} must participate in container and runtime validation");
+            }
+        }
+
         /// <summary>
         /// Verifies the Generated Expression Properties Are Initialized From Attribute Metadata scenario for the sequencer behavior under test.
         /// </summary>

@@ -26,6 +26,8 @@ using NINA.Sequencer.Generators;
 using System.Runtime.Serialization;
 using NINA.Sequencer.Logic;
 using System.Globalization;
+using NINA.Sequencer.Validations;
+using System.Collections.Generic;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -37,7 +39,7 @@ namespace NINA.Sequencer.Conditions {
     [JsonObject(MemberSerialization.OptIn)]
     [UsesExpressions]   
     
-    public partial class SunAltitudeCondition : LoopForSunMoonAltitudeBase {
+    public partial class SunAltitudeCondition : LoopForSunMoonAltitudeBase, IValidatable {
 
         [ImportingConstructor]
         public SunAltitudeCondition(IProfileService profileService) : base(profileService, useCustomHorizon: false) {
@@ -68,11 +70,24 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
+        public override void AfterParentChanged() {
+            Validate();
+            base.AfterParentChanged();
+        }
+
+        public bool Validate() {
+            var issues = new List<string>();
+            Expression.ValidateExpressions(issues, OffsetExpression);
+            Issues = issues;
+            return issues.Count == 0;
+        }
+
         private DateTimeOffset lastCalculation = DateTimeOffset.MinValue;
         private double lastCalculationOffset = double.NaN;
         private ComparisonOperatorEnum lastCalculationComparator = ComparisonOperatorEnum.EQUALS;
 
         public override void CalculateExpectedTime() {
+            OffsetExpression.Evaluate();
             Data.CurrentAltitude = AstroUtil.GetSunAltitude(DateTime.Now, Data.Observer);
 
             if (!Check(null, null, true)) {

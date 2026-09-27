@@ -123,7 +123,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         // Backward compatibility
         [JsonProperty]
         public double ROI {
-            get => ROIPctExpression.Value / 100;
+            get => ROIPct / 100;
             set {
                 // When loaded, we set the expression
                 ROIPctExpression.Definition = (value * 100).ToString(CultureInfo.InvariantCulture);
@@ -410,6 +410,9 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             }
 
             Expression.ValidateExpressions(i, ExposureTimeExpression, GainExpression, OffsetExpression, LeftExpression, TopExpression, WidthExpression, HeightExpression);
+            if (IsROI) {
+                Expression.ValidateExpressions(i, ROIPctExpression);
+            }
 
             GainExpression.Range = CameraInfo.CanSetGain ? new double[] { CameraInfo.GainMin, CameraInfo.GainMax, 0 } : null;
             OffsetExpression.Range = CameraInfo.CanSetOffset ? new double[] { CameraInfo.OffsetMin, CameraInfo.OffsetMax, 0 } : null;
