@@ -90,6 +90,12 @@ namespace NINA.Equipment.Equipment.MyDome {
                 _ => throw new NotSupportedException($"Unsupported mount type: {domeSettings.MountType}"),
             };
 
+            // An alt-az mount whose OTA is offset above the altitude axis can look out of the opposite side of the dome
+            // when it points near the zenith. This only affects which way the dome is turned, so it is applied to the
+            // resulting dome azimuth rather than to the transformation above
+            var flipDomeAzimuth = domeSettings.MountType == MountTypeEnum.ALT_AZ
+                && ShouldFlipAltAzDome(scopeCoordinates, siteLatitude, siteLongitude, siteElevation);
+
             var scopeApertureOrigin = scopeOriginTranslation * origin;
 
             // The OTA points along the positive X-axis before any transformations take place. Transforming the point (1, 0, 0) provides a unit
@@ -225,34 +231,6 @@ namespace NINA.Equipment.Equipment.MyDome {
             var altitudeRotation = Matrix4x4.CreateRotationY((float)topocentric.Altitude.Radians);
             var azimuth = topocentric.Azimuth;
 
-            // Adaptive threshold: telescope is considered to be beyond the top edge of the shutter if this altitude is exceeded
-            double verticalClearanceAngleDeg = Math.Atan2(Math.Abs(domeSettings.GemAxis_mm), domeSettings.DomeRadius_mm) * (180.0 / Math.PI);
-            double zenithThresholdDeg = 90.0 - verticalClearanceAngleDeg;
-            double zOffsetAngle = topocentric.Altitude.Degree + verticalClearanceAngleDeg;
-
-            // Check if telescope is vertically offset and near zenith and whether it is beyond the zenith threshold
-            if (domeSettings.GemAxis_mm != 0d && topocentric.Altitude.Degree >= zenithThresholdDeg) {
-
-                // If the line of sight is higher than the slit can accommodate, rotate the dome to the opposing azimuth
-                if (zOffsetAngle > domeSettings.SlitMaximumAltitude_degrees) {
-                    azimuth = Angle.ByDegree((azimuth.Degree + 180.0) % 360.0);
-
-                    if (!flippedDome) {
-                        Logger.Info("Dome azimuth flipped due to pointing inside zenith threshold. " +
-                            $"Mount Alt: {topocentric.Altitude.Degree:F2}°, Mount Az: {topocentric.Azimuth.Degree:F2}°, Dome Az: {azimuth.Degree:F2}°, z-Offset Alt: {zOffsetAngle:F2}°");
-                    }
-
-                    flippedDome = true;
-                } else {
-                    if (flippedDome) {
-                        Logger.Info("Dome azimuth unflipped after telescope moved away from zenith threshold. " +
-                            $"Mount Alt: {topocentric.Altitude.Degree:F2}°, Mount Az: {topocentric.Azimuth.Degree:F2}°, Dome Az: {azimuth.Degree:F2}°, z-Offset Alt: {zOffsetAngle:F2}°");
-                    }
-
-                    flippedDome = false;
-                }
-            }
-
             // Determine hemisphere direction
             var latitudeFactor = siteLatitude.Radians >= 0 ? 1.0 : -1.0;
 
@@ -282,6 +260,50 @@ namespace NINA.Equipment.Equipment.MyDome {
             ));
 
             return mountOffset * (azimuthRotation * altitudeRotation * offsets);
+        }
+
+        /// <summary>
+        /// Determines whether the dome has to be driven to the opposing azimuth for an alt-az mount.
+        /// <para>
+        /// When the OTA sits above the altitude axis, its line of sight crosses over the zenith and exits the dome on
+        /// the far side once the mount points high enough. In that case only the dome has to be turned around, so this
+        /// decision is deliberately kept out of the transformation matrix. Rotating the mount model itself would move
+        /// the aperture origin and the line of sight along with it and produce a different answer.
+        /// </para>
+        /// </summary>
+        private bool ShouldFlipAltAzDome(
+            Coordinates scopeCoordinates,
+            Angle siteLatitude,
+            Angle siteLongitude,
+            double siteElevation) {
+            var domeSettings = profileService.ActiveProfile.DomeSettings;
+
+            if (domeSettings.GemAxis_mm == 0d) {
+                flippedDome = false;
+                return false;
+            }
+
+            var topocentric = scopeCoordinates.Transform(siteLatitude, siteLongitude, siteElevation);
+
+            // Adaptive threshold: telescope is considered to be beyond the top edge of the shutter if this altitude is exceeded
+            var verticalClearanceAngleDeg = Math.Atan2(Math.Abs(domeSettings.GemAxis_mm), domeSettings.DomeRadius_mm) * (180.0 / Math.PI);
+            var zenithThresholdDeg = 90.0 - verticalClearanceAngleDeg;
+            var zOffsetAngle = topocentric.Altitude.Degree + verticalClearanceAngleDeg;
+
+            // Check if telescope is near zenith and whether it is beyond the zenith threshold
+            var flip = topocentric.Altitude.Degree >= zenithThresholdDeg && zOffsetAngle > domeSettings.SlitMaximumAltitude_degrees;
+
+            if (flip != flippedDome) {
+                var reason = flip
+                    ? "Dome azimuth flipped due to pointing inside zenith threshold. "
+                    : "Dome azimuth unflipped after telescope moved away from zenith threshold. ";
+
+                Logger.Info(reason +
+                    $"Mount Alt: {topocentric.Altitude.Degree:F2}°, Mount Az: {topocentric.Azimuth.Degree:F2}°, z-Offset Alt: {zOffsetAngle:F2}°");
+            }
+
+            flippedDome = flip;
+            return flip;
         }
     }
 }
