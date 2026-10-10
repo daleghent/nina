@@ -146,6 +146,11 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     }
 
                     rotationDistance = targetRotation - orientation;
+                    var rangeType = profileService.ActiveProfile.RotatorSettings.RangeType;
+                    if (rangeType == Core.Enum.RotatorRangeTypeEnum.FULL || rangeType == Core.Enum.RotatorRangeTypeEnum.LITERAL) {
+                        // Unrestricted range, so take the shortest signed path
+                        rotationDistance = AstroUtil.EuclidianModulus(rotationDistance + 180, 360) - 180;
+                    }
 
                     if (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance), true)) {
                         Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {PositionAngle}° - Moving rotator relatively by {rotationDistance}°");

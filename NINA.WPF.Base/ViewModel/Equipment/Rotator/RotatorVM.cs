@@ -193,6 +193,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     var from = RotatorInfo.MechanicalPosition;
                     RotatorInfo.IsMoving = true;
 
+                    requestedPosition = AstroUtil.EuclidianModulus(requestedPosition, 360);
                     var adjustedTargetPosition = GetTargetMechanicalPosition(requestedPosition);
                     if (Math.Abs(adjustedTargetPosition - requestedPosition) > 0.1) {
                         Logger.Info($"Adjusted rotator mechanical target to {adjustedTargetPosition}");
