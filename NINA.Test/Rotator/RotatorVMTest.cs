@@ -200,6 +200,9 @@ namespace NINA.Test.Rotator {
         [TestCase(100.0f, 100.0f, 5.0f, Description = "LITERAL with offset, exact position")]
         [TestCase(190.0f, 190.0f, -10.0f, Description = "LITERAL with negative offset")]
         [TestCase(350.0f, 350.0f, 20.0f, Description = "LITERAL near 360° with offset")]
+        [TestCase(280.0f, 280.0f, 0.0f, Description = "LITERAL keeps requested angle when reciprocal 100° is at current position")]
+        [TestCase(250.0f, 250.0f, 0.0f, Description = "LITERAL keeps requested angle when reciprocal 70° is closer")]
+        [TestCase(275.0f, 275.0f, 5.0f, Description = "LITERAL with offset keeps requested angle when reciprocal is closer")]
         public async Task Test_GetPosition_LiteralRange(float requestedPosition, float expectedPosition, float offsetValue) {
             var sut = await CreateSUT();
             rangeType = RotatorRangeTypeEnum.LITERAL;
