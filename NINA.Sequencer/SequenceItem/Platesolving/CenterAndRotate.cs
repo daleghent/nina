@@ -138,9 +138,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     var orientation = (float)solveResult.PositionAngle;
                     rotatorMediator.Sync(orientation);
 
-                    var prevTargetRotation = targetRotation;
-                    targetRotation = rotatorMediator.GetTargetPosition(prevTargetRotation);
-                    if (Math.Abs(targetRotation - prevTargetRotation) > 0.1) {
+                    targetRotation = rotatorMediator.GetTargetPosition((float)PositionAngle);
+                    if (Math.Abs(AstroUtil.EuclidianModulus(targetRotation - PositionAngle + 180, 360) - 180) > 0.1) {
                         Logger.Info($"Rotator target position {PositionAngle} adjusted to {targetRotation} to be within the allowed mechanical range");
                         Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
                     }
