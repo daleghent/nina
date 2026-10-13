@@ -57,8 +57,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             DisconnectCommand = new AsyncCommand<bool>(() => Task.Run(DisconnectDiag));
             RescanDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !RotatorInfo.Connected);
             _ = RescanDevicesCommand.ExecuteAsync(null);
-            MoveCommand = new AsyncCommand<float>(() => Task.Run(() => Move(TargetPosition, CancellationToken.None)), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
-            MoveMechanicalCommand = new AsyncCommand<float>(() => Task.Run(() => MoveMechanical(TargetPosition, CancellationToken.None)), (p) => RotatorInfo.Connected);
+            MoveCommand = new AsyncCommand<float>(() => Task.Run(() => ManualMove(TargetPosition)), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
+            MoveMechanicalCommand = new AsyncCommand<float>(() => Task.Run(() => ManualMoveMechanical(TargetPosition)), (p) => RotatorInfo.Connected);
             HaltCommand = new RelayCommand(Halt, (p) => RotatorInfo.Connected);
             ReverseCommand = new RelayCommand(Reverse, (p) => RotatorInfo.Connected);
 
@@ -127,6 +127,27 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             }
         }
 
+        private Task<float> ManualMove(float requestedPosition) {
+            if (RotatorInfo.Connected && profileService.ActiveProfile.RotatorSettings.RangeType != RotatorRangeTypeEnum.LITERAL) {
+                var adjustedTargetPosition = GetTargetPosition(requestedPosition);
+                if (Math.Abs(AstroUtil.EuclidianModulus(adjustedTargetPosition - requestedPosition + 180, 360) - 180) > 0.1) {
+                    Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], adjustedTargetPosition.ToString("F2")));
+                }
+            }
+            return Move(requestedPosition, CancellationToken.None);
+        }
+
+        private Task<float> ManualMoveMechanical(float requestedPosition) {
+            if (RotatorInfo.Connected && profileService.ActiveProfile.RotatorSettings.RangeType != RotatorRangeTypeEnum.LITERAL) {
+                var normalizedPosition = AstroUtil.EuclidianModulus(requestedPosition, 360);
+                var adjustedTargetPosition = GetTargetMechanicalPosition(normalizedPosition);
+                if (Math.Abs(adjustedTargetPosition - normalizedPosition) > 0.1) {
+                    Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], adjustedTargetPosition.ToString("F2")));
+                }
+            }
+            return MoveMechanical(requestedPosition, CancellationToken.None);
+        }
+
         public async Task<float> Move(float requestedPosition, CancellationToken ct) {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
@@ -138,9 +159,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     RotatorInfo.IsMoving = true;
 
                     var adjustedTargetPosition = GetTargetPosition(requestedPosition);
-                    if (Math.Abs(adjustedTargetPosition - requestedPosition) > 0.1) {
-                        Logger.Info($"Adjusted rotator target to {adjustedTargetPosition}");
-                        Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], adjustedTargetPosition));
+                    if (Math.Abs(AstroUtil.EuclidianModulus(adjustedTargetPosition - requestedPosition + 180, 360) - 180) > 0.1) {
+                        if (profileService.ActiveProfile.RotatorSettings.RangeType != RotatorRangeTypeEnum.LITERAL) {
+                            Logger.Info($"Rotator target position {requestedPosition} adjusted to {adjustedTargetPosition}");
+                        }
                     }
 
                     applicationStatusMediator.StatusUpdate(
@@ -197,7 +219,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     var adjustedTargetPosition = GetTargetMechanicalPosition(requestedPosition);
                     if (Math.Abs(adjustedTargetPosition - requestedPosition) > 0.1) {
                         Logger.Info($"Adjusted rotator mechanical target to {adjustedTargetPosition}");
-                        Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], adjustedTargetPosition));
                     }
 
                     applicationStatusMediator.StatusUpdate(
