@@ -108,7 +108,7 @@ This allows you to safely return to a stable release if needed.
   - Preventing automatic tracking on unpark avoids unexpected mount movement and reduces the risk of pier collisions or other unintended motion, while ensuring consistent and predictable behavior across drivers.
 - `Wait Until Safe` instruction no longer requires a safety monitor to be connected. A disconnected safety monitor is treated as unsafe, as it could be disconnected due to communication failures.
 - Plugins that register sequencer symbol functions must now use `ISymbolFunctionArguments`. Use `Count` to inspect the argument count and `Evaluate(index)` to lazily evaluate an argument. This NINA-owned contract prevents future NCalc upgrades from changing the plugin API directly.
-- `Full` mechanical range behavior for rotators is now applied in all cases of commanded rotation, including rotations initiated from outside a sequence.
+- The rotator's selected Mechanical Range mode is now applied in all cases, whether the rotator was commanded as part of a sequence or by using manual controls.
 
 ## Features
 
@@ -178,7 +178,7 @@ This allows you to safely return to a stable release if needed.
     - Connected FLI cameras are now identified by their serial number, enabling easier management in the case of multiple FLI cameras connected to the system.
     - No longer creates an extra copy of image data in memory when downloading images, reducing memory usage and improving performance.
 - **Rotators**
-  - Added `Literal` mechanical range mode where the commanded angle is applied exactly as specified, without any automatic adjustments or optimizations.
+  - Added a `Literal` mechanical range mode where the requested angle is always moved to even if its opposing angle would be a closer movement.
 
 ### **User Interface & Usability**
 - **Plugin Manager**
