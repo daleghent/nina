@@ -8415,4 +8415,7 @@ This is useful when a built-in trigger has the timing you need, but you want cus
   <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
     <value>{0} (not available)</value>
   </data>
+  <data name="LblHardwareVersion" xml:space="preserve">
+    <value>Hardware version</value>
+  </data>
 </root>

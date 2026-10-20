@@ -137,7 +137,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
         /*
          * FLI cameras are always 16bit
          */
-
         public int BitDepth {
             get => 16;
             set {
@@ -257,7 +256,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        public string Description => string.Format($"{Name} ({Id}) SN: {Info.Serial} HWRev: {Info.HWrev} FWRev: {Info.FWrev}");
+        public string Description => $"{Name} ({Id}) SN: {Info.Serial}";
+
+        public string FirmwareVersion => Info.FWrev.ToString();
+        public string HardwareVersion => Info.HWrev.ToString();
 
         public bool DewHeaterOn {
             get => false;
@@ -340,7 +342,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public IList<int> Gains => new List<int>();
         public bool HasBattery => false;
         public bool HasDewHeater => false;
-        public bool HasSetupDialog => Connected ? true : false;
+        public bool HasSetupDialog => false;
 
         /*
          * All FLI cameras have shutters
@@ -756,20 +758,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             BinY = y;
         }
 
-        private IWindowService windowService;
-
-        public IWindowService WindowService {
-            get {
-                if (windowService == null) {
-                    windowService = new WindowService();
-                }
-                return windowService;
-            }
-            set => windowService = value;
-        }
-
         public void SetupDialog() {
-            WindowService.ShowDialog(this, Loc.Instance["LblFLICameraSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
 
         public void StartExposure(CaptureSequence sequence) {

@@ -75,10 +75,6 @@
         <equip:FileCameraSetupView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type camera:FLICamera}">
-        <equip:FLICameraSetupView />
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type phd2:PHD2Guider}">
         <equip:PHD2SetupView />
     </DataTemplate>
