@@ -743,7 +743,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 int width = (int)Info.ExposureWidth;
                 int height = (int)Info.ExposureHeight;
                 int imgSize = width * height;
-                int rowSize = width * 2;
                 uint timeLeft = 0;
 
                 /*
@@ -759,30 +758,27 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 }
 
                 // FLI cameras are always 16bit
-                ushort[] rowData = new ushort[width];
                 ushort[] imgData = new ushort[imgSize];
 
                 BGFlushStop();
 
                 Logger.Debug($"FLI: Fetching {height} rows from the camera");
 
-                for (int r = 0; r < height; r++) {
-                    if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, width)) != LibFLI.FLI_SUCCESS) {
-                        Logger.Error($"FLI: FLIGrabRow() failed at row {r + 1}. Returned {rv}");
+                int failedRow = GrabRows(imgData, width, height, out rv);
 
-                        /*
-                         * Discard the rest of the frame so that the camera is ready for the next exposure
-                         */
-                        if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
-                            Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
-                        }
+                if (failedRow >= 0) {
+                    Logger.Error($"FLI: FLIGrabRow() failed at row {failedRow + 1}. Returned {rv}");
 
-                        BGFlushStart();
-
-                        throw new Exception($"FLI: Image download failed reading row {r + 1} of {height}");
+                    /*
+                     * Discard the rest of the frame so that the camera is ready for the next exposure
+                     */
+                    if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
+                        Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
                     }
 
-                    Buffer.BlockCopy(rowData, 0, imgData, r * rowSize, rowSize);
+                    BGFlushStart();
+
+                    throw new Exception($"FLI: Image download failed reading row {failedRow + 1} of {height}");
                 }
 
                 BGFlushStart();
@@ -797,6 +793,26 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     isBayered: this.SensorType != SensorType.Monochrome,
                     metaData: metaData);
             }, ct);
+        }
+
+        /*
+         * Read the frame row by row directly into the destination buffer, avoiding an intermediate row buffer
+         * and copy. Returns the zero-based index of the row that failed, or -1 on success.
+         */
+        private unsafe int GrabRows(ushort[] dest, int width, int height, out uint rv) {
+            rv = LibFLI.FLI_SUCCESS;
+
+            fixed (ushort* p = dest) {
+                ushort* row = p;
+
+                for (int r = 0; r < height; r++, row += width) {
+                    if ((rv = LibFLI.FLIGrabRow(CameraH, row, width)) != LibFLI.FLI_SUCCESS) {
+                        return r;
+                    }
+                }
+            }
+
+            return -1;
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken ct) {
