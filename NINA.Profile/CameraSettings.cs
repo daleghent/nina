@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Core.Model.Equipment;
 using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
@@ -50,8 +49,8 @@ namespace NINA.Profile {
             dewHeaterOn = false;
 
             fliEnableFloodFlush = false;
-            fliFloodDuration = 1;
-            fliFlushCount = 2;
+            fliFloodDuration = 0.5d;
+            fliFlushCount = 1;
             fliEnableSnapshotFloodFlush = false;
 
             qhyIncludeOverscan = false;
