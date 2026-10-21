@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Model.Equipment;
 using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
@@ -51,6 +52,8 @@ namespace NINA.Profile {
             fliEnableFloodFlush = false;
             fliFloodDuration = 0.5d;
             fliFlushCount = 1;
+            fliFloodBinAuto = false;
+            fliFloodBin = new BinningMode(1, 4);
             fliEnableSnapshotFloodFlush = false;
             fliKeepShutterOpen = false;
             fliIncludeOverscan = false;
@@ -295,6 +298,32 @@ namespace NINA.Profile {
             set {
                 if (fliFloodDuration != value) {
                     fliFloodDuration = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fliFloodBinAuto;
+
+        [DataMember]
+        public bool FLIFloodBinAuto {
+            get => fliFloodBinAuto;
+            set {
+                if (fliFloodBinAuto != value) {
+                    fliFloodBinAuto = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private BinningMode fliFloodBin;
+
+        [DataMember]
+        public BinningMode FLIFloodBin {
+            get => fliFloodBin;
+            set {
+                if (fliFloodBin != value) {
+                    fliFloodBin = value;
                     RaisePropertyChanged();
                 }
             }

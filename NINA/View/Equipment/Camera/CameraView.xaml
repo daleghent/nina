@@ -1072,6 +1072,34 @@
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0">
+                                                    <StackPanel Orientation="Horizontal" ToolTip="{ns:Loc LblFLIFloodBinAutoTooltip}">
+                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBinAuto}" />
+                                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIFloodBinAuto}" />
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,6,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBin}" />
+                                                        <ninactrl:IntStepperControl
+                                                            Margin="0,0,6,0"
+                                                            MinWidth="75"
+                                                            MinValue="1"
+                                                            MaxValue="{Binding MaxBinX}"
+                                                            StepSize="1"
+                                                            IsEnabled="{Binding FLIFloodBinAuto, Converter={StaticResource InverseBooleanConverter}}"
+                                                            Value="{Binding FLIFloodBinX, Mode=TwoWay}" />
+                                                        <TextBlock VerticalAlignment="Center" Margin="0,0,6,0" Text="x" />
+                                                        <ninactrl:IntStepperControl
+                                                            Margin="0,0,6,0"
+                                                            MinWidth="75"
+                                                            MinValue="1"
+                                                            MaxValue="{Binding MaxBinY}"
+                                                            StepSize="1"
+                                                            IsEnabled="{Binding FLIFloodBinAuto, Converter={StaticResource InverseBooleanConverter}}"
+                                                            Value="{Binding FLIFloodBinY, Mode=TwoWay}" />
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,6,0,0">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLISnapshotFlood}" />
                                                         <CheckBox

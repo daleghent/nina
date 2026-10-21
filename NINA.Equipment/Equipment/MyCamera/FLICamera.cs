@@ -905,7 +905,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
              */
             if (FLIEnableFloodFlush == true && FLIFlushCount > 0) {
                 if ((isSnap && FLIEnableSnapshotFloodFlush) || !isSnap) {
-                    if (!FloodControl(sequence.Binning.X, sequence.Binning.Y)) {
+                    short floodBinX = FLIFloodBinAuto ? sequence.Binning.X : (short)FLIFloodBinX;
+                    short floodBinY = FLIFloodBinAuto ? sequence.Binning.Y : (short)FLIFloodBinY;
+
+                    if (!FloodControl(floodBinX, floodBinY)) {
                         if (rbiAbortRequested) {
                             Logger.Info("FLI: RBI sequence aborted. Exposure not started.");
                             return;
@@ -1240,6 +1243,34 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 profileService.ActiveProfile.CameraSettings.FLIFloodDuration = time;
                 RaisePropertyChanged();
             }
+        }
+
+        public bool FLIFloodBinAuto {
+            get => profileService.ActiveProfile.CameraSettings.FLIFloodBinAuto;
+            set {
+                profileService.ActiveProfile.CameraSettings.FLIFloodBinAuto = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public BinningMode FLIFloodBin {
+            get => profileService.ActiveProfile.CameraSettings.FLIFloodBin ?? new BinningMode(1, 4);
+            set {
+                profileService.ActiveProfile.CameraSettings.FLIFloodBin = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(FLIFloodBinX));
+                RaisePropertyChanged(nameof(FLIFloodBinY));
+            }
+        }
+
+        public int FLIFloodBinX {
+            get => Math.Clamp((int)FLIFloodBin.X, 1, MaxBinX);
+            set => FLIFloodBin = new BinningMode((short)Math.Clamp(value, 1, MaxBinX), (short)FLIFloodBinY);
+        }
+
+        public int FLIFloodBinY {
+            get => Math.Clamp((int)FLIFloodBin.Y, 1, MaxBinY);
+            set => FLIFloodBin = new BinningMode((short)FLIFloodBinX, (short)Math.Clamp(value, 1, MaxBinY));
         }
 
         public uint FLIFlushCount {

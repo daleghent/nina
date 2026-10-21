@@ -1570,14 +1570,20 @@ When this trigger is deactivated the application will just skip the Start Exposu
   <data name="LblFlatWizardCapture" xml:space="preserve">
     <value>Flat Wizard Capture</value>
   </data>
-  <data name="LblFLICameraSetup" xml:space="preserve">
-    <value>FLI Camera Setup</value>
+  <data name="LblFLIFlashDuration" xml:space="preserve">
+    <value>Flood duration</value>
   </data>
-  <data name="LblFLIFloodDuration" xml:space="preserve">
-    <value>Flood Duration</value>
+  <data name="LblFLIFloodBin" xml:space="preserve">
+    <value>Flood binning (X / Y)</value>
+  </data>
+  <data name="LblFLIFloodBinAuto" xml:space="preserve">
+    <value>Automatic flood binning</value>
+  </data>
+  <data name="LblFLIFloodBinAutoTooltip" xml:space="preserve">
+    <value>When enabled, the RBI pre-flash flood frame uses the same binning as the exposure that follows it. When disabled, the flood binning X and Y values specified below are used.</value>
   </data>
   <data name="LblFLIFlushCount" xml:space="preserve">
-    <value>Pre-exposure Flush Count</value>
+    <value>Flush count</value>
   </data>
   <data name="LblFlip" xml:space="preserve">
     <value>Do the flip</value>

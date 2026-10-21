@@ -44,6 +44,8 @@ namespace NINA.Profile.Interfaces {
         bool FLIIncludeOverscan { get; set; }
         double FLIFloodDuration { get; set; }
         uint FLIFlushCount { get; set; }
+        bool FLIFloodBinAuto { get; set; }
+        BinningMode FLIFloodBin { get; set; }
         bool BitScaling { get; set; }
         bool SaveNativeCameraRaw { get; set; }
         double CoolingDuration { get; set; }
