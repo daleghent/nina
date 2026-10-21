@@ -12,30 +12,30 @@
 
 #endregion "copyright"
 
-using NINA.Core.Enum;
 using NINA.Astrometry;
+using NINA.Core.Enum;
+using NINA.Core.Utility;
+using NINA.Image.ImageData;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using NINA.Core.Utility;
-using NINA.Image.ImageData;
 
 namespace NINA.Image.FileFormat.FITS {
     public class FITSHeader {
 
         public FITSHeader(int width, int height) {
-                Add("SIMPLE", true, "C# FITS");
-                Add("BITPIX", 16, "");
-                Add("NAXIS", 2, "Dimensionality");
-                Add("NAXIS1", width, "");
-                Add("NAXIS2", height, "");
-                Add("BZERO", 32768, "");
-                Add("EXTEND", true, "Extensions are permitted");
-            }
+            Add("SIMPLE", true, "C# FITS");
+            Add("BITPIX", 16, "");
+            Add("NAXIS", 2, "Dimensionality");
+            Add("NAXIS1", width, "");
+            Add("NAXIS2", height, "");
+            Add("BZERO", 32768, "");
+            Add("EXTEND", true, "Extensions are permitted");
+        }
 
-        private Dictionary<string, FITSHeaderCard> _headerCards = new Dictionary<string, FITSHeaderCard>();
+        private readonly Dictionary<string, FITSHeaderCard> _headerCards = new Dictionary<string, FITSHeaderCard>();
 
         public ICollection<FITSHeaderCard> HeaderCards => _headerCards.Values;
 
@@ -441,7 +441,7 @@ namespace NINA.Image.FileFormat.FITS {
         }
 
         private List<IGenericMetaDataHeader> GetAllFITSKeywords() {
-            var l = new List<IGenericMetaDataHeader>();            
+            var l = new List<IGenericMetaDataHeader>();
             if (_headerCards.Count == 0) { return l; }
 
             foreach (var elem in _headerCards) {
@@ -450,13 +450,13 @@ namespace NINA.Image.FileFormat.FITS {
                 var key = elem.Key;
                 if (key == null) { continue; }
 
-                if(elem.Value.Value.StartsWith("'")) {
+                if (elem.Value.Value.StartsWith("'")) {
                     var value = elem.Value.OriginalValue.Trim();
                     l.Add(new StringMetaDataHeader(key, value, elem.Value.Comment));
                 } else if (elem.Value.OriginalValue == "T" || elem.Value.OriginalValue == "F") {
                     var value = elem.Value.OriginalValue.Trim() == "T" ? true : false;
                     l.Add(new BoolMetaDataHeader(key, value, elem.Value.Comment));
-                } else if (elem.Value.OriginalValue.Contains(".") && double.TryParse(elem.Value.OriginalValue, CultureInfo.InvariantCulture, out var number)) {                    
+                } else if (elem.Value.OriginalValue.Contains(".") && double.TryParse(elem.Value.OriginalValue, CultureInfo.InvariantCulture, out var number)) {
                     l.Add(new DoubleMetaDataHeader(key, number, elem.Value.Comment));
                 } else if (int.TryParse(elem.Value.OriginalValue, out var integer)) {
                     l.Add(new IntMetaDataHeader(key, integer, elem.Value.Comment));
@@ -772,8 +772,8 @@ namespace NINA.Image.FileFormat.FITS {
             Add("EQUINOX", 2000.0d, "Equinox of celestial coordinate system");
             Add("SWCREATE", string.Format("N.I.N.A. {0} ({1})", CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
 
-            foreach(var elem in metaData.GenericHeaders) {
-                switch(elem) {
+            foreach (var elem in metaData.GenericHeaders) {
+                switch (elem) {
                     case StringMetaDataHeader s:
                         Add(s.Key, s.Value, s.Comment);
                         break;
@@ -790,7 +790,7 @@ namespace NINA.Image.FileFormat.FITS {
                         Add(d.Key, d.Value, d.Comment);
                         break;
                 }
-                
+
             }
         }
     }

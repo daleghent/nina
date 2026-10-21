@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using static NINA.Image.FileFormat.FITS.CfitsioNative;
-using NINA.Image.ImageData;
-using System.Globalization;
+﻿using NINA.Astrometry;
 using NINA.Core.Enum;
-using NINA.Astrometry;
 using NINA.Core.Utility;
+using NINA.Image.ImageData;
+using System;
+using System.Globalization;
+using System.Linq;
+using static NINA.Image.FileFormat.FITS.CfitsioNative;
 
 namespace NINA.Image.FileFormat.FITS {
     public class CFitsioFITS {
-        private nint filePtr;
+        private readonly nint filePtr;
 
         private CFitsioFITS(string filePath, COMPRESSION compression) {
             CfitsioNative.fits_create_diskfile(out var ptr, filePath, out var status);
