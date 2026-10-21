@@ -494,7 +494,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                     for (int r = 0; r < flushHeight; r++) {
                         if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, (int)flushWidth)) != LibFLI.FLI_SUCCESS) {
-                            Logger.Error($"FLI: FLIGrabRow() failed at row {r}. Returned {rv}");
+                            Logger.Error($"FLI: FLIGrabRow() failed at row {r + 1}. Returned {rv}");
+
+                            if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
+                                Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
+                            }
+
+                            break;
                         }
                     }
 
@@ -763,6 +769,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 for (int r = 0; r < height; r++) {
                     if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, width)) != LibFLI.FLI_SUCCESS) {
                         Logger.Error($"FLI: FLIGrabRow() failed at row {r + 1}. Returned {rv}");
+
+                        /*
+                         * Discard the rest of the frame so that the camera is ready for the next exposure
+                         */
+                        if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
+                            Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
+                        }
+
+                        BGFlushStart();
+
+                        throw new Exception($"FLI: Image download failed reading row {r + 1} of {height}");
                     }
 
                     Buffer.BlockCopy(rowData, 0, imgData, r * rowSize, rowSize);
