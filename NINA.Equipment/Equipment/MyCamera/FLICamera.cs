@@ -687,14 +687,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                      * Background flushing is automatically disabled whenever an exposure is made or
                      * the shutter is opened, so we must turn it on again after those events.
                      *
-                     * We set the camera to execute the pre-exposure flushes that follow the RBI flood readout.
+                     * RBI flushes are performed explicitly by FloodControl(), so firmware pre-exposure flushes are disabled.
                      */
                     if (FLIEnableFloodFlush) {
                         BGFlushStart();
+                    }
 
-                        if (!ApplyFirmwareFlushCount(FirmwareFlushCount)) {
-                            return success;
-                        }
+                    if (!ApplyFirmwareFlushCount(0)) {
+                        return success;
                     }
 
                     /*
@@ -1052,11 +1052,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
          *
          *   1. Flood the sensor with the NIR pre-flash (RBI_FLUSH frame) for FLIFloodDuration, then read it out.
          *      This readout counts as the first of the FLIFlushCount flushes.
-         *   2. The remaining FLIFlushCount - 1 flushes are executed by the camera firmware at the start of the
-         *      next exposure (see ApplyFirmwareFlushCount()). This clears the flood charge without the lengthy
-         *      download that reading out a flush frame from the host would need.
+         *   2. The remaining FLIFlushCount - 1 flushes are zero-length dark frames that are each exposed and
+         *      read out, as in the FLI Legacy driver. Firmware pre-exposure flushes (FLISetNFlushes) are not
+         *      honored by all camera families, so they are not relied upon.
          *
-         * The flood frame is polled until the camera reports it complete before it is read out and discarded.
+         * Each frame is polled
          * As in the FLI Legacy driver, it is taken at the pending exposure's binning and image area. StartExposure()
          * re-applies binning, frame type, exposure time and image area for the real exposure afterwards.
          */
@@ -1067,7 +1067,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             uint lr_x = ul_x + width;
             uint lr_y = ul_y + height;
 
-            Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms at {binX}x{binY} binning, followed by {FirmwareFlushCount} camera pre-exposure flush(es)");
+            Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms at {binX}x{binY} binning, followed by {RbiFlushFrameCount} flush frame(s)");
 
             SetBinning(binX, binY);
 
@@ -1088,7 +1088,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return false;
             }
 
-            BGFlushStart();
+            /*
+             * Flushes
+             */
+            FrameType = LibFLI.FLIFrameType.DARK;
+            ExposureLength = 0;
+
+            for (uint i = 1; i <= RbiFlushFrameCount; i++) {
+                if (!RbiExposeAndDiscard($"flush {i}/{RbiFlushFrameCount}", width, height)) {
+                    return false;
+                }
+            }
 
             Logger.Debug("FLI: RBI: Operation completed.");
             return true;
@@ -1241,11 +1251,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 if (value == true) {
                     BGFlushStart();
-                    ApplyFirmwareFlushCount(FirmwareFlushCount);
                 } else {
                     Logger.Debug("FLI: Attempting to stop background flushing...");
                     BGFlushStop();
-                    ApplyFirmwareFlushCount(0);
                 }
 
                 profileService.ActiveProfile.CameraSettings.FLIEnableFloodFlush = value;
@@ -1301,19 +1309,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  * Total RBI flushes, counting the flood readout as the first (as in the FLI Legacy driver)
                  */
                 profileService.ActiveProfile.CameraSettings.FLIFlushCount = value;
-
-                if (Connected && FLIEnableFloodFlush) {
-                    ApplyFirmwareFlushCount(FirmwareFlushCount);
-                }
-
                 RaisePropertyChanged();
             }
         }
 
         /*
-         * The flood readout is the first RBI flush; the camera firmware executes the rest before the exposure
+         * The flood readout is the first RBI flush; the rest are zero-length dark frames read out by FloodControl()
          */
-        private uint FirmwareFlushCount => FLIFlushCount > 0 ? FLIFlushCount - 1 : 0;
+        private uint RbiFlushFrameCount => FLIFlushCount > 0 ? FLIFlushCount - 1 : 0;
 
         private bool ApplyFirmwareFlushCount(uint nflushes) {
             uint rv;
