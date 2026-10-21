@@ -86,6 +86,15 @@ namespace NINA.Image.FileFormat.FITS {
             this.Comment = comment;
         }
 
+        public FITSHeaderCard(string key, uint value, string comment) {
+            this.Key = key;
+            this.Value = value.ToString(CultureInfo.InvariantCulture);
+            if (comment?.Length > 45) {
+                comment = comment.Substring(0, 45);
+            }
+            this.Comment = comment;
+        }
+
         public FITSHeaderCard(string key, int value, string comment) {
             this.Key = key;
             this.Value = value.ToString(CultureInfo.InvariantCulture);

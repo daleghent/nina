@@ -62,6 +62,11 @@ namespace NINA.Image.FileFormat.FITS {
             LogErrorStatus("fits_update_key_str", status);
         }
 
+        public void AddHeader(string keyword, uint value, string comment) {
+            CfitsioNative.fits_update_key_lng(filePtr, keyword, value, comment, out var status);
+            LogErrorStatus("fits_update_key_lng", status);
+        }
+
         public void AddHeader(string keyword, int value, string comment) {
             CfitsioNative.fits_update_key_lng(filePtr, keyword, value, comment, out var status);
             LogErrorStatus("fits_update_key_lng", status);
@@ -369,6 +374,9 @@ namespace NINA.Image.FileFormat.FITS {
                 switch (elem) {
                     case StringMetaDataHeader s:
                         AddHeader(s.Key, s.Value, s.Comment);
+                        break;
+                    case UIntMetaDataHeader u:
+                        AddHeader(u.Key, u.Value, u.Comment);
                         break;
                     case IntMetaDataHeader i:
                         AddHeader(i.Key, i.Value, i.Comment);

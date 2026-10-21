@@ -45,6 +45,12 @@ namespace NINA.Image.FileFormat.FITS {
             }
         }
 
+        public void Add(string keyword, uint value, string comment) {
+            if (!_headerCards.ContainsKey(keyword)) {
+                _headerCards.Add(keyword, new FITSHeaderCard(keyword, value, comment));
+            }
+        }
+
         public void Add(string keyword, int value, string comment) {
             if (!_headerCards.ContainsKey(keyword)) {
                 _headerCards.Add(keyword, new FITSHeaderCard(keyword, value, comment));
@@ -776,6 +782,9 @@ namespace NINA.Image.FileFormat.FITS {
                 switch (elem) {
                     case StringMetaDataHeader s:
                         Add(s.Key, s.Value, s.Comment);
+                        break;
+                    case UIntMetaDataHeader u:
+                        Add(u.Key, u.Value, u.Comment);
                         break;
                     case IntMetaDataHeader i:
                         Add(i.Key, i.Value, i.Comment);

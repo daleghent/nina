@@ -690,6 +690,9 @@ namespace NINA.Image.FileFormat.XISF {
                     case StringMetaDataHeader s:
                         AddImageFITSKeyword(s.Key, s.Value, s.Comment);
                         break;
+                    case UIntMetaDataHeader u:
+                        AddImageFITSKeyword(u.Key, u.Value, u.Comment);
+                        break;
                     case IntMetaDataHeader i:
                         AddImageFITSKeyword(i.Key, i.Value, i.Comment);
                         break;
@@ -788,6 +791,10 @@ namespace NINA.Image.FileFormat.XISF {
 
         public void AddImageFITSKeyword(string name, DateTime value, string comment = "") {
             AddImageFITSKeywordInternal(name, "'" + value.ToString("yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture) + "'", comment);
+        }
+
+        public void AddImageFITSKeyword(string name, uint value, string comment = "") {
+            AddImageFITSKeywordInternal(name, value.ToString(CultureInfo.InvariantCulture), comment);
         }
 
         public void AddImageFITSKeyword(string name, int value, string comment = "") {
