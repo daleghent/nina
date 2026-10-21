@@ -639,16 +639,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     ReadoutModes = new List<string>(modeList);
 
                     /*
-                     * Set the configured RBI flood bin mode
-                     */
-                    if (FLIFloodBin == null) {
-                        /* 2x2 is the default */
-                        FLIFloodBin = BinningModes.Single(x => x.Name == "2x2");
-                    } else {
-                        FLIFloodBin = BinningModes.Single(x => x.Name == FLIFloodBin?.Name);
-                    }
-
-                    /*
                      * Attempt to turn on background flushing. Save the result for later attempts
                      * Background flushing is automatically disabled whenever an exposure is made or
                      * the shutter is opened, so we must turn it on again after those events.
@@ -804,7 +794,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
              */
             if (FLIEnableFloodFlush == true && FLIFlushCount > 0) {
                 if ((isSnap && FLIEnableSnapshotFloodFlush) || !isSnap) {
-                    if (!FloodControl()) {
+                    if (!FloodControl(sequence.Binning.X, sequence.Binning.Y)) {
                         if (rbiAbortRequested) {
                             Logger.Info("FLI: RBI sequence aborted. Exposure not started.");
                             return;
@@ -894,13 +884,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
          *      download that reading out a flush frame from the host would need.
          *
          * The flood frame is polled until the camera reports it complete before it is read out and discarded.
-         * It covers the full visible area at FLIFloodBin binning. StartExposure() re-applies binning, frame type,
-         * exposure time and image area for the real exposure afterwards.
+         * As in the FLI Legacy driver, it is taken at the pending exposure's binning. StartExposure() re-applies
+         * binning, frame type, exposure time and image area for the real exposure afterwards.
          */
-        private bool FloodControl() {
+        private bool FloodControl(short binX, short binY) {
             uint rv;
-            short binX = FLIFloodBin.X;
-            short binY = FLIFloodBin.Y;
 
             /*
              * FLISetImageArea() takes the lower right corner as the upper left corner plus the binned size
@@ -912,7 +900,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             uint lr_x = ul_x + width;
             uint lr_y = ul_y + height;
 
-            Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms at {FLIFloodBin.Name} binning, followed by {FirmwareFlushCount} camera pre-exposure flush(es)");
+            Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms at {binX}x{binY} binning, followed by {FirmwareFlushCount} camera pre-exposure flush(es)");
 
             SetBinning(binX, binY);
 
@@ -1119,14 +1107,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             return true;
-        }
-
-        public BinningMode FLIFloodBin {
-            get => profileService.ActiveProfile.CameraSettings.FLIFloodBin;
-            set {
-                profileService.ActiveProfile.CameraSettings.FLIFloodBin = value;
-                RaisePropertyChanged();
-            }
         }
 
         public bool FLIEnableSnapshotFloodFlush {

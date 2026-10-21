@@ -42,7 +42,6 @@ namespace NINA.Profile.Interfaces {
         bool FLIEnableSnapshotFloodFlush { get; set; }
         double FLIFloodDuration { get; set; }
         uint FLIFlushCount { get; set; }
-        BinningMode FLIFloodBin { get; set; }
         bool BitScaling { get; set; }
         bool SaveNativeCameraRaw { get; set; }
         double CoolingDuration { get; set; }

@@ -312,19 +312,6 @@ namespace NINA.Profile {
             }
         }
 
-        private BinningMode fliFloodBin;
-
-        [DataMember]
-        public BinningMode FLIFloodBin {
-            get => fliFloodBin;
-            set {
-                if (fliFloodBin != value) {
-                    fliFloodBin = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         private bool fliEnableSnapshotFloodFlush;
 
         [DataMember]

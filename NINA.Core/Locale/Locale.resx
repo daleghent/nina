@@ -1573,9 +1573,6 @@ When this trigger is deactivated the application will just skip the Start Exposu
   <data name="LblFLICameraSetup" xml:space="preserve">
     <value>FLI Camera Setup</value>
   </data>
-  <data name="LblFLIFloodBin" xml:space="preserve">
-    <value>Flood Binning</value>
-  </data>
   <data name="LblFLIFloodDuration" xml:space="preserve">
     <value>Flood Duration</value>
   </data>

@@ -1073,17 +1073,6 @@
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBin}" />
-                                                        <ComboBox
-                                                            MinWidth="75"
-                                                            ItemsSource="{Binding BinningModes}"
-                                                            SelectedItem="{Binding FLIFloodBin, Mode=TwoWay}"
-                                                            DisplayMemberPath="Name"
-                                                            SelectedValuePath="Name" />
-                                                    </StackPanel>
-                                                </DockPanel>
-                                                <DockPanel Margin="0,6,0,0">
-                                                    <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLISnapshotFlood}" />
                                                         <CheckBox
                                                             HorizontalAlignment="Left"
