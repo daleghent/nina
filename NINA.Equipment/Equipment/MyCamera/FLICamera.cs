@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2026 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ï¿½ 2016 - 2026 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -123,6 +123,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 uint rv;
 
+                if (value < 1 || value > MaxBinX) {
+                    throw new ArgumentOutOfRangeException(nameof(BinX), value, $"FLI: Horizontal binning must be between 1 and {MaxBinX}");
+                }
+
                 if (Connected) {
                     if ((rv = LibFLI.FLISetHBin(CameraH, (uint)value)) != LibFLI.FLI_SUCCESS) {
                         Logger.Error($"FLI: BinX.set failed. Returned {rv}");
@@ -138,6 +142,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get => Info.BinY;
             set {
                 uint rv;
+
+                if (value < 1 || value > MaxBinY) {
+                    throw new ArgumentOutOfRangeException(nameof(BinY), value, $"FLI: Vertical binning must be between 1 and {MaxBinY}");
+                }
 
                 if (Connected) {
                     if ((rv = LibFLI.FLISetVBin(CameraH, (uint)value)) != LibFLI.FLI_SUCCESS) {
@@ -840,6 +848,33 @@ namespace NINA.Equipment.Equipment.MyCamera {
             BinY = y;
         }
 
+        /*
+         * Reject exposure parameters the camera cannot honor before anything (RBI flood included) is sent to it.
+         */
+        private void ValidateExposureParameters(CaptureSequence sequence) {
+            short binX = sequence.Binning.X;
+            short binY = sequence.Binning.Y;
+
+            if (binX < 1 || binX > MaxBinX || binY < 1 || binY > MaxBinY) {
+                throw new ArgumentOutOfRangeException(nameof(sequence.Binning), $"FLI: Binning {binX}x{binY} is outside the supported range of 1x1 to {MaxBinX}x{MaxBinY}");
+            }
+
+            if (double.IsNaN(sequence.ExposureTime) || sequence.ExposureTime < 0 || sequence.ExposureTime > ExposureMax) {
+                throw new ArgumentOutOfRangeException(nameof(sequence.ExposureTime), sequence.ExposureTime, $"FLI: Exposure time must be between 0 and {ExposureMax} seconds");
+            }
+
+            if (EnableSubSample) {
+                if (SubSampleWidth < binX || SubSampleHeight < binY) {
+                    throw new ArgumentOutOfRangeException(nameof(SubSampleWidth), $"FLI: Subframe {SubSampleWidth}x{SubSampleHeight} is smaller than one {binX}x{binY} binned pixel");
+                }
+
+                if (SubSampleX < 0 || SubSampleY < 0 ||
+                    SubSampleX + SubSampleWidth > CameraXSize || SubSampleY + SubSampleHeight > CameraYSize) {
+                    throw new ArgumentOutOfRangeException(nameof(SubSampleX), $"FLI: Subframe X={SubSampleX}, Y={SubSampleY}, W={SubSampleWidth}, H={SubSampleHeight} lies outside the {CameraXSize}x{CameraYSize} sensor area");
+                }
+            }
+        }
+
         public void SetupDialog() {
         }
 
@@ -851,6 +886,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             isSnap = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT;
             rbiAbortRequested = false;
+
+            ValidateExposureParameters(sequence);
 
             /*
              * Set the desired readout mode. This is done before any RBI management so that the flood frame
@@ -888,7 +925,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             /*
              * Convert exposure seconds to milliseconds and set the camera with it.
              */
-            ExposureLength = (uint)Math.Round(sequence.ExposureTime * 1000);
+            ExposureLength = (uint)Math.Round(Math.Clamp(sequence.ExposureTime, ExposureMin, ExposureMax) * 1000);
 
             /*
              * Set bin levels
