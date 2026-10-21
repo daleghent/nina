@@ -1094,6 +1094,20 @@
                                                             IsChecked="{Binding FLIKeepShutterOpen}" />
                                                     </StackPanel>
                                                 </DockPanel>
+                                                <DockPanel Margin="0,6,0,0">
+                                                    <StackPanel MinWidth="100" Orientation="Horizontal">
+                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblQhyIncludeOverscan}" />
+                                                        <CheckBox
+                                                            HorizontalAlignment="Left"
+                                                            IsChecked="{Binding FLIIncludeOverscan}">
+                                                            <CheckBox.ToolTip>
+                                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                                    <TextBlock Text="{ns:Loc LblQhyIncludeOverscanTooltip}" />
+                                                                </ToolTip>
+                                                            </CheckBox.ToolTip>
+                                                        </CheckBox>
+                                                    </StackPanel>
+                                                </DockPanel>
                                             </StackPanel>
                                         </GroupBox>
                                     </StackPanel>

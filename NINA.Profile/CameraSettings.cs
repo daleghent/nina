@@ -53,6 +53,7 @@ namespace NINA.Profile {
             fliFlushCount = 1;
             fliEnableSnapshotFloodFlush = false;
             fliKeepShutterOpen = false;
+            fliIncludeOverscan = false;
 
             qhyIncludeOverscan = false;
             ascomAllowUnevenPixelSize = true;
@@ -307,6 +308,19 @@ namespace NINA.Profile {
             set {
                 if (fliFlushCount != value) {
                     fliFlushCount = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fliIncludeOverscan;
+
+        [DataMember]
+        public bool FLIIncludeOverscan {
+            get => fliIncludeOverscan;
+            set {
+                if (fliIncludeOverscan != value) {
+                    fliIncludeOverscan = value;
                     RaisePropertyChanged();
                 }
             }

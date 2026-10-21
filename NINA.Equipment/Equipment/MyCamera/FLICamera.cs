@@ -647,15 +647,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
 
                     Logger.Debug($"FLI: Visible Area: ul_X={ul_x}, ul_Y={ul_y}, lr_X={lr_x}, lr_Y={lr_y}");
+                    visibleArea = (ul_x, ul_y, lr_x, lr_y);
 
-                    Info.ExposureOriginPixelX = ul_x;
-                    Info.ExposureOriginPixelY = ul_y;
-                    Info.ExposureEndPixelX = lr_x;
-                    Info.ExposureEndPixelY = lr_y;
-                    Info.ExposureWidth = Info.ExposureEndPixelX - Info.ExposureOriginPixelX;
-                    Info.ExposureHeight = Info.ExposureEndPixelY - Info.ExposureOriginPixelY;
-                    CameraXSize = (int)Info.ExposureWidth;
-                    CameraYSize = (int)Info.ExposureHeight;
+                    if ((rv = LibFLI.FLIGetArrayArea(CameraH, ref ul_x, ref ul_y, ref lr_x, ref lr_y)) != LibFLI.FLI_SUCCESS) {
+                        Logger.Error($"FLI: FLIGetArrayArea() failed. Returned {rv}. Overscan will not be available");
+                        arrayArea = visibleArea;
+                    } else {
+                        Logger.Debug($"FLI: Array Area: ul_X={ul_x}, ul_Y={ul_y}, lr_X={lr_x}, lr_Y={lr_y}");
+                        arrayArea = (ul_x, ul_y, lr_x, lr_y);
+                    }
+
+                    ApplySensorArea();
 
                     /*
                      * Query the camera for a list of readout modes
@@ -1235,6 +1237,43 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get => profileService.ActiveProfile.CameraSettings.FLIEnableSnapshotFloodFlush;
             set {
                 profileService.ActiveProfile.CameraSettings.FLIEnableSnapshotFloodFlush = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private (uint ulX, uint ulY, uint lrX, uint lrY) visibleArea;
+        private (uint ulX, uint ulY, uint lrX, uint lrY) arrayArea;
+
+        /*
+         * Select the sensor area used for exposures: the visible area, or the full array area including overscan.
+         */
+        private void ApplySensorArea() {
+            var area = FLIIncludeOverscan ? arrayArea : visibleArea;
+
+            Info.ExposureOriginPixelX = area.ulX;
+            Info.ExposureOriginPixelY = area.ulY;
+            Info.ExposureEndPixelX = area.lrX;
+            Info.ExposureEndPixelY = area.lrY;
+            Info.ExposureWidth = area.lrX - area.ulX;
+            Info.ExposureHeight = area.lrY - area.ulY;
+            CameraXSize = (int)Info.ExposureWidth;
+            CameraYSize = (int)Info.ExposureHeight;
+
+            Logger.Debug($"FLI: Using {(FLIIncludeOverscan ? "array (with overscan)" : "visible")} area: ul_X={area.ulX}, ul_Y={area.ulY}, lr_X={area.lrX}, lr_Y={area.lrY} ({CameraXSize}x{CameraYSize})");
+
+            RaisePropertyChanged(nameof(CameraXSize));
+            RaisePropertyChanged(nameof(CameraYSize));
+        }
+
+        public bool FLIIncludeOverscan {
+            get => profileService.ActiveProfile.CameraSettings.FLIIncludeOverscan;
+            set {
+                profileService.ActiveProfile.CameraSettings.FLIIncludeOverscan = value;
+
+                if (Connected) {
+                    ApplySensorArea();
+                }
+
                 RaisePropertyChanged();
             }
         }
