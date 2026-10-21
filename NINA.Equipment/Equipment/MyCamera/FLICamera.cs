@@ -220,7 +220,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public bool CanSetUSBLimit => false;
         public bool CanShowLiveView => false;
-        public bool CanSubSample => false;
+        public bool CanSubSample => true;
 
         public bool Connected {
             get => _connected;
@@ -882,15 +882,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
             SetBinning(sequence.Binning.X, sequence.Binning.Y);
 
             /*
-             * Set the sensor area we want to capture.
-             * FLISetImageArea() takes the lower right corner as the upper left corner plus the binned size
+             * Set the sensor area we want to capture
              */
-            Info.ExposureWidth = (uint)(CameraXSize / BinX);
-            Info.ExposureHeight = (uint)(CameraYSize / BinY);
-            ul_x = Info.ExposureOriginPixelX;
-            ul_y = Info.ExposureOriginPixelY;
-            lr_x = Info.ExposureEndPixelX = ul_x + Info.ExposureWidth;
-            lr_y = Info.ExposureEndPixelY = ul_y + Info.ExposureHeight;
+            GetImageArea(BinX, BinY, out ul_x, out ul_y, out uint width, out uint height);
+            Info.ExposureWidth = width;
+            Info.ExposureHeight = height;
+            lr_x = Info.ExposureEndPixelX = ul_x + width;
+            lr_y = Info.ExposureEndPixelY = ul_y + height;
 
             if ((rv = LibFLI.FLISetImageArea(CameraH, ul_x, ul_y, lr_x, lr_y)) != LibFLI.FLI_SUCCESS) {
                 Logger.Error($"FLI: FLISetImageArea() failed. Returned {rv}");
@@ -929,6 +927,41 @@ namespace NINA.Equipment.Equipment.MyCamera {
             throw new System.NotImplementedException();
         }
 
+        /*
+         * Compute the image area for FLISetImageArea(), as in the FLI Legacy driver:
+         *   - The start position is the binned start (StartX/StartY) multiplied by the bin factor (unbinned
+         *     pixels), offset by the visible area origin.
+         *   - The lower right corner is the upper left corner plus the binned width and height.
+         * Subframe values from NINA are in unbinned pixels and are converted to binned start and size first.
+         */
+        private void GetImageArea(short binX, short binY, out uint ul_x, out uint ul_y, out uint width, out uint height) {
+            int startX = 0, startY = 0;
+            int numX = CameraXSize / binX;
+            int numY = CameraYSize / binY;
+
+            if (EnableSubSample) {
+                startX = SubSampleX / binX;
+                startY = SubSampleY / binY;
+                numX = SubSampleWidth / binX;
+                numY = SubSampleHeight / binY;
+
+                /*
+                 * Keep the subframe within the visible area
+                 */
+                startX = Math.Clamp(startX, 0, Math.Max(CameraXSize / binX - 1, 0));
+                startY = Math.Clamp(startY, 0, Math.Max(CameraYSize / binY - 1, 0));
+                numX = Math.Clamp(numX, 1, CameraXSize / binX - startX);
+                numY = Math.Clamp(numY, 1, CameraYSize / binY - startY);
+
+                Logger.Debug($"FLI: Subframe requested: X={SubSampleX}, Y={SubSampleY}, W={SubSampleWidth}, H={SubSampleHeight} -> binned StartX={startX}, StartY={startY}, NumX={numX}, NumY={numY}");
+            }
+
+            ul_x = Info.ExposureOriginPixelX + (uint)(startX * binX);
+            ul_y = Info.ExposureOriginPixelY + (uint)(startY * binY);
+            width = (uint)numX;
+            height = (uint)numY;
+        }
+
         public void StopLiveView() {
             throw new System.NotImplementedException();
         }
@@ -943,19 +976,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
          *      download that reading out a flush frame from the host would need.
          *
          * The flood frame is polled until the camera reports it complete before it is read out and discarded.
-         * As in the FLI Legacy driver, it is taken at the pending exposure's binning. StartExposure() re-applies
-         * binning, frame type, exposure time and image area for the real exposure afterwards.
+         * As in the FLI Legacy driver, it is taken at the pending exposure's binning and image area. StartExposure()
+         * re-applies binning, frame type, exposure time and image area for the real exposure afterwards.
          */
         private bool FloodControl(short binX, short binY) {
             uint rv;
 
-            /*
-             * FLISetImageArea() takes the lower right corner as the upper left corner plus the binned size
-             */
-            uint width = (uint)(CameraXSize / binX);
-            uint height = (uint)(CameraYSize / binY);
-            uint ul_x = Info.ExposureOriginPixelX;
-            uint ul_y = Info.ExposureOriginPixelY;
+            GetImageArea(binX, binY, out uint ul_x, out uint ul_y, out uint width, out uint height);
             uint lr_x = ul_x + width;
             uint lr_y = ul_y + height;
 
