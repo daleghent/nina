@@ -810,6 +810,24 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 var metaData = new ImageMetaData();
                 metaData.FromCamera(this);
                 metaData.Image.SetExposureTimes(lastExposureStartTime, lastExposureStartTime + TimeSpan.FromSeconds(lastExposureDuration));
+
+                if ((FLIEnableFloodFlush && !IsSnap) || (IsSnap && FLIEnableSnapshotFloodFlush && FLIEnableFloodFlush)) {
+                    var rbiFlashKeyword = new BoolMetaDataHeader("RBIFLUSH", true, "RBI flushing occurred prior to exposure");
+                    metaData.GenericHeaders.Add(rbiFlashKeyword);
+
+                    var rbiFlashCountKeyword = new UIntMetaDataHeader("RBICOUNT", FLIFlushCount, "Number of RBI flushes performed");
+                    metaData.GenericHeaders.Add(rbiFlashCountKeyword);
+
+                    var rbiFloodDurationKeyword = new DoubleMetaDataHeader("RBILEN", FLIFloodDuration * 1000, "[ms] Duration of RBI flood exposure");
+                    metaData.GenericHeaders.Add(rbiFloodDurationKeyword);
+
+                    var rbiFlashBinKeyword = new StringMetaDataHeader("RBIBIN", FLIFloodBin.ToString(), "Binning used for RBI flush readout");
+                    metaData.GenericHeaders.Add(rbiFlashBinKeyword);
+                } else {
+                    var rbiFlashKeyword = new BoolMetaDataHeader("RBIFLUSH", false, "RBI flushing occurred prior to exposure");
+                    metaData.GenericHeaders.Add(rbiFlashKeyword);
+                }
+
                 return exposureDataFactory.CreateImageArrayExposureData(
                     input: imgData,
                     width: width,
@@ -881,13 +899,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public void SetupDialog() {
         }
 
+        private bool IsSnap { get; set; } = false;
+
         public void StartExposure(CaptureSequence sequence) {
-            bool isSnap;
             bool isDarkFrame;
             uint ul_x, ul_y, lr_x, lr_y;
             uint rv;
 
-            isSnap = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT;
+            IsSnap = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT;
             rbiAbortRequested = false;
 
             ValidateExposureParameters(sequence);
@@ -897,14 +916,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * is read out in the same mode as the exposure that follows it, and so that a readout mode change
              * (with its own flush frame) cannot happen between the RBI flood and the exposure.
              */
-            ReadoutMode = isSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
+            ReadoutMode = IsSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
 
             /*
              * Pre-exposure RBI management. As in the FLI Legacy driver, the flood readout counts as the
              * first flush, so a flush count of 0 means no RBI flood is performed.
              */
             if (FLIEnableFloodFlush == true && FLIFlushCount > 0) {
-                if ((isSnap && FLIEnableSnapshotFloodFlush) || !isSnap) {
+                if ((IsSnap && FLIEnableSnapshotFloodFlush) || !IsSnap) {
                     short floodBinX = FLIFloodBinAuto ? sequence.Binning.X : (short)FLIFloodBinX;
                     short floodBinY = FLIFloodBinAuto ? sequence.Binning.Y : (short)FLIFloodBinY;
 
