@@ -38,6 +38,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private LibFLI.FLICameraInfo Info;
         private readonly IProfileService profileService;
         private readonly IExposureDataFactory exposureDataFactory;
+        private DateTime lastExposureStartTime;
+        private double lastExposureDuration;
 
         /*
          * Set by StopExposure() so that an in-progress RBI flood/flush sequence stops instead of
@@ -807,6 +809,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 var metaData = new ImageMetaData();
                 metaData.FromCamera(this);
+                metaData.Image.SetExposureTimes(lastExposureStartTime, lastExposureStartTime + TimeSpan.FromSeconds(lastExposureDuration));
                 return exposureDataFactory.CreateImageArrayExposureData(
                     input: imgData,
                     width: width,
@@ -953,6 +956,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             Logger.Debug($"FLI: Triggering exposure");
 
             DisableTDI();
+
+            lastExposureDuration = ExposureLength / 1000d;
+            lastExposureStartTime = DateTime.UtcNow;
 
             if ((rv = LibFLI.FLIExposeFrame(CameraH)) != LibFLI.FLI_SUCCESS) {
                 Logger.Error($"FLI: FLIExposeFrame() failed. Returned {rv}");
