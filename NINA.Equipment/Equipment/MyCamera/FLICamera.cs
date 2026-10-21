@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright � 2016 - 2026 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2026 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -375,7 +375,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
          */
         public bool HasShutter => true;
 
-        public string Id => Info.Id;
+        public string Id => Info.Serial;
 
         public bool LiveViewEnabled {
             get => false;
