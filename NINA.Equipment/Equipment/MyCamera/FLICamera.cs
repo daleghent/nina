@@ -811,21 +811,23 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 metaData.FromCamera(this);
                 metaData.Image.SetExposureTimes(lastExposureStartTime, lastExposureStartTime + TimeSpan.FromSeconds(lastExposureDuration));
 
-                if ((FLIEnableFloodFlush && !IsSnap) || (IsSnap && FLIEnableSnapshotFloodFlush && FLIEnableFloodFlush)) {
-                    var rbiFlashKeyword = new BoolMetaDataHeader("RBIFLUSH", true, "RBI flushing occurred prior to exposure");
-                    metaData.GenericHeaders.Add(rbiFlashKeyword);
+                var rbiHappened = (FLIEnableFloodFlush && !IsSnap) || (IsSnap && FLIEnableSnapshotFloodFlush && FLIEnableFloodFlush);
 
-                    var rbiFlashCountKeyword = new UIntMetaDataHeader("RBICOUNT", FLIFlushCount, "Number of RBI flushes performed");
-                    metaData.GenericHeaders.Add(rbiFlashCountKeyword);
+                var rbiFlushKeyword = new BoolMetaDataHeader("RBIFLUSH", rbiHappened, "RBI flushing occurred prior to exposure");
+                metaData.GenericHeaders.Add(rbiFlushKeyword);
 
-                    var rbiFloodDurationKeyword = new DoubleMetaDataHeader("RBILEN", FLIFloodDuration * 1000, "[ms] Duration of RBI flood exposure");
+                if (rbiHappened) {
+                    var rbiFlushCountKeyword = new UIntMetaDataHeader("RBICOUNT", FLIFlushCount, "Number of RBI flushes performed");
+                    metaData.GenericHeaders.Add(rbiFlushCountKeyword);
+
+                    var rbiFloodDurationKeyword = new DoubleMetaDataHeader("RBILEN", FLIFloodDuration * 1000, "[ms] Length of RBI flood exposure");
                     metaData.GenericHeaders.Add(rbiFloodDurationKeyword);
 
-                    var rbiFlashBinKeyword = new StringMetaDataHeader("RBIBIN", FLIFloodBin.ToString(), "Binning used for RBI flush readout");
-                    metaData.GenericHeaders.Add(rbiFlashBinKeyword);
-                } else {
-                    var rbiFlashKeyword = new BoolMetaDataHeader("RBIFLUSH", false, "RBI flushing occurred prior to exposure");
-                    metaData.GenericHeaders.Add(rbiFlashKeyword);
+                    var rbiFlushBinXKeyword = new IntMetaDataHeader("RBIXBIN", FLIFloodBin.X, "X axis binning used for RBI flush readout");
+                    metaData.GenericHeaders.Add(rbiFlushBinXKeyword);
+
+                    var rbiFlushBinYKeyword = new IntMetaDataHeader("RBIYBIN", FLIFloodBin.Y, "Y axis binning used for RBI flush readout");
+                    metaData.GenericHeaders.Add(rbiFlushBinYKeyword);
                 }
 
                 return exposureDataFactory.CreateImageArrayExposureData(
