@@ -46,6 +46,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private volatile bool rbiAbortRequested = false;
 
         /*
+         * Background flushing requires camera firmware 0x0110 or later. Determined at connect time.
+         */
+        private const uint BGFlushMinFWRev = 0x0110;
+        private bool canBackgroundFlush = false;
+
+        /*
          * Polling interval and timeout margin used while waiting on the RBI flood frame
          */
         private const int RbiPollIntervalMs = 200;
@@ -617,6 +623,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
 
                     /*
+                     * Determine if the camera firmware supports background flushing
+                     */
+                    if ((rv = LibFLI.FLIGetFWRevision(CameraH, out Info.FWrev)) != LibFLI.FLI_SUCCESS) {
+                        Logger.Error($"FLI: FLIGetFWRevision() failed. Returned {rv}");
+                    }
+
+                    canBackgroundFlush = Info.FWrev >= BGFlushMinFWRev;
+                    Logger.Debug($"FLI: Firmware revision 0x{Info.FWrev:X4}. Background flushing is {(canBackgroundFlush ? "supported" : "not supported")}");
+
+                    /*
                      * Get sensor pixel dimensions
                      */
                     if ((rv = LibFLI.FLIGetVisibleArea(CameraH, ref ul_x, ref ul_y, ref lr_x, ref lr_y)) != LibFLI.FLI_SUCCESS) {
@@ -1046,30 +1062,32 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void BGFlushStart() {
             uint rv;
 
-            if (Info.FWrev >= 0x0110) {
-                Logger.Debug("FLI: Starting background flushing...");
+            if (!canBackgroundFlush) {
+                return;
+            }
 
-                if ((rv = LibFLI.FLIControlBackgroundFlush(CameraH, LibFLI.FLIBGFlush.START)) != LibFLI.FLI_SUCCESS) {
-                    Logger.Info($"FLI: FLIControlBackgroundFlush() failed. Returned {rv}");
-                } else {
-                    Logger.Debug("FLI: Background flushing started!");
-                }
+            Logger.Debug("FLI: Starting background flushing...");
+
+            if ((rv = LibFLI.FLIControlBackgroundFlush(CameraH, LibFLI.FLIBGFlush.START)) != LibFLI.FLI_SUCCESS) {
+                Logger.Info($"FLI: FLIControlBackgroundFlush() failed. Returned {rv}");
             } else {
-                Logger.Debug("FLI: Background flushing is not supported on this camera.");
+                Logger.Debug("FLI: Background flushing started!");
             }
         }
 
         private void BGFlushStop() {
             uint rv;
 
-            if (Info.FWrev >= 0x0110) {
-                Logger.Debug("FLI: Stopping background flushing...");
+            if (!canBackgroundFlush) {
+                return;
+            }
 
-                if ((rv = LibFLI.FLIControlBackgroundFlush(CameraH, LibFLI.FLIBGFlush.STOP)) != LibFLI.FLI_SUCCESS) {
-                    Logger.Info($"FLI: FLIControlBackgroundFlush() failed.  Returned {rv}");
-                } else {
-                    Logger.Debug("FLI: Background flushing stopped.");
-                }
+            Logger.Debug("FLI: Stopping background flushing...");
+
+            if ((rv = LibFLI.FLIControlBackgroundFlush(CameraH, LibFLI.FLIBGFlush.STOP)) != LibFLI.FLI_SUCCESS) {
+                Logger.Info($"FLI: FLIControlBackgroundFlush() failed.  Returned {rv}");
+            } else {
+                Logger.Debug("FLI: Background flushing stopped.");
             }
         }
 
