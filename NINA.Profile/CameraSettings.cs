@@ -52,6 +52,7 @@ namespace NINA.Profile {
             fliFloodDuration = 0.5d;
             fliFlushCount = 1;
             fliEnableSnapshotFloodFlush = false;
+            fliKeepShutterOpen = false;
 
             qhyIncludeOverscan = false;
             ascomAllowUnevenPixelSize = true;
@@ -306,6 +307,19 @@ namespace NINA.Profile {
             set {
                 if (fliFlushCount != value) {
                     fliFlushCount = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fliKeepShutterOpen;
+
+        [DataMember]
+        public bool FLIKeepShutterOpen {
+            get => fliKeepShutterOpen;
+            set {
+                if (fliKeepShutterOpen != value) {
+                    fliKeepShutterOpen = value;
                     RaisePropertyChanged();
                 }
             }

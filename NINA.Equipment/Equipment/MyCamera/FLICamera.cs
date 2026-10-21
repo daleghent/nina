@@ -304,7 +304,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public double ElectronsPerADU => double.NaN;
         public bool EnableSubSample { get; set; }
 
-        public IList<string> SupportedActions => new List<string>();
+        public IList<string> SupportedActions => new List<string> { SetShutterAction };
 
         public uint ExposureLength {
             get => Info.ExposureLength;
@@ -686,6 +686,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
 
                     /*
+                     * Hold the shutter open for the session if configured to
+                     */
+                    if (FLIKeepShutterOpen) {
+                        ControlShutter(LibFLI.FLIShutter.OPEN);
+                    }
+
+                    /*
                      * We can now say that we are connected!
                      */
                     Connected = true;
@@ -712,6 +719,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return;
 
             BGFlushStop();
+
+            /*
+             * As in the FLI Legacy driver, always close the shutter on disconnect
+             */
+            ControlShutter(LibFLI.FLIShutter.CLOSE);
 
             CoolerOn = false;
             Connected = false;
@@ -948,10 +960,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 /*
                  * Keep the subframe within the visible area
                  */
-                startX = Math.Clamp(startX, 0, Math.Max(CameraXSize / binX - 1, 0));
-                startY = Math.Clamp(startY, 0, Math.Max(CameraYSize / binY - 1, 0));
-                numX = Math.Clamp(numX, 1, CameraXSize / binX - startX);
-                numY = Math.Clamp(numY, 1, CameraYSize / binY - startY);
+                startX = Math.Clamp(startX, 0, Math.Max((CameraXSize / binX) - 1, 0));
+                startY = Math.Clamp(startY, 0, Math.Max((CameraYSize / binY) - 1, 0));
+                numX = Math.Clamp(numX, 1, (CameraXSize / binX) - startX);
+                numY = Math.Clamp(numY, 1, (CameraYSize / binY) - startY);
 
                 Logger.Debug($"FLI: Subframe requested: X={SubSampleX}, Y={SubSampleY}, W={SubSampleWidth}, H={SubSampleHeight} -> binned StartX={startX}, StartY={startY}, NumX={numX}, NumY={numY}");
             }
@@ -1227,8 +1239,58 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public bool FLIKeepShutterOpen {
+            get => profileService.ActiveProfile.CameraSettings.FLIKeepShutterOpen;
+            set {
+                profileService.ActiveProfile.CameraSettings.FLIKeepShutterOpen = value;
+
+                if (Connected) {
+                    ControlShutter(value ? LibFLI.FLIShutter.OPEN : LibFLI.FLIShutter.CLOSE);
+                }
+
+                RaisePropertyChanged();
+            }
+        }
+
+        private const string SetShutterAction = "SetShutter";
+
+        private bool ControlShutter(LibFLI.FLIShutter state) {
+            uint rv;
+
+            Logger.Debug($"FLI: Setting shutter to {state}");
+
+            if ((rv = LibFLI.FLIControlShutter(CameraH, (uint)state)) != LibFLI.FLI_SUCCESS) {
+                Logger.Error($"FLI: FLIControlShutter({state}) failed. Returned {rv}");
+                return false;
+            }
+
+            return true;
+        }
+
+        /*
+         * Custom actions, mirroring the FLI Legacy driver:
+         *   SetShutter: "open" or "close"
+         */
         public string Action(string actionName, string actionParameters) {
-            throw new NotImplementedException();
+            if (string.Equals(actionName, SetShutterAction, StringComparison.OrdinalIgnoreCase)) {
+                LibFLI.FLIShutter state = (actionParameters ?? string.Empty).Trim().ToLowerInvariant() switch {
+                    "open" => LibFLI.FLIShutter.OPEN,
+                    "close" => LibFLI.FLIShutter.CLOSE,
+                    _ => throw new ArgumentException($"FLI: {SetShutterAction} parameter must be \"open\" or \"close\"", nameof(actionParameters)),
+                };
+
+                if (!Connected) {
+                    throw new InvalidOperationException("FLI: Camera is not connected");
+                }
+
+                if (!ControlShutter(state)) {
+                    throw new Exception($"FLI: Failed to set shutter to {state}");
+                }
+
+                return string.Empty;
+            }
+
+            throw new NotImplementedException($"FLI: Action {actionName} is not implemented");
         }
 
         public string SendCommandString(string command, bool raw) {
