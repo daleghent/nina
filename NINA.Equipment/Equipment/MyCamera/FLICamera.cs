@@ -585,7 +585,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public int USBLimitStep => -1;
 
         public void AbortExposure() {
-            StopExposure();
+            uint rv;
+
+            Logger.Debug($"FLI: Aborting exposure");
+
+            rbiAbortRequested = true;
+
+            if (Connected) {
+                if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
+                    Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
+                }
+            }
         }
 
         public Task<bool> Connect(CancellationToken ct) {
@@ -689,19 +699,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
-                uint rv;
-                uint timeLeft = 0;
-
                 /*
-                 * Make sure to wait for any residual time to allow the camera to complete the exposure
+                 * As in the FLI Legacy driver, the frame is complete when the camera is idle (or cannot report
+                 * its status) with no exposure time left, or when it reports data ready.
                  */
-                if ((rv = LibFLI.FLIGetExposureStatus(CameraH, ref timeLeft)) != LibFLI.FLI_SUCCESS) {
-                    Logger.Error($"FLI: FLIGetExposureStatus() failed. Returned {rv}");
-                }
+                while (true) {
+                    if (!IsFrameComplete(out uint timeLeft)) {
+                        await Task.Delay(timeLeft > RbiPollIntervalMs ? RbiPollIntervalMs : (int)timeLeft + 1, token);
+                        continue;
+                    }
 
-                if (timeLeft > 0) {
-                    Logger.Debug($"FLI: DownloadExposure() pausing for {timeLeft}ms for exposure completion.");
-                    await Task.Delay((int)timeLeft, token);
+                    return;
                 }
             }
         }
@@ -817,7 +825,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             /*
              * Convert exposure seconds to milliseconds and set the camera with it.
              */
-            ExposureLength = (uint)(sequence.ExposureTime * 1000);
+            ExposureLength = (uint)Math.Round(sequence.ExposureTime * 1000);
 
             /*
              * Set bin levels
@@ -845,6 +853,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * Initiate the exposure. This blocks until finished.
              */
             Logger.Debug($"FLI: Triggering exposure");
+
+            DisableTDI();
 
             if ((rv = LibFLI.FLIExposeFrame(CameraH)) != LibFLI.FLI_SUCCESS) {
                 Logger.Error($"FLI: FLIExposeFrame() failed. Returned {rv}");
@@ -915,7 +925,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * Flood
              */
             FrameType = LibFLI.FLIFrameType.RBI_FLUSH;
-            ExposureLength = (uint)(FLIFloodDuration * 1000);
+            ExposureLength = (uint)Math.Round(FLIFloodDuration * 1000);
 
             if (!RbiExposeAndDiscard("flood", width, height)) {
                 return false;
@@ -939,6 +949,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             Logger.Debug($"FLI: RBI: Exposing {step} frame");
+
+            DisableTDI();
 
             if ((rv = LibFLI.FLIExposeFrame(CameraH)) != LibFLI.FLI_SUCCESS) {
                 Logger.Error($"FLI: RBI: FLIExposeFrame() failed for {step}. Returned {rv}");
@@ -972,42 +984,62 @@ namespace NINA.Equipment.Equipment.MyCamera {
          * idle (or cannot report its status) with no exposure time left, or when it reports data ready.
          */
         private bool RbiWaitForFrame(string step) {
-            uint rv;
-            uint timeLeft = 0;
+            uint timeLeft;
             int timeoutMs = (int)ExposureLength + RbiFrameTimeoutMarginMs;
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
             while (true) {
-                uint camstatus = (uint)LibFLI.CameraStatus.UNKNOWN;
-
                 if (rbiAbortRequested) {
                     Logger.Info($"FLI: RBI: Aborted during {step}");
                     return false;
                 }
 
-                if ((rv = LibFLI.FLIGetDeviceStatus(CameraH, ref camstatus)) != LibFLI.FLI_SUCCESS) {
-                    camstatus = (uint)LibFLI.CameraStatus.UNKNOWN;
-                }
-
-                if ((rv = LibFLI.FLIGetExposureStatus(CameraH, ref timeLeft)) != LibFLI.FLI_SUCCESS) {
-                    Logger.Error($"FLI: RBI: FLIGetExposureStatus() failed during {step}. Returned {rv}");
-                    return false;
-                }
-
-                bool isUnknown = camstatus == (uint)LibFLI.CameraStatus.UNKNOWN;
-                bool isIdle = isUnknown || (camstatus & (uint)LibFLI.CameraStatus.MASK) == (uint)LibFLI.CameraStatus.IDLE;
-                bool isDataReady = !isUnknown && (camstatus & (uint)LibFLI.CameraStatus.DATA_READY) != 0;
-
-                if ((isIdle && timeLeft == 0) || isDataReady) {
+                if (IsFrameComplete(out timeLeft)) {
                     return true;
                 }
 
                 if (stopwatch.ElapsedMilliseconds > timeoutMs) {
-                    Logger.Error($"FLI: RBI: Timed out after {stopwatch.ElapsedMilliseconds}ms waiting for {step} frame (status=0x{camstatus:X8}, timeLeft={timeLeft}ms)");
+                    Logger.Error($"FLI: RBI: Timed out after {stopwatch.ElapsedMilliseconds}ms waiting for {step} frame (timeLeft={timeLeft}ms)");
                     return false;
                 }
 
                 Thread.Sleep(timeLeft > RbiPollIntervalMs ? RbiPollIntervalMs : (int)timeLeft + 1);
+            }
+        }
+
+        /*
+         * A frame is complete when the camera is idle (or cannot report its status) with no exposure time left,
+         * or when it reports data ready. If the status cannot be read, the frame is treated as complete so that
+         * callers do not wait forever.
+         */
+        private bool IsFrameComplete(out uint timeLeft) {
+            uint rv;
+            uint camstatus = (uint)LibFLI.CameraStatus.UNKNOWN;
+            timeLeft = 0;
+
+            if ((rv = LibFLI.FLIGetDeviceStatus(CameraH, ref camstatus)) != LibFLI.FLI_SUCCESS) {
+                Logger.Error($"FLI: FLIGetDeviceStatus() failed. Returned {rv}");
+                return true;
+            }
+
+            if ((rv = LibFLI.FLIGetExposureStatus(CameraH, ref timeLeft)) != LibFLI.FLI_SUCCESS) {
+                Logger.Error($"FLI: FLIGetExposureStatus() failed. Returned {rv}");
+                timeLeft = 0;
+                return true;
+            }
+
+            bool isUnknown = camstatus == (uint)LibFLI.CameraStatus.UNKNOWN;
+            bool isIdle = isUnknown || (camstatus & (uint)LibFLI.CameraStatus.MASK) == (uint)LibFLI.CameraStatus.IDLE;
+            bool isDataReady = !isUnknown && (camstatus & (uint)LibFLI.CameraStatus.DATA_READY) != 0;
+
+            return (isIdle && timeLeft == 0) || isDataReady;
+        }
+
+        private void DisableTDI() {
+            uint rv;
+
+            if ((rv = LibFLI.FLISetTDI(CameraH, 0, 0)) != LibFLI.FLI_SUCCESS) {
+                Logger.Debug($"FLI: FLISetTDI() failed. Returned {rv}");
             }
         }
 
