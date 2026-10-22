@@ -623,8 +623,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public Task<bool> Connect(CancellationToken ct) {
             return Task.Run(() => {
                 uint ul_x = 0, ul_y = 0, lr_x = 0, lr_y = 0;
-                List<string> modeList = new List<string>();
-                StringBuilder modeString = new StringBuilder(32);
+                var modeList = new List<string>();
+                var modeString = new StringBuilder(32);
                 uint modeIndex = 0;
                 bool success = false;
                 uint rv;
@@ -673,14 +673,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
                      * Query the camera for a list of readout modes
                      */
                     while (LibFLI.FLIGetCameraModeString(CameraH, modeIndex, modeString, 32) == LibFLI.FLI_SUCCESS) {
-                        Logger.Debug($"FLI: Adding mode index {modeIndex} (\"{modeString.ToString()}\") to list of modes");
-                        modeList.Add(modeString.ToString());
+                        var modeName = modeString.ToString().Trim();
+                        Logger.Debug($"FLI: Adding mode index {modeIndex} (\"{modeName}\") to list of modes");
+                        modeList.Add(modeName);
 
                         modeIndex++;
                     }
                     Logger.Debug($"FLI: FLIGetCameraModeString() stopped at mode_index={modeIndex}. No more modes available.");
 
-                    ReadoutModes = new List<string>(modeList);
+                    ReadoutModes = [.. modeList];
 
                     /*
                      * Attempt to turn on background flushing. Save the result for later attempts
