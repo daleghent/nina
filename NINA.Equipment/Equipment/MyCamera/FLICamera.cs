@@ -783,7 +783,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 Logger.Debug($"FLI: Fetching {height} rows from the camera");
 
                 // FLI cameras are always 16bit
-                ushort[] imgData = new ushort[imgSize];
+                ushort[] imgData = GC.AllocateUninitializedArray<ushort>(imgSize);
 
                 BGFlushStop();
 
