@@ -1050,7 +1050,7 @@
                                                             IsChecked="{Binding FLIEnableFloodFlush}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0">
+                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodDuration}" />
                                                         <ninactrl:UnitTextBox
@@ -1059,7 +1059,7 @@
                                                             Text="{Binding FLIFloodDuration}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0">
+                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFlushCount}" />
                                                         <ninactrl:IntStepperControl
@@ -1071,13 +1071,13 @@
                                                             Value="{Binding FLIFlushCount, Mode=TwoWay}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0">
+                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal" ToolTip="{ns:Loc LblFLIFloodBinAutoTooltip}">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBinAuto}" />
                                                         <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIFloodBinAuto}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0">
+                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBin}" />
                                                         <ninactrl:IntStepperControl
@@ -1099,7 +1099,7 @@
                                                             Value="{Binding FLIFloodBinY, Mode=TwoWay}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0" Visibility="{Binding CanBackgroundFlush, Converter={StaticResource VisibilityConverter}}">
+                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}" Visibility="{Binding CanBackgroundFlush, Converter={StaticResource VisibilityConverter}}">
                                                     <StackPanel MinWidth="100" Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIRBIBackgroundFlush}" />
                                                         <CheckBox
@@ -1107,7 +1107,7 @@
                                                             IsChecked="{Binding RBIBackgroundFlush}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0">
+                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLISnapshotFlood}" />
                                                         <CheckBox

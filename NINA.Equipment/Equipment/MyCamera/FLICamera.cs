@@ -1212,7 +1212,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void BGFlushStart() {
             uint rv;
 
-            if (!canBackgroundFlush || !RBIBackgroundFlush) {
+            if (!canBackgroundFlush || !FLIEnableFloodFlush || !RBIBackgroundFlush) {
                 return;
             }
 
@@ -1273,14 +1273,18 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return;
                 }
 
-                if (value == true) {
-                    BGFlushStart();
-                } else {
-                    Logger.Debug("FLI: Attempting to stop background flushing...");
-                    BGFlushStop();
+                profileService.ActiveProfile.CameraSettings.FLIEnableFloodFlush = value;
+
+                if (Connected) {
+                    if (value) {
+                        if (CameraState == CameraStates.Idle) {
+                            BGFlushStart();
+                        }
+                    } else {
+                        BGFlushStop();
+                    }
                 }
 
-                profileService.ActiveProfile.CameraSettings.FLIEnableFloodFlush = value;
                 RaisePropertyChanged();
             }
         }
