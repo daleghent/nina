@@ -787,34 +787,34 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 BGFlushStop();
 
-                int failedRow = GrabRows(imgData, width, height, ct, out rv);
+                try {
+                    int failedRow = GrabRows(imgData, width, height, ct, out rv);
 
-                if (failedRow >= 0) {
-                    bool cancelled = rv == LibFLI.FLI_SUCCESS;
+                    if (failedRow >= 0) {
+                        bool cancelled = rv == LibFLI.FLI_SUCCESS;
 
-                    if (cancelled) {
-                        Logger.Info($"FLI: Image download cancelled at row {failedRow + 1} of {height}");
-                    } else {
-                        Logger.Error($"FLI: FLIGrabRow() failed at row {failedRow + 1}. Returned {rv}");
+                        if (cancelled) {
+                            Logger.Info($"FLI: Image download cancelled at row {failedRow + 1} of {height}");
+                        } else {
+                            Logger.Error($"FLI: FLIGrabRow() failed at row {failedRow + 1}. Returned {rv}");
+                        }
+
+                        /*
+                         * Discard the rest of the frame so that the camera is ready for the next exposure
+                         */
+                        if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
+                            Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
+                        }
+
+                        if (cancelled) {
+                            throw new OperationCanceledException(ct);
+                        }
+
+                        throw new Exception($"FLI: Image download failed reading row {failedRow + 1} of {height}");
                     }
-
-                    /*
-                     * Discard the rest of the frame so that the camera is ready for the next exposure
-                     */
-                    if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
-                        Logger.Error($"FLI: FLICancelExposure() failed. Returned {rv}");
-                    }
-
+                } finally {
                     BGFlushStart();
-
-                    if (cancelled) {
-                        throw new OperationCanceledException(ct);
-                    }
-
-                    throw new Exception($"FLI: Image download failed reading row {failedRow + 1} of {height}");
                 }
-
-                BGFlushStart();
 
                 var metaData = new ImageMetaData();
                 metaData.FromCamera(this);
