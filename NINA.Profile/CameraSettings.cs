@@ -51,7 +51,7 @@ namespace NINA.Profile {
 
             fliEnableFloodFlush = false;
             fliFloodDuration = 0.5d;
-            fliFlushCount = 1;
+            fliFlushCount = 2;
             fliFloodBinAuto = false;
             fliFloodBin = new BinningMode(1, 4);
             fliEnableSnapshotFloodFlush = false;
