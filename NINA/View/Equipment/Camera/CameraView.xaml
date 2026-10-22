@@ -1037,105 +1037,128 @@
                                 <DataTemplate x:Key="Fli">
                                     <StackPanel Orientation="Vertical">
                                         <GroupBox
-                                            Header="{ns:Loc LblFLIPreRBIMitigation}"
                                             Name="FliRbi"
                                             Margin="0,10,0,0"
+                                            Header="{ns:Loc LblFLIPreRBIMitigation}"
                                             Visibility="{Binding HasFan, Converter={StaticResource VisibilityConverter}}">
                                             <StackPanel>
                                                 <DockPanel Margin="0,6,0,0">
                                                     <StackPanel MinWidth="100" Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblEnabled}" />
-                                                        <CheckBox
-                                                            HorizontalAlignment="Left"
-                                                            IsChecked="{Binding FLIEnableFloodFlush}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblEnabled}" />
+                                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIEnableFloodFlush}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodDuration}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLIFloodDuration}" />
                                                         <ninactrl:UnitTextBox
-                                                            Unit="s"
                                                             MinWidth="75"
-                                                            Text="{Binding FLIFloodDuration}" />
+                                                            Text="{Binding FLIFloodDuration}"
+                                                            Unit="s" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFlushCount}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLIFlushCount}" />
                                                         <ninactrl:IntStepperControl
                                                             MinWidth="75"
                                                             HorizontalAlignment="Right"
-                                                            MinValue="1"
                                                             MaxValue="16"
+                                                            MinValue="1"
                                                             StepSize="1"
                                                             Value="{Binding FLIFlushCount, Mode=TwoWay}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal" ToolTip="{ns:Loc LblFLIFloodBinAutoTooltip}">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBinAuto}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLIFloodBinAuto}" />
                                                         <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIFloodBinAuto}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIFloodBin}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLIFloodBin}" />
                                                         <ninactrl:IntStepperControl
-                                                            Margin="0,0,6,0"
                                                             MinWidth="75"
-                                                            MinValue="1"
+                                                            Margin="0,0,6,0"
+                                                            IsEnabled="{Binding FLIFloodBinAuto, Converter={StaticResource InverseBooleanConverter}}"
                                                             MaxValue="{Binding MaxBinX}"
-                                                            StepSize="1"
-                                                            IsEnabled="{Binding FLIFloodBinAuto, Converter={StaticResource InverseBooleanConverter}}"
-                                                            Value="{Binding FLIFloodBinX, Mode=TwoWay}" />
-                                                        <TextBlock VerticalAlignment="Center" Margin="0,0,6,0" Text="x" />
-                                                        <ninactrl:IntStepperControl
-                                                            Margin="0,0,6,0"
-                                                            MinWidth="75"
                                                             MinValue="1"
-                                                            MaxValue="{Binding MaxBinY}"
                                                             StepSize="1"
+                                                            Value="{Binding FLIFloodBinX, Mode=TwoWay}" />
+                                                        <TextBlock
+                                                            Margin="0,0,6,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="x" />
+                                                        <ninactrl:IntStepperControl
+                                                            MinWidth="75"
+                                                            Margin="0,0,6,0"
                                                             IsEnabled="{Binding FLIFloodBinAuto, Converter={StaticResource InverseBooleanConverter}}"
+                                                            MaxValue="{Binding MaxBinY}"
+                                                            MinValue="1"
+                                                            StepSize="1"
                                                             Value="{Binding FLIFloodBinY, Mode=TwoWay}" />
                                                     </StackPanel>
                                                 </DockPanel>
-                                                <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}" Visibility="{Binding CanBackgroundFlush, Converter={StaticResource VisibilityConverter}}">
+                                                <DockPanel
+                                                    Margin="0,6,0,0"
+                                                    IsEnabled="{Binding FLIEnableFloodFlush}"
+                                                    Visibility="{Binding CanBackgroundFlush, Converter={StaticResource VisibilityConverter}}">
                                                     <StackPanel MinWidth="100" Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIRBIBackgroundFlush}" />
-                                                        <CheckBox
-                                                            HorizontalAlignment="Left"
-                                                            IsChecked="{Binding RBIBackgroundFlush}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLIRBIBackgroundFlush}" />
+                                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding RBIBackgroundFlush}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0" IsEnabled="{Binding FLIEnableFloodFlush}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLISnapshotFlood}" />
-                                                        <CheckBox
-                                                            HorizontalAlignment="Left"
-                                                            IsChecked="{Binding FLIEnableSnapshotFloodFlush}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLISnapshotFlood}" />
+                                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIEnableSnapshotFloodFlush}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox
-                                            Header="{ns:Loc LblGeneral}"
                                             Name="FliGeneral"
-                                            Margin="0,10,0,0">
+                                            Margin="0,10,0,0"
+                                            Header="{ns:Loc LblGeneral}">
                                             <StackPanel>
                                                 <DockPanel Margin="0,6,0,0">
                                                     <StackPanel MinWidth="100" Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIKeepShutterOpen}" />
-                                                        <CheckBox
-                                                            HorizontalAlignment="Left"
-                                                            IsChecked="{Binding FLIKeepShutterOpen}" />
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblFLIKeepShutterOpen}" />
+                                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIKeepShutterOpen}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,6,0,0">
                                                     <StackPanel MinWidth="100" Orientation="Horizontal">
-                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblQhyIncludeOverscan}" />
-                                                        <CheckBox
-                                                            HorizontalAlignment="Left"
-                                                            IsChecked="{Binding FLIIncludeOverscan}">
+                                                        <TextBlock
+                                                            Width="178"
+                                                            VerticalAlignment="Center"
+                                                            Text="{ns:Loc LblQhyIncludeOverscan}" />
+                                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FLIIncludeOverscan}">
                                                             <CheckBox.ToolTip>
                                                                 <ToolTip ToolTipService.ShowOnDisabled="False">
                                                                     <TextBlock Text="{ns:Loc LblQhyIncludeOverscanTooltip}" />
