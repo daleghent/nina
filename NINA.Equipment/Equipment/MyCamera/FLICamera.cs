@@ -503,7 +503,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     Logger.Debug($"FLI: ReadoutMode: Reading out DARK frame following readout mode change ({flushWidth}x{flushHeight})");
 
                     for (int r = 0; r < flushHeight; r++) {
-                        if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, (int)flushWidth)) != LibFLI.FLI_SUCCESS) {
+                        if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, (nuint)flushWidth)) != LibFLI.FLI_SUCCESS) {
                             Logger.Error($"FLI: FLIGrabRow() failed at row {r + 1}. Returned {rv}");
 
                             if ((rv = LibFLI.FLICancelExposure(CameraH)) != LibFLI.FLI_SUCCESS) {
@@ -866,7 +866,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         return r;
                     }
 
-                    if ((rv = LibFLI.FLIGrabRow(CameraH, row, width)) != LibFLI.FLI_SUCCESS) {
+                    if ((rv = LibFLI.FLIGrabRow(CameraH, row, (nuint)width)) != LibFLI.FLI_SUCCESS) {
                         return r;
                     }
                 }
@@ -1152,7 +1152,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             ushort[] rowData = new ushort[width];
 
             for (int r = 0; r < height; r++) {
-                if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, (int)width)) != LibFLI.FLI_SUCCESS) {
+                if ((rv = LibFLI.FLIGrabRow(CameraH, rowData, (nuint)width)) != LibFLI.FLI_SUCCESS) {
                     Logger.Error($"FLI: RBI: FLIGrabRow() failed for {step} at row {r + 1}. Returned {rv}");
                     return false;
                 }
