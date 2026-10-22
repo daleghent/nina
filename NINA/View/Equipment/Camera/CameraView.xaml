@@ -1065,7 +1065,7 @@
                                                         <ninactrl:IntStepperControl
                                                             MinWidth="75"
                                                             HorizontalAlignment="Right"
-                                                            MinValue="0"
+                                                            MinValue="1"
                                                             MaxValue="16"
                                                             StepSize="1"
                                                             Value="{Binding FLIFlushCount, Mode=TwoWay}" />

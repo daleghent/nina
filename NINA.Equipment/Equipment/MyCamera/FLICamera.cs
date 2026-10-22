@@ -442,7 +442,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         return 0;
                     }
 
-                    Logger.Debug($"FLI: Current readout mode: {mode} ({ReadoutModes.Cast<string>().ToArray()[mode]})");
+                    Logger.Trace($"FLI: Current readout mode: {mode} ({ReadoutModes.Cast<string>().ToArray()[mode]})");
 
                     return (short)mode;
                 } else {
@@ -924,7 +924,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * Pre-exposure RBI management. As in the FLI Legacy driver, the flood readout counts as the
              * first flush, so a flush count of 0 means no RBI flood is performed.
              */
-            if (FLIEnableFloodFlush == true && FLIFlushCount > 0) {
+            if (FLIEnableFloodFlush == true) {
                 if ((IsSnap && FLIEnableSnapshotFloodFlush) || !IsSnap) {
                     short floodBinX = FLIFloodBinAuto ? sequence.Binning.X : (short)FLIFloodBinX;
                     short floodBinY = FLIFloodBinAuto ? sequence.Binning.Y : (short)FLIFloodBinY;
@@ -1067,7 +1067,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             uint lr_x = ul_x + width;
             uint lr_y = ul_y + height;
 
-            Logger.Debug($"FLI: RBI: Flooding for {FLIFloodDuration * 1e3}ms at {binX}x{binY} binning, followed by {RbiFlushFrameCount} flush frame(s)");
+            Logger.Debug($"FLI: RBI: {FLIFlushCount} total flush(es): 1 flood frame ({FLIFloodDuration * 1e3}ms) + {RbiFlushFrameCount} dark frame(s), at {binX}x{binY} binning");
 
             SetBinning(binX, binY);
 
@@ -1303,12 +1303,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public uint FLIFlushCount {
-            get => profileService.ActiveProfile.CameraSettings.FLIFlushCount;
+            get => Math.Max(profileService.ActiveProfile.CameraSettings.FLIFlushCount, 1u);
             set {
                 /*
-                 * Total RBI flushes, counting the flood readout as the first (as in the FLI Legacy driver)
+                 * Total RBI flushes, counting the flood readout as the first (as in the FLI Legacy driver).
+                 * The flood readout always happens, so the minimum is 1.
                  */
-                profileService.ActiveProfile.CameraSettings.FLIFlushCount = value;
+                profileService.ActiveProfile.CameraSettings.FLIFlushCount = Math.Max(value, 1u);
                 RaisePropertyChanged();
             }
         }
@@ -1316,7 +1317,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         /*
          * The flood readout is the first RBI flush; the rest are zero-length dark frames read out by FloodControl()
          */
-        private uint RbiFlushFrameCount => FLIFlushCount > 0 ? FLIFlushCount - 1 : 0;
+        private uint RbiFlushFrameCount => FLIFlushCount - 1;
 
         private bool ApplyFirmwareFlushCount(uint nflushes) {
             uint rv;
