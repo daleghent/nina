@@ -50,6 +50,7 @@ namespace NINA.Profile {
             dewHeaterOn = false;
 
             fliEnableFloodFlush = false;
+            rbiBackgroundFlush = true;
             fliFloodDuration = 0.5d;
             fliFlushCount = 2;
             fliFloodBinAuto = false;
@@ -285,6 +286,19 @@ namespace NINA.Profile {
             set {
                 if (fliEnableFloodFlush != value) {
                     fliEnableFloodFlush = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool rbiBackgroundFlush;
+
+        [DataMember]
+        public bool RBIBackgroundFlush {
+            get => rbiBackgroundFlush;
+            set {
+                if (rbiBackgroundFlush != value) {
+                    rbiBackgroundFlush = value;
                     RaisePropertyChanged();
                 }
             }

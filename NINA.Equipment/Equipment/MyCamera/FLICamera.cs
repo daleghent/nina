@@ -690,9 +690,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                      *
                      * RBI flushes are performed explicitly by FloodControl(), so firmware pre-exposure flushes are disabled.
                      */
-                    if (FLIEnableFloodFlush) {
-                        BGFlushStart();
-                    }
+                    BGFlushStart();
 
                     if (!ApplyFirmwareFlushCount(0)) {
                         return success;
@@ -782,12 +780,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     await Task.Delay((int)timeLeft, ct);
                 }
 
+                Logger.Debug($"FLI: Fetching {height} rows from the camera");
+
                 // FLI cameras are always 16bit
                 ushort[] imgData = new ushort[imgSize];
 
                 BGFlushStop();
-
-                Logger.Debug($"FLI: Fetching {height} rows from the camera");
 
                 int failedRow = GrabRows(imgData, width, height, out rv);
 
@@ -978,9 +976,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             /*
              * Initiate the exposure. This blocks until finished.
              */
-            Logger.Debug($"FLI: Triggering exposure");
-
             DisableTDI();
+
+            Logger.Debug($"FLI: Triggering exposure");
 
             lastExposureDuration = ExposureLength / 1000d;
             lastExposureStartTime = DateTime.UtcNow;
@@ -1214,7 +1212,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private void BGFlushStart() {
             uint rv;
 
-            if (!canBackgroundFlush) {
+            if (!canBackgroundFlush || !RBIBackgroundFlush) {
                 return;
             }
 
@@ -1240,6 +1238,31 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 Logger.Info($"FLI: FLIControlBackgroundFlush() failed.  Returned {rv}");
             } else {
                 Logger.Debug("FLI: Background flushing stopped.");
+            }
+        }
+
+        public bool CanBackgroundFlush => canBackgroundFlush;
+
+        public bool RBIBackgroundFlush {
+            get => profileService.ActiveProfile.CameraSettings.RBIBackgroundFlush;
+            set {
+                if (RBIBackgroundFlush == value) {
+                    return;
+                }
+
+                profileService.ActiveProfile.CameraSettings.RBIBackgroundFlush = value;
+
+                if (Connected) {
+                    if (value) {
+                        if (CameraState == CameraStates.Idle) {
+                            BGFlushStart();
+                        }
+                    } else {
+                        BGFlushStop();
+                    }
+                }
+
+                RaisePropertyChanged();
             }
         }
 

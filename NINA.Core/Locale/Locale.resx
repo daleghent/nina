@@ -1585,6 +1585,9 @@ When this trigger is deactivated the application will just skip the Start Exposu
   <data name="LblFLIFlushCount" xml:space="preserve">
     <value>Flush count</value>
   </data>
+  <data name="LblFLIRBIBackgroundFlush" xml:space="preserve">
+    <value>Background flush</value>
+  </data>
   <data name="LblFlip" xml:space="preserve">
     <value>Do the flip</value>
   </data>

@@ -1099,6 +1099,14 @@
                                                             Value="{Binding FLIFloodBinY, Mode=TwoWay}" />
                                                     </StackPanel>
                                                 </DockPanel>
+                                                <DockPanel Margin="0,6,0,0" Visibility="{Binding CanBackgroundFlush, Converter={StaticResource VisibilityConverter}}">
+                                                    <StackPanel MinWidth="100" Orientation="Horizontal">
+                                                        <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLIRBIBackgroundFlush}" />
+                                                        <CheckBox
+                                                            HorizontalAlignment="Left"
+                                                            IsChecked="{Binding RBIBackgroundFlush}" />
+                                                    </StackPanel>
+                                                </DockPanel>
                                                 <DockPanel Margin="0,6,0,0">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock VerticalAlignment="Center" Width="178" Text="{ns:Loc LblFLISnapshotFlood}" />
