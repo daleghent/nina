@@ -787,10 +787,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 BGFlushStop();
 
-                int failedRow = GrabRows(imgData, width, height, out rv);
+                int failedRow = GrabRows(imgData, width, height, ct, out rv);
 
                 if (failedRow >= 0) {
-                    Logger.Error($"FLI: FLIGrabRow() failed at row {failedRow + 1}. Returned {rv}");
+                    bool cancelled = rv == LibFLI.FLI_SUCCESS;
+
+                    if (cancelled) {
+                        Logger.Info($"FLI: Image download cancelled at row {failedRow + 1} of {height}");
+                    } else {
+                        Logger.Error($"FLI: FLIGrabRow() failed at row {failedRow + 1}. Returned {rv}");
+                    }
 
                     /*
                      * Discard the rest of the frame so that the camera is ready for the next exposure
@@ -800,6 +806,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     }
 
                     BGFlushStart();
+
+                    if (cancelled) {
+                        throw new OperationCanceledException(ct);
+                    }
 
                     throw new Exception($"FLI: Image download failed reading row {failedRow + 1} of {height}");
                 }
@@ -841,15 +851,21 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         /*
          * Read the frame row by row directly into the destination buffer, avoiding an intermediate row buffer
-         * and copy. Returns the zero-based index of the row that failed, or -1 on success.
+         * and copy. Returns the zero-based index of the row that failed, or -1 on success. If cancellation is
+         * requested, reading stops and the index of the next unread row is returned with rv set to FLI_SUCCESS.
          */
-        private unsafe int GrabRows(ushort[] dest, int width, int height, out uint rv) {
+        private unsafe int GrabRows(ushort[] dest, int width, int height, CancellationToken ct, out uint rv) {
+            const int CancellationCheckInterval = 64;
             rv = LibFLI.FLI_SUCCESS;
 
             fixed (ushort* p = dest) {
                 ushort* row = p;
 
                 for (int r = 0; r < height; r++, row += width) {
+                    if (r % CancellationCheckInterval == 0 && ct.IsCancellationRequested) {
+                        return r;
+                    }
+
                     if ((rv = LibFLI.FLIGrabRow(CameraH, row, width)) != LibFLI.FLI_SUCCESS) {
                         return r;
                     }
