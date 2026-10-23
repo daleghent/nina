@@ -8497,4 +8497,13 @@ Dette er nyttig når en innebygd trigger har tidspunktet du trenger, men du vil 
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Bryter {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Astrometriløseren '{0}' er ikke tilgjengelig. Sjekk at programtillegget er installert eller velg en annen astrometriløser.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Kunne ikke starte astrometriløseren '{0}'. Sjekk innstillingene for programtillegget.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (ikke tilgjengelig)</value>
+  </data>
 </root>

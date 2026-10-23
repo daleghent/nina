@@ -8508,4 +8508,13 @@ Dies ist hilfreich, wenn ein integrierter Auslöser den benötigten Zeitpunkt ha
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Schalter {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Platesolver '{0}' ist nicht verfügbar. Prüfen Sie, ob das zugehörige Plugin installiert ist, oder wählen Sie einen anderen Platesolver aus.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Platesolver '{0}' konnte nicht gestartet werden. Prüfen Sie die Einstellungen des Plugins.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (nicht verfügbar)</value>
+  </data>
 </root>

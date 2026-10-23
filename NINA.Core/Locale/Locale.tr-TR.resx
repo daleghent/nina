@@ -8505,4 +8505,13 @@ Bu, yerleşik bir tetikleyicinin zamanlaması ihtiyacınıza uygun olduğu halde
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Anahtar {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Alan Tanımlayıcı '{0}' kullanılamıyor. Eklentisinin yüklenip yüklenmediğini kontrol edin veya başka bir tanımlayıcı seçin.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Alan Tanımlayıcı '{0}' başlatılamadı. Eklentisinin ayarlarını kontrol edin.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (kullanılamıyor)</value>
+  </data>
 </root>

@@ -8509,4 +8509,13 @@ Dec: {1}</value>
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Переключатель {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Плейтсолвер '{0}' недоступен. Проверьте, установлен ли его плагин, или выберите другой плейтсолвер.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Не удалось запустить плейтсолвер '{0}'. Проверьте настройки плагина.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (недоступен)</value>
+  </data>
 </root>

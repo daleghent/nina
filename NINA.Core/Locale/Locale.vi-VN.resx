@@ -8516,4 +8516,13 @@ Hữu ích khi bộ kích hoạt tích hợp có thời điểm phù hợp nhưn
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Công tắc {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Trình giải tọa độ ảnh '{0}' không khả dụng. Kiểm tra xem plugin của trình giải đã được cài đặt chưa hoặc chọn trình giải khác.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Không thể khởi động trình giải tọa độ ảnh '{0}'. Kiểm tra cài đặt của plugin.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (không khả dụng)</value>
+  </data>
 </root>

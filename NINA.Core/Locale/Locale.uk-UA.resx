@@ -8516,4 +8516,13 @@ Dec: {1}</value>
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Перемикач {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Астрометричний розв'язувач '{0}' недоступний. Перевірте, чи встановлено його плагін, або виберіть інший розв'язувач.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Не вдалося запустити астрометричний розв'язувач '{0}'. Перевірте налаштування плагіна.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (недоступний)</value>
+  </data>
 </root>

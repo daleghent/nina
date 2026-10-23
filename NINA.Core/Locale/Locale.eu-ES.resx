@@ -8481,4 +8481,13 @@ Hau erabilgarria da barneko abiarazle batek behar duzun denbora-unea duenean, ba
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>{0}. etengailua - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>'{0}' eremu-ebazlea ez dago erabilgarri. Egiaztatu haren plugina instalatuta dagoela edo hautatu beste ebazle bat.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Ezin izan da '{0}' eremu-ebazlea abiarazi. Egiaztatu pluginaren ezarpenak.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (ez dago erabilgarri)</value>
+  </data>
 </root>

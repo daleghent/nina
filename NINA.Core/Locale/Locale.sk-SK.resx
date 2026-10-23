@@ -8516,4 +8516,13 @@ Hodí sa to, keď vstavaný spúšťač má potrebné časovanie, ale chcete vla
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Spínač {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Astrometrický riešič '{0}' nie je dostupný. Skontrolujte, či je nainštalovaný jeho zásuvný modul, alebo vyberte iný riešič.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Astrometrický riešič '{0}' sa nepodarilo spustiť. Skontrolujte nastavenia zásuvného modulu.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (nedostupný)</value>
+  </data>
 </root>

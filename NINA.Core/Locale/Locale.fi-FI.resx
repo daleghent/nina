@@ -8516,4 +8516,13 @@ Tästä on hyötyä, kun sisäisen laukaisimen ajoitus sopii tarpeeseesi mutta h
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Kytkin {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Koordinaattiratkaisija '{0}' ei ole käytettävissä. Tarkista, että sen liitännäinen on asennettu, tai valitse toinen ratkaisija.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Koordinaattiratkaisijaa '{0}' ei voitu käynnistää. Tarkista liitännäisen asetukset.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (ei käytettävissä)</value>
+  </data>
 </root>

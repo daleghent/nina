@@ -8516,4 +8516,13 @@ Este util când un declanșator integrat are temporizarea necesară, dar doriți
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Comutator {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Rezolvitorul astrometric '{0}' nu este disponibil. Verificați dacă modulul suplimentar corespunzător este instalat sau selectați un alt rezolvitor.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Rezolvitorul astrometric '{0}' nu a putut fi pornit. Verificați setările modulului suplimentar.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (indisponibil)</value>
+  </data>
 </root>

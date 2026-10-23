@@ -8516,4 +8516,13 @@ Dec: {1}</value>
   <data name="LblHubSwitchChannelName" xml:space="preserve">
     <value>Превключвател {0} - {1}</value>
   </data>
+  <data name="LblPlateSolverProviderUnavailable" xml:space="preserve">
+    <value>Програмата за астрометрично разпознаване '{0}' не е достъпна. Проверете дали съответният плъгин е инсталиран, или изберете друга програма за астрометрично разпознаване.</value>
+  </data>
+  <data name="LblPlateSolverProviderCreationFailed" xml:space="preserve">
+    <value>Програмата за астрометрично разпознаване '{0}' не можа да бъде стартирана. Проверете настройките на плъгина.</value>
+  </data>
+  <data name="LblPlateSolverProviderMissingChoice" xml:space="preserve">
+    <value>{0} (недостъпна)</value>
+  </data>
 </root>
