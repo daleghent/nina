@@ -1391,18 +1391,18 @@ namespace NINA.Equipment.Equipment.MyCamera {
          * Select the sensor area used for exposures: the visible area, or the full array area including overscan.
          */
         private void ApplySensorArea() {
-            var area = FLIIncludeOverscan ? arrayArea : visibleArea;
+            var (ulX, ulY, lrX, lrY) = FLIIncludeOverscan ? arrayArea : visibleArea;
 
-            Info.ExposureOriginPixelX = area.ulX;
-            Info.ExposureOriginPixelY = area.ulY;
-            Info.ExposureEndPixelX = area.lrX;
-            Info.ExposureEndPixelY = area.lrY;
-            Info.ExposureWidth = area.lrX - area.ulX;
-            Info.ExposureHeight = area.lrY - area.ulY;
-            CameraXSize = (int)Info.ExposureWidth;
-            CameraYSize = (int)Info.ExposureHeight;
+            /*
+             * Only the sensor geometry is updated here. The per-exposure area (ExposureWidth/Height and end pixels)
+             * is set by StartExposure() and must not change while an exposure is in progress or being downloaded.
+             */
+            Info.ExposureOriginPixelX = ulX;
+            Info.ExposureOriginPixelY = ulY;
+            CameraXSize = (int)(lrX - ulX);
+            CameraYSize = (int)(lrY - ulY);
 
-            Logger.Debug($"FLI: Using {(FLIIncludeOverscan ? "array (with overscan)" : "visible")} area: ul_X={area.ulX}, ul_Y={area.ulY}, lr_X={area.lrX}, lr_Y={area.lrY} ({CameraXSize}x{CameraYSize})");
+            Logger.Debug($"FLI: Using {(FLIIncludeOverscan ? "array (with overscan)" : "visible")} area: ul_X={ulX}, ul_Y={ulY}, lr_X={lrX}, lr_Y={lrY} ({CameraXSize}x{CameraYSize})");
 
             RaisePropertyChanged(nameof(CameraXSize));
             RaisePropertyChanged(nameof(CameraYSize));
