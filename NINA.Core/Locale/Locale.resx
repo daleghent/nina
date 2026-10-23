@@ -1570,7 +1570,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
   <data name="LblFlatWizardCapture" xml:space="preserve">
     <value>Flat Wizard Capture</value>
   </data>
-  <data name="LblFLIFlashDuration" xml:space="preserve">
+  <data name="LblFLIFloodDuration" xml:space="preserve">
     <value>Flood duration</value>
   </data>
   <data name="LblFLIFloodBin" xml:space="preserve">
