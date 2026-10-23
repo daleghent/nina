@@ -40,6 +40,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private readonly IExposureDataFactory exposureDataFactory;
         private DateTime lastExposureStartTime;
         private double lastExposureDuration;
+        private RbiExposureSettings lastRbiSettings = RbiExposureSettings.None;
 
         /*
          * Set by StopExposure() so that an in-progress RBI flood/flush sequence stops instead of
@@ -820,22 +821,26 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 metaData.FromCamera(this);
                 metaData.Image.SetExposureTimes(lastExposureStartTime, lastExposureStartTime + TimeSpan.FromSeconds(lastExposureDuration));
 
-                var rbiHappened = (FLIEnableFloodFlush && !IsSnap) || (IsSnap && FLIEnableSnapshotFloodFlush && FLIEnableFloodFlush);
+                /*
+                 * RBI headers come from the settings captured when the exposure was started, not the current
+                 * settings, which may have been changed while the exposure was in progress.
+                 */
+                var rbi = lastRbiSettings;
 
-                var rbiFlushKeyword = new BoolMetaDataHeader("RBIFLUSH", rbiHappened, "RBI flushing occurred prior to exposure");
+                var rbiFlushKeyword = new BoolMetaDataHeader("RBIFLUSH", rbi.Performed, "RBI flushing occurred prior to exposure");
                 metaData.GenericHeaders.Add(rbiFlushKeyword);
 
-                if (rbiHappened) {
-                    var rbiFlushCountKeyword = new UIntMetaDataHeader("RBICOUNT", FLIFlushCount, "Number of RBI flushes performed");
+                if (rbi.Performed) {
+                    var rbiFlushCountKeyword = new UIntMetaDataHeader("RBICOUNT", rbi.FlushCount, "Number of RBI flushes performed");
                     metaData.GenericHeaders.Add(rbiFlushCountKeyword);
 
-                    var rbiFloodDurationKeyword = new DoubleMetaDataHeader("RBILEN", FLIFloodDuration * 1000, "[ms] Length of RBI flood exposure");
+                    var rbiFloodDurationKeyword = new DoubleMetaDataHeader("RBILEN", rbi.FloodDuration * 1000, "[ms] Length of RBI flood exposure");
                     metaData.GenericHeaders.Add(rbiFloodDurationKeyword);
 
-                    var rbiFlushBinXKeyword = new IntMetaDataHeader("RBIXBIN", FLIFloodBin.X, "X axis binning used for RBI flush readout");
+                    var rbiFlushBinXKeyword = new IntMetaDataHeader("RBIXBIN", rbi.BinX, "X axis binning used for RBI flush readout");
                     metaData.GenericHeaders.Add(rbiFlushBinXKeyword);
 
-                    var rbiFlushBinYKeyword = new IntMetaDataHeader("RBIYBIN", FLIFloodBin.Y, "Y axis binning used for RBI flush readout");
+                    var rbiFlushBinYKeyword = new IntMetaDataHeader("RBIYBIN", rbi.BinY, "Y axis binning used for RBI flush readout");
                     metaData.GenericHeaders.Add(rbiFlushBinYKeyword);
                 }
 
@@ -938,20 +943,29 @@ namespace NINA.Equipment.Equipment.MyCamera {
             /*
              * Pre-exposure RBI management. As in the FLI Legacy driver, the flood readout counts as the
              * first flush, so a flush count of 0 means no RBI flood is performed.
+             * All RBI settings are captured once here so that the flood and the image headers use the same values.
              */
-            if (FLIEnableFloodFlush == true) {
-                if ((IsSnap && FLIEnableSnapshotFloodFlush) || !IsSnap) {
-                    short floodBinX = FLIFloodBinAuto ? sequence.Binning.X : (short)FLIFloodBinX;
-                    short floodBinY = FLIFloodBinAuto ? sequence.Binning.Y : (short)FLIFloodBinY;
+            var rbiSettings = RbiExposureSettings.None;
 
-                    if (!FloodControl(floodBinX, floodBinY)) {
-                        if (rbiAbortRequested) {
-                            Logger.Info("FLI: RBI sequence aborted. Exposure not started.");
-                            return;
-                        }
+            if (FLIEnableFloodFlush && (!IsSnap || FLIEnableSnapshotFloodFlush)) {
+                rbiSettings = new RbiExposureSettings(
+                    Performed: true,
+                    FlushCount: FLIFlushCount,
+                    FloodDuration: FLIFloodDuration,
+                    BinX: FLIFloodBinAuto ? sequence.Binning.X : (short)FLIFloodBinX,
+                    BinY: FLIFloodBinAuto ? sequence.Binning.Y : (short)FLIFloodBinY);
+            }
 
-                        throw new Exception("FLI: RBI flood failed. Exposure not started.");
+            lastRbiSettings = rbiSettings;
+
+            if (rbiSettings.Performed) {
+                if (!FloodControl(rbiSettings)) {
+                    if (rbiAbortRequested) {
+                        Logger.Info("FLI: RBI sequence aborted. Exposure not started.");
+                        return;
                     }
+
+                    throw new Exception("FLI: RBI flood failed. Exposure not started.");
                 }
             }
 
@@ -1075,14 +1089,16 @@ namespace NINA.Equipment.Equipment.MyCamera {
          * As in the FLI Legacy driver, it is taken at the pending exposure's binning and image area. StartExposure()
          * re-applies binning, frame type, exposure time and image area for the real exposure afterwards.
          */
-        private bool FloodControl(short binX, short binY) {
+        private bool FloodControl(RbiExposureSettings rbi) {
             uint rv;
+            short binX = rbi.BinX;
+            short binY = rbi.BinY;
 
             GetImageArea(binX, binY, out uint ul_x, out uint ul_y, out uint width, out uint height);
             uint lr_x = ul_x + width;
             uint lr_y = ul_y + height;
 
-            Logger.Debug($"FLI: RBI: {FLIFlushCount} total flush(es): 1 flood frame ({FLIFloodDuration * 1e3}ms) + {RbiFlushFrameCount} dark frame(s), at {binX}x{binY} binning");
+            Logger.Debug($"FLI: RBI: {rbi.FlushCount} total flush(es): 1 flood frame ({rbi.FloodDuration * 1e3}ms) + {rbi.DarkFlushCount} dark frame(s), at {binX}x{binY} binning");
 
             SetBinning(binX, binY);
 
@@ -1097,7 +1113,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
              * Flood
              */
             FrameType = LibFLI.FLIFrameType.RBI_FLUSH;
-            ExposureLength = (uint)Math.Round(FLIFloodDuration * 1000);
+            ExposureLength = (uint)Math.Round(rbi.FloodDuration * 1000);
 
             if (!RbiExposeAndDiscard("flood", width, height)) {
                 return false;
@@ -1109,8 +1125,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
             FrameType = LibFLI.FLIFrameType.DARK;
             ExposureLength = 0;
 
-            for (uint i = 1; i <= RbiFlushFrameCount; i++) {
-                if (!RbiExposeAndDiscard($"flush {i}/{RbiFlushFrameCount}", width, height)) {
+            for (uint i = 1; i <= rbi.DarkFlushCount; i++) {
+                if (!RbiExposeAndDiscard($"flush {i}/{rbi.DarkFlushCount}", width, height)) {
                     return false;
                 }
             }
@@ -1359,9 +1375,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         /*
-         * The flood readout is the first RBI flush; the rest are zero-length dark frames read out by FloodControl()
+         * The RBI settings used for a single exposure, captured when the exposure is started. The flood readout
+         * is the first RBI flush; the rest are zero-length dark frames read out by FloodControl().
          */
-        private uint RbiFlushFrameCount => FLIFlushCount - 1;
+        private sealed record RbiExposureSettings(bool Performed, uint FlushCount, double FloodDuration, short BinX, short BinY) {
+            public static readonly RbiExposureSettings None = new(false, 0, 0d, 1, 1);
+
+            public uint DarkFlushCount => FlushCount > 0 ? FlushCount - 1 : 0;
+        }
 
         private bool ApplyFirmwareFlushCount(uint nflushes) {
             uint rv;
