@@ -168,6 +168,14 @@ This allows you to safely return to a stable release if needed.
   - While connecting the app will wait for the filter wheel homing to finish before proceeding
 - **Moravian Instruments Cameras and Integrated Filter Wheels**
   - Added native drivers for Moravian Instruments cameras and integrated filter wheels
+- **Finger Lakes Instrumentation Legacy CCD Driver**
+  - Substantial overhaul of the built-in driver for legacy FLI CCD cameras includes:
+    - Completely revamped pre-exposure RBI handling and expanded the available RBI options.
+    - The RBI settings for an exposure are recorded to image file headers.
+    - Exposure timestamps are more accurate and no longer include the time taken by RBI actions that precede an exposure.
+    - Introduced an option to include overscan and optical-black areas in the downloaded image.
+    - Connected FLI cameras are now identified by their serial number, enabling easier management in the case of multiple FLI cameras connected to the system.
+    - No longer creates an extra copy of image data in memory when downloading images, reducing memory usage and improving performance.
 
 ### **User Interface & Usability**
 - **Plugin Manager**

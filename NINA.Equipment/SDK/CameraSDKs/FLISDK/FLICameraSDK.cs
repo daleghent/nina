@@ -258,7 +258,10 @@ namespace FLI {
         public static extern unsafe uint FLIGetCoolerPower(uint dev, ref double power);
 
         [DllImport(DLLNAME, EntryPoint = "FLIGrabRow", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern unsafe uint FLIGrabRow(uint dev, [Out] ushort[] buff, int width);
+        public static extern unsafe uint FLIGrabRow(uint dev, [Out] ushort[] buff, nuint width);
+
+        [DllImport(DLLNAME, EntryPoint = "FLIGrabRow", CallingConvention = CallingConvention.StdCall)]
+        public static extern unsafe uint FLIGrabRow(uint dev, ushort* buff, nuint width);
 
         [DllImport(DLLNAME, EntryPoint = "FLIExposeFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern unsafe uint FLIExposeFrame(uint dev);
@@ -372,7 +375,7 @@ namespace FLI {
         public static extern unsafe uint FLIHomeDevice(uint dev);
 
         [DllImport(DLLNAME, EntryPoint = "FLIGrabFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern unsafe uint FLIGrabFrame(uint dev, byte[] buff, ref int buffsize, ref int bytesgrabbed);
+        public static extern unsafe uint FLIGrabFrame(uint dev, [Out] byte[] buff, UIntPtr buffsize, out UIntPtr bytesgrabbed);
 
         [DllImport(DLLNAME, EntryPoint = "FLISetTDI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern unsafe uint FLISetTDI(uint dev, uint tdi_rate, uint flags);
@@ -411,7 +414,7 @@ namespace FLI {
         public static extern unsafe uint FLIEnableVerticalTable(uint dev, uint width, uint offset, uint flags);
 
         [DllImport(DLLNAME, EntryPoint = "FLIReadUserEEPROM", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern unsafe uint FLIReadUserEEPROM(uint dev, uint loc, uint address, uint length, ref byte[] rbuf);
+        public static extern unsafe uint FLIReadUserEEPROM(uint dev, uint loc, uint address, uint length, [Out] byte[] rbuf);
 
         [DllImport(DLLNAME, EntryPoint = "FLIWriteUserEEPROM", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern unsafe uint FLIWriteUserEEPROM(uint dev, uint loc, uint address, uint length, byte[] wbuf);
