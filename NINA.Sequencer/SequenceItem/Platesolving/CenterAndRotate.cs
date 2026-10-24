@@ -105,7 +105,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
             bool stoppedGuiding = false;
             try {
-                float rotationDistance = float.MaxValue;
+                bool withinTolerance;
 
                 stoppedGuiding = await guiderMediator.StopGuiding(token);
                 progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
@@ -125,8 +125,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 }
                 progress?.Report(new ApplicationStatus() { Status = string.Empty });
 
-                var targetRotation = (float)PositionAngle;
-
                 /* Loop until the rotation is within tolerances*/
                 var attempts = 0;
                 do {
@@ -138,33 +136,32 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     var orientation = (float)solveResult.PositionAngle;
                     rotatorMediator.Sync(orientation);
 
-                    targetRotation = rotatorMediator.GetTargetPosition((float)PositionAngle);
+                    var targetRotation = rotatorMediator.GetTargetPosition((float)PositionAngle);
                     if (Math.Abs(AstroUtil.EuclidianModulus(targetRotation - PositionAngle + 180, 360) - 180) > 0.1) {
                         if (profileService.ActiveProfile.RotatorSettings.RangeType != Core.Enum.RotatorRangeTypeEnum.LITERAL) {
                             Logger.Info($"Rotator target position {PositionAngle} adjusted to {targetRotation}");
                         }
                     }
 
-                    rotationDistance = targetRotation - orientation;
-                    var rangeType = profileService.ActiveProfile.RotatorSettings.RangeType;
-                    if (rangeType == Core.Enum.RotatorRangeTypeEnum.FULL || rangeType == Core.Enum.RotatorRangeTypeEnum.LITERAL) {
-                        // Unrestricted range, so take the shortest signed path
-                        rotationDistance = AstroUtil.EuclidianModulus(rotationDistance + 180, 360) - 180;
-                    }
+                    var rotationDistance = targetRotation - orientation;
+                    var rotationTolerance = profileService.ActiveProfile.PlateSolveSettings.RotationTolerance;
 
-                    if (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance), true)) {
-                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {PositionAngle}° - Moving rotator relatively by {rotationDistance}°");
+                    // Outside of LITERAL, the opposing angle frames the same field and is considered equal
+                    var oneEightyIsEqual = profileService.ActiveProfile.RotatorSettings.RangeType != Core.Enum.RotatorRangeTypeEnum.LITERAL;
+                    withinTolerance = Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(rotationTolerance), oneEightyIsEqual);
+
+                    if (!withinTolerance) {
+                        if (++attempts >= 10) {
+                            throw new SequenceEntityFailedException(string.Format(Loc.Instance["Lbl_SequenceItem_Platesolving_CenterAndRotate_FailedAfterMaxAttempts"], 10));
+                        }
+
+                        Logger.Info($"Rotator not inside tolerance {rotationTolerance} - Current {orientation}° / Target: {targetRotation}° - Moving rotator relatively by {rotationDistance}°");
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblRotating"] });
                         await rotatorMediator.MoveRelative(rotationDistance, token);
                         progress?.Report(new ApplicationStatus() { Status = string.Empty });
                         token.ThrowIfCancellationRequested();
                     }
-
-                    attempts++;
-                    if (attempts >= 10) {
-                        throw new SequenceEntityFailedException(string.Format(Loc.Instance["Lbl_SequenceItem_Platesolving_CenterAndRotate_FailedAfterMaxAttempts"], 10));
-                    }
-                } while (!Angle.ByDegree(rotationDistance).Equals(Angle.Zero, Angle.ByDegree(profileService.ActiveProfile.PlateSolveSettings.RotationTolerance), true));
+                } while (!withinTolerance);
 
                 /* Once everything is in place do a centering of the object */
                 var centerResult = await base.DoCenter(progress, token);
